@@ -1,0 +1,37 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.module]
+source = 'nativefs.lua'
+before = 'main.lua'
+name = 'nativefs'
+
+# Display Safari name in rarity
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "if AUT.card_type == 'Joker' or (AUT.badges and AUT.badges.force_rarity) then card_type = ({localize('k_common'), localize('k_uncommon'), localize('k_rare'), localize('k_legendary')})[card.config.center.rarity] end"
+position = "at"
+payload = "if AUT.card_type == 'Joker' or (AUT.badges and AUT.badges.force_rarity) then card_type = ({localize('k_common'), localize('k_uncommon'), localize('k_rare'), localize('k_legendary'), ['poke_safari'] = 'Safari'})[card.config.center.rarity] end"
+match_indent = true
+
+# Localization color
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "legendary = G.C.RARITY[4],"
+position = "after"
+payload = "poke_safari = G.C.RARITY['poke_safari'],"
+match_indent = true
+
+# Pokemon only functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
+position = "after"
+payload = "if not v.stage and pokermon.config.pokemon_only then add = nil end"
+match_indent = true
