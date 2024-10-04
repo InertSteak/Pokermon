@@ -226,6 +226,7 @@ local drowzee={
       "unique {C:planet}Planet{} card",
       "used this run",
       "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}21{} {C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -248,7 +249,7 @@ local drowzee={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 15)
+    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 21)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -263,14 +264,14 @@ local drowzee={
 local hypno={
   name = "hypno", 
   pos = {x = 0, y = 1}, 
-  config = {extra = {mult = 0, mult_mod = 5, trance_counter = 0, threshold = 3}},
+  config = {extra = {mult = 0, mult_mod = 5, trance_counter = 0, threshold = 4}},
   loc_txt = {      
     name = 'Hypno',      
     text = {
       "{C:mult}+#2#{} Mult per unique",
       "{C:planet}Planet{} card used this run.",
       "Create a {C:spectral}Trance{} card for",
-      "every #4# {C:planet}Planet{} cards used",
+      "every {C:attention}#4#{} {C:planet}Planet{} cards used",
       "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult, {C:attention}#3#{}{C:inactive}/#4# used)",
     } 
   }, 
@@ -286,17 +287,14 @@ local hypno={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      local planets_used = 0
-      for k, v in pairs(G.GAME.consumeable_usage) do
-          if v.set == 'Planet' then planets_used = planets_used + 1 end
-      end
-      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
       card.ability.extra.trance_counter = card.ability.extra.trance_counter + 1
       if card.ability.extra.trance_counter >= card.ability.extra.threshold and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_trance')
         _card:add_to_deck()
         G.consumeables:emplace(_card)
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+        card.ability.extra.trance_counter = 0
+      elseif card.ability.extra.trance_counter >= card.ability.extra.threshold then
         card.ability.extra.trance_counter = 0
       end
     end
@@ -312,6 +310,15 @@ local hypno={
       end
     end
   end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      local planets_used = 0
+      for k, v in pairs(G.GAME.consumeable_usage) do
+          if v.set == 'Planet' then planets_used = planets_used + 1 end
+      end
+      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+    end
+  end
 }
 local krabby={
   name = "krabby", 
