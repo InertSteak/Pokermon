@@ -172,5 +172,5 @@ local poke_master = {
 }
 
 return {name = "Challenges", 
-        list = {poke_master}
+        list = {}
 }

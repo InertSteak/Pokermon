@@ -33,5 +33,5 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
 position = "after"
-payload = "if not v.stage and pokermon.config.pokemon_only then add = nil end"
+payload = "if v.set == 'Joker' and not v.stage and pokermon.config.pokemon_only then add = nil end"
 match_indent = true

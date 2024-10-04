@@ -284,9 +284,6 @@ local moonstone = {
   pos = { x = 0, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -340,9 +337,6 @@ local waterstone = {
   pos = { x = 1, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -376,8 +370,8 @@ local waterstone = {
   end,
   in_pool = function(self)
     for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
-        or v.ability.name == "staryu" or v.ability.name == "eevee" then
+      if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
+      or v.ability.name == "staryu" or v.ability.name == "eevee" then
         return true
       end
     end
@@ -401,9 +395,6 @@ local thunderstone = {
   pos = { x = 2, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -460,9 +451,6 @@ local firestone = {
   pos = { x = 3, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -521,9 +509,6 @@ local leafstone = {
   pos = { x = 4, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -577,9 +562,6 @@ local linkcable = {
   pos = { x = 5, y = 1 },
   atlas = "balls",
   cost = 4,
-  hidden = true,
-  soul_set = "Tarot",
-  soul_rate = .05,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)

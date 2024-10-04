@@ -190,6 +190,14 @@ function pokemon_in_pool(self)
   if next(find_joker(self.name)) and not next(find_joker("Showman")) then
     return false
   else
+    if self.enhancement_gate then
+      for k, v in pairs(G.playing_cards) do
+          if v.config.center.key == self.enhancement_gate then
+              return true
+          end
+      end
+      return false
+    end
     return true
   end
 end
