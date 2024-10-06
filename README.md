@@ -15,8 +15,11 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) and [Steamodded
 
 **Installation:**
 
-1. Create a folder named Pokermon inside your mods folder.
-2. Place all files in this respository (minus the license and readme files) inside the Pokermon folder.
+1. Download the zip file with the contents of the repository. (Code -> Download Zip)\
+2. Create a folder named Pokermon inside your mods folder.
+3. Extract the zip file and place all files in this respository (minus the license and readme files) inside the Pokermon folder.
+4. Make sure the files are directly under the Pokermon folder in your mods folder and not under the zip file folder.
+   (In other words, unzip the file and then copy and paste the assests, config.lua, pokermon.lua, etc to be under the Pokermon folder in the mods folder) 
 
 **Roadmap:**
 
