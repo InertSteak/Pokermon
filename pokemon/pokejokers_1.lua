@@ -101,7 +101,7 @@ local venusaur={
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two",
   atlas = "Pokedex1",
   blueprint_compat = true,
@@ -241,7 +241,7 @@ local charizard={
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two",
   atlas = "Pokedex1",
   blueprint_compat = true,
@@ -395,7 +395,7 @@ local blastoise={
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two",
   atlas = "Pokedex1",
   blueprint_compat = true,

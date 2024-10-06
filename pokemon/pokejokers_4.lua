@@ -150,7 +150,7 @@ local gengar={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex4",
   blueprint_compat = true,
@@ -535,7 +535,7 @@ local exeggutor={
                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "One", 
   atlas = "Pokedex4",
   blueprint_compat = true,

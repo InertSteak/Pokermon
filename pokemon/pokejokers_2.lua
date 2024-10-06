@@ -16,7 +16,7 @@ local nidoqueen={
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex2",
   blueprint_compat = true,
@@ -131,7 +131,7 @@ local nidoking={
     return {vars = {center.ability.extra.mult, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex2", 
   blueprint_compat = true,
@@ -206,7 +206,7 @@ local clefable={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "One", 
   atlas = "Pokedex2",
   blueprint_compat = true,
@@ -364,7 +364,7 @@ local wigglytuff={
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "One", 
   atlas = "Pokedex2",
   blueprint_compat = true,

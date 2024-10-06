@@ -16,7 +16,7 @@ local starmie={
     return {vars = {center.ability.extra.mult, center.ability.extra.money, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "One", 
   atlas = "Pokedex5",
   blueprint_compat = true,
@@ -368,7 +368,7 @@ local gyarados={
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "One", 
   atlas = "Pokedex5",
   blueprint_compat = true,
@@ -1198,7 +1198,7 @@ local dragonite={
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex5",
   blueprint_compat = true,

@@ -624,7 +624,7 @@ local golem={
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
-  cost = 20, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex3",
   blueprint_compat = true,
