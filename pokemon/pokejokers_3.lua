@@ -486,7 +486,7 @@ local tentacool={
         mult = card.ability.extra.mult
       }
     end
-    return level_evo(self, card, context, "tentacruel")
+    return level_evo(self, card, context, "j_poke_tentacruel")
   end
 }
 local tentacruel={
