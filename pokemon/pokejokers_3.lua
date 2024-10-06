@@ -1153,10 +1153,12 @@ local shellder={
     text = {
       "If hand has {C:attention}5{} scoring",
       "cards, each have a {C:green}#1#{} in {C:green}#2#{}",
-      "chance to retrigger"
+      "chance to retrigger",
+      "{C:inactive}(Evolves with a{} {C:attention}Water Stone{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_waterstone'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
