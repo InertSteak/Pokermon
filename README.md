@@ -24,7 +24,7 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.5.0-bet
 **Roadmap:**
 
 In the immdiate future, I would like to polish and fine tune the Gen I pokemon along with bug fixing. 
-In the near future, I would like to implement challenges based on Gym leaders and maybe a few vouchers. 
+In the near future, I would like to implement challenges based on Gym leaders and a new consumbale type, TMs.
 Farther out in the future, I would like to implement additional generations of Pokemon Jokers.
 
 **Card Images:**
