@@ -11,7 +11,7 @@ Please note this is my first mod and a work in progress so there may be quite a 
 
 **Prerequisites:**
 
-Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (v0.5.0-beta6, v0.5.0-beta7 currently crashes with my code) and [Steamodded](https://github.com/Steamopollys/Steamodded) (1.0.0 version) must be installed.
+Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.5.0-beta6, v0.5.0-beta7 currently crashes with my code) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use 1.0.0 version) must be installed.
 
 **Installation:**
 
