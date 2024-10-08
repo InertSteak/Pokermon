@@ -311,10 +311,12 @@ local moonstone = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability.name == "nidorina" or v.ability.name == "nidorino" 
-      or v.ability.name == "clefairy" or v.ability.name == "jigglypuff" then
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "nidorina" or v.ability.name == "nidorino" 
+        or v.ability.name == "clefairy" or v.ability.name == "jigglypuff" then
+          return true
+        end
       end
     end
     return false
@@ -369,10 +371,12 @@ local waterstone = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
-      or v.ability.name == "staryu" or v.ability.name == "eevee" then
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
+        or v.ability.name == "staryu" or v.ability.name == "eevee" then
+          return true
+        end
       end
     end
     return false
@@ -426,9 +430,11 @@ local thunderstone = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability.name == "pikachu" or v.ability.name == "eevee" then 
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "pikachu" or v.ability.name == "eevee" then 
+          return true
+        end
       end
     end
     return false
@@ -483,10 +489,12 @@ local firestone = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability.name == "growlithe" or v.ability.name == "vulpix" 
-      or v.ability.name == "eevee" then 
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "growlithe" or v.ability.name == "vulpix" 
+        or v.ability.name == "eevee" then 
+          return true
+        end
       end
     end
     return false
@@ -536,10 +544,12 @@ local leafstone = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability.name == "gloom" or v.ability.name == "weepinbell" 
-      or v.ability.name == "exeggcute" then
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "gloom" or v.ability.name == "weepinbell" 
+        or v.ability.name == "exeggcute" then
+          return true
+        end
       end
     end
     return false
@@ -594,10 +604,12 @@ local linkcable = {
     return true
   end,
   in_pool = function(self)
-    for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "machoke" or v.ability.name == "kadabra" 
-        or v.ability.name == "graveler" or v.ability.name == "haunter" then
-        return true
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+          if v.ability.name == "machoke" or v.ability.name == "kadabra" 
+          or v.ability.name == "graveler" or v.ability.name == "haunter" then
+          return true
+        end
       end
     end
     return false
