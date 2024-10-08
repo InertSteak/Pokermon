@@ -11,7 +11,7 @@ Please note this is my first mod and a work in progress so there may be quite a 
 
 **Prerequisites:**
 
-Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) and [Steamodded](https://github.com/Steamopollys/Steamodded) must be installed.
+Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.5.0-beta6, v0.5.0-beta7 currently crashes with my code) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use 1.0.0 version) must be installed.
 
 **Installation:**
 
@@ -23,8 +23,8 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) and [Steamodded
 
 **Roadmap:**
 
-In the immdiate future, I would like to polish and fine tune the Gen I pokemon along with bug fixing. 
-In the near future, I would like to implement challenges based on Gym leaders and maybe a few vouchers. 
+In the immediate future, I would like to polish and fine tune the Gen I Pokemon along with bug fixing. 
+In the near future, I would like to implement challenges based on Gym leaders and a new consumable type, TMs.
 Farther out in the future, I would like to implement additional generations of Pokemon Jokers.
 
 **Card Images:**
