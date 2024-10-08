@@ -75,7 +75,7 @@ local gastly={
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_metapod")
+    return level_evo(self, card, context, "j_poke_haunter")
   end
 }
 local haunter={
