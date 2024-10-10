@@ -86,8 +86,8 @@ local mod_dir = ''..SMODS.current_mod.path
 local lovely = require("lovely")
 local nativefs = require("nativefs")
 
-if nativefs.getInfo(lovely.mod_dir.."/Pokermon/config.lua") then
-  local config_file = STR_UNPACK(nativefs.read((lovely.mod_dir.."/Pokermon/config.lua")))
+if nativefs.getInfo(mod_dir.."/config.lua") then
+  local config_file = STR_UNPACK(nativefs.read((mod_dir.."/config.lua")))
   if config_file ~= nil then
     pokermon.config = config_file
   end
@@ -309,7 +309,7 @@ function create_tabs(args)
 							ref_table = pokermon.config,
 							ref_value = "pokemon_only",
               callback = function(_set_toggle)
-                nativefs.write(lovely.mod_dir.."/Pokermon/config.lua", STR_PACK(pokermon.config))
+                nativefs.write(mod_dir.."/config.lua", STR_PACK(pokermon.config))
 							end,
 						}),
           },
