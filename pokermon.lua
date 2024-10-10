@@ -308,6 +308,9 @@ function create_tabs(args)
 							label = "Pokemon Only?",
 							ref_table = pokermon.config,
 							ref_value = "pokemon_only",
+              callback = function(_set_toggle)
+                nativefs.write(lovely.mod_dir.."/Pokermon/config.lua", STR_PACK(pokermon.config))
+							end,
 						}),
           },
         }
