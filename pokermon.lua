@@ -1,7 +1,7 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Pokermon
 --- MOD_ID: Pokermon
---- MOD_AUTHOR: [InertSteak]
+--- MOD_AUTHOR: [InertSteak, Larantula, Joey J. Jester, Gay Coonie, Marie|Tsunami, Yamper, Jevonnissocoolman]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
 --- VERSION: 1.0.0
@@ -73,6 +73,13 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "Mart1",
+    path = "Mart1.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "taurosh_atlas",
     path = "taurosh.png",
     px = 71,
@@ -129,6 +136,7 @@ end
 local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
 
 for _, file in ipairs(pconsumables) do
+  sendDebugMessage ("The file is: "..file)
   local consumable, load_error = NFS.load(mod_dir.."consumables/"..file)
   if load_error then
     sendDebugMessage ("The error is: "..load_error)
