@@ -97,7 +97,7 @@ pokermon_config = SMODS.current_mod.config
 local phelper = NFS.getDirectoryItems(mod_dir.."helper")
 
 for _, file in ipairs(phelper) do
-  SMODS.load_file("helper/"..file)
+  dofile(mod_dir.."helper/"..file)
 end
 
 --Load pokemon file
