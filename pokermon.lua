@@ -91,20 +91,13 @@ local mod_dir = ''..SMODS.current_mod.path
 
 --Load config
 local lovely = require("lovely")
-local nativefs = require("nativefs")
-
-if nativefs.getInfo(mod_dir.."/config.lua") then
-  local config_file = STR_UNPACK(nativefs.read((mod_dir.."/config.lua")))
-  if config_file ~= nil then
-    pokermon.config = config_file
-  end
-end
+pokermon_config = SMODS.current_mod.config
 
 --Load helper files
 local phelper = NFS.getDirectoryItems(mod_dir.."helper")
 
 for _, file in ipairs(phelper) do
-  dofile(mod_dir.."helper/"..file)
+  SMODS.load_file("helper/"..file)
 end
 
 --Load pokemon file
@@ -112,7 +105,7 @@ local pfiles = NFS.getDirectoryItems(mod_dir.."pokemon")
 
 for _, file in ipairs(pfiles) do
   sendDebugMessage ("The file is: "..file)
-  local pokemon, load_error = NFS.load(mod_dir.."pokemon/"..file)
+  local pokemon, load_error = SMODS.load_file("pokemon/"..file)
   if load_error then
     sendDebugMessage ("The error is: "..load_error)
   else
@@ -137,7 +130,7 @@ local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
 
 for _, file in ipairs(pconsumables) do
   sendDebugMessage ("The file is: "..file)
-  local consumable, load_error = NFS.load(mod_dir.."consumables/"..file)
+  local consumable, load_error = SMODS.load_file("consumables/"..file)
   if load_error then
     sendDebugMessage ("The error is: "..load_error)
   else
@@ -154,7 +147,7 @@ end
 local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
 
 for _, file in ipairs(pchallenges) do
-  local challenge, load_error = NFS.load(mod_dir.."challenges/"..file)
+  local challenge, load_error = SMODS.load_file("challenges/"..file)
   if load_error then
     sendDebugMessage ("The error is: "..load_error)
   else
@@ -314,10 +307,10 @@ function create_tabs(args)
           nodes = {
             create_toggle({
 							label = "Pokemon Only?",
-							ref_table = pokermon.config,
+							ref_table = pokermon_config,
 							ref_value = "pokemon_only",
               callback = function(_set_toggle)
-                nativefs.write(mod_dir.."/config.lua", STR_PACK(pokermon.config))
+                NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
 							end,
 						}),
           },
