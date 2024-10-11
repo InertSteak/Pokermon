@@ -93,11 +93,12 @@ local mod_dir = ''..SMODS.current_mod.path
 local lovely = require("lovely")
 pokermon_config = SMODS.current_mod.config
 
---Load helper files
-local phelper = NFS.getDirectoryItems(mod_dir.."helper")
-
-for _, file in ipairs(phelper) do
-  dofile(mod_dir.."helper/"..file)
+--Load helper function file
+local helper, load_error = SMODS.load_file("pokefunctions.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  helper()
 end
 
 --Load pokemon file
