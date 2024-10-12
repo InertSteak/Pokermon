@@ -669,7 +669,7 @@ local emergy = {
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
         fairy_energy, dragon_energy, earth_energy, transformation}
 
-if (SMODS.Mods["Cryptid"]).can_load then
+if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)
 end
 
