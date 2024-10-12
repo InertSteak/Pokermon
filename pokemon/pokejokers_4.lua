@@ -237,8 +237,8 @@ local drowzee={
       "{C:mult}+#2#{} Mult per",
       "unique {C:planet}Planet{} card",
       "used this run",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}21{} {C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+21{} {C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -286,7 +286,7 @@ local hypno={
       "{C:planet}Planet{} card used this run.",
       "Create a {C:spectral}Trance{} card for",
       "every {C:attention}#4#{} {C:planet}Planet{} cards used",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult, {C:attention}#3#{}{C:inactive}/#4# used)",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:attention}#3#{}{C:inactive}/#4# used)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -514,7 +514,7 @@ local exeggcute={
     text = {
       "Played cards with",
       "{C:hearts}#2#{} suit give",
-      "{C:mult}+#1#{} mult when scored",
+      "{C:mult}+#1#{} Mult when scored",
       "{C:inactive}(Evolves with a{} {C:attention}Leaf Stone{}{C:inactive} card)"
     } 
   },
@@ -1092,8 +1092,8 @@ local horsea={
       "Gains {C:mult}+#2#{} Mult",
       "for each scoring {C:attention}6{}",
       "in {C:attention}first hand{} of round",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}10{} {C:inactive}Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+10{} {C:inactive}Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1155,15 +1155,19 @@ local seadra={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint then
+        local upgraded
         for k, v in ipairs(context.scoring_hand) do
           if v:get_id() == 6 then
+            upgraded = true
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
           end
         end
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
+        if upgraded then
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.MULT
+          }
+        end
       end
       if context.joker_main and card.ability.extra.mult > 0 then
         return {

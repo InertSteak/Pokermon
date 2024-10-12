@@ -414,8 +414,8 @@ local blastoise={
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two",
-  atlas = "Pokedex1",
   ptype = "Water",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -516,7 +516,7 @@ local butterfree={
   loc_txt = {      
     name = 'Butterfree',      
     text = {
-      "{C:mult}+#1#{} mult",
+      "{C:mult}+#1#{} Mult",
     }  
   }, 
   loc_vars = function(self, info_queue, center)
@@ -660,6 +660,7 @@ local pidgey={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -669,7 +670,6 @@ local pidgey={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
     return level_evo(self, card, context, "j_poke_pidgeotto")
   end,
   add_to_deck = function(self, card, from_debuff)

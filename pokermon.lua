@@ -121,6 +121,22 @@ for _, file in ipairs(pfiles) do
       if item.name ~= "taurosh" then
         item.in_pool = pokemon_in_pool
       end
+      if item.calculate then
+        local calc = item.calculate
+        item.calculate = function(self, card, context)
+          pokemon_check_up(self, card, context)
+          return calc(self, card, context)
+        end
+      else
+        item.calculate = pokemon_check_up
+      end
+      if item.ptype then
+        if item.config and item.config.extra then
+          item.config.extra.ptype = item.ptype
+        elseif item.config then
+          item.config.extra = {ptype = item.ptype}
+        end
+      end
       SMODS.Joker(item)
     end
   end
@@ -157,10 +173,6 @@ for _, file in ipairs(pconsumables) do
     if curr_consumable.init then curr_consumable:init() end
     
     for i, item in ipairs(curr_consumable.list) do
-      if item.set == "Energy" and not item.name == "emergy" then
-        item.can_use = energy_can_use
-        item.use = energy_use
-      end
       SMODS.Consumable(item)
     end
   end

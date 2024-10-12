@@ -1,3 +1,29 @@
+energy_whitelist = {"mult", "mult2", "chips2", "Xmult", "money", "money2", "retriggers", "mult_mod", "chip_mod", "Xmult_mod", "money_mod", "limit", "triggers"}
+
+energize = function(card)
+  for l, data in pairs(card.ability.extra) do
+    if type(data) == "number" then
+      for m, name in ipairs(energy_whitelist) do
+        if l == name then
+          card.ability.extra[l] = data * 2
+        end
+      end
+    end
+  end
+end
+
+unenergize = function(card)
+  for l, data in pairs(card.ability.extra) do
+    if type(data) == "number" then
+      for m, name in ipairs(energy_whitelist) do
+        if l == name then
+          card.ability.extra[l] = data / 2
+        end
+      end
+    end
+  end
+end
+
 remove = function(self, card, context)
   play_sound('tarot1')
   card.T.r = -0.2
@@ -22,6 +48,8 @@ evolve = function(self, card, context, forced_key)
     local previous_perishable = nil
     local previous_eternal = nil
     local previous_rental = nil
+    local previous_energized = nil
+    local previous_energy_turns = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -37,6 +65,14 @@ evolve = function(self, card, context, forced_key)
 
     if card.ability.rental then
       previous_rental = card.ability.rental
+    end
+    
+    if card.ability.extra and card.ability.extra.energized then
+      previous_energized = card.ability.extra.energized
+    end
+    
+    if card.ability.extra and card.ability.extra.energy_turns then
+      previous_energy_turns = card.ability.extra.energy_turns
     end
     
     G.E_MANAGER:add_event(Event({
@@ -60,6 +96,18 @@ evolve = function(self, card, context, forced_key)
 
     if previous_rental then
       new_card.ability.rental = previous_rental
+    end
+    
+    if previous_energized then
+      new_card.ability.extra.energized = previous_energized
+    end
+    
+    if previous_energy_turns then
+      new_card.ability.extra.energy_turns = card.ability.extra.energy_turns
+    end
+    
+    if new_card.ability.extra.energized and new_card.ability.extra.energy_turns then
+      energize(new_card)
     end
     
     new_card:add_to_deck()
@@ -210,54 +258,51 @@ energy_drain = function(self, card, context)
       card.ability.extra.energy_turns = card.ability.extra.energy_turns - 1
     end
     if card.ability.extra.energy_turns == 0 then
-      card.energized = false
-      if card.abilty.extra.mult then
-      card.abilty.extra.mult = card.abilty.extra.mult / 2
-      end
-      if card.abilty.extra.chips then
-        card.abilty.extra.chips = card.abilty.extra.chips / 2
-      end
-      if card.abilty.extra.Xmult then
-        card.abilty.extra.Xmult = card.abilty.extra.Xmult / 2
-      end
-      if card.abilty.extra.retriggers then
-        card.abilty.extra.retriggers = card.abilty.extra.mult / 2
-      end
-      if card.abilty.extra.money then
-        card.abilty.extra.money = card.abilty.extra.money / 2
-      end
+      unenergize(card)
+      card.ability.extra.energized = false
     end
   end
 end
 
-energy_use = function(self, card, area, copier, etype)
-  if card.energized then
-    card.ability.extra.energy_turns = 5
-  else
-    card.ability.extra.energized = true
-    card.ability.energy_turns = 5
-    if card.abilty.extra.mult then
-      card.abilty.extra.mult = card.abilty.extra.mult * 2
-    end
-    if card.abilty.extra.chips then
-      card.abilty.extra.chips = card.abilty.extra.chips * 2
-    end
-    if card.abilty.extra.Xmult then
-      card.abilty.extra.Xmult = card.abilty.extra.Xmult * 2
-    end
-    if card.abilty.extra.retriggers then
-      card.abilty.extra.retriggers = card.abilty.extra.mult * 2
-    end
-    if card.abilty.extra.money then
-      card.abilty.extra.money = card.abilty.extra.money * 2
+energy_use = function(self, card, area, copier)
+  local applied = false
+  for k, v in pairs(G.jokers.cards) do
+    sendDebugMessage("Starting energy_use function")
+    if applied ~= true and v.ability and v.ability.extra and not v.ability.extra.energized and v.ability.extra.ptype and self.etype then
+      sendDebugMessage("Apply doubling "..v.ability.extra.ptype.." "..v.ability.name.." "..self.etype)
+      if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
+        energize(v)
+        v.ability.extra.energized = true
+        if self.etype == "Colorless" then
+          v.ability.extra.energy_turns = 2
+        else
+          v.ability.extra.energy_turns = 5
+        end
+        applied = true
+      end
     end
   end
 end
 
 energy_can_use = function(self, card)
-  if card.highlighted and card.set == "Joker" and card.ptype and card.ptype.." Energy" == self.loc_txt.Name then
-    return true
-  else
-    return false
+  for k, v in pairs(G.jokers.cards) do
+    if v.ability and v.ability.extra and not v.ability.extra.energize and v.ability.extra.ptype and self.etype then
+      if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
+        for l, data in pairs(v.ability.extra) do
+          if type(data) == "number" then
+            for m, name in ipairs(energy_whitelist) do
+              if l == name then
+                return true
+              end
+            end
+          end
+        end
+      end
+    end
   end
+  return false
+end
+
+pokemon_check_up = function(self, card, context)
+  energy_drain(self, card, context)
 end

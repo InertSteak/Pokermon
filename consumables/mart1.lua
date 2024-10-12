@@ -276,10 +276,10 @@ local grass_energy = {
   loc_txt = {
     name = "Grass Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Grass{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Grass{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -287,13 +287,14 @@ local grass_energy = {
   pos = { x = 0, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Grass",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -304,10 +305,10 @@ local fire_energy = {
   loc_txt = {
     name = "Fire Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Fire{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Fire{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -315,13 +316,14 @@ local fire_energy = {
   pos = { x = 1, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Fire",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -332,10 +334,10 @@ local water_energy = {
   loc_txt = {
     name = "Water Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Water{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Water{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -343,13 +345,14 @@ local water_energy = {
   pos = { x = 2, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Water",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -360,10 +363,10 @@ local lightning_energy = {
   loc_txt = {
     name = "Lightning Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Lightning{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Lightning{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -371,13 +374,14 @@ local lightning_energy = {
   pos = { x = 3, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Lightning",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -388,10 +392,10 @@ local psychic_energy = {
   loc_txt = {
     name = "Psychic Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Psychic{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Pyschic{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -399,13 +403,14 @@ local psychic_energy = {
   pos = { x = 4, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Psychic",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -416,10 +421,10 @@ local fighting_energy = {
   loc_txt = {
     name = "Fighting Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Fighting{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Fighting{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -427,13 +432,14 @@ local fighting_energy = {
   pos = { x = 5, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Fighting",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -444,9 +450,11 @@ local colorless_energy = {
   loc_txt = {
     name = "Colorless Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "Pokemon for {C:attention}2{} turns",
+      "{C:attention}Doubles{} most number values",
+      "of leftmost Pokemon ",
+      "Joker for {C:attention}2{} rounds",
+      "{C:attention}5{} rounds if {C:attention}Colorless{}",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -454,13 +462,14 @@ local colorless_energy = {
   pos = { x = 6, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Colorless",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -471,10 +480,10 @@ local darkness_energy = {
   loc_txt = {
     name = "Darkness Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Dark{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Dark{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -482,13 +491,14 @@ local darkness_energy = {
   pos = { x = 7, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Dark",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -499,10 +509,10 @@ local metal_energy = {
   loc_txt = {
     name = "Metal Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Metal{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Metal{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -510,13 +520,14 @@ local metal_energy = {
   pos = { x = 8, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Metal",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -527,10 +538,10 @@ local fairy_energy = {
   loc_txt = {
     name = "Fairy Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Fairy{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Fairy{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -538,13 +549,14 @@ local fairy_energy = {
   pos = { x = 9, y = 0 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Fairy",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -555,10 +567,10 @@ local dragon_energy = {
   loc_txt = {
     name = "Dragon Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Dragon{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Dreagon{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -566,13 +578,14 @@ local dragon_energy = {
   pos = { x = 0, y = 1 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Dragon",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 
@@ -583,10 +596,10 @@ local earth_energy = {
   loc_txt = {
     name = "Earth Energy",
     text = {
-      "{C:attention}Double{} the effects",
-      "of {C:attention}1{} selected",
-      "{C:attention}Earth{} Pokemon",
-      "for {C:attention}5{} turns"
+      "{C:attention}Doubles{} most number values",
+      "of leftmost {C:attention}Earth{} type Joker",
+      "for {C:attention}5{} rounds",
+      "(C:inactive)(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -594,13 +607,14 @@ local earth_energy = {
   pos = { x = 1, y = 1 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Ground",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return energy_can_use(self, card)
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    return energy_use(self, card, area, copier)
   end
 }
 

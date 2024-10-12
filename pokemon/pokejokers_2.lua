@@ -970,7 +970,7 @@ local psyduck={
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and #context.scoring_hand == 1 and context.scoring_hand[1]:is_face() then
+    if context.cardarea == G.jokers and context.scoring_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
       if context.joker_main then
         ease_dollars(card.ability.extra.money)
         return {

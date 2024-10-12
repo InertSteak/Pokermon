@@ -359,7 +359,7 @@ local magikarp={
   loc_txt = {      
     name = 'Magikarp',      
     text = {
-      "{C:attention}Splash{}",
+      "Applies {C:attention}Splash{}",
       "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
     } 
   },
@@ -1107,7 +1107,7 @@ local zapdos={
     text = {
       "{X:mult,C:white} X#1# {} Mult for",
       "every {C:money}$#2#{} you have",
-      "{C:inactive}(Currently {X:red,C:white}X#3#{} Mult)",
+      "{C:inactive}(Currently {X:red,C:white}X#3#{}{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
