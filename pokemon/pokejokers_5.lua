@@ -1172,7 +1172,7 @@ local moltres={
 }
 local dratini={
   name = "dratini", 
-  pos = {x = 5, y = 1},
+  pos = {x = 5, y = 4},
   config = {extra = {mult = 0, mult_mod = 1, size = 3}},
   loc_txt = {      
     name = 'Dratini',      
