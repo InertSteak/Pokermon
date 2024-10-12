@@ -279,7 +279,7 @@ local grass_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Grass{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -308,7 +308,7 @@ local fire_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Fire{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -337,7 +337,7 @@ local water_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Water{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -366,7 +366,7 @@ local lightning_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Lightning{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -395,7 +395,7 @@ local psychic_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Pyschic{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -424,7 +424,7 @@ local fighting_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Fighting{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -454,7 +454,7 @@ local colorless_energy = {
       "of leftmost Pokemon ",
       "Joker for {C:attention}2{} rounds",
       "{C:attention}5{} rounds if {C:attention}Colorless{}",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -541,7 +541,7 @@ local fairy_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Fairy{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -570,7 +570,7 @@ local dragon_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Dreagon{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -599,7 +599,7 @@ local earth_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Earth{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)

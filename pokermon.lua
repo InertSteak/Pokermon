@@ -86,6 +86,13 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "pokepack",
+    path = "pokepacks.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Get mod path and load other files
 local mod_dir = ''..SMODS.current_mod.path
 
@@ -177,6 +184,24 @@ for _, file in ipairs(pconsumables) do
     end
   end
 end 
+
+--Load boosters
+local pboosters = NFS.getDirectoryItems(mod_dir.."boosters")
+
+for _, file in ipairs(pboosters) do
+  sendDebugMessage ("The file is: "..file)
+  local booster, load_error = SMODS.load_file("boosters/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_booster = booster()
+    if curr_booster.init then curr_booster:init() end
+    
+    for i, item in ipairs(curr_booster.list) do
+      SMODS.Booster(item)
+    end
+  end
+end
 
 --Load challenges file
 local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
