@@ -1048,6 +1048,7 @@ local snorlax={
 local articuno={
   name = "articuno", 
   pos = {x = 5, y = 3}, 
+  soul_pos = { x = 0, y = 4},
   loc_txt = {      
     name = 'Articuno',      
     text = {
@@ -1098,7 +1099,8 @@ local articuno={
 }
 local zapdos={
   name = "zapdos", 
-  pos = {x = 0, y = 4},
+  pos = {x = 1, y = 4},
+  soul_pos = { x = 2, y = 4},
   config = {extra = {Xmult = 2, money = 25}},
   loc_txt = {      
     name = 'Zapdos',      
@@ -1135,7 +1137,8 @@ local zapdos={
 }
 local moltres={
   name = "moltres", 
-  pos = {x = 1, y = 4},
+  pos = {x = 3, y = 4},
+  soul_pos = { x = 4, y = 4},
   loc_txt = {      
     name = 'Moltres',      
     text = {
@@ -1169,7 +1172,7 @@ local moltres={
 }
 local dratini={
   name = "dratini", 
-  pos = {x = 2, y = 4},
+  pos = {x = 5, y = 4},
   config = {extra = {mult = 0, mult_mod = 1, size = 3}},
   loc_txt = {      
     name = 'Dratini',      
@@ -1209,7 +1212,7 @@ local dratini={
 }
 local dragonair={
   name = "dragonair", 
-  pos = {x = 3, y = 4}, 
+  pos = {x = 0, y = 5}, 
   config = {extra = {mult = 10, mult_mod = 2, size = 3}},
   loc_txt = {      
     name = 'Dragonair',      
@@ -1249,7 +1252,7 @@ local dragonair={
 }
 local dragonite={
   name = "dragonite", 
-  pos = {x = 4, y = 4},
+  pos = {x = 1, y = 5},
   config = {extra = {mult = 40, retriggers = 5}},
   loc_txt = {      
     name = 'Dragonite',      
@@ -1291,7 +1294,8 @@ local dragonite={
 }
 local mewtwo={
   name = "mewtwo", 
-  pos = {x = 5, y = 4}, 
+  pos = {x = 2, y = 5}, 
+  soul_pos = { x = 3, y = 5},
   loc_txt = {      
     name = 'Mewtwo',      
     text = {
