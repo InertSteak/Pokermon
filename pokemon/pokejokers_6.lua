@@ -2,6 +2,7 @@
 local mew ={
   name = "mew", 
   pos = {x = 0, y = 0},
+  soul_pos = { x = 1, y = 0},
   config = {extra = {odds = 6}},
   loc_txt = {      
     name = 'Mew',      
