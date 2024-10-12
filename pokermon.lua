@@ -126,6 +126,24 @@ for _, file in ipairs(pfiles) do
   end
 end
 
+--Load consumable types
+local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
+
+for _, file in ipairs(pconsumable_types) do
+  sendDebugMessage ("The file is: "..file)
+  local con_type, load_error = SMODS.load_file("consumable types/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_type = con_type()
+    if curr_type.init then curr_type:init() end
+    
+    for i, item in ipairs(curr_type.list) do
+      SMODS.ConsumableType(item)
+    end
+  end
+end
+
 --Load consumables
 local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
 
@@ -139,6 +157,10 @@ for _, file in ipairs(pconsumables) do
     if curr_consumable.init then curr_consumable:init() end
     
     for i, item in ipairs(curr_consumable.list) do
+      if item.set == "Energy" and not item.name == "emergy" then
+        item.can_use = energy_can_use
+        item.use = energy_use
+      end
       SMODS.Consumable(item)
     end
   end
@@ -210,6 +232,16 @@ function SMODS.current_mod.process_loc_text()
         "that has {C:attention}Evolved{} twice"
       }
     }
+    local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+    for k, v in ipairs(ptype_list) do
+      local tooltip = {
+        name = "Type",
+        text = {
+          "{C:attention}"..v.."{}",
+        }
+      }
+      G.localization.descriptions.Other[v] = tooltip
+    end
 end
 
 --Override set cost function

@@ -13,13 +13,15 @@ local mew ={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 4, 
   cost = 6, 
-  stage = "Legendary", 
+  stage = "Legendary",
+  ptype = "Psychic",
   atlas = "Pokedex6",
   blueprint_compat = true,
   calculate = function(self, card, context)

@@ -215,7 +215,7 @@ local masterball = {
     }
   },
   pos = { x = 3, y = 2 },
-  soul_pos = { x=4, y = 2},
+  soul_pos = { x = 4, y = 2},
   atlas = "Mart1",
   cost = 4,
   hidden = true,
@@ -269,6 +269,410 @@ local masterball = {
   end
 }
 
+local grass_energy = {
+  name = "grass_energy",
+  key = "grass_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Grass Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Grass{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 0, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local fire_energy = {
+  name = "fire_energy",
+  key = "fire_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Fire Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Fire{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 1, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local water_energy = {
+  name = "water_energy",
+  key = "water_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Water Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Water{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 2, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local lightning_energy = {
+  name = "lightning_energy",
+  key = "lightning_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Lightning Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Lightning{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 3, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local psychic_energy = {
+  name = "psychic_energy",
+  key = "psychic_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Psychic Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Psychic{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 4, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local fighting_energy = {
+  name = "fighting_energy",
+  key = "fighting_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Fighting Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Fighting{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 5, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local colorless_energy = {
+  name = "colorless_energy",
+  key = "colorless_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Colorless Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "Pokemon for {C:attention}2{} turns",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 6, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local darkness_energy = {
+  name = "darkness_energy",
+  key = "darkness_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Darkness Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Dark{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 7, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local metal_energy = {
+  name = "metal_energy",
+  key = "metal_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Metal Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Metal{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 8, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local fairy_energy = {
+  name = "fairy_energy",
+  key = "fairy_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Fairy Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Fairy{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 9, y = 0 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local dragon_energy = {
+  name = "dragon_energy",
+  key = "dragon_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Dragon Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Dragon{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 0, y = 1 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local earth_energy = {
+  name = "earth_energy",
+  key = "earth_energy",
+  set = "Energy",
+  loc_txt = {
+    name = "Earth Energy",
+    text = {
+      "{C:attention}Double{} the effects",
+      "of {C:attention}1{} selected",
+      "{C:attention}Earth{} Pokemon",
+      "for {C:attention}5{} turns"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 1, y = 1 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local transformation = {
+  name = "transformation",
+  key = "transformation",
+  set = "Spectral",
+  loc_txt = {
+    name = "Transformation",
+    text = {
+      "Evolves {C:attention}1{}",
+      "selected Pokemon to",
+      "the highest {C:attention}stage{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 2, y = 1 },
+  atlas = "Mart1",
+  cost = 3,
+  hidden = true,
+  soul_set = "Energy",
+  soul_rate = .01,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local emergy = {
+  name = "emergy",
+  key = "emergy",
+  set = "Energy",
+  loc_txt = {
+    name = "Emergy",
+    text = {
+      "Converts all held",
+      "{C:attention}Jolly Jokers{} into",
+      "random {C:green}Energy{} cards",
+      "with {C:dark_edition}Negative{}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+  end,
+  pos = { x = 3, y = 1 },
+  atlas = "Mart1",
+  cost = 3,
+  hidden = true,
+  soul_set = "Energy",
+  soul_rate = .01,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
+        fairy_energy, dragon_energy, earth_energy, transformation}
+
+if (SMODS.Mods["Cryptid"]).can_load then
+  table.insert(list, emergy)
+end
+
 return {name = "Mart 1",
-        list = {pokeball, greatball, ultraball, masterball, }
+        list = list
 }

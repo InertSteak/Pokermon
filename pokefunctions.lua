@@ -17,53 +17,55 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  local previous_edition = nil
-  local previous_perishable = nil
-  local previous_eternal = nil
-  local previous_rental = nil
-  
-  if card.edition then
-    previous_edition = card.edition
-  end
-  
-  if card.ability.perishable then
-    previous_perishable = card.ability.perishable
-  end
+  if not context.retrigger_joker then
+    local previous_edition = nil
+    local previous_perishable = nil
+    local previous_eternal = nil
+    local previous_rental = nil
     
-  if card.ability.eternal then
-    previous_eternal = card.ability.eternal
-  end
+    if card.edition then
+      previous_edition = card.edition
+    end
+    
+    if card.ability.perishable then
+      previous_perishable = card.ability.perishable
+    end
+      
+    if card.ability.eternal then
+      previous_eternal = card.ability.eternal
+    end
 
-  if card.ability.rental then
-    previous_rental = card.ability.rental
-  end
-  
-  G.E_MANAGER:add_event(Event({
-      remove(self, card, context)
-    }))
+    if card.ability.rental then
+      previous_rental = card.ability.rental
+    end
+    
+    G.E_MANAGER:add_event(Event({
+        remove(self, card, context)
+      }))
 
-  local new_card = create_card('Joker', G.jokers, nil, nil, nil, nil, forced_key)
-  
-  if previous_edition then
-    new_card.edition = previous_edition
-  end
-  
-  if previous_perishable then
-     new_card.ability.perishable = previous_perishable
-     new_card.ability.perish_tally = G.GAME.perishable_rounds
-  end
+    local new_card = create_card('Joker', G.jokers, nil, nil, nil, nil, forced_key)
+    
+    if previous_edition then
+      new_card.edition = previous_edition
+    end
+    
+    if previous_perishable then
+       new_card.ability.perishable = previous_perishable
+       new_card.ability.perish_tally = G.GAME.perishable_rounds
+    end
 
-  if previous_eternal then
-    new_card.ability.eternal = previous_eternal
-  end
+    if previous_eternal then
+      new_card.ability.eternal = previous_eternal
+    end
 
-  if previous_rental then
-    new_card.ability.rental = previous_rental
+    if previous_rental then
+      new_card.ability.rental = previous_rental
+    end
+    
+    new_card:add_to_deck()
+    G.jokers:emplace(new_card)
+    return "Evolved!"
   end
-  
-  new_card:add_to_deck()
-  G.jokers:emplace(new_card)
-  return "Evolved!"
 end
 
 level_evo = function(self, card, context, forced_key)
@@ -199,5 +201,63 @@ pokemon_in_pool = function (self)
       return false
     end
     return true
+  end
+end
+
+energy_drain = function(self, card, context)
+  if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.energized == true and not context.blueprint then
+    if card.ability.extra.energy_turns > 0 then
+      card.ability.extra.energy_turns = card.ability.extra.energy_turns - 1
+    end
+    if card.ability.extra.energy_turns == 0 then
+      card.energized = false
+      if card.abilty.extra.mult then
+      card.abilty.extra.mult = card.abilty.extra.mult / 2
+      end
+      if card.abilty.extra.chips then
+        card.abilty.extra.chips = card.abilty.extra.chips / 2
+      end
+      if card.abilty.extra.Xmult then
+        card.abilty.extra.Xmult = card.abilty.extra.Xmult / 2
+      end
+      if card.abilty.extra.retriggers then
+        card.abilty.extra.retriggers = card.abilty.extra.mult / 2
+      end
+      if card.abilty.extra.money then
+        card.abilty.extra.money = card.abilty.extra.money / 2
+      end
+    end
+  end
+end
+
+energy_use = function(self, card, area, copier, etype)
+  if card.energized then
+    card.ability.extra.energy_turns = 5
+  else
+    card.ability.extra.energized = true
+    card.ability.energy_turns = 5
+    if card.abilty.extra.mult then
+      card.abilty.extra.mult = card.abilty.extra.mult * 2
+    end
+    if card.abilty.extra.chips then
+      card.abilty.extra.chips = card.abilty.extra.chips * 2
+    end
+    if card.abilty.extra.Xmult then
+      card.abilty.extra.Xmult = card.abilty.extra.Xmult * 2
+    end
+    if card.abilty.extra.retriggers then
+      card.abilty.extra.retriggers = card.abilty.extra.mult * 2
+    end
+    if card.abilty.extra.money then
+      card.abilty.extra.money = card.abilty.extra.money * 2
+    end
+  end
+end
+
+energy_can_use = function(self, card)
+  if card.highlighted and card.set == "Joker" and card.ptype and card.ptype.." Energy" == self.loc_txt.Name then
+    return true
+  else
+    return false
   end
 end

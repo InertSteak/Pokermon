@@ -13,6 +13,7 @@ local poliwhirl={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_waterstone'}
     return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
                     center.ability.extra.mults[center.ability.extra.indice]}}
@@ -20,6 +21,7 @@ local poliwhirl={
   rarity = 2, 
   cost = 6, 
   stage = "One", 
+  ptype = "Water",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -57,12 +59,14 @@ local poliwrath={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.Xmults[1], center.ability.extra.Xmults[2], center.ability.extra.Xmults[3], center.ability.extra.Xmults[4], center.ability.extra.Xmults[5], 
                     center.ability.extra.Xmults[center.ability.extra.indice]}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
-  stage = "Two", 
+  stage = "Two",
+  ptype = "Water",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -101,12 +105,14 @@ local abra={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -138,6 +144,7 @@ local kadabra={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -145,6 +152,7 @@ local kadabra={
   rarity = 3, 
   cost = 8, 
   stage = "One", 
+  ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -176,12 +184,14 @@ local alakazam={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -220,11 +230,13 @@ local machop={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
-  stage = "Basic", 
+  stage = "Basic",
+  ptype = "Fighting",
   atlas = "Pokedex3",
   blueprint_compat = false,
   calculate = function(self, card, context)
@@ -257,12 +269,14 @@ local machoke={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = 3, 
   cost = 8, 
   stage = "One", 
+  ptype = "Fighting",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -303,11 +317,13 @@ local machamp={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Fighting",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -347,11 +363,13 @@ local bellsprout={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
   stage = "Basic", 
+  ptype = "Grass",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -384,12 +402,14 @@ local weepinbell={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leafstone'}
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "One", 
+  ptype = "Grass",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -422,11 +442,13 @@ local victreebel={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
   stage = "Two", 
+  ptype = "Grass",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -471,11 +493,13 @@ local tentacool={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Water",
   atlas = "Pokedex3", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -502,11 +526,13 @@ local tentacruel={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}}
   end,
   rarity = 3, 
   cost = 8, 
   stage = "One", 
+  ptype = "Water",
   atlas = "Pokedex3", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -539,11 +565,13 @@ local geodude={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 6, 
-  stage = "Basic", 
+  stage = "Basic",
+  ptype = "Earth",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -578,12 +606,14 @@ local graveler={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "One", 
+  ptype = "Earth",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -621,11 +651,13 @@ local golem={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Earth",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -660,11 +692,13 @@ local ponyta={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Fire",
   atlas = "Pokedex3", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -691,23 +725,25 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 5, y = 2},
-  config = {extra = {chips = 0, chip_mod = 20}},
+  config = {extra = {chips = 105, chip_mod = 25}},
   loc_txt = {      
     name = 'Rapidash',      
     text = {
       "Gains {C:chips}#2#{} chips if played", 
       "hand contains a {C:attention}Straight{}",
-      "{C:attention}Shortcut{}",
+      "Applies {C:attention}Shortcut{}",
       "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
   cost = 7, 
   stage = "One", 
+  ptype = "Fire",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -743,11 +779,13 @@ local slowpoke={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Psychic",
   atlas = "Pokedex3", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -777,11 +815,13 @@ local slowbro={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "One", 
+  ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -818,13 +858,15 @@ local magnemite={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Metal'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 7,
   enhancement_gate = 'm_steel',
-  stage = "Basic", 
+  stage = "Basic",
+  ptype = "Metal",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -851,12 +893,14 @@ local magneton={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Metal'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "Two", 
+  ptype = "Metal",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -885,12 +929,14 @@ local farfetchd={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leek'}
     return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Colorless",
   atlas = "Pokedex3",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
@@ -929,11 +975,13 @@ local doduo={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Colorless",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -970,11 +1018,13 @@ local dodrio={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "One", 
+  ptype = "Colorless",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1011,11 +1061,13 @@ local seel={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 7, 
   stage = "Basic", 
+  ptype = "Water",
   atlas = "Pokedex3",
   blueprint_compat = false,
   calculate = function(self, card, context)
@@ -1048,9 +1100,13 @@ local dewgong={
       "random {C:attention}seal{} to that card",
     } 
   }, 
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+  end,
   rarity = 3, 
   cost = 9, 
   stage = "One", 
+  ptype = "Water",
   atlas = "Pokedex3",
   blueprint_compat = false,
   calculate = function(self, card, context)
@@ -1082,11 +1138,13 @@ local grimer={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, G.GAME.starting_deck_size}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Dark",
   atlas = "Pokedex3", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1117,11 +1175,13 @@ local muk={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12}}
   end,
   rarity = 3, 
   cost = 8, 
   stage = "One", 
+  ptype = "Dark",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1158,12 +1218,14 @@ local shellder={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_waterstone'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
   cost = 6, 
-  stage = "Basic", 
+  stage = "Basic",
+  ptype = "Water",
   atlas = "Pokedex3",
   blueprint_compat = true,
   calculate = function(self, card, context)

@@ -13,11 +13,13 @@ local nidoqueen={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Dark",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -64,6 +66,7 @@ local nidoranm={
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Dark",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -93,12 +96,14 @@ local nidorino={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
   cost = 7, 
   stage = "One", 
+  ptype = "Dark",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -128,11 +133,13 @@ local nidoking={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.mult, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Dark",
   atlas = "Pokedex2", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -167,12 +174,14 @@ local clefairy={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Fairy",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -203,11 +212,13 @@ local clefable={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "One", 
+  ptype = "Fairy",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -255,8 +266,10 @@ local vulpix={
   cost = 6, 
   stage = "Basic", 
   atlas = "Pokedex2",
+  ptype = "Fire",
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
     info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_firestone'}
@@ -290,6 +303,7 @@ local ninetales={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
     info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -298,6 +312,7 @@ local ninetales={
   cost = 6, 
   stage = "One", 
   atlas = "Pokedex2", 
+  ptype = "Fire",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play then
@@ -326,12 +341,14 @@ local jigglypuff={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Fairy",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -361,11 +378,13 @@ local wigglytuff={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
   stage = "One", 
+  ptype = "Fairy",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -395,11 +414,13 @@ local zubat={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult*center.ability.extra.zubat_tally}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Dark",
   atlas = "Pokedex2",
   blueprint_compat = true,
   update = function(self, card, dt)
@@ -439,11 +460,13 @@ local golbat={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
+  ptype = "Dark",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -526,11 +549,13 @@ local oddish={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
   stage = "Basic", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -563,12 +588,14 @@ local gloom={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leafstone'}
 		return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
   cost = 8, 
   stage = "One", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -605,6 +632,7 @@ local vileplume={
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -638,11 +666,13 @@ local paras={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Grass",
   atlas = "Pokedex2", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -680,11 +710,13 @@ local parasect={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "One", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -729,11 +761,13 @@ local venonat={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
     return {vars = {center.ability.extra.plus_odds, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = false,
   calculate = function(self, card, context)
@@ -759,11 +793,13 @@ local venomoth={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
     return {vars = {center.ability.extra.plus_odds}}
   end,
   rarity = 3, 
   cost = 7, 
   stage = "One", 
+  ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
@@ -787,11 +823,13 @@ local diglett={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Earth",
   atlas = "Pokedex2",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
@@ -821,12 +859,14 @@ local dugtrio={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "One", 
   atlas = "Pokedex2",
+  ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -862,11 +902,13 @@ local meowth={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
 		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
-  stage = "Basic", 
+  stage = "Basic",
+  ptype = "Colorless",
   atlas = "Pokedex2",
   blueprint_compat = false,
   calculate = function(self, card, context)
@@ -888,9 +930,13 @@ local persian={
       "{C:inactive}(Max of {C:money}$15{})",
     } 
   }, 
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+  end,
   rarity = 3, 
   cost = 9, 
   stage = "One", 
+  ptype = "Colorless",
   atlas = "Pokedex2",
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
@@ -914,11 +960,13 @@ local psyduck={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
   stage = "Basic", 
+  ptype = "Water",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -948,11 +996,13 @@ local golduck={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.money}}
   end,
   rarity = 2, 
   cost = 7, 
   stage = "One", 
+  ptype = "Water",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -997,11 +1047,13 @@ local mankey={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 8, 
   stage = "Basic", 
+  ptype = "Fighting",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1033,11 +1085,13 @@ local primeape={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 3, 
   cost = 10, 
   stage = "One", 
+  ptype = "Fighting",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1068,11 +1122,13 @@ local growlithe={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
+  ptype = "Fire",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1102,12 +1158,14 @@ local arcanine={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_lovers'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
+  ptype = "Fire",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -1145,12 +1203,14 @@ local poliwag={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
                     center.ability.extra.mults[center.ability.extra.indice], center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
   stage = "Basic", 
+  ptype = "Water",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
