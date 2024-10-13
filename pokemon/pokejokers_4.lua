@@ -830,9 +830,8 @@ local weezing={
       "and disable it",
     } 
   }, 
-    loc_vars = function(self, info_queue, center)
+  loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
-		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 3, 
   cost = 7, 
