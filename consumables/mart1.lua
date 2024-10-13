@@ -16,6 +16,7 @@ local pokeball = {
   pos = { x = 0, y = 2 },
   atlas = "Mart1",
   cost = 3,
+  pokeball = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -82,6 +83,7 @@ local greatball = {
   pos = { x = 1, y = 2 },
   atlas = "Mart1",
   cost = 4,
+  pokeball = true,
   hidden = true,
   soul_set = "Tarot",
   soul_rate = .025,
@@ -151,6 +153,7 @@ local ultraball = {
   pos = { x = 2, y = 2 },
   atlas = "Mart1",
   cost = 4,
+  pokeball = true,
   hidden = true,
   soul_set = "Tarot",
   soul_rate = .01,
@@ -218,6 +221,7 @@ local masterball = {
   soul_pos = { x = 4, y = 2},
   atlas = "Mart1",
   cost = 4,
+  pokeball = true,
   hidden = true,
   soul_set = "Tarot",
   soul_rate = .003,
@@ -483,7 +487,7 @@ local darkness_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Dark{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -512,7 +516,7 @@ local metal_energy = {
       "{C:attention}Doubles{} most number values",
       "of leftmost {C:attention}Metal{} type Joker",
       "for {C:attention}5{} rounds",
-      "(C:inactive)(Can't apply more than once)"
+      "{C:inactive}(Can't apply more than once)"
     }
   },
   loc_vars = function(self, info_queue, center)

@@ -174,25 +174,29 @@ if not pokermon_config.jokers_only then
       end
     end
   end
+end
 
-  --Load consumables
-  local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
+--Load consumables
+local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
 
-  for _, file in ipairs(pconsumables) do
-    sendDebugMessage ("The file is: "..file)
-    local consumable, load_error = SMODS.load_file("consumables/"..file)
-    if load_error then
-      sendDebugMessage ("The error is: "..load_error)
-    else
-      local curr_consumable = consumable()
-      if curr_consumable.init then curr_consumable:init() end
-      
-      for i, item in ipairs(curr_consumable.list) do
+for _, file in ipairs(pconsumables) do
+  sendDebugMessage ("The file is: "..file)
+  local consumable, load_error = SMODS.load_file("consumables/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_consumable = consumable()
+    if curr_consumable.init then curr_consumable:init() end
+    
+    for i, item in ipairs(curr_consumable.list) do
+      if (not pokermon_config.jokers_only and not item.pokeball) or (item.pokeball and pokermon_config.pokeballs) then
         SMODS.Consumable(item)
       end
     end
-  end 
+  end
+end 
 
+if not pokermon_config.jokers_only then
   --Load boosters
   local pboosters = NFS.getDirectoryItems(mod_dir.."boosters")
 
@@ -210,7 +214,9 @@ if not pokermon_config.jokers_only then
       end
     end
   end
+end
 
+if not pokermon_config.jokers_only then
   --Load challenges file
   local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
 
@@ -401,6 +407,14 @@ SMODS.current_mod.config_tab = function()
           label = "No Evolutions?(requires restart)",
           ref_table = pokermon_config,
           ref_value = "no_evos",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
+          label = "Pokeballs?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "pokeballs",
           callback = function(_set_toggle)
             NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
           end,

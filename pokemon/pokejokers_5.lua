@@ -831,14 +831,14 @@ local kabuto={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-   info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
+   info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic", 
-  ptype = "Fighting",
+  ptype = "Earth",
   atlas = "Pokedex5",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -891,14 +891,14 @@ local kabutops={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-   info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
+   info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "One",
-  ptype = "Fighting",
+  ptype = "Earth",
   atlas = "Pokedex5", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -950,7 +950,7 @@ local aerodactyl={
     } 
   },
   loc_vars = function(self, info_queue, center)
-     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+     info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult1, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
