@@ -7,9 +7,11 @@ priority = 0
 [[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
-pattern = "if AUT.card_type == 'Joker' or (AUT.badges and AUT.badges.force_rarity) then card_type = ({localize('k_common'), localize('k_uncommon'), localize('k_rare'), localize('k_legendary')})[card.config.center.rarity] end"
-position = "at"
-payload = "if AUT.card_type == 'Joker' or (AUT.badges and AUT.badges.force_rarity) then card_type = ({localize('k_common'), localize('k_uncommon'), localize('k_rare'), localize('k_legendary'), ['poke_safari'] = 'Safari'})[card.config.center.rarity] end"
+pattern = "if AUT.card_type == 'Enhanced' then card_type = localize{type = 'name_text', key = card.config.center.key, set = 'Enhanced'} end"
+position = "before"
+payload = """
+if AUT.card_type == 'Joker' and card.config.center.rarity == 'poke_safari' then card_type = ({['poke_safari'] = 'Safari'})[card.config.center.rarity] end
+"""
 match_indent = true
 
 # Localization color
