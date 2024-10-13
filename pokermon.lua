@@ -1,7 +1,7 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Pokermon
 --- MOD_ID: Pokermon
---- MOD_AUTHOR: [InertSteak, Larantula, Joey J. Jester, Gay Coonie, Marie|Tsunami, Yamper, Jevonnissocoolman]
+--- MOD_AUTHOR: [InertSteak, Larantula, Joey J. Jester, Gay Coonie, Marie|Tsunami, Yamper, Jevonnissocoolman, TheKuro]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
 --- VERSION: 1.0.0
