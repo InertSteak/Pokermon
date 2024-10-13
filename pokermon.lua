@@ -129,17 +129,6 @@ for _, file in ipairs(pfiles) do
         if not pokermon_config.no_evos and item.name ~= "taurosh" then
           item.in_pool = pokemon_in_pool
         end
-        if not pokermon_config.jokers_only then
-          if item.calculate then
-            local calc = item.calculate
-            item.calculate = function(self, card, context)
-              pokemon_check_up(self, card, context)
-              return calc(self, card, context)
-            end
-          else
-            item.calculate = pokemon_check_up
-          end
-        end
         if item.ptype then
           if item.config and item.config.extra then
             item.config.extra.ptype = item.ptype

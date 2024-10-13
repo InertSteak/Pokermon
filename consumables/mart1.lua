@@ -280,10 +280,9 @@ local grass_energy = {
   loc_txt = {
     name = "Grass Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Grass{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -309,10 +308,9 @@ local fire_energy = {
   loc_txt = {
     name = "Fire Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Fire{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -338,10 +336,9 @@ local water_energy = {
   loc_txt = {
     name = "Water Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Water{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -367,10 +364,9 @@ local lightning_energy = {
   loc_txt = {
     name = "Lightning Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Lightning{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -396,10 +392,9 @@ local psychic_energy = {
   loc_txt = {
     name = "Psychic Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
-      "of leftmost {C:attention}Pyschic{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "{C:attention}Increases{} most number values",
+      "of leftmost {C:attention}Psychic{} type Joker",
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -425,10 +420,9 @@ local fighting_energy = {
   loc_txt = {
     name = "Fighting Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Fighting{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -454,11 +448,10 @@ local colorless_energy = {
   loc_txt = {
     name = "Colorless Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
-      "of leftmost Pokemon ",
-      "Joker for {C:attention}2{} rounds",
-      "{C:attention}5{} rounds if {C:attention}Colorless{}",
-      "{C:inactive}(Can't apply more than once)"
+      "{C:attention}Increases{} most number values",
+      "of leftmost Joker permanently if able",
+      "Half as effective with ",
+      "non-{C:attention}Colorless{} Jokers"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -484,10 +477,9 @@ local darkness_energy = {
   loc_txt = {
     name = "Darkness Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Dark{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -513,10 +505,9 @@ local metal_energy = {
   loc_txt = {
     name = "Metal Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Metal{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -542,10 +533,9 @@ local fairy_energy = {
   loc_txt = {
     name = "Fairy Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Fairy{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -571,10 +561,9 @@ local dragon_energy = {
   loc_txt = {
     name = "Dragon Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
-      "of leftmost {C:attention}Dreagon{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "{C:attention}Increases{} most number values",
+      "of leftmost {C:attention}Dragon{} type Joker",
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -600,10 +589,9 @@ local earth_energy = {
   loc_txt = {
     name = "Earth Energy",
     text = {
-      "{C:attention}Doubles{} most number values",
+      "{C:attention}Increases{} most number values",
       "of leftmost {C:attention}Earth{} type Joker",
-      "for {C:attention}5{} rounds",
-      "{C:inactive}(Can't apply more than once)"
+      "permanently if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -611,7 +599,7 @@ local earth_energy = {
   pos = { x = 1, y = 1 },
   atlas = "Mart1",
   cost = 3,
-  etype = "Ground",
+  etype = "Earth",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)

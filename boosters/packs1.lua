@@ -14,7 +14,7 @@ local pack1 = {
 	config = { extra = 2, choose = 1 },
 	cost = 4,
 	order = 1,
-	weight = 10,
+	weight = 6,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
@@ -42,7 +42,7 @@ local pack2 = {
 	config = { extra = 2, choose = 1 },
 	cost = 4,
 	order = 2,
-	weight = 10,
+	weight = 6,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
@@ -70,7 +70,7 @@ local pack3 = {
 	config = { extra = 4, choose = 1 },
 	cost = 6,
 	order = 3,
-	weight = 5,
+	weight = 3,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
@@ -98,7 +98,7 @@ local pack4 = {
 	config = { extra = 4, choose = 2 },
 	cost = 8,
 	order = 4,
-	weight = 2.5,
+	weight = 1.5,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)

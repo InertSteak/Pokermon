@@ -1,23 +1,26 @@
-energy_whitelist = {"mult", "mult2", "chips2", "Xmult", "money", "money2", "retriggers", "mult_mod", "chip_mod", "Xmult_mod", "money_mod", "limit", "triggers"}
+energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "money1", "money2", "mult_mod", "chip_mod", "Xmult_mod", "money_mod"}
+energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, money = 2, money1 = 2, money2 = 2, mult_mod = 2, chip_mod = 20, Xmult_mod = 0.2, money_mod = 2}
 
-energize = function(card)
+energize = function(card, etype, evolving)
   for l, data in pairs(card.ability.extra) do
     if type(data) == "number" then
       for m, name in ipairs(energy_whitelist) do
         if l == name then
-          card.ability.extra[l] = data * 2
-        end
-      end
-    end
-  end
-end
-
-unenergize = function(card)
-  for l, data in pairs(card.ability.extra) do
-    if type(data) == "number" then
-      for m, name in ipairs(energy_whitelist) do
-        if l == name then
-          card.ability.extra[l] = data / 2
+          local addition = energy_values[name]
+          if evolving then
+            if card.ability.extra.ptype ~= "Colorless" then
+              addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
+            else
+              addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
+            end
+            card.ability.extra[l] = data + addition
+          else
+            if card.ability.extra.ptype ~= "Colorless" and etype == "Colorless" then
+              card.ability.extra[l] = data + addition/2
+            else
+              card.ability.extra[l] = data + addition
+            end
+          end
         end
       end
     end
@@ -48,8 +51,8 @@ evolve = function(self, card, context, forced_key)
     local previous_perishable = nil
     local previous_eternal = nil
     local previous_rental = nil
-    local previous_energized = nil
-    local previous_energy_turns = nil
+    local previous_energy_count = nil
+    local previous_c_energy_count = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -67,14 +70,14 @@ evolve = function(self, card, context, forced_key)
       previous_rental = card.ability.rental
     end
     
-    if card.ability.extra and card.ability.extra.energized then
-      previous_energized = card.ability.extra.energized
+    if card.ability.extra and card.ability.extra.energy_count then
+      previous_energy_count  = card.ability.extra.energy_count
     end
-    
-    if card.ability.extra and card.ability.extra.energy_turns then
-      previous_energy_turns = card.ability.extra.energy_turns
-    end
-    
+      
+    if card.ability.extra and card.ability.extra.c_energy_count then
+      previous_c_energy_count  = card.ability.extra.c_energy_count
+    end 
+       
     G.E_MANAGER:add_event(Event({
         remove(self, card, context)
       }))
@@ -98,16 +101,16 @@ evolve = function(self, card, context, forced_key)
       new_card.ability.rental = previous_rental
     end
     
-    if previous_energized then
-      new_card.ability.extra.energized = previous_energized
+    if new_card.ability and new_card.ability.extra and previous_energy_count then
+      new_card.ability.extra.energy_count = previous_energy_count
     end
     
-    if previous_energy_turns then
-      new_card.ability.extra.energy_turns = card.ability.extra.energy_turns
+    if new_card.ability and new_card.ability.extra and previous_c_energy_count then
+      new_card.ability.extra.c_energy_count = previous_c_energy_count
     end
     
-    if new_card.ability.extra.energized and new_card.ability.extra.energy_turns then
-      energize(new_card)
+    if new_card.ability and new_card.ability.extra and (new_card.ability.extra.energy_count or new_card.ability.extra.c_energy_count) then
+      energize(new_card, nil, true)
     end
     
     new_card:add_to_deck()
@@ -253,32 +256,25 @@ pokemon_in_pool = function (self)
   end
 end
 
-energy_drain = function(self, card, context)
-  if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.energized == true and not context.blueprint then
-    if card.ability.extra.energy_turns > 0 then
-      card.ability.extra.energy_turns = card.ability.extra.energy_turns - 1
-    end
-    if card.ability.extra.energy_turns == 0 then
-      unenergize(card)
-      card.ability.extra.energized = false
-    end
-  end
-end
-
 energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
-    sendDebugMessage("Starting energy_use function")
-    if applied ~= true and v.ability and v.ability.extra and not v.ability.extra.energized and v.ability.extra.ptype and self.etype then
-      sendDebugMessage("Apply doubling "..v.ability.extra.ptype.." "..v.ability.name.." "..self.etype)
-      if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
-        energize(v)
-        v.ability.extra.energized = true
-        if self.etype == "Colorless" then
-          v.ability.extra.energy_turns = 2
+    if applied ~= true and v.ability and v.ability.extra and v.ability.extra.ptype and self.etype then
+      if v.ability.extra.ptype == self.etype then
+        if v.ability.extra.energy_count then
+          v.ability.extra.energy_count = v.ability.extra.energy_count + 1
         else
-          v.ability.extra.energy_turns = 5
+          v.ability.extra.energy_count = 1
         end
+        energize(v, false)
+        applied = true
+      elseif self.etype == "Colorless" then
+        if v.ability.extra.c_energy_count then
+          v.ability.extra.c_energy_count = v.ability.extra.c_energy_count + 1
+        else
+          v.ability.extra.c_energy_count = 1
+        end
+        energize(v, self.etype, false)
         applied = true
       end
     end
@@ -287,7 +283,7 @@ end
 
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
-    if v.ability and v.ability.extra and not v.ability.extra.energize and v.ability.extra.ptype and self.etype then
+    if v.ability and v.ability.extra and v.ability.extra.ptype and self.etype then
       if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
@@ -302,8 +298,4 @@ energy_can_use = function(self, card)
     end
   end
   return false
-end
-
-pokemon_check_up = function(self, card, context)
-  energy_drain(self, card, context)
 end
