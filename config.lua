@@ -1,1 +1,1 @@
-return {["pokemon_only"]=false}
+return {["pokemon_only"]=false, ["jokers_only"]=false, ["no_evos"]=false}

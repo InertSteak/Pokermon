@@ -43,7 +43,7 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  if not context.retrigger_joker then
+  if not pokermon_config.no_evos and not context.retrigger_joker then
     local previous_edition = nil
     local previous_perishable = nil
     local previous_eternal = nil
@@ -117,7 +117,7 @@ evolve = function(self, card, context, forced_key)
 end
 
 level_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.rounds and not context.blueprint then
+    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.rounds and not context.blueprint and not pokermon_config.no_evos then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if card.ability.extra.rounds == 1 then
         local eval = function(card) return not card.REMOVED end
@@ -134,7 +134,8 @@ level_evo = function(self, card, context, forced_key)
 end
 
 item_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve == true and not context.blueprint then
+    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve == true and not context.blueprint and 
+       not pokermon_config.no_evos then
       if card.ability.name == "eevee" then
         if card.ability.extra.water then
           forced_key = "j_poke_vaporeon"
@@ -153,7 +154,7 @@ item_evo = function(self, card, context, forced_key)
 end
 
 scaling_evo = function (self, card, context, forced_key, current, target)
-  if not context.repetition and not context.individual and context.end_of_round and current >= target and not context.blueprint then
+  if not context.repetition and not context.individual and context.end_of_round and current >= target and not context.blueprint and not pokermon_config.no_evos then
     return {
       message = evolve (self, card, context, forced_key)
     }

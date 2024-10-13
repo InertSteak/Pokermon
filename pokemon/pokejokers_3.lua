@@ -937,6 +937,7 @@ local farfetchd={
   cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
+  joblacklist = true,
   atlas = "Pokedex3",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)

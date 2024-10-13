@@ -1,7 +1,7 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Pokermon
 --- MOD_ID: Pokermon
---- MOD_AUTHOR: [InertSteak, Larantula, Joey J. Jester, GayCoonie, Marie|Tsunami, Yamper, Jevonnissocoolman, TheKuro]
+--- MOD_AUTHOR: [See Credits Tab]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
 --- VERSION: 1.0.0
@@ -121,104 +121,113 @@ for _, file in ipairs(pfiles) do
     if curr_pokemon.init then curr_pokemon:init() end
     
     for i, item in ipairs(curr_pokemon.list) do
-      item.discovered = true
-      if not item.key then
-        item.key = item.name
-      end
-      if item.name ~= "taurosh" then
-        item.in_pool = pokemon_in_pool
-      end
-      if item.calculate then
-        local calc = item.calculate
-        item.calculate = function(self, card, context)
-          pokemon_check_up(self, card, context)
-          return calc(self, card, context)
+      if (pokermon_config.jokers_only and not item.joblacklist) or not pokermon_config.jokers_only  then
+        item.discovered = true
+        if not item.key then
+          item.key = item.name
         end
-      else
-        item.calculate = pokemon_check_up
-      end
-      if item.ptype then
-        if item.config and item.config.extra then
-          item.config.extra.ptype = item.ptype
-        elseif item.config then
-          item.config.extra = {ptype = item.ptype}
+        if not pokermon_config.no_evos and item.name ~= "taurosh" then
+          item.in_pool = pokemon_in_pool
         end
+        if not pokermon_config.jokers_only then
+          if item.calculate then
+            local calc = item.calculate
+            item.calculate = function(self, card, context)
+              pokemon_check_up(self, card, context)
+              return calc(self, card, context)
+            end
+          else
+            item.calculate = pokemon_check_up
+          end
+        end
+        if item.ptype then
+          if item.config and item.config.extra then
+            item.config.extra.ptype = item.ptype
+          elseif item.config then
+            item.config.extra = {ptype = item.ptype}
+          end
+        end
+        if pokermon_config.jokers_only and item.rarity == "poke_safari" then
+          item.rarity = 3
+        end
+        SMODS.Joker(item)
       end
-      SMODS.Joker(item)
     end
   end
 end
 
---Load consumable types
-local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
+if not pokermon_config.jokers_only then
+  --Load consumable types
+  local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
 
-for _, file in ipairs(pconsumable_types) do
-  sendDebugMessage ("The file is: "..file)
-  local con_type, load_error = SMODS.load_file("consumable types/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_type = con_type()
-    if curr_type.init then curr_type:init() end
-    
-    for i, item in ipairs(curr_type.list) do
-      SMODS.ConsumableType(item)
+  for _, file in ipairs(pconsumable_types) do
+    sendDebugMessage ("The file is: "..file)
+    local con_type, load_error = SMODS.load_file("consumable types/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_type = con_type()
+      if curr_type.init then curr_type:init() end
+      
+      for i, item in ipairs(curr_type.list) do
+        SMODS.ConsumableType(item)
+      end
     end
   end
+
+  --Load consumables
+  local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
+
+  for _, file in ipairs(pconsumables) do
+    sendDebugMessage ("The file is: "..file)
+    local consumable, load_error = SMODS.load_file("consumables/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_consumable = consumable()
+      if curr_consumable.init then curr_consumable:init() end
+      
+      for i, item in ipairs(curr_consumable.list) do
+        SMODS.Consumable(item)
+      end
+    end
+  end 
+
+  --Load boosters
+  local pboosters = NFS.getDirectoryItems(mod_dir.."boosters")
+
+  for _, file in ipairs(pboosters) do
+    sendDebugMessage ("The file is: "..file)
+    local booster, load_error = SMODS.load_file("boosters/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_booster = booster()
+      if curr_booster.init then curr_booster:init() end
+      
+      for i, item in ipairs(curr_booster.list) do
+        SMODS.Booster(item)
+      end
+    end
+  end
+
+  --Load challenges file
+  local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
+
+  for _, file in ipairs(pchallenges) do
+    local challenge, load_error = SMODS.load_file("challenges/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_challenge = challenge()
+      if curr_challenge.init then curr_challenge:init() end
+      
+      for i, item in ipairs(curr_challenge.list) do
+        SMODS.Challenge(item)
+      end
+    end
+  end 
 end
-
---Load consumables
-local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
-
-for _, file in ipairs(pconsumables) do
-  sendDebugMessage ("The file is: "..file)
-  local consumable, load_error = SMODS.load_file("consumables/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_consumable = consumable()
-    if curr_consumable.init then curr_consumable:init() end
-    
-    for i, item in ipairs(curr_consumable.list) do
-      SMODS.Consumable(item)
-    end
-  end
-end 
-
---Load boosters
-local pboosters = NFS.getDirectoryItems(mod_dir.."boosters")
-
-for _, file in ipairs(pboosters) do
-  sendDebugMessage ("The file is: "..file)
-  local booster, load_error = SMODS.load_file("boosters/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_booster = booster()
-    if curr_booster.init then curr_booster:init() end
-    
-    for i, item in ipairs(curr_booster.list) do
-      SMODS.Booster(item)
-    end
-  end
-end
-
---Load challenges file
-local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
-
-for _, file in ipairs(pchallenges) do
-  local challenge, load_error = SMODS.load_file("challenges/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_challenge = challenge()
-    if curr_challenge.init then curr_challenge:init() end
-    
-    for i, item in ipairs(curr_challenge.list) do
-      SMODS.Challenge(item)
-    end
-  end
-end 
 
 local il = init_localization
 function init_localization()
@@ -346,48 +355,200 @@ function get_straight(hand)
   end
 end
 
---Register custom rarity pools
-local is = SMODS.injectItems
-function SMODS.injectItems()
-    local m = is()
-    G.P_JOKER_RARITY_POOLS.poke_safari = {}
-    for k, v in pairs(G.P_CENTERS) do
-        v.key = k
-        if v.rarity and (v.rarity == 'poke_safari') and v.set == 'Joker' and not v.demo then 
-            table.insert(G.P_JOKER_RARITY_POOLS[v.rarity], v)
-        end
-    end
-    return m
+if not pokermon_config.jokers_only then
+  --Register custom rarity pools
+  local is = SMODS.injectItems
+  function SMODS.injectItems()
+      local m = is()
+      G.P_JOKER_RARITY_POOLS.poke_safari = {}
+      for k, v in pairs(G.P_CENTERS) do
+          v.key = k
+          if v.rarity and (v.rarity == 'poke_safari') and v.set == 'Joker' and not v.demo then 
+              table.insert(G.P_JOKER_RARITY_POOLS[v.rarity], v)
+          end
+      end
+      return m
+  end
 end
 
 --Config UI
-local ct = create_tabs
-function create_tabs(args)
-  if args and args.tab_h == 7.05 then
-    args.tabs[#args.tabs + 1] = {
-      label = "Pokermon",
-      tab_definition_function = function()
-        return {
-          n = G.UIT.ROOT,
-          config = {
-						align = "cm",
-						padding = 0.05,
-						colour = G.C.CLEAR,
-					},
-          nodes = {
-            create_toggle({
-							label = "Pokemon Only?",
-							ref_table = pokermon_config,
-							ref_value = "pokemon_only",
-              callback = function(_set_toggle)
-                NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-							end,
-						}),
-          },
-        }
-      end,
-      tab_definition_function_args = "Pokermon",
+SMODS.current_mod.config_tab = function()
+    return {
+      n = G.UIT.ROOT,
+      config = {
+        align = "cm",
+        padding = 0.05,
+        colour = G.C.CLEAR,
+      },
+      nodes = {
+        create_toggle({
+          label = "Pokemon Only?",
+          ref_table = pokermon_config,
+          ref_value = "pokemon_only",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
+          label = "Jokers Only?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "jokers_only",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
+          label = "No Evolutions?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "no_evos",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+      },
     }
-  end
-  return ct(args)
+end
+
+SMODS.current_mod.extra_tabs = function()
+  local scale = 0.75
+  return {
+    label = "Credits",
+    tab_definition_function = function()
+      return {
+        n = G.UIT.ROOT,
+        config = {
+          align = "cm",
+          padding = 0.05,
+          colour = G.C.CLEAR,
+        },
+        nodes = {
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Thanks to",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "InertSteak",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Larantula, Joey J. Jester",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "GayCoonie, Marie|Tsunami",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Yamper, Jevonnissocoolman",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "TheKuro",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0.2,
+              align = "cm",
+            },
+            nodes = {
+              UIBox_button({
+                minw = 3.85,
+                button = "pokermon_github",
+                label = {"Github"}
+              })
+            }
+          },
+        },
+      }
+    end
+  }
+end
+function G.FUNCS.pokermon_github(e)
+	love.system.openURL("https://github.com/InertSteak/Pokermon")
 end

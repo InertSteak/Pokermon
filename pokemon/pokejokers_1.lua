@@ -471,8 +471,10 @@ local caterpie={
     return level_evo(self, card, context, "j_poke_metapod")
   end,
   add_to_deck = function(self, card, from_debuff)
-    local eval = function(card) return not card.REMOVED end
-    juice_card_until(card, eval, true)
+    if not pokermon_config.no_evos then
+      local eval = function(card) return not card.REMOVED end
+      juice_card_until(card, eval, true)
+    end
   end
 }
 local metapod={
@@ -576,8 +578,10 @@ local weedle={
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
   add_to_deck = function(self, card, from_debuff)
-    local eval = function(card) return not card.REMOVED end
-    juice_card_until(card, eval, true)
+    if not pokermon_config.no_evos then
+      local eval = function(card) return not card.REMOVED end
+      juice_card_until(card, eval, true)
+    end
   end
 }
 local kakuna={
