@@ -103,7 +103,7 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["lightning"] = HEX("f8f800")
   G.ARGS.LOC_COLOURS["fire"] = HEX("f81020")
   G.ARGS.LOC_COLOURS["water"] = HEX("38b8f8")
-  G.ARGS.LOC_COLOURS["ground"] = HEX("e97333")
+  G.ARGS.LOC_COLOURS["earth"] = HEX("e97333")
   G.ARGS.LOC_COLOURS["fairy"] = HEX("ff3db6")
   G.ARGS.LOC_COLOURS["fighting"] = HEX("b85838")
   G.ARGS.LOC_COLOURS["colorless"] = HEX("c8c0f8")
@@ -299,7 +299,7 @@ function SMODS.current_mod.process_loc_text()
       local tooltip = {
         name = "Type",
         text = {
-          "{C:attention}"..v.."{}",
+          "{C:"..string.lower(v).."}"..v.."{}",
         }
       }
       G.localization.descriptions.Other[v] = tooltip
