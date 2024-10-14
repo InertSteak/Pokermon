@@ -305,10 +305,14 @@ function SMODS.current_mod.process_loc_text()
     
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
     for k, v in ipairs(ptype_list) do
+      local text_color = "white"
+      if v == "Lightning" then
+        text_color = "black"
+      end
       local tooltip = {
         name = "Type",
         text = {
-          "{X:"..string.lower(v)..",C:white}"..v.."{}",
+          "{X:"..string.lower(v)..",C:"..text_color.."}"..v.."{}",
         }
       }
       G.localization.descriptions.Other[v] = tooltip
