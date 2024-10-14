@@ -386,10 +386,12 @@ local gyarados={
     name = 'Gyarados',      
     text = {
       "{X:red,C:white} X#1# {} Mult",
+      "Applies {C:attention}Splash{}",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 

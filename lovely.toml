@@ -31,3 +31,12 @@ pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then ad
 position = "after"
 payload = "if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end"
 match_indent = true
+
+# Magikarp functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if next(find_joker('Splash')) then"
+position = "at"
+payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) or next(find_joker('gyarados')) then"
+match_indent = true
