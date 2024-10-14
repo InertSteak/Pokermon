@@ -238,7 +238,7 @@ local drowzee={
       "unique {C:planet}Planet{} card",
       "used this run",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+21{} {C:inactive} Mult)"
+      "{C:inactive}(Evolves at {C:mult}+21{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -552,8 +552,8 @@ local exeggutor={
       "{C:green}#4# in #5#{} chance for",
       "played cards with",
       "{C:hearts}#3#{} suit to give",
-      "{C:mult}+#1#{} mult and ",
-      "{X:mult,C:white} X#2# {} Mult when scored", 
+      "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult",
+      "when scored", 
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -589,8 +589,8 @@ local cubone={
   loc_txt = {      
     name = 'Cubone',      
     text = {
-      "When you get this, create a",
-      "{C:attention}Thick Club{} card.",
+      "When you get this, create",
+      "a {C:attention}Thick Club{} card.",
       "{C:mult}+#1#{} Mult for each ",
       "{C:attention}Thick Club{} you have",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
@@ -640,7 +640,8 @@ local marowak={
   loc_txt = {      
     name = 'Marowak',      
     text = {
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips for each ",
+      "{C:mult}+#1#{} Mult and",
+      "{C:chips}+#2#{} Chips for each ",
       "{C:attention}Thick Club{} you have"
     } 
   },
@@ -681,7 +682,7 @@ local hitmonlee={
     text = {
       "{X:red,C:white}X#1#{} Mult for each card",
       "below {C:attention}#2#{} in your full deck",
-      "{C:inactive}(Currently {X:red,C:white}X#3#{} Mult)",
+      "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -716,7 +717,7 @@ local hitmonchan={
     text = {
       "{X:red,C:white}X#1#{} Mult for each card",
       "above {C:attention}#2#{} in your full deck",
-      "{C:inactive}(Currently {X:red,C:white}X#3#{} Mult)",
+      "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -937,7 +938,7 @@ local chansey={
       "{C:attention}Lucky{} card triggers each round,",
       "add a permanent copy to your",
       "deck and draw it to {C:attention}Hand",
-      "{C:inactive}(Currently {C:attention}#2#{}/{C:attention}#1#{}{C:inactive})"
+      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -990,8 +991,8 @@ local tangela={
     name = 'Tangela',      
     text = {
       "Played {C:attention}Wild{} cards give",
-      "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, {C:attention}or{} {C:money}$#3#{}",
-      "{C:green}#4#{} in {C:green}#5#{} chance for {C:attention}all three{}"
+      "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
+      "{C:green}#4# in #5#{} chance for {C:attention}all three{}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1257,7 +1258,7 @@ local staryu={
     text = {
       "Played cards with",
       "{C:diamonds}#2#{} suit give",
-      "{C:mult}+#1#{} mult when scored",
+      "{C:mult}+#1#{} Mult when scored",
     } 
   }, 
   loc_vars = function(self, info_queue, center)

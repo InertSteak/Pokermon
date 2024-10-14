@@ -8,7 +8,7 @@ local starmie={
     text = {
       "Played cards with",
       "{C:diamonds}#3#{} suit give",
-      "{C:mult}+#1#{} mult and ",
+      "{C:mult}+#1#{} Mult and ",
       "{C:money}$#2#{} when scored",
     } 
   }, 
@@ -420,7 +420,7 @@ local lapras={
   loc_txt = {      
     name = 'Lapras',      
     text = {
-      "{C:chips}#2#{} Chips for each",
+      "{C:chips}+#2#{} Chips for each",
       "{C:attention}Blind{} skipped this run",
       "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
     } 
@@ -458,9 +458,10 @@ local ditto={
   loc_txt = {      
     name = 'Ditto',
     text = {
-      "Sell this to create a",
-      "{C:attention}Duplicate{} of the leftmost Joker",
-      "with {C:attention}Perishable{} {C:inactive}(removes Eternal){}",
+      "Sell this to duplicate",
+      "the leftmost Joker",
+      "with {C:attention}Perishable{}",
+      "{C:inactive}(removes Eternal){}",
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -542,8 +543,8 @@ local vaporeon={
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
-      "Earn {C:money}$#1#{}",
-      "and gains {C:chips}+#3#{} Chips",
+      "Earn {C:money}$#1#{} and",
+      "gains {C:chips}+#3#{} Chips",
       "per {C:green}reroll{}",
       "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
     } 
@@ -616,8 +617,8 @@ local flareon={
   loc_txt = {      
     name = 'Flareon',      
     text = {
-      "Earn {C:money}$#1#{}",
-      "and gains {X:red,C:white} X#3# {} Mult",
+      "Earn {C:money}$#1#{} and",
+      "gains {X:red,C:white} X#3# {} Mult",
       "per {C:green}reroll{}",
       "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
     } 
@@ -1057,8 +1058,8 @@ local articuno={
     name = 'Articuno',      
     text = {
       "If played hand has only",
-      "{C:attention}1{} card, add a",
-      "random {C:attention}enhancement{}, {C:attention}edition{},",
+      "{C:attention}1{} card, add a random",
+      "{C:attention}enhancement{}, {C:attention}edition{},",
       "and {C:attention}seal{} to that card"
     } 
   }, 
@@ -1304,7 +1305,7 @@ local mewtwo={
     name = 'Mewtwo',      
     text = {
       "At end of shop, create a",
-      "{C:dark_edition}Polychrome{} {C:attention}Duplicate{} of",
+      "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
       "leftmost {C:attention}Joker{}, then",
       "destroy leftmost {C:attention}Joker{}",
       "{C:inactive}(Except this Joker)",

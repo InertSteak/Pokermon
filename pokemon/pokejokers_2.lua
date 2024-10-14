@@ -170,7 +170,7 @@ local clefairy={
     text = {
       "Played cards with",
       "{C:clubs}#2#{} suit give",
-      "{C:mult}+#1#{} mult when scored",
+      "{C:mult}+#1#{} Mult when scored",
       "{C:inactive}(Evolves with a{} {C:attention}Moon Stone{}{C:inactive} card)"
     } 
   },
@@ -207,7 +207,7 @@ local clefable={
     text = {
       "Played cards with",
       "{C:clubs}#2#{} suit give",
-      "{C:mult}+#1#{} mult when scored",
+      "{C:mult}+#1#{} Mult when scored",
       "{X:mult,C:white} X#3# {} Mult if all cards ",
       "held in hand are {C:clubs}#4#{} ",
     } 
@@ -337,7 +337,7 @@ local jigglypuff={
     text = {
       "Played cards with",
       "{C:clubs}#2#{} suit give",
-      "{C:mult}+#1#{} mult when scored",
+      "{C:mult}+#1#{} Mult when scored",
       "{C:inactive}(Evolves with a{} {C:attention}Moonstone{}{C:inactive} card)"
     } 
   }, 
@@ -374,8 +374,8 @@ local wigglytuff={
     text = {
       "Played cards with",
       "{C:clubs}#3#{} suit give",
-      "{C:mult}+#1#{} mult and ",
-      "{C:chips}+#2#{} chips when scored",
+      "{C:mult}+#1#{} Mult and ",
+      "{C:chips}+#2#{} Chips when scored",
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -456,7 +456,7 @@ local golbat={
       "Gain {C:mult}+#2#{} for {C:attention}Mult{} and {C:attention}Wild{} cards",
       "{C:chips}+#4#{} for {C:attention}Bonus{} and {C:attention}Stone{} cards,",
       "{X:red,C:white}X#6#{} for {C:attention}Steel{} and {C:attention}Glass{} cards,",
-      "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards{C:inactive}(Earned end of round){}",
+      "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards",
       "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive})"
     } 
   },
@@ -661,8 +661,8 @@ local paras={
     name = 'Paras',      
     text = {
       "{C:mult}+#2#{} Mult per played hand",
-      "that contains a {C:attention}Two pair{}", 
-      "{C:inactive}(Currently {C:mult}+#1#{}{C:inactive})",
+      "that contains a {C:attention}Two Pair{}", 
+      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
       "{C:inactive}(Evolves at {C:mult}+8{}{C:inactive} Mult)"
     } 
   },
@@ -704,10 +704,10 @@ local parasect={
     name = 'Parasect',      
     text = {
       "{C:mult}+#2#{} Mult per played hand",
-      "that contains a {C:attention}Two pair{}",
+      "that contains a {C:attention}Two Pair{}",
       "{C:mult}-#2#{} Mult per played hand",
       "that does not",
-      "{C:inactive}(Currently {C:mult}+#1#{}{C:inactive})",
+      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -853,7 +853,7 @@ local dugtrio={
   loc_txt = {      
     name = 'Dugtrio',      
     text = {
-      "Gains {C:chips}+#2#{} chips if played",
+      "Gains {C:chips}+#2#{} Chips if played",
       "hand contains a {C:attention}Three of a Kind{},",
       "resets at end of round",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
@@ -928,11 +928,13 @@ local persian={
       "Earn {C:money}${} at end of",
       "round equal to {C:attention}double{} the", 
       "sell value of the leftmost {C:attention}Joker{}",
-      "{C:inactive}(Max of {C:money}$15{})",
+      "{C:inactive}(Except itself){}",
+      "{C:inactive}(Currently {C:money}$#1#{C:inactive}, Max of {C:money}$15{C:inactive})",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[1] and G.jokers.cards[1] ~= center and math.min(G.jokers.cards[1].sell_cost*2, 15)) or 0}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -942,7 +944,6 @@ local persian={
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-      
 			return math.min(G.jokers.cards[1].sell_cost*2, 15)
     end
 	end
@@ -954,9 +955,8 @@ local psyduck={
   loc_txt = {      
     name = 'Psyduck',      
     text = {
-      "If played hand is",
-      "a single {C:attention}face card{}",
-      "earn {C:money}$#1#{}",
+      "If played hand is a",
+      "single {C:attention}face card{}, earn {C:money}$#1#{}",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   }, 
@@ -992,7 +992,7 @@ local golduck={
     name = 'Golduck',      
     text = {
       "If played hand is a single",
-      "{C:attention}face card{} earn {C:money}$#1#{} and it",
+      "{C:attention}face card{}, earn {C:money}$#1#{} and it",
       "becomes {C:attention}Gold{} when scored"
     } 
   }, 
@@ -1043,7 +1043,8 @@ local mankey={
     text = {
       "Each played {C:attention}2{},",
       "{C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips when scored",
+      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
+      "when scored",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   }, 
@@ -1082,7 +1083,8 @@ local primeape={
     text = {
       "Each played {C:attention}2{},",
       "{C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips when scored"
+      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
+      "when scored"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1160,7 +1162,7 @@ local arcanine={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_lovers'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_lovers
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 

@@ -140,7 +140,7 @@ local charmander={
   loc_txt = {      
     name = 'Charmander',      
     text = {
-      "Gains {C:mult}+#2#{} mult per hand played",
+      "Gains {C:mult}+#2#{} Mult per hand played",
       "when {C:attention}#3#{} discards remaining",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
       "{C:inactive}(Evolves at {C:mult}+16{}{C:inactive} Mult)"
@@ -190,7 +190,7 @@ local charmeleon={
     name = 'Charmeleon',      
     text = {
       "{C:red}+#4#{} discard",
-      "Gains {C:mult}+#2#{} mult per hand played",
+      "Gains {C:mult}+#2#{} Mult per hand played",
       "when {C:attention}#3#{} discards remaining",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
       "{C:inactive}(Evolves at {C:mult}+36{}{C:inactive} Mult)"
@@ -243,7 +243,7 @@ local charizard={
   loc_txt = {      
     name = 'Charizard',      
     text = {
-      "{C:red}+#4#{} discard, {C:mult}+#1#{} mult",
+      "{C:red}+#4#{} discard, {C:mult}+#1#{} Mult",
       "{X:mult,C:white} X#2# {} Mult when {C:attention}#3#{} discards remaining",
     } 
   }, 
@@ -291,7 +291,7 @@ local squirtle={
   loc_txt = {      
     name = 'Squirtle',      
     text = {
-      "Gains {C:chips}+#2#{} chips for each hand",
+      "Gains {C:chips}+#2#{} Chips for each hand",
       "remaining at end of round",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
       "{C:inactive}(Evolves at {C:chips}+16{} {C:inactive}Chips)"
@@ -343,7 +343,7 @@ local wartortle={
     name = 'Wartortle',     
     text = {
       "{C:chips}+#3#{} hands",
-      "Gains {C:chips}+#2#{} chips for each hand",
+      "Gains {C:chips}+#2#{} Chips for each hand",
       "remaining at end of round",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
       "{C:inactive}(Evolves at {C:chips}+36{} {C:inactive}Chips)"
@@ -444,7 +444,7 @@ local caterpie={
   loc_txt = {      
     name = 'Caterpie',      
     text = {
-      "{C:mult}+#1#{} mult",
+      "{C:mult}+#1#{} Mult",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} round)"
     } 
   }, 
@@ -484,7 +484,7 @@ local metapod={
   loc_txt = {      
     name = 'Metapod',      
     text = {
-      "{C:mult}+#1#{} mult",
+      "{C:mult}+#1#{} Mult",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }  
   }, 
@@ -551,7 +551,7 @@ local weedle={
   loc_txt = {      
     name = 'Weedle',      
     text = {
-      "{C:chips}+#1#{} chips",
+      "{C:chips}+#1#{} Chips",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} round)"
     } 
   },
@@ -591,7 +591,7 @@ local kakuna={
   loc_txt = {      
     name = 'Kakuna',      
     text = {
-      "{C:chips}+#1#{} chips",
+      "{C:chips}+#1#{} Chips",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }  
   },
@@ -625,7 +625,7 @@ local beedrill={
   loc_txt = {      
     name = 'Beedrill',      
     text = {
-      "{C:chips}+#1#{} chips",
+      "{C:chips}+#1#{} Chips",
     } 
   }, 
   rarity = 2,
