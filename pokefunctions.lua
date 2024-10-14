@@ -259,7 +259,7 @@ end
 energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
-    if applied ~= true and v.ability and v.ability.extra and v.ability.extra.ptype and self.etype then
+    if applied ~= true and v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
       if v.ability.extra.ptype == self.etype then
         if v.ability.extra.energy_count then
           v.ability.extra.energy_count = v.ability.extra.energy_count + 1
