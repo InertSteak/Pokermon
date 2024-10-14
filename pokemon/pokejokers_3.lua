@@ -1084,7 +1084,7 @@ local seel={
       end
     end
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 end
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
     return level_evo(self, card, context, "j_poke_dewgong")
@@ -1121,7 +1121,7 @@ local dewgong={
       end
     end
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 end
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
   end
