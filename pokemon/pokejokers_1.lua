@@ -286,7 +286,7 @@ local charizard={
   }
 local squirtle={
   name = "squirtle", 
-  pos = {x = 0, y = 1}, 
+  pos = {x = 6, y = 0}, 
   config = {extra = {chips = 0, chip_mod = 2}},
   loc_txt = {      
     name = 'Squirtle',      
@@ -337,7 +337,7 @@ local squirtle={
 }
 local wartortle={
   name = "wartortle", 
-  pos = {x = 1, y = 1},
+  pos = {x = 7, y = 0},
   config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
   loc_txt = {      
     name = 'Wartortle',     
@@ -397,7 +397,7 @@ local wartortle={
 }
 local blastoise={
   name = "blastoise", 
-  pos = {x = 2, y = 1},
+  pos = {x = 8, y = 0},
   config = {extra = {chips = 36, chip_mod = 40, hands = 1}},
   loc_txt = {      
     name = 'Blastoise',      
@@ -439,7 +439,7 @@ local blastoise={
 }
 local caterpie={
   name = "caterpie", 
-  pos = {x = 3, y = 1},
+  pos = {x = 9, y = 0},
   config = {extra = {mult = 1, rounds = 1}},
   loc_txt = {      
     name = 'Caterpie',      
@@ -480,7 +480,7 @@ local caterpie={
 local metapod={
   name = "metapod",
   config = {extra = {mult = 5, rounds = 2}},
-  pos = {x = 4, y = 1}, 
+  pos = {x = 10, y = 0}, 
   loc_txt = {      
     name = 'Metapod',      
     text = {
@@ -513,7 +513,7 @@ local metapod={
 }
 local butterfree={
   name = "butterfree", 
-  pos = {x = 5, y = 1},
+  pos = {x = 11, y = 0},
   config = {extra = {mult = 15}},
   loc_txt = {      
     name = 'Butterfree',      
@@ -546,7 +546,7 @@ local butterfree={
 }
 local weedle={
   name = "weedle", 
-  pos = {x = 0, y = 2},
+  pos = {x = 12, y = 0},
   config = {extra = {chips = 20, rounds = 1}},
   loc_txt = {      
     name = 'Weedle',      
@@ -586,7 +586,7 @@ local weedle={
 }
 local kakuna={
   name = "kakuna", 
-  pos = {x = 1, y = 2}, 
+  pos = {x = 0, y = 1}, 
   config = {extra = {chips = 50, rounds = 2}},
   loc_txt = {      
     name = 'Kakuna',      
@@ -620,7 +620,7 @@ local kakuna={
 }
 local beedrill={
   name = "beedrill", 
-  pos = {x = 2, y = 2}, 
+  pos = {x = 1, y = 1}, 
   config = {extra = {chips = 120}},
   loc_txt = {      
     name = 'Beedrill',      
@@ -652,7 +652,7 @@ local beedrill={
 }
 local pidgey={
   name = "pidgey", 
-  pos = {x = 3, y = 2},
+  pos = {x = 2, y = 1},
   config = {extra = {rounds = 4}},
   loc_txt = {      
     name = 'Pidgey',      
@@ -693,7 +693,7 @@ local pidgey={
 }
 local pidgeotto={
   name = "pidgeotto", 
-  pos = {x = 4, y = 2},
+  pos = {x = 3, y = 1},
   config = {extra = {rounds = 4}},
   loc_txt = {      
     name = 'Pidgeotto',      
@@ -734,7 +734,7 @@ local pidgeotto={
 }
 local pidgeot={
   name = "pidgeot", 
-  pos = {x = 5, y = 2},
+  pos = {x = 4, y = 1},
   config = {extra = {money = 2}}, 
   loc_txt = {      
     name = 'Pidgeot',      
@@ -777,7 +777,7 @@ local pidgeot={
 }
 local rattata={
   name = "rattata", 
-  pos = {x = 0, y = 3},
+  pos = {x = 5, y = 1},
   config = {extra = {retriggers = 1, rounds = 3}},
   loc_txt = {      
     name = 'Rattata',      
@@ -816,7 +816,7 @@ local rattata={
 }
 local raticate={
   name = "raticate", 
-  pos = {x = 1, y = 3}, 
+  pos = {x = 6, y = 1}, 
   config = {extra = {retriggers = 1}},
   loc_txt = {      
     name = 'Raticate',      
@@ -850,7 +850,7 @@ local raticate={
 }
 local spearow={
   name = "spearow", 
-  pos = {x = 2, y = 3},
+  pos = {x = 7, y = 1},
   config = {extra = {rounds = 4}},
   loc_txt = {      
     name = 'Spearow',      
@@ -892,7 +892,7 @@ local spearow={
 }
 local fearow={
   name = "fearow", 
-  pos = {x = 3, y = 3}, 
+  pos = {x = 8, y = 1}, 
   loc_txt = {      
     name = 'Fearow',      
     text = {
@@ -930,7 +930,7 @@ local fearow={
 }
 local ekans={
   name = "ekans", 
-  pos = {x = 4, y = 3}, 
+  pos = {x = 9, y = 1}, 
   config = {extra = {mult = 9, rounds = 4}},
   loc_txt = {      
     name = 'Ekans',      
@@ -966,7 +966,7 @@ local ekans={
   }
 local arbok={
   name = "arbok", 
-  pos = {x = 5, y = 3}, 
+  pos = {x = 10, y = 1}, 
   config = {extra = {mult = 16, rounds = 4}},
   loc_txt = {      
     name = 'Arbok',      
@@ -1022,7 +1022,7 @@ local arbok={
 }
 local pikachu={
   name = "pikachu", 
-  pos = {x = 0, y = 4},
+  pos = {x = 11, y = 1},
   config = {extra={thunder = false}},
   loc_txt = {      
     name = 'Pikachu',      
@@ -1054,7 +1054,7 @@ local pikachu={
 }
 local raichu={
   name = "raichu", 
-  pos = {x = 1, y = 4}, 
+  pos = {x = 12, y = 1}, 
   loc_txt = {      
     name = 'Raichu',      
     text = {
@@ -1080,7 +1080,7 @@ local raichu={
 }
 local sandshrew={
   name = "sandshrew", 
-  pos = {x = 2, y = 4},
+  pos = {x = 0, y = 2},
   config = {extra = {rounds = 5}},
   loc_txt = {      
     name = 'Sandshrew',      
@@ -1139,7 +1139,7 @@ local sandshrew={
 }
 local sandslash={
   name = "sandslash", 
-  pos = {x = 3, y = 4}, 
+  pos = {x = 1, y = 2}, 
   loc_txt = {      
     name = 'Sandslash',      
     text = {
@@ -1193,7 +1193,7 @@ local sandslash={
 }
 local nidoranf={
   name = "nidoranf", 
-  pos = {x = 4, y = 4},
+  pos = {x = 2, y = 2},
   config = {extra = {chips = 40, chip_total = 0, rounds = 3}},
   loc_txt = {      
     name = 'Nidoran F',      
@@ -1236,7 +1236,7 @@ local nidoranf={
 }
 local nidorina={
   name = "nidorina", 
-  pos = {x = 5, y = 4},
+  pos = {x = 3, y = 2},
   config = {extra = {chips = 80, chip_total = 0}},
   loc_txt = {      
     name = 'Nidorina',      
