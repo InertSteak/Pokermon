@@ -22,6 +22,10 @@ function get_badge_colour(key)
     return fromRef
 end
 
+--Load config
+local lovely = require("lovely")
+pokermon_config = SMODS.current_mod.config
+
 --Load all Atlas
 SMODS.Atlas({
     key = "modicon",
@@ -29,47 +33,21 @@ SMODS.Atlas({
     px = 32,
     py = 32
 })
-SMODS.Atlas({
-    key = "Pokedex1",
-    path = "Pokedex1.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Pokedex2",
-    path = "Pokedex2.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Pokedex3",
-    path = "Pokedex3.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Pokedex4",
-    path = "Pokedex4.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Pokedex5",
-    path = "Pokedex5.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Pokedex6",
-    path = "Pokedex6.png",
-    px = 71,
-    py = 95
-}):register()
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex1",
+      path = "Pokedex1Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex1",
+      path = "Pokedex1.png",
+      px = 71,
+      py = 95
+  }):register()
+end
 
 SMODS.Atlas({
     key = "balls",
@@ -81,13 +59,6 @@ SMODS.Atlas({
 SMODS.Atlas({
     key = "Mart1",
     path = "Mart1.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "taurosh_atlas",
-    path = "taurosh.png",
     px = 71,
     py = 95
 }):register()
@@ -123,10 +94,6 @@ end
 
 --Get mod path and load other files
 local mod_dir = ''..SMODS.current_mod.path
-
---Load config
-local lovely = require("lovely")
-pokermon_config = SMODS.current_mod.config
 
 --Load helper function file
 local helper, load_error = SMODS.load_file("pokefunctions.lua")
@@ -438,6 +405,14 @@ SMODS.current_mod.config_tab = function()
           label = "Pokeballs?(requires restart)",
           ref_table = pokermon_config,
           ref_value = "pokeballs",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
+          label = "Pokemon Numbers?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "pokemon_num",
           callback = function(_set_toggle)
             NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
           end,
