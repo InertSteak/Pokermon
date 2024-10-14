@@ -4,7 +4,7 @@
 --- MOD_AUTHOR: [See Credits Tab]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
---- VERSION: 1.0.0
+--- VERSION: 1.5.0
 
 pokermon = {}
 -- Custom Rarity setup (based on Relic-Jokers)
@@ -23,6 +23,12 @@ function get_badge_colour(key)
 end
 
 --Load all Atlas
+SMODS.Atlas({
+    key = "modicon",
+    path = "icon.png",
+    px = 32,
+    py = 32
+})
 SMODS.Atlas({
     key = "Pokedex1",
     path = "Pokedex1.png",
@@ -299,7 +305,7 @@ function SMODS.current_mod.process_loc_text()
       local tooltip = {
         name = "Type",
         text = {
-          "{C:"..string.lower(v).."}"..v.."{}",
+          "{X:"..string.lower(v)..",C:white}"..v.."{}",
         }
       }
       G.localization.descriptions.Other[v] = tooltip
