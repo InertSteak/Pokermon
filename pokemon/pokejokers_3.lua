@@ -1,7 +1,7 @@
 --Code for pokemon jokers 61-90
 local poliwhirl={
   name = "poliwhirl", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 8, y = 4}, 
   config = {extra = {mults = {4, 8, 16, 32, 64}, indice = 1}},
   loc_txt = {      
     name = 'Poliwhirl',      
@@ -22,7 +22,7 @@ local poliwhirl={
   cost = 6, 
   stage = "One", 
   ptype = "Water",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -48,7 +48,7 @@ local poliwhirl={
 }
 local poliwrath={
   name = "poliwrath", 
-  pos = {x = 1, y = 0},
+  pos = {x = 9, y = 4},
   config = {extra = {Xmults = {1, 1.5, 2.25, 3.4, 5}, indice = 1}},
   loc_txt = {      
     name = 'Poliwrath',      
@@ -67,7 +67,7 @@ local poliwrath={
   cost = 6, 
   stage = "Two",
   ptype = "Water",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -92,7 +92,7 @@ local poliwrath={
 }
 local abra={
   name = "abra", 
-  pos = {x = 2, y = 0}, 
+  pos = {x = 10, y = 4}, 
   config = {extra = {odds = 4, rounds = 5}},
   loc_txt = {      
     name = 'Abra',      
@@ -113,7 +113,7 @@ local abra={
   cost = 6, 
   stage = "Basic", 
   ptype = "Psychic",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -131,7 +131,7 @@ local abra={
 }
 local kadabra={
   name = "kadabra", 
-  pos = {x = 3, y = 0},
+  pos = {x = 11, y = 4},
   config = {extra = {odds = 2}},
   loc_txt = {      
     name = 'Kadabra',      
@@ -153,7 +153,7 @@ local kadabra={
   cost = 8, 
   stage = "One", 
   ptype = "Psychic",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -171,7 +171,7 @@ local kadabra={
 }
 local alakazam={
   name = "alakazam", 
-  pos = {x = 4, y = 0}, 
+  pos = {x = 12, y = 4}, 
   config = {extra = {odds = 2, card_limit = 1}},
   loc_txt = {      
     name = 'Alakazam',      
@@ -192,7 +192,7 @@ local alakazam={
   cost = 10, 
   stage = "Two", 
   ptype = "Psychic",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -219,7 +219,7 @@ local alakazam={
 }
 local machop={
   name = "machop", 
-  pos = {x = 5, y = 0},
+  pos = {x = 0, y = 5},
   config = {extra = {hands = 1, discards = 1, rounds = 5}},
   loc_txt = {      
     name = 'Machop',      
@@ -237,7 +237,7 @@ local machop={
   cost = 4, 
   stage = "Basic",
   ptype = "Fighting",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_machoke")
@@ -257,7 +257,7 @@ local machop={
 }
 local machoke={
   name = "machoke", 
-  pos = {x = 0, y = 1},
+  pos = {x = 1, y = 5},
   config = {extra = {hands = 2, discards = 2, mult = 20}},
   loc_txt = {      
     name = 'Machoke',      
@@ -277,7 +277,7 @@ local machoke={
   cost = 8, 
   stage = "One", 
   ptype = "Fighting",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -306,7 +306,7 @@ local machoke={
 }
 local machamp={
   name = "machamp", 
-  pos = {x = 1, y = 1},
+  pos = {x = 2, y = 5},
   config = {extra = {hands = 4, discards = 4, mult = 40}},
   loc_txt = {      
     name = 'Machamp',      
@@ -324,7 +324,7 @@ local machamp={
   cost = 10, 
   stage = "Two", 
   ptype = "Fighting",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -352,7 +352,7 @@ local machamp={
 }
 local bellsprout={
   name = "bellsprout", 
-  pos = {x = 2, y = 1}, 
+  pos = {x = 3, y = 5},
   config = {extra = {chips = 20, rounds = 4}},
   loc_txt = {      
     name = 'Bellsprout',      
@@ -370,7 +370,7 @@ local bellsprout={
   cost = 4, 
   stage = "Basic", 
   ptype = "Grass",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
@@ -391,7 +391,7 @@ local bellsprout={
 }
 local weepinbell={
   name = "weepinbell", 
-  pos = {x = 3, y = 1},
+  pos = {x = 4, y = 5},
   config = {extra = {chips = 40}},
   loc_txt = {      
     name = 'Weepinbell',      
@@ -410,7 +410,7 @@ local weepinbell={
   cost = 6, 
   stage = "One", 
   ptype = "Grass",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
@@ -431,7 +431,7 @@ local weepinbell={
 }
 local victreebel={
   name = "victreebel", 
-  pos = {x = 4, y = 1},
+  pos = {x = 5, y = 5},
   config = {extra = {chips = 40, retriggers = 1}},
   loc_txt = {      
     name = 'Victreebel',      
@@ -449,7 +449,7 @@ local victreebel={
   cost = 6, 
   stage = "Two", 
   ptype = "Grass",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
@@ -482,7 +482,7 @@ local victreebel={
 }
 local tentacool={
   name = "tentacool", 
-  pos = {x = 5, y = 1}, 
+  pos = {x = 6, y = 5},
   config = {extra = {mult = 5, rounds = 5}},
   loc_txt = {      
     name = 'Tentacool',      
@@ -500,7 +500,7 @@ local tentacool={
   cost = 6, 
   stage = "Basic", 
   ptype = "Water",
-  atlas = "Pokedex3", 
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
@@ -515,7 +515,7 @@ local tentacool={
 }
 local tentacruel={
   name = "tentacruel", 
-  pos = {x = 0, y = 2}, 
+  pos = {x = 7, y = 5}, 
   config = {extra = {mult = 5, retriggers = 1}},
   loc_txt = {      
     name = 'Tentacruel',      
@@ -533,7 +533,7 @@ local tentacruel={
   cost = 8, 
   stage = "One", 
   ptype = "Water",
-  atlas = "Pokedex3", 
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
@@ -554,7 +554,7 @@ local tentacruel={
 }
 local geodude={
   name = "geodude", 
-  pos = {x = 1, y = 2}, 
+  pos = {x = 8, y = 5}, 
   config = {extra = {chips = 100, h_size = 1, rounds = 4}},
   loc_txt = {      
     name = 'Geodude',      
@@ -572,7 +572,7 @@ local geodude={
   cost = 6, 
   stage = "Basic",
   ptype = "Earth",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -595,7 +595,7 @@ local geodude={
 }
 local graveler={
   name = "graveler", 
-  pos = {x = 2, y = 2},
+  pos = {x = 9, y = 5},
   config = {extra = {chips = 225, h_size = 2, rounds = 0}},
   loc_txt = {      
     name = 'Graveler',      
@@ -614,7 +614,7 @@ local graveler={
   cost = 6, 
   stage = "One", 
   ptype = "Earth",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -641,7 +641,7 @@ local graveler={
 }
 local golem={
   name = "golem", 
-  pos = {x = 3, y = 2},
+  pos = {x = 10, y = 5},
   config = {extra = {chips = 500, h_size = 3, rounds = 0}},
   loc_txt = {      
     name = 'Golem',      
@@ -658,7 +658,7 @@ local golem={
   cost = 10, 
   stage = "Two", 
   ptype = "Earth",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -680,7 +680,7 @@ local golem={
 }
 local ponyta={
   name = "ponyta", 
-  pos = {x = 4, y = 2},
+  pos = {x = 11, y = 5},
   config = {extra = {chips = 0, chip_mod = 10}},
   loc_txt = {      
     name = 'Ponyta',     
@@ -699,7 +699,7 @@ local ponyta={
   cost = 6, 
   stage = "Basic", 
   ptype = "Fire",
-  atlas = "Pokedex3", 
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -724,7 +724,7 @@ local ponyta={
 }
 local rapidash={
   name = "rapidash", 
-  pos = {x = 5, y = 2},
+  pos = {x = 12, y = 5},
   config = {extra = {chips = 105, chip_mod = 25}},
   loc_txt = {      
     name = 'Rapidash',      
@@ -744,7 +744,7 @@ local rapidash={
   cost = 7, 
   stage = "One", 
   ptype = "Fire",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -768,7 +768,7 @@ local rapidash={
 }
 local slowpoke={
   name = "slowpoke", 
-  pos = {x = 0, y = 3}, 
+  pos = {x = 0, y = 6}, 
   config = {extra = {Xmult = 2, rounds = 5}},
   loc_txt = {      
     name = 'Slowpoke',      
@@ -786,7 +786,7 @@ local slowpoke={
   cost = 6, 
   stage = "Basic", 
   ptype = "Psychic",
-  atlas = "Pokedex3", 
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -803,7 +803,7 @@ local slowpoke={
 }
 local slowbro={
   name = "slowbro", 
-  pos = {x = 1, y = 3}, 
+  pos = {x = 1, y = 6}, 
   config = {extra = {Xmult_mod = 0.75, Xmult = 1}},
   loc_txt = {      
     name = 'Slowbro',      
@@ -822,7 +822,7 @@ local slowbro={
   cost = 6, 
   stage = "One", 
   ptype = "Psychic",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -847,8 +847,8 @@ local slowbro={
 }
 local magnemite={
   name = "magnemite", 
-  pos = {x = 2, y = 3},
-  config = {extra = {Xmult = 1.5, rounds = 4}},
+  pos = {x = 2, y = 6}, 
+  config = {extra = {Xmult = 2, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {
@@ -867,7 +867,7 @@ local magnemite={
   enhancement_gate = 'm_steel',
   stage = "Basic",
   ptype = "Metal",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
@@ -883,8 +883,8 @@ local magnemite={
 }
 local magneton={
   name = "magneton", 
-  pos = {x = 3, y = 3},
-  config = {extra = {Xmult = 1.75}},
+  pos = {x = 3, y = 6}, 
+  config = {extra = {Xmult = 2.5}},
   loc_txt = {      
     name = 'Magneton',      
     text = {
@@ -901,7 +901,7 @@ local magneton={
   cost = 6, 
   stage = "Two", 
   ptype = "Metal",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
@@ -916,7 +916,7 @@ local magneton={
 }
 local farfetchd={
   name = "farfetchd", 
-  pos = {x = 4, y = 3}, 
+  pos = {x = 4, y = 6}, 
   config = {extra = {Xmult = 3, odds = 2}},
   loc_txt = {      
     name = 'Farfetch\'d',      
@@ -938,7 +938,7 @@ local farfetchd={
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -964,7 +964,7 @@ local farfetchd={
 }
 local doduo={
   name = "doduo", 
-  pos = {x = 5, y = 3},
+  pos = {x = 5, y = 6}, 
   config = {extra = {mult = 12, rounds = 4}},
   loc_txt = {      
     name = 'Doduo',      
@@ -983,7 +983,7 @@ local doduo={
   cost = 5, 
   stage = "Basic", 
   ptype = "Colorless",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1008,7 +1008,7 @@ local doduo={
 }
 local dodrio={
   name = "dodrio", 
-  pos = {x = 0, y = 4},
+  pos = {x = 6, y = 6}, 
   config = {extra = {mult = 33}},
   loc_txt = {      
     name = 'Dodrio',      
@@ -1026,7 +1026,7 @@ local dodrio={
   cost = 6, 
   stage = "One", 
   ptype = "Colorless",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1050,7 +1050,7 @@ local dodrio={
 }
 local seel={
   name = "seel", 
-  pos = {x = 1, y = 4},
+  pos = {x = 7, y = 6}, 
   config = {extra = {odds = 2, rounds = 5}},
   loc_txt = {      
     name = 'Seel',      
@@ -1069,7 +1069,7 @@ local seel={
   cost = 7, 
   stage = "Basic", 
   ptype = "Water",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
@@ -1092,7 +1092,7 @@ local seel={
 }
 local dewgong={
   name = "dewgong", 
-  pos = {x = 2, y = 4}, 
+  pos = {x = 8, y = 6}, 
   loc_txt = {      
     name = 'Dewgong',      
     text = {
@@ -1108,7 +1108,7 @@ local dewgong={
   cost = 9, 
   stage = "One", 
   ptype = "Water",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
@@ -1128,7 +1128,7 @@ local dewgong={
 }
 local grimer={
   name = "grimer", 
-  pos = {x = 3, y = 4},
+  pos = {x = 9, y = 6}, 
   config = {extra = {mult = 10, rounds = 5}},
   loc_txt = {      
     name = 'Grimer',      
@@ -1146,7 +1146,7 @@ local grimer={
   cost = 5, 
   stage = "Basic", 
   ptype = "Dark",
-  atlas = "Pokedex3", 
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1163,7 +1163,7 @@ local grimer={
 }
 local muk={
   name = "muk", 
-  pos = {x = 4, y = 4},
+  pos = {x = 10, y = 6}, 
   config = {extra = {mult = 20, Xmult = 3}},
   loc_txt = {      
     name = 'Muk',      
@@ -1183,7 +1183,7 @@ local muk={
   cost = 8, 
   stage = "One", 
   ptype = "Dark",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1207,7 +1207,7 @@ local muk={
 }
 local shellder={
   name = "shellder", 
-  pos = {x = 5, y = 4},
+  pos = {x = 11, y = 6}, 
   config = {extra = {retriggers = 1, odds = 2}},
   loc_txt = {      
     name = 'Shellder',      
@@ -1227,7 +1227,7 @@ local shellder={
   cost = 6, 
   stage = "Basic",
   ptype = "Water",
-  atlas = "Pokedex3",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play and #context.scoring_hand == 5 then

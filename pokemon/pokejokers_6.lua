@@ -1,8 +1,8 @@
 --Code for pokemon jokers 151-180
 local mew ={
   name = "mew", 
-  pos = {x = 0, y = 0},
-  soul_pos = { x = 1, y = 0},
+  pos = {x = 12, y = 11},
+  soul_pos = { x = 0, y = 12},
   config = {extra = {odds = 6}},
   loc_txt = {      
     name = 'Mew',      
@@ -23,7 +23,7 @@ local mew ={
   cost = 20, 
   stage = "Legendary",
   ptype = "Psychic",
-  atlas = "Pokedex6",
+  atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.ending_shop then
