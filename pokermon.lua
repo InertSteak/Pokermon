@@ -122,7 +122,9 @@ for _, file in ipairs(pfiles) do
           item.key = item.name
         end
         if not pokermon_config.no_evos and item.name ~= "taurosh" then
-          item.in_pool = pokemon_in_pool
+          item.in_pool = function(self)
+            return pokemon_in_pool(self, false)
+          end
         end
         if item.ptype then
           if item.config and item.config.extra then

@@ -1,6 +1,63 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "money1", "money2", "mult_mod", "chip_mod", "Xmult_mod", "money_mod"}
 energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, money = 2, money1 = 2, money2 = 2, mult_mod = 2, chip_mod = 20, Xmult_mod = 0.2, money_mod = 2}
 
+family = {
+    {"bulbasaur","ivysaur","venusaur"},
+    {"charmander","charmeleon","charizard"},
+    {"squirtle","wartortle","blastoise"},
+    {"caterpie","metapod","butterfree"},
+    {"weedle","kakuna","beedrill"},
+    {"pidgey","pidgeotto","pidgeot"},
+    {"rattata","raticate"},
+    {"spearow","fearow"},
+    {"ekans","arbok"},
+    {"pikachu","raichu"},
+    {"sandshrew","sandslash"},
+    {"nidoranf","nidorina","nidoqueen"},
+    {"nidoranm","nidorino","nidoking"},
+    {"clefairy","clefable"},
+    {"vulpix","ninetales"},
+    {"jigglypuff","wigglytuff"},
+    {"zubat","golbat"},
+    {"oddish","gloom","vileplume"},
+    {"paras","parasect"},
+    {"venonat","venomoth"},
+    {"diglett","dugtrio"},
+    {"meowth","persian"},
+    {"psyduck","golduck"},
+    {"mankey","primeape"},
+    {"growlithe","arcanine"},
+    {"poliwag","poliwhirl","poliwrath"},
+    {"abra","kadabra","alakazam"},
+    {"machop","machoke","machamp"},
+    {"bellsprout","weepinbell","victreebel"},
+    {"tentacool","tentacruel"},
+    {"geodude","graveler","golem"},
+    {"ponyta","rapidash"},
+    {"slowpoke","slowbro"},
+    {"magnemite","magneton"},
+    {"doduo","dodrio"},
+    {"seel","dewgong"},
+    {"grimer","muk"},
+    {"shellder","cloyster"},
+    {"gastly","haunter","gengar"},
+    {"drowzee","hypno"},
+    {"krabby","kingler"},
+    {"voltorb","electrode"},
+    {"exeggcute","exeggutor"},
+    {"cubone","marowak"},
+    {"koffing","weezing"},
+    {"rhyhorn","rhydon"},
+    {"horsea","seadra"},
+    {"goldeen","seaking"},
+    {"staryu","starmie"},
+    {"magikarp","gyarados"},
+    {"eevee", "vaporeon", "jolteon", "flareon"},
+    {"omanyte","omastar"},
+    {"kabuto","kabutops"},
+    {"dratini","dragonair","dragonite"},
+}
+
 energize = function(card, etype, evolving)
   for l, data in pairs(card.ability.extra) do
     if type(data) == "number" then
@@ -161,79 +218,32 @@ scaling_evo = function (self, card, context, forced_key, current, target)
     return {
       message = evolve (self, card, context, forced_key)
     }
-  elseif current >= target and not card.ability.extra.juiced then
+  elseif current >= target and not card.ability.extra.juiced and not pokermon_config.no_evos then
     card.ability.extra.juiced = true
     local eval = function(card) return not card.REMOVED end
     juice_card_until(card, eval, true)
   end
 end
 
-pokemon_in_pool = function (self)
-  local family = {
-    {"bulbasaur","ivysaur","venusaur"},
-    {"charmander","charmeleon","charizard"},
-    {"squirtle","wartortle","blastoise"},
-    {"caterpie","metapod","butterfree"},
-    {"weedle","kakuna","beedrill"},
-    {"pidgey","pidgeotto","pidgeot"},
-    {"rattata","raticate"},
-    {"spearow","fearow"},
-    {"ekans","arbok"},
-    {"pikachu","raichu"},
-    {"sandshrew","sandslash"},
-    {"nidoranf","nidorina","nidoqueen"},
-    {"nidoranm","nidorino","nidoking"},
-    {"clefairy","clefable"},
-    {"vulpix","ninetales"},
-    {"jigglypuff","wigglytuff"},
-    {"zubat","golbat"},
-    {"oddish","gloom","vileplume"},
-    {"paras","parasect"},
-    {"venonat","venomoth"},
-    {"diglett","dugtrio"},
-    {"meowth","persian"},
-    {"psyduck","golduck"},
-    {"mankey","primeape"},
-    {"growlithe","arcanine"},
-    {"poliwag","poliwhirl","poliwrath"},
-    {"abra","kadabra","alakazam"},
-    {"machop","machoke","machamp"},
-    {"bellsprout","weepinbell","victreebel"},
-    {"tentacool","tentacruel"},
-    {"geodude","graveler","golem"},
-    {"ponyta","rapidash"},
-    {"slowpoke","slowbro"},
-    {"magnemite","magneton"},
-    {"doduo","dodrio"},
-    {"seel","dewgong"},
-    {"grimer","muk"},
-    {"shellder","cloyster"},
-    {"gastly","haunter","gengar"},
-    {"drowzee","hypno"},
-    {"krabby","kingler"},
-    {"voltorb","electrode"},
-    {"exeggcute","exeggutor"},
-    {"cubone","marowak"},
-    {"koffing","weezing"},
-    {"rhyhorn","rhydon"},
-    {"horsea","seadra"},
-    {"goldeen","seaking"},
-    {"staryu","starmie"},
-    {"magikarp","gyarados"},
-    {"eevee", "vaporeon", "jolteon", "flareon"},
-    {"omanyte","omastar"},
-    {"kabuto","kabutops"},
-    {"dratini","dragonair","dragonite"},
-  }
+pokemon_in_pool = function (self, return_highest)
+  local name
+  if not self.name and self.ability.name then
+    name = self.ability.name
+  else
+    name = self.name or "bulbasaur"
+  end
   local found_other
   local in_family
   for k, v in ipairs(family) do
     for l, p in ipairs(v) do
-      if p ~= self.name and next(find_joker(p)) then
+      if p ~= name and next(find_joker(p)) then
         found_other = true 
-      elseif p == self.name then
+      elseif p == name then
         in_family = true
       end
+    end
+    if in_family and return_highest then
+      return v[#v]
     end
     if in_family and found_other then
       return false
@@ -241,7 +251,7 @@ pokemon_in_pool = function (self)
     found_other = false
     in_family = false
   end
-  if next(find_joker(self.name)) and not next(find_joker("Showman")) then
+  if next(find_joker(name)) and not next(find_joker("Showman")) then
     return false
   else
     if self.enhancement_gate then
@@ -260,7 +270,7 @@ energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
-      if v.ability.extra.ptype == self.etype then
+      if v.ability.extra.ptype == self.etype or self.etype == "Trans" then
         if v.ability.extra.energy_count then
           v.ability.extra.energy_count = v.ability.extra.energy_count + 1
         else

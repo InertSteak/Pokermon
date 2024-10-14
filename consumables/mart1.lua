@@ -617,9 +617,10 @@ local transformation = {
   loc_txt = {
     name = "Transformation",
     text = {
-      "Evolves {C:attention}1{}",
-      "selected Pokemon to",
+      "Evolves leftmost Pokemon to",
       "the highest {C:attention}stage{}",
+      "and {C:attention}increases{} most", 
+      "number values if able"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -627,16 +628,35 @@ local transformation = {
   pos = { x = 2, y = 1 },
   atlas = "Mart1",
   cost = 3,
+  etype = "Trans",
   hidden = true,
   soul_set = "Energy",
   soul_rate = .01,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    if G.jokers.cards and #G.jokers.cards > 0 then
+      local joker = G.jokers.cards[1]
+      if joker.ability and joker.ability.extra and joker.ability.extra.ptype then
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
   end,
-  in_pool = function(self)
-    return true
+  use = function(self, card, area, copier)
+    if G.jokers.cards and #G.jokers.cards > 0 then
+      energy_use(self, G.jokers.cards[1], area, copier)
+      local highest = pokemon_in_pool(G.jokers.cards[1], true)
+      if highest and type(highest) == "string" and G.jokers.cards[1].ability.name ~= highest then
+        local forced_key = "j_poke_"..highest
+        local context = {}
+        evolve(G.jokers.cards[1], G.jokers.cards[1], context, forced_key)
+      end
+    end
+
   end
 }
 
