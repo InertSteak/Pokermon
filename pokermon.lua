@@ -301,6 +301,8 @@ function SMODS.current_mod.process_loc_text()
         "that has {C:attention}Evolved{} twice"
       }
     }
+    G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
+    
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
     for k, v in ipairs(ptype_list) do
       local tooltip = {
