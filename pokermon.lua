@@ -547,6 +547,24 @@ SMODS.current_mod.extra_tabs = function()
           {
             n = G.UIT.R,
             config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "SDM0",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
               padding = 0.2,
               align = "cm",
             },
