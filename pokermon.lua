@@ -93,6 +93,27 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+--Custom colors for Types (humplydinkle wuz here)
+local pokecolors = loc_colour
+function loc_colour(_c, _default)
+  if not G.ARGS.LOC_COLOURS then
+    pokecolors()
+  end
+  G.ARGS.LOC_COLOURS["dark"] = HEX("0086a5")
+  G.ARGS.LOC_COLOURS["lightning"] = HEX("f8f800")
+  G.ARGS.LOC_COLOURS["fire"] = HEX("f81020")
+  G.ARGS.LOC_COLOURS["water"] = HEX("38b8f8")
+  G.ARGS.LOC_COLOURS["ground"] = HEX("e97333")
+  G.ARGS.LOC_COLOURS["fairy"] = HEX("ff3db6")
+  G.ARGS.LOC_COLOURS["fighting"] = HEX("b85838")
+  G.ARGS.LOC_COLOURS["colorless"] = HEX("c8c0f8")
+  G.ARGS.LOC_COLOURS["psychic"] = HEX("c135ff")
+  G.ARGS.LOC_COLOURS["metal"] = HEX("888080")
+  G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
+  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800") 
+  return pokecolors(_c, _default)
+end
+
 --Get mod path and load other files
 local mod_dir = ''..SMODS.current_mod.path
 
