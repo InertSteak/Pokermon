@@ -97,7 +97,7 @@ local abra={
   loc_txt = {      
     name = 'Abra',      
     text = {
-      "{C:green}#1#{} in {C:green}#2#{} chance to",
+      "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
       "already been played this turn",
@@ -136,7 +136,7 @@ local kadabra={
   loc_txt = {      
     name = 'Kadabra',      
     text = {
-      "{C:green}#1#{} in {C:green}#2#{} chance to",
+      "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
       "already been played this turn",
@@ -177,7 +177,7 @@ local alakazam={
     name = 'Alakazam',      
     text = {
       "{C:attention}+#3#{} consumable slot",
-      "{C:green}#1#{} in {C:green}#2#{} chance to",
+      "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
       "already been played this turn",
@@ -685,7 +685,7 @@ local ponyta={
   loc_txt = {      
     name = 'Ponyta',     
     text = {
-      "Gains {C:chips}#2#{} chips if played", 
+      "Gains {C:chips}#2#{} Chips if played", 
       "hand contains a {C:attention}Straight{}",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
       "{C:inactive}(Evolves at {C:chips}+60{} {C:inactive}Chips)"
@@ -729,7 +729,7 @@ local rapidash={
   loc_txt = {      
     name = 'Rapidash',      
     text = {
-      "Gains {C:chips}#2#{} chips if played", 
+      "Gains {C:chips}#2#{} Chips if played", 
       "hand contains a {C:attention}Straight{}",
       "Applies {C:attention}Shortcut{}",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
@@ -1056,7 +1056,7 @@ local seel={
     name = 'Seel',      
     text = {
       "If {C:attention}first hand{} of round", 
-      "has only {C:attention}1{} card, {C:green}#1#{} in {C:green}#2#{} chance to",
+      "has only {C:attention}1{} card, {C:green}#1# in #2#{} chance to",
       "add a random {C:attention}seal{} to that card",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
@@ -1213,7 +1213,7 @@ local shellder={
     name = 'Shellder',      
     text = {
       "If hand has {C:attention}5{} scoring",
-      "cards, each have a {C:green}#1#{} in {C:green}#2#{}",
+      "cards, each have a {C:green}#1# in #2#{}",
       "chance to retrigger",
       "{C:inactive}(Evolves with a{} {C:attention}Water Stone{}{C:inactive} card)"
     } 
