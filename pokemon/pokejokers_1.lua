@@ -142,8 +142,8 @@ local charmander={
     text = {
       "Gains {C:mult}+#2#{} mult per hand played",
       "when {C:attention}#3#{} discards remaining",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}16{}{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+16{}{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -192,8 +192,8 @@ local charmeleon={
       "{C:red}+#4#{} discard",
       "Gains {C:mult}+#2#{} mult per hand played",
       "when {C:attention}#3#{} discards remaining",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}36{}{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+36{}{C:inactive} Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -293,8 +293,8 @@ local squirtle={
     text = {
       "Gains {C:chips}+#2#{} chips for each hand",
       "remaining at end of round",
-      "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}16{} {C:inactive}Chips)"
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+      "{C:inactive}(Evolves at {C:chips}+16{} {C:inactive}Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -345,8 +345,8 @@ local wartortle={
       "{C:chips}+#3#{} hands",
       "Gains {C:chips}+#2#{} chips for each hand",
       "remaining at end of round",
-      "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}36{} {C:inactive}Chips)"
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+      "{C:inactive}(Evolves at {C:chips}+36{} {C:inactive}Chips)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)

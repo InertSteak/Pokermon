@@ -1140,7 +1140,7 @@ local seadra={
     text = {
       "Gains {C:mult}+#2#{} Mult",
       "for each scoring {C:attention}6{}",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)

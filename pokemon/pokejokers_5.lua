@@ -419,7 +419,7 @@ local lapras={
     text = {
       "{C:chips}#2#{} Chips for each",
       "{C:attention}Blind{} skipped this run",
-      "{C:inactive}(Currently {C:chips}#1# {C:inactive}Chips)"
+      "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1181,8 +1181,8 @@ local dratini={
       "Gains {C:mult}+#2#{} Mult",
       "if played hand contains",
       "{C:attention}#3#{} or fewer cards",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}10{}{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+10{}{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1221,8 +1221,8 @@ local dragonair={
       "Gains {C:mult}+#2#{} Mult",
       "if played hand contains",
       "{C:attention}#3#{} or fewer cards",
-      "{C:inactive}(Currently {C:mult}#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}40{}{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+40{}{C:inactive} Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)

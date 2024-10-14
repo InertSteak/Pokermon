@@ -8,7 +8,7 @@ local poliwhirl={
     text = {
       "Gives Mult in a {C:attention}cycle{}",
       "{C:mult}+#1#{}, {C:mult}+#2#{}, {C:mult}+#3#{}, {C:mult}+#4#{}, and {C:mult}+#5#{} Mult",
-      "{C:inactive}(Currently {C:mult}#6#{C:inactive} Mult)",
+      "{C:inactive}(Currently {C:mult}+#6#{C:inactive} Mult)",
       "{C:inactive}(Evolves with a{} {C:attention}Water Stone{}{C:inactive} card)"
     } 
   },
@@ -687,8 +687,8 @@ local ponyta={
     text = {
       "Gains {C:chips}#2#{} chips if played", 
       "hand contains a {C:attention}Straight{}",
-      "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}60{} {C:inactive}Chips)"
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+      "{C:inactive}(Evolves at {C:chips}+60{} {C:inactive}Chips)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -732,7 +732,7 @@ local rapidash={
       "Gains {C:chips}#2#{} chips if played", 
       "hand contains a {C:attention}Straight{}",
       "Applies {C:attention}Shortcut{}",
-      "{C:inactive}(Currently {C:chips}#1#{C:inactive} Chips)",
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)

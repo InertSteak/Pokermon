@@ -410,8 +410,8 @@ local zubat={
     text = {
       "{C:mult}+#1#{} Mult for each Enhanced",
       "card in your full deck",
-      "{C:inactive}(Currently {C:mult}#2#{}{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}36{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult)",
+      "{C:inactive}(Evolves at {C:mult}+36{C:inactive} Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -457,7 +457,7 @@ local golbat={
       "{C:chips}+#4#{} for {C:attention}Bonus{} and {C:attention}Stone{} cards,",
       "{X:red,C:white}X#6#{} for {C:attention}Steel{} and {C:attention}Glass{} cards,",
       "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards{C:inactive}(Earned end of round){}",
-      "{C:inactive}(Currently {C:mult}#1#{}, {C:chips}#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive})"
+      "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive})"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -663,7 +663,7 @@ local paras={
       "{C:mult}+#2#{} Mult per played hand",
       "that contains a {C:attention}Two pair{}", 
       "{C:inactive}(Currently {C:mult}+#1#{}{C:inactive})",
-      "{C:inactive}(Evolves at {C:mult}8{}{C:inactive} Mult)"
+      "{C:inactive}(Evolves at {C:mult}+8{}{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1199,7 +1199,7 @@ local poliwag={
     text = {
       "Gives Mult in a {C:attention}cycle{}",
       "{C:mult}+#1#{}, {C:mult}+#2#{}, {C:mult}+#3#{}, {C:mult}+#4#{}, and {C:mult}+#5#{} Mult",
-      "{C:inactive}(Currently {C:mult}#6#{C:inactive} Mult)",
+      "{C:inactive}(Currently {C:mult}+#6#{C:inactive} Mult)",
       "{C:inactive}(Evolves after {C:attention}#7#{}{C:inactive} rounds)"
     } 
   }, 
