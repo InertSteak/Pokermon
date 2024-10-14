@@ -928,12 +928,13 @@ local persian={
       "Earn {C:money}${} at end of",
       "round equal to {C:attention}double{} the", 
       "sell value of the leftmost {C:attention}Joker{}",
+      "{C:inactive}(Except itself){}",
       "{C:inactive}(Currently {C:money}$#1#{C:inactive}, Max of {C:money}$15{C:inactive})",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
-    return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[0] and G.jokers.cards[0].sell_cost) or 0}}
+    return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[1] and G.jokers.cards[1] ~= center and math.min(G.jokers.cards[1].sell_cost*2, 15)) or 0}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -943,7 +944,6 @@ local persian={
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-      
 			return math.min(G.jokers.cards[1].sell_cost*2, 15)
     end
 	end
