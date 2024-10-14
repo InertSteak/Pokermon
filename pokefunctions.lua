@@ -283,7 +283,7 @@ end
 
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
-    if v.ability and v.ability.extra and v.ability.extra.ptype and self.etype then
+    if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
       if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then

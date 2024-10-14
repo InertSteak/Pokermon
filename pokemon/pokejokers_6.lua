@@ -20,7 +20,7 @@ local mew ={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 4, 
-  cost = 6, 
+  cost = 20, 
   stage = "Legendary",
   ptype = "Psychic",
   atlas = "Pokedex6",

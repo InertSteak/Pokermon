@@ -116,7 +116,8 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["psychic"] = HEX("c135ff")
   G.ARGS.LOC_COLOURS["metal"] = HEX("888080")
   G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
-  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800") 
+  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
+  G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
   return pokecolors(_c, _default)
 end
 
@@ -300,7 +301,7 @@ function SMODS.current_mod.process_loc_text()
         "that has {C:attention}Evolved{} twice"
       }
     }
-    local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+    local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
     for k, v in ipairs(ptype_list) do
       local tooltip = {
         name = "Type",
@@ -552,7 +553,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "TheKuro",
+                  text = "TheKuro, Ishtech",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
