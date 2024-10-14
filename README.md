@@ -2,6 +2,8 @@
 Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded) and [Cryptid](https://github.com/MathIsFun0/Cryptid).
 This mod would not be possible otherwise. 
 
+Please use the latest code before repoting issues, the releases may be out of date with the current code.
+
 Pokermon is a full content mod for Balatro, adding content based on Pokemon. There are 152 new Jokers, 10 new Tarot cards and 3 new Spectral cards currently implemented.
 There is also a new option to only play with Pokemon Jokers if you want to focus on the new content. (Option defaults to off)
 
