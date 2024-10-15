@@ -540,12 +540,11 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {money = 2, chips = 0, chip_mod = 15}},
+  config = {extra = {chips = 0, chip_mod = 15}},
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
-      "Earn {C:money}$#1#{} and",
-      "gains {C:chips}+#3#{} Chips",
+      "Gains {C:chips}+#3#{} Chips",
       "per {C:green}reroll{}",
       "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
     } 
@@ -562,7 +561,6 @@ local vaporeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop then
-      ease_dollars(card.ability.extra.money)
       if not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       end
@@ -614,12 +612,11 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {money = 2, Xmult = 1, Xmult_mod = .1}},
+  config = {extra = {money = 2, Xmult = 1, Xmult_mod = .05}},
   loc_txt = {      
     name = 'Flareon',      
     text = {
-      "Earn {C:money}$#1#{} and",
-      "gains {X:red,C:white} X#3# {} Mult",
+      "Gains {X:red,C:white} X#3# {} Mult",
       "per {C:green}reroll{}",
       "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
     } 
@@ -636,7 +633,6 @@ local flareon={
   atlas = "Pokedex1",
   calculate = function(self, card, context)
     if context.reroll_shop then
-      ease_dollars(card.ability.extra.money)
       if not context.blueprint then
         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
       end

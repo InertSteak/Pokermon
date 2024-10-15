@@ -1,5 +1,5 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "money1", "money2", "mult_mod", "chip_mod", "Xmult_mod", "money_mod"}
-energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, money = 2, money1 = 2, money2 = 2, mult_mod = 2, chip_mod = 20, Xmult_mod = 0.2, money_mod = 2}
+energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, money = 2, money1 = 2, money2 = 2, mult_mod = 1, chip_mod = 20, Xmult_mod = 0.1, money_mod = 2}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
