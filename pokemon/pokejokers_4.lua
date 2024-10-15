@@ -279,22 +279,22 @@ local drowzee={
 local hypno={
   name = "hypno", 
   pos = {x = 5, y = 7},  
-  config = {extra = {mult = 0, mult_mod = 5, trance_counter = 0, threshold = 4}},
+  config = {extra = {mult = 0, mult_mod = 5}},
   loc_txt = {      
     name = 'Hypno',      
     text = {
       "{C:mult}+#2#{} Mult per unique",
       "{C:planet}Planet{} card used this run.",
-      "Create a {C:spectral}Trance{} card for",
-      "every {C:attention}#4#{} {C:planet}Planet{} cards used",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:attention}#3#{}{C:inactive}/#4# used)",
+      "When you get this,",
+      "create a {C:spectral}Trance{} card",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_trance'}
     info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.trance_counter, center.ability.extra.threshold}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -303,18 +303,6 @@ local hypno={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      card.ability.extra.trance_counter = card.ability.extra.trance_counter + 1
-      if card.ability.extra.trance_counter >= card.ability.extra.threshold and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_trance')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-        card.ability.extra.trance_counter = 0
-      elseif card.ability.extra.trance_counter >= card.ability.extra.threshold then
-        card.ability.extra.trance_counter = 0
-      end
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if card.ability.extra.mult > 0 then
@@ -334,6 +322,14 @@ local hypno={
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
       card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_trance')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
   end
 }
