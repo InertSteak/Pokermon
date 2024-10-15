@@ -194,14 +194,13 @@ level_evo = function(self, card, context, forced_key)
 end
 
 item_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve == true and not context.blueprint and 
-       not pokermon_config.no_evos then
+    if not context.repetition and not context.individual and context.end_of_round and (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string"))       and not context.blueprint and not pokermon_config.no_evos then
       if card.ability.name == "eevee" then
-        if card.ability.extra.water then
+        if card.ability.extra.evolve == "waterstone" then
           forced_key = "j_poke_vaporeon"
-        elseif card.ability.extra.thunder then
+        elseif card.ability.extra.evolve == "thunderstone" then
           forced_key = "j_poke_jolteon"
-        elseif card.ability.extra.fire then
+        elseif card.ability.extra.evolve == "firestone" then
           forced_key = "j_poke_flareon"
         end
       end
@@ -310,4 +309,47 @@ energy_can_use = function(self, card)
     end
   end
   return false
+end
+
+evo_item_use = function(self, card, area, copier)
+    local applied = false
+    local evolve = false
+    for k, v in pairs(G.jokers.cards) do
+      if applied ~= true then
+        if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name then
+          evolve = true
+        elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" then
+          for l, p in pairs(v.ability.extra.item_req) do
+            if p == self.name then
+              evolve = p
+            end
+          end
+        end
+        
+        if evolve then
+          v.ability.extra.evolve = evolve
+          applied = true
+          local eval = function(v) return not v.REMOVED end
+          juice_card_until(v, eval, true)
+        end
+      end
+    end
+    return true
+end
+
+evo_item_in_pool = function(self)
+    if G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name then
+          return true
+        elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.item_req) == "table" then
+          for l, p in pairs(v.ability.extra.item_req) do
+            if p == self.name then
+              return true
+            end
+          end
+        end
+      end
+    end
+    return false
 end

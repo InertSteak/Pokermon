@@ -520,7 +520,8 @@ local eevee={
     return {vars = {center.ability.extra.money}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 4,
+  item_req = {"waterstone", "thunderstone", "firestone"},
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",

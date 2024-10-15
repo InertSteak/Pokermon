@@ -105,7 +105,8 @@ local haunter={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 3, 
-  cost = 9, 
+  cost = 9,
+  item_req = "linkcable",
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex1",
@@ -524,7 +525,8 @@ local exeggcute={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 5,
+  item_req = "leafstone",
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -1266,7 +1268,8 @@ local staryu={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 5,
+  item_req = "waterstone",
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1", 

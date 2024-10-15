@@ -104,6 +104,7 @@ local nidorino={
   rarity = 2, 
   cost = 7, 
   stage = "One", 
+  item_req = "moonstone",
   ptype = "Dark",
   atlas = "Pokedex1",
   blueprint_compat = true,
@@ -181,6 +182,7 @@ local clefairy={
   end,
   rarity = 1, 
   cost = 5, 
+  item_req = "moonstone",
   stage = "Basic", 
   ptype = "Fairy",
   atlas = "Pokedex1",
@@ -265,6 +267,7 @@ local vulpix={
   }, 
   rarity = 1, 
   cost = 6, 
+  item_req = "firestone",
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Fire",
@@ -348,6 +351,7 @@ local jigglypuff={
   end,
   rarity = 1, 
   cost = 5, 
+  item_req = "moonstone",
   stage = "Basic", 
   ptype = "Fairy",
   atlas = "Pokedex1",
@@ -594,7 +598,8 @@ local gloom={
 		return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 8, 
+  cost = 8,
+  item_req = "leafstone",
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -650,7 +655,6 @@ local vileplume={
           }
       end
     end
-    return item_evo(self, card, context, "j_poke_vileplume")
   end
 }
 local paras={
@@ -1130,6 +1134,7 @@ local growlithe={
   end,
   rarity = 1, 
   cost = 6, 
+  item_req = "firestone",
   stage = "Basic", 
   ptype = "Fire",
   atlas = "Pokedex1",

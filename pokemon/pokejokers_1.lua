@@ -1040,7 +1040,8 @@ local pikachu={
     return {vars = {G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 6,
+  item_req = "thunderstone",
   stage = "Basic", 
   ptype = "Lightning",
   atlas = "Pokedex1",
@@ -1255,6 +1256,7 @@ local nidorina={
   rarity = 2, 
   cost = 7, 
   stage = "One",
+  item_req = "moonstone",
   ptype = "Dark",
   atlas = "Pokedex1",
   blueprint_compat = true,

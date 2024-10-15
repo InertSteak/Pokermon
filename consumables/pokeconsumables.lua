@@ -25,32 +25,10 @@ local moonstone = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "nidorina" or v.ability.name == "nidorino" 
-        or v.ability.name == "clefairy" or v.ability.name == "jigglypuff" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "nidorina" or v.ability.name == "nidorino" 
-        or v.ability.name == "clefairy" or v.ability.name == "jigglypuff" then
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
@@ -81,37 +59,10 @@ local waterstone = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
-        or v.ability.name == "staryu" or v.ability.name == "eevee" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            
-            if v.ability.name == "eevee" then
-              v.ability.extra.water = true
-            end
-            
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "poliwhirl" or v.ability.name == "shellder" 
-        or v.ability.name == "staryu" or v.ability.name == "eevee" then
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
@@ -142,35 +93,10 @@ local thunderstone = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "pikachu" or v.ability.name == "eevee" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            
-            if v.ability.name == "eevee" then
-              v.ability.extra.thunder = true
-            end
-            
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "pikachu" or v.ability.name == "eevee" then 
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
@@ -201,37 +127,10 @@ local firestone = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "growlithe" or v.ability.name == "vulpix" 
-        or v.ability.name == "eevee" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            
-            if v.ability.name == "eevee" then
-              v.ability.extra.fire = true
-            end
-            
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "growlithe" or v.ability.name == "vulpix" 
-        or v.ability.name == "eevee" then 
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
@@ -262,32 +161,10 @@ local leafstone = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "gloom" or v.ability.name == "weepinbell" 
-        or v.ability.name == "exeggcute" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.name == "gloom" or v.ability.name == "weepinbell" 
-        or v.ability.name == "exeggcute" then
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
@@ -318,37 +195,10 @@ local linkcable = {
     end
   end,
   use = function(self, card, area, copier)
-    local applied = false
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
-        if v.ability.name == "machoke" or v.ability.name == "kadabra" 
-        or v.ability.name == "graveler" or v.ability.name == "haunter" then
-          if v.ability.extra.evolve ~= true then
-            v.ability.extra.evolve = true
-            
-            if v.ability.name == "eevee" then
-              v.ability.extra.water = true
-            end
-            
-            applied = true
-            local eval = function(v) return not v.REMOVED end
-            juice_card_until(v, eval, true)
-          end
-        end
-      end
-    end
-    return true
+    return evo_item_use(self, card, area, copier)
   end,
   in_pool = function(self)
-    if G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-          if v.ability.name == "machoke" or v.ability.name == "kadabra" 
-          or v.ability.name == "graveler" or v.ability.name == "haunter" then
-          return true
-        end
-      end
-    end
-    return false
+    return evo_item_in_pool(self)
   end
 }
 
