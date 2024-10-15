@@ -11,7 +11,7 @@ local energy = {
  		},
  	},
   collection_row = {6, 6},
-  shop_rate = 1.5,
+  shop_rate = 0.75,
   default = "c_poke_grass_energy"
 }
 

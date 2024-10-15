@@ -682,7 +682,7 @@ local porygon={
     if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.destroyed = card.ability.extra.destroyed + 1 
       if card.ability.extra.destroyed >= card.ability.extra.target then
-        local eval = function(card) return (card.ability.destroyed == 0) and not G.RESET_JIGGLES end
+        local eval = function(card) return (card.ability.extra.destroyed >= card.ability.extra.target) and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
       end
       card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Pory!"})
@@ -692,7 +692,7 @@ local porygon={
       if #G.jokers.cards > 0 then
         local eligible_editionless_jokers = {}
         for k, v in pairs(G.jokers.cards) do
-          if v.ability.set == 'Joker' and (not v.edition) then
+          if v.ability.set == 'Joker' and (not v.edition) and v ~= card then
               table.insert(eligible_editionless_jokers, v)
           end
         end
