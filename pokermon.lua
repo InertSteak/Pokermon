@@ -175,7 +175,7 @@ for _, file in ipairs(pconsumables) do
     if curr_consumable.init then curr_consumable:init() end
     
     for i, item in ipairs(curr_consumable.list) do
-      if (not pokermon_config.jokers_only and not item.pokeball) or (item.pokeball and pokermon_config.pokeballs) then
+      if ((not pokermon_config.jokers_only and not item.pokeball) or (item.pokeball and pokermon_config.pokeballs)) or (item.evo_item and not pokermon_config.no_evos) then
         SMODS.Consumable(item)
       end
     end

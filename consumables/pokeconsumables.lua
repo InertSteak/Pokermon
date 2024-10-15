@@ -14,6 +14,7 @@ local moonstone = {
   pos = { x = 0, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -69,6 +70,7 @@ local waterstone = {
   pos = { x = 1, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -129,6 +131,7 @@ local thunderstone = {
   pos = { x = 2, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -187,6 +190,7 @@ local firestone = {
   pos = { x = 3, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -247,6 +251,7 @@ local leafstone = {
   pos = { x = 4, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -302,6 +307,7 @@ local linkcable = {
   pos = { x = 5, y = 1 },
   atlas = "balls",
   cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
