@@ -701,11 +701,13 @@ local hitmonlee={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards) * card.ability.extra.Xmult_mod)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = Xmult
-        }
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.MULT,
+            Xmult_mod = Xmult
+          }
+        end
       end
     end
   end,
@@ -736,11 +738,13 @@ local hitmonchan={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size ) * card.ability.extra.Xmult_mod)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = Xmult
-        }
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.MULT,
+            Xmult_mod = Xmult
+          }
+        end
       end
     end
   end,

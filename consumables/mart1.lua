@@ -280,7 +280,7 @@ local grass_energy = {
   loc_txt = {
     name = "Grass Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Grass{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -309,7 +309,7 @@ local fire_energy = {
   loc_txt = {
     name = "Fire Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fire{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -338,7 +338,7 @@ local water_energy = {
   loc_txt = {
     name = "Water Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Water{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -367,7 +367,7 @@ local lightning_energy = {
   loc_txt = {
     name = "Lightning Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Lightning{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -396,7 +396,7 @@ local psychic_energy = {
   loc_txt = {
     name = "Psychic Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Psychic{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -425,7 +425,7 @@ local fighting_energy = {
   loc_txt = {
     name = "Fighting Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fighting{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -454,7 +454,7 @@ local colorless_energy = {
   loc_txt = {
     name = "Colorless Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost Joker permanently if able",
       "Half as effective with ",
       "non-{C:attention}Colorless{} Jokers",
@@ -484,7 +484,7 @@ local darkness_energy = {
   loc_txt = {
     name = "Darkness Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Dark{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -513,7 +513,7 @@ local metal_energy = {
   loc_txt = {
     name = "Metal Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Metal{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -542,7 +542,7 @@ local fairy_energy = {
   loc_txt = {
     name = "Fairy Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fairy{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -571,7 +571,7 @@ local dragon_energy = {
   loc_txt = {
     name = "Dragon Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Dragon{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -600,7 +600,7 @@ local earth_energy = {
   loc_txt = {
     name = "Earth Energy",
     text = {
-      "{C:attention}Increases{} most number values",
+      "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Earth{} type Joker",
       "permanently if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
@@ -631,7 +631,7 @@ local transformation = {
     text = {
       "Evolves leftmost Pokemon to",
       "the highest {C:attention}stage{}",
-      "and {C:attention}increases{} most", 
+      "and increases most {C:attention}scoring{}", 
       "number values if able",
       "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
     }
@@ -650,7 +650,7 @@ local transformation = {
   can_use = function(self, card)
     if G.jokers.cards and #G.jokers.cards > 0 then
       local joker = G.jokers.cards[1]
-      if joker.ability and joker.ability.extra and joker.ability.extra.ptype then
+      if joker.ability and joker.ability.extra and type(joker.ability.extra) == "table" and joker.ability.extra.ptype then
         return true
       else
         return false
