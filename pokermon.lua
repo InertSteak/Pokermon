@@ -7,93 +7,9 @@
 --- VERSION: 1.5.0
 
 pokermon = {}
--- Custom Rarity setup (based on Relic-Jokers)
-Game:set_globals()
-G.C.RARITY["poke_safari"] = HEX("F2C74E");
-local ip = SMODS.insert_pool
-function SMODS.insert_pool(pool, center, replace)
-    if pool == nil then pool = {} end
-    ip(pool, center, replace)
-end
-local get_badge_colourref = get_badge_colour
-function get_badge_colour(key)
-    local fromRef = get_badge_colourref(key)
-    if key == 'poke_safari' then return G.C.RARITY["poke_safari"] end
-    return fromRef
-end
-
---Load config
-local lovely = require("lovely")
-pokermon_config = SMODS.current_mod.config
-
---Load all Atlas
-SMODS.Atlas({
-    key = "modicon",
-    path = "icon.png",
-    px = 32,
-    py = 32
-})
-if pokermon_config.pokemon_num then
-  SMODS.Atlas({
-      key = "Pokedex1",
-      path = "Pokedex1Num.png",
-      px = 71,
-      py = 95
-  }):register()
-else
-  SMODS.Atlas({
-      key = "Pokedex1",
-      path = "Pokedex1.png",
-      px = 71,
-      py = 95
-  }):register()
-end
-
-SMODS.Atlas({
-    key = "balls",
-    path = "balls.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Mart1",
-    path = "Mart1.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "pokepack",
-    path = "pokepacks.png",
-    px = 71,
-    py = 95
-}):register()
-
---Custom colors for Types (humplydinkle wuz here)
-local pokecolors = loc_colour
-function loc_colour(_c, _default)
-  if not G.ARGS.LOC_COLOURS then
-    pokecolors()
-  end
-  G.ARGS.LOC_COLOURS["dark"] = HEX("0086a5")
-  G.ARGS.LOC_COLOURS["lightning"] = HEX("f8f800")
-  G.ARGS.LOC_COLOURS["fire"] = HEX("f81020")
-  G.ARGS.LOC_COLOURS["water"] = HEX("38b8f8")
-  G.ARGS.LOC_COLOURS["earth"] = HEX("e97333")
-  G.ARGS.LOC_COLOURS["fairy"] = HEX("ff3db6")
-  G.ARGS.LOC_COLOURS["fighting"] = HEX("b85838")
-  G.ARGS.LOC_COLOURS["colorless"] = HEX("c8c0f8")
-  G.ARGS.LOC_COLOURS["psychic"] = HEX("c135ff")
-  G.ARGS.LOC_COLOURS["metal"] = HEX("888080")
-  G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
-  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
-  G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
-  return pokecolors(_c, _default)
-end
 
 --Get mod path and load other files
-local mod_dir = ''..SMODS.current_mod.path
+mod_dir = ''..SMODS.current_mod.path
 
 --Load helper function file
 local helper, load_error = SMODS.load_file("pokefunctions.lua")
@@ -101,6 +17,23 @@ if load_error then
   sendDebugMessage ("The error is: "..load_error)
 else
   helper()
+end
+
+--Load Sprites file
+--Load UI file
+local sprite, load_error = SMODS.load_file("pokesprites.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  sprite()
+end
+
+--Load UI file
+local UI, load_error = SMODS.load_file("pokeui.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  UI()
 end
 
 --Load pokemon file
@@ -226,12 +159,6 @@ if not pokermon_config.jokers_only then
       end
     end
   end 
-end
-
-local il = init_localization
-function init_localization()
-    il()
-    G.localization.misc.v_text.ch_c_poke_master = {"Only Pokemon are allowed."}
 end
 
 function SMODS.current_mod.process_loc_text()
@@ -374,220 +301,4 @@ if not pokermon_config.jokers_only then
       end
       return m
   end
-end
-
---Config UI
-SMODS.current_mod.config_tab = function()
-    return {
-      n = G.UIT.ROOT,
-      config = {
-        align = "cm",
-        padding = 0.05,
-        colour = G.C.CLEAR,
-      },
-      nodes = {
-        create_toggle({
-          label = "Pokemon Only?",
-          ref_table = pokermon_config,
-          ref_value = "pokemon_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Jokers Only?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "jokers_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "No Evolutions?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "no_evos",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Pokeballs?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "pokeballs",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Pokemon Numbers?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "pokemon_num",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-      },
-    }
-end
-
-SMODS.current_mod.extra_tabs = function()
-  local scale = 0.75
-  return {
-    label = "Credits",
-    tab_definition_function = function()
-      return {
-        n = G.UIT.ROOT,
-        config = {
-          align = "cm",
-          padding = 0.05,
-          colour = G.C.CLEAR,
-        },
-        nodes = {
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Thanks to",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "InertSteak",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Larantula, Joey J. Jester",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "GayCoonie, Marie|Tsunami",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Yamper, Jevonnissocoolman",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "TheKuro, Ishtech",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "SDM0, SMG9000",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0.2,
-              align = "cm",
-            },
-            nodes = {
-              UIBox_button({
-                minw = 3.85,
-                button = "pokermon_github",
-                label = {"Github"}
-              })
-            }
-          },
-        },
-      }
-    end
-  }
-end
-function G.FUNCS.pokermon_github(e)
-	love.system.openURL("https://github.com/InertSteak/Pokermon")
 end
