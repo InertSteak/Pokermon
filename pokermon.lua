@@ -561,7 +561,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "SDM0",
+                  text = "SDM0, SMG9000",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
