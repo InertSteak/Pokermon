@@ -109,7 +109,7 @@ local haunter={
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex1",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -143,7 +143,7 @@ local haunter={
 local gengar={
   name = "gengar", 
   pos = {x = 2, y = 7}, 
-  config = {extra = {odds = 4}},
+  config = {extra = {odds = 6}},
   loc_txt = {      
     name = 'Gengar',      
     text = {
@@ -163,9 +163,9 @@ local gengar={
   stage = "Two", 
   ptype = "Psychic",
   atlas = "Pokedex1",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if not context.repetition and not context.individual and context.end_of_round and context.blueprint then
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gengar') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}

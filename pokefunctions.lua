@@ -270,22 +270,24 @@ energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
-      if v.ability.extra.ptype == self.etype or self.etype == "Trans" then
-        if v.ability.extra.energy_count then
-          v.ability.extra.energy_count = v.ability.extra.energy_count + 1
-        else
-          v.ability.extra.energy_count = 1
+      if (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
+        if (v.ability.extra.ptype == self.etype or self.etype == "Trans") then
+          if v.ability.extra.energy_count then
+            v.ability.extra.energy_count = v.ability.extra.energy_count + 1
+          else
+            v.ability.extra.energy_count = 1
+          end
+          energize(v, false)
+          applied = true
+        elseif self.etype == "Colorless" then
+          if v.ability.extra.c_energy_count then
+            v.ability.extra.c_energy_count = v.ability.extra.c_energy_count + 1
+          else
+            v.ability.extra.c_energy_count = 1
+          end
+          energize(v, self.etype, false)
+          applied = true
         end
-        energize(v, false)
-        applied = true
-      elseif self.etype == "Colorless" then
-        if v.ability.extra.c_energy_count then
-          v.ability.extra.c_energy_count = v.ability.extra.c_energy_count + 1
-        else
-          v.ability.extra.c_energy_count = 1
-        end
-        energize(v, self.etype, false)
-        applied = true
       end
     end
   end
@@ -294,7 +296,7 @@ end
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
-      if v.ability.extra.ptype == self.etype or self.etype == "Colorless" then
+      if (v.ability.extra.ptype == self.etype or self.etype == "Colorless") and (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
             for m, name in ipairs(energy_whitelist) do
