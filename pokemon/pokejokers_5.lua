@@ -206,16 +206,20 @@ local electabuzz={
 local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
+  config = {extra = {mult = 0, mult_mod = 2}},
   loc_txt = {      
     name = 'Magmar',      
     text = {
-      "If the {C:attention}first{} or {C:attention}second{}",
+      "If the {C:attention}first{}",
       "discard of the round has",
-      "only {C:attention}1{} card, destroy it."
+      "only {C:attention}1{} card, destroy it",
+      "and gain {C:mult}+#2#{} Mult",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -225,13 +229,24 @@ local magmar={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.discards_used < 2 and not G.RESET_JIGGLES end
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
     if context.discard and not context.blueprint then
-      if G.GAME.current_round.discards_used <= 1 and #context.full_hand == 1 then
+      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
         return {
           remove = true
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
         }
       end
     end
