@@ -777,9 +777,9 @@ local emergy = {
   loc_txt = {
     name = "Emergy",
     text = {
-      "Converts all held",
-      "{C:attention}Jolly Jokers{} into",
-      "random {C:green}Energy{} cards",
+      "For each {C:attention}Jolly Joker{}",
+      "you have create a",
+      "random {C:green}Energy{} card",
       "with {C:dark_edition}Negative{}"
     }
   },
@@ -794,10 +794,27 @@ local emergy = {
   soul_rate = .01,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
+  use = function(self, card)
+    --Code taken from Cryptid
+    local jollycount = 0
+    for i = 1, #G.jokers.cards do
+      if
+        G.jokers.cards[i].ability.name == "Jolly Joker"
+        or G.jokers.cards[i].edition and G.jokers.cards[i].edition.key == "e_cry_m"
+        or G.jokers.cards[i].ability.effect == "M Joker"
+      then
+        jollycount = jollycount + 1
+      end
+    end
+    for i= 1, jollycount do
+      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+      local edition = {negative = true}
+      _card:set_edition(edition, true)
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
   end,
-  in_pool = function(self)
+  can_use = function(self, card)
     return true
   end
 }
