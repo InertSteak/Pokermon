@@ -790,13 +790,13 @@ local slowpoke={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 6, 
   stage = "Basic", 
-  ptype = "Psychic",
+  ptype = "Water",
   atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -826,13 +826,13 @@ local slowbro={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "One", 
-  ptype = "Psychic",
+  ptype = "Water",
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
