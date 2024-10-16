@@ -59,6 +59,9 @@ for _, file in ipairs(pfiles) do
             return pokemon_in_pool(self, false)
           end
         end
+        if not item.config then
+          item.config = {}
+        end
         if item.ptype then
           if item.config and item.config.extra then
             item.config.extra.ptype = item.ptype

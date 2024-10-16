@@ -283,10 +283,11 @@ local grass_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Grass{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "Mart1",
@@ -312,10 +313,11 @@ local fire_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fire{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 0 },
   atlas = "Mart1",
@@ -341,10 +343,11 @@ local water_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Water{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 2, y = 0 },
   atlas = "Mart1",
@@ -370,10 +373,11 @@ local lightning_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Lightning{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 3, y = 0 },
   atlas = "Mart1",
@@ -399,10 +403,11 @@ local psychic_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Psychic{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 4, y = 0 },
   atlas = "Mart1",
@@ -428,10 +433,11 @@ local fighting_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fighting{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 5, y = 0 },
   atlas = "Mart1",
@@ -458,10 +464,11 @@ local colorless_energy = {
       "of leftmost Joker permanently if able",
       "Half as effective with ",
       "non-{C:attention}Colorless{} Jokers",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 6, y = 0 },
   atlas = "Mart1",
@@ -487,10 +494,11 @@ local darkness_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Dark{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 7, y = 0 },
   atlas = "Mart1",
@@ -516,10 +524,11 @@ local metal_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Metal{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 8, y = 0 },
   atlas = "Mart1",
@@ -545,10 +554,11 @@ local fairy_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Fairy{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 9, y = 0 },
   atlas = "Mart1",
@@ -574,10 +584,11 @@ local dragon_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Dragon{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 1 },
   atlas = "Mart1",
@@ -603,10 +614,11 @@ local earth_energy = {
       "Increases most {C:attention}scoring{} number values",
       "of leftmost {C:attention}Earth{} type Joker",
       "permanently if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 1 },
   atlas = "Mart1",
@@ -633,10 +645,11 @@ local transformation = {
       "the highest {C:attention}stage{}",
       "and increases most {C:attention}scoring{}", 
       "number values if able",
-      "{C:inactive}(Max of {C:attention}5{}{C:inactive} increases per Joker)"
+      "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 2, y = 1 },
   atlas = "Mart1",
@@ -707,6 +720,56 @@ local obituary = {
   end,
 }
 
+local nightmare = {
+  name = "nightmare",
+  key = "nightmare",
+  set = "Spectral",
+  loc_txt = {
+    name = "Nightmare",
+    text = {
+      "Destroys a random Pokemon",
+      "Joker and creates {C:attention}3{}",
+      "random {C:pink}Energy{} with {C:dark_edition}Negative{}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+  end,
+  pos = { x = 0, y = 3 },
+  atlas = "Mart1",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card)
+    local victims = {}
+    for k, v in pairs(G.jokers.cards) do
+      if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and not v.ability.eternal then
+        table.insert(victims, v)
+      end
+    end
+    if #victims > 0 then
+      local victim = pseudorandom_element(victims, pseudoseed("nightmare"))
+      local context = {}
+      remove(victim, victim, context)
+    end
+    for i= 1, 3 do
+      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+      local edition = {negative = true}
+      _card:set_edition(edition, true)
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+  end,
+  can_use = function(self, card)
+    for k, v in pairs(G.jokers.cards) do
+      if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype then
+        return true
+      end
+    end
+    return false
+  end,
+}
+
 local emergy = {
   name = "emergy",
   key = "emergy",
@@ -740,7 +803,7 @@ local emergy = {
 }
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, transformation, obituary}
+        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

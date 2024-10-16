@@ -17,6 +17,14 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
+          label = "Unlimited Energy?",
+          ref_table = pokermon_config,
+          ref_value = "unlimited_energy",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
           label = "Jokers Only?(requires restart)",
           ref_table = pokermon_config,
           ref_value = "jokers_only",

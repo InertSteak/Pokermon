@@ -1131,7 +1131,7 @@ local zapdos={
   name = "zapdos", 
   pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
-  config = {extra = {Xmult = 2, money_threshold = 25}},
+  config = {extra = {Xmult = 2, money_threshold = 20}},
   loc_txt = {      
     name = 'Zapdos',      
     text = {
