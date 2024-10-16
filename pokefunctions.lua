@@ -295,7 +295,7 @@ end
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
-      if (v.ability.extra.ptype == self.etype or self.etype == "Colorless") and (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
+      if (v.ability.extra.ptype == self.etype or self.etype == "Colorless") and (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
             for m, name in ipairs(energy_whitelist) do
