@@ -904,14 +904,14 @@ local magneton={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Metal'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 3, 
   cost = 6, 
   stage = "Two", 
-  ptype = "Metal",
+  ptype = "Lightning",
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
