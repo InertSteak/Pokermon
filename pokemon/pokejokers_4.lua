@@ -151,6 +151,7 @@ local gengar={
       "{C:green}#1# in #2#{} chance to",
       "add {C:dark_edition}Negative{} to a",
       "random {C:attention}Joker{}",
+      "at end of round",
       "{C:inactive}(includes self){}"
     } 
   },
@@ -821,6 +822,7 @@ local koffing={
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
       end
     end
+    return level_evo(self, card, context, "j_poke_weezing")
   end
 }
 local weezing={

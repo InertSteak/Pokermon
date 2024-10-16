@@ -119,11 +119,13 @@ local abra={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
-        if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          end
         end
       end
     end
@@ -160,11 +162,13 @@ local kadabra={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
-        if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+        if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          end
         end
       end
     end
@@ -199,11 +203,13 @@ local alakazam={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
-        if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          end
         end
       end
     end
@@ -616,6 +622,7 @@ local graveler={
   end,
   rarity = 3, 
   cost = 6, 
+  item_req = "linkcable",
   stage = "One", 
   ptype = "Earth",
   atlas = "Pokedex1",

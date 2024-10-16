@@ -608,7 +608,7 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 5}},
+  config = {extra = {money = 6}},
   loc_txt = {      
     name = 'Jolteon',      
     text = {
