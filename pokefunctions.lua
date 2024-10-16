@@ -138,8 +138,9 @@ evolve = function(self, card, context, forced_key)
     G.E_MANAGER:add_event(Event({
         remove(self, card, context)
       }))
-
-    local new_card = create_card('Joker', G.jokers, nil, nil, nil, nil, forced_key)
+    
+    local temp_card = {set = "Joker", area = G.jokers, key = forced_key, no_edition = true}
+    local new_card = SMODS.create_card(temp_card)
     
     if previous_edition then
       new_card.edition = previous_edition
