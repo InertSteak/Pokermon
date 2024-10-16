@@ -496,6 +496,7 @@ local ditto={
   ptype = "Colorless",
   atlas = "Pokedex1",
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context) --mostly copied from how invisible joker works
     if context.selling_self and not context.blueprint then
       local eval = function(card) return (card.ability.loyalty_remaining == 0) and not G.RESET_JIGGLES end
@@ -702,6 +703,7 @@ local porygon={
   ptype = "Colorless",
   atlas = "Pokedex1",
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.destroyed = card.ability.extra.destroyed + 1 

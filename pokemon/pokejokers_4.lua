@@ -815,6 +815,7 @@ local koffing={
   ptype = "Dark",
   atlas = "Pokedex1",
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and not context.blueprint then
       if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
@@ -846,6 +847,7 @@ local weezing={
   ptype = "Dark",
   atlas = "Pokedex1",
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and not context.blueprint then
       if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
