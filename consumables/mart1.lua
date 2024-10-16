@@ -669,8 +669,42 @@ local transformation = {
         evolve(G.jokers.cards[1], G.jokers.cards[1], context, forced_key)
       end
     end
-
   end
+}
+
+local obituary = {
+  name = "obituary",
+  key = "obituary",
+  set = "Spectral",
+  config = {extra = "Pink", max_highlighted = 1},
+  loc_txt = {
+    name = "Obituary",
+    text = {
+      "Adds a {C:pink}Pink{} seal",
+      "to {C:attention}1{} selected card",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'poke_pink_seal_seal', set = 'Other'}
+  end,
+  pos = { x = 1, y = 3 },
+  atlas = "Mart1",
+  cost = 4,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card)
+    local conv_card = G.hand.highlighted[1]
+    G.E_MANAGER:add_event(Event({func = function()
+      play_sound('tarot1')
+      return true end }))
+    
+    G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+        conv_card:set_seal("poke_pink_seal", nil, true)
+        return true end }))
+    
+    delay(0.5)
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+  end,
 }
 
 local emergy = {
@@ -706,7 +740,7 @@ local emergy = {
 }
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, transformation}
+        fairy_energy, dragon_energy, earth_energy, transformation, obituary}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

@@ -143,6 +143,26 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
+  --Load seals
+  local pseals = NFS.getDirectoryItems(mod_dir.."seals")
+
+  for _, file in ipairs(pseals) do
+    sendDebugMessage ("The file is: "..file)
+    local seal, load_error = SMODS.load_file("seals/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_seal = seal()
+      if curr_seal.init then curr_seal:init() end
+      
+      for i, item in ipairs(curr_seal.list) do
+        SMODS.Seal(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
   --Load challenges file
   local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
 

@@ -62,6 +62,13 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "pinkseal",
+    path = "pinkseal.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)
@@ -81,5 +88,6 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
   G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
   G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
+  G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
   return pokecolors(_c, _default)
 end

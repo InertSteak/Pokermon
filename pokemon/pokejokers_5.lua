@@ -261,7 +261,8 @@ local pinsir={
     text = {
       "{X:mult,C:white} X#1# {} Mult",
       "{C:attention}Leftmost{} Joker becomes",
-      "{C:attention}pinned{} at end of shop"
+      "{C:attention}pinned{} at end of shop",
+      "{C:attention}Unpin{} that Joker at end of round"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -288,6 +289,12 @@ local pinsir={
       if not G.jokers.cards[1].pinned then
         G.jokers.cards[1].pinned = true
         card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = "Pinned!", colour = G.C.CHIPS})
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round then
+      if G.jokers.cards[1].pinned then
+        G.jokers.cards[1].pinned = false
+        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = "Unpinned!", colour = G.C.CHIPS})
       end
     end
   end
@@ -522,17 +529,18 @@ local ditto={
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
-  config = {extra = {money = 2}},
+  config = {extra = {money = 2, limit = 0, max = 5}},
   loc_txt = {      
     name = 'Eevee',      
     text = {
-      "Earn {C:money}$#1#{}",
-      "per {C:green}reroll{}"
+      "Earn {C:money}$#1#{} for",
+      "the first {C:attention}5{} {C:green}rerolls{}",
+      "{C:inactive}Curently {C:attention}#2#{C:inactive}/#3#"
     } 
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
-    return {vars = {center.ability.extra.money}}
+    return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
   end,
   rarity = 1, 
   cost = 4,
@@ -542,12 +550,16 @@ local eevee={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop then
+    if context.reroll_shop and card.ability.extra.limit < 5 then
+      card.ability.extra.limit = card.ability.extra.limit + 1
       ease_dollars(card.ability.extra.money)
       return {
           message = localize('$')..card.ability.extra.money,
           colour = G.C.MONEY
       }
+    end
+    if context.ending_shop and not context.blueprint then
+      card.ability.extra.limit = 0
     end
     return item_evo(self, card, context, nil)
   end
@@ -1089,21 +1101,22 @@ local articuno={
       _card = context.full_hand[1]
       if not _card.seal then
         local seal_type = pseudorandom(pseudoseed('articuno'))
-        if seal_type > 0.75 then _card:set_seal('Red', true)
-        elseif seal_type > 0.5 then _card:set_seal('Blue', true)
-        elseif seal_type > 0.25 then _card:set_seal('Gold', true)
-        else _card:set_seal('Purple', true)
+        if seal_type > 0.80 then _card:set_seal('Red', true)
+        elseif seal_type > 0.60 then _card:set_seal('Blue', true)
+        elseif seal_type > 0.40 then _card:set_seal('Gold', true)
+        elseif seal_type > 0.20 then _card:set_seal('Purple', true)
+        else _card:set_seal('poke_pink_seal', true)
         end
       end
       if _card.ability.name == "Default Base" then
         local enhancement_type = pseudorandom(pseudoseed('articuno'))
-        if enhancement_type > 87.5 then _card:set_ability(G.P_CENTERS.m_bonus, nil, true)
-        elseif enhancement_type > 75 then _card:set_ability(G.P_CENTERS.m_mult, nil, true)
-        elseif enhancement_type > 62.5 then _card:set_ability(G.P_CENTERS.m_wild, nil, true)
-        elseif enhancement_type > 50 then _card:set_ability(G.P_CENTERS.m_glass, nil, true)
-        elseif enhancement_type > 37.5 then _card:set_ability(G.P_CENTERS.m_steel, nil, true)
-        elseif enhancement_type > 25 then _card:set_ability(G.P_CENTERS.m_stone, nil, true)
-        elseif enhancement_type > 12.5 then _card:set_ability(G.P_CENTERS.m_gold, nil, true)
+        if enhancement_type > .875 then _card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+        elseif enhancement_type > .75 then _card:set_ability(G.P_CENTERS.m_mult, nil, true)
+        elseif enhancement_type > .625 then _card:set_ability(G.P_CENTERS.m_wild, nil, true)
+        elseif enhancement_type > .50 then _card:set_ability(G.P_CENTERS.m_glass, nil, true)
+        elseif enhancement_type > .375 then _card:set_ability(G.P_CENTERS.m_steel, nil, true)
+        elseif enhancement_type > .25 then _card:set_ability(G.P_CENTERS.m_stone, nil, true)
+        elseif enhancement_type > .125 then _card:set_ability(G.P_CENTERS.m_gold, nil, true)
         else _card:set_ability(G.P_CENTERS.m_lucky, nil, true)
         end
       end
@@ -1118,7 +1131,7 @@ local zapdos={
   name = "zapdos", 
   pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
-  config = {extra = {Xmult = 2, money = 25}},
+  config = {extra = {Xmult = 2, money_threshold = 25}},
   loc_txt = {      
     name = 'Zapdos',      
     text = {
@@ -1129,7 +1142,7 @@ local zapdos={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.money, math.max(1, center.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/center.ability.extra.money))}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.money_threshold , math.max(1, center.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/                    center.ability.extra.money_threshold))}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -1140,7 +1153,7 @@ local zapdos={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money)
+        local Xmult = card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
         if Xmult > 0 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
