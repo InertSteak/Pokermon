@@ -964,11 +964,13 @@ local farfetchd={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and pseudorandom('farfet') < G.GAME.probabilities.normal/card.ability.extra.odds then
         local count = find_joker('leek')
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult * #count}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult * #count
-        }
+        if #count > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult * #count}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult * #count
+          }
+        end
       end
     end
   end
