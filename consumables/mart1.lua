@@ -1,7 +1,7 @@
 local pokeball = {
   name = "pokeball",
   key = "pokeball",
-  set = "Tarot",
+  set = "Item",
   loc_txt = {
     name = "Pokeball",
     text = {
@@ -13,8 +13,8 @@ local pokeball = {
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
   end,
-  pos = { x = 0, y = 2 },
-  atlas = "Mart1",
+  pos = { x = 0, y = 3 },
+  atlas = "Mart",
   cost = 3,
   pokeball = true,
   unlocked = true,
@@ -68,7 +68,7 @@ local pokeball = {
 local greatball = {
   name = "greatball",
   key = "greatball",
-  set = "Tarot",
+  set = "Item",
   loc_txt = {
     name = "Greatball",
     text = {
@@ -80,8 +80,8 @@ local greatball = {
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
   end,
-  pos = { x = 1, y = 2 },
-  atlas = "Mart1",
+  pos = { x = 1, y = 3 },
+  atlas = "Mart",
   cost = 4,
   pokeball = true,
   hidden = true,
@@ -150,12 +150,12 @@ local ultraball = {
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage2'}
   end,
-  pos = { x = 2, y = 2 },
-  atlas = "Mart1",
+  pos = { x = 2, y = 3 },
+  atlas = "Mart",
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "Tarot",
+  soul_set = "Item",
   soul_rate = .01,
   unlocked = true,
   discovered = true,
@@ -217,13 +217,13 @@ local masterball = {
       "{C:inactive}(Must have room)"
     }
   },
-  pos = { x = 3, y = 2 },
+  pos = { x = 3, y = 3 },
   soul_pos = { x = 4, y = 2},
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "Tarot",
+  soul_set = "Item",
   soul_rate = .003,
   unlocked = true,
   discovered = true,
@@ -290,7 +290,7 @@ local grass_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Grass",
   unlocked = true,
@@ -320,7 +320,7 @@ local fire_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Fire",
   unlocked = true,
@@ -350,7 +350,7 @@ local water_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 2, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Water",
   unlocked = true,
@@ -380,7 +380,7 @@ local lightning_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 3, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Lightning",
   unlocked = true,
@@ -410,7 +410,7 @@ local psychic_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 4, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Psychic",
   unlocked = true,
@@ -440,7 +440,7 @@ local fighting_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 5, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Fighting",
   unlocked = true,
@@ -471,7 +471,7 @@ local colorless_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 6, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Colorless",
   unlocked = true,
@@ -501,7 +501,7 @@ local darkness_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 7, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Dark",
   unlocked = true,
@@ -531,7 +531,7 @@ local metal_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 8, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Metal",
   unlocked = true,
@@ -561,7 +561,7 @@ local fairy_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 9, y = 0 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Fairy",
   unlocked = true,
@@ -591,7 +591,7 @@ local dragon_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 1 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Dragon",
   unlocked = true,
@@ -621,7 +621,7 @@ local earth_energy = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 1 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Earth",
   unlocked = true,
@@ -652,7 +652,7 @@ local transformation = {
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 2, y = 1 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   etype = "Trans",
   hidden = true,
@@ -700,8 +700,8 @@ local obituary = {
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'poke_pink_seal_seal', set = 'Other'}
   end,
-  pos = { x = 1, y = 3 },
-  atlas = "Mart1",
+  pos = { x = 1, y = 4 },
+  atlas = "Mart",
   cost = 4,
   unlocked = true,
   discovered = true,
@@ -735,8 +735,8 @@ local nightmare = {
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
-  pos = { x = 0, y = 3 },
-  atlas = "Mart1",
+  pos = { x = 0, y = 4 },
+  atlas = "Mart",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -787,7 +787,7 @@ local emergy = {
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
   pos = { x = 3, y = 1 },
-  atlas = "Mart1",
+  atlas = "Mart",
   cost = 3,
   hidden = true,
   soul_set = "Energy",
@@ -818,6 +818,15 @@ local emergy = {
     return true
   end
 }
+
+if pokermon_config.jokers_only then
+  pokeball.set = "Tarot"
+  pokeball.pos.y = 2
+  greatball.set = "Tarot"
+  greatball.pos.y = 2
+  ultraball.pos.y = 2
+  masterball.pos.y = 2
+end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
         fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare}

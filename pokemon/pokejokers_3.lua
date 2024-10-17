@@ -14,7 +14,7 @@ local poliwhirl={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_waterstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_waterstone'}
     return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
                     center.ability.extra.mults[center.ability.extra.indice]}}
   end,
@@ -149,7 +149,7 @@ local kadabra={
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 3, 
@@ -278,7 +278,7 @@ local machoke={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = 3, 
@@ -412,7 +412,7 @@ local weepinbell={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leafstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leafstone'}
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
@@ -617,7 +617,7 @@ local graveler={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_linkcable'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
@@ -941,7 +941,7 @@ local farfetchd={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leek'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leek'}
     return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
@@ -953,7 +953,7 @@ local farfetchd={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
+      local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
@@ -1235,7 +1235,7 @@ local shellder={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_waterstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_waterstone'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 

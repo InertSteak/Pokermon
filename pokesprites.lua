@@ -16,7 +16,6 @@ end
 
 --Load config
 local lovely = require("lovely")
-pokermon_config = SMODS.current_mod.config
 
 --Load all Atlas
 SMODS.Atlas({
@@ -56,15 +55,8 @@ else
 end
 
 SMODS.Atlas({
-    key = "balls",
-    path = "balls.png",
-    px = 71,
-    py = 95
-}):register()
-
-SMODS.Atlas({
-    key = "Mart1",
-    path = "Mart1.png",
+    key = "Mart",
+    path = "Mart.png",
     px = 71,
     py = 95
 }):register()
@@ -103,5 +95,6 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
   G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
   G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
+  G.ARGS.LOC_COLOURS["item"] = HEX("9AA4B7")
   return pokecolors(_c, _default)
 end

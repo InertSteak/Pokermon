@@ -8,17 +8,23 @@ local pack1 = {
     name = "Pocket Pack",
     text = {
         "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2# Energy Cards{}",
+        "up to {C:attention}#2#",
+        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
     },
   },
-	config = { extra = 2, choose = 1 },
+	config = { extra = 3, choose = 1 },
 	cost = 4,
 	order = 1,
 	weight = 3,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-		return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    local card_type = pseudorandom(pseudoseed('pocket'))
+    if card_type > .40 then
+      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    else
+      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+    end
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -36,17 +42,23 @@ local pack2 = {
     name = "Pocket Pack",
     text = {
         "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2# Energy Cards{}",
+        "up to {C:attention}#2#",
+        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
     },
   },
-	config = { extra = 2, choose = 1 },
+	config = { extra = 3, choose = 1 },
 	cost = 4,
 	order = 2,
 	weight = 3,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-		return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    local card_type = pseudorandom(pseudoseed('pocket'))
+    if card_type > .40 then
+      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    else
+      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+    end
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -64,17 +76,23 @@ local pack3 = {
     name = "Jumbo Pocket Pack",
     text = {
         "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2# Energy Cards{}",
+        "up to {C:attention}#2#",
+        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
     },
   },
-	config = { extra = 4, choose = 1 },
+	config = { extra = 5, choose = 1 },
 	cost = 6,
 	order = 3,
 	weight = 1.5,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-		return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    local card_type = pseudorandom(pseudoseed('pocket'))
+    if card_type > .40 then
+      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    else
+      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+    end
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -92,17 +110,23 @@ local pack4 = {
     name = "Mega Pocket Pack",
     text = {
         "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2# Energy Cards{}",
+        "up to {C:attention}#2#",
+        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
     },
   },
-	config = { extra = 4, choose = 2 },
+	config = { extra = 5, choose = 2 },
 	cost = 8,
 	order = 4,
 	weight = 0.75,
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-		return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    local card_type = pseudorandom(pseudoseed('pocket'))
+    if card_type > .40 then
+      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    else
+      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+    end
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }

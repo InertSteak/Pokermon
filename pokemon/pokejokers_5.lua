@@ -1036,7 +1036,7 @@ local snorlax={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leftovers'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leftovers'}
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
@@ -1048,7 +1048,7 @@ local snorlax={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
+      local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})

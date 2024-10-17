@@ -1036,7 +1036,7 @@ local pikachu={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_thunderstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_thunderstone'}
     return {vars = {G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)}}
   end,
   rarity = 2, 
@@ -1250,7 +1250,7 @@ local nidorina={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 

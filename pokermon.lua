@@ -10,6 +10,7 @@ pokermon = {}
 
 --Get mod path and load other files
 mod_dir = ''..SMODS.current_mod.path
+pokermon_config = SMODS.current_mod.config
 
 --Load helper function file
 local helper, load_error = SMODS.load_file("pokefunctions.lua")
@@ -85,20 +86,20 @@ for _, file in ipairs(pfiles) do
   end
 end
 
-if not pokermon_config.jokers_only then
-  --Load consumable types
-  local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
+--Load consumable types
+local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
 
-  for _, file in ipairs(pconsumable_types) do
-    sendDebugMessage ("The file is: "..file)
-    local con_type, load_error = SMODS.load_file("consumable types/"..file)
-    if load_error then
-      sendDebugMessage ("The error is: "..load_error)
-    else
-      local curr_type = con_type()
-      if curr_type.init then curr_type:init() end
-      
-      for i, item in ipairs(curr_type.list) do
+for _, file in ipairs(pconsumable_types) do
+  sendDebugMessage ("The file is: "..file)
+  local con_type, load_error = SMODS.load_file("consumable types/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_type = con_type()
+    if curr_type.init then curr_type:init() end
+    
+    for i, item in ipairs(curr_type.list) do
+      if (not pokermon_config.jokers_only) or (not pokermon_config.no_evos and item.key == "Item") then
         SMODS.ConsumableType(item)
       end
     end

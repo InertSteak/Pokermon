@@ -98,7 +98,7 @@ local nidorino={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
@@ -177,7 +177,7 @@ local clefairy={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
@@ -276,7 +276,7 @@ local vulpix={
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
     info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_firestone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_firestone'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   calculate = function(self, card, context)
@@ -346,7 +346,7 @@ local jigglypuff={
   }, 
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Fairy'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_moonstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_moonstone'}
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
@@ -594,7 +594,7 @@ local gloom={
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_poke_leafstone'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leafstone'}
 		return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
