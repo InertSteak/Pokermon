@@ -8,7 +8,8 @@ local moonstone = {
     name = "Moon Stone",
     text = {
       "Creates a {C:attention}Moon{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -25,9 +26,11 @@ local moonstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -45,7 +48,8 @@ local sunstone = {
     name = "Sun Stone",
     text = {
       "Creates a {C:attention}Sun{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -62,9 +66,11 @@ local sunstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_sun')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_sun')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -82,7 +88,8 @@ local waterstone = {
     name = "Water Stone",
     text = {
       "Creates a {C:attention}Star{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -99,9 +106,11 @@ local waterstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -119,7 +128,8 @@ local thunderstone = {
     name = "Thunder Stone",
     text = {
       "Creates a {C:attention}Devil{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -136,9 +146,11 @@ local thunderstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_devil')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_devil')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -156,7 +168,8 @@ local firestone = {
     name = "Fire Stone",
     text = {
       "Creates a {C:attention}Lovers{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -173,9 +186,11 @@ local firestone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -193,7 +208,8 @@ local leafstone = {
     name = "Leaf Stone",
     text = {
       "Creates a {C:attention}World{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -210,9 +226,11 @@ local leafstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -230,7 +248,8 @@ local linkcable = {
     name = "Linking Cord",
     text = {
       "Creates a {C:attention}Death{} card",
-      "{C:attention}Evolution Card{}"
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -247,9 +266,11 @@ local linkcable = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_death')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_death')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
     if #G.jokers.cards > 0 then
       return evo_item_use(self, card, area, copier)
     end
@@ -267,7 +288,8 @@ local leftovers = {
     name = "Leftovers",
     text = {
       "Creates a {C:attention}Hanged Man{} card",
-      "{C:attention}Held Card{}"
+      "{C:attention}Held Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -283,9 +305,11 @@ local leftovers = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_hanged_man')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_hanged_man')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
   end,
   in_pool = function(self)
     return true
@@ -300,7 +324,8 @@ local leek = {
     name = "Leek",
     text = {
       "Creates a {C:attention}Wheel of Fortune{} card",
-      "{C:attention}Held Card{}"
+      "{C:attention}Held Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -316,9 +341,11 @@ local leek = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_wheel_of_fortune')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_wheel_of_fortune')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
   end,
   in_pool = function(self)
     return true
@@ -333,7 +360,8 @@ local thickclub = {
     name = "Thick Club",
     text = {
       "Creates a {C:attention}Strength{} card",
-      "{C:attention}Held Card{}"
+      "{C:attention}Held Card{}",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -349,9 +377,11 @@ local thickclub = {
     return true
   end,
   use = function(self, card, area, copier)
-    local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_strength')
-    _card:add_to_deck()
-    G.consumeables:emplace(_card)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_strength')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
   end,
   in_pool = function(self)
     return true
