@@ -110,9 +110,13 @@ evolve = function(self, card, context, forced_key)
     local previous_rental = nil
     local previous_energy_count = nil
     local previous_c_energy_count = nil
+    local shiny = nil
     
     if card.edition then
       previous_edition = card.edition
+      if card.edition.poke_shiny then
+        shiny = true
+      end
     end
     
     if card.ability.perishable then
@@ -143,7 +147,12 @@ evolve = function(self, card, context, forced_key)
     local new_card = SMODS.create_card(temp_card)
     
     if previous_edition then
-      new_card.edition = previous_edition
+      if shiny then
+        local edition = {poke_shiny = true}
+         new_card:set_edition(edition, true)
+      else
+        new_card.edition = previous_edition
+      end
     end
     
     if previous_perishable then

@@ -32,10 +32,24 @@ if pokermon_config.pokemon_num then
       px = 71,
       py = 95
   }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex1",
+      path = "Shinydex1Num.png",
+      px = 71,
+      py = 95
+  }):register()
 else
   SMODS.Atlas({
       key = "Pokedex1",
       path = "Pokedex1.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex1",
+      path = "Shinydex1.png",
       px = 71,
       py = 95
   }):register()

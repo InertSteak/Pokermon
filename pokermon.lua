@@ -166,6 +166,26 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
+  --Load editions
+  local editions = NFS.getDirectoryItems(mod_dir.."editions")
+
+  for _, file in ipairs(editions) do
+    sendDebugMessage ("The file is: "..file)
+    local edition, load_error = SMODS.load_file("editions/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_edition = edition()
+      if curr_edition.init then curr_edition:init() end
+      
+      for i, item in ipairs(curr_edition.list) do
+        SMODS.Edition(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
   --Load challenges file
   local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
 

@@ -40,3 +40,25 @@ pattern = "if next(find_joker('Splash')) then"
 position = "at"
 payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) or next(find_joker('gyarados')) then"
 match_indent = true
+
+# Extra Booster Functionality
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "for i = 1, 2 do"
+position = "at"
+payload = "for i = 1, (G.GAME.modifiers.cry_booster_packs or G.GAME.modifiers.poke_booster_packs) or 2 do"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.added_to_deck = false"
+position = "after"
+payload = '''
+if self.edition and self.edition.poke_shiny and G.jokers then
+  G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+end
+'''
+match_indent = true
+
