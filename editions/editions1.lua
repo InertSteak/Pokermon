@@ -35,10 +35,17 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "poke_Pokedex1"
         end
-        if G.GAME.modifiers.poke_booster_packs then
-          G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
-        else
-          G.GAME.modifiers.poke_booster_packs = 3
+        --we don't want to do this in the collection screen
+        if card.area and card.area.config and not card.area.config.collection then
+          if card.area == G.pack_cards or card.area == G.shop_jokers then
+            card.config.shiny_on_add = true
+          else
+            if G.GAME.modifiers.poke_booster_packs then
+              G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
+            else
+              G.GAME.modifiers.poke_booster_packs = 3
+            end
+          end
         end
     end,
     on_remove = function(card)

@@ -150,6 +150,7 @@ evolve = function(self, card, context, forced_key)
       if shiny then
         local edition = {poke_shiny = true}
          new_card:set_edition(edition, true)
+         new_card.config.shiny_on_add = true
       else
         new_card.edition = previous_edition
       end

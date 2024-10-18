@@ -12,6 +12,7 @@ local pink_seal = {
   },
 	badge_colour = HEX("FF7ABF"), --pink
 	atlas = "pinkseal",
+  pos = {x = 0, y = 0},
 	calculate = function(self, card, context)
 		if context.cardarea == G.play and not context.repetition_only and G.GAME.current_round.hands_played == 0 then
 			G.E_MANAGER:add_event(Event({

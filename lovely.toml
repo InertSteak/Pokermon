@@ -53,6 +53,22 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+pattern = "self.added_to_deck = true"
+position = "after"
+payload = '''
+if self.config.shiny_on_add then
+  if G.GAME.modifiers.poke_booster_packs then
+    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
+  else
+    G.GAME.modifiers.poke_booster_packs = 3
+  end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = "self.added_to_deck = false"
 position = "after"
 payload = '''
