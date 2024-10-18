@@ -236,6 +236,9 @@ scaling_evo = function (self, card, context, forced_key, current, target)
 end
 
 pokemon_in_pool = function (self, return_highest)
+  if next(find_joker("Showman")) then
+      return true
+  end
   local name
   if not self.name and self.ability.name then
     name = self.ability.name
@@ -261,7 +264,7 @@ pokemon_in_pool = function (self, return_highest)
     found_other = false
     in_family = false
   end
-  if next(find_joker(name)) and not next(find_joker("Showman")) then
+  if next(find_joker(name)) then
     return false
   else
     if self.enhancement_gate then

@@ -167,6 +167,26 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
+  --Load stickers
+  local pseals = NFS.getDirectoryItems(mod_dir.."stickers")
+
+  for _, file in ipairs(pseals) do
+    sendDebugMessage ("The file is: "..file)
+    local sticker, load_error = SMODS.load_file("stickers/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_sticker = sticker()
+      if curr_sticker.init then curr_sticker:init() end
+      
+      for i, item in ipairs(curr_sticker.list) do
+        SMODS.Sticker(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
   --Load editions
   local editions = NFS.getDirectoryItems(mod_dir.."editions")
 

@@ -388,6 +388,38 @@ local thickclub = {
   end
 }
 
+local teraorb = {
+  name = "teraorb",
+  key = "teraorb",
+  set = "Item",
+  loc_txt = {
+    name = "Tera Orb",
+    text = {
+      "Applies a random",
+      "{C:pink}Energy{} sticker",
+      "to leftmost Joker{}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_strength
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {"Cubone and Marowak"}}
+  end,
+  pos = { x = 9, y = 4 },
+  atlas = "Mart",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return #G.jokers.cards > 0
+  end,
+  use = function(self, card, area, copier)
+    G.jokers.cards[1].ability.fire_sticker = true
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
 return {name = "Items",
         list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub,}
 }
