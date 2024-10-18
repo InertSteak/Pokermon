@@ -23,7 +23,7 @@ local shiny = ({
     unlocked = true,
     config = {},
     in_shop = true,
-    weight = 1,
+    weight = 2,
     extra_cost = 6,
     apply_to_float = true,
     loc_vars = function(self)
@@ -46,6 +46,8 @@ local shiny = ({
               G.GAME.modifiers.poke_booster_packs = 3
             end
           end
+        elseif not card.area then
+          card.config.shiny_on_add = true
         end
     end,
     on_remove = function(card)
