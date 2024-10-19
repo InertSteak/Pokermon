@@ -570,18 +570,19 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 15}},
+  config = {extra = {chips = 0, chip_mod = 50, rerolls = 0}},
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
-      "Gains {C:chips}+#3#{} Chips",
-      "per {C:green}reroll{}",
-      "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+      "Gains {C:chips}+#2#{} Chips",
+      "for every {C:attention}3{} {C:green}rerolls{}",
+      "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/3 rerolls)",
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.chips, center.ability.extra.chip_mod}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.rerolls}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -591,12 +592,20 @@ local vaporeon={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop then
-      if not context.blueprint then
+    if context.reroll_shop and not context.blueprint then
+      if card.ability.extra.rerolls < 2 then
+        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.CHIPS})
+        if card.ability.extra.rerolls == 2 then
+          local eval = function() return card.ability.extra.rerolls == 2 end
+          juice_card_until(card, eval, true)
+        end
+      else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.CHIPS})
+        card.ability.extra.rerolls = 0
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
-      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      return true
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -612,50 +621,59 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 6}},
+  config = {extra = {money = 15, rerolls = 0}},
   loc_txt = {      
     name = 'Jolteon',      
     text = {
       "Earn {C:money}$#1#{}",
-      "per {C:green}reroll{}"
+      "for every {C:attention}3{} {C:green}rerolls{}",
+      "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/3 rerolls)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money}}
+    return {vars = {center.ability.extra.money, center.ability.extra.rerolls}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   ptype = "Lightning",
   atlas = "Pokedex1",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop then
-      ease_dollars(card.ability.extra.money)
-      return {
-          message = localize('$')..card.ability.extra.money,
-          colour = G.C.MONEY
-      }
+    if context.reroll_shop and not context.blueprint then
+      if card.ability.extra.rerolls < 2 then
+        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.MONEY})
+        if card.ability.extra.rerolls == 2 then
+          local eval = function() return card.ability.extra.rerolls == 2 end
+          juice_card_until(card, eval, true)
+        end
+      else
+        ease_dollars(card.ability.extra.money)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.MONEY})
+        card.ability.extra.rerolls = 0
+      end
     end
   end
 }
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {money = 2, Xmult = 1, Xmult_mod = .05}},
+  config = {extra = {Xmult = 1, Xmult_mod = .2, rerolls = 0}},
   loc_txt = {      
     name = 'Flareon',      
     text = {
-      "Gains {X:red,C:white} X#3# {} Mult",
-      "per {C:green}reroll{}",
-      "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
+      "Gains {X:red,C:white} X#2# {} Mult",
+      "for every {C:attention}3{} {C:green}rerolls{}",
+      "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/3 rerolls)",
+      "{C:inactive}(Currently {X:red,C:white} X#1# {}{C:inactive} Mult)"
     } 
   }, 
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rerolls}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -664,12 +682,20 @@ local flareon={
   atlas = "Pokedex1",
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop then
-      if not context.blueprint then
+    if context.reroll_shop and not context.blueprint then
+      if card.ability.extra.rerolls < 2 then
+        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.XMULT})
+        if card.ability.extra.rerolls == 2 then
+          local eval = function() return card.ability.extra.rerolls == 2 end
+          juice_card_until(card, eval, true)
+        end
+      else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.XMULT})
+        card.ability.extra.rerolls = 0
         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
-      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      return true
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
