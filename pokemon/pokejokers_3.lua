@@ -85,7 +85,7 @@ local poliwrath={
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {scoring_xmult}}, 
           colour = G.C.XMULT,
-          xmult_mod = scoring_mult
+          Xmult_mod = scoring_xmult
         }
       end
     end
