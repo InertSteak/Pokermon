@@ -320,7 +320,7 @@ energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and energy_matches(v, self.etype, true) then
-      if pokermon_config.unlimited_energy or (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
+      if pokermon_config.unlimited_energy or (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
         local viable = false
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
@@ -358,7 +358,7 @@ end
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then
-      if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
+      if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
             for m, name in ipairs(energy_whitelist) do

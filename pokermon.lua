@@ -49,38 +49,40 @@ for _, file in ipairs(pfiles) do
     local curr_pokemon = pokemon()
     if curr_pokemon.init then curr_pokemon:init() end
     
-    for i, item in ipairs(curr_pokemon.list) do
-      if (pokermon_config.jokers_only and not item.joblacklist) or not pokermon_config.jokers_only  then
-        item.discovered = true
-        if not item.key then
-          item.key = item.name
-        end
-        if not pokermon_config.no_evos and item.name ~= "taurosh" then
-          item.in_pool = function(self)
-            return pokemon_in_pool(self, false)
+    if curr_pokemon.list and #curr_pokemon.list > 0 then
+      for i, item in ipairs(curr_pokemon.list) do
+        if (pokermon_config.jokers_only and not item.joblacklist) or not pokermon_config.jokers_only  then
+          item.discovered = true
+          if not item.key then
+            item.key = item.name
           end
-        end
-        if not item.config then
-          item.config = {}
-        end
-        if item.ptype then
-          if item.config and item.config.extra then
-            item.config.extra.ptype = item.ptype
-          elseif item.config then
-            item.config.extra = {ptype = item.ptype}
+          if not pokermon_config.no_evos and item.name ~= "taurosh" then
+            item.in_pool = function(self)
+              return pokemon_in_pool(self, false)
+            end
           end
-        end
-        if item.item_req then
-          if item.config and item.config.extra then
-            item.config.extra.item_req = item.item_req
-          elseif item.config then
-            item.config.extra = {item_req = item.item_req}
+          if not item.config then
+            item.config = {}
           end
+          if item.ptype then
+            if item.config and item.config.extra then
+              item.config.extra.ptype = item.ptype
+            elseif item.config then
+              item.config.extra = {ptype = item.ptype}
+            end
+          end
+          if item.item_req then
+            if item.config and item.config.extra then
+              item.config.extra.item_req = item.item_req
+            elseif item.config then
+              item.config.extra = {item_req = item.item_req}
+            end
+          end
+          if pokermon_config.jokers_only and item.rarity == "poke_safari" then
+            item.rarity = 3
+          end
+          SMODS.Joker(item)
         end
-        if pokermon_config.jokers_only and item.rarity == "poke_safari" then
-          item.rarity = 3
-        end
-        SMODS.Joker(item)
       end
     end
   end
@@ -201,6 +203,26 @@ if not pokermon_config.jokers_only then
       
       for i, item in ipairs(curr_edition.list) do
         SMODS.Edition(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
+  --Load vouchers
+  local vouchers = NFS.getDirectoryItems(mod_dir.."vouchers")
+
+  for _, file in ipairs(vouchers) do
+    sendDebugMessage ("The file is: "..file)
+    local voucher, load_error = SMODS.load_file("vouchers/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_voucher = voucher()
+      if curr_voucher.init then curr_voucher:init() end
+      
+      for i, item in ipairs(curr_voucher.list) do
+        SMODS.Voucher(item)
       end
     end
   end

@@ -75,6 +75,13 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "pokevouchers",
+    path = "pokevouchers.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)

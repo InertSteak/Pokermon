@@ -12,7 +12,7 @@ local pack1 = {
         "{C:pink}Energy{} or {C:item}Item{} Cards{}",
     },
   },
-	config = { extra = 3, choose = 1 },
+	config = { extra = 3, choose = 1},
 	cost = 4,
 	order = 1,
 	weight = 3,
