@@ -402,7 +402,7 @@ local teraorb = {
   },
   loc_vars = function(self, info_queue, center)
   end,
-  pos = { x = 2, y = 4 },
+  pos = { x = 9, y = 2 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
