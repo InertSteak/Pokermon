@@ -379,9 +379,9 @@ evo_item_use = function(self, card, area, copier)
     local evolve = false
     for k, v in pairs(G.jokers.cards) do
       if applied ~= true then
-        if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name then
+        if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name and not v.ability.extra.evolve then
           evolve = true
-        elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" then
+        elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" and not v.ability.extra.evolve then
           for l, p in pairs(v.ability.extra.item_req) do
             if p == self.name then
               evolve = p

@@ -113,7 +113,7 @@ local haunter={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
           G.E_MANAGER:add_event(Event({
               remove(self, card, context)
             }))
