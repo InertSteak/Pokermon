@@ -273,7 +273,7 @@ scaling_evo = function (self, card, context, forced_key, current, target)
 end
 
 pokemon_in_pool = function (self, return_highest)
-  if next(find_joker("Showman")) then
+  if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true
   end
   local name
