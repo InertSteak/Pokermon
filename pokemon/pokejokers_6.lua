@@ -14,7 +14,7 @@ local mew ={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}

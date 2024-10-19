@@ -58,24 +58,46 @@ family = {
     {"dratini","dragonair","dragonite"},
 }
 
+type_sticker_applied = function(card)
+  if card.ability.grass_sticker or card.ability.fire_sticker or card.ability.water_sticker or card.ability.lightning_sticker or card.ability.psychic_sticker or card.ability.fighting_sticker or
+     card.ability.colorless_sticker or card.ability.dark_sticker or card.ability.metal_sticker or card.ability.fairy_sticker or card.ability.dragon_sticker or card.ability.earth_sticker then
+    return true
+  else
+    return false
+  end
+end
+
+energy_matches = function(card, etype, include_colorless)
+  if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
+    if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype) or (card.ability[string.lower(etype).."_sticker"]) then
+      return true
+    elseif etype == "Colorless" and include_colorless then
+      return true
+    end
+  end
+  return false
+end
+
 energize = function(card, etype, evolving)
-  for l, data in pairs(card.ability.extra) do
-    if type(data) == "number" then
-      for m, name in ipairs(energy_whitelist) do
-        if l == name then
-          local addition = energy_values[name]
-          if evolving then
-            if card.ability.extra.ptype ~= "Colorless" then
-              addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
-            else
-              addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
-            end
-            card.ability.extra[l] = data + addition
-          else
-            if card.ability.extra.ptype ~= "Colorless" and etype == "Colorless" then
-              card.ability.extra[l] = data + addition/2
-            else
+  if type(card.ability.extra) == "table" then
+    for l, data in pairs(card.ability.extra) do
+      if type(data) == "number" then
+        for m, name in ipairs(energy_whitelist) do
+          if l == name then
+            local addition = energy_values[name]
+            if evolving then
+              if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
+                addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
+              else
+                addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
+              end
               card.ability.extra[l] = data + addition
+            else
+              if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+                card.ability.extra[l] = data + addition/2
+              else
+                card.ability.extra[l] = data + addition
+              end
             end
           end
         end
@@ -104,6 +126,7 @@ end
 
 evolve = function(self, card, context, forced_key)
   if not pokermon_config.no_evos and not context.retrigger_joker then
+    local poketype_list = nil
     local previous_edition = nil
     local previous_perishable = nil
     local previous_eternal = nil
@@ -111,6 +134,7 @@ evolve = function(self, card, context, forced_key)
     local previous_energy_count = nil
     local previous_c_energy_count = nil
     local shiny = nil
+    local type_sticker = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -139,6 +163,15 @@ evolve = function(self, card, context, forced_key)
       previous_c_energy_count  = card.ability.extra.c_energy_count
     end 
        
+    if type_sticker_applied then
+      poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
+      for l, v in pairs(poketype_list) do
+        if card.ability[v.."_sticker"] then
+          type_sticker = v
+        end
+      end
+    end
+      
     G.E_MANAGER:add_event(Event({
         remove(self, card, context)
       }))
@@ -179,6 +212,10 @@ evolve = function(self, card, context, forced_key)
     
     if new_card.ability and new_card.ability.extra and (new_card.ability.extra.energy_count or new_card.ability.extra.c_energy_count) then
       energize(new_card, nil, true)
+    end
+    
+    if type_sticker then
+      new_card.ability[type_sticker.."_sticker"] = true
     end
     
     new_card:add_to_deck()
@@ -282,7 +319,7 @@ end
 energy_use = function(self, card, area, copier)
   local applied = false
   for k, v in pairs(G.jokers.cards) do
-    if applied ~= true and v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
+    if applied ~= true and energy_matches(v, self.etype, true) then
       if pokermon_config.unlimited_energy or (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
         local viable = false
         for l, data in pairs(v.ability.extra) do
@@ -295,7 +332,7 @@ energy_use = function(self, card, area, copier)
           end
         end
         if viable then
-          if (v.ability.extra.ptype == self.etype or self.etype == "Trans") then
+          if (energy_matches(v, self.etype, false) or self.etype == "Trans") then
             if v.ability.extra.energy_count then
               v.ability.extra.energy_count = v.ability.extra.energy_count + 1
             else
@@ -320,8 +357,8 @@ end
 
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
-    if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and self.etype then
-      if (v.ability.extra.ptype == self.etype or self.etype == "Colorless") and (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
+    if energy_matches(v, self.etype, true) then
+      if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5) then
         for l, data in pairs(v.ability.extra) do
           if type(data) == "number" then
             for m, name in ipairs(energy_whitelist) do
@@ -378,4 +415,10 @@ evo_item_in_pool = function(self)
       end
     end
     return false
+end
+
+type_tooltip = function(self, info_queue, center)
+  if center.ability.extra and center.ability.extra.ptype and not type_sticker_applied(center) then
+    info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
+  end
 end

@@ -13,8 +13,8 @@ local poliwhirl={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_waterstone'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
     return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
                     center.ability.extra.mults[center.ability.extra.indice]}}
   end,
@@ -60,7 +60,7 @@ local poliwrath={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmults[1], center.ability.extra.Xmults[2], center.ability.extra.Xmults[3], center.ability.extra.Xmults[4], center.ability.extra.Xmults[5], 
                     center.ability.extra.Xmults[center.ability.extra.indice]}}
   end,
@@ -106,7 +106,7 @@ local abra={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
@@ -147,9 +147,9 @@ local kadabra={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 3, 
@@ -190,7 +190,7 @@ local alakazam={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Psychic'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
   end,
@@ -238,7 +238,7 @@ local machop={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -277,8 +277,8 @@ local machoke={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = 3, 
@@ -326,7 +326,7 @@ local machamp={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fighting'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
@@ -372,7 +372,7 @@ local bellsprout={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -411,8 +411,8 @@ local weepinbell={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leafstone'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
@@ -452,7 +452,7 @@ local victreebel={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
@@ -503,7 +503,7 @@ local tentacool={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -536,7 +536,7 @@ local tentacruel={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}}
   end,
   rarity = 3, 
@@ -575,7 +575,7 @@ local geodude={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -616,8 +616,8 @@ local graveler={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_linkcable'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
@@ -662,7 +662,7 @@ local golem={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = "poke_safari", 
@@ -703,7 +703,7 @@ local ponyta={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 1, 
@@ -747,7 +747,7 @@ local rapidash={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
@@ -790,7 +790,7 @@ local slowpoke={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -826,7 +826,7 @@ local slowbro={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
@@ -869,7 +869,7 @@ local magnemite={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
@@ -904,7 +904,7 @@ local magneton={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     return {vars = {center.ability.extra.Xmult}}
   end,
@@ -940,8 +940,8 @@ local farfetchd={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_leek'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
     return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
@@ -989,7 +989,7 @@ local doduo={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -1032,7 +1032,7 @@ local dodrio={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
@@ -1075,7 +1075,7 @@ local seel={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
   rarity = 2, 
@@ -1116,7 +1116,7 @@ local dewgong={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
   end,
   rarity = 3, 
   cost = 9, 
@@ -1154,7 +1154,7 @@ local grimer={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, G.GAME.starting_deck_size}}
   end,
   rarity = 1, 
@@ -1191,7 +1191,7 @@ local muk={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12}}
   end,
   rarity = 3, 
@@ -1234,8 +1234,8 @@ local shellder={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_waterstone'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 

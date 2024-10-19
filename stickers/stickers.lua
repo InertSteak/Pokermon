@@ -4,7 +4,7 @@ local grass_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
       "{X:grass,C:white}Grass{}"
     } 
@@ -20,7 +20,7 @@ local fire_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
       "{X:fire,C:white}Fire{}"
     } 
@@ -36,7 +36,7 @@ local water_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
       "{X:water,C:white}Water{}"
     } 
@@ -52,7 +52,7 @@ local lightning_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
       "{X:lightning,C:black}Lightning{}"
     } 
@@ -68,7 +68,7 @@ local psychic_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
       "{X:psychic,C:white}Psychic{}"
     } 
@@ -84,9 +84,9 @@ local fighting_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:fighting,C:white}fighting{}"
+      "{X:fighting,C:white}Fighting{}"
     } 
   },
   rate = 0.0,
@@ -100,9 +100,9 @@ local colorless_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:colorless,C:white}colorless{}"
+      "{X:colorless,C:white}Colorless{}"
     } 
   },
   rate = 0.0,
@@ -116,9 +116,9 @@ local dark_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:dark,C:white}dark{}"
+      "{X:dark,C:white}Dark{}"
     } 
   },
   rate = 0.0,
@@ -132,9 +132,9 @@ local metal_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:metal,C:white}metal{}"
+      "{X:metal,C:white}Metal{}"
     } 
   },
   rate = 0.0,
@@ -148,9 +148,9 @@ local fairy_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:fairy,C:white}fairy{}"
+      "{X:fairy,C:white}Fairy{}"
     } 
   },
   rate = 0.0,
@@ -164,9 +164,9 @@ local dragon_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:dragon,C:white}dragon{}"
+      "{X:dragon,C:white}Dragon{}"
     } 
   },
   rate = 0.0,
@@ -180,9 +180,9 @@ local earth_sticker = {
   prefix_config = {key = false},
   loc_txt = {      
     name = 'Type',
-    label = 'Type',
+    label = 'Tera',
     text = {
-      "{X:earth,C:white}earth{}"
+      "{X:earth,C:white}Earth{}"
     } 
   },
   rate = 0.0,

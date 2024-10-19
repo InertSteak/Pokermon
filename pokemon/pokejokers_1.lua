@@ -13,7 +13,7 @@ local bulbasaur={
       } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks')}}
   end,
   rarity = 2, 
@@ -55,7 +55,7 @@ local ivysaur={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
   end,
   rarity = 3, 
@@ -102,7 +102,7 @@ local venusaur={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
   end,
   rarity = "poke_safari", 
@@ -147,7 +147,7 @@ local charmander={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining}}
   end,
   rarity = 2, 
@@ -197,7 +197,7 @@ local charmeleon={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = 3, 
@@ -248,7 +248,7 @@ local charizard={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Fire'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = "poke_safari", 
@@ -298,7 +298,7 @@ local squirtle={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
@@ -350,7 +350,7 @@ local wartortle={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = 3, 
@@ -408,7 +408,7 @@ local blastoise={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Water'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = "poke_safari", 
@@ -449,7 +449,7 @@ local caterpie={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -495,7 +495,7 @@ local metapod={
   atlas = "Pokedex1",
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   calculate = function(self, card, context)
@@ -522,7 +522,7 @@ local butterfree={
     }  
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
@@ -556,7 +556,7 @@ local weedle={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -596,7 +596,7 @@ local kakuna={
     }  
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -631,7 +631,7 @@ local beedrill={
   rarity = 2,
   cost = 6,
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Grass'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
   end,
   stage = "Two", 
@@ -664,7 +664,7 @@ local pidgey={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -706,7 +706,7 @@ local pidgeotto={
   },
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 2, 
@@ -746,7 +746,7 @@ local pidgeot={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
   end,
   rarity = 3, 
@@ -789,7 +789,7 @@ local rattata={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -827,7 +827,7 @@ local raticate={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers}}
   end,
   rarity = 2, 
@@ -862,7 +862,7 @@ local spearow={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -902,7 +902,7 @@ local fearow={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Colorless'}
+    type_tooltip(self, info_queue, center)
   end,
   rarity = 2, 
   cost = 6, 
@@ -942,7 +942,7 @@ local ekans={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -978,7 +978,7 @@ local arbok={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
@@ -1035,7 +1035,7 @@ local pikachu={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_thunderstone'}
     return {vars = {G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)}}
   end,
@@ -1066,7 +1066,7 @@ local raichu={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Lightning'}
+    type_tooltip(self, info_queue, center)
     return {vars = {2 * (G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))}}
   end,
   rarity = "poke_safari", 
@@ -1093,7 +1093,7 @@ local sandshrew={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
 		return {vars = {center.ability.extra.rounds}}
@@ -1150,7 +1150,7 @@ local sandslash={
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Earth'}
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
@@ -1206,7 +1206,7 @@ local nidoranf={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
+    type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1,
@@ -1249,8 +1249,8 @@ local nidorina={
     } 
   }, 
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Dark'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_moonstone'}
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 

@@ -396,15 +396,13 @@ local teraorb = {
     name = "Tera Orb",
     text = {
       "Applies a random",
-      "{C:pink}Energy{} sticker",
+      "{C:pink}Type{} sticker",
       "to leftmost Joker{}"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_strength
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {"Cubone and Marowak"}}
   end,
-  pos = { x = 9, y = 4 },
+  pos = { x = 2, y = 4 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -413,7 +411,20 @@ local teraorb = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    G.jokers.cards[1].ability.fire_sticker = true
+    local leftmost = G.jokers.cards[1]
+    
+    local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
+    local poketype = pseudorandom_element(poketype_list, pseudoseed("tera"))
+    
+    leftmost.ability[poketype.."_sticker"] = true
+    for l, v in pairs(poketype_list) do
+      if v ~= poketype then
+        leftmost.ability[v.."_sticker"] = false
+      end
+    end
+    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
+     leftmost.ability.extra.ptype = poketype
+    end
   end,
   in_pool = function(self)
     return true
@@ -421,5 +432,5 @@ local teraorb = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub,}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb}
 }
