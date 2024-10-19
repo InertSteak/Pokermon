@@ -155,6 +155,7 @@ local charmander={
   stage = "Basic",
   ptype = "Fire",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -205,6 +206,7 @@ local charmeleon={
   stage = "One",
   ptype = "Fire",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -306,6 +308,7 @@ local squirtle={
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

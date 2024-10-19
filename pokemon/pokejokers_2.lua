@@ -679,6 +679,7 @@ local paras={
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1", 
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -723,6 +724,7 @@ local parasect={
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

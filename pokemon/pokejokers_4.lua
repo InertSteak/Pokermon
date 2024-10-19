@@ -1114,6 +1114,7 @@ local horsea={
   ptype = "Water",
   atlas = "Pokedex1",
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint and G.GAME.current_round.hands_played == 0 then
@@ -1159,6 +1160,7 @@ local seadra={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

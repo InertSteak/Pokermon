@@ -96,6 +96,7 @@ local scyther={
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind and not card.getting_sliced and not context.blueprint then
@@ -587,6 +588,7 @@ local vaporeon={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop then
@@ -660,6 +662,7 @@ local flareon={
   stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.reroll_shop then
       if not context.blueprint then
@@ -1046,6 +1049,7 @@ local snorlax={
   ptype = "Colorless",
   joblacklist = true,
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -1226,6 +1230,7 @@ local dratini={
   stage = "Basic", 
   ptype = "Dragon",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1267,6 +1272,7 @@ local dragonair={
   ptype = "Dragon",
   atlas = "Pokedex1",
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then

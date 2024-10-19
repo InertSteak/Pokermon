@@ -425,6 +425,7 @@ local teraorb = {
     if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
      leftmost.ability.extra.ptype = poketype
     end
+    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Tera!", colour = G.C.SECONDARY_SET.Spectral})
   end,
   in_pool = function(self)
     return true

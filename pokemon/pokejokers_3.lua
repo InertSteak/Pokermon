@@ -711,6 +711,7 @@ local ponyta={
   stage = "Basic", 
   ptype = "Fire",
   atlas = "Pokedex1", 
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -756,6 +757,7 @@ local rapidash={
   stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
+  perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
