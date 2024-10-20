@@ -686,7 +686,7 @@ local hitmonlee={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(0, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -723,7 +723,7 @@ local hitmonchan={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(0, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1267,10 +1267,12 @@ local staryu={
       "Played cards with",
       "{C:diamonds}#2#{} suit give",
       "{C:mult}+#1#{} Mult when scored",
+      "{C:inactive}(Evolves with a{} {C:attention}Water Stone{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
