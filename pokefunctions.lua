@@ -126,7 +126,7 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  if not pokermon_config.no_evos and not context.retrigger_joker then
+  if not pokermon_config.no_evos and not next(find_joker("everstone")) and not context.retrigger_joker then
     local poketype_list = nil
     local previous_edition = nil
     local previous_perishable = nil
@@ -227,23 +227,25 @@ end
 
 level_evo = function(self, card, context, forced_key)
     if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.rounds and not context.blueprint and not pokermon_config.no_evos then
-      card.ability.extra.rounds = card.ability.extra.rounds - 1
-      if card.ability.extra.rounds == 1 then
+      if card.ability.extra.rounds > 0 then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+      end
+      if card.ability.extra.rounds == 1 and not next(find_joker("everstone")) then
         local eval = function(card) return not card.REMOVED end
         juice_card_until(card, eval, true)
       end
-      if card.ability.extra.rounds <= 0 then
+      if card.ability.extra.rounds <= 0 and not next(find_joker("everstone")) then
         return {
           message = evolve (self, card, context, forced_key)
         }
-      else
+      elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Level Up!"})
       end
     end
 end
 
 item_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string"))       and not context.blueprint and not pokermon_config.no_evos then
+    if not context.repetition and not context.individual and context.end_of_round and (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string"))       and not context.blueprint and not pokermon_config.no_evos and not next(find_joker("everstone")) then
       if card.ability.name == "eevee" then
         if card.ability.extra.evolve == "waterstone" then
           forced_key = "j_poke_vaporeon"
@@ -262,11 +264,11 @@ item_evo = function(self, card, context, forced_key)
 end
 
 scaling_evo = function (self, card, context, forced_key, current, target)
-  if not context.repetition and not context.individual and context.end_of_round and current >= target and not context.blueprint and not pokermon_config.no_evos then
+  if not context.repetition and not context.individual and context.end_of_round and current >= target and not context.blueprint and not pokermon_config.no_evos and not next(find_joker("everstone")) then
     return {
       message = evolve (self, card, context, forced_key)
     }
-  elseif current >= target and not card.ability.extra.juiced and not pokermon_config.no_evos then
+  elseif current >= target and not card.ability.extra.juiced and not pokermon_config.no_evos and not next(find_joker("everstone")) then
     card.ability.extra.juiced = true
     local eval = function(card) return not card.REMOVED end
     juice_card_until(card, eval, true)

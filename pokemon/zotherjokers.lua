@@ -18,7 +18,7 @@ local pokedex={
   rarity = 1, 
   cost = 5, 
   stage = "Other",
-  atlas = "pokedex",
+  atlas = "others",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -44,6 +44,43 @@ local pokedex={
   end
 }
 
+local everstone={ 
+  name = "everstone",
+  pos = {x = 1, y = 0},
+  config = {extra = {Xmult_mod = 1.75}},
+  loc_txt = {      
+    name = 'Everstone',      
+    text = {
+        "Pokemon {C:attention}can't{} evolve",
+        "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
+      } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+		return {vars = {center.ability.extra.Xmult_mod}}
+  end,
+  rarity = 2, 
+  cost = 8, 
+  stage = "Other",
+  atlas = "others",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.other_joker and context.other_joker.config and context.other_joker.config.center.stage == "Basic" then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_mod
+        }
+    end
+  end,
+}
+
 return {name = "Other Jokers",
-        list = {pokedex}
+        list = {pokedex, everstone}
 }
