@@ -877,10 +877,11 @@ local dugtrio={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local Xmult = 1 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
         return{
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.CHIPS,
-          Xmult_mod = 1 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
+          Xmult_mod = Xmult
         }
       end
     end
