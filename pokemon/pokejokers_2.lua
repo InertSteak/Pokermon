@@ -855,7 +855,7 @@ local diglett={
 local dugtrio={
   name = "dugtrio", 
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_mod = 0.25}},
+  config = {extra = {Xmult_mod = 0.2}},
   loc_txt = {      
     name = 'Dugtrio',      
     text = {
