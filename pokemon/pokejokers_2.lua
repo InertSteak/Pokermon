@@ -855,44 +855,34 @@ local diglett={
 local dugtrio={
   name = "dugtrio", 
   pos = {x = 11, y = 3},
-  config = {extra = {chips = 0, chip_mod = 100}},
+  config = {extra = {Xmult_mod = 0.25}},
   loc_txt = {      
     name = 'Dugtrio',      
     text = {
-      "Gains {C:chips}+#2#{} Chips if played",
-      "hand contains a {C:attention}Three of a Kind{},",
-      "resets at end of round",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+      "{X:red,C:white} X#1# {} Mult for each",
+      "level of {C:attention}Three of a Kind{},",
+      "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
+		return {vars = {center.ability.extra.Xmult_mod,  1 + (G.GAME.hands["Three of a Kind"].level * center.ability.extra.Xmult_mod)}}
   end,
-  rarity = 2, 
-  cost = 6, 
+  rarity = 3, 
+  cost = 8, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and next(context.poker_hands['Three of a Kind']) then
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-      elseif context.joker_main then
+      if context.joker_main then
         return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          Xmult_mod = 1 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
         }
       end
-    end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.chips = 0
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
     end
   end
 }

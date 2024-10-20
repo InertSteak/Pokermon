@@ -36,8 +36,8 @@ local cgoose={
   loc_txt = {      
     name = 'Chartreuse Chamber',      
     text = {
-      "Jokers with a random type",
-      "are disabled every hand"
+      "Random Types get debuffed",
+      "every hand",
     } 
   },
   dollars = 8,
