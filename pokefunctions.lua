@@ -59,6 +59,7 @@ family = {
 }
 
 type_sticker_applied = function(card)
+  if not card then return false end
   if card.ability.grass_sticker or card.ability.fire_sticker or card.ability.water_sticker or card.ability.lightning_sticker or card.ability.psychic_sticker or card.ability.fighting_sticker or
      card.ability.colorless_sticker or card.ability.dark_sticker or card.ability.metal_sticker or card.ability.fairy_sticker or card.ability.dragon_sticker or card.ability.earth_sticker then
     return true

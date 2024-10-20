@@ -229,6 +229,26 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
+  --Load vouchers
+  local blinds = NFS.getDirectoryItems(mod_dir.."blinds")
+
+  for _, file in ipairs(blinds) do
+    sendDebugMessage ("The file is: "..file)
+    local blind, load_error = SMODS.load_file("blinds/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_blind = blind()
+      if curr_blind.init then curr_blind:init() end
+      
+      for i, item in ipairs(curr_blind.list) do
+        SMODS.Blind(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
   --Load challenges file
   local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
 
