@@ -1,0 +1,33 @@
+-- Pansage 511
+-- Simisage 512
+-- Pansear 513
+-- Simisear 514
+-- Panpour 515
+-- Simipour 516
+-- Munna 517
+-- Musharna 518
+-- Pidove 519
+-- Tranquill 520
+-- Unfezant 521
+-- Blitzle 522
+-- Zebstrika 523
+-- Roggenrola 524
+-- Boldore 525
+-- Gigalith 526
+-- Woobat 527
+-- Swoobat 528
+-- Drilbur 529
+-- Excadrill 530
+-- Audino 531
+-- Timburr 532
+-- Gurdurr 533
+-- Conkeldurr 534
+-- Tympole 535
+-- Palpitoad 536
+-- Seismitoad 537
+-- Throh 538
+-- Sawk 539
+-- Sewaddle 540
+return {name = "Pokemon Jokers 511-540", 
+        list = {},
+}

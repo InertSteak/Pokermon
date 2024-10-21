@@ -1,0 +1,33 @@
+-- Delcatty 301
+-- Sableye 302
+-- Mawile 303
+-- Aron 304
+-- Lairon 305
+-- Aggron 306
+-- Meditite 307
+-- Medicham 308
+-- Electrike 309
+-- Manectric 310
+-- Plusle 311
+-- Minun 312
+-- Volbeat 313
+-- Illumise 314
+-- Roselia 315
+-- Gulpin 316
+-- Swalot 317
+-- Carvanha 318
+-- Sharpedo 319
+-- Wailmer 320
+-- Wailord 321
+-- Numel 322
+-- Camerupt 323
+-- Torkoal 324
+-- Spoink 325
+-- Grumpig 326
+-- Spinda 327
+-- Trapinch 328
+-- Vibrava 329
+-- Flygon 330
+return {name = "Pokemon Jokers 301-330", 
+        list = {},
+}

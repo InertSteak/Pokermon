@@ -1,0 +1,33 @@
+-- Skorupi 451
+-- Drapion 452
+-- Croagunk 453
+-- Toxicroak 454
+-- Carnivine 455
+-- Finneon 456
+-- Lumineon 457
+-- Mantyke 458
+-- Snover 459
+-- Abomasnow 460
+-- Weavile 461
+-- Magnezone 462
+-- Lickilicky 463
+-- Rhyperior 464
+-- Tangrowth 465
+-- Electivire 466
+-- Magmortar 467
+-- Togekiss 468
+-- Yanmega 469
+-- Leafeon 470
+-- Glaceon 471
+-- Gliscor 472
+-- Mamoswine 473
+-- Porygon-Z 474
+-- Gallade 475
+-- Probopass 476
+-- Dusknoir 477
+-- Froslass 478
+-- Rotom 479
+-- Uxie 480
+return {name = "Pokemon Jokers 451-480", 
+        list = {},
+}

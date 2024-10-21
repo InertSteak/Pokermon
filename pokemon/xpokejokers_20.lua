@@ -1,0 +1,33 @@
+-- Zoroark 571
+-- Minccino 572
+-- Cinccino 573
+-- Gothita 574
+-- Gothorita 575
+-- Gothitelle 576
+-- Solosis 577
+-- Duosion 578
+-- Reuniclus 579
+-- Ducklett 580
+-- Swanna 581
+-- Vanillite 582
+-- Vanillish 583
+-- Vanilluxe 584
+-- Deerling 585
+-- Sawsbuck 586
+-- Emolga 587
+-- Karrablast 588
+-- Escavalier 589
+-- Foongus 590
+-- Amoonguss 591
+-- Frillish 592
+-- Jellicent 593
+-- Alomomola 594
+-- Joltik 595
+-- Galvantula 596
+-- Ferroseed 597
+-- Ferrothorn 598
+-- Klink 599
+-- Klang 600
+return {name = "Pokemon Jokers 570-600", 
+        list = {},
+}

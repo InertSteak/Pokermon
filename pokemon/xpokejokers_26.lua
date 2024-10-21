@@ -1,0 +1,33 @@
+-- Dewpider 751
+-- Araquanid 752
+-- Fomantis 753
+-- Lurantis 754
+-- Morelull 755
+-- Shiinotic 756
+-- Salandit 757
+-- Salazzle 758
+-- Stufful 759
+-- Bewear 760
+-- Bounsweet 761
+-- Steenee 762
+-- Tsareena 763
+-- Comfey 764
+-- Oranguru 765
+-- Passimian 766
+-- Wimpod 767
+-- Golisopod 768
+-- Sandygast 769
+-- Palossand 770
+-- Pyukumuku 771
+-- Type: Null 772
+-- Silvally 773
+-- Minior 774
+-- Komala 775
+-- Turtonator 776
+-- Togedemaru 777
+-- Mimikyu 778
+-- Bruxish 779
+-- Drampa 780
+return {name = "Pokemon Jokers 751-780", 
+        list = {},
+}

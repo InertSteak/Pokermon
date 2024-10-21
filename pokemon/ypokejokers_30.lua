@@ -1,0 +1,33 @@
+-- Pincurchin 871
+-- Snom 872
+-- Frosmoth 873
+-- Stonjourner 874
+-- Eiscue 875
+-- Indeedee 876
+-- Morpeko 877
+-- Cufant 878
+-- Copperajah 879
+-- Dracozolt 880
+-- Arctozolt 881
+-- Dracovish 882
+-- Arctovish 883
+-- Duraludon 884
+-- Dreepy 885
+-- Drakloak 886
+-- Dragapult 887
+-- Zacian 888
+-- Zamazenta 889
+-- Eternatus 890
+-- Kubfu 891
+-- Urshifu 892
+-- Zarude 893
+-- Regieleki 894
+-- Regidrago 895
+-- Glastrier 896
+-- Spectrier 897
+-- Calyrex 898
+-- Wyrdeer 899
+-- Kleavor 900
+return {name = "Pokemon Jokers 871-900", 
+        list = {},
+}

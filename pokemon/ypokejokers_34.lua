@@ -1,0 +1,33 @@
+-- Iron Bundle 991
+-- Iron Hands 992
+-- Iron Jugulis 993
+-- Iron Moth 994
+-- Iron Thorns 995
+-- Frigibax 996
+-- Arctibax 997
+-- Baxcalibur 998
+-- Gimmighoul 999
+-- Gholdengo 1000
+-- Wo-Chien 1001
+-- Chien-Pao 1002
+-- Ting-Lu 1003
+-- Chi-Yu 1004
+-- Roaring Moon 1005
+-- Iron Valiant 1006
+-- Koraidon 1007
+-- Miraidon 1008
+-- Walking Wake 1009
+-- Iron Leaves 1010
+-- Dipplin 1011
+-- Poltchageist 1012
+-- Sinistcha 1013
+-- Okidogi 1014
+-- Munkidori 1015
+-- Fezandipiti 1016
+-- Ogerpon 1017
+-- Archaludon 1018
+-- Hydrapple 1019
+-- Gouging Fire 1020
+return {name = "Pokemon Jokers 991-1020", 
+        list = {},
+}

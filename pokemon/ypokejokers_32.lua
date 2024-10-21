@@ -1,0 +1,33 @@
+-- Squawkabilly 931
+-- Nacli 932
+-- Naclstack 933
+-- Garganacl 934
+-- Charcadet 935
+-- Armarouge 936
+-- Ceruledge 937
+-- Tadbulb 938
+-- Bellibolt 939
+-- Wattrel 940
+-- Kilowattrel 941
+-- Maschiff 942
+-- Mabosstiff 943
+-- Shroodle 944
+-- Grafaiai 945
+-- Bramblin 946
+-- Brambleghast 947
+-- Toedscool 948
+-- Toedscruel 949
+-- Klawf 950
+-- Capsakid 951
+-- Scovillain 952
+-- Rellor 953
+-- Rabsca 954
+-- Flittle 955
+-- Espathra 956
+-- Tinkatink 957
+-- Tinkatuff 958
+-- Tinkaton 959
+-- Wiglett 960
+return {name = "Pokemon Jokers 931-960", 
+        list = {},
+}

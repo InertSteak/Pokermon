@@ -1,0 +1,33 @@
+-- Klinklang 601
+-- Tynamo 602
+-- Eelektrik 603
+-- Eelektross 604
+-- Elgyem 605
+-- Beheeyem 606
+-- Litwick 607
+-- Lampent 608
+-- Chandelure 609
+-- Axew 610
+-- Fraxure 611
+-- Haxorus 612
+-- Cubchoo 613
+-- Beartic 614
+-- Cryogonal 615
+-- Shelmet 616
+-- Accelgor 617
+-- Stunfisk 618
+-- Mienfoo 619
+-- Mienshao 620
+-- Druddigon 621
+-- Golett 622
+-- Golurk 623
+-- Pawniard 624
+-- Bisharp 625
+-- Bouffalant 626
+-- Rufflet 627
+-- Braviary 628
+-- Vullaby 629
+-- Mandibuzz 630
+return {name = "Pokemon Jokers 601-630", 
+        list = {},
+}

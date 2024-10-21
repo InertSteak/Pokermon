@@ -1,0 +1,33 @@
+-- Heatmor 631
+-- Durant 632
+-- Deino 633
+-- Zweilous 634
+-- Hydreigon 635
+-- Larvesta 636
+-- Volcarona 637
+-- Cobalion 638
+-- Terrakion 639
+-- Virizion 640
+-- Tornadus 641
+-- Thundurus 642
+-- Reshiram 643
+-- Zekrom 644
+-- Landorus 645
+-- Kyurem 646
+-- Keldeo 647
+-- Meloetta 648
+-- Genesect 649
+-- Chespin 650
+-- Quilladin 651
+-- Chesnaught 652
+-- Fennekin 653
+-- Braixen 654
+-- Delphox 655
+-- Froakie 656
+-- Frogadier 657
+-- Greninja 658
+-- Bunnelby 659
+-- Diggersby 660
+return {name = "Pokemon Jokers 631-660", 
+        list = {},
+}

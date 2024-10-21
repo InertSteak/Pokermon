@@ -47,7 +47,35 @@ local mew ={
     end
   end,
 }
-
+-- Chikorita 152
+-- Bayleef 153
+-- Meganium 154
+-- Cyndaquil 155
+-- Quilava 156
+-- Typhlosion 157
+-- Totodile 158
+-- Croconaw 159
+-- Feraligatr 160
+-- Sentret 161
+-- Furret 162
+-- Hoothoot 163
+-- Noctowl 164
+-- Ledyba 165
+-- Ledian 166
+-- Spinarak 167
+-- Ariados 168
+-- Crobat 169
+-- Chinchou 170
+-- Lanturn 171
+-- Pichu 172
+-- Cleffa 173
+-- Igglybuff 174
+-- Togepi 175
+-- Togetic 176
+-- Natu 177
+-- Xatu 178
+-- Mareep 179
+-- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
         list = { mew, },

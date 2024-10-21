@@ -1,0 +1,33 @@
+-- Volcanion 721
+-- Rowlet 722
+-- Dartrix 723
+-- Decidueye 724
+-- Litten 725
+-- Torracat 726
+-- Incineroar 727
+-- Popplio 728
+-- Brionne 729
+-- Primarina 730
+-- Pikipek 731
+-- Trumbeak 732
+-- Toucannon 733
+-- Yungoos 734
+-- Gumshoos 735
+-- Grubbin 736
+-- Charjabug 737
+-- Vikavolt 738
+-- Crabrawler 739
+-- Crabominable 740
+-- Oricorio 741
+-- Cutiefly 742
+-- Ribombee 743
+-- Rockruff 744
+-- Lycanroc 745
+-- Wishiwashi 746
+-- Mareanie 747
+-- Toxapex 748
+-- Mudbray 749
+-- Mudsdale 750
+return {name = "Pokemon Jokers 721-750", 
+        list = {},
+}

@@ -1,0 +1,33 @@
+-- Mesprit 481
+-- Azelf 482
+-- Dialga 483
+-- Palkia 484
+-- Heatran 485
+-- Regigigas 486
+-- Giratina 487
+-- Cresselia 488
+-- Phione 489
+-- Manaphy 490
+-- Darkrai 491
+-- Shaymin 492
+-- Arceus 493
+-- Victini 494
+-- Snivy 495
+-- Servine 496
+-- Serperior 497
+-- Tepig 498
+-- Pignite 499
+-- Emboar 500
+-- Oshawott 501
+-- Dewott 502
+-- Samurott 503
+-- Patrat 504
+-- Watchog 505
+-- Lillipup 506
+-- Herdier 507
+-- Stoutland 508
+-- Purrloin 509
+-- Liepard 510
+return {name = "Pokemon Jokers 481-510", 
+        list = {},
+}

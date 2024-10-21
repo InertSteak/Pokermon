@@ -1,0 +1,33 @@
+-- Cherrim 421
+-- Shellos 422
+-- Gastrodon 423
+-- Ambipom 424
+-- Drifloon 425
+-- Drifblim 426
+-- Buneary 427
+-- Lopunny 428
+-- Mismagius 429
+-- Honchkrow 430
+-- Glameow 431
+-- Purugly 432
+-- Chingling 433
+-- Stunky 434
+-- Skuntank 435
+-- Bronzor 436
+-- Bronzong 437
+-- Bonsly 438
+-- Mime Jr. 439
+-- Happiny 440
+-- Chatot 441
+-- Spiritomb 442
+-- Gible 443
+-- Gabite 444
+-- Garchomp 445
+-- Munchlax 446
+-- Riolu 447
+-- Lucario 448
+-- Hippopotas 449
+-- Hippowdon 450
+return {name = "Pokemon Jokers 421-450", 
+        list = {},
+}

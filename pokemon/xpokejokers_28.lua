@@ -1,0 +1,33 @@
+-- Thwackey 811
+-- Rillaboom 812
+-- Scorbunny 813
+-- Raboot 814
+-- Cinderace 815
+-- Sobble 816
+-- Drizzile 817
+-- Inteleon 818
+-- Skwovet 819
+-- Greedent 820
+-- Rookidee 821
+-- Corvisquire 822
+-- Corviknight 823
+-- Blipbug 824
+-- Dottler 825
+-- Orbeetle 826
+-- Nickit 827
+-- Thievul 828
+-- Gossifleur 829
+-- Eldegoss 830
+-- Wooloo 831
+-- Dubwool 832
+-- Chewtle 833
+-- Drednaw 834
+-- Yamper 835
+-- Boltund 836
+-- Rolycoly 837
+-- Carkol 838
+-- Coalossal 839
+-- Applin 840
+return {name = "Pokemon Jokers 811-840", 
+        list = {},
+}

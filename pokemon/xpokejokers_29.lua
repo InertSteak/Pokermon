@@ -1,0 +1,33 @@
+-- Flapple 841
+-- Appletun 842
+-- Silicobra 843
+-- Sandaconda 844
+-- Cramorant 845
+-- Arrokuda 846
+-- Barraskewda 847
+-- Toxel 848
+-- Toxtricity 849
+-- Sizzlipede 850
+-- Centiskorch 851
+-- Clobbopus 852
+-- Grapploct 853
+-- Sinistea 854
+-- Polteageist 855
+-- Hatenna 856
+-- Hattrem 857
+-- Hatterene 858
+-- Impidimp 859
+-- Morgrem 860
+-- Grimmsnarl 861
+-- Obstagoon 862
+-- Perrserker 863
+-- Cursola 864
+-- Sirfetch'd 865
+-- Mr. Rime 866
+-- Runerigus 867
+-- Milcery 868
+-- Alcremie 869
+-- Falinks 870
+return {name = "Pokemon Jokers 841-870", 
+        list = {},
+}

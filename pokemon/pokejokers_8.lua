@@ -1,0 +1,33 @@
+-- Qwilfish 211
+-- Scizor 212
+-- Shuckle 213
+-- Heracross 214
+-- Sneasel 215
+-- Teddiursa 216
+-- Ursaring 217
+-- Slugma 218
+-- Magcargo 219
+-- Swinub 220
+-- Piloswine 221
+-- Corsola 222
+-- Remoraid 223
+-- Octillery 224
+-- Delibird 225
+-- Mantine 226
+-- Skarmory 227
+-- Houndour 228
+-- Houndoom 229
+-- Kingdra 230
+-- Phanpy 231
+-- Donphan 232
+-- Porygon2 233
+-- Stantler 234
+-- Smeargle 235
+-- Tyrogue 236
+-- Hitmontop 237
+-- Smoochum 238
+-- Elekid 239
+-- Magby 240
+return {name = "Pokemon Jokers 211-240", 
+        list = {},
+}

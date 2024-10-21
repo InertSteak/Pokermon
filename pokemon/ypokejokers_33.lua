@@ -1,0 +1,33 @@
+-- Wugtrio 961
+-- Bombirdier 962
+-- Finizen 963
+-- Palafin 964
+-- Varoom 965
+-- Revavroom 966
+-- Cyclizar 967
+-- Orthworm 968
+-- Glimmet 969
+-- Glimmora 970
+-- Greavard 971
+-- Houndstone 972
+-- Flamigo 973
+-- Cetoddle 974
+-- Cetitan 975
+-- Veluza 976
+-- Dondozo 977
+-- Tatsugiri 978
+-- Annihilape 979
+-- Clodsire 980
+-- Farigiraf 981
+-- Dudunsparce 982
+-- Kingambit 983
+-- Great Tusk 984
+-- Scream Tail 985
+-- Brute Bonnet 986
+-- Flutter Mane 987
+-- Slither Wing 988
+-- Sandy Shocks 989
+-- Iron Treads 990
+return {name = "Pokemon Jokers 961-990", 
+        list = {},
+}

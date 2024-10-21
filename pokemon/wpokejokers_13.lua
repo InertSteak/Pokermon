@@ -1,0 +1,33 @@
+-- Snorunt 361
+-- Glalie 362
+-- Spheal 363
+-- Sealeo 364
+-- Walrein 365
+-- Clamperl 366
+-- Huntail 367
+-- Gorebyss 368
+-- Relicanth 369
+-- Luvdisc 370
+-- Bagon 371
+-- Shelgon 372
+-- Salamence 373
+-- Beldum 374
+-- Metang 375
+-- Metagross 376
+-- Regirock 377
+-- Regice 378
+-- Registeel 379
+-- Latias 380
+-- Latios 381
+-- Kyogre 382
+-- Groudon 383
+-- Rayquaza 384
+-- Jirachi 385
+-- Deoxys 386
+-- Turtwig 387
+-- Grotle 388
+-- Torterra 389
+-- Chimchar 390
+return {name = "Pokemon Jokers 361-390", 
+        list = {},
+}

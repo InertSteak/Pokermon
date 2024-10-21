@@ -1,0 +1,33 @@
+-- Ursaluna 901
+-- Basculegion 902
+-- Sneasler 903
+-- Overqwil 904
+-- Enamorus 905
+-- Sprigatito 906
+-- Floragato 907
+-- Meowscarada 908
+-- Fuecoco 909
+-- Crocalor 910
+-- Skeledirge 911
+-- Quaxly 912
+-- Quaxwell 913
+-- Quaquaval 914
+-- Lechonk 915
+-- Oinkologne 916
+-- Tarountula 917
+-- Spidops 918
+-- Nymble 919
+-- Lokix 920
+-- Pawmi 921
+-- Pawmo 922
+-- Pawmot 923
+-- Tandemaus 924
+-- Maushold 925
+-- Fidough 926
+-- Dachsbun 927
+-- Smoliv 928
+-- Dolliv 929
+-- Arboliva 930
+return {name = "Pokemon Jokers 901-930", 
+        list = {},
+}

@@ -1,0 +1,33 @@
+-- Cacnea 331
+-- Cacturne 332
+-- Swablu 333
+-- Altaria 334
+-- Zangoose 335
+-- Seviper 336
+-- Lunatone 337
+-- Solrock 338
+-- Barboach 339
+-- Whiscash 340
+-- Corphish 341
+-- Crawdaunt 342
+-- Baltoy 343
+-- Claydol 344
+-- Lileep 345
+-- Cradily 346
+-- Anorith 347
+-- Armaldo 348
+-- Feebas 349
+-- Milotic 350
+-- Castform 351
+-- Kecleon 352
+-- Shuppet 353
+-- Banette 354
+-- Duskull 355
+-- Dusclops 356
+-- Tropius 357
+-- Chimecho 358
+-- Absol 359
+-- Wynaut 360
+return {name = "Pokemon Jokers 331-360", 
+        list = {},
+}

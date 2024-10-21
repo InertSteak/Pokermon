@@ -1,0 +1,33 @@
+-- Dragalge 691
+-- Clauncher 692
+-- Clawitzer 693
+-- Helioptile 694
+-- Heliolisk 695
+-- Tyrunt 696
+-- Tyrantrum 697
+-- Amaura 698
+-- Aurorus 699
+-- Sylveon 700
+-- Hawlucha 701
+-- Dedenne 702
+-- Carbink 703
+-- Goomy 704
+-- Sliggoo 705
+-- Goodra 706
+-- Klefki 707
+-- Phantump 708
+-- Trevenant 709
+-- Pumpkaboo 710
+-- Gourgeist 711
+-- Bergmite 712
+-- Avalugg 713
+-- Noibat 714
+-- Noivern 715
+-- Xerneas 716
+-- Yveltal 717
+-- Zygarde 718
+-- Diancie 719
+-- Hoopa 720
+return {name = "Pokemon Jokers 691-720", 
+        list = {},
+}
