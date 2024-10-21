@@ -54,6 +54,246 @@ else
   }):register()
 end
 
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex2",
+      path = "Pokedex2Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex2",
+      path = "Shinydex2Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex2",
+      path = "Pokedex2.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex2",
+      path = "Shinydex2.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex3",
+      path = "Pokedex3Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex3",
+      path = "Shinydex3Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex3",
+      path = "Pokedex3.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex3",
+      path = "Shinydex3.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex4",
+      path = "Pokedex4Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex4",
+      path = "Shinydex4Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex4",
+      path = "Pokedex4.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex4",
+      path = "Shinydex4.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex5",
+      path = "Pokedex5Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex5",
+      path = "Shinydex5Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex5",
+      path = "Pokedex5.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex5",
+      path = "Shinydex5.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex6",
+      path = "Pokedex6Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex6",
+      path = "Shinydex6Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex6",
+      path = "Pokedex6.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex6",
+      path = "Shinydex6.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex7",
+      path = "Pokedex7Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex7",
+      path = "Shinydex7Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex7",
+      path = "Pokedex7.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex7",
+      path = "Shinydex7.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex8",
+      path = "Pokedex8Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex8",
+      path = "Shinydex8Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex8",
+      path = "Pokedex8.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex8",
+      path = "Shinydex8.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
+if pokermon_config.pokemon_num then
+  SMODS.Atlas({
+      key = "Pokedex9",
+      path = "Pokedex9Num.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex9",
+      path = "Shinydex9Num.png",
+      px = 71,
+      py = 95
+  }):register()
+else
+  SMODS.Atlas({
+      key = "Pokedex9",
+      path = "Pokedex9.png",
+      px = 71,
+      py = 95
+  }):register()
+
+  SMODS.Atlas({
+      key = "Shinydex9",
+      path = "Shinydex9.png",
+      px = 71,
+      py = 95
+  }):register()
+end
+
 SMODS.Atlas({
     key = "Mart",
     path = "Mart.png",

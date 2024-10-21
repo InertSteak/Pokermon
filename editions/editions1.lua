@@ -30,10 +30,13 @@ local shiny = ({
         return { vars = {} }
     end,
     on_apply = function(card)
-        if card.config.center.atlas == "poke_Pokedex1" then
-          card.config.center.atlas = "poke_Shinydex1"
-          card:set_sprites(card.config.center)
-          card.config.center.atlas = "poke_Pokedex1"
+        for i = 1, 9 do
+          if card.config.center.atlas == "poke_Pokedex"..i then
+            card.config.center.atlas = "poke_Shinydex"..i
+            card:set_sprites(card.config.center)
+            card.config.center.atlas = "poke_Pokedex"..i
+            break
+          end
         end
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
