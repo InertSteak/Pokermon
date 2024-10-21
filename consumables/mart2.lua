@@ -413,13 +413,13 @@ local teraorb = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     
-    local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
+    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
     local poketype = pseudorandom_element(poketype_list, pseudoseed("tera"))
     
-    leftmost.ability[poketype.."_sticker"] = true
+    leftmost.ability[string.lower(poketype).."_sticker"] = true
     for l, v in pairs(poketype_list) do
       if v ~= poketype then
-        leftmost.ability[v.."_sticker"] = false
+        leftmost.ability[string.lower(v).."_sticker"] = false
       end
     end
     if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
@@ -432,6 +432,92 @@ local teraorb = {
   end
 }
 
+local metalcoat = {
+  name = "metalcoat",
+  key = "metalcoat",
+  set = "Item",
+  loc_txt = {
+    name = "Metal Coat",
+    text = {
+      "Applies a",
+      "{C:metal}Metal{} sticker",
+      "to leftmost Joker{}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 6, y = 2 },
+  atlas = "Mart",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return #G.jokers.cards > 0
+  end,
+  use = function(self, card, area, copier)
+    local leftmost = G.jokers.cards[1]
+    
+    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+    
+    leftmost.ability.metal_sticker = true
+    for l, v in pairs(poketype_list) do
+      if v ~= "Metal" then
+        leftmost.ability[string.lower(v).."_sticker"] = false
+      end
+    end
+    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
+     leftmost.ability.extra.ptype = "Metal"
+    end
+    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Metal!", colour = G.ARGS.LOC_COLOURS["metal"]})
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local dragonscale = {
+  name = "dragonscale",
+  key = "dragonscale",
+  set = "Item",
+  loc_txt = {
+    name = "Dragon Scale",
+    text = {
+      "Applies a",
+      "{C:dragon}Dragon{} sticker",
+      "to leftmost Joker{}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+  end,
+  pos = { x = 7, y = 2 },
+  atlas = "Mart",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return #G.jokers.cards > 0
+  end,
+  use = function(self, card, area, copier)
+    local leftmost = G.jokers.cards[1]
+    
+    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+    
+    leftmost.ability.dragon_sticker = true
+    for l, v in pairs(poketype_list) do
+      if v ~= "Dragon" then
+        leftmost.ability[string.lower(v).."_sticker"] = false
+      end
+    end
+    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
+     leftmost.ability.extra.ptype = "Dragon"
+    end
+    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Dragon!", colour = G.ARGS.LOC_COLOURS["dragon"]})
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale}
 }
