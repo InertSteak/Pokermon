@@ -450,7 +450,7 @@ local metalcoat = {
   end,
   pos = { x = 6, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -501,7 +501,8 @@ local dragonscale = {
   end,
   pos = { x = 7, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -553,7 +554,8 @@ local kingsrock = {
   end,
   pos = { x = 5, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
@@ -568,6 +570,9 @@ local kingsrock = {
     }))
     delay(0.5)
     juice_flip()
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -578,7 +583,7 @@ local upgrade = {
   name = "upgrade",
   key = "upgrade",
   set = "Item",
-  config = {mod_conv = 'm_bonus', max_highlighted = 3},
+  config = {max_highlighted = 2},
   loc_txt = {
     name = "Upgrade",
     text = {
@@ -593,7 +598,8 @@ local upgrade = {
   end,
   pos = { x = 8, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
@@ -614,6 +620,48 @@ local upgrade = {
     end
     delay(0.5)
     juice_flip()
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+local icestone = {
+  name = "icestone",
+  key = "icestone",
+  set = "Item",
+  loc_txt = {
+    name = "Ice Stone",
+    text = {
+      "Creates a {C:attention}Justice{} card",
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_justice
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+  end,
+  pos = { x = 5, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  use = function(self, card, area, copier)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_justice')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -621,5 +669,5 @@ local upgrade = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, icestone}
 }
