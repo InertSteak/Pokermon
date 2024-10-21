@@ -565,3 +565,25 @@ type_tooltip = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
 end
+
+juice_flip = function()
+        for i = 1, #G.hand.highlighted do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    play_sound('tarot1')
+                    G.hand.highlighted[i]:juice_up(0.3, 0.5)
+                    return true
+                end
+            }))
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip(); play_sound('card1', percent); G.hand.highlighted[i]:juice_up(0.3, 0.3); return true
+                end
+            }))
+        end
+    end

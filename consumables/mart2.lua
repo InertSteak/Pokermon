@@ -439,12 +439,14 @@ local metalcoat = {
   loc_txt = {
     name = "Metal Coat",
     text = {
-      "Applies a",
-      "{C:metal}Metal{} sticker",
-      "to leftmost Joker{}"
+      "Applies a {C:metal}Metal{} sticker",
+      "to leftmost Joker.",
+      "Creates a {C:attention}Chariot{} card",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_chariot
   end,
   pos = { x = 6, y = 2 },
   atlas = "Mart",
@@ -469,6 +471,12 @@ local metalcoat = {
      leftmost.ability.extra.ptype = "Metal"
     end
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Metal!", colour = G.ARGS.LOC_COLOURS["metal"]})
+    
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
   end,
   in_pool = function(self)
     return true
@@ -482,12 +490,14 @@ local dragonscale = {
   loc_txt = {
     name = "Dragon Scale",
     text = {
-      "Applies a",
-      "{C:dragon}Dragon{} sticker",
-      "to leftmost Joker{}"
+      "Applies a {C:dragon}Dragon{} sticker",
+      "to leftmost Joker.",
+      "Creates an {C:attention}Emperor{} card",
+      "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_emperor
   end,
   pos = { x = 7, y = 2 },
   atlas = "Mart",
@@ -512,6 +522,52 @@ local dragonscale = {
      leftmost.ability.extra.ptype = "Dragon"
     end
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Dragon!", colour = G.ARGS.LOC_COLOURS["dragon"]})
+    
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_emperor')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local kingsrock = {
+  name = "kingsrock",
+  key = "kingsrock",
+  set = "Item",
+  config = {max_highlighted = 1},
+  loc_txt = {
+    name = "King's Rock",
+    text = {
+      "Turns {C:attention}#1#{} selected",
+      "card into a {C:attention}King{}",
+      "{C:attention}Evolution Card{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted}}
+  end,
+  pos = { x = 5, y = 2 },
+  atlas = "Mart",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card, area, copier)
+    local conv_card = G.hand.highlighted[1]
+    juice_flip(conv_card)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            SMODS.change_base(conv_card, nil, "King"); return true
+        end
+    }))
+    delay(0.5)
+    juice_flip(conv_card)
   end,
   in_pool = function(self)
     return true
@@ -519,5 +575,5 @@ local dragonscale = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock}
 }
