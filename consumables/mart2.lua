@@ -558,7 +558,7 @@ local kingsrock = {
   discovered = true,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
-    juice_flip(conv_card)
+    juice_flip()
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = 0.2,
@@ -567,7 +567,53 @@ local kingsrock = {
         end
     }))
     delay(0.5)
-    juice_flip(conv_card)
+    juice_flip()
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local upgrade = {
+  name = "upgrade",
+  key = "upgrade",
+  set = "Item",
+  config = {mod_conv = 'm_bonus', max_highlighted = 3},
+  loc_txt = {
+    name = "Upgrade",
+    text = {
+      "Gives {C:attention}#1#{} selected cards",
+      "a random {C:attention}Enhancement{}",
+      "{C:attention}Evolution Card{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted}}
+  end,
+  pos = { x = 8, y = 2 },
+  atlas = "Mart",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card, area, copier)
+    local enhancement_type = pseudorandom(pseudoseed('upgrade'))
+    local enhancement = nil
+    if enhancement_type > .875 then enhancement = G.P_CENTERS.m_bonus
+    elseif enhancement_type > .75 then enhancement = G.P_CENTERS.m_mult
+    elseif enhancement_type > .625 then enhancement = G.P_CENTERS.m_wild
+    elseif enhancement_type > .50 then enhancement = G.P_CENTERS.m_glass
+    elseif enhancement_type > .375 then enhancement = G.P_CENTERS.m_steel
+    elseif enhancement_type > .25 then enhancement = G.P_CENTERS.m_stone
+    elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
+    else enhancement = G.P_CENTERS.m_lucky
+    end
+    juice_flip()
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(enhancement, nil, true)
+    end
+    delay(0.5)
+    juice_flip()
   end,
   in_pool = function(self)
     return true
@@ -575,5 +621,5 @@ local kingsrock = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade}
 }
