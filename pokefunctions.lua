@@ -41,6 +41,7 @@ family = {
     {"grimer","muk"},
     {"shellder","cloyster"},
     {"gastly","haunter","gengar"},
+    {"onix","steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
     {"voltorb","electrode"},
@@ -56,6 +57,7 @@ family = {
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
+    {"yamper","boltund"}
 }
 
 type_sticker_applied = function(card)
