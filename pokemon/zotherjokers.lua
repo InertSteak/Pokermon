@@ -13,6 +13,7 @@ local pokedex={
       } 
   }, 
   loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 1, 
@@ -56,6 +57,7 @@ local everstone={
       } 
   }, 
   loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
 		return {vars = {center.ability.extra.Xmult_mod}}
   end,

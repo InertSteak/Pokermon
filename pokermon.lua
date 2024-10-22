@@ -350,6 +350,14 @@ function SMODS.current_mod.process_loc_text()
         "that has {C:attention}Evolved{} twice"
       }
     }
+    
+    G.localization.descriptions.Other['energy'] = {
+      name = "Energy Used",
+      text = {
+        "{C:attention}#1#{}/#2#",
+      }
+    }
+    
     G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
     
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}

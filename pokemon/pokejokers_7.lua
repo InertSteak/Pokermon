@@ -46,7 +46,7 @@ local steelix={
   end,
   rarity = 3, 
   cost = 6, 
-  stage = "Basic",
+  stage = "One",
   ptype = "Metal",
   atlas = "Pokedex2",
   blueprint_compat = false,

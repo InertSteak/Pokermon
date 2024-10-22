@@ -578,6 +578,13 @@ type_tooltip = function(self, info_queue, center)
   if center.ability.extra and center.ability.extra.ptype and not type_sticker_applied(center) then
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
+  if not pokermon_config.unlimited_energy then
+    if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
+        info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), 5 + (G.GAME.energy_plus or 0)}}
+    elseif (center.ability and center.ability.extra and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
+        info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), 5 + (G.GAME.energy_plus or 0)}}
+    end
+  end
 end
 
 juice_flip = function()
