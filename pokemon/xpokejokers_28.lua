@@ -25,7 +25,7 @@
 -- Yamper 835
 local yamper={
   name = "yamper", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 11, y = 1}, 
   config = {extra = {mult = 4, money = 4, rounds = 4}},
   loc_txt = {      
     name = 'Yamper',      
@@ -63,7 +63,7 @@ local yamper={
 -- Boltund 836
 local boltund={
   name = "boltund", 
-  pos = {x = 1, y = 0}, 
+  pos = {x = 12, y = 1}, 
   config = {extra = {Xmult = 2, money = 4}},
   loc_txt = {      
     name = 'Boltund',      
