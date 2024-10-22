@@ -229,7 +229,7 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
-  --Load vouchers
+  --Load blinds
   local blinds = NFS.getDirectoryItems(mod_dir.."blinds")
 
   for _, file in ipairs(blinds) do
@@ -243,6 +243,26 @@ if not pokermon_config.jokers_only then
       
       for i, item in ipairs(curr_blind.list) do
         SMODS.Blind(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
+  --Load tags
+  local tags = NFS.getDirectoryItems(mod_dir.."tags")
+
+  for _, file in ipairs(tags) do
+    sendDebugMessage ("The file is: "..file)
+    local tag, load_error = SMODS.load_file("tags/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_tag = tag()
+      if curr_tag.init then curr_tag:init() end
+      
+      for i, item in ipairs(curr_tag.list) do
+        SMODS.Tag(item)
       end
     end
   end
