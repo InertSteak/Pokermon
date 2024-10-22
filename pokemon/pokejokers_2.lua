@@ -626,6 +626,7 @@ local vileplume={
   config = {extra = {Xmult = 1.3}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.Xmult}}
   end,
   loc_txt = {      
