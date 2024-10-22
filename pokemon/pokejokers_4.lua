@@ -95,7 +95,7 @@ local haunter={
       "add {C:dark_edition}Negative{} to a",
       "random {C:attention}Joker{}",
       "{S:1.1,C:red,E:2}self destructs{}",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)

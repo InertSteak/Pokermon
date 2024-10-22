@@ -30,7 +30,7 @@ local yamper={
   loc_txt = {      
     name = 'Yamper',      
     text = {
-      "{C:mult}+#1#{} Mult and {C:money}$#2#{}",
+      "{C:mult}+#1#{} Mult and earn {C:money}$#2#{}",
       "if played hand contains",
       "a {C:attention}Straight{}",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
@@ -68,7 +68,7 @@ local boltund={
   loc_txt = {      
     name = 'Boltund',      
     text = {
-      "{X:red,C:white}X#1#{} Mult and {C:money}$#2#{}",
+      "{X:red,C:white}X#1#{} Mult and earn {C:money}$#2#{}",
       "if played hand contains",
       "a {C:attention}Straight{}",
     } 

@@ -143,7 +143,7 @@ local kadabra={
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
       "already been played this round",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -273,7 +273,7 @@ local machoke={
       "{C:chips}+#1#{} hands",
       "{C:mult}-#2# discards{}",
       "{C:mult}+#3#{} Mult",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -612,7 +612,7 @@ local graveler={
     text = {
       "{C:chips}+#1#{} Chips,",
       "{C:attention}-#2#{} hand size",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
