@@ -414,13 +414,13 @@ local zubat={
     text = {
       "{C:mult}+#1#{} Mult for each Enhanced",
       "card in your full deck",
-      "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+36{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult, {C:attention}#4#{}{C:inactive} Enhancements)",
+      "{C:inactive}(Evolves at {C:mult}#3#{C:inactive} Enhancements)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult*center.ability.extra.zubat_tally}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult*center.ability.extra.zubat_tally, 12, center.ability.extra.zubat_tally}}
   end,
   rarity = 1, 
   cost = 5, 
