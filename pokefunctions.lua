@@ -587,24 +587,47 @@ type_tooltip = function(self, info_queue, center)
   end
 end
 
-juice_flip = function()
-        for i = 1, #G.hand.highlighted do
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.4,
-                func = function()
-                    play_sound('tarot1')
-                    G.hand.highlighted[i]:juice_up(0.3, 0.5)
-                    return true
-                end
-            }))
-            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.15,
-                func = function()
-                    G.hand.highlighted[i]:flip(); play_sound('card1', percent); G.hand.highlighted[i]:juice_up(0.3, 0.3); return true
-                end
-            }))
-        end
+apply_type_sticker = function(card, sticker_type)
+  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+  local apply_type = nil
+  
+  if sticker_type then
+    apply_type = sticker_type
+    card.ability[string.lower(apply_type).."_sticker"] = true
+  else
+    apply_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
+    card.ability[string.lower(apply_type).."_sticker"] = true
+  end
+  
+  for l, v in pairs(poketype_list) do
+    if v ~= apply_type then
+      card.ability[string.lower(v).."_sticker"] = false
     end
+  end
+  
+  if card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
+    card.ability.extra.ptype = apply_type 
+  end
+end
+
+juice_flip = function()
+  for i = 1, #G.hand.highlighted do
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.4,
+          func = function()
+              play_sound('tarot1')
+              G.hand.highlighted[i]:juice_up(0.3, 0.5)
+              return true
+          end
+      }))
+      local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.15,
+          func = function()
+              G.hand.highlighted[i]:flip(); play_sound('card1', percent); G.hand.highlighted[i]:juice_up(0.3, 0.3); return true
+          end
+      }))
+  end
+end

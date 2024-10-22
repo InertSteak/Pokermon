@@ -412,19 +412,7 @@ local teraorb = {
   end,
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
-    
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    local poketype = pseudorandom_element(poketype_list, pseudoseed("tera"))
-    
-    leftmost.ability[string.lower(poketype).."_sticker"] = true
-    for l, v in pairs(poketype_list) do
-      if v ~= poketype then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = poketype
-    end
+    apply_type_sticker(leftmost)
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Tera!", colour = G.C.SECONDARY_SET.Spectral})
   end,
   in_pool = function(self)
@@ -459,17 +447,7 @@ local metalcoat = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    
-    leftmost.ability.metal_sticker = true
-    for l, v in pairs(poketype_list) do
-      if v ~= "Metal" then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = "Metal"
-    end
+    apply_type_sticker(leftmost, "Metal")
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Metal!", colour = G.ARGS.LOC_COLOURS["metal"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -511,17 +489,7 @@ local dragonscale = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    
-    leftmost.ability.dragon_sticker = true
-    for l, v in pairs(poketype_list) do
-      if v ~= "Dragon" then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = "Dragon"
-    end
+    apply_type_sticker(leftmost, "Dragon")
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Dragon!", colour = G.ARGS.LOC_COLOURS["dragon"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
