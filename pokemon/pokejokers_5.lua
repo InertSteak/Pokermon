@@ -1115,13 +1115,14 @@ local articuno={
     name = 'Articuno',      
     text = {
       "If played hand has only",
-      "{C:attention}1{} card, add a random",
-      "{C:attention}enhancement{}, {C:attention}edition{},",
-      "and {C:attention}seal{} to that card"
+      "{C:attention}1{} card, add {C:attention}Foil{}, a",
+      "random {C:attention}enhancement{}, and a",
+      "random {C:attention}seal{}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue +1] = G.P_CENTERS.e_foil
   end,
   rarity = 4, 
   cost = 20, 
@@ -1154,8 +1155,7 @@ local articuno={
         end
       end
       if not _card.edition then
-        local edition = poll_edition('articuno', nil, false, true)
-        _card:set_edition(edition, true)
+        _card:set_edition("e_foil", true)
       end
     end
   end
