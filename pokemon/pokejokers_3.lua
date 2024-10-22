@@ -101,7 +101,7 @@ local abra={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
+      "already been played this round",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   }, 
@@ -142,7 +142,7 @@ local kadabra={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
+      "already been played this round",
       "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
     } 
   }, 
@@ -186,7 +186,7 @@ local alakazam={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
+      "already been played this round",
     } 
   }, 
   loc_vars = function(self, info_queue, center)

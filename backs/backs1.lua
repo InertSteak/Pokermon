@@ -2,7 +2,7 @@ local pokemondeck = {
 	name = "pokemondeck",
 	key = "pokemondeck",  
   loc_txt = {      
-    name = 'PTCG deck',      
+    name = 'Trainer Deck',      
     text = {
       "Start run with the",
       "{C:tarot,T:v_poke_goodrod}#1#{} voucher",
