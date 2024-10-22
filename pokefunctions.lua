@@ -1,5 +1,5 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
-energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, mult_mod = 1, s_mult = 1, chip_mod = 20, Xmult_mod = 0.1}
+energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, mult_mod = 1, s_mult = 1, chip_mod = 6, Xmult_mod = 0.1}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -575,7 +575,7 @@ evo_item_in_pool = function(self)
 end
 
 type_tooltip = function(self, info_queue, center)
-  if center.ability.extra and center.ability.extra.ptype and not type_sticker_applied(center) then
+  if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
   if not pokermon_config.unlimited_energy then
@@ -607,6 +607,28 @@ apply_type_sticker = function(card, sticker_type)
   
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
     card.ability.extra.ptype = apply_type 
+  end
+  
+  if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage then
+    if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
+      local lv = G.P_CENTERS[card.config.center_key].loc_vars
+      SMODS.Joker:take_ownership(card.config.center_key, {
+        unlocked = true, 
+        discovered = true,
+        loc_vars = function(self, info_queue, center)
+          type_tooltip(self, info_queue, center)
+          return lv(self, info_queue, center)
+        end,
+      }, true)
+    else
+      SMODS.Joker:take_ownership(card.config.center_key, {
+        unlocked = true, 
+        discovered = true,
+        loc_vars = function(self, info_queue, center)
+          type_tooltip(self, info_queue, center)
+        end,
+      }, true)
+    end
   end
 end
 
