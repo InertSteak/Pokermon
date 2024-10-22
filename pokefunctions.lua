@@ -377,6 +377,18 @@ scaling_evo = function (self, card, context, forced_key, current, target)
   end
 end
 
+type_evo = function (self, card, context, forced_key, type_req)
+  if not context.repetition and not context.individual and context.end_of_round and card.ability[type_req.."_sticker"] and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+    return {
+      message = evolve (self, card, context, forced_key)
+    }
+  elseif card.ability[type_req.."_sticker"] and not card.ability.extra.juiced and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+    card.ability.extra.juiced = true
+    local eval = function(card) return not card.REMOVED end
+    juice_card_until(card, eval, true)
+  end
+end
+
 pokemon_in_pool = function (self, return_highest)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true

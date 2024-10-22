@@ -197,7 +197,8 @@ local onix={
     text = {
       "The leftmost scoring card of",
       "your {C:attention}first hand{} of round",
-      "becomes a {C:attention}Stone{} card."
+      "becomes a {C:attention}Stone{} card",
+      "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -227,6 +228,7 @@ local onix={
         })) 
       end
     end
+    return type_evo(self, card, context, "j_poke_steelix", "metal")
   end
 }
 local drowzee={
