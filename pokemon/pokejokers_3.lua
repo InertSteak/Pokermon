@@ -861,7 +861,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult = 2, rounds = 4}},
+  config = {extra = {Xmult = 1.75, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {
@@ -897,7 +897,7 @@ local magnemite={
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
-  config = {extra = {Xmult = 2.5}},
+  config = {extra = {Xmult = 2}},
   loc_txt = {      
     name = 'Magneton',      
     text = {
