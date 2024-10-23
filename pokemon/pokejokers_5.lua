@@ -735,7 +735,7 @@ local porygon={
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and not context.blueprint then
+    if context.remove_playing_cards and #context.removed > 0 and not context.blueprint then
       card.ability.extra.destroyed = card.ability.extra.destroyed + 1 
       if card.ability.extra.destroyed >= card.ability.extra.target then
         local eval = function(card) return (card.ability.extra.destroyed >= card.ability.extra.target) and not G.RESET_JIGGLES end
