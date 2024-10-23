@@ -49,7 +49,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Pokemon Numbers?(requires restart)",
+          label = "Pokedex Numbers?(requires restart)",
           ref_table = pokermon_config,
           ref_value = "pokemon_num",
           callback = function(_set_toggle)
