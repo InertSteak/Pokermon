@@ -22,7 +22,7 @@ local beldum={
       "Gains {C:mult}+#2#{} Mult and {C:chips}+#4#{} Chips",
       "if played hand contains at least",
       "one scoring {C:attention}Ace{} and is exactly {C:attention}#5#{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}#3#{} Chips)",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{}{C:inactive} Chips)",
       "{C:inactive}(Evolves at {C:mult}+10{}{C:inactive} Mult)"
     } 
   },
@@ -74,7 +74,7 @@ local metang={
       "Gains {C:mult}+#2#{} Mult and {C:chips}+#4#{} Chips",
       "if played hand contains at least",
       "two scoring {C:attention}Aces{} and is exactly {C:attention}#5#{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}#3#{} Chips)",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{}{C:inactive} Chips)",
       "{C:inactive}(Evolves at {C:mult}+40{}{C:inactive} Mult)"
     } 
   },
@@ -126,7 +126,7 @@ local metagross={
       "{X:mult,C:white}X{} Mult equal to the {C:attention}cube root{} of",
       "the {C:attention}difference{} between {C:mult}#1#{} and {C:chips}#2#{}",
       "if played hand contains exactly {C:attention}#3#{} {C:attention}Aces{}",
-      "{C:inactive}(Currently {X:mult,C:white}X#4#{} Mult{C:inactive})",
+      "{C:inactive}(Currently {X:mult,C:white}X#4#{}{C:inactive} Mult)",
     } 
   },
   loc_vars = function(self, info_queue, center)
