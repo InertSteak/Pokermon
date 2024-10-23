@@ -339,7 +339,7 @@ local jigglypuff={
     name = 'Jigglypuff',      
     text = {
       "Played cards with",
-      "{C:clubs}#2#{} suit give",
+      "{C:spades}#2#{} suit give",
       "{C:mult}+#1#{} Mult when scored",
       "{C:inactive}(Evolves with a{} {C:attention}Moonstone{}{C:inactive} card)"
     } 
@@ -377,7 +377,7 @@ local wigglytuff={
     name = 'Wigglytuff',      
     text = {
       "Played cards with",
-      "{C:clubs}#3#{} suit give",
+      "{C:spades}#3#{} suit give",
       "{C:mult}+#1#{} Mult and ",
       "{C:chips}+#2#{} Chips when scored",
     } 
