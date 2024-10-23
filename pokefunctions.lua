@@ -435,11 +435,11 @@ pokemon_in_pool = function (self, return_highest)
   end
 end
 
-energy_use = function(self, card, area, copier)
+energy_use = function(self, card, area, copier, unreservable)
   local applied = false
   local viable = false
   for k, v in pairs(G.jokers.cards) do
-    if applied ~= true and energy_matches(v, self.etype, true) then
+    if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
       if type(v.ability.extra) == "table" then
         if (pokermon_config.unlimited_energy) or (((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
           for l, data in pairs(v.ability.extra) do
@@ -500,9 +500,18 @@ energy_use = function(self, card, area, copier)
       end
     end
   end
+  if not applied and not unreservable then 
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, self.key, nil)
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card:juice_up()
+    end
+  end
 end
 
 energy_can_use = function(self, card)
+  if card.area and card.area == G.pack_cards and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) then return true end
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then

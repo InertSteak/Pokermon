@@ -1,3 +1,47 @@
+local matching_energy = function(card)
+  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
+  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
+    if card.ability.extra.ptype == "Dark" then
+      return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
+    else
+      return "c_poke_"..string.lower(card.ability.extra.ptype).."_energy"
+    end
+  end
+  for l, v in pairs(poketype_list) do
+    if card.ability[v.."_sticker"] then
+      if v == "dark" then
+        return "c_poke_"..v.."ness_energy"
+      else
+        return "c_poke_"..v.."_energy"
+      end
+    end
+  end
+end
+
+local create_pocket_card = function(self, card)
+    local card_type = pseudorandom(pseudoseed('pocket'))
+    if card_type > .40 then
+      local match_type = pseudorandom(pseudoseed('match'))
+      if match_type > .80 and #G.jokers.cards > 0 then
+        local energy_types = {}
+        for l, v in pairs(G.jokers.cards) do
+          local match = matching_energy(v)
+          if match then
+            table.insert(energy_types, match)
+          end
+        end
+        if #energy_types > 0 then
+          local energy = pseudorandom_element(energy_types, pseudoseed('match'))
+          sendDebugMessage("Created matching energy: "..energy)
+          return create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+        end
+      end
+      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+    else
+      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+    end
+end
+
 local pack1 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_1",
@@ -20,12 +64,7 @@ local pack1 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -55,12 +94,7 @@ local pack2 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -90,12 +124,7 @@ local pack3 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -125,12 +154,7 @@ local pack4 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -160,12 +184,7 @@ local pack5 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -195,12 +214,7 @@ local pack6 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -230,12 +244,7 @@ local pack7 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }
@@ -265,12 +274,7 @@ local pack8 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card)
-    local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-    end
+    return create_pocket_card(self, card)
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra } }

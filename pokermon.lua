@@ -358,6 +358,15 @@ function SMODS.current_mod.process_loc_text()
       }
     }
     
+    G.localization.descriptions.Other['reserve'] = {
+      name = "Reservable",
+      text = {
+        "Creates a {C:attention}copy{} of",
+        "self if used in pack and", 
+        "its effect didn't apply"
+      }
+    }
+    
     G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
     
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
