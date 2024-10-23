@@ -22,7 +22,7 @@ local create_pocket_card = function(self, card)
     local card_type = pseudorandom(pseudoseed('pocket'))
     if card_type > .40 then
       local match_type = pseudorandom(pseudoseed('match'))
-      if match_type > .80 and #G.jokers.cards > 0 then
+      if match_type > .85 and #G.jokers.cards > 0 then
         local energy_types = {}
         for l, v in pairs(G.jokers.cards) do
           local match = matching_energy(v)
