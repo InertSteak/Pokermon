@@ -1,6 +1,6 @@
 local matching_energy = function(card)
   local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
+  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" then
     if card.ability.extra.ptype == "Dark" then
       return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
     else
@@ -32,7 +32,6 @@ local create_pocket_card = function(self, card)
         end
         if #energy_types > 0 then
           local energy = pseudorandom_element(energy_types, pseudoseed('match'))
-          sendDebugMessage("Created matching energy: "..energy)
           return create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
         end
       end
