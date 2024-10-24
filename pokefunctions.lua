@@ -1,5 +1,5 @@
-energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
-energy_values = {mult = .3, mult1 = .3, mult2 = .3, chips = .3, chips1 = .3, chips2 = .3, Xmult = .3, mult_mod = .1, s_mult = .1, chip_mod = .1, Xmult_mod = .1}
+energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
+energy_values = {mult = .3, mult1 = .3, mult2 = .3, chips = .3, chips1 = .3, chips2 = .3, Xmult = .3, money = .2, mult_mod = .1, s_mult = .1, chip_mod = .1, Xmult_mod = .1}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -121,6 +121,7 @@ energize = function(card, etype, evolving)
     local chip_mod = nil
     local Xmult = nil
     local Xmult_mod = nil
+    local money = nil
     local mults = {"Joker" , "Jolly Joker", "Zany Joker", "Mad Joker", "Crazy Joker", "Droll Joker", "Half Joker", "Mystic Summit", "Gros Michel", "Popcorn"}
     local mult_mods = {"Greedy Joker", "Lusty Joker", "Wrathful Joker", "Gluttonous Joker", "Fibonacci", "Abstract Joker", "Even Steven", "Ride the Bus", "Green Joker", "Red Card", "Erosion",
                        "Fortune Teller", "Pokedex", "Flash Card", "Spare Trousers", "Smiley Face", "Onyx Agate", "Shoot the Moon", "Bootstraps"}
@@ -130,6 +131,8 @@ energize = function(card, etype, evolving)
                     "Driver's License"}
     local Xmult_mods = {"Joker Stencil", "Steel Joker", "Constellation", "Madness", "Vampire", "Hologram", "Baron", "Obelisk", "Photograph", "Lucky Cat", "Baseball Card", "Everstone", "Ancient Joker",
                         "Campfire", "Throwback", "Bloodstone", "Glass Joker", "The Idol", "Hit the Road", "Canio", "Triboulet", "Yorick"}
+    local monies = {"Delayed Gratification", "Egg", "Cloud 9", "Rocket", "Gift Card", "Reserved Parking", "Mail-In Rebate", "To the Moon", "Golden Joker", "Trading Card", "Golden Ticket", "Rough Gem",
+                    "Satellite",}
     
     for k, v in pairs(mults) do
       if card.ability.name == v then
@@ -163,7 +166,13 @@ energize = function(card, etype, evolving)
     
     for k, v in pairs(Xmult_mods) do
       if card.ability.name == v then
-        Xmult_mod = true
+        money = true
+      end
+    end
+    
+    for k, v in pairs(monies) do
+      if card.ability.name == v then
+        money = true
       end
     end
     
@@ -179,6 +188,8 @@ energize = function(card, etype, evolving)
       increase = energy_values.Xmult
     elseif Xmult_mod then
       increase = energy_values.Xmult_mod
+    elseif money then
+      increase = energy_values.money
     end
     if increase then
       if not card.ability.colorless_sticker and etype == "Colorless" then
