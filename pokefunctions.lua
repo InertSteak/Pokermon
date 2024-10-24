@@ -1,5 +1,5 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
-energy_values = {mult = 4, mult1 = 4, mult2 = 4, chips = 40, chips1 = 40, chips2 = 40, Xmult = 0.5, mult_mod = 1, s_mult = 1, chip_mod = 6, Xmult_mod = 0.1}
+energy_values = {mult = .3, mult1 = .3, mult2 = .3, chips = .3, chips1 = .3, chips2 = .3, Xmult = .3, mult_mod = .1, s_mult = .1, chip_mod = .1, Xmult_mod = .1}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -53,7 +53,7 @@ family = {
     {"goldeen","seaking"},
     {"staryu","starmie"},
     {"magikarp","gyarados"},
-    {"eevee", "vaporeon", "jolteon", "flareon"},
+    {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon"},
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
@@ -101,12 +101,12 @@ energize = function(card, etype, evolving)
               else
                 addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
               end
-              card.ability.extra[l] = data + addition
+              card.ability.extra[l] =  data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
             else
               if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
-                card.ability.extra[l] = data + addition/2
+                card.ability.extra[l] = data + (card.config.center.config.extra[l] * addition/2) * (card.ability.extra.escale or 1)
               else
-                card.ability.extra[l] = data + addition
+                card.ability.extra[l] = data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
               end
             end
           end
@@ -182,9 +182,9 @@ energize = function(card, etype, evolving)
     end
     if increase then
       if not card.ability.colorless_sticker and etype == "Colorless" then
-        card.ability.extra = card.ability.extra + increase/2
+        card.ability.extra = card.ability.extra + (card.config.center.config.extra * increase/2)
       else
-        card.ability.extra = card.ability.extra + increase
+        card.ability.extra = card.ability.extra + (card.config.center.config.extra * increase)
       end
     end
   else
@@ -199,13 +199,13 @@ energize = function(card, etype, evolving)
         increase = increase/2
       end
       if (card.ability.mult and card.ability.mult > 0) then
-        card.ability.mult = card.ability.mult + increase
+        card.ability.mult = card.ability.mult + (card.config.center.config.mult * increase)
       end
       if (card.ability.t_mult and card.ability.t_mult > 0) then
-        card.ability.t_mult = card.ability.t_mult + increase
+        card.ability.t_mult = card.ability.t_mult + (card.config.center.config.t_mult * increase)
       end
       if (card.ability.t_chips and card.ability.t_chips > 0) then
-        card.ability.t_chips = card.ability.t_chips + increase
+        card.ability.t_chips = card.ability.t_chips + (card.config.center.config.t_chips * increase)
       end
     end
   end
@@ -608,7 +608,7 @@ type_tooltip = function(self, info_queue, center)
   if not pokermon_config.unlimited_energy then
     if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
         info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), 5 + (G.GAME.energy_plus or 0)}}
-    elseif (center.ability and center.ability.extra and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
+    elseif (center.ability and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
         info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), 5 + (G.GAME.energy_plus or 0)}}
     end
   end
@@ -636,7 +636,8 @@ apply_type_sticker = function(card, sticker_type)
     card.ability.extra.ptype = apply_type 
   end
   
-  if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage then
+  if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
+     and not G.P_CENTERS[card.config.center_key].taken_ownership then
     if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
       local lv = G.P_CENTERS[card.config.center_key].loc_vars
       SMODS.Joker:take_ownership(card.config.center_key, {
