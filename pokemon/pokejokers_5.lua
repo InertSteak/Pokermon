@@ -564,7 +564,14 @@ local eevee={
     if context.ending_shop and not context.blueprint then
       card.ability.extra.limit = 0
     end
-    return item_evo(self, card, context, nil)
+    local result = item_evo(self, card, context, nil)
+    if not result then
+      result = deck_suit_evo(self, card, context, "j_poke_espeon", "Hearts", .40)
+    end
+    if not result then
+      result = deck_suit_evo(self, card, context, "j_poke_umbreon", "Clubs", .40)
+    end
+    return result
   end
 }
 local vaporeon={
