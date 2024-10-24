@@ -546,7 +546,7 @@ local exeggcute={
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult = 2, Xmult = 1.75, suit = "Hearts", odds = 2}},
+  config = {extra = {mult_mod = 2, Xmult_mod = 1.5, suit = "Hearts", odds = 2}},
   loc_txt = {      
     name = 'Exeggutor',      
     text = {
@@ -559,7 +559,7 @@ local exeggutor={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, localize(center.ability.extra.suit, 'suits_singular'), 
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_mod, localize(center.ability.extra.suit, 'suits_singular'), 
                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
@@ -573,10 +573,10 @@ local exeggutor={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         if pseudorandom('exeggutor') < G.GAME.probabilities.normal/card.ability.extra.odds then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = "Solar!", 
             colour = G.C.XMULT,
-            mult = card.ability.extra.mult, 
-            x_mult = card.ability.extra.Xmult
+            mult = card.ability.extra.mult_mod, 
+            x_mult = card.ability.extra.Xmult_mod
           }
         end
       end
@@ -751,7 +751,7 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult = 2}},
+  config = {extra = {Xmult_mod = 2}},
   loc_txt = {      
     name = 'Lickitung',      
     text = {
@@ -762,7 +762,7 @@ local lickitung={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -786,7 +786,7 @@ local lickitung={
       end
       if context.other_card == first_jack or context.other_card == second_jack then
         return {
-            x_mult = card.ability.extra.Xmult,
+            x_mult = card.ability.extra.Xmult_mod,
             colour = G.C.RED,
             card = card
         }

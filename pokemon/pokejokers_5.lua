@@ -545,7 +545,7 @@ local eevee={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 4,
   item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone"},
   stage = "Basic",

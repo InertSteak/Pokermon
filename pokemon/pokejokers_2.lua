@@ -623,11 +623,11 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult = 1.3}},
+  config = {extra = {Xmult_mod = 1.3}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult}}
+		return {vars = {center.ability.extra.Xmult_mod}}
   end,
   loc_txt = {      
     name = 'Vileplume',      
@@ -650,9 +650,9 @@ local vileplume={
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
             colour = G.C.XMULT,
-            x_mult = card.ability.extra.Xmult
+            x_mult = card.ability.extra.Xmult_mod
           }
       end
     end
