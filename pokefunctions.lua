@@ -357,6 +357,10 @@ item_evo = function(self, card, context, forced_key)
           forced_key = "j_poke_jolteon"
         elseif card.ability.extra.evolve == "firestone" then
           forced_key = "j_poke_flareon"
+        elseif card.ability.extra.evolve == "sunstone" then
+          forced_key = "j_poke_espeon"
+        elseif card.ability.extra.evolve == "moonstone" then
+          forced_key = "j_poke_umbreon"
         end
       end
       if forced_key then

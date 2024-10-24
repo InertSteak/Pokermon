@@ -547,7 +547,7 @@ local eevee={
   end,
   rarity = 1, 
   cost = 4,
-  item_req = {"waterstone", "thunderstone", "firestone"},
+  item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone"},
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -566,10 +566,10 @@ local eevee={
     end
     local result = item_evo(self, card, context, nil)
     if not result then
-      result = deck_suit_evo(self, card, context, "j_poke_espeon", "Hearts", .40)
+      result = deck_suit_evo(self, card, context, "j_poke_espeon", "Hearts", .60)
     end
     if not result then
-      result = deck_suit_evo(self, card, context, "j_poke_umbreon", "Clubs", .40)
+      result = deck_suit_evo(self, card, context, "j_poke_umbreon", "Clubs", .60)
     end
     return result
   end
