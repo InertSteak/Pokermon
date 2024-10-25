@@ -889,6 +889,7 @@ local kabuto={
       "{C:attention}1{} #1#s: {C:chips}+#2#{} Chips",
       "{C:attention}2{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
       "{C:attention}3+{} #1#s: {C:chips}+#4#{} Chips",
+      "{C:inactive}(Evolves after {C:attention}#5#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
