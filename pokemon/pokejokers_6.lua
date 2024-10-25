@@ -57,7 +57,99 @@ local mew ={
 -- Croconaw 159
 -- Feraligatr 160
 -- Sentret 161
+local sentret={
+  name = "sentret",
+  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
+  pos = {x = 0, y = 0}, 
+  loc_txt = {      
+    name = 'Sentret',      
+    text = {
+      "{C:mult}+#2#{} Mult when played hand",
+      "isn't the last played hand",
+      "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
+      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
+      "{C:inactive}(Evolves at {C:mult}+6{} {C:inactive}Mult)"
+    }  
+  }, 
+  rarity = 1, 
+  cost = 4, 
+  stage = "One", 
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played or "None"}}
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
+        card.ability.extra.last_hand = G.GAME.last_hand_played
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      end
+      if context.joker_main then
+        if card.ability.extra.mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 6)
+  end,
+}
 -- Furret 162
+local furret={
+  name = "furret",
+  config = {extra = {mult = 6, mult_mod = 2, last_hand = 'None'}},
+  pos = {x = 0, y = 0}, 
+  loc_txt = {      
+    name = 'Furret',      
+    text = {
+      "{C:mult}+#2#{} Mult when played hand",
+      "isn't the last played hand",
+      "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
+      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
+    }  
+  }, 
+  rarity = 2, 
+  cost = 4, 
+  stage = "One", 
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played or "None"}}
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
+        card.ability.extra.last_hand = G.GAME.last_hand_played
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      end
+      if context.joker_main then
+        if card.ability.extra.mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Hoothoot 163
 -- Noctowl 164
 -- Ledyba 165
@@ -78,5 +170,5 @@ local mew ={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, },
+        list = { mew, sentret, furret},
 }
