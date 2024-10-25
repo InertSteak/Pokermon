@@ -118,15 +118,15 @@ local metang={
 local metagross={
   name = "metagross", 
   pos = {x = 7, y = 11},
-  config = {extra = {mult = 40, chips = 104, size = 4}},
+  config = {extra = {mult = 40, chips = 100,}},
   loc_txt = {      
     name = 'Metagross',      
     text = {
       "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips",
-      "{X:mult,C:white}X{} Mult equal to the {C:attention}cube root{} of",
-      "the {C:attention}difference{} between {C:mult}#1#{} and {C:chips}#2#{}",
-      "if played hand contains exactly {C:attention}#3#{} {C:attention}Aces{}",
-      "{C:inactive}(Currently {X:mult,C:white}X#4#{}{C:inactive} Mult)",
+      "If played hand is a {C:attention}Four of a Kind{}",
+      "each played card gives {X:mult,C:white}X{} Mult",
+      "equal to the {C:attention}cube root{} ",
+      "of its total chips",
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -143,30 +143,27 @@ local metagross={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1
-        if #context.full_hand == card.ability.extra.size then
-          local ace_count = 0
-          for i = 1, #context.scoring_hand do
-              if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
-          end
-          if ace_count == 4 then
-            Xmult = math.abs(card.ability.extra.chips - card.ability.extra.mult)^(1/3)
-          end
-        end
-        if Xmult < 1 then 
-          Xmult = 1 
-        elseif Xmult > 1 then
-          card_eval_status_text((context.blueprint_card or card), 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},colour = G.C.XMULT})
-        end
         return {
           message = "Klang!", 
           colour = G.C.CHIPS,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          Xmult_mod = Xmult,
           card = card
         }
       end
+    end
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.scoring_name and context.scoring_name == "Four of a Kind" then
+      local total_chips = (context.other_card.base.nominal) + (context.other_card.ability.bonus) + (context.other_card.ability.perma_bonus or 0) 
+      if context.other_card.edition then
+        total_chips = (total_chips + context.other_card.edition.chips or 0)
+      end
+      local Xmult = (total_chips)^(1/3)
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
+        colour = G.C.XMULT,
+        mult = card.ability.extra.mult_mod, 
+        x_mult = Xmult
+      }
     end
   end,
 }
