@@ -1090,13 +1090,9 @@ local seel={
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
       if pseudorandom('seel') < G.GAME.probabilities.normal/card.ability.extra.odds then
         _card = context.full_hand[1]
-        local seal_type = pseudorandom(pseudoseed('seel'))
-        if seal_type > 0.80 then _card:set_seal('Red', true)
-        elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-        elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-        elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-        else _card:set_seal('poke_pink_seal', true)
-        end
+        local args = {guaranteed = true}
+        local seal_type = SMODS.poll_seal(args)
+        _card:set_seal(seal_type, true)
       end
     end
     if context.first_hand_drawn and not context.blueprint then
@@ -1129,13 +1125,10 @@ local dewgong={
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
       _card = context.full_hand[1]
-      local seal_type = pseudorandom(pseudoseed('dewgong'))
-      if seal_type > 0.80 then _card:set_seal('Red', true)
-      elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-      elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-      elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-      else _card:set_seal('poke_pink_seal', true)
-      end
+      local args = {guaranteed = true}
+      local seal_type = SMODS.poll_seal(args)
+      sendDebugMessage(seal_type)
+      _card:set_seal(seal_type, true)
     end
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end

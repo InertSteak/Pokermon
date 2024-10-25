@@ -1136,13 +1136,9 @@ local articuno={
     if context.before and context.cardarea == G.jokers and #context.full_hand == 1 and not context.blueprint then
       _card = context.full_hand[1]
       if not _card.seal then
-        local seal_type = pseudorandom(pseudoseed('articuno'))
-        if seal_type > 0.80 then _card:set_seal('Red', true)
-        elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-        elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-        elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-        else _card:set_seal('poke_pink_seal', true)
-        end
+        local args = {guaranteed = true}
+        local seal_type = SMODS.poll_seal(args)
+        _card:set_seal(seal_type, true)
       end
       if _card.ability.name == "Default Base" then
         local enhancement_type = pseudorandom(pseudoseed('articuno'))
