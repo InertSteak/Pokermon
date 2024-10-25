@@ -17,7 +17,7 @@
 local espeon={
   name = "espeon", 
   pos = {x = 0, y = 0},
-  config = {extra = {retriggers = 1, rerolls = 0}},
+  config = {extra = {retriggers = 1, suit = "Hearts", rerolls = 0}},
   loc_txt = {      
     name = 'Espeon',      
     text = {
@@ -25,20 +25,21 @@ local espeon={
       "every {C:attention}3{} {C:green}rerolls{}",
       "Retrigger all played cards with",
       "{C:hearts}Hearts{} suit used in scoring",
+      "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_sun
-    return {vars = {center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex2",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
       if card.ability.extra.rerolls < 2 then
@@ -59,7 +60,7 @@ local espeon={
       end
     end
     if context.repetition and context.cardarea == G.play and not context.end_of_round then
-      if context.other_card:is_suit("Hearts") then
+      if context.other_card:is_suit(card.ability.extra.suit) then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
@@ -73,28 +74,29 @@ local espeon={
 local umbreon={
   name = "umbreon", 
   pos = {x = 0, y = 0},
-  config = {extra = {retriggers = 1, rerolls = 0}},
+  config = {extra = {retriggers = 1, suit = "Clubs", rerolls = 0}},
   loc_txt = {      
     name = 'Umbreon',      
     text = {
       "Create a {C:attention}Moon{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
       "Retrigger all {C:attention}held in hand{}",
-      "abilities of cards with {C:clubs}Clubs{} suit",
+      "abilities of cards with {C:clubs}#2#{} suit",
+      "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_moon
-    return {vars = {center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   ptype = "Dark",
   atlas = "Pokedex2",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
       if card.ability.extra.rerolls < 2 then
@@ -115,7 +117,7 @@ local umbreon={
       end
     end
     if context.repetition and context.cardarea == G.hand then
-      if context.other_card:is_suit("Clubs") and (next(context.card_effects[1]) or #context.card_effects > 1) then
+      if context.other_card:is_suit(card.ability.extra.suit) and (next(context.card_effects[1]) or #context.card_effects > 1) then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,

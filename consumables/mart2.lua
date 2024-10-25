@@ -87,13 +87,13 @@ local waterstone = {
   loc_txt = {
     name = "Water Stone",
     text = {
-      "Creates a {C:attention}Star{} card",
+      "Creates a {C:attention}Heirophant{} card",
       "{C:attention}Evolution Card{}",
       "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_star
+    info_queue[#info_queue+1] = G.P_CENTERS.c_heirophant
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 5, y = 3 },
@@ -107,7 +107,7 @@ local waterstone = {
   end,
   use = function(self, card, area, copier)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_heirophant')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
@@ -635,7 +635,46 @@ local icestone = {
     return true
   end
 }
+local shinystone = {
+  name = "shinystone",
+  key = "shinystone",
+  set = "Item",
+  loc_txt = {
+    name = "Shiny Stone",
+    text = {
+      "Creates a {C:attention}Star{} card",
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_star
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+  end,
+  pos = { x = 2, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  use = function(self, card, area, copier)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, icestone}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, icestone, shinystone}
 }

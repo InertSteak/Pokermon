@@ -547,7 +547,7 @@ local eevee={
   end,
   rarity = 2, 
   cost = 4,
-  item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone"},
+  item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -564,14 +564,7 @@ local eevee={
     if context.ending_shop and not context.blueprint then
       card.ability.extra.limit = 0
     end
-    local result = item_evo(self, card, context, nil)
-    if not result then
-      result = deck_suit_evo(self, card, context, "j_poke_espeon", "Hearts", .60)
-    end
-    if not result then
-      result = deck_suit_evo(self, card, context, "j_poke_umbreon", "Clubs", .60)
-    end
-    return result
+    return item_evo(self, card, context, nil)
   end
 }
 local vaporeon={
