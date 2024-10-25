@@ -516,7 +516,8 @@ local ditto={
               
               local card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
               card:set_eternal(false)
-              card:set_perishable(true)
+              --Setting it directly to overrule perishiable compatibility
+              card.ability.perishable = true
               card:add_to_deck()
               G.jokers:emplace(card)
           else

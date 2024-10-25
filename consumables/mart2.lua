@@ -87,7 +87,7 @@ local waterstone = {
   loc_txt = {
     name = "Water Stone",
     text = {
-      "Creates a {C:attention}Heirophant{} card",
+      "Creates a {C:attention}Hierophant{} card",
       "{C:attention}Evolution Card{}",
       "{C:inactive}(Must have room){}"
     }
