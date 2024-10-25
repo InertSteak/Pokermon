@@ -119,7 +119,7 @@ local furret={
     }  
   }, 
   rarity = 2, 
-  cost = 4, 
+  cost = 6, 
   stage = "One", 
   ptype = "Colorless",
   atlas = "Pokedex2",
