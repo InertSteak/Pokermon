@@ -1036,6 +1036,7 @@ local aerodactyl={
           }
         elseif aces == 3 then
           return {
+            message = "Wing Attack!",
             mult_mod = card.ability.extra.mult2,
             chip_mod = card.ability.extra.chips,
             card = card
