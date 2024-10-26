@@ -1,6 +1,6 @@
 # Pokermon
-Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded) and [Cryptid](https://github.com/MathIsFun0/Cryptid).
-This mod would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
+Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded), [Cryptid](https://github.com/MathIsFun0/Cryptid) and [Betmma](https://github.com/betmma/my_balatro_mods)!
+This mod and its features would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
 
 Please use the latest code before repoting issues, the releases may be out of date with the current code.
 
