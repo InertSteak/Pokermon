@@ -76,19 +76,20 @@ local leafeon={
 local glaceon={
   name = "glaceon", 
   pos = {x = 0, y = 0},
-  config = {extra = {rerolls = 0}},
+  config = {extra = {rerolls = 0, odds = 6}},
   loc_txt = {      
     name = 'Glaceon',      
     text = {
       "Create a random {C:attention}Tarot{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
+      "{C:green}#2#{} in {C:green}#3#{} chance for {C:dark_edition}Negative{}",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.rerolls, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -108,6 +109,10 @@ local glaceon={
       else
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+          if pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds then
+            local edition = {negative = true}
+            _card:set_edition(edition, true)
+          end
           _card:add_to_deck()
           G.consumeables:emplace(_card)
         end

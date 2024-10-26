@@ -53,10 +53,12 @@ family = {
     {"goldeen","seaking"},
     {"staryu","starmie"},
     {"magikarp","gyarados"},
-    {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon"},
+    {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
+    {"beldum", "metang", "metagross"},
+    {"sentret", "furret"},
     {"yamper","boltund"}
 }
 

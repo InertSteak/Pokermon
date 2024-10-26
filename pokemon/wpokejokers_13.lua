@@ -126,7 +126,7 @@ local metagross={
       "If played hand is a {C:attention}Four of a Kind{}",
       "each played card gives {X:mult,C:white}X{} Mult",
       "equal to the {C:attention}cube root{} ",
-      "of its total chips",
+      "of that card's total chips",
     } 
   },
   loc_vars = function(self, info_queue, center)
