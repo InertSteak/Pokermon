@@ -107,3 +107,17 @@ if (self.edition and self.edition.poke_shiny) and self.config.center and type(se
 end
 '''
 match_indent = true
+
+#Pidgey functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') > 0 then self.cost = 0 end
+'''
+position = "after"
+payload = '''
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = 2 end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') + #find_joker('pidgeot') > 0 then self.cost = 0 end
+'''
+match_indent = true

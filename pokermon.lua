@@ -385,26 +385,6 @@ function SMODS.current_mod.process_loc_text()
     end
 end
 
---Override set cost function
-function Card:set_cost()
-    self.extra_cost = 0 + G.GAME.inflation
-    if self.edition then
-        self.extra_cost = self.extra_cost + (self.edition.holo and 3 or 0) + (self.edition.foil and 2 or 0) + 
-        (self.edition.polychrome and 5 or 0) + (self.edition.negative and 5 or 0)
-    end
-    self.cost = math.max(1, math.floor((self.base_cost + self.extra_cost + 0.5)*(100-G.GAME.discount_percent)/100))
-    if self.ability.set == 'Booster' and G.GAME.modifiers.booster_ante_scaling then self.cost = self.cost + G.GAME.round_resets.ante - 1 end
-    if self.ability.set == 'Booster' and (not G.SETTINGS.tutorial_complete) and G.SETTINGS.tutorial_progress and (not G.SETTINGS.tutorial_progress.completed_parts['shop_1']) then
-        self.cost = self.cost + 3
-    end
-    if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = 2 end
-    if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') + #find_joker('pidgeotto') + #find_joker('pidgeot') > 0        then self.cost = 0 end
-    if self.ability.rental then self.cost = 1 end
-    self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
-    if self.area and self.ability.couponed and (self.area == G.shop_jokers or self.area == G.shop_booster) then self.cost = 0 end
-    self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
-end
-
 --Override straight function for Rapidash
 function get_straight(hand)
   local ret = {}
