@@ -518,6 +518,7 @@ local ditto={
               card:set_eternal(false)
               --Setting it directly to overrule perishiable compatibility
               card.ability.perishable = true
+              card.ability.perish_tally = G.GAME.perishable_rounds
               card:add_to_deck()
               G.jokers:emplace(card)
           else
