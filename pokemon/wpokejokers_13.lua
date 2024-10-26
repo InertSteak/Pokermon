@@ -155,15 +155,17 @@ local metagross={
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.scoring_name and context.scoring_name == "Four of a Kind" then
       local total_chips = (context.other_card.base.nominal) + (context.other_card.ability.bonus) + (context.other_card.ability.perma_bonus or 0) 
       if context.other_card.edition then
-        total_chips = (total_chips + context.other_card.edition.chips or 0)
+        total_chips = total_chips + (context.other_card.edition.chips or 0)
       end
       local Xmult = (total_chips)^(1/3)
-      return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
-        colour = G.C.XMULT,
-        mult = card.ability.extra.mult_mod, 
-        x_mult = Xmult
-      }
+      if Xmult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
+          colour = G.C.XMULT,
+          mult = card.ability.extra.mult_mod, 
+          x_mult = Xmult
+        }
+      end
     end
   end,
 }
