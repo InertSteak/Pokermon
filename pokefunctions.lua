@@ -538,7 +538,6 @@ energy_use = function(self, card, area, copier)
 end
 
 energy_can_use = function(self, card)
-  if card.area and card.area == G.pack_cards and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) then return true end
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
