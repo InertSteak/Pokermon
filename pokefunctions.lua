@@ -304,10 +304,8 @@ evolve = function(self, card, context, forced_key)
       else
         name = card.name
       end
-      sendDebugMessage(name)
       if name == scaled_evos[i] then
         scaled_values = copy_scaled_values(card)
-        sendDebugMessage(inspect(scaled_values))
         scaled = true
         break
       end
@@ -366,8 +364,6 @@ evolve = function(self, card, context, forced_key)
     
     if scaled then
       for l, v in pairs(scaled_values) do
-        sendDebugMessage(v)
-        sendDebugMessage(inspect(new_card.ability.extra))
         if v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and v > new_card.ability.extra[l] then
           new_card.ability.extra[l] = v
         end

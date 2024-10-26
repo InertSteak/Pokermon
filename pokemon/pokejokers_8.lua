@@ -36,7 +36,7 @@ local kingdra={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Water",

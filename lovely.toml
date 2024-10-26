@@ -121,3 +121,15 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') + #find_joker('pidgeot') > 0 then self.cost = 0 end
 '''
 match_indent = true
+
+#Deck functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if card.ability.consumeable and not skip_materialize then card:start_materialize() end"
+position = "after"
+payload = '''
+if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
+if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card) end
+'''
+match_indent = true

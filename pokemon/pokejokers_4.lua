@@ -1151,6 +1151,7 @@ local seadra={
       "Gains {C:mult}+#2#{} Mult",
       "for each scoring {C:attention}6{}",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves with a {C:dragon}Dragon{} {C:inactive}sticker){}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
