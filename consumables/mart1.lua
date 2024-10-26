@@ -283,12 +283,10 @@ local grass_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Grass{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 0 },
@@ -315,12 +313,10 @@ local fire_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Fire{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 0 },
@@ -347,12 +343,10 @@ local water_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Water{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 2, y = 0 },
@@ -379,12 +373,10 @@ local lightning_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Lightning{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 3, y = 0 },
@@ -411,12 +403,10 @@ local psychic_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Psychic{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 4, y = 0 },
@@ -443,12 +433,10 @@ local fighting_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Fighting{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 5, y = 0 },
@@ -476,12 +464,10 @@ local colorless_energy = {
       "of leftmost Joker permanently if able",
       "Half as effective with ",
       "non-{C:attention}Colorless{} Jokers",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 6, y = 0 },
@@ -508,12 +494,10 @@ local darkness_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Dark{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 7, y = 0 },
@@ -540,12 +524,10 @@ local metal_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Metal{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 8, y = 0 },
@@ -572,12 +554,10 @@ local fairy_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Fairy{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 9, y = 0 },
@@ -604,12 +584,10 @@ local dragon_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Dragon{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 0, y = 1 },
@@ -636,12 +614,10 @@ local earth_energy = {
       "Increases most {C:attention}scoring{} and {C:money}${} number",
       "values of leftmost {C:attention}Earth{} type",
       "Joker permanently if able",
-      "{C:attention}Reservable{}",
       "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'reserve'}
     return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
   end,
   pos = { x = 1, y = 1 },
@@ -698,7 +674,7 @@ local transformation = {
   end,
   use = function(self, card, area, copier)
     if G.jokers.cards and #G.jokers.cards > 0 then
-      energy_use(self, G.jokers.cards[1], area, copier, true)
+      energy_use(self, G.jokers.cards[1], area, copier)
       local highest = pokemon_in_pool(G.jokers.cards[1], true)
       if highest and type(highest) == "string" and G.jokers.cards[1].ability.name ~= highest then
         local forced_key = "j_poke_"..highest

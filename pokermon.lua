@@ -369,6 +369,8 @@ function SMODS.current_mod.process_loc_text()
     
     G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
     
+    G.localization.misc.dictionary.b_save = "SAVE"
+    
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
     for k, v in ipairs(ptype_list) do
       local text_color = "white"

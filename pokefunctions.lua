@@ -470,7 +470,7 @@ pokemon_in_pool = function (self, return_highest)
   end
 end
 
-energy_use = function(self, card, area, copier, unreservable)
+energy_use = function(self, card, area, copier)
   local applied = false
   local viable = false
   for k, v in pairs(G.jokers.cards) do
@@ -533,14 +533,6 @@ energy_use = function(self, card, area, copier, unreservable)
           end
         end
       end
-    end
-  end
-  if not applied and not unreservable then 
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, self.key, nil)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card:juice_up()
     end
   end
 end
