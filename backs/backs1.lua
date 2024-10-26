@@ -66,7 +66,7 @@ local obituarydeck = {
   loc_txt = {      
     name = 'Obituary Deck',      
     text = {
-      "All cards have a {c:dark_edition}Pink Seal{}",
+      "All cards have a {C:dark_edition}#1#{}",
     } 
   }, 
 	order = 19,
@@ -74,7 +74,7 @@ local obituarydeck = {
   discovered = true,
 	config = {},
   loc_vars = function(self, info_queue, center)
-    return {vars = {}}
+    return {vars = {"Pink Seal"}}
   end,
 	pos = { x = 2, y = 0 },
 	atlas = "pokedeck",
