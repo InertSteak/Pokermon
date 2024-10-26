@@ -21,14 +21,14 @@
 local leafeon={
   name = "leafeon", 
   pos = {x = 0, y = 0},
-  config = {extra = {money = 2, suit = "Spades", rerolls = 0}},
+  config = {extra = {chip_mod = 10, suit = "Spades", rerolls = 0}},
   loc_txt = {      
     name = 'Leafeon',      
     text = {
       "Create a {C:attention}World{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
-      "Discarded cards with",
-      "{C:spades}#2#{} suit earn {C:money}$#3#{}",
+      "Scoring cards with {C:spades}#2#{} suit",
+      "permanetly gain {C:chips}+#3#{} Chips",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
@@ -36,14 +36,14 @@ local leafeon={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_world
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.money}}
+    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.chip_mod}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex4",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
       if card.ability.extra.rerolls < 2 then
@@ -63,11 +63,13 @@ local leafeon={
         card.ability.extra.rerolls = 0
       end
     end
-    if context.discard and context.other_card:is_suit(card.ability.extra.suit) and not context.other_card.debuff and not context.blueprint then
-      ease_dollars(card.ability.extra.money)
+    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) and not context.other_card.debuff then
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
       return {
-        message = localize('$')..card.ability.extra.money, 
-        colour = G.C.MONEY
+        extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+        colour = G.C.CHIPS,
+        card = card
       }
     end
   end

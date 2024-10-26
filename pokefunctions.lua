@@ -1,6 +1,8 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
 energy_values = {mult = .3, mult1 = .3, mult2 = .3, chips = .3, chips1 = .3, chips2 = .3, Xmult = .3, money = .2, mult_mod = .1, s_mult = .1, chip_mod = .1, Xmult_mod = .1}
 
+scaled_evos = {"seadra"}
+
 family = {
     {"bulbasaur","ivysaur","venusaur"},
     {"charmander","charmeleon","charizard"},
@@ -49,7 +51,7 @@ family = {
     {"cubone","marowak"},
     {"koffing","weezing"},
     {"rhyhorn","rhydon"},
-    {"horsea","seadra"},
+    {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
     {"magikarp","gyarados"},
@@ -224,6 +226,18 @@ energize = function(card, etype, evolving)
   end
 end
 
+copy_scaled_values = function(card)
+  local values = {mult = 0, chips = 0, Xmult = 0}
+  if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
+    for l, v in pairs(values) do
+      if card.ability.extra[l] and card.ability.extra[l.."_mod"] then
+        values[l] = card.ability.extra[l]
+      end
+    end
+  end
+  return values
+end
+
 remove = function(self, card, context)
   play_sound('tarot1')
   card.T.r = -0.2
@@ -253,6 +267,8 @@ evolve = function(self, card, context, forced_key)
     local previous_c_energy_count = nil
     local shiny = nil
     local type_sticker = nil
+    local scaled = nil
+    local scaled_values = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -280,7 +296,23 @@ evolve = function(self, card, context, forced_key)
     if card.ability.extra and card.ability.extra.c_energy_count then
       previous_c_energy_count  = card.ability.extra.c_energy_count
     end 
-       
+    
+    for i = 1, #scaled_evos do
+      local name = nil
+      if not card.name and card.ability.name then
+        name = card.ability.name
+      else
+        name = card.name
+      end
+      sendDebugMessage(name)
+      if name == scaled_evos[i] then
+        scaled_values = copy_scaled_values(card)
+        sendDebugMessage(inspect(scaled_values))
+        scaled = true
+        break
+      end
+    end
+    
     if type_sticker_applied then
       poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
       for l, v in pairs(poketype_list) do
@@ -330,6 +362,16 @@ evolve = function(self, card, context, forced_key)
     
     if new_card.ability and new_card.ability.extra and (new_card.ability.extra.energy_count or new_card.ability.extra.c_energy_count) then
       energize(new_card, nil, true)
+    end
+    
+    if scaled then
+      for l, v in pairs(scaled_values) do
+        sendDebugMessage(v)
+        sendDebugMessage(inspect(new_card.ability.extra))
+        if v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and v > new_card.ability.extra[l] then
+          new_card.ability.extra[l] = v
+        end
+      end
     end
     
     if type_sticker then

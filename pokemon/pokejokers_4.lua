@@ -1189,6 +1189,7 @@ local seadra={
         }
       end
     end
+    return type_evo(self, card, context, "j_poke_kingdra", "dragon")
   end,
 }
 local goldeen={
