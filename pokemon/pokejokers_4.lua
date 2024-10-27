@@ -946,7 +946,8 @@ local chansey={
       "{C:attention}Lucky{} card triggers each round,",
       "add a permanent copy to your",
       "deck and draw it to {C:attention}Hand",
-      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
+      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})",
+      "{C:inactive}(Evolves when deck is >= 25% Lucky cards)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -989,6 +990,7 @@ local chansey={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
+    return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
   end
 }
 local tangela={

@@ -466,6 +466,20 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
   end
 end
 
+deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage)
+  if not context.repetition and not context.individual and context.end_of_round then
+    local enhance_count = 0
+    for k, v in pairs(G.playing_cards) do
+      if v.ability.name == enhancement.." Card" then enhance_count  = enhance_count  + 1 end
+    end
+    if enhance_count/#G.playing_cards >= percentage then
+      return {
+        message = evolve (self, card, context, forced_key)
+      }
+    end
+  end
+end
+
 pokemon_in_pool = function (self, return_highest)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true
