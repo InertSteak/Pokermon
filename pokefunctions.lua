@@ -55,6 +55,7 @@ family = {
     {"goldeen","seaking"},
     {"staryu","starmie"},
     {"magikarp","gyarados"},
+    {"chansey", "blissey"},
     {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
@@ -269,6 +270,7 @@ evolve = function(self, card, context, forced_key)
     local type_sticker = nil
     local scaled = nil
     local scaled_values = nil
+    local reset_apply_type = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -324,8 +326,17 @@ evolve = function(self, card, context, forced_key)
         remove(self, card, context)
       }))
     
+    if G.GAME.modifiers.apply_type then
+      G.GAME.modifiers.apply_type = false
+      reset_apply_type = true
+    end
+    
     local temp_card = {set = "Joker", area = G.jokers, key = forced_key, no_edition = true}
     local new_card = SMODS.create_card(temp_card)
+    
+    if reset_apply_type then
+      G.GAME.modifiers.apply_type = true
+    end
     
     if previous_edition then
       if shiny then
@@ -380,27 +391,42 @@ evolve = function(self, card, context, forced_key)
   end
 end
 
+can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
+  if not G.P_CENTERS[forced_key] then return false end
+  if next(find_joker("everstone")) and not allow_level then return false end
+  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos then
+    return true
+  else
+    return false
+  end
+end
+
 level_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.rounds and not context.blueprint and not pokermon_config.no_evos then
+    if can_evolve(self, card, context, forced_key) and card.ability.extra.rounds then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
       end
-      if card.ability.extra.rounds == 1 and not next(find_joker("everstone")) then
+      if card.ability.extra.rounds == 1 then
         local eval = function(card) return not card.REMOVED end
         juice_card_until(card, eval, true)
       end
-      if card.ability.extra.rounds <= 0 and not next(find_joker("everstone")) then
+      if card.ability.extra.rounds <= 0 then
         return {
           message = evolve (self, card, context, forced_key)
         }
       elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Level Up!"})
       end
+    elseif can_evolve(self, card, context, forced_key, nil, true) and card.ability.extra.rounds then
+      if card.ability.extra.rounds > 0 then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Level Up!"})
+      end
     end
 end
 
 item_evo = function(self, card, context, forced_key)
-    if not context.repetition and not context.individual and context.end_of_round and (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string"))       and not context.blueprint and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+    if (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string")) then
       if card.ability.name == "eevee" then
         if card.ability.extra.evolve == "waterstone" then
           forced_key = "j_poke_vaporeon"
@@ -420,7 +446,7 @@ item_evo = function(self, card, context, forced_key)
           forced_key = "j_poke_sylveon"
         end
       end
-      if forced_key then
+      if forced_key and can_evolve(self, card, context, forced_key) then
         return {
           message = evolve (self, card, context, forced_key)
         }
@@ -429,11 +455,12 @@ item_evo = function(self, card, context, forced_key)
 end
 
 scaling_evo = function (self, card, context, forced_key, current, target)
-  if not context.repetition and not context.individual and context.end_of_round and current >= target and not context.blueprint and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+  if can_evolve(self, card, context, forced_key) and current >= target then
     return {
       message = evolve (self, card, context, forced_key)
     }
-  elseif current >= target and not card.ability.extra.juiced and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+  end
+  if can_evolve(self, card, context, forced_key, true) and current >= target and not card.ability.extra.juiced then
     card.ability.extra.juiced = true
     local eval = function(card) return not card.REMOVED end
     juice_card_until(card, eval, true)
@@ -441,11 +468,11 @@ scaling_evo = function (self, card, context, forced_key, current, target)
 end
 
 type_evo = function (self, card, context, forced_key, type_req)
-  if not context.repetition and not context.individual and context.end_of_round and card.ability[type_req.."_sticker"] and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+  if can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
     return {
       message = evolve (self, card, context, forced_key)
     }
-  elseif card.ability[type_req.."_sticker"] and not card.ability.extra.juiced and not pokermon_config.no_evos and not next(find_joker("everstone")) then
+  elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] and not card.ability.extra.juiced then
     card.ability.extra.juiced = true
     local eval = function(card) return not card.REMOVED end
     juice_card_until(card, eval, true)
@@ -453,7 +480,7 @@ type_evo = function (self, card, context, forced_key, type_req)
 end
 
 deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
-  if not context.repetition and not context.individual and context.end_of_round then
+  if can_evolve(self, card, context, forced_key) then
     local suit_count = 0
     for k, v in pairs(G.playing_cards) do
       if v:is_suit(suit) then suit_count = suit_count + 1 end
@@ -467,7 +494,7 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
 end
 
 deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage)
-  if not context.repetition and not context.individual and context.end_of_round then
+  if can_evolve(self, card, context, forced_key) then
     local enhance_count = 0
     for k, v in pairs(G.playing_cards) do
       if v.ability.name == enhancement.." Card" then enhance_count  = enhance_count  + 1 end

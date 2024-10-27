@@ -27,8 +27,8 @@ local leafeon={
     text = {
       "Create a {C:attention}World{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
-      "Scoring cards with {C:spades}#2#{} suit",
-      "permanetly gain {C:chips}+#3#{} Chips",
+      "Every played card with {C:spades}#2#{} suit",
+      "permanetly gains {C:chips}+#3#{} Chips",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
