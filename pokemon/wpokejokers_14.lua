@@ -45,7 +45,7 @@ local buizel={
   end,
   rarity = 1, 
   cost = 5, 
-  stage = "One", 
+  stage = "Basic", 
   atlas = "Pokedex4",
   ptype = "Water",
   blueprint_compat = true,

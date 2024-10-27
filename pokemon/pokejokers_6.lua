@@ -73,7 +73,7 @@ local sentret={
   }, 
   rarity = 1, 
   cost = 4, 
-  stage = "One", 
+  stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex2",
   blueprint_compat = true,

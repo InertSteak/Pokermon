@@ -1082,7 +1082,7 @@ local snorlax={
   perishable_compat = false,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
       _card:add_to_deck()
       G.consumeables:emplace(_card)

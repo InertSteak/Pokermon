@@ -83,8 +83,8 @@ local metang={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
   end,
   rarity = 3, 
-  cost = 6, 
-  stage = "Basic", 
+  cost = 8, 
+  stage = "Two", 
   ptype = "Metal",
   atlas = "Pokedex3",
   perishable_compat = false,
@@ -134,8 +134,8 @@ local metagross={
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.size, math.max(1, math.abs(center.ability.extra.chips - center.ability.extra.mult)^(1/3))}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
-  stage = "Basic", 
+  cost = 10, 
+  stage = "Two", 
   ptype = "Metal",
   atlas = "Pokedex3",
   perishable_compat = false,

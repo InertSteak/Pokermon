@@ -37,8 +37,8 @@ local kingdra={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
-  stage = "One", 
+  cost = 10, 
+  stage = "Two", 
   ptype = "Water",
   atlas = "Pokedex2",
   perishable_compat = false,
