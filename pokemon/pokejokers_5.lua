@@ -1391,15 +1391,19 @@ local mewtwo={
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
-        local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
-        local edition = {polychrome = true}
-        _card:set_edition(edition, true)
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        if (#G.jokers.cards - 1 < G.jokers.config.card_limit and not leftmost.ability.eternal) or (#G.jokers.cards < G.jokers.config.card_limit and leftmost.ability.eternal) then
+          local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
+          local edition = {polychrome = true}
+          _card:set_edition(edition, true)
+          _card:add_to_deck()
+          G.jokers:emplace(_card)
+        end
         
-        G.E_MANAGER:add_event(Event({
-          remove(self, G.jokers.cards[1], context)
-        }))
+        if not leftmost.ability.eternal then
+          G.E_MANAGER:add_event(Event({
+            remove(self, G.jokers.cards[1], context)
+          }))
+        end
       end
     end
     if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
