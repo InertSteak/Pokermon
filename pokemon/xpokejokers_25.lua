@@ -63,7 +63,7 @@ local charjabug={
   loc_txt = {      
     name = 'Charjabug',      
     text = {
-      "{C:mult}+#1#{} Mult for each",
+      "{C:mult}+#1#{} Mult",
       "for each {X:lightning, C:black}Lightning{} Joker",
       "you have {C:inactive}(includes self){}",
        "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)",
@@ -79,7 +79,7 @@ local charjabug={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_thunderstone'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult * (math.max(#find_pokemon_type("Lightning"), 1))}}
   end,
   calculate = function(self, card, context)
@@ -106,7 +106,7 @@ local vikavolt={
   loc_txt = {      
     name = 'Vikavolt',      
     text = {
-      "{X:red,C:white} X#1# {} Mult for each",
+      "{X:red,C:white} X#1# {} Mult",
       "for each {X:lightning, C:black}Lightning{} Joker",
       "you have {C:inactive}(includes self){}",
        "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)",

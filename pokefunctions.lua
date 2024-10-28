@@ -60,8 +60,10 @@ family = {
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
+    {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
+    {"grubbin", "charjabug", "vikavolt"},
     {"yamper","boltund"}
 }
 
