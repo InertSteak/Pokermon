@@ -58,7 +58,7 @@ for _, file in ipairs(pfiles) do
           end
           if not pokermon_config.no_evos and item.name ~= "taurosh" then
             item.in_pool = function(self)
-              return pokemon_in_pool(self, false)
+              return pokemon_in_pool(self)
             end
           end
           if not item.config then

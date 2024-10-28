@@ -521,7 +521,30 @@ deck_enhance_evo = function (self, card, context, forced_key, enhancement, perce
   end
 end
 
-pokemon_in_pool = function (self, return_highest)
+get_highest_evo = function(card)
+  local name = nil
+  local highest = "venusaur"
+  local found = nil
+  if not card.name and card.ability.name then
+    name = card.ability.name
+  else
+    name = card.name or "bulbasaur"
+  end
+  for k, v in ipairs(family) do
+    for x, y in ipairs(v) do
+      if y == name then
+        found = true
+      end
+    end
+    if found and name ~= v[#v] then
+      highest = v[#v]
+      break
+    end
+  end
+  return highest
+end
+
+pokemon_in_pool = function (self)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true
   end
@@ -540,9 +563,6 @@ pokemon_in_pool = function (self, return_highest)
       elseif p == name then
         in_family = true
       end
-    end
-    if in_family and return_highest then
-      return v[#v]
     end
     if in_family and found_other then
       return false

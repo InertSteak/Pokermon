@@ -674,12 +674,13 @@ local transformation = {
   end,
   use = function(self, card, area, copier)
     if G.jokers.cards and #G.jokers.cards > 0 then
-      energy_use(self, G.jokers.cards[1], area, copier)
-      local highest = pokemon_in_pool(G.jokers.cards[1], true)
-      if highest and type(highest) == "string" and G.jokers.cards[1].ability.name ~= highest then
+      local leftmost = G.jokers.cards[1]
+      energy_use(self, leftmost, area, copier)
+      local highest = get_highest_evo(leftmost)
+      if highest and type(highest) == "string" then
         local forced_key = "j_poke_"..highest
         local context = {}
-        evolve(G.jokers.cards[1], G.jokers.cards[1], context, forced_key)
+        evolve(leftmost, leftmost, context, forced_key)
       end
     end
   end
