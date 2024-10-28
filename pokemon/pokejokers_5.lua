@@ -1361,6 +1361,7 @@ local mewtwo={
   name = "mewtwo", 
   pos = {x = 10, y = 11},
   soul_pos = { x = 11, y = 11},
+  config = {extra = {Xmult_mod = 1.2}},
   loc_txt = {      
     name = 'Mewtwo',      
     text = {
@@ -1368,12 +1369,14 @@ local mewtwo={
       "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
       "leftmost {C:attention}Joker{}, then",
       "destroy leftmost {C:attention}Joker{}",
-      "{C:inactive}(Except this Joker)",
+      "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+      "{C:inactive}(Can't destroy self or Polychrome)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -1383,7 +1386,8 @@ local mewtwo={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.ending_shop and not context.blueprint then
-      if G.jokers.cards[1] ~= card  then
+      local leftmost = G.jokers.cards[1]
+      if leftmost ~= card and not (leftmost.edition and leftmost.edition.polychrome) then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
@@ -1397,6 +1401,19 @@ local mewtwo={
           remove(self, G.jokers.cards[1], context)
         }))
       end
+    end
+    if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_mod
+        }
     end
   end
 }
