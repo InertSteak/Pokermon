@@ -71,13 +71,18 @@ local nidoranm={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.other_card.debuff and context.other_card:get_id() == 13 then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          h_mult = card.ability.extra.mult
-        }
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              h_mult = card.ability.extra.mult,
+              card = card
+          }
       end
     end
     return level_evo(self, card, context, "j_poke_nidorino")
@@ -109,13 +114,18 @@ local nidorino={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.other_card.debuff and context.other_card:get_id() == 13 then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          h_mult = card.ability.extra.mult
-        }
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              h_mult = card.ability.extra.mult,
+              card = card
+          }
       end
     end
     return item_evo(self, card, context, "j_poke_nidoking")
@@ -145,13 +155,18 @@ local nidoking={
   atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.other_card.debuff and context.other_card:get_id() == 13 then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          h_mult = card.ability.extra.mult
-        }
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              h_mult = card.ability.extra.mult,
+              card = card
+          }
       end
     end
   end,
@@ -452,7 +467,7 @@ local zubat={
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2}},
+  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2, eaten = 0}},
   loc_txt = {      
     name = 'Golbat',      
     text = {
@@ -461,12 +476,13 @@ local golbat={
       "{C:chips}+#4#{} for {C:attention}Bonus{} and {C:attention}Stone{} cards,",
       "{X:red,C:white}X#6#{} for {C:attention}Steel{} and {C:attention}Glass{} cards,",
       "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive})"
+      "{C:inactive}(Evolves at {C:attention}#9#{}{C:inactive}/20 Enhancements eaten)",
+      "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive} end of round)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod, center.ability.extra.eaten}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -505,6 +521,7 @@ local golbat={
                       return true
                   end
               })) 
+              card.ability.extra.eaten = card.ability.extra.eaten + 1
           end
       end
 
@@ -534,6 +551,7 @@ local golbat={
         }
       end
     end
+    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, 20)
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then

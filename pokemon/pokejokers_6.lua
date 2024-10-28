@@ -157,6 +157,107 @@ local furret={
 -- Spinarak 167
 -- Ariados 168
 -- Crobat 169
+local crobat={
+  name = "crobat", 
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2}},
+  loc_txt = {      
+    name = 'Crobat',      
+    text = {
+      "{C:attention}Randomize{} existing scoring card Enhancements",
+      "Gain {C:mult}+#2#{} for {C:attention}Mult{} and {C:attention}Wild{} cards",
+      "{C:chips}+#4#{} for {C:attention}Bonus{} and {C:attention}Stone{} cards,",
+      "{X:red,C:white}X#6#{} for {C:attention}Steel{} and {C:attention}Glass{} cards,",
+      "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards",
+      "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive} end of round)"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
+      local m_count = 0 
+      local c_count = 0 
+      local x_count = 0 
+      local d_count = 0
+      local enhanced = {}
+      for k, v in ipairs(context.scoring_hand) do
+          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
+              enhanced[#enhanced+1] = v
+              v.vampired = true
+              if v.config.center == G.P_CENTERS.m_mult or v.config.center == G.P_CENTERS.m_wild then
+                m_count = m_count + 1
+              end
+              if v.config.center == G.P_CENTERS.m_bonus or v.config.center == G.P_CENTERS.m_stone then
+                c_count = c_count + 1
+              end
+              if v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_glass then
+                x_count = x_count + 1
+              end
+              if v.config.center == G.P_CENTERS.m_gold or v.config.center == G.P_CENTERS.m_lucky then
+                d_count = d_count + 1
+              end
+              local enhancement_type = pseudorandom(pseudoseed('crobat'))
+              if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
+              elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
+              elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
+              elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
+              elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
+              elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
+              elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
+              else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+              end
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      v:juice_up()
+                      v.vampired = nil
+                      return true
+                  end
+              })) 
+          end
+      end
+
+      if #enhanced > 0 then 
+          if m_count > 0 then
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * m_count
+          end
+          if c_count > 0 then
+            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * c_count
+          end
+          if x_count > 0 then
+            card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * x_count
+          end
+          if d_count > 0 then
+            card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod * d_count
+          end
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = "Skree!", 
+          colour = G.C.BLACK,
+          mult_mod = card.ability.extra.mult,
+          chip_mod = card.ability.extra.chips,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    if card.ability.extra.money > 0 then
+      return card.ability.extra.money
+    end
+	end
+}
 -- Chinchou 170
 -- Lanturn 171
 -- Pichu 172
@@ -170,5 +271,5 @@ local furret={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret},
+        list = { mew, sentret, furret, crobat},
 }

@@ -984,7 +984,7 @@ local doduo={
   loc_txt = {      
     name = 'Doduo',      
     text = {
-      "{C:mult}+#1#{} Mult if played hand",
+      "{C:mult}+#1#{} Mult if scoring hand",
       "contains at least",
       "{C:attention}2{} face cards",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
@@ -1028,7 +1028,7 @@ local dodrio={
   loc_txt = {      
     name = 'Dodrio',      
     text = {
-      "{C:mult}+#1#{} Mult if played hand",
+      "{C:mult}+#1#{} Mult if scoring hand",
       "contains at least",
       "{C:attention}3{} face cards"
     } 

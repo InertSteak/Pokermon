@@ -1,7 +1,7 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod"}
 energy_values = {mult = .3, mult1 = .3, mult2 = .3, chips = .3, chips1 = .3, chips2 = .3, Xmult = .3, money = .2, mult_mod = .1, s_mult = .1, chip_mod = .1, Xmult_mod = .1}
 
-scaled_evos = {"seadra"}
+scaled_evos = {"seadra", "golbat"}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -20,7 +20,7 @@ family = {
     {"clefairy","clefable"},
     {"vulpix","ninetales"},
     {"jigglypuff","wigglytuff"},
-    {"zubat","golbat"},
+    {"zubat","golbat", "crobat"},
     {"oddish","gloom","vileplume"},
     {"paras","parasect"},
     {"venonat","venomoth"},
@@ -73,6 +73,18 @@ type_sticker_applied = function(card)
   else
     return false
   end
+end
+
+find_pokemon_type = function(target_type)
+  local found = {}
+  if G.jokers and G.jokers.cards then
+    for k, v in pairs(G.jokers.cards) do
+      if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) then
+        table.insert(found, v)
+      end
+    end
+  end
+  return found
 end
 
 energy_matches = function(card, etype, include_colorless)
@@ -228,10 +240,10 @@ energize = function(card, etype, evolving)
 end
 
 copy_scaled_values = function(card)
-  local values = {mult = 0, chips = 0, Xmult = 0}
+  local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
-      if card.ability.extra[l] and card.ability.extra[l.."_mod"] then
+      if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) then
         values[l] = card.ability.extra[l]
       end
     end
