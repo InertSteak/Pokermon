@@ -537,8 +537,12 @@ get_highest_evo = function(card)
       end
     end
     if found and name ~= v[#v] then
+      found = false
       highest = v[#v]
       break
+    else
+      found = false
+      highest = false
     end
   end
   return highest
