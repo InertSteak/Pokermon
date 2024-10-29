@@ -817,7 +817,7 @@ local slowpoke={
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_mod = 0.75, Xmult = 1}},
+  config = {extra = {Xmult_multi = 0.75, Xmult = 1}},
   loc_txt = {      
     name = 'Slowbro',      
     text = {
@@ -829,7 +829,7 @@ local slowbro={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
   cost = 6, 
@@ -841,12 +841,12 @@ local slowbro={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_multi
         end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_multi = card.ability.extra.Xmult
         }
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -861,7 +861,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult_mod = 1.75, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.75, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {
@@ -873,7 +873,7 @@ local magnemite={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 7,
@@ -886,9 +886,9 @@ local magnemite={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_mod
+          x_mult = card.ability.extra.Xmult_multi
         }
     end
     return level_evo(self, card, context, "j_poke_magneton")
@@ -897,7 +897,7 @@ local magnemite={
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
-  config = {extra = {Xmult_mod = 2}},
+  config = {extra = {Xmult_multi = 2}},
   loc_txt = {      
     name = 'Magneton',      
     text = {
@@ -908,7 +908,7 @@ local magneton={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 3, 
   cost = 6, 
@@ -920,9 +920,9 @@ local magneton={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_mod
+          x_mult = card.ability.extra.Xmult_multi
         }
     end
   end
