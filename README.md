@@ -14,6 +14,8 @@ Please note this is my first mod and a work in progress so there may be quite a 
 **Prerequisites:**
 
 **IMPORTANT**: You must download the latest version of steamodded and NOT use the release version which is very old. The mod will run into errors otherwise.
+![{5CA521AC-B97C-4EEC-AF2B-BEC2DF44AC31}](https://github.com/user-attachments/assets/c67676d7-42b8-4a35-95ec-6258fb8b76fa)
+
 
 Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.6.0 if you can, some things may be broken on v0.5.0 beta 6) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use latest) must be installed.
 
