@@ -55,6 +55,7 @@ local gastly={
   stage = "Basic", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -110,6 +111,7 @@ local haunter={
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -165,6 +167,7 @@ local gengar={
   stage = "Two", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
