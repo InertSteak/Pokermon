@@ -1,19 +1,4 @@
 --Visual Code for Pokemon
--- Custom Rarity setup (based on Relic-Jokers)
-Game:set_globals()
-G.C.RARITY["poke_safari"] = HEX("F2C74E");
-local ip = SMODS.insert_pool
-function SMODS.insert_pool(pool, center, replace)
-    if pool == nil then pool = {} end
-    ip(pool, center, replace)
-end
-local get_badge_colourref = get_badge_colour
-function get_badge_colour(key)
-    local fromRef = get_badge_colourref(key)
-    if key == 'poke_safari' then return G.C.RARITY["poke_safari"] end
-    return fromRef
-end
-
 --Load config
 local lovely = require("lovely")
 

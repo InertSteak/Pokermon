@@ -12,6 +12,25 @@ pokermon = {}
 mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
 
+--Load Custom Rarities
+SMODS.Rarity{
+    key = "safari",
+    loc_txt = {
+      name = "Safari",
+      text = {
+        "Can only be obtained",
+        "through {C:attention}Evolution{}",
+        "or certain {C:attention}Pokeball Items{}"
+      } 
+    },
+    default_weight = 0,
+    badge_colour = HEX("F2C74E"),
+    pools = {["Joker"] = true},
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+}
+
 --Load helper function file
 local helper, load_error = SMODS.load_file("pokefunctions.lua")
 if load_error then
@@ -429,21 +448,5 @@ function get_straight(hand)
     if not straight then return ret end
     table.insert(ret, t)
     return ret
-  end
-end
-
-if not pokermon_config.jokers_only then
-  --Register custom rarity pools
-  local is = SMODS.injectItems
-  function SMODS.injectItems()
-      local m = is()
-      G.P_JOKER_RARITY_POOLS.poke_safari = {}
-      for k, v in pairs(G.P_CENTERS) do
-          v.key = k
-          if v.rarity and (v.rarity == 'poke_safari') and v.set == 'Joker' and not v.demo then 
-              table.insert(G.P_JOKER_RARITY_POOLS[v.rarity], v)
-          end
-      end
-      return m
   end
 end

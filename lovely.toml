@@ -3,17 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
-# Display Safari name in rarity
-[[patches]]
-[patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "if AUT.card_type == 'Enhanced' then card_type = localize{type = 'name_text', key = card.config.center.key, set = 'Enhanced'} end"
-position = "before"
-payload = """
-if AUT.card_type == 'Joker' and card.config.center.rarity == 'poke_safari' then card_type = ({['poke_safari'] = 'Safari'})[card.config.center.rarity] end
-"""
-match_indent = true
-
 # Localization color
 [[patches]]
 [patches.pattern]
