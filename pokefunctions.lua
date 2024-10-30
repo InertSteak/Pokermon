@@ -332,6 +332,7 @@ evolve = function(self, card, context, forced_key)
       for l, v in pairs(poketype_list) do
         if card.ability[v.."_sticker"] then
           type_sticker = v
+          break
         end
       end
     end
@@ -396,7 +397,7 @@ evolve = function(self, card, context, forced_key)
     end
     
     if type_sticker then
-      new_card.ability[type_sticker.."_sticker"] = true
+      apply_type_sticker(new_card, type_sticker)
     end
     
     new_card:add_to_deck()
@@ -754,7 +755,7 @@ apply_type_sticker = function(card, sticker_type)
   end
   
   for l, v in pairs(poketype_list) do
-    if v ~= apply_type then
+    if string.lower(v) ~= string.lower(apply_type) then
       card.ability[string.lower(v).."_sticker"] = false
     end
   end
