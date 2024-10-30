@@ -461,6 +461,13 @@ item_evo = function(self, card, context, forced_key)
           forced_key = "j_poke_sylveon"
         end
       end
+      if card.ability.name == "gloom" then
+        if card.ability.extra.evolve == "leafstone" then
+          forced_key = "j_poke_vileplume"
+        elseif card.ability.extra.evolve == "sunstone" then
+          forced_key = "j_poke_bellossom"
+        end
+      end
       if forced_key and can_evolve(self, card, context, forced_key) then
         return {
           message = evolve (self, card, context, forced_key)

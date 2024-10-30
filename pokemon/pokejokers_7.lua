@@ -1,5 +1,56 @@
 -- Ampharos 181
 -- Bellossom 182
+local bellossom={
+  name = "bellossom",
+  config = {extra = {}},
+  pos = {x = 0, y = 0},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  loc_txt = {      
+    name = 'Bellossom',      
+    text = {
+      "Played cards with {C:attention}Odd{} rank",
+      "become {C:attention}Wild{} cards when scored",
+      "If already {C:attention}Wild{}, adds {C:dark_edition}Polychrome"
+    } 
+  }, 
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.before and context.cardarea == G.jokers and not context.blueprint then
+      local odds = {}
+      for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14 then
+              odds[#odds+1] = v
+              if v.ability.name == 'Wild Card' then
+                local edition = {polychrome = true}
+                v:set_edition(edition, true)
+              end
+              v:set_ability(G.P_CENTERS.m_wild, nil, true)
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      v:juice_up()
+                      return true
+                  end
+              })) 
+          end
+      end
+      if #odds > 0 then 
+          return {
+              message = "Petal!",
+              colour = G.C.MULT,
+              card = card
+          }
+      end
+    end
+  end
+}
 -- Marill 183
 -- Azumarill 184
 -- Sudowoodo 185
@@ -188,5 +239,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {espeon, umbreon, steelix},
+        list = {bellossom, espeon, umbreon, steelix},
 }

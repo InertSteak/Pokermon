@@ -617,7 +617,7 @@ local gloom={
   end,
   rarity = 2, 
   cost = 8,
-  item_req = "leafstone",
+  item_req = {"leafstone", "sunstone"},
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -636,7 +636,7 @@ local gloom={
           }
       end
     end
-    return item_evo(self, card, context, "j_poke_vileplume")
+    return item_evo(self, card, context)
   end
 }
 local vileplume={
