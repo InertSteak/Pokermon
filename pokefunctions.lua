@@ -21,7 +21,7 @@ family = {
     {"vulpix","ninetales"},
     {"jigglypuff","wigglytuff"},
     {"zubat","golbat", "crobat"},
-    {"oddish","gloom","vileplume"},
+    {"oddish","gloom","vileplume", "bellossom"},
     {"paras","parasect"},
     {"venonat","venomoth"},
     {"diglett","dugtrio"},
