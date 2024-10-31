@@ -83,7 +83,13 @@ local obituarydeck = {
   end,
 }
 
+local dList = {luminousdeck, obituarydeck}
+
+if pokermon_config.pokeballs then
+  table.insert(dList, 1, pokemondeck)
+end
+
 return {name = "Back",
         init = init,
-        list = {pokemondeck, luminousdeck, obituarydeck }
+        list = dList
 }
