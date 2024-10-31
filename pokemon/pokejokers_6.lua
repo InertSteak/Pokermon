@@ -261,6 +261,48 @@ local crobat={
 -- Chinchou 170
 -- Lanturn 171
 -- Pichu 172
+local pichu={
+  name = "pichu", 
+  pos = {x = 0, y = 0},
+  config = {extra={money = 15, Xmult_minus = 0.75, rounds = 2}},
+  loc_txt = {      
+    name = 'Pichu',      
+    text = {
+      "Earn {C:money}$#1#{} at",
+      "end of round",
+      "{X:red,C:white} X#2# {} Mult",
+      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
+      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
+    } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
+    return {vars = {center.ability.extra.money, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
+  end,
+  rarity = 1, 
+  cost = 3,
+  item_req = "thunderstone",
+  stage = "Baby", 
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_pikachu")
+  end,
+  calc_dollar_bonus = function(self, card)
+    return card.ability.extra.money
+	end,
+}
 -- Cleffa 173
 -- Igglybuff 174
 -- Togepi 175
@@ -271,5 +313,5 @@ local crobat={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, crobat},
+        list = { mew, sentret, furret, crobat, pichu},
 }

@@ -91,7 +91,7 @@ end
 '''
 position = "after"
 payload = '''
-if (self.edition and self.edition.poke_shiny) and self.config.center and type(self.config.center) == "table" and not self.config.center.stage then
+if (self.edition and self.edition.poke_shiny) and self.config.center and type(self.config.center) == "table" and not self.config.center.stage and self.label ~= "e_poke_shiny" then
     self.children.center:draw_shader('poke_shiny', nil, self.ARGS.send_to_shader)
 end
 '''
