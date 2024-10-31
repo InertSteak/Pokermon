@@ -352,6 +352,53 @@ local cleffa={
   end,
 }
 -- Igglybuff 174
+local igglybuff={
+  name = "igglybuff",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  loc_txt = {
+    name = "Igglybuff",
+    text = {
+      "Create a {C:attention}World{} card at end of round",
+      "{X:red,C:white} X#1# {} Mult",
+      "{C:inactive}(Must have room)",
+      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
+      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_world
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 2,
+  stage = "Baby",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      end
+    end
+    return level_evo(self, card, context, "j_poke_jigglypuff")
+  end,
+}
 -- Togepi 175
 -- Togetic 176
 -- Natu 177
@@ -360,5 +407,5 @@ local cleffa={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, crobat, pichu, cleffa},
+        list = { mew, sentret, furret, crobat, pichu, cleffa, igglybuff},
 }

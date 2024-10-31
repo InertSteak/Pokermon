@@ -19,7 +19,7 @@ family = {
     {"nidoranm","nidorino","nidoking"},
     {"cleffa", "clefairy","clefable"},
     {"vulpix","ninetales"},
-    {"jigglypuff","wigglytuff"},
+    {"igglybuff", "jigglypuff","wigglytuff"},
     {"zubat","golbat", "crobat"},
     {"oddish","gloom","vileplume", "bellossom"},
     {"paras","parasect"},
