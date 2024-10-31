@@ -30,7 +30,7 @@ local bellossom={
               odds[#odds+1] = v
               if v.ability.name == 'Wild Card' then
                 local edition = {polychrome = true}
-                v:set_edition(edition, true)
+                v:set_edition(edition, true, true)
               end
               v:set_ability(G.P_CENTERS.m_wild, nil, true)
               G.E_MANAGER:add_event(Event({

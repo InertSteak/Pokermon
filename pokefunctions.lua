@@ -17,7 +17,7 @@ family = {
     {"sandshrew","sandslash"},
     {"nidoranf","nidorina","nidoqueen"},
     {"nidoranm","nidorino","nidoking"},
-    {"clefairy","clefable"},
+    {"cleffa", "clefairy","clefable"},
     {"vulpix","ninetales"},
     {"jigglypuff","wigglytuff"},
     {"zubat","golbat", "crobat"},

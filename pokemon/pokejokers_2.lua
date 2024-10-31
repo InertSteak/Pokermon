@@ -607,7 +607,7 @@ local gloom={
     text = {
       "Played cards with {C:attention}Odd{} rank",
       "give {C:mult}+#1#{} Mult when scored",
-      "{C:inactive}(Evolves with a{} {C:attention}Leaf Stone{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Leaf/Sun Stone{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)

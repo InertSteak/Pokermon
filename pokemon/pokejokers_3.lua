@@ -1127,7 +1127,6 @@ local dewgong={
       _card = context.full_hand[1]
       local args = {guaranteed = true}
       local seal_type = SMODS.poll_seal(args)
-      sendDebugMessage(seal_type)
       _card:set_seal(seal_type, true)
     end
     if context.first_hand_drawn and not context.blueprint then

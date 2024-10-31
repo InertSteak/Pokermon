@@ -1,6 +1,5 @@
 init = function()
   local backapply_orig = Back.apply_to_run
-  sendDebugMessage("Here")
   function Back.apply_to_run(self)
     backapply_orig(self)
     			G.E_MANAGER:add_event(Event({
