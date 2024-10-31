@@ -1058,7 +1058,7 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
-  config = {extra={money = 2, threshold = 90, plus_slot = false}},
+  config = {extra={money = 1, threshold = 90, plus_slot = false}},
   loc_txt = {      
     name = 'Raichu',      
     text = {
