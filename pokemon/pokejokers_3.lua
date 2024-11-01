@@ -846,7 +846,7 @@ local slowbro={
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
-          Xmult_multi = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult
         }
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
