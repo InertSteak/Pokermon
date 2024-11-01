@@ -50,7 +50,7 @@ family = {
     {"exeggcute","exeggutor"},
     {"cubone","marowak"},
     {"koffing","weezing"},
-    {"rhyhorn","rhydon"},
+    {"rhyhorn","rhydon", "rhyperior"},
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
@@ -92,6 +92,14 @@ find_pokemon_type = function(target_type)
     end
   end
   return found
+end
+
+is_type = function(card, target_type)
+  if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
+    return true
+  else
+    return false
+  end
 end
 
 energy_matches = function(card, etype, include_colorless)

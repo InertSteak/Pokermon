@@ -911,17 +911,20 @@ local rhydon={
     text = {
       "Every played {C:attention}Stone{} card",
       "permanently gains",
-      "{C:chips}+#1#{} Chips when scored"
+      "{C:chips}+#1#{} Chips when scored",
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
   cost = 8,
   enhancement_gate = 'm_stone',
+  item_req = "linkcable",
   stage = "One", 
   ptype = "Earth",
   atlas = "Pokedex1",
@@ -936,6 +939,7 @@ local rhydon={
           card = card
       }
     end
+    return item_evo(self, card, context, "j_poke_rhyperior")
   end
 }
 local chansey={

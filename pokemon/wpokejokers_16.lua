@@ -12,31 +12,32 @@
 -- Magnezone 462
 -- Lickilicky 463
 -- Rhyperior 464
-local Rhyperior={
-  name = "Rhyperior", 
+local rhyperior={
+  name = "rhyperior", 
   pos = {x = 0, y = 0},
-  config = {extra = {chips = 50}},
+  config = {extra = {chips = 40}},
   loc_txt = {      
-    name = 'Rhydon',      
+    name = 'Rhyperior',      
     text = {
       "Every played {C:attention}Stone{} card",
       "permanently gains",
       "{C:chips}+#1#{} Chips when scored",
       "and retriggers for each {C:attention}other{}",
-      "{X:earth, C:white}Earth{} Joker you have"
+      "{X:earth,C:white}Earth{} Joker you have",
+      "{C:inactive}(Currently #2# retriggers)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-    return {vars = {center.ability.extra.chips}}
+    return {vars = {center.ability.extra.chips, math.max(0, #find_pokemon_type("Earth") - (is_type(center, "Earth") and 1 or 0))}}
   end,
   rarity = "poke_safari", 
   cost = 8,
   enhancement_gate = 'm_stone',
   stage = "One", 
   ptype = "Earth",
-  atlas = "Pokedex1",
+  atlas = "Pokedex4",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
@@ -47,6 +48,16 @@ local Rhyperior={
           colour = G.C.CHIPS,
           card = card
       }
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
+      local rhytriggers = math.max(0, #find_pokemon_type("Earth") - (is_type(card, "Earth") and 1 or 0))
+      if rhytriggers > 0 then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = rhytriggers,
+          card = card
+        }
+      end
     end
   end
 }
@@ -172,5 +183,5 @@ local glaceon={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {leafeon, glaceon},
+        list = {rhyperior,leafeon, glaceon},
 }
