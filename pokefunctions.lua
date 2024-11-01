@@ -544,7 +544,6 @@ end
 
 get_highest_evo = function(card)
   local name = nil
-  local highest = "venusaur"
   local found = nil
   if not card.name and card.ability.name then
     name = card.ability.name
@@ -552,21 +551,27 @@ get_highest_evo = function(card)
     name = card.name or "bulbasaur"
   end
   for k, v in ipairs(family) do
+    local evos = {}
     for x, y in ipairs(v) do
-      if y == name then
+      if found and y == v[#v] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+        table.insert(evos, y)
+      elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[#v]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+        table.insert(evos, y)
+      elseif not found and y == name then
         found = true
       end
     end
-    if found and name ~= v[#v] then
-      found = false
-      highest = v[#v]
-      break
+    if #evos > 0 then
+      if #evos == 1 then
+        return evos[1]
+      else
+        return pseudorandom_element(evos, pseudoseed('highest'))
+      end
     else
       found = false
-      highest = false
     end
   end
-  return highest
+  return false
 end
 
 pokemon_in_pool = function (self)

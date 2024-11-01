@@ -22,8 +22,8 @@ local rhyperior={
       "Every played {C:attention}Stone{} card",
       "permanently gains",
       "{C:chips}+#1#{} Chips when scored",
-      "and retriggers for each {C:attention}other{}",
-      "{X:earth,C:white}Earth{} Joker you have",
+      "{C:attention}Stone{} cards retrigger for each",
+      "{C:attention}other{} {X:earth,C:white}Earth{} Joker you have",
       "{C:inactive}(Currently #2# retriggers)"
     } 
   },
