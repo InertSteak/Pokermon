@@ -12,6 +12,44 @@
 -- Magnezone 462
 -- Lickilicky 463
 -- Rhyperior 464
+local Rhyperior={
+  name = "Rhyperior", 
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 50}},
+  loc_txt = {      
+    name = 'Rhydon',      
+    text = {
+      "Every played {C:attention}Stone{} card",
+      "permanently gains",
+      "{C:chips}+#1#{} Chips when scored",
+      "and retriggers for each {C:attention}other{}",
+      "{X:earth, C:white}Earth{} Joker you have"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {vars = {center.ability.extra.chips}}
+  end,
+  rarity = "poke_safari", 
+  cost = 8,
+  enhancement_gate = 'm_stone',
+  stage = "One", 
+  ptype = "Earth",
+  atlas = "Pokedex1",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips
+      return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card
+      }
+    end
+  end
+}
 -- Tangrowth 465
 -- Electivire 466
 -- Magmortar 467

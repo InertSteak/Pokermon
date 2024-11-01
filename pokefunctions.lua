@@ -54,7 +54,9 @@ family = {
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
+    {"mimejr", "mrmime"},
     {"magikarp","gyarados"},
+    {"munchlax", "snorlax"},
     {"chansey", "blissey"},
     {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
     {"omanyte","omastar"},
@@ -359,7 +361,7 @@ evolve = function(self, card, context, forced_key)
          new_card:set_edition(edition, true)
          new_card.config.shiny_on_add = true
       else
-        new_card.edition = previous_edition
+        new_card:set_edition(previous_edition, true)
       end
     end
     

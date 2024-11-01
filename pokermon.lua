@@ -4,7 +4,7 @@
 --- MOD_AUTHOR: [See Credits Tab]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
---- VERSION: 1.6.0
+--- VERSION: 1.7.0
 
 pokermon = {}
 

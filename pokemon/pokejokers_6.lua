@@ -311,15 +311,16 @@ local cleffa={
   loc_txt = {
     name = "Cleffa",
     text = {
-      "Create a {C:attention}Moon{} card at end of round",
+      "Create a {C:attention}Moon{} card with",
+      "{C:dark_edition}Negative{} at end of round",
       "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Must have room)",
       "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_moon
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
@@ -342,11 +343,11 @@ local cleffa={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
+      local edition = {negative = true}
+      _card:set_edition(edition, true)
       _card:add_to_deck()
       G.consumeables:emplace(_card)
-      end
     end
     return level_evo(self, card, context, "j_poke_clefairy")
   end,
@@ -359,15 +360,16 @@ local igglybuff={
   loc_txt = {
     name = "Igglybuff",
     text = {
-      "Create a {C:attention}World{} card at end of round",
+      "Create a {C:attention}World{} card with",
+      "{C:dark_edition}Negative{} at end of round",
       "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Must have room)",
       "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_world
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
@@ -390,11 +392,11 @@ local igglybuff={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
+      local edition = {negative = true}
+      _card:set_edition(edition, true)
       _card:add_to_deck()
       G.consumeables:emplace(_card)
-      end
     end
     return level_evo(self, card, context, "j_poke_jigglypuff")
   end,
