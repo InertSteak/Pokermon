@@ -1094,7 +1094,7 @@ local raichu={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.plus_slot then
+    if card.ability.extra.plus_slot and not from_debuff then
       G.jokers.config.card_limit = G.jokers.config.card_limit - 1
     end
   end
