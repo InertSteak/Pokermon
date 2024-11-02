@@ -1,5 +1,6 @@
 local apply_shader = function ()
   SMODS.Shader({ key = 'booster', path = 'booster.fs' })
+  SMODS.Shader({ key = 'shiny', path = 'shiny.fs' })
 end
 
 local shiny = ({

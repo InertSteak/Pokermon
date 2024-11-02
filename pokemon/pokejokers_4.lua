@@ -55,6 +55,7 @@ local gastly={
   stage = "Basic", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -95,7 +96,7 @@ local haunter={
       "add {C:dark_edition}Negative{} to a",
       "random {C:attention}Joker{}",
       "{S:1.1,C:red,E:2}self destructs{}",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -110,6 +111,7 @@ local haunter={
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -165,6 +167,7 @@ local gengar={
   stage = "Two", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
@@ -197,7 +200,8 @@ local onix={
     text = {
       "The leftmost scoring card of",
       "your {C:attention}first hand{} of round",
-      "becomes a {C:attention}Stone{} card."
+      "becomes a {C:attention}Stone{} card",
+      "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -227,6 +231,7 @@ local onix={
         })) 
       end
     end
+    return type_evo(self, card, context, "j_poke_steelix", "metal")
   end
 }
 local drowzee={
@@ -544,7 +549,7 @@ local exeggcute={
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult = 2, Xmult = 1.75, suit = "Hearts", odds = 2}},
+  config = {extra = {mult_mod = 2, Xmult_multi = 1.5, suit = "Hearts", odds = 2}},
   loc_txt = {      
     name = 'Exeggutor',      
     text = {
@@ -557,7 +562,7 @@ local exeggutor={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, localize(center.ability.extra.suit, 'suits_singular'), 
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), 
                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
@@ -571,10 +576,10 @@ local exeggutor={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         if pseudorandom('exeggutor') < G.GAME.probabilities.normal/card.ability.extra.odds then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = "Solar!", 
             colour = G.C.XMULT,
-            mult = card.ability.extra.mult, 
-            x_mult = card.ability.extra.Xmult
+            mult = card.ability.extra.mult_mod, 
+            x_mult = card.ability.extra.Xmult_multi
           }
         end
       end
@@ -608,7 +613,7 @@ local cubone={
   atlas = "Pokedex1", 
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_thickclub')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
@@ -690,7 +695,7 @@ local hitmonlee={
   end,
   rarity = 2, 
   cost = 7, 
-  stage = "Basic", 
+  stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex1",
   blueprint_compat = true,
@@ -727,7 +732,7 @@ local hitmonchan={
   end,
   rarity = 2, 
   cost = 7, 
-  stage = "Basic", 
+  stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex1",
   blueprint_compat = true,
@@ -749,7 +754,7 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult = 2}},
+  config = {extra = {Xmult_multi = 2}},
   loc_txt = {      
     name = 'Lickitung',      
     text = {
@@ -760,7 +765,7 @@ local lickitung={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -784,7 +789,7 @@ local lickitung={
       end
       if context.other_card == first_jack or context.other_card == second_jack then
         return {
-            x_mult = card.ability.extra.Xmult,
+            x_mult = card.ability.extra.Xmult_multi,
             colour = G.C.RED,
             card = card
         }
@@ -906,17 +911,20 @@ local rhydon={
     text = {
       "Every played {C:attention}Stone{} card",
       "permanently gains",
-      "{C:chips}+#1#{} Chips when scored"
+      "{C:chips}+#1#{} Chips when scored",
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
   cost = 8,
   enhancement_gate = 'm_stone',
+  item_req = "linkcable",
   stage = "One", 
   ptype = "Earth",
   atlas = "Pokedex1",
@@ -931,6 +939,7 @@ local rhydon={
           card = card
       }
     end
+    return item_evo(self, card, context, "j_poke_rhyperior")
   end
 }
 local chansey={
@@ -944,7 +953,8 @@ local chansey={
       "{C:attention}Lucky{} card triggers each round,",
       "add a permanent copy to your",
       "deck and draw it to {C:attention}Hand",
-      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
+      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})",
+      "{C:inactive}(Evolves when deck is >= 25% Lucky cards)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -956,7 +966,7 @@ local chansey={
   cost = 8,
   ptype = "Colorless",
   enhancement_gate = 'm_lucky',
-  stage = "Basic", 
+  stage = "One", 
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -987,6 +997,7 @@ local chansey={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
+    return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
   end
 }
 local tangela={
@@ -1149,6 +1160,7 @@ local seadra={
       "Gains {C:mult}+#2#{} Mult",
       "for each scoring {C:attention}6{}",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves with a {C:dragon}Dragon{} {C:inactive}sticker){}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1187,6 +1199,7 @@ local seadra={
         }
       end
     end
+    return type_evo(self, card, context, "j_poke_kingdra", "dragon")
   end,
 }
 local goldeen={

@@ -4,13 +4,32 @@
 --- MOD_AUTHOR: [See Credits Tab]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
---- VERSION: 1.6.0
+--- VERSION: 1.7.0
 
 pokermon = {}
 
 --Get mod path and load other files
 mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
+
+--Load Custom Rarities
+SMODS.Rarity{
+    key = "safari",
+    loc_txt = {
+      name = "Safari",
+      text = {
+        "Can only be obtained",
+        "through {C:attention}Evolution{}",
+        "or certain {C:attention}Pokeball Items{}"
+      } 
+    },
+    default_weight = 0,
+    badge_colour = HEX("F2C74E"),
+    pools = {["Joker"] = true},
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+}
 
 --Load helper function file
 local helper, load_error = SMODS.load_file("pokefunctions.lua")
@@ -58,7 +77,7 @@ for _, file in ipairs(pfiles) do
           end
           if not pokermon_config.no_evos and item.name ~= "taurosh" then
             item.in_pool = function(self)
-              return pokemon_in_pool(self, false)
+              return pokemon_in_pool(self)
             end
           end
           if not item.config then
@@ -229,7 +248,7 @@ if not pokermon_config.jokers_only then
 end
 
 if not pokermon_config.jokers_only then
-  --Load vouchers
+  --Load blinds
   local blinds = NFS.getDirectoryItems(mod_dir.."blinds")
 
   for _, file in ipairs(blinds) do
@@ -243,6 +262,46 @@ if not pokermon_config.jokers_only then
       
       for i, item in ipairs(curr_blind.list) do
         SMODS.Blind(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
+  --Load tags
+  local tags = NFS.getDirectoryItems(mod_dir.."tags")
+
+  for _, file in ipairs(tags) do
+    sendDebugMessage ("The file is: "..file)
+    local tag, load_error = SMODS.load_file("tags/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_tag = tag()
+      if curr_tag.init then curr_tag:init() end
+      
+      for i, item in ipairs(curr_tag.list) do
+        SMODS.Tag(item)
+      end
+    end
+  end
+end
+
+if not pokermon_config.jokers_only then
+  --Load backs
+  local backs = NFS.getDirectoryItems(mod_dir.."backs")
+
+  for _, file in ipairs(backs) do
+    sendDebugMessage ("The file is: "..file)
+    local back, load_error = SMODS.load_file("backs/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local curr_back = back()
+      if curr_back.init then curr_back:init() end
+      
+      for i, item in ipairs(curr_back.list) do
+        SMODS.Back(item)
       end
     end
   end
@@ -310,7 +369,26 @@ function SMODS.current_mod.process_loc_text()
         "that has {C:attention}Evolved{} twice"
       }
     }
+    
+    G.localization.descriptions.Other['energy'] = {
+      name = "Energy Used",
+      text = {
+        "{C:attention}#1#{}/#2#",
+      }
+    }
+    
+    G.localization.descriptions.Other['reserve'] = {
+      name = "Reservable",
+      text = {
+        "Creates a {C:attention}copy{} of",
+        "self if used in pack and", 
+        "its effect didn't apply"
+      }
+    }
+    
     G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
+    
+    G.localization.misc.dictionary.b_save = "SAVE"
     
     local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
     for k, v in ipairs(ptype_list) do
@@ -326,26 +404,6 @@ function SMODS.current_mod.process_loc_text()
       }
       G.localization.descriptions.Other[v] = tooltip
     end
-end
-
---Override set cost function
-function Card:set_cost()
-    self.extra_cost = 0 + G.GAME.inflation
-    if self.edition then
-        self.extra_cost = self.extra_cost + (self.edition.holo and 3 or 0) + (self.edition.foil and 2 or 0) + 
-        (self.edition.polychrome and 5 or 0) + (self.edition.negative and 5 or 0)
-    end
-    self.cost = math.max(1, math.floor((self.base_cost + self.extra_cost + 0.5)*(100-G.GAME.discount_percent)/100))
-    if self.ability.set == 'Booster' and G.GAME.modifiers.booster_ante_scaling then self.cost = self.cost + G.GAME.round_resets.ante - 1 end
-    if self.ability.set == 'Booster' and (not G.SETTINGS.tutorial_complete) and G.SETTINGS.tutorial_progress and (not G.SETTINGS.tutorial_progress.completed_parts['shop_1']) then
-        self.cost = self.cost + 3
-    end
-    if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = 2 end
-    if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') + #find_joker('pidgeotto') + #find_joker('pidgeot') > 0        then self.cost = 0 end
-    if self.ability.rental then self.cost = 1 end
-    self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
-    if self.area and self.ability.couponed and (self.area == G.shop_jokers or self.area == G.shop_booster) then self.cost = 0 end
-    self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
 end
 
 --Override straight function for Rapidash
@@ -390,21 +448,5 @@ function get_straight(hand)
     if not straight then return ret end
     table.insert(ret, t)
     return ret
-  end
-end
-
-if not pokermon_config.jokers_only then
-  --Register custom rarity pools
-  local is = SMODS.injectItems
-  function SMODS.injectItems()
-      local m = is()
-      G.P_JOKER_RARITY_POOLS.poke_safari = {}
-      for k, v in pairs(G.P_CENTERS) do
-          v.key = k
-          if v.rarity and (v.rarity == 'poke_safari') and v.set == 'Joker' and not v.demo then 
-              table.insert(G.P_JOKER_RARITY_POOLS[v.rarity], v)
-          end
-      end
-      return m
   end
 end

@@ -26,8 +26,84 @@
 -- Vespiquen 416
 -- Pachirisu 417
 -- Buizel 418
+local buizel={
+  name = "buizel", 
+  pos = {x = 0, y = 1}, 
+  config = {extra = {chips = 40, rounds = 4}},
+  loc_txt = {      
+    name = 'Buizel',      
+    text = {
+      "{C:chips}+#1#{} Chips for",
+      "each {C:attention}unscored{} card",
+      "in played hand",
+      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)",
+    }  
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
+  end,
+  rarity = 1, 
+  cost = 5, 
+  stage = "Basic", 
+  atlas = "Pokedex4",
+  ptype = "Water",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local chips = card.ability.extra.chips * math.abs(#context.scoring_hand - #context.full_hand)
+        if chips > 0 then
+          return {
+              message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+              colour = G.C.CHIPS,
+              chip_mod = chips
+            }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_floatzel")
+  end,
+}
 -- Floatzel 419
+local floatzel={
+  name = "floatzel", 
+  pos = {x = 0, y = 1}, 
+  config = {extra = {chips = 90}},
+  loc_txt = {      
+    name = 'Floatzel',      
+    text = {
+      "{C:chips}+#1#{} Chips for",
+      "each {C:attention}unscored{} card",
+      "in played hand",
+    }  
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.chips}}
+  end,
+  rarity = 2, 
+  cost = 6, 
+  stage = "One", 
+  atlas = "Pokedex4",
+  ptype = "Water",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local chips = card.ability.extra.chips * math.abs(#context.scoring_hand - #context.full_hand)
+        if chips > 0 then
+          return {
+              message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+              colour = G.C.CHIPS,
+              chip_mod = chips
+            }
+        end
+      end
+    end
+  end,
+}
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 
-        list = {},
+        list = {buizel, floatzel},
 }

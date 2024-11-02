@@ -101,7 +101,7 @@ local abra={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
+      "already been played this round",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     }
   },
@@ -142,8 +142,8 @@ local kadabra={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "already been played this round",
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -186,7 +186,7 @@ local alakazam={
       "{C:green}#1# in #2#{} chance to",
       "create a {C:attention}Fool{} card if",
       "played {C:attention}poker hand{} has",
-      "already been played this turn",
+      "already been played this round",
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -273,7 +273,7 @@ local machoke={
       "{C:chips}+#1#{} hands",
       "{C:mult}-#2# discards{}",
       "{C:mult}+#3#{} Mult",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -612,7 +612,7 @@ local graveler={
     text = {
       "{C:chips}+#1#{} Chips,",
       "{C:attention}-#2#{} hand size",
-      "{C:inactive}(Evolves with a{} {C:attention}Link Cable{}{C:inactive} card)"
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -817,7 +817,7 @@ local slowpoke={
 local slowbro={
   name = "slowbro",
   pos = {x = 1, y = 6},
-  config = {extra = {Xmult_mod = 0.75, Xmult = 1}},
+  config = {extra = {Xmult_multi = 0.75, Xmult = 1}},
   loc_txt = {
     name = 'Slowbro',
     text = {
@@ -829,7 +829,7 @@ local slowbro={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
   end,
   rarity = 3,
   cost = 6,
@@ -841,7 +841,7 @@ local slowbro={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_multi
         end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
@@ -861,7 +861,7 @@ local slowbro={
 local magnemite={
   name = "magnemite",
   pos = {x = 2, y = 6},
-  config = {extra = {Xmult = 2, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.75, rounds = 4}},
   loc_txt = {
     name = 'Magnemite',
     text = {
@@ -873,7 +873,7 @@ local magnemite={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rounds}}
   end,
   rarity = 2,
   cost = 7,
@@ -886,9 +886,9 @@ local magnemite={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult
+          x_mult = card.ability.extra.Xmult_multi
         }
     end
     return level_evo(self, card, context, "j_poke_magneton")
@@ -897,7 +897,7 @@ local magnemite={
 local magneton={
   name = "magneton",
   pos = {x = 3, y = 6},
-  config = {extra = {Xmult = 2.5}},
+  config = {extra = {Xmult_multi = 2}},
   loc_txt = {
     name = 'Magneton',
     text = {
@@ -908,7 +908,7 @@ local magneton={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 3,
   cost = 6,
@@ -920,9 +920,9 @@ local magneton={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult
+          x_mult = card.ability.extra.Xmult_multi
         }
     end
   end
@@ -954,7 +954,7 @@ local farfetchd={
   atlas = "Pokedex1",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
@@ -984,7 +984,7 @@ local doduo={
   loc_txt = {
     name = 'Doduo',
     text = {
-      "{C:mult}+#1#{} Mult if played hand",
+      "{C:mult}+#1#{} Mult if scoring hand",
       "contains at least",
       "{C:attention}2{} face cards",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
@@ -1028,7 +1028,7 @@ local dodrio={
   loc_txt = {
     name = 'Dodrio',
     text = {
-      "{C:mult}+#1#{} Mult if played hand",
+      "{C:mult}+#1#{} Mult if scoring hand",
       "contains at least",
       "{C:attention}3{} face cards"
     }
@@ -1090,13 +1090,9 @@ local seel={
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
       if pseudorandom('seel') < G.GAME.probabilities.normal/card.ability.extra.odds then
         _card = context.full_hand[1]
-        local seal_type = pseudorandom(pseudoseed('seel'))
-        if seal_type > 0.80 then _card:set_seal('Red', true)
-        elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-        elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-        elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-        else _card:set_seal('poke_pink_seal', true)
-        end
+        local args = {guaranteed = true}
+        local seal_type = SMODS.poll_seal(args)
+        _card:set_seal(seal_type, true)
       end
     end
     if context.first_hand_drawn and not context.blueprint then
@@ -1129,13 +1125,9 @@ local dewgong={
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
       _card = context.full_hand[1]
-      local seal_type = pseudorandom(pseudoseed('dewgong'))
-      if seal_type > 0.80 then _card:set_seal('Red', true)
-      elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-      elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-      elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-      else _card:set_seal('poke_pink_seal', true)
-      end
+      local args = {guaranteed = true}
+      local seal_type = SMODS.poll_seal(args)
+      _card:set_seal(seal_type, true)
     end
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end

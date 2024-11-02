@@ -1,6 +1,6 @@
 # Pokermon
-Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded) and [Cryptid](https://github.com/MathIsFun0/Cryptid).
-This mod would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
+Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded), [Cryptid](https://github.com/MathIsFun0/Cryptid) and [Betmma](https://github.com/betmma/my_balatro_mods)!
+This mod and its features would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
 
 Please use the latest code before repoting issues, the releases may be out of date with the current code.
 
@@ -13,7 +13,11 @@ Please note this is my first mod and a work in progress so there may be quite a 
 
 **Prerequisites:**
 
-Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.5.0-beta6, v0.5.0-beta7 currently crashes with my code) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use 1.0.0 version) must be installed.
+**IMPORTANT**: You must download the latest version of steamodded and NOT use the release version which is very old. The mod will run into errors otherwise.
+
+![image](https://github.com/user-attachments/assets/75680130-d49b-4a48-b808-d664cc9affc6)
+
+Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.6.0 if you can, some things may be broken on v0.5.0 beta 6) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use latest) must be installed.
 
 **Installation:**
 

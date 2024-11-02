@@ -3,17 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
-# Display Safari name in rarity
-[[patches]]
-[patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "if AUT.card_type == 'Enhanced' then card_type = localize{type = 'name_text', key = card.config.center.key, set = 'Enhanced'} end"
-position = "before"
-payload = """
-if AUT.card_type == 'Joker' and card.config.center.rarity == 'poke_safari' then card_type = ({['poke_safari'] = 'Safari'})[card.config.center.rarity] end
-"""
-match_indent = true
-
 # Localization color
 [[patches]]
 [patches.pattern]
@@ -88,5 +77,48 @@ payload = '''
 if self.ability.name:find("Pocket") and G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
   _size = _size + G.GAME.extra_pocket_picks
 end
+'''
+match_indent = true
+
+#Shiny shader
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (self.edition and self.edition.negative) or (self.ability.name == 'Antimatter' and (self.config.center.discovered or self.bypass_discovery_center)) then
+    self.children.center:draw_shader('negative_shine', nil, self.ARGS.send_to_shader)
+end
+'''
+position = "after"
+payload = '''
+if (self.edition and self.edition.poke_shiny) and self.config.center and type(self.config.center) == "table" and not self.config.center.stage and self.label ~= "e_poke_shiny" then
+    self.children.center:draw_shader('poke_shiny', nil, self.ARGS.send_to_shader)
+end
+'''
+match_indent = true
+
+#Pidgey functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') > 0 then self.cost = 0 end
+'''
+position = "after"
+payload = '''
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = 2 end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') + #find_joker('pidgeot') > 0 then self.cost = 0 end
+'''
+match_indent = true
+
+#Deck functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if card.ability.consumeable and not skip_materialize then card:start_materialize() end"
+position = "after"
+payload = '''
+if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
+if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card) end
 '''
 match_indent = true

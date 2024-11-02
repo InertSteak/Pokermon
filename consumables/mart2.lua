@@ -87,13 +87,13 @@ local waterstone = {
   loc_txt = {
     name = "Water Stone",
     text = {
-      "Creates a {C:attention}Star{} card",
+      "Creates a {C:attention}Hierophant{} card",
       "{C:attention}Evolution Card{}",
       "{C:inactive}(Must have room){}"
     }
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_star
+    info_queue[#info_queue+1] = G.P_CENTERS.c_heirophant
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 5, y = 3 },
@@ -107,7 +107,7 @@ local waterstone = {
   end,
   use = function(self, card, area, copier)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_heirophant')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
@@ -412,19 +412,7 @@ local teraorb = {
   end,
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
-    
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    local poketype = pseudorandom_element(poketype_list, pseudoseed("tera"))
-    
-    leftmost.ability[string.lower(poketype).."_sticker"] = true
-    for l, v in pairs(poketype_list) do
-      if v ~= poketype then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = poketype
-    end
+    apply_type_sticker(leftmost)
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Tera!", colour = G.C.SECONDARY_SET.Spectral})
   end,
   in_pool = function(self)
@@ -450,7 +438,7 @@ local metalcoat = {
   end,
   pos = { x = 6, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -459,17 +447,7 @@ local metalcoat = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    
-    leftmost.ability.metal_sticker = true
-    for l, v in pairs(poketype_list) do
-      if v ~= "Metal" then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = "Metal"
-    end
+    apply_type_sticker(leftmost, "Metal")
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Metal!", colour = G.ARGS.LOC_COLOURS["metal"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -501,7 +479,8 @@ local dragonscale = {
   end,
   pos = { x = 7, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -510,17 +489,7 @@ local dragonscale = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     
-    local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-    
-    leftmost.ability.dragon_sticker = true
-    for l, v in pairs(poketype_list) do
-      if v ~= "Dragon" then
-        leftmost.ability[string.lower(v).."_sticker"] = false
-      end
-    end
-    if leftmost.ability and leftmost.ability.extra and type(leftmost.ability.extra) == "table" and leftmost.ability.extra.ptype then
-     leftmost.ability.extra.ptype = "Dragon"
-    end
+    apply_type_sticker(leftmost, "Dragon")
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Dragon!", colour = G.ARGS.LOC_COLOURS["dragon"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -553,12 +522,13 @@ local kingsrock = {
   end,
   pos = { x = 5, y = 2 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
+  evo_item = true,
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
-    juice_flip(conv_card)
+    juice_flip()
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = 0.2,
@@ -567,7 +537,138 @@ local kingsrock = {
         end
     }))
     delay(0.5)
-    juice_flip(conv_card)
+    juice_flip()
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+local upgrade = {
+  name = "upgrade",
+  key = "upgrade",
+  set = "Item",
+  config = {max_highlighted = 2},
+  loc_txt = {
+    name = "Upgrade",
+    text = {
+      "Gives {C:attention}#1#{} selected cards",
+      "a random {C:attention}Enhancement{}",
+      "{C:attention}Evolution Card{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted}}
+  end,
+  pos = { x = 8, y = 2 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card, area, copier)
+    local enhancement_type = pseudorandom(pseudoseed('upgrade'))
+    local enhancement = nil
+    if enhancement_type > .875 then enhancement = G.P_CENTERS.m_bonus
+    elseif enhancement_type > .75 then enhancement = G.P_CENTERS.m_mult
+    elseif enhancement_type > .625 then enhancement = G.P_CENTERS.m_wild
+    elseif enhancement_type > .50 then enhancement = G.P_CENTERS.m_glass
+    elseif enhancement_type > .375 then enhancement = G.P_CENTERS.m_steel
+    elseif enhancement_type > .25 then enhancement = G.P_CENTERS.m_stone
+    elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
+    else enhancement = G.P_CENTERS.m_lucky
+    end
+    juice_flip()
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(enhancement, nil, true)
+    end
+    delay(0.5)
+    juice_flip()
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+local icestone = {
+  name = "icestone",
+  key = "icestone",
+  set = "Item",
+  loc_txt = {
+    name = "Ice Stone",
+    text = {
+      "Creates a {C:attention}Justice{} card",
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_justice
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+  end,
+  pos = { x = 5, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  use = function(self, card, area, copier)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_justice')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+local shinystone = {
+  name = "shinystone",
+  key = "shinystone",
+  set = "Item",
+  loc_txt = {
+    name = "Shiny Stone",
+    text = {
+      "Creates a {C:attention}Star{} card",
+      "{C:attention}Evolution Card{}",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_star
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+  end,
+  pos = { x = 2, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  use = function(self, card, area, copier)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+    end
+    if #G.jokers.cards > 0 then
+      return evo_item_use(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -575,5 +676,5 @@ local kingsrock = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, icestone, shinystone}
 }

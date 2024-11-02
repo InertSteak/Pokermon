@@ -1026,31 +1026,30 @@ local arbok={
 local pikachu={
   name = "pikachu", 
   pos = {x = 11, y = 1},
-  config = {extra={thunder = false}},
+  config = {extra={money = 1}},
   loc_txt = {      
     name = 'Pikachu',      
     text = {
-      "Earn {C:money}${} equal to the ",
-      "difference between the interest ",
-      "cap and earned interest.",
-      "{C:inactive}(Currently {C:money}$#1#{}{C:inactive})",
+      "Earn {C:money}$#1#{} at",
+      "end of round for",
+      "each Joker you have",
       "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_thunderstone'}
-    return {vars = {G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)}}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
+    return {vars = {center.ability.extra.money}}
   end,
   rarity = 2, 
   cost = 6,
   item_req = "thunderstone",
-  stage = "Basic", 
+  stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex1",
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)
+    return #G.jokers.cards * card.ability.extra.money
 	end,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_raichu")
@@ -1059,28 +1058,46 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
+  config = {extra={money = 1, threshold = 90, plus_slot = false}},
   loc_txt = {      
     name = 'Raichu',      
     text = {
-      "Earn {C:money}${} equal to {C:attention}double{} the ",
-      "difference between the interest ",
-      "cap and earned interest.",
-      "{C:inactive}(Currently {C:money}$#1#{}{C:inactive})",
+      "Earn {C:money}$#1#{} at",
+      "end of round for",
+      "each Joker you have",
+      "{C:dark_edition}+1{} Joker slot if you",
+      "have at least {C:money}$#2#{}",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {2 * (G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))}}
+    return {vars = {center.ability.extra.money, center.ability.extra.threshold}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
-  stage = "One", 
+  stage = "Two", 
   ptype = "Lightning",
   atlas = "Pokedex1", 
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return 2 * (G.GAME.interest_cap/5 - G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))
-	end
+    return #G.jokers.cards * card.ability.extra.money
+	end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN and card.area and card.area.config and not card.area.config.collection then
+      if G.GAME.dollars > card.ability.extra.threshold and not card.ability.extra.plus_slot then
+        card.ability.extra.plus_slot = true
+        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+      elseif G.GAME.dollars < card.ability.extra.threshold and card.ability.extra.plus_slot then
+        card.ability.extra.plus_slot = false
+        G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if card.ability.extra.plus_slot and not from_debuff then
+      G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+    end
+  end
 }
 local sandshrew={
   name = "sandshrew", 

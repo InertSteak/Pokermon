@@ -149,8 +149,8 @@ local jynx={
   end,
   rarity = 2, 
   cost = 6, 
-  stage = "Basic",
-  ptype = "Water",
+  stage = "One",
+  ptype = "Psychic",
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -190,7 +190,7 @@ local electabuzz={
   end,
   rarity = 2, 
   cost = 5, 
-  stage = "Basic",
+  stage = "One",
   ptype = "Lightning",
   atlas = "Pokedex1",
   blueprint_compat = false,
@@ -224,7 +224,7 @@ local magmar={
   end,
   rarity = 2, 
   cost = 6, 
-  stage = "Basic", 
+  stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
   blueprint_compat = false,
@@ -516,7 +516,9 @@ local ditto={
               
               local card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
               card:set_eternal(false)
-              card:set_perishable(true)
+              --Setting it directly to overrule perishiable compatibility
+              card.ability.perishable = true
+              card.ability.perish_tally = G.GAME.perishable_rounds
               card:add_to_deck()
               G.jokers:emplace(card)
           else
@@ -545,9 +547,9 @@ local eevee={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 4,
-  item_req = {"waterstone", "thunderstone", "firestone"},
+  item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -621,7 +623,7 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 15, rerolls = 0}},
+  config = {extra = {money = 9, rerolls = 0}},
   loc_txt = {      
     name = 'Jolteon',      
     text = {
@@ -735,7 +737,7 @@ local porygon={
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and not context.blueprint then
+    if context.remove_playing_cards and #context.removed > 0 and not context.blueprint then
       card.ability.extra.destroyed = card.ability.extra.destroyed + 1 
       if card.ability.extra.destroyed >= card.ability.extra.target then
         local eval = function(card) return (card.ability.extra.destroyed >= card.ability.extra.target) and not G.RESET_JIGGLES end
@@ -888,6 +890,7 @@ local kabuto={
       "{C:attention}1{} #1#s: {C:chips}+#2#{} Chips",
       "{C:attention}2{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
       "{C:attention}3+{} #1#s: {C:chips}+#4#{} Chips",
+      "{C:inactive}(Evolves after {C:attention}#5#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1035,6 +1038,7 @@ local aerodactyl={
           }
         elseif aces == 3 then
           return {
+            message = "Wing Attack!",
             mult_mod = card.ability.extra.mult2,
             chip_mod = card.ability.extra.chips,
             card = card
@@ -1071,14 +1075,14 @@ local snorlax={
   end,
   rarity = 3, 
   cost = 6, 
-  stage = "Basic", 
+  stage = "One", 
   ptype = "Colorless",
   joblacklist = true,
   atlas = "Pokedex1",
   perishable_compat = false,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
@@ -1115,13 +1119,14 @@ local articuno={
     name = 'Articuno',      
     text = {
       "If played hand has only",
-      "{C:attention}1{} card, add a random",
-      "{C:attention}enhancement{}, {C:attention}edition{},",
-      "and {C:attention}seal{} to that card"
+      "{C:attention}1{} card, add {C:attention}Foil{}, a",
+      "random {C:attention}enhancement{}, and a",
+      "random {C:attention}seal{}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue +1] = G.P_CENTERS.e_foil
   end,
   rarity = 4, 
   cost = 20, 
@@ -1133,13 +1138,9 @@ local articuno={
     if context.before and context.cardarea == G.jokers and #context.full_hand == 1 and not context.blueprint then
       _card = context.full_hand[1]
       if not _card.seal then
-        local seal_type = pseudorandom(pseudoseed('articuno'))
-        if seal_type > 0.80 then _card:set_seal('Red', true)
-        elseif seal_type > 0.60 then _card:set_seal('Blue', true)
-        elseif seal_type > 0.40 then _card:set_seal('Gold', true)
-        elseif seal_type > 0.20 then _card:set_seal('Purple', true)
-        else _card:set_seal('poke_pink_seal', true)
-        end
+        local args = {guaranteed = true}
+        local seal_type = SMODS.poll_seal(args)
+        _card:set_seal(seal_type, true)
       end
       if _card.ability.name == "Default Base" then
         local enhancement_type = pseudorandom(pseudoseed('articuno'))
@@ -1154,8 +1155,7 @@ local articuno={
         end
       end
       if not _card.edition then
-        local edition = poll_edition('articuno', nil, false, true)
-        _card:set_edition(edition, true)
+        _card:set_edition("e_foil", true)
       end
     end
   end
@@ -1361,6 +1361,7 @@ local mewtwo={
   name = "mewtwo", 
   pos = {x = 10, y = 11},
   soul_pos = { x = 11, y = 11},
+  config = {extra = {Xmult_mod = 1.2}},
   loc_txt = {      
     name = 'Mewtwo',      
     text = {
@@ -1368,12 +1369,14 @@ local mewtwo={
       "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
       "leftmost {C:attention}Joker{}, then",
       "destroy leftmost {C:attention}Joker{}",
-      "{C:inactive}(Except this Joker)",
+      "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+      "{C:inactive}(Can't destroy self or Polychrome)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -1383,20 +1386,38 @@ local mewtwo={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.ending_shop and not context.blueprint then
-      if G.jokers.cards[1] ~= card  then
+      local leftmost = G.jokers.cards[1]
+      if leftmost ~= card and not (leftmost.edition and leftmost.edition.polychrome) then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
-        local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
-        local edition = {polychrome = true}
-        _card:set_edition(edition, true)
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
+        if (#G.jokers.cards - 1 < G.jokers.config.card_limit and not leftmost.ability.eternal) or (#G.jokers.cards < G.jokers.config.card_limit and leftmost.ability.eternal) then
+          local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
+          local edition = {polychrome = true}
+          _card:set_edition(edition, true)
+          _card:add_to_deck()
+          G.jokers:emplace(_card)
+        end
         
-        G.E_MANAGER:add_event(Event({
-          remove(self, G.jokers.cards[1], context)
-        }))
+        if not leftmost.ability.eternal then
+          G.E_MANAGER:add_event(Event({
+            remove(self, G.jokers.cards[1], context)
+          }))
+        end
       end
+    end
+    if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_mod
+        }
     end
   end
 }
