@@ -930,15 +930,15 @@ local magneton={
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {Xmult = 3, odds = 2}},
+  config = {extra = {Xmult = 4, odds = 4}},
   loc_txt = {      
     name = 'Farfetch\'d',      
     text = {
       "When you get this,",
       "create a {C:attention}Leek{} card.",
       "{C:green}#2# in #3#{} chance for {X:red,C:white}X#1#{} Mult",
-      "for each {C:attention}Leek{} card you have",
-      "{C:inactive}(2 would give {X:red,C:white}X6{}{C:inactive} total, etc){}"
+      "The chance is doubled for",
+      "each {C:attention}Leek{} card you have",
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -964,15 +964,19 @@ local farfetchd={
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and pseudorandom('farfet') < G.GAME.probabilities.normal/card.ability.extra.odds then
-        local count = find_joker('leek')
-        if #count > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult * #count}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult * #count
-          }
-        end
+      local count = #find_joker('leek')
+      local chance
+      if count > 0 then
+        chance = G.GAME.probabilities.normal * 2 * count
+      else
+        chance = G.GAME.probabilities.normal
+      end
+      if context.joker_main and pseudorandom('farfet') < chance/card.ability.extra.odds then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
       end
     end
   end
