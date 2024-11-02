@@ -713,54 +713,45 @@ local flareon={
 local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
-  config = {extra = {target = 3, destroyed = 0}},
+  config = {extra = {}},
   loc_txt = {      
     name = 'Porygon',      
     text = {
-      "After destroying {C:attention}playing cards{}",
-      "{C:attention}#1#{} separate times, sell this",
-      "Joker to add {C:dark_edition}Polychrome{}",
-      "to a random {C:attention}Joker{}",
-      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
+      "Create an {C:pink}Energy{} card",
+      "when any {C:attention}Booster Pack{}",
+      "is opened",
+      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-    return {vars = {center.ability.extra.target, center.ability.extra.destroyed}}
+    return {vars = {}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
+  item_req = "upgrade",
+  joblacklist = true,
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
-  blueprint_compat = false,
-  eternal_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and #context.removed > 0 and not context.blueprint then
-      card.ability.extra.destroyed = card.ability.extra.destroyed + 1 
-      if card.ability.extra.destroyed >= card.ability.extra.target then
-        local eval = function(card) return (card.ability.extra.destroyed >= card.ability.extra.target) and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
-      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Pory!"})
-      return true
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.0,
+          func = (function()
+                  local card = create_card('Energy', G.consumeables, nil, nil, nil, nil, nil, 'pory')
+                  card:add_to_deck()
+                  G.consumeables:emplace(card)
+                  G.GAME.consumeable_buffer = 0
+              return true
+          end)}))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+1 Energy", colour = G.ARGS.LOC_COLOURS["pink"]})
     end
-    if context.selling_self and not context.blueprint and card.ability.extra.destroyed >= card.ability.extra.target then
-      if #G.jokers.cards > 0 then
-        local eligible_editionless_jokers = {}
-        for k, v in pairs(G.jokers.cards) do
-          if v.ability.set == 'Joker' and (not v.edition) and v ~= card then
-              table.insert(eligible_editionless_jokers, v)
-          end
-        end
-        if #eligible_editionless_jokers > 0 then
-          local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('porygon'))
-          local edition = {polychrome = true}
-          eligible_card:set_edition(edition, true)
-        end
-          end
-    end
+    return item_evo(self, card, context, "j_poke_porygon2")
   end
 }
 local omanyte={

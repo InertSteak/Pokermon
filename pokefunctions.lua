@@ -1,5 +1,5 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
-energy_values = {mult = .5, mult1 = .5, mult2 = .5, chips = .5, chips1 = .5, chips2 = .5, chips3 = .5, Xmult = .3, money = .3, mult_mod = .5, s_mult = .5, chip_mod = .5, Xmult_mod = .3, Xmult_multi = .1}
+energy_values = {mult = .4, mult1 = .4, mult2 = .4, chips = .4, chips1 = .4, chips2 = .4, chips3 = .4, Xmult = .3, money = .3, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .3, Xmult_multi = .1}
 
 scaled_evos = {"seadra", "golbat"}
 
@@ -709,6 +709,26 @@ energy_can_use = function(self, card)
     end
   end
   return false
+end
+
+matching_energy = function(card)
+  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
+  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" then
+    if card.ability.extra.ptype == "Dark" then
+      return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
+    else
+      return "c_poke_"..string.lower(card.ability.extra.ptype).."_energy"
+    end
+  end
+  for l, v in pairs(poketype_list) do
+    if card.ability[v.."_sticker"] then
+      if v == "dark" then
+        return "c_poke_"..v.."ness_energy"
+      else
+        return "c_poke_"..v.."_energy"
+      end
+    end
+  end
 end
 
 evo_item_use = function(self, card, area, copier)

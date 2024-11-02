@@ -15,8 +15,7 @@ local energysearch = { --+1 max energy limit
   loc_txt = {
     name = "Energy Search",
     text = {
-      "{C:pink}Energy{} limit",
-      "raised by {C:attention}1{}",
+      "{C:pink}+1{} Energy Limit"
     }
   },
   redeem = function(self)
@@ -52,8 +51,7 @@ local energyresearch = { --+1 max energy limit
   loc_txt = {
     name = "Energy Research",
     text = {
-      "{C:pink}Energy{} limit",
-      "raised by {C:attention}1{}",
+      "{C:pink}+1{} Energy Limit"
     }
   },
   redeem = function(self)

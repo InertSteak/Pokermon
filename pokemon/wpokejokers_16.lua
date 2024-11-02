@@ -176,6 +176,69 @@ local glaceon={
 -- Gliscor 472
 -- Mamoswine 473
 -- Porygon-Z 474
+local porygonz={
+  name = "porygonz", 
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.1}},
+  loc_txt = {      
+    name = 'Porygon-Z',      
+    text = {
+      "{C:pink}+3{} Energy Limit",
+      "This Joker gains",
+      "{X:red,C:white} X#2# {} Mult every time",
+      "an {C:pink}Energy{} card is used",
+      "{C:inactive}(Currently {X:red,C:white} X#1# {}{C:inactive} Mult)"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_safari", 
+  cost = 6, 
+  joblacklist = true,
+  stage = "Two",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Energy' then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      G.E_MANAGER:add_event(Event({
+          func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult}}}); return true
+          end}))
+      return
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 3
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 3
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 0
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus - 3
+      end
+    end
+  end
+}
 -- Gallade 475
 -- Probopass 476
 -- Dusknoir 477
@@ -183,5 +246,5 @@ local glaceon={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {rhyperior,leafeon, glaceon},
+        list = {rhyperior,leafeon, glaceon, porygonz},
 }

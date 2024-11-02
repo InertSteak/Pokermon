@@ -81,6 +81,71 @@ local kingdra={
 -- Phanpy 231
 -- Donphan 232
 -- Porygon2 233
+local porygon2={
+  name = "porygon2", 
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_txt = {      
+    name = 'Porygon 2',      
+    text = {
+      "{C:pink}+1{} Energy Limit",
+      "Create an {C:pink}Energy{} card",
+      "of the same {C:pink}Type{} of",
+      "leftmost Joker when any",
+      "{C:attention}Booster Pack{} is opened",
+      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_safari", 
+  cost = 6, 
+  item_req = "upgrade",
+  joblacklist = true,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local forced_key = matching_energy(G.jokers.cards[1]);
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.0,
+          func = (function()
+                  local card = create_card('Energy', G.consumeables, nil, nil, nil, nil, forced_key)
+                  card:add_to_deck()
+                  G.consumeables:emplace(card)
+                  G.GAME.consumeable_buffer = 0
+              return true
+          end)}))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+1 Energy", colour = G.ARGS.LOC_COLOURS["pink"]})
+    end
+    return item_evo(self, card, context, "j_poke_porygonz")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 1
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 1
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 0
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus - 1
+      end
+    end
+  end
+}
 -- Stantler 234
 -- Smeargle 235
 -- Tyrogue 236
@@ -368,5 +433,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {kingdra, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {kingdra, porygon2, tyrogue, hitmontop, smoochum, elekid, magby},
 }

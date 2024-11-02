@@ -1,23 +1,3 @@
-local matching_energy = function(card)
-  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" then
-    if card.ability.extra.ptype == "Dark" then
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
-    else
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."_energy"
-    end
-  end
-  for l, v in pairs(poketype_list) do
-    if card.ability[v.."_sticker"] then
-      if v == "dark" then
-        return "c_poke_"..v.."ness_energy"
-      else
-        return "c_poke_"..v.."_energy"
-      end
-    end
-  end
-end
-
 local create_pocket_card = function(self, card)
     local card_type = pseudorandom(pseudoseed('pocket'))
     if card_type > .40 then
