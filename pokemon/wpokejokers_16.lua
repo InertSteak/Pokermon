@@ -10,6 +10,60 @@
 -- Abomasnow 460
 -- Weavile 461
 -- Magnezone 462
+local magnezone={
+  name = "magnezone", 
+  pos = {x = 3, y = 6}, 
+  config = {extra = {Xmult_multi = 2.25}},
+  loc_txt = {      
+    name = 'Magnezone',      
+    text = {
+      "Played {C:attention}Steel{} cards",
+      "give {X:red,C:white}X#1#{} Mult",
+      "{X:metal,C:white}Metal{} Jokers next to",
+      "this Joker each give {X:red,C:white}X#1#{} Mult"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
+       context.other_card.ability.name == 'Steel Card' then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          x_mult = card.ability.extra.Xmult_multi
+        }
+    end
+    if context.other_joker then
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == context.other_joker and ((G.jokers.cards[i + 1] and G.jokers.cards[i + 1] == card) or (G.jokers.cards[i - 1] and G.jokers.cards[i - 1] == card)) then
+          if is_type(G.jokers.cards[i], "Metal") then
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                  context.other_joker:juice_up(0.5, 0.5)
+                  return true
+              end
+            })) 
+            return {
+              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+              colour = G.C.XMULT,
+              Xmult_mod = card.ability.extra.Xmult_multi
+            }
+          end
+        end
+      end
+    end
+  end
+}
 -- Lickilicky 463
 -- Rhyperior 464
 local rhyperior={
@@ -312,5 +366,5 @@ local porygonz={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {rhyperior, tangrowth, leafeon, glaceon, porygonz},
+        list = {magnezone, rhyperior, tangrowth, leafeon, glaceon, porygonz},
 }

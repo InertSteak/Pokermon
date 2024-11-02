@@ -902,19 +902,22 @@ local magneton={
     name = 'Magneton',      
     text = {
       "Played {C:attention}Steel{} cards",
-      "give {X:red,C:white}X#1#{} Mult"
+      "give {X:red,C:white}X#1#{} Mult",
+      "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 3, 
   cost = 6, 
-  stage = "Two", 
+  stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex1",
+  item_req = "thunderstone",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
@@ -925,6 +928,7 @@ local magneton={
           x_mult = card.ability.extra.Xmult_multi
         }
     end
+    return item_evo(self, card, context, "j_poke_magnezone")
   end
 }
 local farfetchd={

@@ -68,6 +68,7 @@ family = {
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
+    {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
     {"yamper","boltund"}
 }
@@ -603,7 +604,7 @@ pokemon_in_pool = function (self)
   if next(find_joker(name)) then
     return false
   else
-    if self.enhancement_gate then
+    if self.enhancement_gate and G.playing_cards then
       for k, v in pairs(G.playing_cards) do
           if v.config.center.key == self.enhancement_gate then
               return true
