@@ -954,7 +954,7 @@ local chansey={
       "add a permanent copy to your",
       "deck and draw it to {C:attention}Hand",
       "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})",
-      "{C:inactive}(Evolves when deck is >= 25% Lucky cards)"
+      "{C:inactive}(Evolves when deck is >= 25% {C:attention}Lucky{C:inactive} cards)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1009,7 +1009,8 @@ local tangela={
     text = {
       "Played {C:attention}Wild{} cards give",
       "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
-      "{C:green}#4# in #5#{} chance for {C:attention}all three{}"
+      "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
+      "{C:inactive}(Evolves when deck is >= 20% {C:attention}Wild{C:inactive} cards)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1063,6 +1064,7 @@ local tangela={
           end
         end
     end
+    return deck_enhance_evo(self, card, context, "j_poke_tangrowth", "Wild", .20)
   end,
 }
 local kangaskhan={

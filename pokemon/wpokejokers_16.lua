@@ -62,6 +62,72 @@ local rhyperior={
   end
 }
 -- Tangrowth 465
+local tangrowth={
+  name = "tangrowth", 
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 15, chips = 75, money = 6, odds = 4}},
+  loc_txt = {      
+    name = 'Tangrowth',      
+    text = {
+      "Played {C:attention}Wild{} cards give",
+      "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
+      "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
+      "Wild cards {C:attention}can't{} be debuffed"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10,
+  enhancement_gate = 'm_wild',
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
+       context.other_card.ability.name == 'Wild Card' then
+        if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+          G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+          return {
+            message = "All!", 
+            colour = G.C.BLACK,
+            mult = card.ability.extra.mult,
+            chips = card.ability.extra.chips,
+            dollars = card.ability.extra.money,
+            card = card
+          }
+        else
+          local scoring_bonuses = {"Mult", "Chips", "Money"}
+          local bonus = pseudorandom_element(scoring_bonuses, pseudoseed('tangela'))
+          if bonus == "Mult" then
+            return {
+              message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+              colour = G.C.MULT,
+              mult = card.ability.extra.mult
+            }
+          elseif bonus == "Chips" then
+            return {
+              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+              colour = G.C.CHIPS,
+              chips = card.ability.extra.chips
+            }
+          elseif bonus == "Money" then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+            return {
+              dollars = card.ability.extra.money,
+              card = card
+            }
+          end
+        end
+    end
+  end,
+}
 -- Electivire 466
 -- Magmortar 467
 -- Togekiss 468
@@ -246,5 +312,5 @@ local porygonz={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {rhyperior,leafeon, glaceon, porygonz},
+        list = {rhyperior, tangrowth, leafeon, glaceon, porygonz},
 }
