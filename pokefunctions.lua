@@ -27,7 +27,7 @@ family = {
     {"diglett","dugtrio"},
     {"meowth","persian"},
     {"psyduck","golduck"},
-    {"mankey","primeape"},
+    {"mankey","primeape", "annihilape"},
     {"growlithe","arcanine"},
     {"poliwag","poliwhirl","poliwrath"},
     {"abra","kadabra","alakazam"},

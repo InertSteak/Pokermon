@@ -1093,22 +1093,23 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 11, chips = 13}},
+  config = {extra = {mult = 11, chips = 13, primes_played = 0}},
   loc_txt = {      
     name = 'Primeape',      
     text = {
       "Each played {C:attention}2{},",
       "{C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
       "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
-      "when scored"
+      "when scored",
+      "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.primes_played}}
   end,
   rarity = 3, 
-  cost = 10, 
+  cost = 9, 
   stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex1",
@@ -1119,6 +1120,7 @@ local primeape={
          context.other_card:get_id() == 3 or 
          context.other_card:get_id() == 5 or 
          context.other_card:get_id() == 7 then
+        card.ability.extra.primes_played = card.ability.extra.primes_played + 1
         return {
             chips = card.ability.extra.chips,
             mult = card.ability.extra.mult,
@@ -1126,6 +1128,7 @@ local primeape={
         }
       end
     end
+    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, 25)
   end
 }
 local growlithe={
