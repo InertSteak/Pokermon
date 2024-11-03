@@ -814,10 +814,59 @@ local slowpoke={
     return level_evo(self, card, context, "j_poke_slowbro")
   end
 }
+local slowpoke2={
+  name = "slowpoke", 
+  pos = {x = 0, y = 6}, 
+  config = {extra = {Xmult = 2, rounds = 5, odds = 4}},
+  loc_txt = {      
+    name = 'Slowpoke',      
+    text = {
+      "{X:red,C:white} X#1# {} Mult on {C:attention}final {C:attention}hand{} of round",
+      "{C:green}#3# in #4#{} chance to create",
+      "a {C:attention}King's Rock{} card at",
+      "end of round {C:inactive,s:0.8}(Must have room){}",
+      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{}{C:inactive,s:0.8} rounds or with a {C:attention,s:0.8}King's Rock{} {C:inactive,s:0.8}card)"
+    } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+  end,
+  rarity = 1, 
+  cost = 6, 
+  item_req = "kingsrock",
+  stage = "Basic", 
+  ptype = "Water",
+  atlas = "Pokedex1", 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and G.GAME.current_round.hands_left == 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round then
+      if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) and (pseudorandom('slowpoke') < G.GAME.probabilities.normal/card.ability.extra.odds) then
+        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, "c_poke_kingsrock")
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
+    end
+    local evo = item_evo(self, card, context, "j_poke_slowking")
+    if not evo then
+      evo = level_evo(self, card, context, "j_poke_slowbro")
+    end
+    return evo
+  end
+}
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_multi = 0.75, Xmult = 1}},
+  config = {extra = {Xmult_multi = 0.75, Xmult = 1, oXmult = 1}},
   loc_txt = {      
     name = 'Slowbro',      
     text = {
@@ -838,6 +887,9 @@ local slowbro={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      card.ability.extra.oXmult = card.ability.extra.Xmult_multi
+    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if not context.blueprint then
@@ -850,7 +902,7 @@ local slowbro={
         }
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = 1
+      card.ability.extra.Xmult = card.ability.extra.oXmult
       return {
         message = localize('k_reset'),
         colour = G.C.RED
@@ -1263,7 +1315,14 @@ local shellder={
   end,
 }
 
+local slowpoke_to_use = nil
+if pokermon_config.no_evos then
+  slowpoke_to_use = slowpoke
+else
+  slowpoke_to_use = slowpoke2
+end
+
 return {name = "Pokemon Jokers 61-90", 
         list = { poliwhirl, poliwrath, abra, kadabra, alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
-                 golem, ponyta, rapidash, slowpoke, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
+                 golem, ponyta, rapidash, slowpoke_to_use, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

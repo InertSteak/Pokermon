@@ -180,6 +180,61 @@ local umbreon={
 }
 -- Murkrow 198
 -- Slowking 199
+local slowking={
+  name = "slowking",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_multi = 1,Xmult_mod = 0.2, oXmult = 1}},
+  loc_txt = {
+    name = "Slowking",
+    text = {
+      "Played {C:attention}Kings{} give {X:red,C:white}X#1#{} Mult",
+      "when scored",
+      "Increases by {X:red,C:white}X#2#{} Mult",
+      "per hand played",
+      "resets at end of round",      
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_mod, }}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      card.ability.extra.oXmult = card.ability.extra.Xmult_multi
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.Xmult_multi = card.ability.extra.Xmult_multi + card.ability.extra.Xmult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.XMULT
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 13 then
+      return {
+          x_mult = card.ability.extra.Xmult_multi,
+          colour = G.C.RED,
+          card = card
+      }
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult_multi = card.ability.extra.oXmult
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end
+}
 -- Misdreavus 200
 -- Unown 201
 -- Wobbuffet 202
@@ -239,5 +294,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, espeon, umbreon, steelix},
+        list = {bellossom, espeon, umbreon, slowking, steelix},
 }

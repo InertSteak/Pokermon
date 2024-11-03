@@ -790,7 +790,7 @@ local venonat={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.plus_odds, center.ability.extra.rounds}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 5, 
   stage = "Basic", 
   ptype = "Grass",
