@@ -181,15 +181,18 @@ local electabuzz={
     text = {
       "When a card is {C:attention}sold{}",
       "and at end of round",
-      "gains {C:money}$#1#{} of {C:attention}sell value{}"
+      "gains {C:money}$#1#{} of {C:attention}sell value{}",
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.money}}
   end,
   rarity = 2, 
   cost = 5, 
+  item_req = "linkcable",
   stage = "One",
   ptype = "Lightning",
   atlas = "Pokedex1",
@@ -202,6 +205,7 @@ local electabuzz={
         func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
         end}))
     end
+    return item_evo(self, card, context, "j_poke_electivire")
   end
 }
 local magmar={
@@ -211,19 +215,21 @@ local magmar={
   loc_txt = {      
     name = 'Magmar',      
     text = {
-      "If the {C:attention}first{}",
-      "discard of the round has",
-      "only {C:attention}1{} card, destroy it",
-      "and gain {C:mult}+#2#{} Mult",
+      "If the {C:attention}first{} discard of",
+      "the round has only {C:attention}1{} card",
+      "destroy it and gain {C:mult}+#2#{} Mult",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
+  item_req = "linkcable",
   stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
@@ -251,6 +257,7 @@ local magmar={
         }
       end
     end
+    return item_evo(self, card, context, "j_poke_magmortar")
   end
 }
 local pinsir={

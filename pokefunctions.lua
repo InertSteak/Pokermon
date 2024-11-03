@@ -1,7 +1,7 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
 energy_values = {mult = .4, mult1 = .4, mult2 = .4, chips = .4, chips1 = .4, chips2 = .4, chips3 = .4, Xmult = .3, money = .3, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .3, Xmult_multi = .1}
 
-scaled_evos = {"seadra", "golbat"}
+scaled_evos = {"seadra", "golbat", "magmar"}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -55,8 +55,9 @@ family = {
     {"goldeen","seaking"},
     {"staryu","starmie"},
     {"mimejr", "mrmime"},
-    {"elekid", "electabuzz"},
-    {"magby", "magmar"},
+    {"elekid", "electabuzz", "electivire"},
+    {"magby", "magmar", "magmortar"},
+    {"tangela", "tangrowth"},
     {"smoochum", "jynx"},
     {"magikarp","gyarados"},
     {"munchlax", "snorlax"},
@@ -299,6 +300,7 @@ evolve = function(self, card, context, forced_key)
     local scaled = nil
     local scaled_values = nil
     local reset_apply_type = nil
+    local previous_extra_value = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -350,7 +352,11 @@ evolve = function(self, card, context, forced_key)
         end
       end
     end
-      
+    
+    if card.ability.extra_value then
+      previous_extra_value = card.ability.extra_value
+    end
+    
     G.E_MANAGER:add_event(Event({
         remove(self, card, context)
       }))
@@ -412,6 +418,11 @@ evolve = function(self, card, context, forced_key)
     
     if type_sticker then
       apply_type_sticker(new_card, type_sticker)
+    end
+    
+    if previous_extra_value then
+      new_card.ability.extra_value = previous_extra_value
+      new_card:set_cost()
     end
     
     new_card:add_to_deck()

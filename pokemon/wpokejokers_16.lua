@@ -183,7 +183,103 @@ local tangrowth={
   end,
 }
 -- Electivire 466
+local electivire={
+  name = "electivire", 
+  pos = {x = 0, y = 0}, 
+  config = {extra = {money = 2, Xmult_mod = 0.1}},
+  loc_txt = {      
+    name = 'Electivire',      
+    text = {
+      "When a card is {C:attention}sold{}",
+      "and at end of round",
+      "gains {C:money}$#1#{} of {C:attention}sell value{}",
+      "Gives {X:mult,C:white}X#2#{} Mult for each",
+      "dollar of sell value this Joker has",
+      "{C:inactive}(Currently {X:mult,C:white}X#3#{}{C:inactive} Mult)",
+    } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    return {vars = {center.ability.extra.money, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
+  end,
+  rarity = "poke_safari", 
+  cost = 6,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex4",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
+      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
+      card:set_cost()
+      G.E_MANAGER:add_event(Event({
+        func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
+        end}))
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult_mod * card.sell_cost}}, 
+          colour = G.C.MULT,
+          Xmult_mod = 1 + card.ability.extra.Xmult_mod * card.sell_cost
+        }
+      end
+    end
+  end
+}
 -- Magmortar 467
+local magmortar={
+  name = "magmortar", 
+  pos = {x = 8, y = 9}, 
+  config = {extra = {mult = 0, mult_mod = 2, Xmult_mod = 0.02}},
+  loc_txt = {      
+    name = 'Magmortar',      
+    text = {
+      "If the {C:attention}first{} discard of",
+      "the round has only {C:attention}1{} card,",
+      "destroy it and gain {C:mult}+#2#{} Mult",
+      "Gives {X:mult,C:white}X#3#{} Mult for each",
+      "card discarded this {C:attention}run{}",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:mult,C:white}X#4#{}{C:inactive} Mult)",
+    } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult_mod, 1 + center.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  ptype = "Fire",
+  atlas = "Pokedex4",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.discard and not context.blueprint then
+      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+        return {
+          remove = true
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = "Fire Blast!", 
+          colour = G.C.XMULT,
+          mult_mod = card.ability.extra.mult,
+          Xmult_mod = 1 + center.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt
+        }
+      end
+    end
+  end
+}
 -- Togekiss 468
 -- Yanmega 469
 -- Leafeon 470
@@ -366,5 +462,5 @@ local porygonz={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {magnezone, rhyperior, tangrowth, leafeon, glaceon, porygonz},
+        list = {magnezone, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
 }
