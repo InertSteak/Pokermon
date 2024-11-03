@@ -68,17 +68,19 @@ local magnezone={
 local lickilicky={
   name = "lickilicky", 
   pos = {x = 0, y = 0}, 
-  config = {extra = {Xmult_multi = 1.5}},
+  config = {extra = {Xmult_multi = 2, subtract = 0.7}},
   loc_txt = {      
     name = 'Lickilicky',      
     text = {
+      "First and second played",
       "Played {C:attention}Jacks{} give {X:mult,C:white} X#1# {} Mult",
-      "when scored"
+      "when scored and further {C:attention}Jacks{}",
+      "give {X:mult,C:white} X#2# {} Mult when scored"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi - center.ability.extra.subtract}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -88,9 +90,27 @@ local lickilicky={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card:get_id() == 11 then
+      local first_jack = nil
+      local second_jack = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == 11 then
+          if not first_jack then
+            first_jack = context.scoring_hand[i];
+          else
+            second_jack = context.scoring_hand[i];
+            break
+          end
+        end
+      end
+      if context.other_card == first_jack or context.other_card == second_jack then
         return {
             x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.RED,
+            card = card
+        }
+      elseif context.other_card:get_id() == 11 then
+        return {
+            x_mult = card.ability.extra.Xmult_multi - card.ability.extra.subtract,
             colour = G.C.RED,
             card = card
         }
