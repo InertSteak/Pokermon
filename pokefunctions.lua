@@ -62,6 +62,7 @@ family = {
     {"magikarp","gyarados"},
     {"munchlax", "snorlax"},
     {"happiny", "chansey", "blissey"},
+    {"porygon", "porygon2", "porygonz"},
     {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
