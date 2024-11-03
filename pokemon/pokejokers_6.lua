@@ -190,9 +190,8 @@ local crobat={
       local d_count = 0
       local enhanced = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
+          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff then 
               enhanced[#enhanced+1] = v
-              v.vampired = true
               if v.config.center == G.P_CENTERS.m_mult or v.config.center == G.P_CENTERS.m_wild then
                 m_count = m_count + 1
               end
@@ -218,7 +217,6 @@ local crobat={
               G.E_MANAGER:add_event(Event({
                   func = function()
                       v:juice_up()
-                      v.vampired = nil
                       return true
                   end
               })) 
