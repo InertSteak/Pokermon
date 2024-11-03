@@ -65,6 +65,39 @@ local magnezone={
   end
 }
 -- Lickilicky 463
+local lickilicky={
+  name = "lickilicky", 
+  pos = {x = 0, y = 0}, 
+  config = {extra = {Xmult_multi = 1.5}},
+  loc_txt = {      
+    name = 'Lickilicky',      
+    text = {
+      "Played {C:attention}Jacks{} give {X:mult,C:white} X#1# {} Mult",
+      "when scored"
+    } 
+  }, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex4", 
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+      if context.other_card:get_id() == 11 then
+        return {
+            x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.RED,
+            card = card
+        }
+      end
+    end
+  end
+}
 -- Rhyperior 464
 local rhyperior={
   name = "rhyperior", 
@@ -89,7 +122,7 @@ local rhyperior={
   rarity = "poke_safari", 
   cost = 8,
   enhancement_gate = 'm_stone',
-  stage = "One", 
+  stage = "Two", 
   ptype = "Earth",
   atlas = "Pokedex4",
   blueprint_compat = true,
@@ -205,7 +238,7 @@ local electivire={
   end,
   rarity = "poke_safari", 
   cost = 6,
-  stage = "One",
+  stage = "Two",
   ptype = "Lightning",
   atlas = "Pokedex4",
   blueprint_compat = false,
@@ -274,7 +307,7 @@ local magmortar={
           message = "Fire Blast!", 
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = 1 + center.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt
+          Xmult_mod = 1 + card.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt
         }
       end
     end
@@ -411,7 +444,7 @@ local porygonz={
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   joblacklist = true,
   stage = "Two",
   ptype = "Colorless",
@@ -462,5 +495,5 @@ local porygonz={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {magnezone, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
+        list = {magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
 }

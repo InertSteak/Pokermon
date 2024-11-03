@@ -754,18 +754,19 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult_multi = 2}},
+  config = {extra = {Xmult_multi = 2, jacks_played = 0}},
   loc_txt = {      
     name = 'Lickitung',      
     text = {
       "First and second played",
       "{C:attention}Jacks{} give {X:mult,C:white} X#1# {} Mult",
-      "when scored"
+      "when scored",
+      "{C:inactive}(Evolves after triggering {C:attention}#2#{}{C:inactive}/20 times){}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.jacks_played}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -788,6 +789,7 @@ local lickitung={
         end
       end
       if context.other_card == first_jack or context.other_card == second_jack then
+        card.ability.extra.jacks_played = card.ability.extra.jacks_played + 1
         return {
             x_mult = card.ability.extra.Xmult_multi,
             colour = G.C.RED,
@@ -795,6 +797,7 @@ local lickitung={
         }
       end
     end
+    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, 20)
   end
 }
 local koffing={
