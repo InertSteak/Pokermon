@@ -737,7 +737,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {chips = 105, chip_mod = 25}},
+  config = {extra = {chips = 105, chip_mod = 15}},
   loc_txt = {      
     name = 'Rapidash',      
     text = {

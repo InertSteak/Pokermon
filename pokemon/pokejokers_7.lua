@@ -183,7 +183,7 @@ local umbreon={
 local slowking={
   name = "slowking",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_multi = 1,Xmult_mod = 0.2, oXmult = 1}},
+  config = {extra = {Xmult_multi = 1,Xmult_mod = 0.25, oXmult = 1}},
   loc_txt = {
     name = "Slowking",
     text = {

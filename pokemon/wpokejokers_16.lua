@@ -239,7 +239,7 @@ local tangrowth={
 local electivire={
   name = "electivire", 
   pos = {x = 0, y = 0}, 
-  config = {extra = {money = 2, Xmult_mod = 0.1}},
+  config = {extra = {money = 2, Xmult_mod = 0.03}},
   loc_txt = {      
     name = 'Electivire',      
     text = {
