@@ -20,7 +20,7 @@ local scizor={
   end,
   rarity = "poke_safari", 
   cost = 10, 
-  stage = "Basic",
+  stage = "One",
   ptype = "Metal",
   atlas = "Pokedex2",
   perishable_compat = false,
