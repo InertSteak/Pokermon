@@ -62,10 +62,9 @@ local politoed={
   loc_txt = {      
     name = 'Politoed',      
     text = {
-      "Played cards with",
-      "{V:1}#2#{} suit give",
-      "{C:mult}+#1#{} Mult when scored",
-      "and {C:attention}retrigger{}",
+      "Played cards with {V:1}#2#{} suit give",
+      "{C:mult}+#1#{} Mult when scored for each",
+      "{X:water,C:white}Water{} Joker you have and {C:attention}retrigger{}",
       "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
     } 
   },
@@ -99,7 +98,7 @@ local politoed={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult * #find_pokemon_type("Water")
         }
       end
     end

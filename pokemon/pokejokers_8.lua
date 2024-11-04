@@ -16,7 +16,7 @@ local scizor={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, (center.ability.extra.Xmult > 0 and center.ability.extra.Xmult) or 1}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -42,7 +42,7 @@ local scizor={
               card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
             end
             if card.edition.x_mult then
-              card.ability.extra.Xmult = card.ability.extra.Xmult + card.edition.x_mult
+              card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
             end
           end
           local edition = poll_edition('wheel_of_fortune', nil, true, true)
@@ -59,13 +59,13 @@ local scizor={
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
+      if context.joker_main then
         return {
           message = "X-Scissor!", 
           colour = G.ARGS.LOC_COLOURS.metal,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = (card.ability.extra.Xmult > 0 and card.ability.extra.Xmult) or 1
         }
       end
     end
