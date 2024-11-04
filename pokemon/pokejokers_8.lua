@@ -11,6 +11,7 @@ local scizor={
       "Joker to the right and gain",
       "{C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
       "Those editions {C:attention}stack{} on this Joker",
+      "{C:inactive,s:0.75}(Matches destroyed Joker's edition if able){}",
       "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
     } 
   },
@@ -45,7 +46,12 @@ local scizor={
               card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
             end
           end
-          local edition = poll_edition('wheel_of_fortune', nil, true, true)
+          local edition = nil
+          if sliced_card.edition and (sliced_card.edition.foil or sliced_card.edition.holo or sliced_card.edition.polychrome) then
+            edition = sliced_card.edition
+          else
+            edition = poll_edition('wheel_of_fortune', nil, true, true)
+          end
           card:set_edition(edition, true)
           
           G.GAME.joker_buffer = G.GAME.joker_buffer - 1
