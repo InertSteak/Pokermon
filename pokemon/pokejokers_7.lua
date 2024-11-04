@@ -55,6 +55,66 @@ local bellossom={
 -- Azumarill 184
 -- Sudowoodo 185
 -- Politoed 186
+local politoed={
+  name = "politoed", 
+  pos = {x = 0, y = 0}, 
+  config = {extra = {mult = 5, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, retriggers = 1}},
+  loc_txt = {      
+    name = 'Politoed',      
+    text = {
+      "Played cards with",
+      "{V:1}#2#{} suit give",
+      "{C:mult}+#1#{} Mult when scored",
+      "and {C:attention}retrigger{}",
+      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
+                    colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if not context.blueprint then
+          if card.ability.extra.indice == 4 then
+            card.ability.extra.indice = 1
+          else
+            card.ability.extra.indice = card.ability.extra.indice + 1
+          end
+        end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      if context.other_card:is_suit(scoring_suit) then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      if context.other_card:is_suit(scoring_suit) then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Hoppip 187
 -- Skiploom 188
 -- Jumpluff 189
@@ -294,5 +354,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, espeon, umbreon, slowking, steelix},
+        list = {bellossom, politoed, espeon, umbreon, slowking, steelix},
 }

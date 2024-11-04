@@ -180,7 +180,7 @@ local nidoking={
 local clefairy={
   name = "clefairy", 
   pos = {x = 8, y = 2},
-  config = {extra = {mult = 2, suit = "Clubs"}},
+  config = {extra = {mult = 3, suit = "Clubs"}},
   loc_txt = {      
     name = 'Clefairy',      
     text = {
@@ -218,7 +218,7 @@ local clefairy={
 local clefable={
   name = "clefable", 
   pos = {x = 9, y = 2},
-  config = {extra = {mult = 7, suit = "Clubs", Xmult = 2}},
+  config = {extra = {mult = 8, suit = "Clubs", Xmult = 2}},
   loc_txt = {      
     name = 'Clefable',      
     text = {
@@ -349,7 +349,7 @@ local ninetales={
 local jigglypuff={
   name = "jigglypuff", 
   pos = {x = 12, y = 2},
-  config = {extra = {mult = 2, suit = "Spades"}},
+  config = {extra = {mult = 3, suit = "Spades"}},
   loc_txt = {      
     name = 'Jigglypuff',      
     text = {
@@ -387,7 +387,7 @@ local jigglypuff={
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
-  config = {extra = {mult = 5, chips = 50, suit = "Spades"}},
+  config = {extra = {mult = 6, chips = 50, suit = "Spades"}},
   loc_txt = {      
     name = 'Wigglytuff',      
     text = {
@@ -1216,20 +1216,22 @@ local arcanine={
 local poliwag={
   name = "poliwag", 
   pos = {x = 7, y = 4},
-  config = {extra = {mults = {1, 2, 3, 5, 8}, indice = 1, rounds = 5}},
+  config = {extra = {mult = 4, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
   loc_txt = {      
     name = 'Poliwag',      
     text = {
-      "Gives Mult in a {C:attention}cycle{}",
-      "{C:mult}+#1#{}, {C:mult}+#2#{}, {C:mult}+#3#{}, {C:mult}+#4#{}, and {C:mult}+#5#{} Mult",
-      "{C:inactive}(Currently {C:mult}+#6#{C:inactive} Mult)",
-      "{C:inactive}(Evolves after {C:attention}#7#{}{C:inactive} rounds)"
+      "Played cards with",
+      "{V:1}#3#{} suit give",
+      "{C:mult}+#1#{} Mult when scored",
+      "Suit changes in order {C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
+      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
-                    center.ability.extra.mults[center.ability.extra.indice], center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
+                    colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -1240,19 +1242,22 @@ local poliwag={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local scoring_mult
         if not context.blueprint then
-          scoring_mult = card.ability.extra.mults[card.ability.extra.indice]
-          if card.ability.extra.indice == 5 then
+          if card.ability.extra.indice == 4 then
             card.ability.extra.indice = 1
           else
             card.ability.extra.indice = card.ability.extra.indice + 1
           end
         end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      if context.other_card:is_suit(scoring_suit) then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult_mod = scoring_mult
+          mult = card.ability.extra.mult
         }
       end
     end

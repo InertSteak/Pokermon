@@ -2,25 +2,26 @@
 local poliwhirl={
   name = "poliwhirl", 
   pos = {x = 8, y = 4}, 
-  config = {extra = {mults = {4, 8, 16, 32, 64}, indice = 1}},
+  config = {extra = {mult = 8, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
   loc_txt = {      
     name = 'Poliwhirl',      
     text = {
-      "Gives Mult in a {C:attention}cycle{}",
-      "{C:mult}+#1#{}, {C:mult}+#2#{}, {C:mult}+#3#{}, {C:mult}+#4#{}, and {C:mult}+#5#{} Mult",
-      "{C:inactive}(Currently {C:mult}+#6#{C:inactive} Mult)",
-      "{C:inactive}(Evolves with a{} {C:attention}Water Stone{}{C:inactive} card)"
+      "Played cards with",
+      "{V:1}#2#{} suit give",
+      "{C:mult}+#1#{} Mult when scored",
+      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+      "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Water Stone{}{C:inactive,s:0.8} or {C:attention,s:0.8}King's Rock{}{C:inactive,s:0.8} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
-    return {vars = {center.ability.extra.mults[1], center.ability.extra.mults[2], center.ability.extra.mults[3], center.ability.extra.mults[4], center.ability.extra.mults[5], 
-                    center.ability.extra.mults[center.ability.extra.indice]}}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
+                    colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = 2, 
   cost = 6, 
-  item_req = "waterstone",
+  item_req = {"waterstone", "kingsrock"},
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -28,41 +29,46 @@ local poliwhirl={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local scoring_mult
         if not context.blueprint then
-          scoring_mult = card.ability.extra.mults[card.ability.extra.indice]
-          if card.ability.extra.indice == 5 then
+          if card.ability.extra.indice == 4 then
             card.ability.extra.indice = 1
           else
             card.ability.extra.indice = card.ability.extra.indice + 1
           end
         end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      if context.other_card:is_suit(scoring_suit) then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult_mod = scoring_mult
+          mult = card.ability.extra.mult
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_poliwrath")
+    return item_evo(self, card, context)
   end,
 }
 local poliwrath={
   name = "poliwrath", 
   pos = {x = 9, y = 4},
-  config = {extra = {Xmults = {1, 1.5, 2.25, 3.4, 5}, indice = 1}},
+  config = {extra = {Xmult_multi = 1.75, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
   loc_txt = {      
     name = 'Poliwrath',      
     text = {
-      "Gives Mult in a {C:attention}cycle{}",
-      "{X:mult,C:white} X#1# {}, {X:mult,C:white} X#2# {}, {X:mult,C:white} X#3# {}, {X:mult,C:white} X#4# {}, and {X:mult,C:white} X#5# {} Mult",
-      "{C:inactive}(Currently {X:mult,C:white} X#6# {C:inactive} Mult)"
+      "Played cards with",
+      "{V:1}#2#{} suit give",
+      "{X:mult,C:white} X#1# {} Mult when scored",
+      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmults[1], center.ability.extra.Xmults[2], center.ability.extra.Xmults[3], center.ability.extra.Xmults[4], center.ability.extra.Xmults[5], 
-                    center.ability.extra.Xmults[center.ability.extra.indice]}}
+    return {vars = {center.ability.extra.Xmult_multi, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
+                    colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -73,19 +79,22 @@ local poliwrath={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local scoring_xmult
         if not context.blueprint then
-          scoring_xmult = card.ability.extra.Xmults[card.ability.extra.indice]
-          if card.ability.extra.indice == 5 then
+          if card.ability.extra.indice == 4 then
             card.ability.extra.indice = 1
           else
             card.ability.extra.indice = card.ability.extra.indice + 1
           end
         end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      if context.other_card:is_suit(scoring_suit) then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {scoring_xmult}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          Xmult_mod = scoring_xmult
+          x_mult = card.ability.extra.Xmult_multi
         }
       end
     end

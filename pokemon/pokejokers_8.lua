@@ -1,5 +1,76 @@
 -- Qwilfish 211
 -- Scizor 212
+local scizor={
+  name = "scizor", 
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, chips = 0, Xmult = 0}},
+  loc_txt = {      
+    name = 'Scizor',      
+    text = {
+      "When Blind is selected, destroy",
+      "Joker to the right and gain",
+      "{C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
+      "Those editions {C:attention}stack{} on this Joker",
+      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
+    } 
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.Xmult}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  perishable_compat = false,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+          if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
+          local sliced_card = G.jokers.cards[my_pos+1]
+          sliced_card.getting_sliced = true
+          if card.edition then
+            if card.edition.chips then
+              card.ability.extra.chips = card.ability.extra.chips + card.edition.chips
+            end
+            if card.edition.mult then
+              card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
+            end
+            if card.edition.x_mult then
+              card.ability.extra.Xmult = card.ability.extra.Xmult + card.edition.x_mult
+            end
+          end
+          local edition = poll_edition('wheel_of_fortune', nil, true, true)
+          card:set_edition(edition, true)
+          
+          G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+          G.E_MANAGER:add_event(Event({func = function()
+              G.GAME.joker_buffer = 0
+              card:juice_up(0.8, 0.8)
+              sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+              play_sound('slice1', 0.96+math.random()*0.08)
+          return true end }))
+          card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED, no_juice = true})
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = "X-Scissor!", 
+          colour = G.ARGS.LOC_COLOURS.metal,
+          mult_mod = card.ability.extra.mult,
+          chip_mod = card.ability.extra.chips,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end
+}
 -- Shuckle 213
 -- Heracross 214
 -- Sneasel 215
@@ -433,5 +504,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {kingdra, porygon2, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, kingdra, porygon2, tyrogue, hitmontop, smoochum, elekid, magby},
 }

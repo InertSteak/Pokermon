@@ -1,7 +1,7 @@
 energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
 energy_values = {mult = .4, mult1 = .4, mult2 = .4, chips = .4, chips1 = .4, chips2 = .4, chips3 = .4, Xmult = .3, money = .3, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .3, Xmult_multi = .1}
 
-scaled_evos = {"seadra", "golbat", "magmar"}
+scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -29,7 +29,7 @@ family = {
     {"psyduck","golduck"},
     {"mankey","primeape", "annihilape"},
     {"growlithe","arcanine"},
-    {"poliwag","poliwhirl","poliwrath"},
+    {"poliwag","poliwhirl","poliwrath", "politoed"},
     {"abra","kadabra","alakazam"},
     {"machop","machoke","machamp"},
     {"bellsprout","weepinbell","victreebel"},
@@ -54,6 +54,7 @@ family = {
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
+    {"scyther", "scizor"},
     {"mimejr", "mrmime"},
     {"elekid", "electabuzz", "electivire"},
     {"magby", "magmar", "magmortar"},
@@ -493,6 +494,13 @@ item_evo = function(self, card, context, forced_key)
           forced_key = "j_poke_vileplume"
         elseif card.ability.extra.evolve == "sunstone" then
           forced_key = "j_poke_bellossom"
+        end
+      end
+      if card.ability.name == "poliwhirl" then
+        if card.ability.extra.evolve == "waterstone" then
+          forced_key = "j_poke_poliwrath"
+        elseif card.ability.extra.evolve == "kingsrock" then
+          forced_key = "j_poke_politoed"
         end
       end
       if forced_key and can_evolve(self, card, context, forced_key) then

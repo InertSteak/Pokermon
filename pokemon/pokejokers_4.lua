@@ -511,7 +511,7 @@ local electrode={
 local exeggcute={
   name = "exeggcute", 
   pos = {x = 10, y = 7}, 
-  config = {extra = {mult = 2, suit = "Hearts"}},
+  config = {extra = {mult = 3, suit = "Hearts"}},
   loc_txt = {      
     name = 'Exeggcute',      
     text = {
@@ -549,7 +549,7 @@ local exeggcute={
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult_mod = 2, Xmult_multi = 1.5, suit = "Hearts", odds = 2}},
+  config = {extra = {mult_mod = 3, Xmult_multi = 1.5, suit = "Hearts", odds = 2}},
   loc_txt = {      
     name = 'Exeggutor',      
     text = {
@@ -1278,7 +1278,7 @@ local seaking={
 local staryu={
   name = "staryu", 
   pos = {x = 2, y = 9},
-  config = {extra = {mult = 2, suit = "Diamonds"}},
+  config = {extra = {mult = 3, suit = "Diamonds"}},
   loc_txt = {      
     name = 'Staryu',      
     text = {

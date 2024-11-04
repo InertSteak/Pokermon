@@ -2,7 +2,7 @@
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 4, money = 2, suit = "Diamonds"}},
+  config = {extra = {mult = 3, money = 3, suit = "Diamonds"}},
   loc_txt = {      
     name = 'Starmie',      
     text = {
@@ -81,9 +81,10 @@ local scyther={
     name = 'Scyther',      
     text = {
       "When Blind is selected, destroy",
-      "Joker to the right and gain",
-      "{C:mult}+#2#{} Mult. Gain a non-Negative",
-      "{C:attention}Edition{} if rare or higher",
+      "Joker to the right and gain {C:mult}+#2#{} Mult",
+      "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
+      "if rare or higher",
+      "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
     } 
   },
@@ -131,6 +132,7 @@ local scyther={
         }
       end
     end
+    return type_evo(self, card, context, "j_poke_scizor", "metal")
   end
 }
 local jynx={
