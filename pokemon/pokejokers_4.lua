@@ -589,21 +589,23 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 10, rounds = 4}},
+  config = {extra = {mult = 5, rounds = 5,}},
   loc_txt = {      
     name = 'Cubone',      
     text = {
       "When you get this, create",
-      "a {C:attention}Thick Club{} card.",
-      "{C:mult}+#1#{} Mult for each ",
-      "{C:attention}Thick Club{} you have",
+      "a {C:attention}Thick Club{} card",
+      "Gives {C:mult}+#1#{} Mult for each",
+      "filled consumable slot",
+      "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{}{C:inactive,s:0.75} count as double){}",
+      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub'))}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -618,64 +620,75 @@ local cubone={
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-      return true
     end
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = find_joker('thickclub')
-        if #count > 0 then
+        local count = #G.consumeables.cards + #find_joker('thickclub')
+        if count > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * #count}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * count}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * #count
+            mult_mod = card.ability.extra.mult * count
           }
         end
       end
     end
     return level_evo(self, card, context, "j_poke_marowak")
-  end
+  end,
 }
 local marowak={
   name = "marowak", 
-  pos = {x = 0, y = 8}, 
-  config = {extra = {mult = 10, chips = 100}},
+  pos = {x = 0, y = 8},  
+  config = {extra = {Xmult_multi = 0.75, card_limit = 1}},
   loc_txt = {      
     name = 'Marowak',      
     text = {
-      "{C:mult}+#1#{} Mult and",
-      "{C:chips}+#2#{} Chips for each ",
-      "{C:attention}Thick Club{} you have"
+      "{C:attention}+#2#{} consumable slots",
+      "Gives {X:mult,C:white} X#1# {} Mult for each ",
+      "filled consumable slot",
+      "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{}{C:inactive,s:0.75} count as double){}",
+      "{C:inactive}(Currently {X:mult,C:white} X#3# {}{C:inactive} Mult)",
     } 
-  },
+  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.card_limit, 
+                    math.max(1, center.ability.extra.Xmult_multi * (1 + (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub'))))}}
   end,
-  rarity = "poke_safari",  
+  rarity = 3, 
   cost = 8, 
   stage = "One", 
   ptype = "Earth",
   joblacklist = true,
-  atlas = "Pokedex1",
+  atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = find_joker('thickclub')
-        if #count > 0 then
+        local count = #G.consumeables.cards + #find_joker('thickclub')
+        if (count + 1) > 1 then
           return {
-            message = "Bone!", 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * #count,
-            chip_mod = card.ability.extra.chips * #count
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi * (count + 1)}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult_multi * (count + 1)
           }
         end
       end
     end
-  end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
+      return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
+      return true end }))
+  end, 
 }
 local hitmonlee={
   name = "hitmonlee", 
