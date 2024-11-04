@@ -55,7 +55,11 @@ local shiny = ({
         end
     end,
     on_remove = function(card)
-      G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+      if G.GAME.modifiers.poke_booster_packs then
+        G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+      else
+        G.GAME.modifiers.poke_booster_packs = 0
+      end
     end
 })
 

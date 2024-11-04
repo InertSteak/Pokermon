@@ -62,7 +62,11 @@ pattern = "self.added_to_deck = false"
 position = "after"
 payload = '''
 if self.edition and self.edition.poke_shiny and G.jokers then
-  G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+  if G.GAME.modifiers.poke_booster_packs then
+    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+  else
+    G.GAME.modifiers.poke_booster_packs = 0
+  end
 end
 '''
 match_indent = true
