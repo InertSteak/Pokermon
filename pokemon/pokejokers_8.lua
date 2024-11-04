@@ -3,7 +3,7 @@
 local scizor={
   name = "scizor", 
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, chips = 0, Xmult = 0}},
+  config = {extra = {mult = 0, chips = 0, Xmult = 1}},
   loc_txt = {      
     name = 'Scizor',      
     text = {
@@ -16,7 +16,7 @@ local scizor={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, (center.ability.extra.Xmult > 0 and center.ability.extra.Xmult) or 1}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -65,7 +65,7 @@ local scizor={
           colour = G.ARGS.LOC_COLOURS.metal,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          Xmult_mod = (card.ability.extra.Xmult > 0 and card.ability.extra.Xmult) or 1
+          Xmult_mod = card.ability.extra.Xmult
         }
       end
     end
