@@ -618,6 +618,7 @@ local gloom={
   rarity = 2, 
   cost = 8,
   item_req = {"leafstone", "sunstone"},
+  evo_list = {leafstone = "j_poke_vileplume", sunstone = "j_poke_bellossom"},
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",

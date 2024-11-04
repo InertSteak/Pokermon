@@ -97,6 +97,13 @@ for _, file in ipairs(pfiles) do
               item.config.extra = {item_req = item.item_req}
             end
           end
+          if item.evo_list then
+            if item.config and item.config.extra then
+              item.config.extra.evo_list = item.evo_list
+            elseif item.config then
+              item.config.extra = {item_req = item.evo_list}
+            end
+          end
           if pokermon_config.jokers_only and item.rarity == "poke_safari" then
             item.rarity = 3
           end

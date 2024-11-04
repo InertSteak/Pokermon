@@ -23,6 +23,7 @@ local poliwhirl={
   rarity = 2, 
   cost = 6, 
   item_req = {"waterstone", "kingsrock"},
+  evo_list = {waterstone = "j_poke_poliwrath", kingsrock = "j_poke_politoed"},
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",

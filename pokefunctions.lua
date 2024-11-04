@@ -470,38 +470,8 @@ end
 
 item_evo = function(self, card, context, forced_key)
     if (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string")) then
-      if card.ability.name == "eevee" then
-        if card.ability.extra.evolve == "waterstone" then
-          forced_key = "j_poke_vaporeon"
-        elseif card.ability.extra.evolve == "thunderstone" then
-          forced_key = "j_poke_jolteon"
-        elseif card.ability.extra.evolve == "firestone" then
-          forced_key = "j_poke_flareon"
-        elseif card.ability.extra.evolve == "sunstone" then
-          forced_key = "j_poke_espeon"
-        elseif card.ability.extra.evolve == "moonstone" then
-          forced_key = "j_poke_umbreon"
-        elseif card.ability.extra.evolve == "leafstone" then
-          forced_key = "j_poke_leafeon"
-        elseif card.ability.extra.evolve == "icestone" then
-          forced_key = "j_poke_glaceon"
-        elseif card.ability.extra.evolve == "shinystone" then
-          forced_key = "j_poke_sylveon"
-        end
-      end
-      if card.ability.name == "gloom" then
-        if card.ability.extra.evolve == "leafstone" then
-          forced_key = "j_poke_vileplume"
-        elseif card.ability.extra.evolve == "sunstone" then
-          forced_key = "j_poke_bellossom"
-        end
-      end
-      if card.ability.name == "poliwhirl" then
-        if card.ability.extra.evolve == "waterstone" then
-          forced_key = "j_poke_poliwrath"
-        elseif card.ability.extra.evolve == "kingsrock" then
-          forced_key = "j_poke_politoed"
-        end
+      if type(card.ability.extra.evolve) == "string" then
+        forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]
       end
       if forced_key and can_evolve(self, card, context, forced_key) then
         return {
