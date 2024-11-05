@@ -24,7 +24,7 @@ local shiny = ({
     unlocked = true,
     config = {},
     in_shop = true,
-    weight = 2,
+    weight = 100,
     extra_cost = 6,
     apply_to_float = true,
     loc_vars = function(self)
@@ -61,6 +61,12 @@ local shiny = ({
         G.GAME.modifiers.poke_booster_packs = 0
       end
     end
+    
+    local set_edition = Card.set_edition
+    function Card:set_edition(edition, immediate, silent)
+      if edition == 'shiny' and self.set ~= 'Joker' then return end
+      set_edition(self, edition, immediate, silent)
+    end,
 })
 
 return {
