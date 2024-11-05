@@ -246,8 +246,14 @@ SMODS.current_mod.extra_tabs = function()
                 minw = 3.85,
                 button = "pokermon_github",
                 label = {"Github"}
+              }),
+              UIBox_button({
+                minw = 3.85,
+                colour = HEX("9656ce"),
+                button = "pokermon_discord",
+                label = {"Discord"}
               })
-            }
+            },
           },
         },
       }
@@ -256,6 +262,9 @@ SMODS.current_mod.extra_tabs = function()
 end
 function G.FUNCS.pokermon_github(e)
 	love.system.openURL("https://github.com/InertSteak/Pokermon")
+end
+function G.FUNCS.pokermon_discord(e)
+  love.system.openURL("https://discord.gg/6kXbfDQ5")
 end
 
 --Reserve Area for Pocket packs (adapted from betmma)
