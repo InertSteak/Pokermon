@@ -264,7 +264,7 @@ function G.FUNCS.pokermon_github(e)
 	love.system.openURL("https://github.com/InertSteak/Pokermon")
 end
 function G.FUNCS.pokermon_discord(e)
-  love.system.openURL("https://discord.gg/6kXbfDQ5")
+  love.system.openURL("https://discord.gg/3GZTGppef4")
 end
 
 --Reserve Area for Pocket packs (adapted from betmma)
