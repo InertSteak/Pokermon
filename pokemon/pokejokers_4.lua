@@ -641,7 +641,7 @@ local cubone={
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
-  config = {extra = {Xmult_multi = 0.75, card_limit = 1}},
+  config = {extra = {Xmult_multi = 0.5, card_limit = 1}},
   loc_txt = {      
     name = 'Marowak',      
     text = {

@@ -17,7 +17,19 @@ local scizor={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.Xmult}}
+    local emult = 0 
+    local echips = 0 
+    local eXmult = 1
+    if center.edition and center.edition.holo then
+      emult = center.edition.mult or 0
+    end
+    if center.edition and center.edition.foil then
+      echips = center.edition.chips or 0
+    end
+    if center.edition and center.edition.polychrome then
+     eXmult = center.edition.x_mult or 1
+    end
+    return {vars = {center.ability.extra.mult + emult, center.ability.extra.chips + echips, center.ability.extra.Xmult * eXmult}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
