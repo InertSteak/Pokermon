@@ -109,6 +109,15 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
+                  text = "Lead Developer: ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
                   text = "InertSteak",
                   shadow = true,
                   scale = scale * 0.8,
@@ -127,7 +136,16 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Larantula, Joey J. Jester",
+                  text = "Graphics Design: ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro, Yamper",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -145,7 +163,16 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "GayCoonie, Marie|Tsunami",
+                  text = "QA Lead: ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Mus",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -163,7 +190,16 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Yamper, Jevonnissocoolman",
+                  text = "Developers: ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -181,61 +217,43 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "TheKuro, Ishtech",
+                  text = "Community Managers: ",
                   shadow = true,
                   scale = scale * 0.8,
-                  colour = G.C.BLUE
+                  colour = G.C.UI.TEXT_LIGHT
                 }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "SDM0, SMG9000",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Mus, WilsontheWolf",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
+              },
               {
                 n = G.UIT.T,
                 config = {
                   text = "Astra, Kaethela",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            }
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Promotion Producer: ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Marie|Tsunami",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
