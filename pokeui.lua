@@ -25,7 +25,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Shiny on Playing Cards?(requires restart)",
+          label = "Shiny on Playing Cards?",
           ref_table = pokermon_config,
           ref_value = "shiny_playing_cards",
           callback = function(_set_toggle)

@@ -460,6 +460,6 @@ end
 
 local set_edition = Card.set_edition
 function Card:set_edition(edition, immediate, silent)
-  if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and self.ability.set ~= 'Joker' then return end
+  if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and (self.ability.set ~= 'Joker' and self.ability.set ~= 'Edition') then return end
   return set_edition(self, edition, immediate, silent)
 end
