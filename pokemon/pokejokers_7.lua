@@ -3,7 +3,7 @@
 local bellossom={
   name = "bellossom",
   config = {extra = {}},
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.Xmult_multi}}
@@ -57,7 +57,7 @@ local bellossom={
 -- Politoed 186
 local politoed={
   name = "politoed", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 4, y = 3}, 
   config = {extra = {mult = 5, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, retriggers = 1}},
   loc_txt = {      
     name = 'Politoed',      
@@ -126,7 +126,7 @@ local politoed={
 -- Espeon 196
 local espeon={
   name = "espeon", 
-  pos = {x = 0, y = 0},
+  pos = {x = 4, y = 4},
   config = {extra = {retriggers = 1, suit = "Hearts", rerolls = 0}},
   loc_txt = {      
     name = 'Espeon',      
@@ -183,7 +183,7 @@ local espeon={
 -- Umbreon 197
 local umbreon={
   name = "umbreon", 
-  pos = {x = 0, y = 0},
+  pos = {x = 5, y = 4},
   config = {extra = {retriggers = 1, suit = "Clubs", rerolls = 0}},
   loc_txt = {      
     name = 'Umbreon',      
@@ -241,7 +241,7 @@ local umbreon={
 -- Slowking 199
 local slowking={
   name = "slowking",
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 4},
   config = {extra = {Xmult_multi = 1,Xmult_mod = 0.25, oXmult = 1}},
   loc_txt = {
     name = "Slowking",
@@ -305,7 +305,7 @@ local slowking={
 -- Steelix 208
 local steelix={
   name = "steelix", 
-  pos = {x = 0, y = 0},  
+  pos = {x = 6, y = 5},  
   loc_txt = {      
     name = 'Steelix',      
     text = {

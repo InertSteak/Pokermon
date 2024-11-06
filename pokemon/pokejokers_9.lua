@@ -2,7 +2,7 @@
 -- Blissey 242
 local blissey={
   name = "blissey", 
-  pos = {x = 8, y = 8}, 
+  pos = {x = 0, y = 9}, 
   config = {extra = {limit = 2, triggers = 0}},
   loc_txt = {      
     name = 'Blissey',      

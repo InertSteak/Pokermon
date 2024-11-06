@@ -2,7 +2,7 @@
 -- Scizor 212
 local scizor={
   name = "scizor", 
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 6},
   config = {extra = {mult = 0, chips = 0, Xmult = 1}},
   loc_txt = {      
     name = 'Scizor',      
@@ -109,7 +109,7 @@ local scizor={
 -- Kingdra 230
 local kingdra={
   name = "kingdra", 
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 7},
   config = {extra = {mult = 10, mult_mod = 3, Xmult = 1, Xmult_mod = .1}},
   loc_txt = {      
     name = 'Kingdra',      
@@ -172,7 +172,7 @@ local kingdra={
 -- Porygon2 233
 local porygon2={
   name = "porygon2", 
-  pos = {x = 0, y = 0},
+  pos = {x = 1, y = 8},
   config = {extra = {}},
   loc_txt = {      
     name = 'Porygon 2',      
@@ -241,7 +241,7 @@ local porygon2={
 local tyrogue={
   name = "tyrogue",
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
-  pos = {x = 0, y = 0}, 
+  pos = {x = 4, y = 8}, 
   loc_txt = {      
     name = 'Tyrogue',      
     text = {
@@ -338,7 +338,7 @@ local tyrogue={
 -- Hitmontop 237
 local hitmontop={
   name = "hitmontop", 
-  pos = {x = 0, y = 0},
+  pos = {x = 5, y = 8},
   config = {extra = {Xmult = 2.5}},
   loc_txt = {      
     name = 'Hitmontop',      
@@ -373,7 +373,7 @@ local hitmontop={
 -- Smoochum 238
 local smoochum ={
   name = "smoochum",
-  pos = {x = 0, y = 0},
+  pos = {x = 6, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Smoochum",
@@ -425,7 +425,7 @@ local smoochum ={
 -- Elekid 239
 local elekid ={
   name = "elekid",
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Elekid",
@@ -477,7 +477,7 @@ local elekid ={
 -- Magby 240
 local magby={
   name = "magby",
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 8},
   config = {extra = {Xmult_minus = 0.75, d_size = 2, rounds = 2,}},
   loc_txt = {
     name = "Magby",
