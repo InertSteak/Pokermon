@@ -1377,7 +1377,9 @@ local mewtwo={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
