@@ -107,6 +107,7 @@ local missingno ={
     } 
   },
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'missingno'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
   end,
   rarity = 4, 

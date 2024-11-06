@@ -384,12 +384,15 @@ function SMODS.current_mod.process_loc_text()
       }
     }
     
-    G.localization.descriptions.Other['reserve'] = {
-      name = "Reservable",
+    G.localization.descriptions.Other['missingno'] = {
+      name = "Missingno.",
       text = {
-        "Creates a {C:attention}copy{} of",
-        "self if used in pack and", 
-        "its effect didn't apply"
+        "{s:0.8}When you get this {C:attention,s:0.8}fills{} consumable and",
+        "{s:0.8}Joker slots with leftmost consumable",
+        "{s:0.8}Randomly gives different amounts of",
+        "{C:mult,s:0.8} Mult{}, {C:chips,s0.8}Chips{}, {X:mult,C:white,s:0.8}X {C:mult,s:0.8}Mult{}, and {C:money,s:0.8}${} on scoring hands",
+        "{s:0.8}Chance to change played hand to random {C:attention,s:0.8}suits{} and {C:attention,s:0.8}ranks{}",
+        "{s:0.8}Chance to reduce or increase {C:attention,s:0.8}hand size{} per hand played",
       }
     }
     
