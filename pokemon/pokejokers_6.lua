@@ -62,7 +62,7 @@ local mew ={
 local sentret={
   name = "sentret",
   config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
-  pos = {x = 0, y = 0}, 
+  pos = {x = 9, y = 0}, 
   loc_txt = {      
     name = 'Sentret',      
     text = {
@@ -110,7 +110,7 @@ local sentret={
 local furret={
   name = "furret",
   config = {extra = {mult = 6, mult_mod = 2, last_hand = 'None'}},
-  pos = {x = 0, y = 0}, 
+  pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Furret',      
     text = {
@@ -161,7 +161,7 @@ local furret={
 -- Crobat 169
 local crobat={
   name = "crobat", 
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 1},
   config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2}},
   loc_txt = {      
     name = 'Crobat',      
@@ -263,7 +263,7 @@ local crobat={
 -- Pichu 172
 local pichu={
   name = "pichu", 
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 2},
   config = {extra={money = 10, Xmult_minus = 0.75, rounds = 2}},
   loc_txt = {      
     name = 'Pichu',      
@@ -306,7 +306,7 @@ local pichu={
 -- Cleffa 173
 local cleffa={
   name = "cleffa",
-  pos = {x = 0, y = 0},
+  pos = {x = 1, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Cleffa",
@@ -355,7 +355,7 @@ local cleffa={
 -- Igglybuff 174
 local igglybuff={
   name = "igglybuff",
-  pos = {x = 0, y = 0},
+  pos = {x = 2, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Igglybuff",
