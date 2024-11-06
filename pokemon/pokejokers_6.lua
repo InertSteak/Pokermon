@@ -16,7 +16,9 @@ local mew ={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
-    info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    if not center.edition or (center.edition and not center.edition.negative) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 4, 

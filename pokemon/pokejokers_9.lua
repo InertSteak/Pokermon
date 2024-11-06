@@ -17,8 +17,10 @@ local blissey={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
-    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-		return {vars = {center.ability.extra.limit, center.ability.extra.triggers}}
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return {vars = {center.ability.extra.limit, center.ability.extra.triggers}}
   end,
   rarity = "poke_safari", 
   cost = 10,
