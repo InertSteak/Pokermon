@@ -17,6 +17,10 @@ Please note this is my first mod and a work in progress so there may be quite a 
 
 ![image](https://github.com/user-attachments/assets/75680130-d49b-4a48-b808-d664cc9affc6)
 
+The upper right of the title screen has the steamodded version. This is the current minimum version for the latest release:
+![{FE27C764-1795-455D-B93C-47DE7685FA9B}](https://github.com/user-attachments/assets/9177cf31-e2ce-4289-86fa-54674c87ddbd)
+
+
 Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.6.0 if you can, some things may be broken on v0.5.0 beta 6) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use latest) must be installed.
 
 **Installation:**
