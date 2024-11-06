@@ -25,6 +25,14 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
+          label = "Shiny on Playing Cards?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "shiny_playing_cards",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
+        create_toggle({
           label = "Jokers Only?(requires restart)",
           ref_table = pokermon_config,
           ref_value = "jokers_only",
