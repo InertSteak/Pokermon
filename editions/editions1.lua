@@ -61,6 +61,12 @@ local shiny = ({
         G.GAME.modifiers.poke_booster_packs = 0
       end
     end
+    
+    local set_edition = Card.set_edition
+    function Card:set_edition(edition, immediate, silent)
+      if edition == 'shiny' and self.set ~= 'Joker' then return end
+      set_edition(self, edition, immediate, silent)
+    end,
 })
 
 return {
