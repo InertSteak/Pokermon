@@ -30,6 +30,7 @@ local magnezone={
   end,
   rarity = "poke_safari", 
   cost = 10, 
+  enhancement_gate = 'm_steel',
   stage = "Two", 
   ptype = "Lightning",
   atlas = "Pokedex4",

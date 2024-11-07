@@ -1144,7 +1144,7 @@ local sandshrew={
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
 		return {vars = {center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 6,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
@@ -1200,7 +1200,7 @@ local sandslash={
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
-  rarity = "poke_safari",
+  rarity = 2,
   cost = 8, 
   enhancement_gate = 'm_glass',
   stage = "One", 

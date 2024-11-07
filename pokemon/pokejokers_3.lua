@@ -977,6 +977,7 @@ local magneton={
   end,
   rarity = 3, 
   cost = 6, 
+  enhancement_gate = 'm_steel',
   stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex1",
