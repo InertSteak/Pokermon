@@ -28,7 +28,7 @@
 -- Buizel 418
 local buizel={
   name = "buizel", 
-  pos = {x = 0, y = 1}, 
+  pos = {x = 3, y = 2}, 
   config = {extra = {chips = 40, rounds = 4}},
   loc_txt = {      
     name = 'Buizel',      
@@ -68,7 +68,7 @@ local buizel={
 -- Floatzel 419
 local floatzel={
   name = "floatzel", 
-  pos = {x = 0, y = 1}, 
+  pos = {x = 4, y = 2}, 
   config = {extra = {chips = 90}},
   loc_txt = {      
     name = 'Floatzel',      

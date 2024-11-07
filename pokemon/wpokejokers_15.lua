@@ -19,7 +19,7 @@
 -- Mime Jr. 439
 local mimejr={
   name = "mimejr",
-  pos = {x = 0, y = 0},
+  pos = {x = 10, y = 3},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Mime Jr.",
@@ -71,7 +71,7 @@ local mimejr={
 -- Happiny 440
 local happiny={
   name = "happiny",
-  pos = {x = 0, y = 0},
+  pos = {x = 11, y = 3},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Happiny",
@@ -136,7 +136,7 @@ local happiny={
 -- Munchlax 446
 local munchlax={
   name = "munchlax",
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 4},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_txt = {
     name = "Munchlax",

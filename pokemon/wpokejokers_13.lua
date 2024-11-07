@@ -14,7 +14,7 @@
 -- Beldum 374
 local beldum={
   name = "beldum", 
-  pos = {x = 7, y = 11},
+  pos = {x = 4, y = 13},
   config = {extra = {mult = 0, mult_mod = 1, chips = 0, chip_mod = 5, size = 4}},
   loc_txt = {      
     name = 'Beldum',      
@@ -66,7 +66,7 @@ local beldum={
 -- Metang 375
 local metang={
   name = "metang", 
-  pos = {x = 7, y = 11},
+  pos = {x = 5, y = 13},
   config = {extra = {mult = 10, mult_mod = 2, chips = 50, chip_mod = 5, size = 4}},
   loc_txt = {      
     name = 'Metang',      
@@ -117,7 +117,7 @@ local metang={
 -- Metagross 376
 local metagross={
   name = "metagross", 
-  pos = {x = 7, y = 11},
+  pos = {x = 6, y = 13},
   config = {extra = {mult = 40, chips = 100,}},
   loc_txt = {      
     name = 'Metagross',      
