@@ -467,7 +467,7 @@ local zubat={
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2, eaten = 0}},
+  config = {extra = {mult = 0, mult_mod = 3, chips = 0, chip_mod = 30, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}},
   loc_txt = {      
     name = 'Golbat',      
     text = {
@@ -724,20 +724,20 @@ local paras={
 local parasect={
   name = "parasect", 
   pos = {x = 7, y = 3},
-   config = {extra = {mult = 8, mult_mod = 3}},
+   config = {extra = {mult = 8, mult_mod = 3, mult_mod_minus = 1}},
   loc_txt = {      
     name = 'Parasect',      
     text = {
       "{C:mult}+#2#{} Mult per played hand",
       "that contains a {C:attention}Two Pair{}",
-      "{C:mult}-#2#{} Mult per played hand",
+      "{C:mult}-#3#{} Mult per played hand",
       "that does not",
       "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod_minus}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -756,9 +756,9 @@ local parasect={
             colour = G.C.MULT
           }
         elseif context.before and card.ability.extra.mult > 0 then
-          card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod
+          card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod_minus
           return {
-            message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod}},
+            message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod_minus}},
             colour = G.C.RED,
             card = self
           }

@@ -2,7 +2,7 @@
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 3, money = 3, suit = "Diamonds"}},
+  config = {extra = {mult = 3, money = 2, suit = "Diamonds"}},
   loc_txt = {      
     name = 'Starmie',      
     text = {

@@ -11,7 +11,7 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 7, y = 3},
-  config = {extra = {Xmult_mod = 1.3, suit = "Diamonds", rerolls = 0}},
+  config = {extra = {Xmult_mod = 1.2, suit = "Diamonds", rerolls = 0}},
   loc_txt = {      
     name = 'Sylveon',      
     text = {

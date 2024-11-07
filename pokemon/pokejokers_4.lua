@@ -1025,7 +1025,7 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money = 4, odds = 4}},
+  config = {extra = {mult = 10, chips = 50, money = 3, odds = 4}},
   loc_txt = {      
     name = 'Tangela',      
     text = {
@@ -1249,9 +1249,9 @@ local goldeen={
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' and not context.blueprint then
+    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -1283,9 +1283,9 @@ local seaking={
   stage = "One",
   ptype = "Water",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' and not context.blueprint then
+    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,

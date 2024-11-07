@@ -16,7 +16,7 @@
 -- Grubbin 736
 local grubbin={
   name = "grubbin",
-  config = {extra = {mult = 3, rounds = 4}},
+  config = {extra = {mult = 3, rounds = 3}},
   pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Grubbin',      
@@ -101,7 +101,7 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = 1.5}},
+  config = {extra = {Xmult = 1.3}},
   pos = {x = 2, y = 1}, 
   loc_txt = {      
     name = 'Vikavolt',      

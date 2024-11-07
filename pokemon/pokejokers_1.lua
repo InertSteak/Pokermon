@@ -443,7 +443,7 @@ local blastoise={
 local caterpie={
   name = "caterpie", 
   pos = {x = 9, y = 0},
-  config = {extra = {mult = 1, rounds = 1}},
+  config = {extra = {mult = 2, rounds = 1}},
   loc_txt = {      
     name = 'Caterpie',      
     text = {
@@ -482,7 +482,7 @@ local caterpie={
 }
 local metapod={
   name = "metapod",
-  config = {extra = {mult = 5, rounds = 2}},
+  config = {extra = {mult = 6, rounds = 2}},
   pos = {x = 10, y = 0}, 
   loc_txt = {      
     name = 'Metapod',      
@@ -517,7 +517,7 @@ local metapod={
 local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
-  config = {extra = {mult = 15}},
+  config = {extra = {mult = 12}},
   loc_txt = {      
     name = 'Butterfree',      
     text = {
@@ -624,7 +624,7 @@ local kakuna={
 local beedrill={
   name = "beedrill", 
   pos = {x = 1, y = 1}, 
-  config = {extra = {chips = 120}},
+  config = {extra = {chips = 100}},
   loc_txt = {      
     name = 'Beedrill',      
     text = {

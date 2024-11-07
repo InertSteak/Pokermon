@@ -327,7 +327,7 @@ local machoke={
 local machamp={
   name = "machamp", 
   pos = {x = 2, y = 5},
-  config = {extra = {hands = 4, discards = 4, mult = 40}},
+  config = {extra = {hands = 4, discards = 4, mult = 24}},
   loc_txt = {      
     name = 'Machamp',      
     text = {
@@ -924,7 +924,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult_multi = 1.75, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.5, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {

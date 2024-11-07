@@ -162,7 +162,7 @@ local furret={
 local crobat={
   name = "crobat", 
   pos = {x = 7, y = 1},
-  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 40, Xmult = 1, Xmult_mod = .2, money = 0, money_mod = 2}},
+  config = {extra = {mult = 0, mult_mod = 3, chips = 0, chip_mod = 30, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1}},
   loc_txt = {      
     name = 'Crobat',      
     text = {

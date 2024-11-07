@@ -122,7 +122,7 @@ local lickilicky={
 local rhyperior={
   name = "rhyperior", 
   pos = {x = 7, y = 5},
-  config = {extra = {chips = 40}},
+  config = {extra = {chips = 30}},
   loc_txt = {      
     name = 'Rhyperior',      
     text = {
@@ -172,7 +172,7 @@ local rhyperior={
 local tangrowth={
   name = "tangrowth", 
   pos = {x = 8, y = 5},
-  config = {extra = {mult = 15, chips = 75, money = 6, odds = 4}},
+  config = {extra = {mult = 15, chips = 75, money = 4, odds = 4}},
   loc_txt = {      
     name = 'Tangrowth',      
     text = {
@@ -339,7 +339,7 @@ local magmortar={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {chip_mod = 10, suit = "Spades", rerolls = 0}},
+  config = {extra = {chip_mod = 8, suit = "Spades", rerolls = 0}},
   loc_txt = {      
     name = 'Leafeon',      
     text = {
@@ -402,13 +402,14 @@ local glaceon={
     text = {
       "Create a random {C:attention}Tarot{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
-      "{C:green}#2#{} in {C:green}#3#{} chance for {C:dark_edition}Negative{}",
+      "{C:green}#2#{} in {C:green}#3#{} chance for {C:dark_edition}Negative{} edition",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     return {vars = {center.ability.extra.rerolls, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 

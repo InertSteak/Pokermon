@@ -1,5 +1,7 @@
-energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
-energy_values = {mult = .4, mult1 = .4, mult2 = .4, chips = .4, chips1 = .4, chips2 = .4, chips3 = .4, Xmult = .3, money = .3, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .3, Xmult_multi = .1}
+energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "x_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
+energy_values = {
+  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .1, mult_mod = .4, s_mult = .4, x_mult = .2, chip_mod = .4, Xmult_mod = .2, Xmult_multi = .1
+}
 
 scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
 
