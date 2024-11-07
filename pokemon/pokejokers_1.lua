@@ -1,10 +1,11 @@
 local bulbasaur={ 
   name = "bulbasaur",
   pos = {x = 0, y = 0},
-  config = {extra = {money = 1, earned = 0}},
+  config = {extra = {money = 1, earned = 0, h_size = 1}},
   loc_txt = {      
     name = 'Bulbasaur',      
     text = {
+        "{C:attention}+#3#{} hand size",
         "Earn {C:money}$#1#{} for each {C:attention}#3#{}",
         "held in hand, rank",
         "changes every round",
@@ -37,17 +38,23 @@ local bulbasaur={
     end
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, 16)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
 }
 
 local ivysaur={
   name = "ivysaur", 
   pos = {x = 1, y = 0}, 
-  config = {extra = {money = 1, earned = 0, h_size = 1}, venusaur = {money = 2, earned = 0, h_size = 1}},
+  config = {extra = {money = 1, earned = 0, h_size = 1}},
   loc_txt = {      
     name = 'Ivysaur',      
     text = {
         "{C:attention}+#3#{} hand size",
-        "Earn {C:money}$#1#{} for each {C:attention}#4#{}",
+        "Earn {C:money}$#1#{} or {C:money}$#5#{} for each {C:attention}#4#{}",
         "held in hand, rank",
         "changes every round",
         "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
@@ -56,7 +63,7 @@ local ivysaur={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
+		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money + 1}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -70,9 +77,10 @@ local ivysaur={
           if not context.blueprint then
             card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
           end
-          ease_dollars(card.ability.extra.money)
+          local more = math.random(0, 1)
+          ease_dollars(card.ability.extra.money + more)
           return {
-              message = localize('$')..card.ability.extra.money,
+              message = localize('$')..card.ability.extra.money + more,
               colour = G.C.MONEY
           }
         end
@@ -136,10 +144,11 @@ local venusaur={
 local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
-  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0}},
+  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charmander',      
     text = {
+      "{C:red}+#4#{} discard",
       "Gains {C:mult}+#2#{} Mult per hand played",
       "when {C:attention}#3#{} discards remaining",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
@@ -148,7 +157,7 @@ local charmander={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -180,6 +189,14 @@ local charmander={
       end
     end
     return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, 16)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+        ease_discard(card.ability.extra.d_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+        ease_discard(-card.ability.extra.d_size)
   end
 }
 
@@ -289,10 +306,11 @@ local charizard={
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 2}},
+  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
   loc_txt = {      
     name = 'Squirtle',      
     text = {
+      "{C:chips}+#3#{} hands",
       "Gains {C:chips}+#2#{} Chips for each hand",
       "remaining at end of round",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
@@ -301,7 +319,7 @@ local squirtle={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -336,12 +354,20 @@ local squirtle={
           }
         end
     end
-  end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+      ease_hands_played(card.ability.extra.hands)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      ease_hands_played(-card.ability.extra.hands)
+  end, 
 }
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 16, chip_mod = 4, hands = 1}},
   loc_txt = {      
     name = 'Wartortle',     
     text = {
