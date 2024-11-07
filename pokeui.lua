@@ -64,6 +64,14 @@ SMODS.current_mod.config_tab = function()
             NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
           end,
         }),
+        create_toggle({
+          label = "Pokemon Splash Card?(requires restart)",
+          ref_table = pokermon_config,
+          ref_value = "pokemon_splash",
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+        }),
       },
     }
 end

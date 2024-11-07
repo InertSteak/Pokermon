@@ -1,1 +1,2 @@
-return {["pokemon_only"]=false, ["jokers_only"]=false, ["no_evos"]=false, ["unlimited_energy"]=false, ["shiny_playing_cards"]=false, ["pokeballs"]=true, ["pokemon_num"]=true}
+return {["pokemon_only"]=false, ["jokers_only"]=false, ["no_evos"]=false, ["unlimited_energy"]=false, ["shiny_playing_cards"]=false, ["pokeballs"]=true, ["pokemon_num"]=true, 
+        ["pokemon_splash"]=true}

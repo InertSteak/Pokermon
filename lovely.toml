@@ -145,3 +145,24 @@ payload = '''
 if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
 '''
 match_indent = true
+
+# Splash Screen
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['j_joker'])"
+position = "after"
+payload = '''
+if pokermon_config.pokemon_splash then
+  local pokemon = {}
+  for k, v in pairs(G.P_CENTERS) do
+    if v.set == 'Joker' and v.stage then
+      table.insert(pokemon, v)
+    end
+  end
+  local chosen = math.random(#pokemon)
+  local chosencard = pokemon[chosen]
+  SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, chosencard)
+end
+'''
+match_indent = true
