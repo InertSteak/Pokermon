@@ -1,6 +1,6 @@
-energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "x_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
+energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
 energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .1, mult_mod = .4, s_mult = .4, x_mult = .2, chip_mod = .4, Xmult_mod = .2, Xmult_multi = .1
+  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .1, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .2, Xmult_multi = .1
 }
 
 scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
@@ -117,7 +117,7 @@ energy_matches = function(card, etype, include_colorless)
       return true
     end
   elseif card.ability and (card.ability.extra and type(card.ability.extra) == "number") or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
-      (card.ability.t_chips and card.ability.t_chips > 0) or (card.ability.x_mult and card.ability.x_mult > 0) then
+      (card.ability.t_chips and card.ability.t_chips > 0) then
     if card.ability[string.lower(etype).."_sticker"] then
       return true
     elseif etype == "Colorless" and type_sticker_applied(card) and include_colorless then
@@ -243,8 +243,6 @@ energize = function(card, etype, evolving)
       increase = energy_values.mult
     elseif (card.ability.t_chips and card.ability.t_chips > 0) then
       increase = energy_values.chips
-    elseif (card.ability.x_mult) then
-      increase = energy_values.x_mult
     end
     if increase then
       if not card.ability.colorless_sticker and etype == "Colorless" then
@@ -258,9 +256,6 @@ energize = function(card, etype, evolving)
       end
       if (card.ability.t_chips and card.ability.t_chips > 0) then
         card.ability.t_chips = card.ability.t_chips + (card.config.center.config.t_chips * increase)
-      end
-      if (card.ability.x_mult and card.ability.x_mult > 0) then
-        card.ability.x_mult = card.ability.x_mult + (card.config.center.config.x_mult * increase)
       end
     end
   end
@@ -632,7 +627,7 @@ energy_use = function(self, card, area, copier)
           end
         end
       elseif applied ~= true and (type(v.ability.extra) == "number" or (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or
-             (v.ability.t_chips and v.ability.t_chips > 0) or (v.ability.x_mult and v.ability.x_mult > 0)) then
+            (v.ability.t_chips and v.ability.t_chips > 0)) then
         if (pokermon_config.unlimited_energy) or (((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
           viable = true
         end
@@ -657,7 +652,7 @@ energy_use = function(self, card, area, copier)
             applied = true
           end
         elseif type(v.ability.extra) == "number" or (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or 
-               (v.ability.t_chips and v.ability.t_chips > 0) or (v.ability.x_mult and v.ability.x_mult > 0) then
+               (v.ability.t_chips and v.ability.t_chips > 0) then
           if (energy_matches(v, self.etype, false) or self.etype == "Trans") then
             if v.ability.energy_count then
               v.ability.energy_count = v.ability.energy_count + 1
@@ -700,8 +695,7 @@ energy_can_use = function(self, card)
         if (pokermon_config.unlimited_energy) or (((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
           return true
         end
-      elseif (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or (v.ability.t_chips and v.ability.t_chips > 0) 
-          or (v.ability.x_mult and v.ability.x_mult > 0) then
+      elseif (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or (v.ability.t_chips and v.ability.t_chips > 0) then
         if (pokermon_config.unlimited_energy) or (((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
           return true
         end
