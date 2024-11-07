@@ -17,7 +17,7 @@
 local grubbin={
   name = "grubbin",
   config = {extra = {mult = 3, rounds = 4}},
-  pos = {x = 10, y = 0}, 
+  pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Grubbin',      
     text = {
@@ -59,7 +59,7 @@ local grubbin={
 local charjabug={
   name = "charjabug",
   config = {extra = {mult = 12}},
-  pos = {x = 10, y = 0}, 
+  pos = {x = 1, y = 1}, 
   loc_txt = {      
     name = 'Charjabug',      
     text = {
@@ -102,7 +102,7 @@ local charjabug={
 local vikavolt={
   name = "vikavolt",
   config = {extra = {Xmult = 1.5}},
-  pos = {x = 0, y = 0}, 
+  pos = {x = 2, y = 1}, 
   loc_txt = {      
     name = 'Vikavolt',      
     text = {

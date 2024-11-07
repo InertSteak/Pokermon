@@ -19,7 +19,7 @@
 -- Annihilape 979
 local annihilape={
   name = "annihilape", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 3, y = 5}, 
   config = {extra = {mult = 11, chips = 13}},
   loc_txt = {      
     name = 'Annihilape',      

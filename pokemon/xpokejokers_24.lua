@@ -10,7 +10,7 @@
 -- Sylveon 700
 local sylveon={
   name = "sylveon", 
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 3},
   config = {extra = {Xmult_mod = 1.3, suit = "Diamonds", rerolls = 0}},
   loc_txt = {      
     name = 'Sylveon',      
@@ -32,7 +32,7 @@ local sylveon={
   cost = 7, 
   stage = "One",
   ptype = "Fairy",
-  atlas = "Pokedex4",
+  atlas = "Pokedex6",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then

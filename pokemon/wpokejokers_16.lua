@@ -12,7 +12,7 @@
 -- Magnezone 462
 local magnezone={
   name = "magnezone", 
-  pos = {x = 3, y = 6}, 
+  pos = {x = 5, y = 5}, 
   config = {extra = {Xmult_multi = 2.25}},
   loc_txt = {      
     name = 'Magnezone',      
@@ -67,7 +67,7 @@ local magnezone={
 -- Lickilicky 463
 local lickilicky={
   name = "lickilicky", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 6, y = 5}, 
   config = {extra = {Xmult_multi = 2, subtract = 0.7}},
   loc_txt = {      
     name = 'Lickilicky',      
@@ -121,7 +121,7 @@ local lickilicky={
 -- Rhyperior 464
 local rhyperior={
   name = "rhyperior", 
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 5},
   config = {extra = {chips = 40}},
   loc_txt = {      
     name = 'Rhyperior',      
@@ -171,7 +171,7 @@ local rhyperior={
 -- Tangrowth 465
 local tangrowth={
   name = "tangrowth", 
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 5},
   config = {extra = {mult = 15, chips = 75, money = 6, odds = 4}},
   loc_txt = {      
     name = 'Tangrowth',      
@@ -238,7 +238,7 @@ local tangrowth={
 -- Electivire 466
 local electivire={
   name = "electivire", 
-  pos = {x = 0, y = 0}, 
+  pos = {x = 9, y = 5}, 
   config = {extra = {money = 2, Xmult_mod = 0.03}},
   loc_txt = {      
     name = 'Electivire',      
@@ -284,7 +284,7 @@ local electivire={
 -- Magmortar 467
 local magmortar={
   name = "magmortar", 
-  pos = {x = 8, y = 9}, 
+  pos = {x = 10, y = 5}, 
   config = {extra = {mult = 0, mult_mod = 2, Xmult_mod = 0.02}},
   loc_txt = {      
     name = 'Magmortar',      
@@ -338,7 +338,7 @@ local magmortar={
 -- Leafeon 470
 local leafeon={
   name = "leafeon", 
-  pos = {x = 0, y = 0},
+  pos = {x = 13, y = 5},
   config = {extra = {chip_mod = 10, suit = "Spades", rerolls = 0}},
   loc_txt = {      
     name = 'Leafeon',      
@@ -395,7 +395,7 @@ local leafeon={
 -- Glaceon 471
 local glaceon={
   name = "glaceon", 
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 6},
   config = {extra = {rerolls = 0, odds = 6}},
   loc_txt = {      
     name = 'Glaceon',      
@@ -447,7 +447,7 @@ local glaceon={
 -- Porygon-Z 474
 local porygonz={
   name = "porygonz", 
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 6},
   config = {extra = {Xmult = 1, Xmult_mod = 0.1}},
   loc_txt = {      
     name = 'Porygon-Z',      
@@ -468,7 +468,7 @@ local porygonz={
   joblacklist = true,
   stage = "Two",
   ptype = "Colorless",
-  atlas = "Pokedex2",
+  atlas = "Pokedex4",
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
