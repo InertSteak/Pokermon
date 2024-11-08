@@ -313,6 +313,26 @@ if not pokermon_config.jokers_only then
     end
   end
 end
+--Load Sleeves
+if not pokermon_config.jokers_only and (SMODS.Mods["CardSleeves"]) then
+  --Load Sleeves
+  local sleeves = NFS.getDirectoryItems(mod_dir.."sleeves")
+
+  for _, file in ipairs(sleeves) do
+    sendDebugMessage ("the file is: "..file)
+    local sleeve, load_error = SMODS.load_file("sleeves/"..file)
+    if load_error then
+      sendDebugMessage("The error is: "..load_error)
+    else
+      local curr_sleeve = sleeve()
+      if curr_sleeve.init then curr_sleeve.init() end
+      
+      for i,item in ipairs (curr_sleeve.list) do
+        CardSleeves.Sleeve(item)
+      end
+    end
+  end
+end
 
 if not pokermon_config.jokers_only then
   --Load challenges file
