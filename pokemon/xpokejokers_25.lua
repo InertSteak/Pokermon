@@ -101,7 +101,7 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = 1.3}},
+  config = {extra = {Xmult = 1.2}},
   pos = {x = 2, y = 1}, 
   loc_txt = {      
     name = 'Vikavolt',      

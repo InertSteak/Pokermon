@@ -2,7 +2,7 @@
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 3, money = 2, suit = "Diamonds"}},
+  config = {extra = {mult = 3, money = 1, suit = "Diamonds"}},
   loc_txt = {      
     name = 'Starmie',      
     text = {
@@ -265,7 +265,7 @@ local magmar={
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
-  config = {extra = {Xmult = 2}},
+  config = {extra = {Xmult = 1.5}},
   loc_txt = {      
     name = 'Pinsir',      
     text = {
@@ -388,7 +388,7 @@ local taurosh={
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
-  config = {extra = {rounds = 8}},
+  config = {extra = {rounds = 10}},
   loc_txt = {      
     name = 'Magikarp',      
     text = {
@@ -583,7 +583,7 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 50, rerolls = 0}},
+  config = {extra = {chips = 0, chip_mod = 40, rerolls = 0}},
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
@@ -1059,7 +1059,7 @@ local aerodactyl={
 local snorlax={
   name = "snorlax", 
   pos = {x = 0, y = 11},
-  config = {extra = {Xmult_mod = 0.50, Xmult = 1}},
+  config = {extra = {Xmult_mod = 0.25, Xmult = 1}},
   loc_txt = {      
     name = 'Snorlax',      
     text = {
@@ -1279,7 +1279,7 @@ local dratini={
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
-  config = {extra = {mult = 10, mult_mod = 2, size = 3}},
+  config = {extra = {mult = 10, mult_mod = 1, size = 2}},
   loc_txt = {      
     name = 'Dragonair',      
     text = {
@@ -1287,7 +1287,7 @@ local dragonair={
       "if played hand contains",
       "{C:attention}#3#{} or fewer cards",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+40{}{C:inactive} Mult)"
+      "{C:inactive}(Evolves at {C:mult}+30{}{C:inactive} Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1314,13 +1314,13 @@ local dragonair={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, 40)
+    return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, 30)
   end,
 }
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
-  config = {extra = {mult = 40, retriggers = 5}},
+  config = {extra = {mult = 30, retriggers = 5}},
   loc_txt = {      
     name = 'Dragonite',      
     text = {

@@ -2,7 +2,7 @@
 local poliwhirl={
   name = "poliwhirl", 
   pos = {x = 8, y = 4}, 
-  config = {extra = {mult = 8, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
+  config = {extra = {mult = 6, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
   loc_txt = {      
     name = 'Poliwhirl',      
     text = {
@@ -277,7 +277,7 @@ local machop={
 local machoke={
   name = "machoke", 
   pos = {x = 1, y = 5},
-  config = {extra = {hands = 2, discards = 2, mult = 20}},
+  config = {extra = {hands = 2, discards = 2, mult = 12}},
   loc_txt = {      
     name = 'Machoke',      
     text = {
@@ -373,7 +373,7 @@ local machamp={
 local bellsprout={
   name = "bellsprout", 
   pos = {x = 3, y = 5},
-  config = {extra = {chips = 20, rounds = 4}},
+  config = {extra = {chips = 12, rounds = 4}},
   loc_txt = {      
     name = 'Bellsprout',      
     text = {
@@ -412,7 +412,7 @@ local bellsprout={
 local weepinbell={
   name = "weepinbell", 
   pos = {x = 4, y = 5},
-  config = {extra = {chips = 40}},
+  config = {extra = {chips = 24}},
   loc_txt = {      
     name = 'Weepinbell',      
     text = {
@@ -453,7 +453,7 @@ local weepinbell={
 local victreebel={
   name = "victreebel", 
   pos = {x = 5, y = 5},
-  config = {extra = {chips = 40, retriggers = 1}},
+  config = {extra = {chips = 12, retriggers = 1}},
   loc_txt = {      
     name = 'Victreebel',      
     text = {
@@ -576,7 +576,7 @@ local tentacruel={
 local geodude={
   name = "geodude", 
   pos = {x = 8, y = 5}, 
-  config = {extra = {chips = 100, h_size = 1, rounds = 4}},
+  config = {extra = {chips = 75, h_size = 1, rounds = 4}},
   loc_txt = {      
     name = 'Geodude',      
     text = {
@@ -617,7 +617,7 @@ local geodude={
 local graveler={
   name = "graveler", 
   pos = {x = 9, y = 5},
-  config = {extra = {chips = 225, h_size = 2, rounds = 0}},
+  config = {extra = {chips = 175, h_size = 2, rounds = 0}},
   loc_txt = {      
     name = 'Graveler',      
     text = {
@@ -664,7 +664,7 @@ local graveler={
 local golem={
   name = "golem", 
   pos = {x = 10, y = 5},
-  config = {extra = {chips = 500, h_size = 3, rounds = 0}},
+  config = {extra = {chips = 275, h_size = 3, rounds = 0}},
   loc_txt = {      
     name = 'Golem',      
     text = {
@@ -877,7 +877,7 @@ local slowpoke2={
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_multi = 0.75, Xmult = 1, oXmult = 1}},
+  config = {extra = {Xmult_multi = 0.5, Xmult = 1, oXmult = 1}},
   loc_txt = {      
     name = 'Slowbro',      
     text = {
@@ -975,7 +975,7 @@ local magneton={
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   enhancement_gate = 'm_steel',
   stage = "One", 
@@ -998,7 +998,7 @@ local magneton={
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {Xmult = 4, odds = 4}},
+  config = {extra = {Xmult = 3, odds = 4}},
   loc_txt = {      
     name = 'Farfetch\'d',      
     text = {
@@ -1289,7 +1289,7 @@ local muk={
 local shellder={
   name = "shellder", 
   pos = {x = 11, y = 6}, 
-  config = {extra = {retriggers = 1, odds = 2}},
+  config = {extra = {retriggers = 1, odds = 3}},
   loc_txt = {      
     name = 'Shellder',      
     text = {

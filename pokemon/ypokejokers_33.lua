@@ -20,7 +20,7 @@
 local annihilape={
   name = "annihilape", 
   pos = {x = 3, y = 5}, 
-  config = {extra = {mult = 11, chips = 13}},
+  config = {extra = {mult = 7, chips = 11}},
   loc_txt = {      
     name = 'Annihilape',      
     text = {

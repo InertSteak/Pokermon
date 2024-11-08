@@ -20,7 +20,7 @@
 local mimejr={
   name = "mimejr",
   pos = {x = 10, y = 3},
-  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   loc_txt = {
     name = "Mime Jr.",
     text = {
@@ -72,7 +72,7 @@ local mimejr={
 local happiny={
   name = "happiny",
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   loc_txt = {
     name = "Happiny",
     text = {
@@ -137,7 +137,7 @@ local happiny={
 local munchlax={
   name = "munchlax",
   pos = {x = 3, y = 4},
-  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   loc_txt = {
     name = "Munchlax",
     text = {

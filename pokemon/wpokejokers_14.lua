@@ -29,7 +29,7 @@
 local buizel={
   name = "buizel", 
   pos = {x = 3, y = 2}, 
-  config = {extra = {chips = 30, rounds = 4}},
+  config = {extra = {chips = 20, rounds = 4}},
   loc_txt = {      
     name = 'Buizel',      
     text = {
@@ -69,7 +69,7 @@ local buizel={
 local floatzel={
   name = "floatzel", 
   pos = {x = 4, y = 2}, 
-  config = {extra = {chips = 60}},
+  config = {extra = {chips = 40}},
   loc_txt = {      
     name = 'Floatzel',      
     text = {

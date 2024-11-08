@@ -69,7 +69,7 @@ local magnezone={
 local lickilicky={
   name = "lickilicky", 
   pos = {x = 6, y = 5}, 
-  config = {extra = {Xmult_multi = 2, subtract = 0.7}},
+  config = {extra = {Xmult_multi = 1.5, subtract = 0.3}},
   loc_txt = {      
     name = 'Lickilicky',      
     text = {
@@ -123,7 +123,7 @@ local lickilicky={
 local rhyperior={
   name = "rhyperior", 
   pos = {x = 7, y = 5},
-  config = {extra = {chips = 30}},
+  config = {extra = {chips = 12}},
   loc_txt = {      
     name = 'Rhyperior',      
     text = {
@@ -173,7 +173,7 @@ local rhyperior={
 local tangrowth={
   name = "tangrowth", 
   pos = {x = 8, y = 5},
-  config = {extra = {mult = 15, chips = 75, money = 4, odds = 4}},
+  config = {extra = {mult = 15, chips = 75, money = 3, odds = 4}},
   loc_txt = {      
     name = 'Tangrowth',      
     text = {
@@ -240,7 +240,7 @@ local tangrowth={
 local electivire={
   name = "electivire", 
   pos = {x = 9, y = 5}, 
-  config = {extra = {money = 2, Xmult_mod = 0.03}},
+  config = {extra = {money = 2, Xmult_mod = 0.02}},
   loc_txt = {      
     name = 'Electivire',      
     text = {
@@ -340,7 +340,7 @@ local magmortar={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {chip_mod = 8, suit = "Spades", rerolls = 0}},
+  config = {extra = {chip_mod = 6, suit = "Spades", rerolls = 0}},
   loc_txt = {      
     name = 'Leafeon',      
     text = {

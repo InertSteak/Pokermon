@@ -128,7 +128,7 @@ local kingdra={
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
-  ptype = "Dragon",
+  ptype = "Water",
   atlas = "Pokedex2",
   perishable_compat = false,
   blueprint_compat = true,
@@ -240,7 +240,7 @@ local porygon2={
 -- Tyrogue 236
 local tyrogue={
   name = "tyrogue",
-  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   pos = {x = 4, y = 8}, 
   loc_txt = {      
     name = 'Tyrogue',      

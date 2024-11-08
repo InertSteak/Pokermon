@@ -2,7 +2,7 @@
 local nidoqueen={
   name = "nidoqueen", 
   pos = {x = 4, y = 2}, 
-  config = {extra = {chips = 100, chip_total = 0, h_size = 1}},
+  config = {extra = {chips = 75, chip_total = 0, h_size = 1}},
   loc_txt = {      
     name = 'Nidoqueen',      
     text = {
@@ -50,7 +50,7 @@ local nidoqueen={
 local nidoranm={
   name = "nidoranm", 
   pos = {x = 5, y = 2}, 
-  config = {extra = {mult = 8, rounds = 3}},
+  config = {extra = {mult = 6, rounds = 3}},
   loc_txt = {      
     name = 'Nidoran M',      
     text = {
@@ -91,7 +91,7 @@ local nidoranm={
 local nidorino={
   name = "nidorino", 
   pos = {x = 6, y = 2}, 
-  config = {extra = {mult = 16}},
+  config = {extra = {mult = 12}},
   loc_txt = {      
     name = 'Nidorino',      
     text = {
@@ -134,7 +134,7 @@ local nidorino={
 local nidoking={
   name = "nidoking", 
   pos = {x = 7, y = 2},
-  config = {extra = {mult = 20, h_size = 1}},
+  config = {extra = {mult = 15, h_size = 1}},
   loc_txt = {      
     name = 'Nidoking',      
     text = {
@@ -387,7 +387,7 @@ local jigglypuff={
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
-  config = {extra = {mult = 6, chips = 50, suit = "Spades"}},
+  config = {extra = {mult = 3, chips = 40, suit = "Spades"}},
   loc_txt = {      
     name = 'Wigglytuff',      
     text = {
@@ -601,7 +601,7 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult = 7}},
+  config = {extra = {mult = 5}},
   loc_txt = {      
     name = 'Gloom',      
     text = {
@@ -1004,7 +1004,7 @@ local psyduck={
 local golduck={
   name = "golduck", 
   pos = {x = 2, y = 4},
-  config = {extra = {money = 5}},
+  config = {extra = {money = 3}},
   loc_txt = {      
     name = 'Golduck',      
     text = {
@@ -1217,7 +1217,7 @@ local arcanine={
 local poliwag={
   name = "poliwag", 
   pos = {x = 7, y = 4},
-  config = {extra = {mult = 4, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
+  config = {extra = {mult = 3, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
   loc_txt = {      
     name = 'Poliwag',      
     text = {

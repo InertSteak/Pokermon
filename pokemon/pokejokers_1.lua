@@ -469,7 +469,7 @@ local blastoise={
 local caterpie={
   name = "caterpie", 
   pos = {x = 9, y = 0},
-  config = {extra = {mult = 2, rounds = 1}},
+  config = {extra = {mult = 2, rounds = 2}},
   loc_txt = {      
     name = 'Caterpie',      
     text = {
@@ -499,16 +499,10 @@ local caterpie={
     end
     return level_evo(self, card, context, "j_poke_metapod")
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not pokermon_config.no_evos then
-      local eval = function(card) return not card.REMOVED end
-      juice_card_until(card, eval, true)
-    end
-  end
 }
 local metapod={
   name = "metapod",
-  config = {extra = {mult = 6, rounds = 2}},
+  config = {extra = {mult = 6, rounds = 3}},
   pos = {x = 10, y = 0}, 
   loc_txt = {      
     name = 'Metapod',      
@@ -576,7 +570,7 @@ local butterfree={
 local weedle={
   name = "weedle", 
   pos = {x = 12, y = 0},
-  config = {extra = {chips = 20, rounds = 1}},
+  config = {extra = {chips = 16, rounds = 2}},
   loc_txt = {      
     name = 'Weedle',      
     text = {
@@ -616,7 +610,7 @@ local weedle={
 local kakuna={
   name = "kakuna", 
   pos = {x = 0, y = 1}, 
-  config = {extra = {chips = 50, rounds = 2}},
+  config = {extra = {chips = 32, rounds = 3}},
   loc_txt = {      
     name = 'Kakuna',      
     text = {
@@ -650,7 +644,7 @@ local kakuna={
 local beedrill={
   name = "beedrill", 
   pos = {x = 1, y = 1}, 
-  config = {extra = {chips = 100}},
+  config = {extra = {chips = 80}},
   loc_txt = {      
     name = 'Beedrill',      
     text = {
@@ -960,7 +954,7 @@ local fearow={
 local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
-  config = {extra = {mult = 9, rounds = 4}},
+  config = {extra = {mult = 6, rounds = 4}},
   loc_txt = {      
     name = 'Ekans',      
     text = {
@@ -996,7 +990,7 @@ local ekans={
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
-  config = {extra = {mult = 16, rounds = 4}},
+  config = {extra = {mult = 8, rounds = 4}},
   loc_txt = {      
     name = 'Arbok',      
     text = {
@@ -1241,7 +1235,7 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 40, chip_total = 0, rounds = 3}},
+  config = {extra = {chips = 30, chip_total = 0, rounds = 3}},
   loc_txt = {      
     name = 'Nidoran F',      
     text = {
@@ -1284,7 +1278,7 @@ local nidoranf={
 local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},
-  config = {extra = {chips = 80, chip_total = 0}},
+  config = {extra = {chips = 60, chip_total = 0}},
   loc_txt = {      
     name = 'Nidorina',      
     text = {

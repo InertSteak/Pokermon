@@ -2,16 +2,18 @@
 local cloyster={
   name = "cloyster", 
   pos = {x = 12, y = 6},
-  config = {extra = {retriggers = 1}},
+  config = {extra = {retriggers = 1, odds = 2}},
   loc_txt = {      
     name = 'Cloyster',      
     text = {
       "If hand has {C:attention}5{} scoring",
-      "cards, retrigger them"
+      "cards, each have a {C:green}#1# in #2#{}",
+      "chance to retrigger",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -22,11 +24,13 @@ local cloyster={
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play and #context.scoring_hand == 5 then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+        if pseudorandom('cloyster') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
       end
     end
   end,
@@ -555,7 +559,7 @@ local exeggcute={
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult_mod = 3, Xmult_multi = 1.5, suit = "Hearts", odds = 2}},
+  config = {extra = {mult_mod = 3, Xmult_multi = 1.4, suit = "Hearts", odds = 2}},
   loc_txt = {      
     name = 'Exeggutor',      
     text = {
@@ -595,7 +599,7 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 5, rounds = 5,}},
+  config = {extra = {mult = 4, rounds = 5,}},
   loc_txt = {      
     name = 'Cubone',      
     text = {
@@ -647,7 +651,7 @@ local cubone={
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
-  config = {extra = {Xmult_multi = 0.5, card_limit = 1}},
+  config = {extra = {Xmult_multi = 0.4, card_limit = 1}},
   loc_txt = {      
     name = 'Marowak',      
     text = {
@@ -703,14 +707,14 @@ local hitmonlee={
   loc_txt = {      
     name = 'Hitmonlee',      
     text = {
-      "{X:red,C:white}X#1#{} Mult for each card",
+      "{X:red,C:white}X#1#{} Mult for every 2 cards",
       "below {C:attention}#2#{} in your full deck",
       "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards)/2 or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -721,7 +725,7 @@ local hitmonlee={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards)/2 * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
@@ -773,7 +777,7 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult_multi = 2, jacks_played = 0}},
+  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}},
   loc_txt = {      
     name = 'Lickitung',      
     text = {
@@ -889,7 +893,7 @@ local weezing={
 local rhyhorn={
   name = "rhyhorn", 
   pos = {x = 6, y = 8}, 
-  config = {extra = {chips = 15, rounds = 4}},
+  config = {extra = {chips = 8, rounds = 4}},
   loc_txt = {      
     name = 'Rhyhorn',      
     text = {
@@ -927,7 +931,7 @@ local rhyhorn={
 local rhydon={
   name = "rhydon", 
   pos = {x = 7, y = 8},
-  config = {extra = {chips = 30}},
+  config = {extra = {chips = 12}},
   loc_txt = {      
     name = 'Rhydon',      
     text = {
@@ -1229,7 +1233,7 @@ local seadra={
 local goldeen={
   name = "goldeen", 
   pos = {x = 0, y = 9},
-  config = {extra = {retriggers = 1, rounds = 4}},
+  config = {extra = {retriggers = 1, rounds = 5}},
   loc_txt = {      
     name = 'Goldeen',      
     text = {
@@ -1277,7 +1281,7 @@ local seaking={
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
 		return {vars = {center.ability.extra.retriggers}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 8, 
   enhancement_gate = 'm_gold',
   stage = "One",
