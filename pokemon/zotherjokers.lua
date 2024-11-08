@@ -16,7 +16,7 @@ local pokedex={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 5, 
   stage = "Other",
   atlas = "others",

@@ -154,7 +154,7 @@ local haunter={
 local gengar={
   name = "gengar", 
   pos = {x = 2, y = 7}, 
-  config = {extra = {odds = 6}},
+  config = {extra = {odds = 5}},
   loc_txt = {      
     name = 'Gengar',      
     text = {
@@ -162,7 +162,7 @@ local gengar={
       "add {C:dark_edition}Negative{} to a",
       "random {C:attention}Joker{}",
       "at end of round",
-      "{C:inactive}(includes self){}"
+      "{C:inactive,s:0.8}(Exludes self, odds can't be increased){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -170,7 +170,7 @@ local gengar={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {1, center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -181,11 +181,11 @@ local gengar={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('gengar') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if pseudorandom('gengar') < 5/card.ability.extra.odds then
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and (not v.edition) then
+              if v.ability.set == 'Joker' and (not v.edition) and v ~= card then
                   table.insert(eligible_editionless_jokers, v)
               end
             end

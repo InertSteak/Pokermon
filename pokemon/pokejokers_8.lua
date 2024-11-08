@@ -245,11 +245,11 @@ local tyrogue={
   loc_txt = {      
     name = 'Tyrogue',      
     text = {
+      "{C:attention}Baby{}",
       "For the {C:attention}first hand{} of round",
       "If {C:attention}2{} cards played, {C:attention}destroy{} one",
       "If {C:attention}3+{} cards played, {C:attention}copy{} one to hand",
       "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }  
   }, 
@@ -261,6 +261,7 @@ local tyrogue={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
 		return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   calculate = function(self, card, context)
@@ -334,6 +335,24 @@ local tyrogue={
     end
     return level_evo(self, card, context, forced_key)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
+  end,
 }
 -- Hitmontop 237
 local hitmontop={
@@ -378,6 +397,7 @@ local smoochum ={
   loc_txt = {
     name = "Smoochum",
     text = {
+      "{C:attention}Baby{}",
       "Create a {C:attention}Standard{} tag",
       "when this Joker evolves",
       "{X:red,C:white} X#1# {} Mult",
@@ -387,6 +407,7 @@ local smoochum ={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {key = 'tag_standard', set = 'Tag'}
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
@@ -421,6 +442,24 @@ local smoochum ={
     end
     return evo
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
+  end,
 }
 -- Elekid 239
 local elekid ={
@@ -430,6 +469,7 @@ local elekid ={
   loc_txt = {
     name = "Elekid",
     text = {
+      "{C:attention}Baby{}",
       "Create a {C:attention}Coupon{} tag",
       "when this Joker evolves",
       "{X:red,C:white} X#1# {} Mult",
@@ -439,6 +479,7 @@ local elekid ={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
@@ -473,6 +514,24 @@ local elekid ={
     end
     return evo
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
+  end,
 }
 -- Magby 240
 local magby={
@@ -482,6 +541,7 @@ local magby={
   loc_txt = {
     name = "Magby",
     text = {
+      "{C:attention}Baby{}",
       "{C:red}+#2#{} discards",
       "{X:red,C:white} X#1# {} Mult",
       "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
@@ -490,6 +550,7 @@ local magby={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -515,10 +576,24 @@ local magby={
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
     ease_discard(card.ability.extra.d_size)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
   end
 }
 return {name = "Pokemon Jokers 211-240", 

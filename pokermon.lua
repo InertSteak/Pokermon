@@ -404,6 +404,16 @@ function SMODS.current_mod.process_loc_text()
       }
     }
     
+    G.localization.descriptions.Other['baby'] = {
+      name = "Baby",
+      text = {
+        "{C:attention}Pins{} other Non-Baby Jokers",
+        "when you get this, Jokers are",
+        "unpinned when this card",
+        "evolves or is removed"
+      }
+    }
+    
     G.localization.descriptions.Other['missingno'] = {
       name = "Missingno.",
       text = {
@@ -456,7 +466,7 @@ function get_straight(hand)
 
     local straight_length = 0
     local straight = false
-    local can_skip = next(find_joker('Shortcut')) or next(find_joker('rapidash'))
+    local can_skip = next(find_joker('Shortcut')) or (next(find_joker('rapidash')) and G.GAME.current_round.hands_played == 0)
     local skipped_rank = false
     for j = 1, 14 do
       if IDS[j == 1 and 14 or j] then

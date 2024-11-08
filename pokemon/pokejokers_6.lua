@@ -268,15 +268,16 @@ local pichu={
   loc_txt = {      
     name = 'Pichu',      
     text = {
+      "{C:attention}Baby{}",
       "Earn {C:money}$#1#{} at",
       "end of round",
       "{X:red,C:white} X#2# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
@@ -302,6 +303,24 @@ local pichu={
   calc_dollar_bonus = function(self, card)
     return card.ability.extra.money
 	end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
+  end,
 }
 -- Cleffa 173
 local cleffa={
@@ -311,15 +330,16 @@ local cleffa={
   loc_txt = {
     name = "Cleffa",
     text = {
+      "{C:attention}Baby{}",
       "Create a {C:attention}Moon{} card with",
       "{C:dark_edition}Negative{} at end of round",
       "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_moon
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
@@ -351,6 +371,24 @@ local cleffa={
     end
     return level_evo(self, card, context, "j_poke_clefairy")
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
+  end,
 }
 -- Igglybuff 174
 local igglybuff={
@@ -360,15 +398,16 @@ local igglybuff={
   loc_txt = {
     name = "Igglybuff",
     text = {
+      "{C:attention}Baby{}",
       "Create a {C:attention}World{} card with",
       "{C:dark_edition}Negative{} at end of round",
       "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_world
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
@@ -399,6 +438,24 @@ local igglybuff={
       G.consumeables:emplace(_card)
     end
     return level_evo(self, card, context, "j_poke_jigglypuff")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = true
+        end
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for i=1, #G.jokers.cards do
+        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
+          G.jokers.cards[i].pinned = false
+        end
+      end
+    end
   end,
 }
 -- Togepi 175

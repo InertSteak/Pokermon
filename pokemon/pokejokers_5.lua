@@ -1369,10 +1369,10 @@ local mewtwo={
     text = {
       "At end of shop, create a",
       "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
-      "leftmost {C:attention}Joker{}, then",
-      "destroy leftmost {C:attention}Joker{}",
+      "leftmost {C:attention}Joker{} with {C:attention}+1{} {C:pink}Energy{}",
+      "then destroy leftmost {C:attention}Joker{}",
       "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
-      "{C:inactive}(Can't destroy self or Polychrome)",
+      "{C:inactive}(Can't destroy self)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1391,7 +1391,7 @@ local mewtwo={
   calculate = function(self, card, context)
     if context.ending_shop and not context.blueprint then
       local leftmost = G.jokers.cards[1]
-      if leftmost ~= card and not (leftmost.edition and leftmost.edition.polychrome) then
+      if leftmost ~= card then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
@@ -1399,6 +1399,11 @@ local mewtwo={
           local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
           local edition = {polychrome = true}
           _card:set_edition(edition, true)
+          if _card.config and _card.config.center.stage and not type_sticker_applied then
+            energy_increase(_card, _card.ability.extra.ptype)
+          elseif type_sticker_applied(_card) then
+            energy_increase(_card, type_sticker_applied(_card))
+          end
           _card:add_to_deck()
           G.jokers:emplace(_card)
         end

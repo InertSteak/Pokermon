@@ -218,20 +218,18 @@ local clefairy={
 local clefable={
   name = "clefable", 
   pos = {x = 9, y = 2},
-  config = {extra = {mult = 8, suit = "Clubs", Xmult = 2}},
+  config = {extra = {mult = 9, suit = "Clubs"}},
   loc_txt = {      
     name = 'Clefable',      
     text = {
       "Played cards with",
       "{C:clubs}#2#{} suit give",
       "{C:mult}+#1#{} Mult when scored",
-      "{X:mult,C:white} X#3# {} Mult if all cards ",
-      "held in hand are {C:clubs}#4#{} ",
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult, localize(center.ability.extra.suit, 'suits_plural')}}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -249,21 +247,6 @@ local clefable={
         }
       end
     end
-    if context.joker_main then
-      local applies = true
-      for k, v in ipairs(G.hand.cards) do
-        if v:is_suit(card.ability.extra.suit, nil, true) ~= true then
-          applies = false
-        end
-      end
-      if applies == true then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    end 
   end
 }
 local vulpix={
@@ -642,17 +625,18 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.3}},
+  config = {extra = {Xmult_multi = 1.1, mult = 3}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_multi}}
+		return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.mult}}
   end,
   loc_txt = {      
     name = 'Vileplume',      
     text = {
       "Played cards with {C:attention}Odd{} rank",
-      "give {X:mult,C:white} X#1# {} Mult when scored"
+      "give {C:mult}#2#{} Mult and",
+      "{X:mult,C:white} X#1# {} Mult when scored"
     } 
   }, 
   rarity = "poke_safari", 
@@ -668,10 +652,10 @@ local vileplume={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-            colour = G.C.XMULT,
-            x_mult = card.ability.extra.Xmult_multi
+          return { 
+            x_mult = card.ability.extra.Xmult_multi,
+            mult = card.ability.extra.mult,
+            card = card
           }
       end
     end
@@ -724,7 +708,7 @@ local paras={
 local parasect={
   name = "parasect", 
   pos = {x = 7, y = 3},
-   config = {extra = {mult = 8, mult_mod = 3, mult_mod_minus = 1}},
+   config = {extra = {mult = 8, mult_mod = 3, mult_mod2 = 2}},
   loc_txt = {      
     name = 'Parasect',      
     text = {
@@ -737,7 +721,7 @@ local parasect={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod_minus}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -756,9 +740,9 @@ local parasect={
             colour = G.C.MULT
           }
         elseif context.before and card.ability.extra.mult > 0 then
-          card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod_minus
+          card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod2
           return {
-            message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod_minus}},
+            message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod2}},
             colour = G.C.RED,
             card = self
           }

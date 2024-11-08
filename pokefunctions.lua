@@ -1,6 +1,6 @@
-energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
+energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "mult_mod", "mult_mod2", "s_mult", "chip_mod", "Xmult_mod", "Xmult_multi"}
 energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .1, mult_mod = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .2, Xmult_multi = .1
+  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .1, mult_mod = .4, mult_mod2 = .4, s_mult = .4, chip_mod = .4, Xmult_mod = .2, Xmult_multi = .1
 }
 
 scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
@@ -81,12 +81,34 @@ family = {
 
 type_sticker_applied = function(card)
   if not card then return false end
-  if card.ability.grass_sticker or card.ability.fire_sticker or card.ability.water_sticker or card.ability.lightning_sticker or card.ability.psychic_sticker or card.ability.fighting_sticker or
-     card.ability.colorless_sticker or card.ability.dark_sticker or card.ability.metal_sticker or card.ability.fairy_sticker or card.ability.dragon_sticker or card.ability.earth_sticker then
-    return true
+  if card.ability.grass_sticker then
+    return "Grass"
+  elseif card.ability.fire_sticker then
+    return "Fire"
+  elseif card.ability.water_sticker then
+    return "Water"
+  elseif card.ability.lightning_sticker then
+    return "Lightning"
+  elseif card.ability.psychic_sticker then
+    return "Psychic"
+  elseif card.ability.fighting_sticker then
+    return "Water"
+  elseif card.ability.colorless_sticker then
+    return "Colorless"
+  elseif card.ability.dark_sticker then
+    return "Dark"
+  elseif card.ability.metal_sticker then
+    return "Metal"
+  elseif card.ability.fairy_sticker then
+    return "Fairy"
+  elseif card.ability.dragon_sticker then
+    return "Dragon"
+  elseif card.ability.earth_sticker then
+    return "Earth"
   else
     return false
   end
+  
 end
 
 find_pokemon_type = function(target_type)
@@ -674,6 +696,43 @@ energy_use = function(self, card, area, copier)
       end
     end
   end
+end
+
+energy_increase = function(card, etype)
+	if type(card.ability.extra) == "table" then
+	  if (energy_matches(card, etype, false) or etype == "Trans") then
+      if card.ability.extra.energy_count then
+        card.ability.extra.energy_count = card.ability.extra.energy_count + 1
+      else
+        card.ability.extra.energy_count = 1
+      end
+      energize(card, false)
+	  elseif etype == "Colorless" then
+      if card.ability.extra.c_energy_count then
+        card.ability.extra.c_energy_count = card.ability.extra.c_energy_count + 1
+      else
+        card.ability.extra.c_energy_count = 1
+      end
+      energize(card, etype, false)
+	  end
+	elseif type(card.ability.extra) == "number" or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
+		   (card.ability.t_chips and card.ability.t_chips > 0) then
+	  if (energy_matches(card, etype, false) or etype == "Trans") then
+      if card.ability.energy_count then
+        card.ability.energy_count = card.ability.energy_count + 1
+      else
+        card.ability.energy_count = 1
+      end
+      energize(card, false)
+	  elseif etype == "Colorless" then
+      if card.ability.c_energy_count then
+        card.ability.c_energy_count = card.ability.c_energy_count + 1
+      else
+        card.ability.c_energy_count = 1
+      end
+      energize(card, etype, false)
+	  end
+	end
 end
 
 energy_can_use = function(self, card)
