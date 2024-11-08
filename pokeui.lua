@@ -153,13 +153,40 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro, Yamper",
+                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
                 }
               }
-            }
+            },
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Graphics Design(cont.): ",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Yamper, MyDude",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            },
           },
           {
             n = G.UIT.R,
