@@ -56,7 +56,7 @@ local poliwhirl={
 local poliwrath={
   name = "poliwrath", 
   pos = {x = 9, y = 4},
-  config = {extra = {Xmult_multi = 1.75, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
+  config = {extra = {Xmult_multi = 1.3, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, mult = 3}},
   loc_txt = {      
     name = 'Poliwrath',      
     text = {
@@ -94,9 +94,9 @@ local poliwrath={
       local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
       if context.other_card:is_suit(scoring_suit) then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_multi
+          x_mult = card.ability.extra.Xmult_multi,
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -510,6 +510,7 @@ local tentacool={
     text = {
       "Each played {C:attention}10{}",
       "gives {C:mult}+#1#{} Mult when scored",
+      "if hand only contains {C:attention}10{}s",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   }, 
@@ -525,11 +526,20 @@ local tentacool={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      return {
-        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-        colour = G.C.MULT,
-        mult = card.ability.extra.mult
-      }
+      local allten = true
+      for k, v in pairs(context.scoring_hand) do
+        if v:get_id() ~= 10 then
+          allten = false
+          break
+        end
+      end
+      if allten then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult = card.ability.extra.mult
+        }
+      end
     end
     return level_evo(self, card, context, "j_poke_tentacruel")
   end
@@ -543,6 +553,7 @@ local tentacruel={
     text = {
       "Each played {C:attention}10{}",
       "gives {C:mult}+#1#{} Mult when scored",
+      "if hand only contains {C:attention}10{}s",
       "and {C:attention}retriggers{}"
     } 
   }, 
@@ -558,18 +569,36 @@ local tentacruel={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      return {
-        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-        colour = G.C.MULT,
-        mult = card.ability.extra.mult
-      }
+      local allten = true
+      for k, v in pairs(context.scoring_hand) do
+        if v:get_id() ~= 10 then
+          allten = false
+          break
+        end
+      end
+      if allten then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult = card.ability.extra.mult
+        }
+      end
     end
     if context.repetition and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+      local allten = true
+      for k, v in pairs(context.scoring_hand) do
+        if v:get_id() ~= 10 then
+          allten = false
+          break
+        end
+      end
+      if allten then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
     end
   end
 }
@@ -754,7 +783,7 @@ local rapidash={
     text = {
       "Gains {C:chips}#2#{} Chips if played", 
       "hand contains a {C:attention}Straight{}",
-      "Applies {C:attention}Shortcut{}",
+      "Applies {C:attention}Shortcut{} for first hand",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
     } 
   }, 

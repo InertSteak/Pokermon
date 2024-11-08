@@ -1369,10 +1369,10 @@ local mewtwo={
     text = {
       "At end of shop, create a",
       "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
-      "leftmost {C:attention}Joker{}, then",
-      "destroy leftmost {C:attention}Joker{}",
+      "leftmost {C:attention}Joker{} with {C:attention}+1{} {C:pink}Energy{}",
+      "then destroy leftmost {C:attention}Joker{}",
       "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
-      "{C:inactive}(Can't destroy self or Polychrome)",
+      "{C:inactive}(Can't destroy self)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)

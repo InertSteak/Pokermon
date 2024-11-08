@@ -5,7 +5,7 @@ local bulbasaur={
   loc_txt = {      
     name = 'Bulbasaur',      
     text = {
-        "{C:attention}+#3#{} hand size",
+        "{C:attention}+#4#{} hand size",
         "Earn {C:money}$#1#{} for each {C:attention}#3#{}",
         "held in hand, rank",
         "changes every round",
@@ -15,7 +15,8 @@ local bulbasaur={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks')}}
+		return {vars = {center.ability.extra.money, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
+                    center.ability.extra.h_size}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -65,7 +66,7 @@ local ivysaur={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money + 1}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 9, 
   stage = "One",
   ptype = "Grass",
@@ -74,10 +75,10 @@ local ivysaur={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
         if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          if not context.blueprint then
-            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
-          end
           local more = math.random(0, 1)
+          if not context.blueprint then
+            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
+          end
           ease_dollars(card.ability.extra.money + more)
           return {
               message = localize('$')..card.ability.extra.money + more,
@@ -218,7 +219,7 @@ local charmeleon={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One",
   ptype = "Fire",
@@ -382,7 +383,7 @@ local wartortle={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One",
   ptype = "Water",
@@ -682,7 +683,7 @@ local pidgey={
     text = {
       "All {C:planet}Planet{} cards and",
       "{C:planet}Celestial Packs{} in",
-      "the shop cost {C:money}$2",
+      "the shop cost {C:money}$2{} less",
       "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
     } 
   },
@@ -723,7 +724,7 @@ local pidgeotto={
     text = {
       "All {C:planet}Planet{} cards and",
       "{C:planet}Celestial Packs{} in",
-      "the shop are {C:attention}free",
+      "the shop cost {C:money}$3{} less",
       "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
     } 
   },
