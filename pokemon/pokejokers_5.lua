@@ -1391,7 +1391,7 @@ local mewtwo={
   calculate = function(self, card, context)
     if context.ending_shop and not context.blueprint then
       local leftmost = G.jokers.cards[1]
-      if leftmost ~= card and not (leftmost.edition and leftmost.edition.polychrome) then
+      if leftmost ~= card then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
@@ -1399,6 +1399,11 @@ local mewtwo={
           local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
           local edition = {polychrome = true}
           _card:set_edition(edition, true)
+          if _card.config and _card.config.center.stage and not type_sticker_applied then
+            energy_increase(_card, _card.ability.extra.ptype)
+          elseif type_sticker_applied(_card) then
+            energy_increase(_card, type_sticker_applied(_card))
+          end
           _card:add_to_deck()
           G.jokers:emplace(_card)
         end
