@@ -601,12 +601,6 @@ local weedle={
     end
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not pokermon_config.no_evos then
-      local eval = function(card) return not card.REMOVED end
-      juice_card_until(card, eval, true)
-    end
-  end
 }
 local kakuna={
   name = "kakuna", 

@@ -44,6 +44,7 @@ local luminousdeck = {
     text = {
       "All Jokers are created",
       "with random {C:pink}Type{} stickers",
+      "and have {C:attention}+1{} {C:pink}Energy{}"
     } 
   }, 
 	order = 18,
