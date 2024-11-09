@@ -708,7 +708,7 @@ local paras={
 local parasect={
   name = "parasect", 
   pos = {x = 7, y = 3},
-   config = {extra = {mult = 8, mult_mod = 3, mult_mod2 = 2}},
+   config = {extra = {mult = 8, mult_mod = 3, mult_mod2 = 3}},
   loc_txt = {      
     name = 'Parasect',      
     text = {

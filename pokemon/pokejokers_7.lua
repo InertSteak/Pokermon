@@ -71,7 +71,7 @@ local politoed={
       "{C:mult}+#1#{} Mult when scored",
       "Those cards retrigger based on",
       "how many {X:water,C:white}Water{} Jokers you have",
-      "{C:inactive,s:0.8}(Retriggers divided evenly between scoring cards){}",
+      "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{}{C:inactive,s:0.8} Retrigger(s) divided evenly between scoring cards){}",
       "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
     } 
   },
@@ -79,7 +79,7 @@ local politoed={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
                     colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
-                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), #find_pokemon_type("Water")}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -155,7 +155,7 @@ local espeon={
       "Create a {C:attention}Sun{} card",
       "every {C:attention}3{} {C:green}rerolls{}",
       "Retrigger all played cards with",
-      "{C:hearts}Hearts{} suit used in scoring",
+      "{C:hearts}Hearts{} suit in your {C:attention}first hand{}",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
@@ -190,7 +190,7 @@ local espeon={
         card.ability.extra.rerolls = 0
       end
     end
-    if context.repetition and context.cardarea == G.play and not context.end_of_round then
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and G.GAME.current_round.hands_played == 0 then
       if context.other_card:is_suit(card.ability.extra.suit) then
         return {
           message = localize('k_again_ex'),
@@ -209,10 +209,10 @@ local umbreon={
   loc_txt = {      
     name = 'Umbreon',      
     text = {
-      "Create a {C:attention}Moon{} card",
-      "every {C:attention}3{} {C:green}rerolls{}",
-      "Retrigger all {C:attention}held in hand{}",
-      "abilities of cards with {C:clubs}#2#{} suit",
+      "Create a {C:attention}Moon{} card every",
+      "{C:attention}3{} {C:green}rerolls{}, retrigger",
+      "all {C:attention}held in hand{} abilities of",
+      "cards with {C:clubs}#2#{} suit in {C:attention}final hand{}",
       "{C:inactive}(Must have room)",
       "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
     } 
@@ -248,7 +248,7 @@ local umbreon={
       end
     end
     if context.repetition and context.cardarea == G.hand then
-      if context.other_card:is_suit(card.ability.extra.suit) and (next(context.card_effects[1]) or #context.card_effects > 1) then
+      if context.other_card:is_suit(card.ability.extra.suit) and (next(context.card_effects[1]) or #context.card_effects > 1) and G.GAME.current_round.hands_left == 0 then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,

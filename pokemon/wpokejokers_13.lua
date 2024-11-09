@@ -15,20 +15,20 @@
 local beldum={
   name = "beldum", 
   pos = {x = 4, y = 13},
-  config = {extra = {mult = 0, mult_mod = 1, chips = 0, chip_mod = 5, size = 4}},
+  config = {extra = {chips = 0, chip_mod = 4, size = 4}},
   loc_txt = {      
     name = 'Beldum',      
     text = {
-      "Gains {C:mult}+#2#{} Mult and {C:chips}+#4#{} Chips",
+      "Gains {C:chips}+#2#{} Chips",
       "if played hand contains at least",
-      "one scoring {C:attention}Ace{} and is exactly {C:attention}#5#{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{}{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:mult}+10{}{C:inactive} Mult)"
+      "one scoring {C:attention}Ace{} and is exactly {C:attention}#3#{} cards",
+      "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
+      "{C:inactive}(Evolves at {C:chips}+36{}{C:inactive} Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -45,44 +45,41 @@ local beldum={
             if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
         end
         if has_ace then
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
         end
       end
       if context.joker_main then
         
         return {
-          message = "Klang!", 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
-          mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          card = card
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.mult, 10)
+    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, 36)
   end,
 }
 -- Metang 375
 local metang={
   name = "metang", 
   pos = {x = 5, y = 13},
-  config = {extra = {mult = 10, mult_mod = 2, chips = 50, chip_mod = 5, size = 4}},
+  config = {extra = {chips = 36, chip_mod = 4, size = 4}},
   loc_txt = {      
     name = 'Metang',      
     text = {
-      "Gains {C:mult}+#2#{} Mult and {C:chips}+#4#{} Chips",
+      "Gains {C:chips}+#2#{} Chips",
       "if played hand contains at least",
-      "two scoring {C:attention}Aces{} and is exactly {C:attention}#5#{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{}{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:mult}+40{}{C:inactive} Mult)"
+      "two scoring {C:attention}Aces{} and is exactly {C:attention}#3#{} cards",
+      "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
+      "{C:inactive}(Evolves at {C:chips}+100{}{C:inactive} Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "Two", 
   ptype = "Metal",
@@ -97,32 +94,29 @@ local metang={
             if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
         end
         if ace_count > 1 then
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
         end
       end
       if context.joker_main then
         return {
-          message = "Klang!", 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
-          mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          card = card
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.mult, 40)
+    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, 100)
   end,
 }
 -- Metagross 376
 local metagross={
   name = "metagross", 
   pos = {x = 6, y = 13},
-  config = {extra = {mult = 40, chips = 100,}},
+  config = {extra = {chips = 100,}},
   loc_txt = {      
     name = 'Metagross',      
     text = {
-      "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips",
+      "{C:chips}+#1#{} Chips",
       "If played hand is a {C:attention}Four of a Kind{}",
       "each played card gives {X:mult,C:white}X{} Mult",
       "equal to the {C:attention}cube root{} ",
@@ -131,7 +125,7 @@ local metagross={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.size, math.max(1, math.abs(center.ability.extra.chips - center.ability.extra.mult)^(1/3))}}
+    return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -144,11 +138,9 @@ local metagross={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = "Klang!", 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
-          mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
-          card = card
         }
       end
     end
