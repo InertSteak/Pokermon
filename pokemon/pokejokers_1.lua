@@ -145,7 +145,7 @@ local venusaur={
 local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
-  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 0, mult_mod = 1, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charmander',      
     text = {
@@ -204,7 +204,7 @@ local charmander={
 local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
-  config = {extra = {mult = 16, mult_mod = 4, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 16, mult_mod = 2, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charmeleon',      
     text = {
@@ -259,7 +259,7 @@ local charmeleon={
 local charizard={
   name = "charizard", 
   pos = {x = 5, y = 0}, 
-  config = {extra = {mult = 36, Xmult = 1.5, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 36, Xmult = 1.25, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charizard',      
     text = {
@@ -307,7 +307,7 @@ local charizard={
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 1, hands = 1}},
   loc_txt = {      
     name = 'Squirtle',      
     text = {
@@ -368,7 +368,7 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 16, chip_mod = 4, hands = 1}},
+  config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
   loc_txt = {      
     name = 'Wartortle',     
     text = {

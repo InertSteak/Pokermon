@@ -287,7 +287,7 @@ local grass_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "Mart",
@@ -317,7 +317,7 @@ local fire_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 1, y = 0 },
   atlas = "Mart",
@@ -347,7 +347,7 @@ local water_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 2, y = 0 },
   atlas = "Mart",
@@ -377,7 +377,7 @@ local lightning_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 3, y = 0 },
   atlas = "Mart",
@@ -407,7 +407,7 @@ local psychic_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 4, y = 0 },
   atlas = "Mart",
@@ -437,7 +437,7 @@ local fighting_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 5, y = 0 },
   atlas = "Mart",
@@ -468,7 +468,7 @@ local colorless_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 6, y = 0 },
   atlas = "Mart",
@@ -498,7 +498,7 @@ local darkness_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 7, y = 0 },
   atlas = "Mart",
@@ -528,7 +528,7 @@ local metal_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 8, y = 0 },
   atlas = "Mart",
@@ -558,7 +558,7 @@ local fairy_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 9, y = 0 },
   atlas = "Mart",
@@ -588,7 +588,7 @@ local dragon_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 0, y = 1 },
   atlas = "Mart",
@@ -618,7 +618,7 @@ local earth_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 1, y = 1 },
   atlas = "Mart",
@@ -649,7 +649,7 @@ local transformation = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 2, y = 1 },
   atlas = "Mart",
