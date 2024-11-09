@@ -2,7 +2,7 @@
 -- Bellossom 182
 local bellossom={
   name = "bellossom",
-  config = {extra = {}},
+  config = {extra = {blind = ""}},
   pos = {x = 0, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -11,7 +11,8 @@ local bellossom={
   loc_txt = {      
     name = 'Bellossom',      
     text = {
-      "Played cards with {C:attention}Odd{} rank",
+      "During the {C:attention}Small Blind{}",
+      "played cards with {C:attention}Odd{} rank",
       "become {C:attention}Wild{} cards when scored",
       "If already {C:attention}Wild{}, adds {C:dark_edition}Polychrome"
     } 
@@ -23,7 +24,8 @@ local bellossom={
   atlas = "Pokedex2",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and card.ability.extra.blind == "Small Blind" and not context.blueprint then
+      
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           if v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14 then
@@ -49,6 +51,9 @@ local bellossom={
           }
       end
     end
+    if context.setting_blind then
+      card.ability.extra.blind = context.blind.name
+    end
   end
 }
 -- Marill 183
@@ -58,13 +63,15 @@ local bellossom={
 local politoed={
   name = "politoed", 
   pos = {x = 4, y = 3}, 
-  config = {extra = {mult = 5, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, retriggers = 1}},
+  config = {extra = {mult = 3, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1,}},
   loc_txt = {      
     name = 'Politoed',      
     text = {
       "Played cards with {V:1}#2#{} suit give",
-      "{C:mult}+#1#{} Mult when scored for each",
-      "{X:water,C:white}Water{} Joker you have and {C:attention}retrigger{}",
+      "{C:mult}+#1#{} Mult when scored",
+      "Those cards retrigger based on",
+      "how many {X:water,C:white}Water{} Jokers you have",
+      "{C:inactive,s:0.8}(Retriggers divided evenly between scoring cards){}",
       "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
     } 
   },
@@ -98,16 +105,30 @@ local politoed={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult * #find_pokemon_type("Water")
+          mult = card.ability.extra.mult 
         }
       end
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play then
       local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
       if context.other_card:is_suit(scoring_suit) then
+        local total = #find_pokemon_type("Water")
+        local cards = #context.scoring_hand
+        local pos
+        local remainder
+        local retriggers
+        for i=1, #context.scoring_hand do
+          if context.scoring_hand[i] == context.other_card then
+            pos = i
+            break
+          end
+        end
+        retriggers = math.floor(total/cards)
+        remainder = total % cards
+        if pos <= remainder then retriggers = retriggers + 1 end
         return {
           message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
+          repetitions = retriggers,
           card = card
         }
       end

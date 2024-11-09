@@ -8,7 +8,8 @@ local mew ={
     name = 'Mew',      
     text = {
       "At end of shop, create",
-      "a random {C:dark_edition}Negative{} {C:attention}Tarot{} card.",
+      "a random {C:dark_edition}Negative{} {C:attention}Tarot{}",
+      "{C:spectral}Spectral{} or {C:item}Item{} card",
       "{C:green}#1# in {C:green}#2#{} chance to create",
       "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}"
     } 
@@ -38,8 +39,9 @@ local mew ={
         G.jokers:emplace(_card)
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
       else
-        --create random Tarot and apply negative
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+        --create random consumable and apply negative
+        local sets = {"Tarot", "Spectral", "Item"}
+        local _card = create_card(sets[math.random(#sets)], G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
         _card:set_edition(edition, true)
         _card:add_to_deck()

@@ -11,7 +11,7 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 7, y = 3},
-  config = {extra = {Xmult_mod = 1.2, suit = "Diamonds", rerolls = 0}},
+  config = {extra = {Xmult_multi = 1.2, suit = "Diamonds", rerolls = 0}},
   loc_txt = {      
     name = 'Sylveon',      
     text = {
@@ -26,7 +26,7 @@ local sylveon={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_star
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -54,12 +54,17 @@ local sylveon={
       end
     end
     if context.individual and context.cardarea == G.hand and context.other_card:is_suit(card.ability.extra.suit) then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
-          colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_mod
-        }
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              x_mult = card.ability.extra.Xmult_multi,
+              card = card
+          }
       end
     end
   end
