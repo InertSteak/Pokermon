@@ -180,7 +180,7 @@ local nidoking={
 local clefairy={
   name = "clefairy", 
   pos = {x = 8, y = 2},
-  config = {extra = {mult = 3, suit = "Clubs"}},
+  config = {extra = {mult = 2, suit = "Clubs"}},
   loc_txt = {      
     name = 'Clefairy',      
     text = {
@@ -332,7 +332,7 @@ local ninetales={
 local jigglypuff={
   name = "jigglypuff", 
   pos = {x = 12, y = 2},
-  config = {extra = {mult = 3, suit = "Spades"}},
+  config = {extra = {mult = 2, suit = "Spades"}},
   loc_txt = {      
     name = 'Jigglypuff',      
     text = {
@@ -370,7 +370,7 @@ local jigglypuff={
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
-  config = {extra = {mult = 3, chips = 40, suit = "Spades"}},
+  config = {extra = {mult = 2, chips = 40, suit = "Spades"}},
   loc_txt = {      
     name = 'Wigglytuff',      
     text = {
@@ -406,7 +406,7 @@ local wigglytuff={
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
-  config = {extra = {mult = 3, zubat_tally = 0}},
+  config = {extra = {mult = 2, zubat_tally = 0}},
   loc_txt = {      
     name = 'Zubat',      
     text = {
@@ -450,7 +450,7 @@ local zubat={
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 3, chips = 0, chip_mod = 30, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}},
+  config = {extra = {mult = 0, mult_mod = 2, chips = 0, chip_mod = 20, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}},
   loc_txt = {      
     name = 'Golbat',      
     text = {
@@ -545,18 +545,18 @@ local golbat={
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
-  config = {extra = {mult = 3, rounds = 4}},
+  config = {extra = {mult1 = 1, mult2 = 3, rounds = 4}},
   loc_txt = {      
     name = 'Oddish',      
     text = {
       "Played cards with {C:attention}Odd{} rank",
-      "give {C:mult}+#1#{} Mult when scored",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+      "give {C:mult}+#1#{} or {C:mult}+#2#{} Mult when scored",
+      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.mult1, center.ability.extra.mult2, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -571,10 +571,12 @@ local oddish={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
+          local mults = {card.ability.extra.mult1, card.ability.extra.mult2}
+          local value = mults[math.random(#mults)] 
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = card.ability.extra.mult
+            mult = value
           }
       end
     end
@@ -584,19 +586,19 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult = 5}},
+  config = {extra = {mult1 = 3, mult2 = 5}},
   loc_txt = {      
     name = 'Gloom',      
     text = {
       "Played cards with {C:attention}Odd{} rank",
-      "give {C:mult}+#1#{} Mult when scored",
+      "give {C:mult}+#1#{} or {C:mult}+#2#{} Mult when scored",
       "{C:inactive}(Evolves with a{} {C:attention}Leaf/Sun Stone{}{C:inactive} card)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
-		return {vars = {center.ability.extra.mult}}
+		return {vars = {center.ability.extra.mult1, center.ability.extra.mult2}}
   end,
   rarity = 2, 
   cost = 8,
@@ -613,10 +615,12 @@ local gloom={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
+          local mults = {card.ability.extra.mult1, card.ability.extra.mult2}
+          local value = mults[math.random(#mults)] 
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = card.ability.extra.mult
+            mult = value
           }
       end
     end
@@ -625,7 +629,7 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.1, mult = 3}},
+  config = {extra = {Xmult_multi = 1.35, mult = 5}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -635,7 +639,7 @@ local vileplume={
     name = 'Vileplume',      
     text = {
       "Played cards with {C:attention}Odd{} rank",
-      "give {C:mult}#2#{} Mult and",
+      "give {C:mult}+#2#{} Mult or",
       "{X:mult,C:white} X#1# {} Mult when scored"
     } 
   }, 
@@ -652,11 +656,19 @@ local vileplume={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
-          return { 
-            x_mult = card.ability.extra.Xmult_multi,
-            mult = card.ability.extra.mult,
-            card = card
-          }
+          local values = {"Xmult_multi", "mult"}
+          local value = values[math.random(#values)]
+          if value == "Xmult_multi" then
+            return { 
+              x_mult = card.ability.extra.Xmult_multi,
+              card = card
+            }
+          else
+            return { 
+              mult = card.ability.extra.mult,
+              card = card
+            }
+          end
       end
     end
   end
@@ -1038,12 +1050,12 @@ local golduck={
 local mankey={
   name = "mankey", 
   pos = {x = 3, y = 4},
-  config = {extra = {mult = 5, chips = 7, rounds = 5}},
+  config = {extra = {mult = 3, chips = 5, rounds = 5}},
   loc_txt = {     
     name = 'Mankey',      
     text = {
       "Each played {C:attention}2{},",
-      "{C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
+      "{C:attention}3{}, {C:attention}5{} gives",
       "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
       "when scored",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
@@ -1063,8 +1075,7 @@ local mankey={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card:get_id() == 2 or 
          context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 then
+         context.other_card:get_id() == 5 then
         return {
             chips = card.ability.extra.chips,
             mult = card.ability.extra.mult,
@@ -1078,12 +1089,12 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 11, chips = 13, primes_played = 0}},
+  config = {extra = {mult = 7, chips = 11, primes_played = 0}},
   loc_txt = {      
     name = 'Primeape',      
     text = {
       "Each played {C:attention}2{},",
-      "{C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
+      "{C:attention}3{}, {C:attention}5{} gives",
       "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
       "when scored",
       "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"
@@ -1103,8 +1114,7 @@ local primeape={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card:get_id() == 2 or 
          context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 then
+         context.other_card:get_id() == 5 then
         card.ability.extra.primes_played = card.ability.extra.primes_played + 1
         return {
             chips = card.ability.extra.chips,
@@ -1119,7 +1129,7 @@ local primeape={
 local growlithe={
   name = "growlithe", 
   pos = {x = 5, y = 4},
-  config = {extra = {mult = 8}},
+  config = {extra = {mult = 6}},
   loc_txt = {      
     name = 'Growlithe',      
     text = {
@@ -1156,7 +1166,7 @@ local growlithe={
 local arcanine={
   name = "arcanine", 
   pos = {x = 6, y = 4},
-  config = {extra = {Xmult = 2}},
+  config = {extra = {Xmult = 1.5}},
   loc_txt = {      
     name = 'Arcanine',      
     text = {
@@ -1205,10 +1215,11 @@ local poliwag={
   loc_txt = {      
     name = 'Poliwag',      
     text = {
-      "Played cards with",
-      "{V:1}#3#{} suit give",
-      "{C:mult}+#1#{} Mult when scored",
-      "Suit changes in order {C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
+      "Played cards with {V:1}#3#{} suit",
+      "give {C:mult}+#1#{} Mult when scored,",
+      "Suit changes in order after",
+      "hand is played",
+      "{C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   }, 

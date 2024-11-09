@@ -7,8 +7,10 @@ local poliwhirl={
     name = 'Poliwhirl',      
     text = {
       "Played cards with {V:1}#2#{} suit ",
-      "give {C:mult}+#1#{} Mult when scored",
-      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+      "give {C:mult}+#1#{} Mult when scored,",
+      "Suit changes in order after",
+      "hand is played",
+      "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
       "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Water Stone{}{C:inactive,s:0.8} or {C:attention,s:0.8}King's Rock{}{C:inactive,s:0.8} card)"
     } 
   },
@@ -60,17 +62,19 @@ local poliwrath={
   loc_txt = {      
     name = 'Poliwrath',      
     text = {
-      "Played cards with",
-      "{V:1}#2#{} suit give",
-      "{X:mult,C:white} X#1# {} Mult when scored",
-      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+      "Played cards with {V:1}#2#{} suit",
+      "give {C:mult}+#7#{} Mult",
+      "and {X:mult,C:white} X#1# {} Mult when scored,",
+      "Suit changes in order after",
+      "hand is played",
+      "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
                     colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
-                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -777,7 +781,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {chips = 105, chip_mod = 15}},
+  config = {extra = {chips = 105, chip_mod = 10}},
   loc_txt = {      
     name = 'Rapidash',      
     text = {

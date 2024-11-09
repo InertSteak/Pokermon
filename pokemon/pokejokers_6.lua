@@ -72,7 +72,7 @@ local sentret={
       "isn't the last played hand",
       "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
       "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-      "{C:inactive}(Evolves at {C:mult}+6{} {C:inactive}Mult)"
+      "{C:inactive}(Evolves at {C:mult}+8{} {C:inactive}Mult)"
     }  
   }, 
   rarity = 1, 
@@ -105,13 +105,13 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 6)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 8)
   end,
 }
 -- Furret 162
 local furret={
   name = "furret",
-  config = {extra = {mult = 6, mult_mod = 2, last_hand = 'None'}},
+  config = {extra = {mult = 12, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Furret',      
