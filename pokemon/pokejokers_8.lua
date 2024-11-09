@@ -273,7 +273,7 @@ local tyrogue={
           Xmult_mod = card.ability.extra.Xmult_minus
         }
       end
-      if context.after and not context.blueprint then
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 then
         if #context.full_hand == 2 then
           local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
