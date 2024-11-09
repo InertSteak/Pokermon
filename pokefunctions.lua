@@ -700,40 +700,42 @@ energy_use = function(self, card, area, copier)
 end
 
 energy_increase = function(card, etype)
-	if type(card.ability.extra) == "table" then
-	  if (energy_matches(card, etype, false) or etype == "Trans") then
-      if card.ability.extra.energy_count then
-        card.ability.extra.energy_count = card.ability.extra.energy_count + 1
-      else
-        card.ability.extra.energy_count = 1
+  if (pokermon_config.unlimited_energy) or (((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)) < 5 + (G.GAME.energy_plus or 0)) then
+    if type(card.ability.extra) == "table" then
+      if (energy_matches(card, etype, false) or etype == "Trans") then
+        if card.ability.extra.energy_count then
+          card.ability.extra.energy_count = card.ability.extra.energy_count + 1
+        else
+          card.ability.extra.energy_count = 1
+        end
+        energize(card, false)
+      elseif etype == "Colorless" then
+        if card.ability.extra.c_energy_count then
+          card.ability.extra.c_energy_count = card.ability.extra.c_energy_count + 1
+        else
+          card.ability.extra.c_energy_count = 1
+        end
+        energize(card, etype, false)
       end
-      energize(card, false)
-	  elseif etype == "Colorless" then
-      if card.ability.extra.c_energy_count then
-        card.ability.extra.c_energy_count = card.ability.extra.c_energy_count + 1
-      else
-        card.ability.extra.c_energy_count = 1
+    elseif type(card.ability.extra) == "number" or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
+         (card.ability.t_chips and card.ability.t_chips > 0) then
+      if (energy_matches(card, etype, false) or etype == "Trans") then
+        if card.ability.energy_count then
+          card.ability.energy_count = card.ability.energy_count + 1
+        else
+          card.ability.energy_count = 1
+        end
+        energize(card, false)
+      elseif etype == "Colorless" then
+        if card.ability.c_energy_count then
+          card.ability.c_energy_count = card.ability.c_energy_count + 1
+        else
+          card.ability.c_energy_count = 1
+        end
+        energize(card, etype, false)
       end
-      energize(card, etype, false)
-	  end
-	elseif type(card.ability.extra) == "number" or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
-		   (card.ability.t_chips and card.ability.t_chips > 0) then
-	  if (energy_matches(card, etype, false) or etype == "Trans") then
-      if card.ability.energy_count then
-        card.ability.energy_count = card.ability.energy_count + 1
-      else
-        card.ability.energy_count = 1
-      end
-      energize(card, false)
-	  elseif etype == "Colorless" then
-      if card.ability.c_energy_count then
-        card.ability.c_energy_count = card.ability.c_energy_count + 1
-      else
-        card.ability.c_energy_count = 1
-      end
-      energize(card, etype, false)
-	  end
-	end
+    end
+  end
 end
 
 energy_can_use = function(self, card)
