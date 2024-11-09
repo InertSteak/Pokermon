@@ -423,7 +423,6 @@ local gyarados={
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
