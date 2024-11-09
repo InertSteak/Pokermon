@@ -150,7 +150,7 @@ local jynx={
     type_tooltip(self, info_queue, center)
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex1",
@@ -167,7 +167,6 @@ local jynx={
             table.insert(G.playing_cards, copy)
             G.deck:emplace(copy)
             card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-            return {playing_cards_added = true}
           end
         end
       end
@@ -193,7 +192,7 @@ local electabuzz={
     return {vars = {center.ability.extra.money}}
   end,
   rarity = 2, 
-  cost = 5, 
+  cost = 7, 
   item_req = "linkcable",
   stage = "Basic",
   ptype = "Lightning",
@@ -230,7 +229,7 @@ local magmar={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = "linkcable",
   stage = "Basic", 
   ptype = "Fire",
@@ -265,7 +264,7 @@ local magmar={
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
-  config = {extra = {Xmult = 1.5}},
+  config = {extra = {Xmult = 1.75}},
   loc_txt = {      
     name = 'Pinsir',      
     text = {
@@ -280,7 +279,7 @@ local pinsir={
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -327,7 +326,7 @@ local tauros={
     return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -361,7 +360,7 @@ local taurosh={
     return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
   end,
   rarity = 1, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -460,7 +459,7 @@ local lapras={
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -581,7 +580,7 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 40, rerolls = 0}},
+  config = {extra = {chips = 0, chip_mod = 32, rerolls = 0}},
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
@@ -632,7 +631,7 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 9, rerolls = 0}},
+  config = {extra = {money = 8, rerolls = 0}},
   loc_txt = {      
     name = 'Jolteon',      
     text = {
@@ -671,7 +670,7 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {Xmult = 1, Xmult_mod = .2, rerolls = 0}},
+  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}},
   loc_txt = {      
     name = 'Flareon',      
     text = {
@@ -783,7 +782,7 @@ local omanyte={
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -840,7 +839,7 @@ local omastar={
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2}}
   end,
   rarity = 3, 
-  cost = 9, 
+  cost = 8, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -959,7 +958,7 @@ local kabutops={
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 8, 
   stage = "One",
   ptype = "Earth",
   atlas = "Pokedex1", 
@@ -1074,7 +1073,7 @@ local snorlax={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,
@@ -1120,7 +1119,8 @@ local articuno={
     text = {
       "Add {C:attention}Foil{}, a",
       "random {C:attention}enhancement{}, and a",
-      "random {C:attention}seal{} to unscored cards"
+      "random {C:attention}seal{} to unscored cards",
+      "on the {C:attention}first hand{} of the round"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1134,7 +1134,7 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
         v.poke_scored = true
       end
@@ -1171,6 +1171,10 @@ local articuno={
       for k, v in ipairs(context.scoring_hand)do
         v.poke_scored = nil
       end
+    end
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end
 }

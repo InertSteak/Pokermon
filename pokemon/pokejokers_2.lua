@@ -50,7 +50,7 @@ local nidoqueen={
 local nidoranm={
   name = "nidoranm", 
   pos = {x = 5, y = 2}, 
-  config = {extra = {mult = 6, rounds = 3}},
+  config = {extra = {mult = 6, rounds = 4}},
   loc_txt = {      
     name = 'Nidoran M',      
     text = {
@@ -545,7 +545,7 @@ local golbat={
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
-  config = {extra = {mult1 = 1, mult2 = 3, rounds = 4}},
+  config = {extra = {mult1 = 1, mult2 = 3, rounds = 5}},
   loc_txt = {      
     name = 'Oddish',      
     text = {
@@ -736,7 +736,7 @@ local parasect={
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -806,7 +806,7 @@ local venonat={
 local venomoth={
   name = "venomoth", 
   pos = {x = 9, y = 3},
-  config = {extra = {plus_odds = 3}},
+  config = {extra = {plus_odds = 2}},
   loc_txt = {      
     name = 'Venomoth',      
     text = {
@@ -882,7 +882,7 @@ local dugtrio={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_mod,  1 + (G.GAME.hands["Three of a Kind"].level * center.ability.extra.Xmult_mod)}}
+		return {vars = {center.ability.extra.Xmult_mod,  0.8 + (G.GAME.hands["Three of a Kind"].level * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -893,7 +893,7 @@ local dugtrio={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
+        local Xmult = 0.8 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
         return{
           message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.CHIPS,
@@ -920,7 +920,7 @@ local meowth={
 		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -978,7 +978,7 @@ local psyduck={
     return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -1066,7 +1066,7 @@ local mankey={
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 8, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Fighting",
   atlas = "Pokedex1",
@@ -1144,7 +1144,7 @@ local growlithe={
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 5, 
   item_req = "firestone",
   stage = "Basic", 
   ptype = "Fire",

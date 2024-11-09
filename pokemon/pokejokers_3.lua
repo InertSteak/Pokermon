@@ -23,7 +23,7 @@ local poliwhirl={
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = {"waterstone", "kingsrock"},
   evo_list = {waterstone = "j_poke_poliwrath", kingsrock = "j_poke_politoed"},
   stage = "One", 
@@ -109,7 +109,7 @@ local poliwrath={
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
-  config = {extra = {odds = 4, rounds = 5}},
+  config = {extra = {odds = 5, rounds = 5}},
   loc_txt = {      
     name = 'Abra',      
     text = {
@@ -150,7 +150,7 @@ local abra={
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
-  config = {extra = {odds = 2}},
+  config = {extra = {odds = 4}},
   loc_txt = {      
     name = 'Kadabra',      
     text = {
@@ -193,7 +193,7 @@ local kadabra={
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
-  config = {extra = {odds = 2, card_limit = 1}},
+  config = {extra = {odds = 3, card_limit = 1}},
   loc_txt = {      
     name = 'Alakazam',      
     text = {
@@ -243,26 +243,36 @@ local alakazam={
 local machop={
   name = "machop", 
   pos = {x = 0, y = 5},
-  config = {extra = {hands = 1, discards = 1, rounds = 5}},
+  config = {extra = {hands = 1, discards = 2, rounds = 5, mult = 4}},
   loc_txt = {      
     name = 'Machop',      
     text = {
       "{C:chips}+#1#{} hands",
       "{C:mult}-#2# discards{}",
+      "{C:mult}+#4#{} Mult",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Fighting",
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
     return level_evo(self, card, context, "j_poke_machoke")
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -431,7 +441,7 @@ local weepinbell={
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = "leafstone",
   stage = "One", 
   ptype = "Grass",
@@ -551,7 +561,7 @@ local tentacool={
 local tentacruel={
   name = "tentacruel", 
   pos = {x = 7, y = 5}, 
-  config = {extra = {mult = 5, retriggers = 1}},
+  config = {extra = {mult = 3, retriggers = 1}},
   loc_txt = {      
     name = 'Tentacruel',      
     text = {
@@ -665,7 +675,7 @@ local graveler={
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 8, 
   item_req = "linkcable",
   stage = "One", 
   ptype = "Earth",
@@ -797,7 +807,7 @@ local rapidash={
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
-  cost = 7, 
+  cost = 8, 
   stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
@@ -924,7 +934,7 @@ local slowbro={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Water",
@@ -957,7 +967,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult_multi = 1.5, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.3, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {
@@ -993,13 +1003,13 @@ local magnemite={
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
-  config = {extra = {Xmult_multi = 2}},
+  config = {extra = {Xmult_multi = 1.6}},
   loc_txt = {      
     name = 'Magneton',      
     text = {
       "Played {C:attention}Steel{} cards",
       "give {X:red,C:white}X#1#{} Mult",
-      "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
+      "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{} {C:inactive,s:0.8}and an owned {C:metal,s:0.8}Metal{}{C:inactive,s:0.8} Joker)"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1143,7 +1153,7 @@ local dodrio={
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -1338,7 +1348,7 @@ local shellder={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   item_req = "waterstone",
   stage = "Basic",
   ptype = "Water",

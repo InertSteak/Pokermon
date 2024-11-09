@@ -19,7 +19,7 @@ local bulbasaur={
                     center.ability.extra.h_size}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -503,7 +503,7 @@ local caterpie={
 }
 local metapod={
   name = "metapod",
-  config = {extra = {mult = 6, rounds = 3}},
+  config = {extra = {mult = 4, rounds = 3}},
   pos = {x = 10, y = 0}, 
   loc_txt = {      
     name = 'Metapod',      
@@ -538,7 +538,7 @@ local metapod={
 local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
-  config = {extra = {mult = 12}},
+  config = {extra = {mult = 10}},
   loc_txt = {      
     name = 'Butterfree',      
     text = {
@@ -767,7 +767,7 @@ local pidgeot={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "Two", 
   atlas = "Pokedex1",
@@ -884,7 +884,7 @@ local spearow={
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Colorless",
@@ -964,7 +964,7 @@ local ekans={
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Dark",
   atlas = "Pokedex1",
@@ -1000,7 +1000,7 @@ local arbok={
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Dark",
@@ -1134,7 +1134,7 @@ local sandshrew={
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 6,
+  cost = 5,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
   ptype = "Earth",
@@ -1190,7 +1190,7 @@ local sandslash={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
   rarity = 2,
-  cost = 8, 
+  cost = 7, 
   enhancement_gate = 'm_glass',
   stage = "One", 
   atlas = "Pokedex1",
@@ -1230,7 +1230,7 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 30, chip_total = 0, rounds = 3}},
+  config = {extra = {chips = 30, chip_total = 0, rounds = 4}},
   loc_txt = {      
     name = 'Nidoran F',      
     text = {

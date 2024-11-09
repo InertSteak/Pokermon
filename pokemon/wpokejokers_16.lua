@@ -13,7 +13,7 @@
 local magnezone={
   name = "magnezone", 
   pos = {x = 5, y = 5}, 
-  config = {extra = {Xmult_multi = 2.25, Xmult_multi2 = 1.5}},
+  config = {extra = {Xmult_multi = 1.8, Xmult_multi2 = 1.5}},
   loc_txt = {      
     name = 'Magnezone',      
     text = {

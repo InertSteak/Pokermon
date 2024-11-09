@@ -11,7 +11,8 @@ local mew ={
       "a random {C:dark_edition}Negative{} {C:attention}Tarot{}",
       "{C:spectral}Spectral{} or {C:item}Item{} card",
       "{C:green}#1# in {C:green}#2#{} chance to create",
-      "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}"
+      "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}",
+      "{C:inactive,s:0.8}(Odds can't be increased){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -20,7 +21,7 @@ local mew ={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {1, center.ability.extra.odds}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -30,7 +31,7 @@ local mew ={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.ending_shop then
-      if pseudorandom('mew') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if pseudorandom('mew') < 1/card.ability.extra.odds then
         --create random joker
         local _card = create_card('Joker', G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
@@ -72,7 +73,7 @@ local sentret={
       "isn't the last played hand",
       "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
       "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-      "{C:inactive}(Evolves at {C:mult}+8{} {C:inactive}Mult)"
+      "{C:inactive}(Evolves at {C:mult}+7{} {C:inactive}Mult)"
     }  
   }, 
   rarity = 1, 
@@ -105,7 +106,7 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 8)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 7)
   end,
 }
 -- Furret 162

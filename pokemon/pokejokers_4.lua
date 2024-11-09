@@ -181,7 +181,7 @@ local gengar={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('gengar') < 5/card.ability.extra.odds then
+      if pseudorandom('gengar') < 1/card.ability.extra.odds then
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -312,7 +312,7 @@ local hypno={
     info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Psychic",
@@ -744,14 +744,14 @@ local hitmonchan={
   loc_txt = {      
     name = 'Hitmonchan',      
     text = {
-      "{X:red,C:white}X#1#{} Mult for each card",
+      "{X:red,C:white}X#1#{} Mult for every 2 cards",
       "above {C:attention}#2#{} in your full deck",
       "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size)/2 or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -762,7 +762,7 @@ local hitmonchan={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size ) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size)/2 * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
@@ -909,7 +909,7 @@ local rhyhorn={
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   enhancement_gate = 'm_stone',
   stage = "Basic", 
   ptype = "Earth",
@@ -1140,7 +1140,7 @@ local horsea={
       "for each scoring {C:attention}6{}",
       "in {C:attention}first hand{} of round",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+10{} {C:inactive}Mult)"
+      "{C:inactive}(Evolves at {C:mult}+12{} {C:inactive}Mult)"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1175,18 +1175,19 @@ local horsea={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, 10)
+    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, 12)
   end,
 }
 local seadra={
   name = "seadra", 
   pos = {x = 12, y = 8},
-  config = {extra = {mult = 10, mult_mod = 2}},
+  config = {extra = {mult = 12, mult_mod = 1}},
   loc_txt = {      
     name = 'Seadra',      
     text = {
       "Gains {C:mult}+#2#{} Mult",
       "for each scoring {C:attention}6{}",
+      "in your first {C:attention}2{} hands",
       "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
       "{C:inactive}(Evolves with a {C:dragon}Dragon{} {C:inactive}sticker){}"
     } 
@@ -1204,7 +1205,7 @@ local seadra={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
+      if context.before and not context.blueprint and G.GAME.current_round.hands_played <= 1 then
         local upgraded
         for k, v in ipairs(context.scoring_hand) do
           if v:get_id() == 6 then
