@@ -818,7 +818,7 @@ local venomoth={
     text = {
       "Adds {C:attention}#1#{} to all {C:attention}listed",
       "{C:green,E:1,S:1.1}probabilities",
-      "{C:inactive}(ex: {C:green}1 in 6{C:inactive} -> {C:green}4 in 6{C:inactive})"
+      "{C:inactive}(ex: {C:green}1 in 6{C:inactive} -> {C:green}3 in 6{C:inactive})"
     } 
   },
   loc_vars = function(self, info_queue, center)

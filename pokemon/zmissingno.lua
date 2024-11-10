@@ -53,53 +53,87 @@ local mXmult = function(self, card, context)
 end
 
 local mranksuit = function(self, card, context)
-  if context.individual and context.cardarea == G.play then
+  if context.before and not context.blueprint then
     local ranks = {'2','3','4','5','6','7','8','9','T','J','Q','K','A'}
-    local rank = pseudorandom_element(ranks, pseudoseed(mseed))
-    G.E_MANAGER:add_event(Event({func = function()
-        local card = context.other_card
-        local suit_prefix = string.sub(card.base.suit, 1, 1)..'_'
-        local rank_suffix = rank
-        card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
-    return true end }))
-
+    card.ability.extra.rank = pseudorandom_element(ranks, pseudoseed(mseed))
+    
     local suits = {'S','H','D','C'}
-    local suit = pseudorandom_element(suits, pseudoseed(mseed))
+    card.ability.extra.suit = pseudorandom_element(suits, pseudoseed(mseed))
+    
+    for k, v in ipairs(context.scoring_hand) do
+      local enhancement_type = pseudorandom(pseudoseed('articuno'))
+      if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
+      elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
+      elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
+      elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
+      elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
+      elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
+      elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
+      else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+      end
+    end
+    card.ability.extra.suitrank = true
+    card.ability.extra.calced = true
+  end
+  if context.individual and context.cardarea == G.play then
+
+    G.E_MANAGER:add_event(Event({func = function()
+        local _card = context.other_card
+        if _card then
+          local suit_prefix = string.sub(_card.base.suit, 1, 1)..'_'
+          local rank_suffix = card.ability.extra.rank
+          _card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+        end
+    return true end }))
     
     G.E_MANAGER:add_event(Event({func = function()
-        local card = context.other_card
-        local suit_prefix = suit..'_'
-        local rank_suffix = card.base.id < 10 and tostring(card.base.id) or
-                            card.base.id == 10 and 'T' or card.base.id == 11 and 'J' or
-                            card.base.id == 12 and 'Q' or card.base.id == 13 and 'K' or
-                            card.base.id == 14 and 'A'
-        card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+        local _card = context.other_card
+        if _card then
+          local suit_prefix = card.ability.extra.suit..'_'
+          local rank_suffix = _card.base.id < 10 and tostring(_card.base.id) or
+                              _card.base.id == 10 and 'T' or _card.base.id == 11 and 'J' or
+                              _card.base.id == 12 and 'Q' or _card.base.id == 13 and 'K' or
+                              _card.base.id == 14 and 'A'
+          _card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+        end
     return true end }))
   end
 end
 
-local mhandsizeplus = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        G.hand:change_size(math.ceil(pseudorandom(pseudoseed(mseed))*5))
-      end
+local mtag = function(self, card, context)
+  if context.cardarea == G.jokers and context.scoring_hand then
+    if context.joker_main then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+            add_tag(Tag(tag.key))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
     end
+  end
 end
 
-local mhandsizeminus = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        G.hand:change_size(-math.ceil(pseudorandom(pseudoseed(mseed))*2))
+local mdiscardorhand = function(self, card, context)
+  if context.cardarea == G.jokers and context.scoring_hand then
+    if context.joker_main then
+      if pseudorandom(pseudoseed(mseed)) > .50 then
+        G.hand:change_size(1)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + 1
+      else
+        ease_discard(1)
       end
     end
+  end
 end
 
-missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mhandsizeplus, mhandsizeminus}
-
+missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
 local missingno ={
   name = "missingno", 
   pos = { x = 1, y = 12},
-  config = {extra = {odds = 6}},
+  config = {extra = {suit = "S", rank = "A", suitrank = false, calced = false}},
   loc_txt = {      
     name = 'Missingno.',      
     text = {
@@ -118,8 +152,22 @@ local missingno ={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not context.blueprint then
-      local mcalc = pseudorandom_element(missingnocalc, pseudoseed(mseed))
-      return mcalc(self, card, context)
+      if context.cardarea == G.jokers and context.scoring_hand then
+        local mcalc = pseudorandom_element(missingnocalc, pseudoseed(mseed))
+        if context.before then
+          return mcalc(self, card, context)
+        end
+        if not card.ability.extra.calced and context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+          return mcalc(self, card, context)
+        end
+        if context.after then
+          card.ability.extra.suitrank = false
+          card.ability.extra.calced = false
+        end
+      end
+      if context.individual and context.cardarea == G.play and card.ability.extra.suitrank then
+        return mranksuit(self, card, context)
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)

@@ -417,12 +417,13 @@ function SMODS.current_mod.process_loc_text()
     G.localization.descriptions.Other['missingno'] = {
       name = "Missingno.",
       text = {
-        "{s:0.8}When you get this {C:attention,s:0.8}fills{} consumable and",
+        "{s:0.8}When you get this, it {C:attention,s:0.8}fills{} consumable and",
         "{s:0.8}Joker slots with leftmost consumable",
-        "{s:0.8}Randomly gives different amounts of",
-        "{C:mult,s:0.8} Mult{}, {C:chips,s0.8}Chips{}, {X:mult,C:white,s:0.8}X {C:mult,s:0.8}Mult{}, and {C:money,s:0.8}${} on scoring hands",
-        "{s:0.8}Chance to change played hand to random {C:attention,s:0.8}suits{} and {C:attention,s:0.8}ranks{}",
-        "{s:0.8}Chance to reduce or increase {C:attention,s:0.8}hand size{} per hand played",
+        "{C:attention,s:0.8}When playing hand one of the following effects happens at random:",
+        "{s:0.8}Randomly gives different amounts of {C:attention,s:0.8}scoring{} values",
+        "{s:0.8}{C:attention,s:0.8}Suit{}, {C:attention,s:0.8}rank{} and {C:attention,s:0.8}enhancement{} of played cards changed",
+        "{s:0.8}Gain a random {C:attention,s:0.8}Tag{}",
+        "{s:0.8}Gain {C:mult,s:0.8}+1{} discard or {C:attention}+1{} hand size temporarily{}"
       }
     }
     
