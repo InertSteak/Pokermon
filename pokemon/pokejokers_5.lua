@@ -76,21 +76,21 @@ local mrmime={
 local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
-  config = {extra = {mult = 0, mult_mod = 6}},
+  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 8}},
   loc_txt = {      
     name = 'Scyther',      
     text = {
       "When Blind is selected, destroy",
-      "Joker to the right and gain {C:mult}+#2#{} Mult",
+      "Joker to the right and gain {C:mult}+#2#{} Mult or {C:chips}+#4#{} Chips",
       "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
       "if rare or higher",
       "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{C:inactive} Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -116,7 +116,11 @@ local scyther={
           G.GAME.joker_buffer = G.GAME.joker_buffer - 1
           G.E_MANAGER:add_event(Event({func = function()
               G.GAME.joker_buffer = 0
-              card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+              if pseudorandom('scyther') < .50 then
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+              else
+                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+              end
               card:juice_up(0.8, 0.8)
               sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
               play_sound('slice1', 0.96+math.random()*0.08)
@@ -125,10 +129,11 @@ local scyther={
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
+      if context.joker_main then
         return {
-            message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
-            mult_mod = card.ability.extra.mult
+            message = "Wing Attack!",
+            mult_mod = card.ability.extra.mult,
+            chip_mod = card.ability.extra.chips
         }
       end
     end
@@ -143,14 +148,15 @@ local jynx={
     text = {
       "{C:attention}Playing cards{} added to your",
       "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-      "and {C:spectral}Cryptid{} are {C:attention}duplicated{}"
+      "{C:spectral}Cryptid{} and certain Jokers",
+      "are {C:attention}duplicated{}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex1",
@@ -167,7 +173,6 @@ local jynx={
             table.insert(G.playing_cards, copy)
             G.deck:emplace(copy)
             card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-            return {playing_cards_added = true}
           end
         end
       end
@@ -193,7 +198,7 @@ local electabuzz={
     return {vars = {center.ability.extra.money}}
   end,
   rarity = 2, 
-  cost = 5, 
+  cost = 7, 
   item_req = "linkcable",
   stage = "Basic",
   ptype = "Lightning",
@@ -230,7 +235,7 @@ local magmar={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = "linkcable",
   stage = "Basic", 
   ptype = "Fire",
@@ -265,7 +270,7 @@ local magmar={
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
-  config = {extra = {Xmult = 1.5}},
+  config = {extra = {Xmult = 1.75}},
   loc_txt = {      
     name = 'Pinsir',      
     text = {
@@ -280,7 +285,7 @@ local pinsir={
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -327,7 +332,7 @@ local tauros={
     return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -361,7 +366,7 @@ local taurosh={
     return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
   end,
   rarity = 1, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -414,17 +419,15 @@ local magikarp={
 local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
-  config = {extra = {Xmult = 4}},
+  config = {extra = {Xmult = 3}},
   loc_txt = {      
     name = 'Gyarados',      
     text = {
       "{X:red,C:white} X#1# {} Mult",
-      "Applies {C:attention}Splash{}",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
@@ -462,7 +465,7 @@ local lapras={
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -583,7 +586,7 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 40, rerolls = 0}},
+  config = {extra = {chips = 0, chip_mod = 32, rerolls = 0}},
   loc_txt = {      
     name = 'Vaporeon',      
     text = {
@@ -634,7 +637,7 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 9, rerolls = 0}},
+  config = {extra = {money = 8, rerolls = 0}},
   loc_txt = {      
     name = 'Jolteon',      
     text = {
@@ -673,7 +676,7 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {Xmult = 1, Xmult_mod = .2, rerolls = 0}},
+  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}},
   loc_txt = {      
     name = 'Flareon',      
     text = {
@@ -785,7 +788,7 @@ local omanyte={
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -842,7 +845,7 @@ local omastar={
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2}}
   end,
   rarity = 3, 
-  cost = 9, 
+  cost = 8, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -884,7 +887,7 @@ local omastar={
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 50, chips2 = 10, chips3 = 100, rounds = 5}},
+  config = {extra = {rank = "2", chips1 = 40, chips2 = 6, chips3 = 80, rounds = 5}},
   loc_txt = {      
     name = 'Kabuto',      
     text = {
@@ -945,7 +948,7 @@ local kabuto={
 local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 80, chips2 = 20, chips3 = 250}},
+  config = {extra = {rank = "2", chips1 = 60, chips2 = 10, chips3 = 120}},
   loc_txt = {      
     name = 'Kabutops',      
     text = {
@@ -961,7 +964,7 @@ local kabutops={
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 8, 
   stage = "One",
   ptype = "Earth",
   atlas = "Pokedex1", 
@@ -1059,7 +1062,7 @@ local aerodactyl={
 local snorlax={
   name = "snorlax", 
   pos = {x = 0, y = 11},
-  config = {extra = {Xmult_mod = 0.25, Xmult = 1}},
+  config = {extra = {Xmult_mod = 0.2, Xmult = 1}},
   loc_txt = {      
     name = 'Snorlax',      
     text = {
@@ -1076,7 +1079,7 @@ local snorlax={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,
@@ -1120,10 +1123,10 @@ local articuno={
   loc_txt = {      
     name = 'Articuno',      
     text = {
-      "If played hand has only",
-      "{C:attention}1{} card, add {C:attention}Foil{}, a",
+      "Add {C:attention}Foil{}, a",
       "random {C:attention}enhancement{}, and a",
-      "random {C:attention}seal{}"
+      "random {C:attention}seal{} to unscored cards",
+      "on the {C:attention}first hand{} of the round"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
@@ -1137,28 +1140,47 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and #context.full_hand == 1 and not context.blueprint then
-      _card = context.full_hand[1]
-      if not _card.seal then
-        local args = {guaranteed = true}
-        local seal_type = SMODS.poll_seal(args)
-        _card:set_seal(seal_type, true)
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      for k, v in ipairs(context.scoring_hand) do
+        v.poke_scored = true
       end
-      if _card.ability.name == "Default Base" then
-        local enhancement_type = pseudorandom(pseudoseed('articuno'))
-        if enhancement_type > .875 then _card:set_ability(G.P_CENTERS.m_bonus, nil, true)
-        elseif enhancement_type > .75 then _card:set_ability(G.P_CENTERS.m_mult, nil, true)
-        elseif enhancement_type > .625 then _card:set_ability(G.P_CENTERS.m_wild, nil, true)
-        elseif enhancement_type > .50 then _card:set_ability(G.P_CENTERS.m_glass, nil, true)
-        elseif enhancement_type > .375 then _card:set_ability(G.P_CENTERS.m_steel, nil, true)
-        elseif enhancement_type > .25 then _card:set_ability(G.P_CENTERS.m_stone, nil, true)
-        elseif enhancement_type > .125 then _card:set_ability(G.P_CENTERS.m_gold, nil, true)
-        else _card:set_ability(G.P_CENTERS.m_lucky, nil, true)
+      for k, v in ipairs(context.full_hand) do
+        if not v.poke_scored then
+          if not v.seal then
+            local args = {guaranteed = true}
+            local seal_type = SMODS.poll_seal(args)
+            v:set_seal(seal_type, true)
+          end
+          if v.ability.name == "Default Base" then
+            local enhancement_type = pseudorandom(pseudoseed('articuno'))
+            if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
+            elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
+            elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
+            elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
+            elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
+            elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
+            elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
+            else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+            end
+          end
+          if not v.edition then
+            v:set_edition("e_foil", true)
+          end
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  v:juice_up()
+                  return true
+              end
+          })) 
         end
       end
-      if not _card.edition then
-        _card:set_edition("e_foil", true)
+      for k, v in ipairs(context.scoring_hand)do
+        v.poke_scored = nil
       end
+    end
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end
 }
@@ -1166,7 +1188,7 @@ local zapdos={
   name = "zapdos", 
   pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
-  config = {extra = {Xmult = 2, money_threshold = 20}},
+  config = {extra = {Xmult = 0.08, money_threshold = 2}},
   loc_txt = {      
     name = 'Zapdos',      
     text = {
@@ -1294,7 +1316,7 @@ local dragonair={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Dragon",
@@ -1399,7 +1421,7 @@ local mewtwo={
           local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
           local edition = {polychrome = true}
           _card:set_edition(edition, true)
-          if _card.config and _card.config.center.stage and not type_sticker_applied then
+          if _card.config and _card.config.center.stage and not type_sticker_applied(_card) then
             energy_increase(_card, _card.ability.extra.ptype)
           elseif type_sticker_applied(_card) then
             energy_increase(_card, type_sticker_applied(_card))

@@ -101,14 +101,15 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = 1.2}},
+  config = {extra = {Xmult = 1.2, mult = 12}},
   pos = {x = 2, y = 1}, 
   loc_txt = {      
     name = 'Vikavolt',      
     text = {
-      "{X:red,C:white} X#1# {} Mult",
-      "for each {X:lightning, C:black}Lightning{} Joker",
-      "you have {C:inactive}(includes self){}",
+      "{C:mult}+#3#{} Mult",
+      "{X:red,C:white} X#1# {} Mult for each",
+      "other {X:lightning, C:black}Lightning{} Joker",
+      "you have{}",
        "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)",
     }  
   }, 
@@ -120,19 +121,25 @@ local vikavolt={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult * (math.max(#find_pokemon_type("Lightning"), 1))}}
+    local count = #find_pokemon_type("Lightning")
+      if is_type(center, "Lightning") then
+        count = count - 1
+      end
+		return {vars = {center.ability.extra.Xmult, math.max(1, center.ability.extra.Xmult * count), center.ability.extra.mult}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #find_pokemon_type("Lightning")
-        if count > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult * count}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult * count
-          }
+        if is_type(card, "Lightning") then
+          count = count - 1
         end
+        return {
+          message = "Thunder!", 
+          colour = G.C.XMULT,
+          Xmult_mod = math.max(1, card.ability.extra.Xmult * count),
+          mult_mod = card.ability.extra.mult
+        }
       end
     end
   end

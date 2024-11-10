@@ -397,7 +397,8 @@ local teraorb = {
     text = {
       "Applies a random",
       "{C:pink}Type{} sticker",
-      "to leftmost Joker{}"
+      "to leftmost Joker{}", 
+      "and gives {C:attention}+1{} {C:pink}Energy{}"
     }
   },
   loc_vars = function(self, info_queue, center)
@@ -413,6 +414,7 @@ local teraorb = {
   use = function(self, card, area, copier)
     local leftmost = G.jokers.cards[1]
     apply_type_sticker(leftmost)
+    energy_increase(leftmost, type_sticker_applied(leftmost))
     card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = "Tera!", colour = G.C.SECONDARY_SET.Spectral})
   end,
   in_pool = function(self)

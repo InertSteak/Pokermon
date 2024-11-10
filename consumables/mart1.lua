@@ -287,11 +287,11 @@ local grass_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Grass",
   unlocked = true,
   discovered = true,
@@ -317,11 +317,11 @@ local fire_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 1, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Fire",
   unlocked = true,
   discovered = true,
@@ -347,11 +347,11 @@ local water_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 2, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Water",
   unlocked = true,
   discovered = true,
@@ -377,11 +377,11 @@ local lightning_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 3, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Lightning",
   unlocked = true,
   discovered = true,
@@ -407,11 +407,11 @@ local psychic_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 4, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Psychic",
   unlocked = true,
   discovered = true,
@@ -437,11 +437,11 @@ local fighting_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 5, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Fighting",
   unlocked = true,
   discovered = true,
@@ -468,11 +468,11 @@ local colorless_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 6, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Colorless",
   unlocked = true,
   discovered = true,
@@ -498,11 +498,11 @@ local darkness_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 7, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Dark",
   unlocked = true,
   discovered = true,
@@ -528,11 +528,11 @@ local metal_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 8, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Metal",
   unlocked = true,
   discovered = true,
@@ -558,11 +558,11 @@ local fairy_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 9, y = 0 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Fairy",
   unlocked = true,
   discovered = true,
@@ -588,11 +588,11 @@ local dragon_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 0, y = 1 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Dragon",
   unlocked = true,
   discovered = true,
@@ -618,7 +618,7 @@ local earth_energy = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 1, y = 1 },
   atlas = "Mart",
@@ -649,11 +649,11 @@ local transformation = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or "5"}}
+    return {vars = {(pokermon_config.unlimited_energy and "unlimited") or energy_max}}
   end,
   pos = { x = 2, y = 1 },
   atlas = "Mart",
-  cost = 3,
+  cost = 4,
   etype = "Trans",
   hidden = true,
   soul_set = "Energy",

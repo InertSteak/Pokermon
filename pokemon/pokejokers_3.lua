@@ -7,8 +7,10 @@ local poliwhirl={
     name = 'Poliwhirl',      
     text = {
       "Played cards with {V:1}#2#{} suit ",
-      "give {C:mult}+#1#{} Mult when scored",
-      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+      "give {C:mult}+#1#{} Mult when scored,",
+      "Suit changes in order after",
+      "hand is played",
+      "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
       "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Water Stone{}{C:inactive,s:0.8} or {C:attention,s:0.8}King's Rock{}{C:inactive,s:0.8} card)"
     } 
   },
@@ -21,7 +23,7 @@ local poliwhirl={
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = {"waterstone", "kingsrock"},
   evo_list = {waterstone = "j_poke_poliwrath", kingsrock = "j_poke_politoed"},
   stage = "One", 
@@ -60,17 +62,19 @@ local poliwrath={
   loc_txt = {      
     name = 'Poliwrath',      
     text = {
-      "Played cards with",
-      "{V:1}#2#{} suit give",
-      "{X:mult,C:white} X#1# {} Mult when scored",
-      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
+      "Played cards with {V:1}#2#{} suit",
+      "give {C:mult}+#7#{} Mult",
+      "and {X:mult,C:white} X#1# {} Mult when scored,",
+      "Suit changes in order after",
+      "hand is played",
+      "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
                     colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
-                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -105,7 +109,7 @@ local poliwrath={
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
-  config = {extra = {odds = 4, rounds = 5}},
+  config = {extra = {odds = 5, rounds = 5}},
   loc_txt = {      
     name = 'Abra',      
     text = {
@@ -146,7 +150,7 @@ local abra={
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
-  config = {extra = {odds = 2}},
+  config = {extra = {odds = 4}},
   loc_txt = {      
     name = 'Kadabra',      
     text = {
@@ -189,7 +193,7 @@ local kadabra={
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
-  config = {extra = {odds = 2, card_limit = 1}},
+  config = {extra = {odds = 3, card_limit = 1}},
   loc_txt = {      
     name = 'Alakazam',      
     text = {
@@ -239,26 +243,36 @@ local alakazam={
 local machop={
   name = "machop", 
   pos = {x = 0, y = 5},
-  config = {extra = {hands = 1, discards = 1, rounds = 5}},
+  config = {extra = {hands = 1, discards = 2, rounds = 5, mult = 4}},
   loc_txt = {      
     name = 'Machop',      
     text = {
       "{C:chips}+#1#{} hands",
       "{C:mult}-#2# discards{}",
+      "{C:mult}+#4#{} Mult",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Fighting",
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
     return level_evo(self, card, context, "j_poke_machoke")
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -427,7 +441,7 @@ local weepinbell={
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   item_req = "leafstone",
   stage = "One", 
   ptype = "Grass",
@@ -547,19 +561,18 @@ local tentacool={
 local tentacruel={
   name = "tentacruel", 
   pos = {x = 7, y = 5}, 
-  config = {extra = {mult = 5, retriggers = 1}},
+  config = {extra = {mult = 8}},
   loc_txt = {      
     name = 'Tentacruel',      
     text = {
       "Each played {C:attention}10{}",
       "gives {C:mult}+#1#{} Mult when scored",
-      "if hand only contains {C:attention}10{}s",
-      "and {C:attention}retriggers{}"
+      "{C:attention}10s can't{} be debuffed"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}}
+    return {vars = {center.ability.extra.mult}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -569,36 +582,11 @@ local tentacruel={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      local allten = true
-      for k, v in pairs(context.scoring_hand) do
-        if v:get_id() ~= 10 then
-          allten = false
-          break
-        end
-      end
-      if allten then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult = card.ability.extra.mult
-        }
-      end
-    end
-    if context.repetition and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      local allten = true
-      for k, v in pairs(context.scoring_hand) do
-        if v:get_id() ~= 10 then
-          allten = false
-          break
-        end
-      end
-      if allten then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+      return {
+        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+        colour = G.C.MULT,
+        mult = card.ability.extra.mult
+      }
     end
   end
 }
@@ -661,7 +649,7 @@ local graveler={
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
-  cost = 6, 
+  cost = 8, 
   item_req = "linkcable",
   stage = "One", 
   ptype = "Earth",
@@ -777,7 +765,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {chips = 105, chip_mod = 15}},
+  config = {extra = {chips = 105, chip_mod = 10}},
   loc_txt = {      
     name = 'Rapidash',      
     text = {
@@ -793,7 +781,7 @@ local rapidash={
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
-  cost = 7, 
+  cost = 8, 
   stage = "One", 
   ptype = "Fire",
   atlas = "Pokedex1",
@@ -920,7 +908,7 @@ local slowbro={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Water",
@@ -953,7 +941,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult_multi = 1.5, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.3, rounds = 4}},
   loc_txt = {      
     name = 'Magnemite',      
     text = {
@@ -989,13 +977,13 @@ local magnemite={
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
-  config = {extra = {Xmult_multi = 2}},
+  config = {extra = {Xmult_multi = 1.6}},
   loc_txt = {      
     name = 'Magneton',      
     text = {
       "Played {C:attention}Steel{} cards",
       "give {X:red,C:white}X#1#{} Mult",
-      "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
+      "{C:inactive}(Evolves with a {C:attention}Thunder Stone{}{C:inactive})"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -1139,7 +1127,7 @@ local dodrio={
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -1239,12 +1227,14 @@ local dewgong={
 local grimer={
   name = "grimer", 
   pos = {x = 9, y = 6}, 
-  config = {extra = {mult = 10, rounds = 5}},
+  config = {extra = {mult = 6, rounds = 5}},
   loc_txt = {      
     name = 'Grimer',      
     text = {
       "{C:mult}+#1#{} Mult if",
       "deck size > {C:attention}#3#{}",
+      "Add a random playing card",
+      "to your deck at end of round",
       "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
     } 
   },
@@ -1268,26 +1258,37 @@ local grimer={
         }
       end
     end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local _card = create_playing_card({
+        front = pseudorandom_element(G.P_CARDS, pseudoseed('grimer')), 
+        center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE
+      })
+      playing_card_joker_effects({card})
+      card:juice_up()
+    end
     return level_evo(self, card, context, "j_poke_muk")
   end,
 }
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
-  config = {extra = {mult = 20, Xmult = 3}},
+  config = {extra = {mult = 1, Xmult = 1.5}},
   loc_txt = {      
     name = 'Muk',      
     text = {
-      "{C:mult}+#1#{} Mult if",
-      "deck size > {C:attention}#3#{}.",
-      "{X:mult,C:white} X#2# {} Mult {C:attention}instead{} if",
-      "deck size > {C:attention}#4#{}"
-      
+      "{C:mult}+#1#{} Mult for every card",
+      "above {C:attention}#3#{} in your full deck",
+      "{X:mult,C:white} X#2# {} Mult if deck size > {C:attention}#4#{}",
+      "{C:inactive,s:0.8}(Currently {C:mult,s:0.8}+#5#{} {C:inactive,s:0.8}Mult){}",
+      "Add two random playing cards to deck",
+      "and remove one random card from deck",
+      "at end of round"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12, 
+                    (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0)}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -1298,20 +1299,45 @@ local muk={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.playing_cards > G.GAME.starting_deck_size then
+        local Xmult
         if #G.playing_cards > G.GAME.starting_deck_size + 12 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
+          Xmult = card.ability.extra.Xmult
         else
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
+          Xmult = 1
         end
+        return {
+          message = "Sludge!", 
+          colour = G.C.XMULT,
+          mult_mod = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size),
+          Xmult_mod = Xmult
+        }
       end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local cards = {}
+      for i = 1, 2 do
+        cards[i] = create_playing_card({
+          front = pseudorandom_element(G.P_CARDS, pseudoseed('muk')), 
+          center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE
+        })
+      end
+      playing_card_joker_effects(cards);
+      local target = pseudorandom_element(G.playing_cards, pseudoseed('muk'))
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.2,
+          func = function() 
+              if target.ability.name == 'Glass Card' then 
+                  target:shatter()
+              else
+                  target:start_dissolve()
+              end
+          return true end }))
+      delay(0.3)
+      for i = 1, #G.jokers.cards do
+          G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
+      end
+      card:juice_up()
     end
   end,
 }
@@ -1334,7 +1360,7 @@ local shellder={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   item_req = "waterstone",
   stage = "Basic",
   ptype = "Water",

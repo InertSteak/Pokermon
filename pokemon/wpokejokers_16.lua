@@ -13,20 +13,20 @@
 local magnezone={
   name = "magnezone", 
   pos = {x = 5, y = 5}, 
-  config = {extra = {Xmult_multi = 2.25}},
+  config = {extra = {Xmult_multi = 1.8, Xmult_multi2 = 1.3}},
   loc_txt = {      
     name = 'Magnezone',      
     text = {
       "Played {C:attention}Steel{} cards",
       "give {X:red,C:white}X#1#{} Mult",
       "{X:metal,C:white}Metal{} Jokers next to",
-      "this Joker each give {X:red,C:white}X#1#{} Mult"
+      "this Joker each give {X:red,C:white}X#2#{} Mult"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult_multi}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -41,7 +41,8 @@ local magnezone={
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_multi
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
         }
     end
     if context.other_joker then
@@ -55,7 +56,7 @@ local magnezone={
               end
             })) 
             return {
-              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi2}}, 
               colour = G.C.XMULT,
               Xmult_mod = card.ability.extra.Xmult_multi
             }
@@ -123,7 +124,7 @@ local lickilicky={
 local rhyperior={
   name = "rhyperior", 
   pos = {x = 7, y = 5},
-  config = {extra = {chips = 12}},
+  config = {extra = {chips = 8}},
   loc_txt = {      
     name = 'Rhyperior',      
     text = {
@@ -258,7 +259,7 @@ local electivire={
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
   end,
   rarity = "poke_safari", 
-  cost = 6,
+  cost = 1,
   stage = "Two",
   ptype = "Lightning",
   atlas = "Pokedex4",
@@ -286,21 +287,21 @@ local electivire={
 local magmortar={
   name = "magmortar", 
   pos = {x = 10, y = 5}, 
-  config = {extra = {mult = 0, mult_mod = 2, Xmult_mod = 0.02}},
+  config = {extra = {mult = 0, mult_mod = 2, Xmult = 1, Xmult_mod = 0.02}},
   loc_txt = {      
     name = 'Magmortar',      
     text = {
       "If the {C:attention}first{} discard of",
       "the round has only {C:attention}1{} card,",
       "destroy it and gain {C:mult}+#2#{} Mult",
-      "Gives {X:mult,C:white}X#3#{} Mult for each",
-      "card discarded this {C:attention}run{}",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:mult,C:white}X#4#{}{C:inactive} Mult)",
+      "Gains {X:mult,C:white}X#4#{} Mult for each",
+      "card discarded",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:mult,C:white}X#3#{}{C:inactive} Mult)",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult_mod, 1 + center.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -314,11 +315,18 @@ local magmortar={
       juice_card_until(card, eval, true)
     end
     if context.discard and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
       if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
         return {
           remove = true
+        }
+      else
+        return {
+            delay = 0.2,
+            message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult_mod}},
+            colour = G.C.RED
         }
       end
     end
@@ -328,7 +336,7 @@ local magmortar={
           message = "Fire Blast!", 
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = 1 + card.ability.extra.Xmult_mod * G.GAME.round_scores.cards_discarded.amt
+          Xmult_mod = card.ability.extra.Xmult
         }
       end
     end

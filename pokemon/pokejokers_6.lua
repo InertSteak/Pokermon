@@ -8,9 +8,11 @@ local mew ={
     name = 'Mew',      
     text = {
       "At end of shop, create",
-      "a random {C:dark_edition}Negative{} {C:attention}Tarot{} card.",
+      "a random {C:dark_edition}Negative{} {C:attention}Tarot{}",
+      "{C:spectral}Spectral{} or {C:item}Item{} card",
       "{C:green}#1# in {C:green}#2#{} chance to create",
-      "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}"
+      "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}",
+      "{C:inactive,s:0.8}(Odds can't be increased){}"
     } 
   },
   loc_vars = function(self, info_queue, center)
@@ -19,7 +21,7 @@ local mew ={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {1, center.ability.extra.odds}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -29,7 +31,7 @@ local mew ={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.ending_shop then
-      if pseudorandom('mew') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if pseudorandom('mew') < 1/card.ability.extra.odds then
         --create random joker
         local _card = create_card('Joker', G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
@@ -38,8 +40,9 @@ local mew ={
         G.jokers:emplace(_card)
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
       else
-        --create random Tarot and apply negative
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+        --create random consumable and apply negative
+        local sets = {"Tarot", "Spectral", "Item"}
+        local _card = create_card(sets[math.random(#sets)], G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
         _card:set_edition(edition, true)
         _card:add_to_deck()
@@ -70,7 +73,7 @@ local sentret={
       "isn't the last played hand",
       "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
       "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-      "{C:inactive}(Evolves at {C:mult}+6{} {C:inactive}Mult)"
+      "{C:inactive}(Evolves at {C:mult}+7{} {C:inactive}Mult)"
     }  
   }, 
   rarity = 1, 
@@ -103,13 +106,13 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 6)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 7)
   end,
 }
 -- Furret 162
 local furret={
   name = "furret",
-  config = {extra = {mult = 6, mult_mod = 2, last_hand = 'None'}},
+  config = {extra = {mult = 9, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Furret',      
@@ -345,7 +348,7 @@ local cleffa={
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 2,
+  cost = 3,
   stage = "Baby",
   ptype = "Fairy",
   atlas = "Pokedex2",
@@ -413,7 +416,7 @@ local igglybuff={
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 2,
+  cost = 3,
   stage = "Baby",
   ptype = "Colorless",
   atlas = "Pokedex2",

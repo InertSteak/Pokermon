@@ -27,7 +27,7 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if next(find_joker('Splash')) then"
 position = "at"
-payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) or next(find_joker('gyarados')) then"
+payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) then"
 match_indent = true
 
 # Extra Booster Functionality
@@ -124,11 +124,11 @@ pattern = "if card.ability.consumeable and not skip_materialize then card:start_
 position = "after"
 payload = '''
 if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
-if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card) end
+if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card); energy_increase(card, type_sticker_applied(card)) end
 '''
 match_indent = true
 
-#Tangrowth functionality
+#Debuff functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -144,6 +144,7 @@ end
 position = "after"
 payload = '''
 if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
+if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
 '''
 match_indent = true
 

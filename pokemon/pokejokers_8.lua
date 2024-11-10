@@ -110,7 +110,7 @@ local scizor={
 local kingdra={
   name = "kingdra", 
   pos = {x = 8, y = 7},
-  config = {extra = {mult = 10, mult_mod = 3, Xmult = 1, Xmult_mod = .1}},
+  config = {extra = {mult = 10, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
   loc_txt = {      
     name = 'Kingdra',      
     text = {
@@ -273,7 +273,7 @@ local tyrogue={
           Xmult_mod = card.ability.extra.Xmult_minus
         }
       end
-      if context.after and not context.blueprint then
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 then
         if #context.full_hand == 2 then
           local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -293,7 +293,7 @@ local tyrogue={
               return true end }))
           delay(0.3)
           for i = 1, #G.jokers.cards do
-              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = destroyed_cards})
+              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
           end
         elseif #context.full_hand > 2 then
           local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
@@ -309,7 +309,7 @@ local tyrogue={
                 return true
             end
           })) 
-          
+          playing_card_joker_effects({copy})
           return {
               message = localize('k_copied_ex'),
               colour = G.C.CHIPS,
@@ -358,7 +358,7 @@ local tyrogue={
 local hitmontop={
   name = "hitmontop", 
   pos = {x = 5, y = 8},
-  config = {extra = {Xmult = 2.5}},
+  config = {extra = {Xmult = 2.2}},
   loc_txt = {      
     name = 'Hitmontop',      
     text = {
@@ -371,8 +371,8 @@ local hitmontop={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size}}
   end,
-  rarity = 2, 
-  cost = 7, 
+  rarity = 3, 
+  cost = 8, 
   stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex2",
@@ -537,7 +537,7 @@ local elekid ={
 local magby={
   name = "magby",
   pos = {x = 8, y = 8},
-  config = {extra = {Xmult_minus = 0.75, d_size = 2, rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
   loc_txt = {
     name = "Magby",
     text = {
@@ -545,16 +545,16 @@ local magby={
       "{C:red}+#2#{} discards",
       "{X:red,C:white} X#1# {} Mult",
       "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.d_size, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 3,
+  cost = 4,
   stage = "Baby",
   ptype = "Colorless",
   atlas = "Pokedex2",

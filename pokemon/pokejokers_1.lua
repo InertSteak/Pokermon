@@ -19,7 +19,7 @@ local bulbasaur={
                     center.ability.extra.h_size}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -75,7 +75,12 @@ local ivysaur={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
         if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          local more = math.random(0, 1)
+          local more
+          if pseudorandom('bulba') < .50 then
+            more = 0
+          else
+            more = 1
+          end
           if not context.blueprint then
             card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
           end
@@ -145,7 +150,7 @@ local venusaur={
 local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
-  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 0, mult_mod = 1, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charmander',      
     text = {
@@ -204,7 +209,7 @@ local charmander={
 local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
-  config = {extra = {mult = 16, mult_mod = 4, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 16, mult_mod = 2, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charmeleon',      
     text = {
@@ -259,7 +264,7 @@ local charmeleon={
 local charizard={
   name = "charizard", 
   pos = {x = 5, y = 0}, 
-  config = {extra = {mult = 36, Xmult = 1.5, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 36, Xmult = 1.25, d_remaining = 0, d_size = 1}},
   loc_txt = {      
     name = 'Charizard',      
     text = {
@@ -307,7 +312,7 @@ local charizard={
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 1, hands = 1}},
   loc_txt = {      
     name = 'Squirtle',      
     text = {
@@ -368,7 +373,7 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 16, chip_mod = 4, hands = 1}},
+  config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
   loc_txt = {      
     name = 'Wartortle',     
     text = {
@@ -503,7 +508,7 @@ local caterpie={
 }
 local metapod={
   name = "metapod",
-  config = {extra = {mult = 6, rounds = 3}},
+  config = {extra = {mult = 4, rounds = 3}},
   pos = {x = 10, y = 0}, 
   loc_txt = {      
     name = 'Metapod',      
@@ -538,7 +543,7 @@ local metapod={
 local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
-  config = {extra = {mult = 12}},
+  config = {extra = {mult = 10}},
   loc_txt = {      
     name = 'Butterfree',      
     text = {
@@ -601,12 +606,6 @@ local weedle={
     end
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not pokermon_config.no_evos then
-      local eval = function(card) return not card.REMOVED end
-      juice_card_until(card, eval, true)
-    end
-  end
 }
 local kakuna={
   name = "kakuna", 
@@ -773,7 +772,7 @@ local pidgeot={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "Two", 
   atlas = "Pokedex1",
@@ -890,7 +889,7 @@ local spearow={
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Colorless",
@@ -970,7 +969,7 @@ local ekans={
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Dark",
   atlas = "Pokedex1",
@@ -1006,7 +1005,7 @@ local arbok={
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Dark",
@@ -1054,6 +1053,7 @@ local pikachu={
       "Earn {C:money}$#1#{} at",
       "end of round for",
       "each Joker you have",
+      "{C:inactive}(Max of {C:money}$10{C:inactive})",
       "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
     } 
   }, 
@@ -1070,7 +1070,7 @@ local pikachu={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return #G.jokers.cards * card.ability.extra.money
+    return math.min(10, #G.jokers.cards * card.ability.extra.money)
 	end,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_raichu")
@@ -1079,20 +1079,25 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
-  config = {extra={money = 1, threshold = 90, plus_slot = false}},
+  config = {extra={money = 1, threshold = 120, plus_slot = false}},
   loc_txt = {      
     name = 'Raichu',      
     text = {
-      "Earn {C:money}$#1#{} at",
-      "end of round for",
-      "each Joker you have",
-      "{C:dark_edition}+1{} Joker slot if you",
+      "Applies {C:dark_edition}Negative{} to self",
+      "at end of round if you",
       "have at least {C:money}$#2#{}",
+      "{C:inactive,s:0.8}(Increases per Raichu you have){}",
+      "Earn {C:money}$#1#{} at end of",
+      "round for each Joker you have",
+      "{C:inactive}(Max of {C:money}$10{C:inactive})"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.threshold}}
+    if not center.edition or (center.edition and not center.edition.negative) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    end
+    return {vars = {center.ability.extra.money, math.max(center.ability.extra.threshold, center.ability.extra.threshold + (center.ability.extra.threshold * (#find_joker("raichu") - 1)))}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -1101,24 +1106,12 @@ local raichu={
   atlas = "Pokedex1", 
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return #G.jokers.cards * card.ability.extra.money
+    if G.GAME.dollars > card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative) then
+      local edition = {negative = true}
+      card:set_edition(edition, true)
+    end
+    return math.min(10, #G.jokers.cards * card.ability.extra.money)
 	end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area and card.area.config and not card.area.config.collection then
-      if G.GAME.dollars > card.ability.extra.threshold and not card.ability.extra.plus_slot then
-        card.ability.extra.plus_slot = true
-        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
-      elseif G.GAME.dollars < card.ability.extra.threshold and card.ability.extra.plus_slot then
-        card.ability.extra.plus_slot = false
-        G.jokers.config.card_limit = G.jokers.config.card_limit - 1
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.plus_slot and not from_debuff then
-      G.jokers.config.card_limit = G.jokers.config.card_limit - 1
-    end
-  end
 }
 local sandshrew={
   name = "sandshrew", 
@@ -1140,7 +1133,7 @@ local sandshrew={
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 6,
+  cost = 5,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
   ptype = "Earth",
@@ -1196,7 +1189,7 @@ local sandslash={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
   rarity = 2,
-  cost = 8, 
+  cost = 7, 
   enhancement_gate = 'm_glass',
   stage = "One", 
   atlas = "Pokedex1",
@@ -1236,7 +1229,7 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 30, chip_total = 0, rounds = 3}},
+  config = {extra = {chips = 30, chip_total = 0, rounds = 4}},
   loc_txt = {      
     name = 'Nidoran F',      
     text = {
