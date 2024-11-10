@@ -1189,7 +1189,7 @@ local zapdos={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
-        if Xmult > 0 then
+        if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
             colour = G.C.MULT,
