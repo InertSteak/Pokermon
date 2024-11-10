@@ -1048,6 +1048,7 @@ local pikachu={
       "Earn {C:money}$#1#{} at",
       "end of round for",
       "each Joker you have",
+      "{C:inactive}(Max of {C:money}$10{C:inactive})",
       "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
     } 
   }, 
@@ -1064,7 +1065,7 @@ local pikachu={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return #G.jokers.cards * card.ability.extra.money
+    return math.min(10, #G.jokers.cards * card.ability.extra.money)
 	end,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_raichu")
@@ -1073,20 +1074,25 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
-  config = {extra={money = 1, threshold = 90, plus_slot = false}},
+  config = {extra={money = 1, threshold = 120, plus_slot = false}},
   loc_txt = {      
     name = 'Raichu',      
     text = {
-      "Earn {C:money}$#1#{} at",
-      "end of round for",
-      "each Joker you have",
-      "{C:dark_edition}+1{} Joker slot if you",
+      "Applies {C:dark_edition}Negative{} to self",
+      "at end of round if you",
       "have at least {C:money}$#2#{}",
+      "{C:inactive,s:0.8}(Increases per Raichu you have){}",
+      "Earn {C:money}$#1#{} at end of",
+      "round for each Joker you have",
+      "{C:inactive}(Max of {C:money}$10{C:inactive})"
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.threshold}}
+    if not center.edition or (center.edition and not center.edition.negative) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    end
+    return {vars = {center.ability.extra.money, math.max(center.ability.extra.threshold, center.ability.extra.threshold + (center.ability.extra.threshold * (#find_joker("raichu") - 1)))}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -1095,24 +1101,12 @@ local raichu={
   atlas = "Pokedex1", 
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return #G.jokers.cards * card.ability.extra.money
+    if G.GAME.dollars > card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative) then
+      local edition = {negative = true}
+      card:set_edition(edition, true)
+    end
+    return math.min(10, #G.jokers.cards * card.ability.extra.money)
 	end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area and card.area.config and not card.area.config.collection then
-      if G.GAME.dollars > card.ability.extra.threshold and not card.ability.extra.plus_slot then
-        card.ability.extra.plus_slot = true
-        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
-      elseif G.GAME.dollars < card.ability.extra.threshold and card.ability.extra.plus_slot then
-        card.ability.extra.plus_slot = false
-        G.jokers.config.card_limit = G.jokers.config.card_limit - 1
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.plus_slot and not from_debuff then
-      G.jokers.config.card_limit = G.jokers.config.card_limit - 1
-    end
-  end
 }
 local sandshrew={
   name = "sandshrew", 

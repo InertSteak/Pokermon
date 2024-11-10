@@ -110,7 +110,7 @@ local scizor={
 local kingdra={
   name = "kingdra", 
   pos = {x = 8, y = 7},
-  config = {extra = {mult = 10, mult_mod = 3, Xmult = 1, Xmult_mod = .1}},
+  config = {extra = {mult = 10, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
   loc_txt = {      
     name = 'Kingdra',      
     text = {
@@ -358,7 +358,7 @@ local tyrogue={
 local hitmontop={
   name = "hitmontop", 
   pos = {x = 5, y = 8},
-  config = {extra = {Xmult = 2.5}},
+  config = {extra = {Xmult = 2.2}},
   loc_txt = {      
     name = 'Hitmontop',      
     text = {
@@ -371,8 +371,8 @@ local hitmontop={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size}}
   end,
-  rarity = 2, 
-  cost = 7, 
+  rarity = 3, 
+  cost = 8, 
   stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex2",
@@ -537,7 +537,7 @@ local elekid ={
 local magby={
   name = "magby",
   pos = {x = 8, y = 8},
-  config = {extra = {Xmult_minus = 0.75, d_size = 2, rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
   loc_txt = {
     name = "Magby",
     text = {
@@ -554,7 +554,7 @@ local magby={
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 3,
+  cost = 4,
   stage = "Baby",
   ptype = "Colorless",
   atlas = "Pokedex2",

@@ -112,7 +112,7 @@ local sentret={
 -- Furret 162
 local furret={
   name = "furret",
-  config = {extra = {mult = 12, mult_mod = 1, last_hand = 'None'}},
+  config = {extra = {mult = 9, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 0, y = 1}, 
   loc_txt = {      
     name = 'Furret',      
@@ -348,7 +348,7 @@ local cleffa={
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 2,
+  cost = 3,
   stage = "Baby",
   ptype = "Fairy",
   atlas = "Pokedex2",
@@ -416,7 +416,7 @@ local igglybuff={
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 1,
-  cost = 2,
+  cost = 3,
   stage = "Baby",
   ptype = "Colorless",
   atlas = "Pokedex2",

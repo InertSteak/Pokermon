@@ -703,7 +703,15 @@ energy_use = function(self, card, area, copier)
 end
 
 energy_increase = function(card, etype)
-  if (pokermon_config.unlimited_energy) or (((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+  local can_increase = false
+  if card.ability.extra and type(card.ability.extra) == "table" and ((pokermon_config.unlimited_energy) or 
+    (((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0))) then
+    can_increase = true
+  elseif (pokermon_config.unlimited_energy) or (((card.ability.energy_count or 0) + (card.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+    can_increase = true
+  end
+  
+  if can_increase then
     if type(card.ability.extra) == "table" then
       if (energy_matches(card, etype, false) or etype == "Trans") then
         if card.ability.extra.energy_count then

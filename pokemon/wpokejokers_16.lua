@@ -13,7 +13,7 @@
 local magnezone={
   name = "magnezone", 
   pos = {x = 5, y = 5}, 
-  config = {extra = {Xmult_multi = 1.8, Xmult_multi2 = 1.5}},
+  config = {extra = {Xmult_multi = 1.8, Xmult_multi2 = 1.3}},
   loc_txt = {      
     name = 'Magnezone',      
     text = {
@@ -124,7 +124,7 @@ local lickilicky={
 local rhyperior={
   name = "rhyperior", 
   pos = {x = 7, y = 5},
-  config = {extra = {chips = 12}},
+  config = {extra = {chips = 8}},
   loc_txt = {      
     name = 'Rhyperior',      
     text = {
@@ -259,7 +259,7 @@ local electivire={
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
   end,
   rarity = "poke_safari", 
-  cost = 6,
+  cost = 1,
   stage = "Two",
   ptype = "Lightning",
   atlas = "Pokedex4",

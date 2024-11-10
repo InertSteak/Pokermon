@@ -263,7 +263,7 @@ local umbreon={
 local slowking={
   name = "slowking",
   pos = {x = 7, y = 4},
-  config = {extra = {Xmult_multi = 1,Xmult_mod = 0.25, oXmult = 1}},
+  config = {extra = {Xmult_multi = 1,Xmult_mod = 0.2, oXmult = 1}},
   loc_txt = {
     name = "Slowking",
     text = {
@@ -342,7 +342,7 @@ local steelix={
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One",
   ptype = "Metal",
