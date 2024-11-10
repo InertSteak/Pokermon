@@ -76,21 +76,21 @@ local mrmime={
 local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
-  config = {extra = {mult = 0, mult_mod = 6}},
+  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 8}},
   loc_txt = {      
     name = 'Scyther',      
     text = {
       "When Blind is selected, destroy",
-      "Joker to the right and gain {C:mult}+#2#{} Mult",
+      "Joker to the right and gain {C:mult}+#2#{} Mult or {C:chips}+#4#{} Chips",
       "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
       "if rare or higher",
       "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{C:inactive} Chips)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -116,7 +116,11 @@ local scyther={
           G.GAME.joker_buffer = G.GAME.joker_buffer - 1
           G.E_MANAGER:add_event(Event({func = function()
               G.GAME.joker_buffer = 0
-              card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+              if pseudorandom('scyther') < .50 then
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+              else
+                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+              end
               card:juice_up(0.8, 0.8)
               sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
               play_sound('slice1', 0.96+math.random()*0.08)
@@ -125,10 +129,11 @@ local scyther={
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
+      if context.joker_main then
         return {
-            message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
-            mult_mod = card.ability.extra.mult
+            message = "Wing Attack!",
+            mult_mod = card.ability.extra.mult,
+            chip_mod = card.ability.extra.chips
         }
       end
     end

@@ -571,8 +571,12 @@ local oddish={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
-          local mults = {card.ability.extra.mult1, card.ability.extra.mult2}
-          local value = mults[math.random(#mults)] 
+          local value
+          if pseudorandom('oddish') < .50 then
+            value = card.ability.extra.mult1
+          else
+            value = card.ability.extra.mult2
+          end
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
@@ -615,8 +619,12 @@ local gloom={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
-          local mults = {card.ability.extra.mult1, card.ability.extra.mult2}
-          local value = mults[math.random(#mults)] 
+          local value
+          if pseudorandom('gloom') < .50 then
+            value = card.ability.extra.mult1
+          else
+            value = card.ability.extra.mult2
+          end
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
@@ -656,9 +664,7 @@ local vileplume={
          context.other_card:get_id() == 7 or 
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
-          local values = {"Xmult_multi", "mult"}
-          local value = values[math.random(#values)]
-          if value == "Xmult_multi" then
+          if pseudorandom('vileplume') < .50 then
             return { 
               x_mult = card.ability.extra.Xmult_multi,
               card = card

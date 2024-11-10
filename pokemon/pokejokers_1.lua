@@ -75,7 +75,12 @@ local ivysaur={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
         if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          local more = math.random(0, 1)
+          local more
+          if pseudorandom('bulba') < .50 then
+            more = 0
+          else
+            more = 1
+          end
           if not context.blueprint then
             card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
           end
