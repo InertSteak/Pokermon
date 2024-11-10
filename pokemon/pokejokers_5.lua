@@ -143,7 +143,8 @@ local jynx={
     text = {
       "{C:attention}Playing cards{} added to your",
       "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-      "and {C:spectral}Cryptid{} are {C:attention}duplicated{}"
+      "{C:spectral}Cryptid{} and certain Jokers",
+      "are {C:attention}duplicated{}"
     } 
   }, 
   loc_vars = function(self, info_queue, center)

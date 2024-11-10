@@ -45,6 +45,7 @@ local blissey={
               copy:start_materialize()
               local edition = {polychrome = true}
               copy:set_edition(edition, true)
+              playing_card_joker_effects({copy})
               return true
           end
       })) 

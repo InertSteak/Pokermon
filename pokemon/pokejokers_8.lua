@@ -293,7 +293,7 @@ local tyrogue={
               return true end }))
           delay(0.3)
           for i = 1, #G.jokers.cards do
-              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = destroyed_cards})
+              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
           end
         elseif #context.full_hand > 2 then
           local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
@@ -309,7 +309,7 @@ local tyrogue={
                 return true
             end
           })) 
-          
+          playing_card_joker_effects({copy})
           return {
               message = localize('k_copied_ex'),
               colour = G.C.CHIPS,
@@ -545,13 +545,13 @@ local magby={
       "{C:red}+#2#{} discards",
       "{X:red,C:white} X#1# {} Mult",
       "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.d_size, center.ability.extra.rounds, }}
   end,
   rarity = 1,
   cost = 4,

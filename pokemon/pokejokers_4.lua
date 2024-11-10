@@ -1013,6 +1013,7 @@ local chansey={
           end
       })) 
       card.ability.extra.triggers = card.ability.extra.triggers + 1
+      playing_card_joker_effects({copy})
       return {
           message = localize('k_copied_ex'),
           colour = G.C.CHIPS,

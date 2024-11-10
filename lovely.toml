@@ -128,7 +128,7 @@ if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card
 '''
 match_indent = true
 
-#Tangrowth functionality
+#Debuff functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -144,6 +144,7 @@ end
 position = "after"
 payload = '''
 if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
+if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
 '''
 match_indent = true
 
