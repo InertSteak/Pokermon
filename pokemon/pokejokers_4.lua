@@ -665,8 +665,9 @@ local marowak={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
+    local count = #G.consumeables.cards + #find_joker('thickclub')
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.card_limit, 
-                    math.max(1, center.ability.extra.Xmult_multi * (1 + (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub'))))}}
+                    1 + (center.ability.extra.Xmult_multi * count)}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -679,11 +680,11 @@ local marowak={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #G.consumeables.cards + #find_joker('thickclub')
-        if (count + 1) > 1 then
+        if count > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi * (count + 1)}}, 
             colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult_multi * (count + 1)
+            Xmult_mod = 1 + (card.ability.extra.Xmult_multi * count)
           }
         end
       end
