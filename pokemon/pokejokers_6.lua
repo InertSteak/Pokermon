@@ -281,7 +281,6 @@ local pichu={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
   rarity = 1, 
