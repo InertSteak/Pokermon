@@ -883,12 +883,13 @@ local dugtrio={
     text = {
       "{X:red,C:white} X#1# {} Mult for each",
       "level of {C:attention}Three of a Kind{},",
+      "beyond the first",
       "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
     } 
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_mod,  0.8 + (G.GAME.hands["Three of a Kind"].level * center.ability.extra.Xmult_mod)}}
+		return {vars = {center.ability.extra.Xmult_mod,  1 + ((G.GAME.hands["Three of a Kind"].level - 1) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -899,7 +900,7 @@ local dugtrio={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 0.8 + (G.GAME.hands["Three of a Kind"].level * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((G.GAME.hands["Three of a Kind"].level - 1) * card.ability.extra.Xmult_mod)
         return{
           message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.CHIPS,
