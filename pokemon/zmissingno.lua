@@ -178,7 +178,7 @@ local missingno ={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if G.consumeables and G.consumeables.cards then
+    if G.consumeables and G.consumeables.cards and not from_debuff then
       local _card
       if #G.consumeables.cards > 0 then
         _card = G.consumeables.cards[1]
