@@ -137,19 +137,18 @@ end
 local missingno ={
   name = "missingno", 
   pos = { x = 1, y = 12},
-  config = {extra = {}},
+  config = {extra = {tags_created = 2}},
   loc_txt = {      
     name = 'Missingno.',      
     text = {
-      "When you get this, {C:attention}fill{}",
-      "consumable and Joker slots",
-      "with leftmost consumable",
-      "Create a random {C:attention}Tag{}",
-      "at end of round"
+      "Creates consumables",
+      "when obtained?",
+      "Creates {C:attention}#1#{}? {C:attention}Tags{}?",
     } 
   },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
+    		return {vars = {center.ability.extra.tags_created}}
   end,
   rarity = 4, 
   cost = 21, 
@@ -159,35 +158,49 @@ local missingno ={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
-      G.E_MANAGER:add_event(Event({
-        func = (function()
-            local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
-            add_tag(Tag(tag.key))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
-        end)
-      }))
+      local more
+      if pseudorandom('bulba') > .90 then
+        more = 1
+      else
+        more = 0
+      end
+      for i = 1, card.ability.extra.tags_created + more do
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+              local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+              add_tag(Tag(tag.key))
+              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+              return true
+          end)
+        }))
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if G.consumeables and G.consumeables.cards and G.consumeables.cards[1] then
+    if G.consumeables and G.consumeables.cards then
+      local _card
+      if #G.consumeables.cards > 0 then
+        _card = G.consumeables.cards[1]
+      else
+        _card = create_card("Item", G.consumeables, nil, nil, nil, nil, nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card) 
+      end
       local empty_con = G.consumeables.config.card_limit - #G.consumeables.cards
       if empty_con then
         for i=1, empty_con do
-          local _card = copy_card(G.consumeables.cards[1], nil)
-          _card:add_to_deck()
-          G.consumeables:emplace(_card) 
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+          local copy = copy_card(_card, nil)
+          copy:add_to_deck()
+          G.consumeables:emplace(copy)
         end
       end
       local empty_jokers = G.jokers.config.card_limit - #G.jokers.cards - 1
       if empty_jokers then
         for i=1, empty_jokers do
-          local _card = copy_card(G.consumeables.cards[1], nil)
-          _card:add_to_deck()
-          G.jokers:emplace(_card) 
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+          local copy = copy_card(_card, nil)
+          copy:add_to_deck()
+          G.jokers:emplace(copy)
         end
       end
     end
