@@ -1428,6 +1428,10 @@ local mewtwo={
           end
           _card:add_to_deck()
           G.jokers:emplace(_card)
+          if _card.debuff then 
+            _card.debuff = false 
+            if _card.ability.perishable then _card.ability.perish_tally = G.GAME.perishable_rounds end
+          end
         end
         
         if not leftmost.ability.eternal then
