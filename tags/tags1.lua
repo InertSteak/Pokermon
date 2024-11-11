@@ -44,6 +44,50 @@ local pocket_tag = {
 	end,
 }
 
+local shiny_tag = {
+	object_type = "Tag",
+	atlas = "poketag",
+	name = "shiny_tag",
+	order = 26,
+	pos = { x = 1, y = 0 },
+  loc_txt = {      
+    name = 'Shiny Tag',      
+    text = {
+      "Next base edition shop",
+      "Joker is free and",
+      "becomes {C:colorless}Shiny{}",
+    } 
+  }, 
+	config = { type = "store_joker_modify", edition = "poke_shiny" },
+	key = "shiny_tag",
+	min_ante = 3,
+  discovered = true,
+	loc_vars = function(self, info_queue)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_poke_shiny
+		return { vars = {} }
+	end,
+	apply = function(tag, context)
+    if context.type == "store_joker_modify" then
+      local _applied = nil
+      if not context.card.edition and not context.card.temp_edition and context.card.ability.set == 'Joker' then
+        local lock = tag.ID
+        G.CONTROLLER.locks[lock] = true
+          context.card.temp_edition = true
+            tag:yep('+', G.C.DARK_EDITION,function() 
+                context.card:set_edition({poke_shiny = true}, true)
+                context.card.ability.couponed = true
+                context.card:set_cost()
+                context.card.temp_edition = nil
+                G.CONTROLLER.locks[lock] = nil
+                return true
+        end)
+        _applied = true
+        tag.triggered = true
+      end
+    end
+	end,
+}
+
 return {name = "Tags",
-        list = {pocket_tag}
+        list = {pocket_tag, shiny_tag}
 }
