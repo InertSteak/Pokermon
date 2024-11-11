@@ -707,7 +707,8 @@ energy_increase = function(card, etype)
   if card.ability.extra and type(card.ability.extra) == "table" and ((pokermon_config.unlimited_energy) or 
     (((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0))) then
     can_increase = true
-  elseif (pokermon_config.unlimited_energy) or (((card.ability.energy_count or 0) + (card.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+  elseif not (card.ability.extra and type(card.ability.extra) == "table") and ((pokermon_config.unlimited_energy) or 
+             (((card.ability.energy_count or 0) + (card.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0))) then
     can_increase = true
   end
   
