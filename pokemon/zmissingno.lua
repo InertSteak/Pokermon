@@ -1,5 +1,5 @@
 local mseed = "missingno"
-
+--[[
 local mmult = function(self, card, context)
   if context.cardarea == G.jokers and context.scoring_hand then
     if context.joker_main then
@@ -100,6 +100,21 @@ local mranksuit = function(self, card, context)
   end
 end
 
+local mdiscardorhand = function(self, card, context)
+  if context.cardarea == G.jokers and context.scoring_hand then
+    if context.joker_main then
+      if pseudorandom(pseudoseed(mseed)) > .50 then
+        G.hand:change_size(1)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + 1
+      else
+        ease_discard(1)
+      end
+    end
+  end
+end
+
+missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
+]]--
 local mtag = function(self, card, context)
   if context.cardarea == G.jokers and context.scoring_hand then
     if context.joker_main then
@@ -116,32 +131,24 @@ local mtag = function(self, card, context)
   end
 end
 
-local mdiscardorhand = function(self, card, context)
-  if context.cardarea == G.jokers and context.scoring_hand then
-    if context.joker_main then
-      if pseudorandom(pseudoseed(mseed)) > .50 then
-        G.hand:change_size(1)
-        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + 1
-      else
-        ease_discard(1)
-      end
-    end
-  end
-end
 
-missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
+
+
 local missingno ={
   name = "missingno", 
   pos = { x = 1, y = 12},
-  config = {extra = {suit = "S", rank = "A", suitrank = false, calced = false}},
+  config = {extra = {}},
   loc_txt = {      
     name = 'Missingno.',      
     text = {
-      "??????????????"
+      "When you get this, {C:attention}fill{}",
+      "consumable and Joker slots",
+      "with leftmost consumable",
+      "Create a random {C:attention}Tag{}",
+      "at end of round"
     } 
   },
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'missingno'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
   end,
   rarity = 4, 
@@ -149,25 +156,18 @@ local missingno ={
   stage = "Legendary",
   ptype = "Bird",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    if not context.blueprint then
-      if context.cardarea == G.jokers and context.scoring_hand then
-        local mcalc = pseudorandom_element(missingnocalc, pseudoseed(mseed))
-        if context.before then
-          return mcalc(self, card, context)
-        end
-        if not card.ability.extra.calced and context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
-          return mcalc(self, card, context)
-        end
-        if context.after then
-          card.ability.extra.suitrank = false
-          card.ability.extra.calced = false
-        end
-      end
-      if context.individual and context.cardarea == G.play and card.ability.extra.suitrank then
-        return mranksuit(self, card, context)
-      end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+            add_tag(Tag(tag.key))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
     end
   end,
   add_to_deck = function(self, card, from_debuff)

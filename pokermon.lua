@@ -413,20 +413,7 @@ function SMODS.current_mod.process_loc_text()
         "evolves or is removed"
       }
     }
-    
-    G.localization.descriptions.Other['missingno'] = {
-      name = "Missingno.",
-      text = {
-        "{s:0.8}When you get this, it {C:attention,s:0.8}fills{} consumable and",
-        "{s:0.8}Joker slots with leftmost consumable",
-        "{C:attention,s:0.8}When playing hand one of the following effects happens at random:",
-        "{s:0.8}Randomly gives different amounts of {C:attention,s:0.8}scoring{} values",
-        "{s:0.8}{C:attention,s:0.8}Suit{}, {C:attention,s:0.8}rank{} and {C:attention,s:0.8}enhancement{} of played cards changed",
-        "{s:0.8}Gain a random {C:attention,s:0.8}Tag{}",
-        "{s:0.8}Gain {C:mult,s:0.8}+1{} discard or {C:attention}+1{} hand size temporarily{}"
-      }
-    }
-    
+        
     G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
     
     G.localization.misc.dictionary.b_save = "SAVE"
