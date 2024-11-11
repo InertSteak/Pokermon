@@ -317,19 +317,19 @@ local pinsir={
 local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
-  config = {extra = {Xmult = 1.5,}},
+  config = {extra = {Xmult_multi = 1.5, odds = 15}},
   loc_txt = {      
     name = 'Tauros (Leader)',      
     text = {
-      "{X:mult,C:white} X#1# {} Mult for each",
-      "{C:attention}Tauros{} Joker you have",
-      "{C:inactive}(Tauros (Herd) may appear in shop){}",
-      "{C:inactive}(Currently {X:red,C:white}X#2#{} {C:inactive}Mult)",
+      "{C:attention}Tauros{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+      "Each reroll in the shop has a",
+      "{C:green}#2# in #3#{} chance to add",
+      "a {C:attention}Tauros (Herd){} to shop",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
+    return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -338,13 +338,28 @@ local tauros={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+    if context.other_joker and context.other_joker.config and (context.other_joker.label == "tauros" or context.other_joker.label == "taurosh") then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {(#find_joker('tauros') + #find_joker('taurosh')) * card.ability.extra.Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = (#find_joker('tauros') + #find_joker('taurosh')) * card.ability.extra.Xmult
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_multi
         }
+    end
+    if context.reroll_shop and not context.blueprint then
+      if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
+        local new_card = SMODS.create_card(temp_card)
+        create_shop_card_ui(new_card, 'Joker', G.shop_jokers)
+        new_card.states.visible = false
+        G.shop_jokers:emplace(new_card)
+        new_card:start_materialize()
+        new_card:set_cost()
       end
     end
   end
@@ -352,20 +367,18 @@ local tauros={
 local taurosh={
   name = "taurosh",
   pos = {x = 11, y = 9},
-  config = {extra = {Xmult = 1.5,}},
+  config = {extra = {mult = 6}},
   loc_txt = {      
     name = 'Tauros (Herd)',      
     text = {
-      "{X:mult,C:white} X#1# {} Mult for each",
-      "{C:attention}Tauros{} Joker you have",
-      "{C:inactive}(Currently {X:red,C:white}X#2#{} {C:inactive}Mult)",
+      "{C:mult}+#1#{} Mult",
     } 
   }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, math.max((#find_joker('tauros') + #find_joker('taurosh')) * center.ability.extra.Xmult,1)}}
+    return {vars = {center.ability.extra.mult}}
   end,
-  rarity = 1, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
@@ -375,18 +388,11 @@ local taurosh={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {(#find_joker('tauros') + #find_joker('taurosh')) * card.ability.extra.Xmult}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          Xmult_mod = (#find_joker('tauros') + #find_joker('taurosh')) * card.ability.extra.Xmult
+          mult_mod = card.ability.extra.mult
         }
       end
-    end
-  end,
-  in_pool = function(self)
-    if next(find_joker('tauros')) then
-      return true
-    else
-      return false
     end
   end
 }
