@@ -332,7 +332,7 @@ local tauros={
     return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 8, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
