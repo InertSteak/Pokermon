@@ -366,17 +366,18 @@ local voltorb={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main and G.jokers.cards[1] == card then
-        card.ability.extra.destruct = true
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.debuff = true
+              return true
+          end
+        })) 
         return {
           message = localize("poke_explosion_ex"),
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult
         }
       end
-    end
-    if context.after and card.ability.extra.destruct and not context.blueprint then
-      card.debuff = true
-      card.ability.extra.destruct = false
     end
     return level_evo(self, card, context, "j_poke_electrode")
   end
@@ -398,19 +399,19 @@ local electrode={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main and G.jokers.cards[1] == card then
-        card.ability.extra.destruct = true
-    
         ease_dollars(card.ability.extra.money)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.debuff = true
+              return true
+          end
+        })) 
         
         return {
           message = localize("poke_explosion_ex"),
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult,
         }
-      end
-      if context.after and card.ability.extra.destruct and not context.blueprint then
-        card.debuff = true
-        card.ability.extra.destruct = false
       end
     end
   end
