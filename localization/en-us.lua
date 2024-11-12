@@ -844,7 +844,7 @@ return {
                 name = "Mankey",
                 text = {
                     "Each played {C:attention}2{},",
-                    "{C:attention}3{}, {C:attention}5{} gives",
+                    "{C:attention}3{}, or {C:attention}5{} gives",
                     "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
                     "when scored",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
@@ -855,7 +855,7 @@ return {
                 name = "Primeape",
                 text = {
                     "Each played {C:attention}2{},",
-                    "{C:attention}3{}, {C:attention}5{} gives",
+                    "{C:attention}3{}, or {C:attention}5{} gives",
                     "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
                     "when scored",
                     "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"
@@ -1591,6 +1591,7 @@ return {
             j_poke_porygon = {
                 name = 'Porygon',
                 text = {
+                    "{C:pink}+1{} Energy Limit",
                     "Create an {C:pink}Energy{} card",
                     "when any {C:attention}Booster Pack{}",
                     "is opened",
@@ -1876,7 +1877,7 @@ return {
             j_poke_porygon2 = {
                 name = 'Porygon2',
                 text = {
-                    "{C:pink}+1{} Energy Limit",
+                    "{C:pink}+2{} Energy Limit",
                     "Create an {C:pink}Energy{} card",
                     "of the same {C:pink}Type{} of",
                     "leftmost Joker when any",
@@ -2312,13 +2313,13 @@ return {
             v_poke_energysearch = {
                 name = "Energy Search",
                 text = {
-                    "{C:pink}+1{} Energy Limit"
+                    "{C:pink}+2{} Energy Limit"
                 },
             },
             v_poke_energyresearch = {
                 name = "Energy Research",
                 text = {
-                    "{C:pink}+1{} Energy Limit"
+                    "{C:pink}+3{} Energy Limit"
                 },
             },
             v_poke_goodrod = {
