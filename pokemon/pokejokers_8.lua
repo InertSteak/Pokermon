@@ -187,9 +187,9 @@ local porygon2={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 1
+        G.GAME.energy_plus = 2
       else
-        G.GAME.energy_plus = G.GAME.energy_plus + 1
+        G.GAME.energy_plus = G.GAME.energy_plus + 2
       end
     end
   end,
@@ -198,7 +198,7 @@ local porygon2={
       if not G.GAME.energy_plus then
         G.GAME.energy_plus = 0
       else
-        G.GAME.energy_plus = G.GAME.energy_plus - 1
+        G.GAME.energy_plus = G.GAME.energy_plus - 2
       end
     end
   end

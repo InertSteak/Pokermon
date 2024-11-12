@@ -590,6 +590,16 @@ local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
   config = {extra = {}},
+  loc_txt = {      
+    name = 'Porygon',      
+    text = {
+      "{C:pink}+1{} Energy Limit",
+      "Create an {C:pink}Energy{} card",
+      "when any {C:attention}Booster Pack{}",
+      "is opened",
+      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
+    } 
+  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -619,6 +629,24 @@ local porygon={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
     end
     return item_evo(self, card, context, "j_poke_porygon2")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 1
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 1
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 0
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus - 1
+      end
+    end
   end
 }
 local omanyte={

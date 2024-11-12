@@ -25,7 +25,8 @@ local pokeball = {
         local f_key = ""
         
         for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Basic" then
+          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Basic" and 
+             ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
             if #G.jokers.cards > 0 then
               for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
@@ -87,7 +88,8 @@ local greatball = {
         local f_key = ""
         
         for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "One" then
+          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "One" and
+             ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
             if #G.jokers.cards > 0 then
               for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
@@ -149,7 +151,8 @@ local ultraball = {
         local f_key = ""
         
         for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Two" then
+          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Two" and 
+          ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
             if #G.jokers.cards > 0 then
               for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
@@ -209,7 +212,8 @@ local masterball = {
         local f_key = ""
         
         for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Legendary" then
+          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Legendary" and 
+          ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
             if #G.jokers.cards > 0 then
               for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then

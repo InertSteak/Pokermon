@@ -5,7 +5,7 @@ energy_values = {
   Xmult_mod = .2, Xmult_multi = .1, Xmult_multi2 = .1
 }
 
-energy_max = 4
+energy_max = 3
 
 scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
 

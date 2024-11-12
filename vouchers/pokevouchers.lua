@@ -14,16 +14,16 @@ local energysearch = { --+1 max energy limit
 	end,
   redeem = function(self)
     if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 1
+      G.GAME.energy_plus = 2
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 1
+      G.GAME.energy_plus = G.GAME.energy_plus + 2
     end
   end,
   unredeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 1
+      G.GAME.energy_plus = G.GAME.energy_plus - 2
     end
   end
 }
@@ -44,16 +44,16 @@ local energyresearch = { --+1 max energy limit
 	end,
   redeem = function(self)
     if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 1
+      G.GAME.energy_plus = 3
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 1
+      G.GAME.energy_plus = G.GAME.energy_plus + 3
     end
   end,
   unredeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 1
+      G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
   end
 }
