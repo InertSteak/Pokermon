@@ -45,14 +45,6 @@ local pack1 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 0, y = 0 },
-  loc_txt =  	{
-    name = "Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 3, choose = 1},
 	cost = 4,
 	order = 1,
@@ -75,14 +67,6 @@ local pack2 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 1, y = 0 },
-  loc_txt =  	{
-    name = "Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 3, choose = 1 },
 	cost = 4,
 	order = 2,
@@ -105,14 +89,6 @@ local pack3 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 2, y = 0 },
-  loc_txt =  	{
-    name = "Jumbo Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 5, choose = 1 },
 	cost = 6,
 	order = 3,
@@ -135,14 +111,6 @@ local pack4 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 3, y = 0 },
-  loc_txt =  	{
-    name = "Mega Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 5, choose = 2 },
 	cost = 8,
 	order = 4,
@@ -165,14 +133,6 @@ local pack5 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 0, y = 1 },
-  loc_txt =  	{
-    name = "Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 3, choose = 1},
 	cost = 4,
 	order = 1,
@@ -195,14 +155,6 @@ local pack6 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 1, y = 1 },
-  loc_txt =  	{
-    name = "Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 3, choose = 1 },
 	cost = 4,
 	order = 2,
@@ -225,14 +177,6 @@ local pack7 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 2, y = 1 },
-  loc_txt =  	{
-    name = "Jumbo Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 5, choose = 1 },
 	cost = 6,
 	order = 3,
@@ -255,14 +199,6 @@ local pack8 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 3, y = 1 },
-  loc_txt =  	{
-    name = "Mega Pocket Pack",
-    text = {
-        "Choose {C:attention}#1#{} of",
-        "up to {C:attention}#2#",
-        "{C:pink}Energy{} or {C:item}Item{} Cards{}",
-    },
-  },
 	config = { extra = 5, choose = 2 },
 	cost = 8,
 	order = 4,

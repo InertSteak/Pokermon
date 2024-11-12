@@ -458,7 +458,7 @@ evolve = function(self, card, context, forced_key)
     
     new_card:add_to_deck()
     G.jokers:emplace(new_card)
-    return "Evolved!"
+    return localize("poke_evolve_success")
   end
 end
 
@@ -486,12 +486,12 @@ level_evo = function(self, card, context, forced_key)
           message = evolve (self, card, context, forced_key)
         }
       elseif card.ability.extra.rounds > 0 then
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Level Up!"})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
     elseif can_evolve(self, card, context, forced_key, nil, true) and card.ability.extra.rounds then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Level Up!"})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
     end
 end

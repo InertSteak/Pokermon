@@ -3,15 +3,6 @@ local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
   config = {extra = {mult = 3, money = 1, suit = "Diamonds"}},
-  loc_txt = {      
-    name = 'Starmie',      
-    text = {
-      "Played cards with",
-      "{C:diamonds}#3#{} suit give",
-      "{C:mult}+#1#{} Mult and ",
-      "{C:money}$#2#{} when scored",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -44,13 +35,6 @@ local mrmime={
   name = "mrmime", 
   pos = {x = 4, y = 9}, 
   config = {extra = {retriggers = 3}},
-  loc_txt = {      
-    name = 'Mr. Mime',      
-    text = {
-      "Retrigger leftmost card",
-      "held in hand {C:attention}#1#{} times"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers}}
@@ -77,17 +61,6 @@ local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
   config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 8}},
-  loc_txt = {      
-    name = 'Scyther',      
-    text = {
-      "When Blind is selected, destroy",
-      "Joker to the right and gain {C:mult}+#2#{} Mult or {C:chips}+#4#{} Chips",
-      "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
-      "if rare or higher",
-      "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{C:inactive} Chips)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -143,15 +116,6 @@ local scyther={
 local jynx={
   name = "jynx", 
   pos = {x = 6, y = 9}, 
-  loc_txt = {      
-    name = 'Jynx',      
-    text = {
-      "{C:attention}Playing cards{} added to your",
-      "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-      "{C:spectral}Cryptid{} and certain Jokers",
-      "are {C:attention}duplicated{}"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -183,15 +147,6 @@ local electabuzz={
   name = "electabuzz", 
   pos = {x = 7, y = 9}, 
   config = {extra = {money = 2}},
-  loc_txt = {      
-    name = 'Electabuzz',      
-    text = {
-      "When a card is {C:attention}sold{}",
-      "and at end of round",
-      "gains {C:money}$#1#{} of {C:attention}sell value{}",
-      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
@@ -219,16 +174,6 @@ local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
   config = {extra = {mult = 0, mult_mod = 2}},
-  loc_txt = {      
-    name = 'Magmar',      
-    text = {
-      "If the {C:attention}first{} discard of",
-      "the round has only {C:attention}1{} card",
-      "destroy it and gain {C:mult}+#2#{} Mult",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
@@ -271,15 +216,6 @@ local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
   config = {extra = {Xmult = 1.75}},
-  loc_txt = {      
-    name = 'Pinsir',      
-    text = {
-      "{X:mult,C:white} X#1# {} Mult",
-      "{C:attention}Leftmost{} Joker becomes",
-      "{C:attention}pinned{} at end of shop",
-      "{C:attention}Unpin{} that Joker at end of round"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
@@ -303,13 +239,13 @@ local pinsir={
     if context.ending_shop and not context.blueprint then
       if not G.jokers.cards[1].pinned then
         G.jokers.cards[1].pinned = true
-        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = "Pinned!", colour = G.C.CHIPS})
+        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_pinsir_pin"), colour = G.C.CHIPS})
       end
     end
     if not context.repetition and not context.individual and context.end_of_round then
       if G.jokers.cards[1].pinned then
         G.jokers.cards[1].pinned = false
-        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = "Unpinned!", colour = G.C.CHIPS})
+        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_pinsir_remove_pin"), colour = G.C.CHIPS})
       end
     end
   end
@@ -318,15 +254,6 @@ local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
   config = {extra = {Xmult_multi = 1.5, odds = 15}},
-  loc_txt = {      
-    name = 'Tauros (Leader)',      
-    text = {
-      "{C:attention}Tauros{} Jokers each give {X:mult,C:white} X#1# {} Mult",
-      "Each reroll in the shop has a",
-      "{C:green}#2# in #3#{} chance to add",
-      "a {C:attention}Tauros (Herd){} to shop",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -368,12 +295,6 @@ local taurosh={
   name = "taurosh",
   pos = {x = 11, y = 9},
   config = {extra = {mult = 6}},
-  loc_txt = {      
-    name = 'Tauros (Herd)',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
@@ -400,13 +321,6 @@ local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
   config = {extra = {rounds = 10}},
-  loc_txt = {      
-    name = 'Magikarp',      
-    text = {
-      "Applies {C:attention}Splash{}",
-      "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
@@ -426,12 +340,6 @@ local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 3}},
-  loc_txt = {      
-    name = 'Gyarados',      
-    text = {
-      "{X:red,C:white} X#1# {} Mult",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
@@ -458,14 +366,6 @@ local lapras={
   name = "lapras", 
   pos = {x = 1, y = 10},
   config = {extra = {chips = 0, chip_mod = 100}},
-  loc_txt = {      
-    name = 'Lapras',      
-    text = {
-      "{C:chips}+#2#{} Chips for each",
-      "{C:attention}Blind{} skipped this run",
-      "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -496,15 +396,6 @@ local lapras={
 local ditto={
   name = "ditto", 
   pos = {x = 2, y = 10}, 
-  loc_txt = {      
-    name = 'Ditto',
-    text = {
-      "Sell this to duplicate",
-      "the leftmost Joker",
-      "with {C:attention}Perishable{}",
-      "{C:inactive}(removes Eternal){}",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds}}
@@ -552,15 +443,6 @@ local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
   config = {extra = {money = 2, limit = 0, max = 5}},
-  loc_txt = {      
-    name = 'Eevee',      
-    text = {
-      "Earn {C:money}$#1#{} for",
-      "the first {C:attention}5{} {C:green}rerolls{}",
-      "{C:inactive}(Evolves with...a lot){}",
-      "{C:inactive}Curently {C:attention}#2#{C:inactive}/#3#"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
@@ -593,15 +475,6 @@ local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
   config = {extra = {chips = 0, chip_mod = 32, rerolls = 0}},
-  loc_txt = {      
-    name = 'Vaporeon',      
-    text = {
-      "Gains {C:chips}+#2#{} Chips",
-      "for every {C:attention}3{} {C:green}rerolls{}",
-      "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/3 rerolls)",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.rerolls}}
@@ -644,14 +517,6 @@ local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
   config = {extra = {money = 8, rerolls = 0}},
-  loc_txt = {      
-    name = 'Jolteon',      
-    text = {
-      "Earn {C:money}$#1#{}",
-      "for every {C:attention}3{} {C:green}rerolls{}",
-      "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/3 rerolls)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.rerolls}}
@@ -682,16 +547,7 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}},
-  loc_txt = {      
-    name = 'Flareon',      
-    text = {
-      "Gains {X:red,C:white} X#2# {} Mult",
-      "for every {C:attention}3{} {C:green}rerolls{}",
-      "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/3 rerolls)",
-      "{C:inactive}(Currently {X:red,C:white} X#1# {}{C:inactive} Mult)"
-    } 
-  }, 
+  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}}, 
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -734,15 +590,6 @@ local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
   config = {extra = {}},
-  loc_txt = {      
-    name = 'Porygon',      
-    text = {
-      "Create an {C:pink}Energy{} card",
-      "when any {C:attention}Booster Pack{}",
-      "is opened",
-      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -769,7 +616,7 @@ local porygon={
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+1 Energy", colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
     end
     return item_evo(self, card, context, "j_poke_porygon2")
   end
@@ -778,16 +625,6 @@ local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
   config = {extra = {rank = "3", money1 = 3, money2 = 2, rounds = 5}},
-  loc_txt = {      
-    name = 'Omanyte',      
-    text = {
-      "{C:attention}Ancient #1#s{}",
-      "{C:attention}1{} #1#: Gain {C:money}$#2#{} of sell value",
-      "{C:attention}2{} #1#s: Earn {C:money}$#3#{}",
-      "{C:attention}3+{} #1#s: Create a random {C:attention}Tarot{} card {C:inactive}(Must have room)",
-      "{C:inactive}(Evolves after {C:attention}#4#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -836,15 +673,6 @@ local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
   config = {extra = {rank = "3", money1 = 5, money2 = 4}},
-  loc_txt = {      
-    name = 'Omastar',      
-    text = {
-      "{C:attention}Ancient #1#s{}",
-      "{C:attention}2{} #1#s: Gain {C:money}$#2#{} of sell value",
-      "{C:attention}3{} #1#s: Earn {C:money}$#3#{}",
-      "{C:attention}4+{} #1#s: Create 2 random {C:attention}Tarot{} cards {C:inactive}(Must have room)",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -894,16 +722,6 @@ local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
   config = {extra = {rank = "2", chips1 = 40, chips2 = 6, chips3 = 80, rounds = 5}},
-  loc_txt = {      
-    name = 'Kabuto',      
-    text = {
-      "{C:attention}Ancient #1#s{}",
-      "{C:attention}1{} #1#s: {C:chips}+#2#{} Chips",
-      "{C:attention}2{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-      "{C:attention}3+{} #1#s: {C:chips}+#4#{} Chips",
-      "{C:inactive}(Evolves after {C:attention}#5#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -955,15 +773,6 @@ local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
   config = {extra = {rank = "2", chips1 = 60, chips2 = 10, chips3 = 120}},
-  loc_txt = {      
-    name = 'Kabutops',      
-    text = {
-      "{C:attention}Ancient #1#s{}",
-      "{C:attention}2{} #1#s: {C:chips}+#2#{} Chips",
-      "{C:attention}3{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-      "{C:attention}4+{} #1#s: {C:chips}+#4#{} Chips",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -1014,15 +823,6 @@ local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
   config = {extra = {rank = "Ace", mult1 = 12, mult2 = 16, chips = 80, Xmult = 2.5}},
-  loc_txt = {      
-    name = 'Aerodactyl',      
-    text = {
-      "{C:attention}Ancient #1#s{}",
-      "{C:attention}2{} #1#s: {C:mult}+#2#{} Mult",
-      "{C:attention}3{} #1#s: {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
-      "{C:attention}4+{} #1#s: {X:red,C:white}X#5#{} Mult"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -1069,16 +869,6 @@ local snorlax={
   name = "snorlax", 
   pos = {x = 0, y = 11},
   config = {extra = {Xmult_mod = 0.2, Xmult = 1}},
-  loc_txt = {      
-    name = 'Snorlax',      
-    text = {
-      "When you get this, create a",
-      "{C:attention}Leftovers{} card. At end of",
-      "round gain {X:red,C:white}X#1#{} Mult ",
-      "for each {C:attention}Leftovers{} you have",
-      "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
@@ -1097,7 +887,7 @@ local snorlax={
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       return true
     end
   end,
@@ -1126,15 +916,6 @@ local articuno={
   name = "articuno", 
   pos = {x = 1, y = 11},
   soul_pos = { x = 2, y = 11},
-  loc_txt = {      
-    name = 'Articuno',      
-    text = {
-      "Add {C:attention}Foil{}, a",
-      "random {C:attention}enhancement{}, and a",
-      "random {C:attention}seal{} to unscored cards",
-      "on the {C:attention}first hand{} of the round"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue +1] = G.P_CENTERS.e_foil
@@ -1195,14 +976,6 @@ local zapdos={
   pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
   config = {extra = {Xmult = 0.08, money_threshold = 2}},
-  loc_txt = {      
-    name = 'Zapdos',      
-    text = {
-      "{X:mult,C:white} X#1# {} Mult for",
-      "every {C:money}$#2#{} you have",
-      "{C:inactive}(Currently {X:red,C:white}X#3#{}{C:inactive} Mult)",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money_threshold , math.max(1, center.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/                    center.ability.extra.money_threshold))}}
@@ -1232,14 +1005,6 @@ local moltres={
   name = "moltres", 
   pos = {x = 5, y = 11},
   soul_pos = { x = 6, y = 11},
-  loc_txt = {      
-    name = 'Moltres',      
-    text = {
-      "Upgrade the level of the",
-      "first {C:attention}3 discarded{}",
-      "poker hands each round"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -1267,16 +1032,6 @@ local dratini={
   name = "dratini", 
   pos = {x = 7, y = 11},
   config = {extra = {mult = 0, mult_mod = 1, size = 3}},
-  loc_txt = {      
-    name = 'Dratini',      
-    text = {
-      "Gains {C:mult}+#2#{} Mult",
-      "if played hand contains",
-      "{C:attention}#3#{} or fewer cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+10{}{C:inactive} Mult)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
@@ -1308,16 +1063,6 @@ local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
   config = {extra = {mult = 10, mult_mod = 1, size = 2}},
-  loc_txt = {      
-    name = 'Dragonair',      
-    text = {
-      "Gains {C:mult}+#2#{} Mult",
-      "if played hand contains",
-      "{C:attention}#3#{} or fewer cards",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+30{}{C:inactive} Mult)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
@@ -1349,15 +1094,6 @@ local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
   config = {extra = {mult = 30, retriggers = 5}},
-  loc_txt = {      
-    name = 'Dragonite',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "If played hand has",
-      "only {C:attention}1{} card",
-      "retrigger it {C:attention}#2#{} times"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 
@@ -1392,17 +1128,6 @@ local mewtwo={
   pos = {x = 10, y = 11},
   soul_pos = { x = 11, y = 11},
   config = {extra = {Xmult_mod = 1.2}},
-  loc_txt = {      
-    name = 'Mewtwo',      
-    text = {
-      "At end of shop, create a",
-      "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
-      "leftmost {C:attention}Joker{} with {C:attention}+1{} {C:pink}Energy{}",
-      "then destroy leftmost {C:attention}Joker{}",
-      "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
-      "{C:inactive}(Can't destroy self)",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.polychrome) then

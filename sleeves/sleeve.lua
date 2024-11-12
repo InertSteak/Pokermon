@@ -24,16 +24,8 @@ end
 		pos = { x = 1, y = 3 },
 		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
 		loc_vars = function(self, info_queue, center)
-			return {vars = {"Good Rod", "Pokeball"}}
+			return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
 		end,
-		loc_txt = {
-		    name = "Trainer Sleeve",
-		    text = {
-		    	"Start run with the",
-		        "{C:tarot,T:v_poke_goodrod}#1#{} voucher",
-		        "and a {C:tarot,T:c_poke_pokeball}#2#{} card",
-		    }
-		},
 	}
 --- Obituary Sleeve
 	local obituarysleeve = {
@@ -44,14 +36,8 @@ end
 		pos = { x = 1, y = 3 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
-		  return {vars = {"Pink Seal"}}
+		  return {vars = {localize("pinkseal_variable")}}
 		end,
-		loc_txt = {      
-		    name = 'Obituary Sleeve',      
-		    text = {
-		      "All cards have a {C:dark_edition}#1#{}",
-		    } 
-		  },
 		apply = function(self)
 			G.GAME.modifiers.poke_force_seal = "poke_pink_seal"
 		end
@@ -71,13 +57,6 @@ end
 				}
 		}
 	end,
-	loc_txt = {      
-	  name = 'Luminous Sleeve',      
-	  text = {
-	    "All Jokers are created",
-	    "with random {C:pink}Type{} stickers",
-	  }
-	},
 	apply = function(self)
 	  G.GAME.modifiers.apply_type = true
 	end

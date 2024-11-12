@@ -4,17 +4,6 @@ local mew ={
   pos = {x = 12, y = 11},
   soul_pos = { x = 0, y = 12},
   config = {extra = {odds = 6}},
-  loc_txt = {      
-    name = 'Mew',      
-    text = {
-      "At end of shop, create",
-      "a random {C:dark_edition}Negative{} {C:attention}Tarot{}",
-      "{C:spectral}Spectral{} or {C:item}Item{} card",
-      "{C:green}#1# in {C:green}#2#{} chance to create",
-      "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}",
-      "{C:inactive,s:0.8}(Odds can't be increased){}"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -66,16 +55,6 @@ local sentret={
   name = "sentret",
   config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 9, y = 0}, 
-  loc_txt = {      
-    name = 'Sentret',      
-    text = {
-      "{C:mult}+#2#{} Mult when played hand",
-      "isn't the last played hand",
-      "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
-      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-      "{C:inactive}(Evolves at {C:mult}+7{} {C:inactive}Mult)"
-    }  
-  }, 
   rarity = 1, 
   cost = 4, 
   stage = "Basic", 
@@ -114,15 +93,6 @@ local furret={
   name = "furret",
   config = {extra = {mult = 9, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 0, y = 1}, 
-  loc_txt = {      
-    name = 'Furret',      
-    text = {
-      "{C:mult}+#2#{} Mult when played hand",
-      "isn't the last played hand",
-      "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
-      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-    }  
-  }, 
   rarity = 2, 
   cost = 6, 
   stage = "One", 
@@ -166,17 +136,6 @@ local crobat={
   name = "crobat", 
   pos = {x = 7, y = 1},
   config = {extra = {mult = 0, mult_mod = 3, chips = 0, chip_mod = 30, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1}},
-  loc_txt = {      
-    name = 'Crobat',      
-    text = {
-      "{C:attention}Randomize{} existing scoring card Enhancements",
-      "Gain {C:mult}+#2#{} for {C:attention}Mult{} and {C:attention}Wild{} cards",
-      "{C:chips}+#4#{} for {C:attention}Bonus{} and {C:attention}Stone{} cards,",
-      "{X:red,C:white}X#6#{} for {C:attention}Steel{} and {C:attention}Glass{} cards,",
-      "{C:money}$#8#{} for {C:attention}Gold{} and {C:attention}Lucky{} cards",
-      "{C:inactive}(Currently {C:mult}+#1#{}, {C:chips}+#3#{}, {X:red,C:white}X#5#{}, {C:money}$#7#{}{C:inactive} end of round)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
@@ -246,7 +205,7 @@ local crobat={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = "Skree!", 
+          message = localize("poke_screech_ex"), 
           colour = G.C.BLACK,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
@@ -268,16 +227,6 @@ local pichu={
   name = "pichu", 
   pos = {x = 0, y = 2},
   config = {extra={money = 10, Xmult_minus = 0.75, rounds = 2}},
-  loc_txt = {      
-    name = 'Pichu',      
-    text = {
-      "{C:attention}Baby{}",
-      "Earn {C:money}$#1#{} at",
-      "end of round",
-      "{X:red,C:white} X#2# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -329,16 +278,6 @@ local cleffa={
   name = "cleffa",
   pos = {x = 1, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
-  loc_txt = {
-    name = "Cleffa",
-    text = {
-      "{C:attention}Baby{}",
-      "Create a {C:attention}Moon{} card with",
-      "{C:dark_edition}Negative{} at end of round",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -397,16 +336,6 @@ local igglybuff={
   name = "igglybuff",
   pos = {x = 2, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
-  loc_txt = {
-    name = "Igglybuff",
-    text = {
-      "{C:attention}Baby{}",
-      "Create a {C:attention}World{} card with",
-      "{C:dark_edition}Negative{} at end of round",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}

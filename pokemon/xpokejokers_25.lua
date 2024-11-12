@@ -18,16 +18,6 @@ local grubbin={
   name = "grubbin",
   config = {extra = {mult = 3, rounds = 3}},
   pos = {x = 0, y = 1}, 
-  loc_txt = {      
-    name = 'Grubbin',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "This card scores {C:attention}triple{}",
-      "its Mult if you have",
-      "a {X:lightning, C:black}Lightning{} Joker",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }  
-  }, 
   rarity = 1, 
   cost = 3, 
   stage = "Basic", 
@@ -60,16 +50,6 @@ local charjabug={
   name = "charjabug",
   config = {extra = {mult = 12}},
   pos = {x = 1, y = 1}, 
-  loc_txt = {      
-    name = 'Charjabug',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "for each {X:lightning, C:black}Lightning{} Joker",
-      "you have {C:inactive}(includes self){}",
-       "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)",
-      "{C:inactive}(Evolves with a{} {C:attention}Thunder Stone{}{C:inactive} card)"
-    }  
-  }, 
   rarity = 2, 
   cost = 5, 
   item_req = "thunderstone",
@@ -103,16 +83,6 @@ local vikavolt={
   name = "vikavolt",
   config = {extra = {Xmult = 1.2, mult = 12}},
   pos = {x = 2, y = 1}, 
-  loc_txt = {      
-    name = 'Vikavolt',      
-    text = {
-      "{C:mult}+#3#{} Mult",
-      "{X:red,C:white} X#1# {} Mult for each",
-      "other {X:lightning, C:black}Lightning{} Joker",
-      "you have{}",
-       "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)",
-    }  
-  }, 
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
@@ -135,7 +105,7 @@ local vikavolt={
           count = count - 1
         end
         return {
-          message = "Thunder!", 
+          message = localize("poke_thunder_ex"),
           colour = G.C.XMULT,
           Xmult_mod = math.max(1, card.ability.extra.Xmult * count),
           mult_mod = card.ability.extra.mult

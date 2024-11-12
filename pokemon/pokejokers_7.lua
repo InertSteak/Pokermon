@@ -8,15 +8,6 @@ local bellossom={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.Xmult_multi}}
   end,
-  loc_txt = {      
-    name = 'Bellossom',      
-    text = {
-      "During the {C:attention}Small Blind{}",
-      "played cards with {C:attention}Odd{} rank",
-      "become {C:attention}Wild{} cards when scored",
-      "If already {C:attention}Wild{}, adds {C:dark_edition}Polychrome"
-    } 
-  }, 
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
@@ -45,7 +36,7 @@ local bellossom={
       end
       if #odds > 0 then 
           return {
-              message = "Petal!",
+            message = localize("poke_petal_dance_ex"),
               colour = G.C.MULT,
               card = card
           }
@@ -64,17 +55,6 @@ local politoed={
   name = "politoed", 
   pos = {x = 4, y = 3}, 
   config = {extra = {mult = 3, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1,}},
-  loc_txt = {      
-    name = 'Politoed',      
-    text = {
-      "Played cards with {V:1}#2#{} suit give",
-      "{C:mult}+#1#{} Mult when scored",
-      "Those cards retrigger based on",
-      "how many {X:water,C:white}Water{} Jokers you have",
-      "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{}{C:inactive,s:0.8} Retrigger(s) divided evenly between scoring cards){}",
-      "Suit changes in order {C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
@@ -149,17 +129,6 @@ local espeon={
   name = "espeon", 
   pos = {x = 4, y = 4},
   config = {extra = {retriggers = 1, suit = "Hearts", rerolls = 0}},
-  loc_txt = {      
-    name = 'Espeon',      
-    text = {
-      "Create a {C:attention}Sun{} card",
-      "every {C:attention}3{} {C:green}rerolls{}",
-      "Retrigger all played cards with",
-      "{C:hearts}Hearts{} suit in your {C:attention}first hand{}",
-      "{C:inactive}(Must have room)",
-      "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_sun
@@ -206,17 +175,6 @@ local umbreon={
   name = "umbreon", 
   pos = {x = 5, y = 4},
   config = {extra = {retriggers = 1, suit = "Clubs", rerolls = 0}},
-  loc_txt = {      
-    name = 'Umbreon',      
-    text = {
-      "Create a {C:attention}Moon{} card every",
-      "{C:attention}3{} {C:green}rerolls{}, retrigger",
-      "all {C:attention}held in hand{} abilities of",
-      "cards with {C:clubs}#2#{} suit in {C:attention}final hand{}",
-      "{C:inactive}(Must have room)",
-      "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_moon
@@ -264,16 +222,6 @@ local slowking={
   name = "slowking",
   pos = {x = 7, y = 4},
   config = {extra = {Xmult_multi = 1,Xmult_mod = 0.2, oXmult = 1}},
-  loc_txt = {
-    name = "Slowking",
-    text = {
-      "Played {C:attention}Kings{} give {X:red,C:white}X#1#{} Mult",
-      "when scored",
-      "Increases by {X:red,C:white}X#2#{} Mult",
-      "per hand played",
-      "resets at end of round",      
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_mod, }}
@@ -327,16 +275,6 @@ local slowking={
 local steelix={
   name = "steelix", 
   pos = {x = 6, y = 5},  
-  loc_txt = {      
-    name = 'Steelix',      
-    text = {
-      "The leftmost scoring card of",
-      "your {C:attention}first hand{} of round",
-      "becomes a {C:attention}Steel{} card",
-      "{C:attention}Stone{} cards {C:attention}held{} in",
-      "hand become {C:attention}Steel{}"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone

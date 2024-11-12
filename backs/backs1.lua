@@ -18,20 +18,12 @@ end
 local pokemondeck = {
 	name = "pokemondeck",
 	key = "pokemondeck",  
-  loc_txt = {      
-    name = 'Trainer Deck',      
-    text = {
-      "Start run with the",
-      "{C:tarot,T:v_poke_goodrod}#1#{} voucher",
-      "and a {C:tarot,T:c_poke_pokeball}#2#{} card",
-    } 
-  }, 
 	order = 17,
   unlocked = true,
   discovered = true,
 	config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {"Good Rod", "Pokeball"}}
+    return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
   end,
 	pos = { x = 0, y = 0 },
 	atlas = "pokedeck",
@@ -39,14 +31,6 @@ local pokemondeck = {
 local luminousdeck = {
 	name = "luminousdeck",
 	key = "luminousdeck",  
-  loc_txt = {      
-    name = 'Luminous Deck',      
-    text = {
-      "All Jokers are created",
-      "with random {C:pink}Type{} stickers",
-      "and have {C:attention}+1{} {C:pink}Energy{}"
-    } 
-  }, 
 	order = 18,
   unlocked = true,
   discovered = true,
@@ -63,18 +47,12 @@ local luminousdeck = {
 local obituarydeck = {
 	name = "obituarydeck",
 	key = "obituarydeck",  
-  loc_txt = {      
-    name = 'Obituary Deck',      
-    text = {
-      "All cards have a {C:dark_edition}#1#{}",
-    } 
-  }, 
 	order = 19,
   unlocked = true,
   discovered = true,
 	config = {},
   loc_vars = function(self, info_queue, center)
-    return {vars = {"Pink Seal"}}
+    return {vars = {localize("pinkseal_variable")}}
   end,
 	pos = { x = 2, y = 0 },
 	atlas = "pokedeck",

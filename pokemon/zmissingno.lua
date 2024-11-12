@@ -138,14 +138,6 @@ local missingno ={
   name = "missingno", 
   pos = { x = 1, y = 12},
   config = {extra = {tags_created = 2}},
-  loc_txt = {      
-    name = 'Missingno.',      
-    text = {
-      "Creates consumables",
-      "when obtained?",
-      "Creates {C:attention}#1#{}? {C:attention}Tags{}?",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
     		return {vars = {center.ability.extra.tags_created}}

@@ -5,10 +5,6 @@ local energy = {
   loc_txt =  	{
  		name = 'Energy', -- used on card type badges
  		collection = 'Energy Cards', -- label for the button to access the collection
- 		undiscovered = { -- description for undiscovered cards in the collection
- 			name = 'Undiscovered',
- 			text = { 'Not yet discovered' },
- 		},
  	},
   collection_row = {6, 6},
   shop_rate = 0.75,
@@ -22,10 +18,6 @@ local item = {
   loc_txt =  	{
  		name = 'Item', -- used on card type badges
  		collection = 'Item Cards', -- label for the button to access the collection
- 		undiscovered = { -- description for undiscovered cards in the collection
- 			name = 'Undiscovered',
- 			text = { 'Not yet discovered' },
- 		},
  	},
   collection_row = {6, 6},
   shop_rate = 1.5,

@@ -2,16 +2,6 @@ local pokedex={
   name = "pokedex",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 0, mult_mod = 2}},
-  loc_txt = {      
-    name = 'Pokedex',      
-    text = {
-        "{C:mult}+#2#{} Mult for each",
-        "Joker with a {C:pink}Type{} you have",
-        "Pokemon may appear",
-        "multiple times",
-        "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
-      } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -49,13 +39,6 @@ local everstone={
   name = "everstone",
   pos = {x = 1, y = 0},
   config = {extra = {Xmult_mod = 1.75}},
-  loc_txt = {      
-    name = 'Everstone',      
-    text = {
-        "Pokemon {C:attention}can't{} evolve",
-        "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
-      } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}

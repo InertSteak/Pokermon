@@ -2,17 +2,6 @@ local bulbasaur={
   name = "bulbasaur",
   pos = {x = 0, y = 0},
   config = {extra = {money = 1, earned = 0, h_size = 1}},
-  loc_txt = {      
-    name = 'Bulbasaur',      
-    text = {
-        "{C:attention}+#4#{} hand size",
-        "Earn {C:money}$#1#{} for each {C:attention}#3#{}",
-        "held in hand, rank",
-        "changes every round",
-        "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
-        "{C:inactive}(Evolves at {C:money}$16{}{C:inactive} earned)"
-      } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
@@ -26,15 +15,24 @@ local bulbasaur={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          if not context.blueprint then
-            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
-          end
-          ease_dollars(card.ability.extra.money)
-          return {
+        if not context.end_of_round and not context.before and not context.after then
+          if context.other_card.debuff then
+            return {
+              message = localize("k_debuffed"),
+              colour = G.C.RED,
+              card = card,
+            }
+          else
+            if not context.blueprint then
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+            end
+            ease_dollars(card.ability.extra.money)
+            return {
               message = localize('$')..card.ability.extra.money,
-              colour = G.C.MONEY
-          }
+              colour = G.C.MONEY,
+              card = card
+            }
+          end
         end
     end
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, 16)
@@ -51,17 +49,6 @@ local ivysaur={
   name = "ivysaur", 
   pos = {x = 1, y = 0}, 
   config = {extra = {money = 1, earned = 0, h_size = 1}},
-  loc_txt = {      
-    name = 'Ivysaur',      
-    text = {
-        "{C:attention}+#3#{} hand size",
-        "Earn {C:money}$#1#{} or {C:money}$#5#{} for each {C:attention}#4#{}",
-        "held in hand, rank",
-        "changes every round",
-        "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
-        "{C:inactive}(Evolves at {C:money}$16{}{C:inactive} earned)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money + 1}}
@@ -74,21 +61,30 @@ local ivysaur={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          local more
-          if pseudorandom('bulba') < .50 then
-            more = 0
+        if not context.end_of_round and not context.before and not context.after then
+          if context.other_card.debuff then
+            return {
+              message = localize("k_debuffed"),
+              colour = G.C.RED,
+              card = card,
+            }
           else
-            more = 1
-          end
-          if not context.blueprint then
-            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
-          end
-          ease_dollars(card.ability.extra.money + more)
-          return {
+            local more
+            if pseudorandom('bulba') < .50 then
+              more = 0
+            else
+              more = 1
+            end
+            if not context.blueprint then
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
+            end
+            ease_dollars(card.ability.extra.money + more)
+            return {
               message = localize('$')..card.ability.extra.money + more,
-              colour = G.C.MONEY
-          }
+              colour = G.C.MONEY,
+              card = card
+            }
+          end
         end
     end
     return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, 16)
@@ -105,16 +101,6 @@ local venusaur={
   name = "venusaur", 
   pos = {x = 2, y = 0}, 
   config = {extra = {money = 2, earned = 0, h_size = 1}},
-  loc_txt = {      
-    name = 'Venusaur',      
-    text = {
-        "{C:attention}+#3#{} hand size",
-        "Earn {C:money}$#1#{} for each {C:attention}#4#{}",
-        "held in hand, rank",
-        "changes every round",
-        "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
@@ -127,15 +113,24 @@ local venusaur={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-          if not context.blueprint then
-            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+        if not context.end_of_round and not context.before and not context.after then
+          if context.other_card.debuff then
+            return {
+              message = localize("k_debuffed"),
+              colour = G.C.RED,
+              card = card,
+            }
+          else
+            if not context.blueprint then
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+            end
+            ease_dollars(card.ability.extra.money)
+            return {
+                message = localize('$')..card.ability.extra.money,
+                colour = G.C.MONEY,
+                card = card
+            }
           end
-          ease_dollars(card.ability.extra.money)
-          return {
-              message = localize('$')..card.ability.extra.money,
-              colour = G.C.MONEY
-          }
         end
     end
   end,
@@ -151,16 +146,6 @@ local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
   config = {extra = {mult = 0, mult_mod = 1, d_remaining = 0, d_size = 1}},
-  loc_txt = {      
-    name = 'Charmander',      
-    text = {
-      "{C:red}+#4#{} discard",
-      "Gains {C:mult}+#2#{} Mult per hand played",
-      "when {C:attention}#3#{} discards remaining",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+16{}{C:inactive} Mult)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -210,16 +195,6 @@ local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
   config = {extra = {mult = 16, mult_mod = 2, d_remaining = 0, d_size = 1}},
-  loc_txt = {      
-    name = 'Charmeleon',      
-    text = {
-      "{C:red}+#4#{} discard",
-      "Gains {C:mult}+#2#{} Mult per hand played",
-      "when {C:attention}#3#{} discards remaining",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive}(Evolves at {C:mult}+36{}{C:inactive} Mult)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -265,13 +240,6 @@ local charizard={
   name = "charizard", 
   pos = {x = 5, y = 0}, 
   config = {extra = {mult = 36, Xmult = 1.25, d_remaining = 0, d_size = 1}},
-  loc_txt = {      
-    name = 'Charizard',      
-    text = {
-      "{C:red}+#4#{} discard, {C:mult}+#1#{} Mult",
-      "{X:mult,C:white} X#2# {} Mult when {C:attention}#3#{} discards remaining",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -313,16 +281,6 @@ local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
   config = {extra = {chips = 0, chip_mod = 1, hands = 1}},
-  loc_txt = {      
-    name = 'Squirtle',      
-    text = {
-      "{C:chips}+#3#{} hands",
-      "Gains {C:chips}+#2#{} Chips for each hand",
-      "remaining at end of round",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}+16{} {C:inactive}Chips)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -374,16 +332,6 @@ local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
   config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
-  loc_txt = {      
-    name = 'Wartortle',     
-    text = {
-      "{C:chips}+#3#{} hands",
-      "Gains {C:chips}+#2#{} Chips for each hand",
-      "remaining at end of round",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}+36{} {C:inactive}Chips)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -434,14 +382,6 @@ local blastoise={
   name = "blastoise", 
   pos = {x = 8, y = 0},
   config = {extra = {chips = 36, chip_mod = 40, hands = 1}},
-  loc_txt = {      
-    name = 'Blastoise',      
-    text = {
-      "{C:chips}+#3#{} hands, {C:chips}+#1#{} Chips",
-      "{C:chips}+#2#{} Chips for each",
-      "remaining hand",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -476,13 +416,6 @@ local caterpie={
   name = "caterpie", 
   pos = {x = 9, y = 0},
   config = {extra = {mult = 2, rounds = 2}},
-  loc_txt = {      
-    name = 'Caterpie',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} round)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -510,13 +443,6 @@ local metapod={
   name = "metapod",
   config = {extra = {mult = 4, rounds = 3}},
   pos = {x = 10, y = 0}, 
-  loc_txt = {      
-    name = 'Metapod',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }  
-  }, 
   rarity = 1, 
   cost = 4, 
   stage = "One", 
@@ -544,12 +470,6 @@ local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
   config = {extra = {mult = 10}},
-  loc_txt = {      
-    name = 'Butterfree',      
-    text = {
-      "{C:mult}+#1#{} Mult",
-    }  
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult}}
@@ -577,13 +497,6 @@ local weedle={
   name = "weedle", 
   pos = {x = 12, y = 0},
   config = {extra = {chips = 16, rounds = 2}},
-  loc_txt = {      
-    name = 'Weedle',      
-    text = {
-      "{C:chips}+#1#{} Chips",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} round)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -611,13 +524,6 @@ local kakuna={
   name = "kakuna", 
   pos = {x = 0, y = 1}, 
   config = {extra = {chips = 32, rounds = 3}},
-  loc_txt = {      
-    name = 'Kakuna',      
-    text = {
-      "{C:chips}+#1#{} Chips",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }  
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -677,15 +583,6 @@ local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
   config = {extra = {rounds = 4}},
-  loc_txt = {      
-    name = 'Pidgey',      
-    text = {
-      "All {C:planet}Planet{} cards and",
-      "{C:planet}Celestial Packs{} in",
-      "the shop cost {C:money}$2{} less",
-      "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
@@ -718,15 +615,6 @@ local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
   config = {extra = {rounds = 4}},
-  loc_txt = {      
-    name = 'Pidgeotto',      
-    text = {
-      "All {C:planet}Planet{} cards and",
-      "{C:planet}Celestial Packs{} in",
-      "the shop cost {C:money}$3{} less",
-      "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
-    } 
-  },
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -759,15 +647,6 @@ local pidgeot={
   name = "pidgeot", 
   pos = {x = 4, y = 1},
   config = {extra = {money = 2}}, 
-  loc_txt = {      
-    name = 'Pidgeot',      
-    text = {
-      "All {C:planet}Planet{} cards and",
-      "{C:planet}Celestial Packs{} in the",
-      "shop are {C:attention}free{}, using",
-      "{C:planet}Planet{} cards earns you {C:money}$#1#{}"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
@@ -777,7 +656,7 @@ local pidgeot={
   stage = "Two", 
   atlas = "Pokedex1",
   ptype = "Colorless",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
       ease_dollars(card.ability.extra.money)
@@ -802,15 +681,6 @@ local rattata={
   name = "rattata", 
   pos = {x = 5, y = 1},
   config = {extra = {retriggers = 1, rounds = 3}},
-  loc_txt = {      
-    name = 'Rattata',      
-    text = {
-      "Retrigger {C:attention}first{} played",
-      "card used in scoring",
-      "{C:attention}#1#{} additional time",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds}}
@@ -841,14 +711,6 @@ local raticate={
   name = "raticate", 
   pos = {x = 6, y = 1}, 
   config = {extra = {retriggers = 1}},
-  loc_txt = {      
-    name = 'Raticate',      
-    text = {
-      "Retrigger {C:attention}first{} and {C:attention}second{}",
-      "played cards used in scoring",
-      "{C:attention}#1#{} additional time",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers}}
@@ -875,15 +737,6 @@ local spearow={
   name = "spearow", 
   pos = {x = 7, y = 1},
   config = {extra = {rounds = 4}},
-  loc_txt = {      
-    name = 'Spearow',      
-    text = {
-      "Adds {C:attention}double{} the",
-      "level of the highest",
-      "level poker hand to Mult",
-      "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds}}
@@ -916,14 +769,6 @@ local spearow={
 local fearow={
   name = "fearow", 
   pos = {x = 8, y = 1}, 
-  loc_txt = {      
-    name = 'Fearow',      
-    text = {
-      "Adds {C:attention}quadruple{} the",
-      "level of the highest",
-      "level poker hand to Mult",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -955,15 +800,6 @@ local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
   config = {extra = {mult = 6, rounds = 4}},
-  loc_txt = {      
-    name = 'Ekans',      
-    text = {
-      "{C:mult}+#1#{} Mult if",
-      "played hand contains",
-      "a {C:attention}Straight{}",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -991,15 +827,6 @@ local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
   config = {extra = {mult = 8, rounds = 4}},
-  loc_txt = {      
-    name = 'Arbok',      
-    text = {
-      "{C:mult}+#1#{} Mult if played hand",
-      "contains a {C:attention}Straight{}",
-      "Create a Tarot card if it",
-      "also contains an {C:attention}Ace{}."
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
@@ -1047,16 +874,6 @@ local pikachu={
   name = "pikachu", 
   pos = {x = 11, y = 1},
   config = {extra={money = 1}},
-  loc_txt = {      
-    name = 'Pikachu',      
-    text = {
-      "Earn {C:money}$#1#{} at",
-      "end of round for",
-      "each Joker you have",
-      "{C:inactive}(Max of {C:money}$10{C:inactive})",
-      "{C:inactive}(Evolves with a {C:attention}Thunder Stone{} {C:inactive}card)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
@@ -1080,18 +897,6 @@ local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
   config = {extra={money = 1, threshold = 120, plus_slot = false}},
-  loc_txt = {      
-    name = 'Raichu',      
-    text = {
-      "Applies {C:dark_edition}Negative{} to self",
-      "at end of round if you",
-      "have at least {C:money}$#2#{}",
-      "{C:inactive,s:0.8}(Increases per Raichu you have){}",
-      "Earn {C:money}$#1#{} at end of",
-      "round for each Joker you have",
-      "{C:inactive}(Max of {C:money}$10{C:inactive})"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.negative) then
@@ -1117,15 +922,6 @@ local sandshrew={
   name = "sandshrew", 
   pos = {x = 0, y = 2},
   config = {extra = {rounds = 5}},
-  loc_txt = {      
-    name = 'Sandshrew',      
-    text = {
-      "When a {C:attention}Glass{} card is",
-      "destroyed, add a {C:attention}Stone{} copy to",
-      "deck and draw it to {C:attention}hand{}",
-      "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -1174,15 +970,7 @@ local sandshrew={
 }
 local sandslash={
   name = "sandslash", 
-  pos = {x = 1, y = 2}, 
-  loc_txt = {      
-    name = 'Sandslash',      
-    text = {
-      "When a {C:attention}Glass{} card is",
-      "destroyed, add a {C:attention}Steel{} copy to",
-      "deck and draw it to {C:attention}hand{}",
-    } 
-  },
+  pos = {x = 1, y = 2},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -1230,15 +1018,6 @@ local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
   config = {extra = {chips = 30, chip_total = 0, rounds = 4}},
-  loc_txt = {      
-    name = 'Nidoran F',      
-    text = {
-      "Each {C:attention}Queen{}",
-      "held in hand",
-      "gives {C:chips}+#1#{} Chips",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -1251,12 +1030,21 @@ local nidoranf={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 12 then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS
-        }
+      if not context.end_of_round and not context.before and not context.after then
+        if context.other_card.debuff then
+            return {
+              message = localize("k_debuffed"),
+              colour = G.C.RED,
+              card = card,
+            }
+        else
+            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
+            return {
+              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+              colour = G.C.CHIPS,
+              card = card,
+            }
+        end
       end
     end
     if context.joker_main then
@@ -1273,15 +1061,6 @@ local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},
   config = {extra = {chips = 60, chip_total = 0}},
-  loc_txt = {      
-    name = 'Nidorina',      
-    text = {
-      "Each {C:attention}Queen{}",
-      "held in hand",
-      "gives {C:chips}+#1#{} Chips",
-      "{C:inactive}(Evolves with a{} {C:attention}Moon Stone{}{C:inactive} card)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
@@ -1296,12 +1075,21 @@ local nidorina={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 12 then
-      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS
-        }
+      if not context.end_of_round and not context.before and not context.after then
+        if context.other_card.debuff then
+          return {
+            message = localize("k_debuffed"),
+            colour = G.C.RED,
+            card = card,
+          }
+        else
+            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
+            return {
+              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+              colour = G.C.CHIPS,
+              card = card,
+            }
+        end
       end
     end
     if context.joker_main then

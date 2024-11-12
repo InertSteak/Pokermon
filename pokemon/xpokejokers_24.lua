@@ -12,17 +12,6 @@ local sylveon={
   name = "sylveon", 
   pos = {x = 7, y = 3},
   config = {extra = {Xmult_multi = 1.2, suit = "Diamonds", rerolls = 0}},
-  loc_txt = {      
-    name = 'Sylveon',      
-    text = {
-      "Create a {C:attention}Star{} card",
-      "every {C:attention}3{} {C:green}rerolls{}",
-      "Each card with {C:diamonds}#2#{} suit",
-      "held in hand gives {X:mult,C:white} X#3# {} Mult",
-      "{C:inactive}(Must have room)",
-      "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_star

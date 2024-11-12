@@ -9,7 +9,7 @@ SMODS.current_mod.config_tab = function()
       },
       nodes = {
         create_toggle({
-          label = "Pokemon Only?",
+          label = localize("poke_settings_pokemon_only"),
           ref_table = pokermon_config,
           ref_value = "pokemon_only",
           callback = function(_set_toggle)
@@ -17,7 +17,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Unlimited Energy?",
+          label = localize("poke_settings_unlimited_energy"),
           ref_table = pokermon_config,
           ref_value = "unlimited_energy",
           callback = function(_set_toggle)
@@ -25,7 +25,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Shiny on Playing Cards?",
+          label = localize("poke_settings_shiny_playing_cards"),
           ref_table = pokermon_config,
           ref_value = "shiny_playing_cards",
           callback = function(_set_toggle)
@@ -33,7 +33,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Jokers Only?(requires restart)",
+          label = localize("poke_settings_jokers_only"),
           ref_table = pokermon_config,
           ref_value = "jokers_only",
           callback = function(_set_toggle)
@@ -41,7 +41,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "No Evolutions?(requires restart)",
+          label = localize("poke_settings_no_evolutions"),
           ref_table = pokermon_config,
           ref_value = "no_evos",
           callback = function(_set_toggle)
@@ -49,7 +49,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Pokeballs?(requires restart)",
+          label = localize("poke_settings_pokeballs"),
           ref_table = pokermon_config,
           ref_value = "pokeballs",
           callback = function(_set_toggle)
@@ -57,7 +57,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Pokedex Numbers?(requires restart)",
+          label = localize("poke_settings_pokedex_number"),
           ref_table = pokermon_config,
           ref_value = "pokemon_num",
           callback = function(_set_toggle)
@@ -65,7 +65,7 @@ SMODS.current_mod.config_tab = function()
           end,
         }),
         create_toggle({
-          label = "Pokemon Splash Card?(requires restart)",
+          label = localize("poke_settings_pokemon_splash"),
           ref_table = pokermon_config,
           ref_value = "pokemon_splash",
           callback = function(_set_toggle)
@@ -79,7 +79,7 @@ end
 SMODS.current_mod.extra_tabs = function()
   local scale = 0.75
   return {
-    label = "Credits",
+    label = localize("poke_credits_actualcredits"),
     tab_definition_function = function()
       return {
         n = G.UIT.ROOT,
@@ -99,7 +99,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Thanks to",
+                  text = localize("poke_credits_thanks"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -117,7 +117,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Lead Developer: ",
+                  text = localize("poke_credits_lead"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -144,7 +144,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Graphics Design: ",
+                  text = localize("poke_credits_graphics"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -171,7 +171,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Graphics Design(cont.): ",
+                  text = localize("poke_credits_graphics"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -198,7 +198,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "QA Lead: ",
+                  text = localize("poke_credits_quality_assurance_main"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -225,7 +225,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Developers: ",
+                  text = localize("poke_credits_developer"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -252,7 +252,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Community Managers: ",
+                  text = localize("poke_credits_community_manager"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -279,7 +279,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Promotion Producer: ",
+                  text = localize("poke_credits_promotion_producer"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT

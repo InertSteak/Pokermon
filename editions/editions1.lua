@@ -5,14 +5,6 @@ end
 
 local shiny = ({
     key = "shiny",
-    loc_txt = {
-        name = "Shiny",
-        label = "Shiny",
-        text = {
-          "{C:attention}+1{} Booster Pack slot",
-          "available in shop",
-        }
-    },
     atlas = "Shinydex1",
     -- Stop shadow from being rendered under the card
     disable_shadow = false,

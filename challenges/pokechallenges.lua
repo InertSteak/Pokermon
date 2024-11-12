@@ -1,7 +1,6 @@
 local poke_master = {
     object_type = "Challenge",
     key = "poke_master",
-    loc_txt = "Pokemon Master",
     rules = {
         custom = {
             {id = 'poke_master'} --this just explains the rule
