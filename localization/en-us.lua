@@ -2676,6 +2676,8 @@ return {
             b_item_cards = "Item Cards",
             
             --Mod Menu stuff
+            poke_settings_header_required = "Restart Required:",
+            poke_settings_header_norequired = "No Restart Required:",
             poke_settings_pokemon_only = "Pokemon only?",
             poke_settings_unlimited_energy = "Unlmited Energy?",
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",

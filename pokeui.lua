@@ -45,7 +45,7 @@ pokemonconfig = function()
         {
           n = G.UIT.T,
           config = {
-            text = "No Restart Required:",
+            text = localize("poke_settings_header_norequired"),
             shadow = true,
             scale = 0.75 * 0.8,
             colour = HEX("ED533A")
@@ -64,7 +64,7 @@ pokemonconfig = function()
         {
           n = G.UIT.T,
           config = {
-            text = "Restart Required:",
+            text = localize("poke_settings_header_required"),
             shadow = true,
             scale = 0.75 * 0.8,
             colour = HEX("ED533A")
