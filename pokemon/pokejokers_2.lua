@@ -1062,7 +1062,7 @@ local mankey={
     name = 'Mankey',      
     text = {
       "Each played {C:attention}2{},",
-      "{C:attention}3{}, {C:attention}5{} gives",
+      "{C:attention}3{}, or {C:attention}5{} gives",
       "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
       "when scored",
       "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
@@ -1101,7 +1101,7 @@ local primeape={
     name = 'Primeape',      
     text = {
       "Each played {C:attention}2{},",
-      "{C:attention}3{}, {C:attention}5{} gives",
+      "{C:attention}3{}, or {C:attention}5{} gives",
       "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
       "when scored",
       "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"

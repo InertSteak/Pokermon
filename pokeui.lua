@@ -1,4 +1,88 @@
 --Config UI
+local no_restart_toggles_left = { 
+                 {ref_value = "jokers_only", label = "Jokers Only?"}, {ref_value = "no_evos", label = "No Evolutions?"}, {ref_value = "pokeballs", label = "Pokeballs?"}
+                }
+                
+local no_restart_toggles_right = { 
+  {ref_value = "pokemon_num", label = "Pokedex Numbers?"}, {ref_value = "pokemon_splash", label = "Pokemon Intro?"}, 
+}
+local restart_toggles = {{ref_value = "pokemon_only", label = "Pokemon Only?"}, {ref_value = "unlimited_energy", label = "Unlimited Energy?"}, 
+                         {ref_value = "shiny_playing_card", label = "Shiny Playing Cards?"}, {ref_value = "gen_one", label = "Gen 1 Only?"}}
+                       
+local create_menu_toggles = function (parent, toggles)
+  for k, v in ipairs(toggles) do
+    parent.nodes[#parent.nodes + 1] = create_toggle({
+          label = v.label,
+          ref_table = pokermon_config,
+          ref_value = v.ref_value,
+          callback = function(_set_toggle)
+            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+          end,
+    })
+  end
+end
+
+pokemonconfig = function()
+  local no_restart_left_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(no_restart_left_settings, no_restart_toggles_left)
+
+  local no_restart_right_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(no_restart_right_settings, no_restart_toggles_right)
+
+  local restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(restart_settings, restart_toggles)
+  
+  local config_nodes =   
+  {
+    {
+      n = G.UIT.R,
+      config = {
+        padding = 0,
+        align = "cm"
+      },
+      nodes = {
+        {
+          n = G.UIT.T,
+          config = {
+            text = "No Restart Required:",
+            shadow = true,
+            scale = 0.75 * 0.8,
+            colour = HEX("ED533A")
+          }
+        }
+      },
+    },
+    restart_settings,
+    {
+      n = G.UIT.R,
+      config = {
+        padding = 0,
+        align = "cm"
+      },
+      nodes = {
+        {
+          n = G.UIT.T,
+          config = {
+            text = "Restart Required:",
+            shadow = true,
+            scale = 0.75 * 0.8,
+            colour = HEX("ED533A")
+          }
+        }
+      },
+    },
+    {
+      n = G.UIT.R,
+      config = {
+        padding = 0,
+        align = "tm"
+      },
+      nodes = {no_restart_left_settings, no_restart_right_settings},
+    },
+  }
+  return config_nodes
+end
+
 SMODS.current_mod.config_tab = function()
     return {
       n = G.UIT.ROOT,
@@ -7,72 +91,7 @@ SMODS.current_mod.config_tab = function()
         padding = 0.05,
         colour = G.C.CLEAR,
       },
-      nodes = {
-        create_toggle({
-          label = "Pokemon Only?",
-          ref_table = pokermon_config,
-          ref_value = "pokemon_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Unlimited Energy?",
-          ref_table = pokermon_config,
-          ref_value = "unlimited_energy",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Shiny on Playing Cards?",
-          ref_table = pokermon_config,
-          ref_value = "shiny_playing_cards",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Jokers Only?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "jokers_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "No Evolutions?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "no_evos",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Pokeballs?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "pokeballs",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Pokedex Numbers?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "pokemon_num",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = "Pokemon Splash Card?(requires restart)",
-          ref_table = pokermon_config,
-          ref_value = "pokemon_splash",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-      },
+      nodes = pokemonconfig()
     }
 end
 
