@@ -137,6 +137,7 @@ local jynx={
             table.insert(G.playing_cards, copy)
             G.deck:emplace(copy)
             card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+            playing_card_joker_effects({true});
           end
         end
       end
