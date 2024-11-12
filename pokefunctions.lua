@@ -922,3 +922,47 @@ juice_flip = function()
       }))
   end
 end
+
+create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
+  local poke_keys = {}
+  local pokearea = area or G.jokers
+  local poke_key
+  local create_args = {set = "Joker", rarity = pokerarity, area = pokearea, key = ''}
+  
+  for k, v in pairs(G.P_CENTERS) do
+    if v.stage and not (stage and v.stage ~= stage) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and not (poketype and poketype ~= v.ptype) then
+      table.insert(poke_keys, v.key)
+    end
+  end
+  
+  if #poke_keys > 0 then
+    poke_key = pseudorandom_element(poke_keys, pseudoseed(pseed))
+  else
+    poke_key = "j_poke_caterpie"
+  end
+  create_args.key = poke_key
+
+  return SMODS.create_card(create_args)
+end
+
+get_gen_allowed = function(atlas)
+  local gen_allowed = true
+  if pokermon_config.gen_one and atlas ~= "poke_Pokedex1" and atlas ~= "poke_others" then
+    gen_allowed = false
+  end
+  return gen_allowed
+end
+
+get_poke_allowed = function(key)
+  local banned_keys = {"taurosh"}
+  local allowed = true
+  
+  for i=1, #banned_keys do
+    if banned_keys[i] == key then
+      allowed = false
+      break
+    end
+  end
+  
+  return allowed
+end

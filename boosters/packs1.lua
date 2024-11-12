@@ -1,6 +1,6 @@
 local create_pocket_card = function(self, card)
     local card_type = pseudorandom(pseudoseed('pocket'))
-    if card_type > .40 then
+    if card_type > .60 then
       local match_type = pseudorandom(pseudoseed('match'))
       if match_type > .85 and #G.jokers.cards > 0 then
         local energy_types = {}

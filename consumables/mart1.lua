@@ -20,39 +20,10 @@ local pokeball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        local allowedPokemon = {}
-        local duplicatePokemon = false
-        local f_key = ""
-        
-        for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Basic" and 
-             ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
-            if #G.jokers.cards > 0 then
-              for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
-                  duplicatePokemon = true
-                end
-              end
-              if duplicatePokemon == false then 
-                  allowedPokemon[#allowedPokemon+1] = k
-              end
-              duplicatePokemon = false
-            else
-              allowedPokemon[#allowedPokemon+1] = k
-            end
-          end
-        end
-        
-        if #allowedPokemon > 0 then
-          f_key = pseudorandom_element(allowedPokemon, pseudoseed('poke_ball'))
-        else
-          f_key = "j_poke_caterpie"
-        end
-        
         play_sound('timpani')
-        local card = create_card('Joker', G.jokers, nil, nil, nil, nil, f_key)
-        card:add_to_deck()
-        G.jokers:emplace(card)
+        local _card = create_random_poke_joker("pokeball", "Basic")
+        _card:add_to_deck()
+        G.jokers:emplace(_card)
         return true end }))
     delay(0.6)
   end
@@ -83,39 +54,10 @@ local greatball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        local allowedPokemon = {}
-        local duplicatePokemon = false
-        local f_key = ""
-        
-        for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "One" and
-             ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
-            if #G.jokers.cards > 0 then
-              for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
-                  duplicatePokemon = true
-                end
-              end
-              if duplicatePokemon == false then 
-                  allowedPokemon[#allowedPokemon+1] = k
-              end
-              duplicatePokemon = false
-            else
-              allowedPokemon[#allowedPokemon+1] = k
-            end
-          end
-        end
-        
-        if #allowedPokemon > 0 then
-          f_key = pseudorandom_element(allowedPokemon, pseudoseed('poke_ball'))
-        else
-          f_key = "j_poke_caterpie"
-        end
-        
         play_sound('timpani')
-        local card = create_card('Joker', G.jokers, nil, nil, nil, nil, f_key)
-        card:add_to_deck()
-        G.jokers:emplace(card)
+        local _card = create_random_poke_joker("greatball", "One")
+        _card:add_to_deck()
+        G.jokers:emplace(_card)
         return true end }))
     delay(0.6)
   end
@@ -146,39 +88,10 @@ local ultraball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        local allowedPokemon = {}
-        local duplicatePokemon = false
-        local f_key = ""
-        
-        for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Two" and 
-          ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
-            if #G.jokers.cards > 0 then
-              for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
-                  duplicatePokemon = true
-                end
-              end
-              if duplicatePokemon == false then 
-                  allowedPokemon[#allowedPokemon+1] = k
-              end
-              duplicatePokemon = false
-            else
-              allowedPokemon[#allowedPokemon+1] = k
-            end
-          end
-        end
-        
-        if #allowedPokemon > 0 then
-          f_key = pseudorandom_element(allowedPokemon, pseudoseed('poke_ball'))
-        else
-          f_key = "j_poke_caterpie"
-        end
-        
         play_sound('timpani')
-        local card = create_card('Joker', G.jokers, nil, nil, nil, nil, f_key)
-        card:add_to_deck()
-        G.jokers:emplace(card)
+        local _card = create_random_poke_joker("ultraball", "Two")
+        _card:add_to_deck()
+        G.jokers:emplace(_card)
         return true end }))
     delay(0.6)
   end
@@ -207,39 +120,10 @@ local masterball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        local allowedPokemon = {}
-        local duplicatePokemon = false
-        local f_key = ""
-        
-        for k, _ in pairs(G.P_CENTERS) do
-          if G.P_CENTERS[k].stage and G.P_CENTERS[k].stage == "Legendary" and 
-          ((pokermon_config.gen_one and (G.P_CENTERS[k].atlas == "poke_Pokedex1" or G.P_CENTERS[k].atlas == "poke_others")) or not pokermon_config.gen_one) then
-            if #G.jokers.cards > 0 then
-              for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == G.P_CENTERS[k].name then
-                  duplicatePokemon = true
-                end
-              end
-              if duplicatePokemon == false then 
-                  allowedPokemon[#allowedPokemon+1] = k
-              end
-              duplicatePokemon = false
-            else
-              allowedPokemon[#allowedPokemon+1] = k
-            end
-          end
-        end
-        
-        if #allowedPokemon > 0 then
-          f_key = pseudorandom_element(allowedPokemon, pseudoseed('poke_ball'))
-        else
-          f_key = "j_poke_caterpie"
-        end
-        
         play_sound('timpani')
-        local card = create_card('Joker', G.jokers, nil, nil, nil, nil, f_key)
-        card:add_to_deck()
-        G.jokers:emplace(card)
+        local _card = create_random_poke_joker("masterball", "Legendary")
+        _card:add_to_deck()
+        G.jokers:emplace(_card)
         return true end }))
     delay(0.6)
   end

@@ -521,7 +521,8 @@ local marowak={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    local count = #G.consumeables.cards + #find_joker('thickclub')
+    local count = (G.consumeables and #G.consumeables.cards) or 0 
+    count = count + #find_joker('thickclub')
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.card_limit, 
                     1 + (center.ability.extra.Xmult_multi * count)}}
   end,

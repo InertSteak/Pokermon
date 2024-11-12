@@ -61,7 +61,7 @@ local metang={
   end,
   rarity = "poke_safari", 
   cost = 8, 
-  stage = "Two", 
+  stage = "One", 
   ptype = "Metal",
   atlas = "Pokedex3",
   perishable_compat = false,
