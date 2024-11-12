@@ -15,21 +15,21 @@ local energysearch = { --+1 max energy limit
   loc_txt = {
     name = "Energy Search",
     text = {
-      "{C:pink}+1{} Energy Limit"
+      "{C:pink}+2{} Energy Limit"
     }
   },
   redeem = function(self)
     if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 1
+      G.GAME.energy_plus = 2
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 1
+      G.GAME.energy_plus = G.GAME.energy_plus + 2
     end
   end,
   unredeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 1
+      G.GAME.energy_plus = G.GAME.energy_plus - 2
     end
   end
 }
@@ -51,21 +51,21 @@ local energyresearch = { --+1 max energy limit
   loc_txt = {
     name = "Energy Research",
     text = {
-      "{C:pink}+1{} Energy Limit"
+      "{C:pink}+3{} Energy Limit"
     }
   },
   redeem = function(self)
     if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 1
+      G.GAME.energy_plus = 3
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 1
+      G.GAME.energy_plus = G.GAME.energy_plus + 3
     end
   end,
   unredeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 1
+      G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
   end
 }
