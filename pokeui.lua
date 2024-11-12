@@ -1,18 +1,19 @@
 --Config UI
 local no_restart_toggles_left = { 
-                 {ref_value = "jokers_only", label = "Jokers Only?"}, {ref_value = "no_evos", label = "No Evolutions?"}, {ref_value = "pokeballs", label = "Pokeballs?"}
+                 {ref_value = "jokers_only", label = "poke_settings_jokers_only"}, {ref_value = "no_evos", label = "poke_settings_no_evolutions"}, 
+                 {ref_value = "pokeballs", label = "poke_settings_pokeballs"}
                 }
                 
 local no_restart_toggles_right = { 
-  {ref_value = "pokemon_num", label = "Pokedex Numbers?"}, {ref_value = "pokemon_splash", label = "Pokemon Intro?"}, 
+  {ref_value = "pokemon_num", label = "poke_settings_pokedex_number"}, {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
 }
-local restart_toggles = {{ref_value = "pokemon_only", label = "Pokemon Only?"}, {ref_value = "unlimited_energy", label = "Unlimited Energy?"}, 
-                         {ref_value = "shiny_playing_card", label = "Shiny Playing Cards?"}, {ref_value = "gen_one", label = "Gen 1 Only?"}}
+local restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
+                         {ref_value = "shiny_playing_card", label = "poke_settings_shiny_playing_cards"}, {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
                        
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do
     parent.nodes[#parent.nodes + 1] = create_toggle({
-          label = v.label,
+          label = localize(v.label),
           ref_table = pokermon_config,
           ref_value = v.ref_value,
           callback = function(_set_toggle)
@@ -90,72 +91,6 @@ SMODS.current_mod.config_tab = function()
         align = "cm",
         padding = 0.05,
         colour = G.C.CLEAR,
-      },
-      nodes = {
-        create_toggle({
-          label = localize("poke_settings_pokemon_only"),
-          ref_table = pokermon_config,
-          ref_value = "pokemon_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_unlimited_energy"),
-          ref_table = pokermon_config,
-          ref_value = "unlimited_energy",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_shiny_playing_cards"),
-          ref_table = pokermon_config,
-          ref_value = "shiny_playing_cards",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_jokers_only"),
-          ref_table = pokermon_config,
-          ref_value = "jokers_only",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_no_evolutions"),
-          ref_table = pokermon_config,
-          ref_value = "no_evos",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_pokeballs"),
-          ref_table = pokermon_config,
-          ref_value = "pokeballs",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_pokedex_number"),
-          ref_table = pokermon_config,
-          ref_value = "pokemon_num",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
-        create_toggle({
-          label = localize("poke_settings_pokemon_splash"),
-          ref_table = pokermon_config,
-          ref_value = "pokemon_splash",
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
-        }),
       },
       nodes = pokemonconfig()
     }
