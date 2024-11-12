@@ -844,16 +844,6 @@ local mankey={
   name = "mankey", 
   pos = {x = 3, y = 4},
   config = {extra = {mult = 3, chips = 5, rounds = 5}},
-  loc_txt = {     
-    name = 'Mankey',      
-    text = {
-      "Each played {C:attention}2{},",
-      "{C:attention}3{}, or {C:attention}5{} gives",
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
-      "when scored",
-      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
@@ -883,16 +873,6 @@ local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
   config = {extra = {mult = 7, chips = 11, primes_played = 0}},
-  loc_txt = {      
-    name = 'Primeape',      
-    text = {
-      "Each played {C:attention}2{},",
-      "{C:attention}3{}, or {C:attention}5{} gives",
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
-      "when scored",
-      "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.primes_played}}

@@ -590,16 +590,6 @@ local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
   config = {extra = {}},
-  loc_txt = {      
-    name = 'Porygon',      
-    text = {
-      "{C:pink}+1{} Energy Limit",
-      "Create an {C:pink}Energy{} card",
-      "when any {C:attention}Booster Pack{}",
-      "is opened",
-      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
