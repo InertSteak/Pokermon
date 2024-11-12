@@ -1022,7 +1022,7 @@ local grimer={
         front = pseudorandom_element(G.P_CARDS, pseudoseed('grimer')), 
         center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE
       })
-      playing_card_joker_effects({card})
+      playing_card_joker_effects({_card})
       card:juice_up()
     end
     return level_evo(self, card, context, "j_poke_muk")
