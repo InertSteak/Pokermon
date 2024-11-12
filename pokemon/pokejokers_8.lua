@@ -4,17 +4,6 @@ local scizor={
   name = "scizor", 
   pos = {x = 0, y = 6},
   config = {extra = {mult = 0, chips = 0, Xmult = 1}},
-  loc_txt = {      
-    name = 'Scizor',      
-    text = {
-      "When Blind is selected, destroy",
-      "Joker to the right and gain",
-      "{C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
-      "Those editions {C:attention}stack{} on this Joker",
-      "{C:inactive,s:0.75}(Matches destroyed Joker's edition if able){}",
-      "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local emult = 0 
@@ -79,7 +68,7 @@ local scizor={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = "X-Scissor!", 
+          message = localize("poke_x_scissor_ex"),
           colour = G.ARGS.LOC_COLOURS.metal,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,
@@ -111,16 +100,6 @@ local kingdra={
   name = "kingdra", 
   pos = {x = 8, y = 7},
   config = {extra = {mult = 10, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
-  loc_txt = {      
-    name = 'Kingdra',      
-    text = {
-      "Gains {C:mult}+#2#{} Mult for each",
-      "scoring {C:attention}6{}, if you have",
-      "a {C:attention}King{} held in hand gain",
-      "{X:red,C:white}X#4#{} Mult {C:attention}as well{}",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{} Mult{C:inactive})",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
@@ -158,7 +137,7 @@ local kingdra={
       end
       if context.joker_main then
         return {
-          message = "Twister!", 
+          message = localize("poke_twister_ex"),
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
           Xmult_mod = card.ability.extra.Xmult
@@ -174,17 +153,6 @@ local porygon2={
   name = "porygon2", 
   pos = {x = 1, y = 8},
   config = {extra = {}},
-  loc_txt = {      
-    name = 'Porygon 2',      
-    text = {
-      "{C:pink}+2{} Energy Limit",
-      "Create an {C:pink}Energy{} card",
-      "of the same {C:pink}Type{} of",
-      "leftmost Joker when any",
-      "{C:attention}Booster Pack{} is opened",
-      "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -212,7 +180,7 @@ local porygon2={
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+1 Energy", colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
     end
     return item_evo(self, card, context, "j_poke_porygonz")
   end,
@@ -242,17 +210,6 @@ local tyrogue={
   name = "tyrogue",
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   pos = {x = 4, y = 8}, 
-  loc_txt = {      
-    name = 'Tyrogue',      
-    text = {
-      "{C:attention}Baby{}",
-      "For the {C:attention}first hand{} of round",
-      "If {C:attention}2{} cards played, {C:attention}destroy{} one",
-      "If {C:attention}3+{} cards played, {C:attention}copy{} one to hand",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }  
-  }, 
   rarity = 2, 
   cost = 4, 
   stage = "Baby", 
@@ -279,7 +236,7 @@ local tyrogue={
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
               play_sound('tarot1')
               card:juice_up(0.5, 0.5)
-              card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Destroyed!", colour = G.C.PURPLE})                       
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_destroyed_ex"), colour = G.C.PURPLE})                       
             return true end }))
           G.E_MANAGER:add_event(Event({
               trigger = 'after',
@@ -359,14 +316,6 @@ local hitmontop={
   name = "hitmontop", 
   pos = {x = 5, y = 8},
   config = {extra = {Xmult = 2.2}},
-  loc_txt = {      
-    name = 'Hitmontop',      
-    text = {
-      "{X:red,C:white} X#1# {} Mult",
-      "if deck size",
-      "is exactly {C:attention}#2#{}"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size}}
@@ -394,17 +343,6 @@ local smoochum ={
   name = "smoochum",
   pos = {x = 6, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
-  loc_txt = {
-    name = "Smoochum",
-    text = {
-      "{C:attention}Baby{}",
-      "Create a {C:attention}Standard{} tag",
-      "when this Joker evolves",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -466,17 +404,6 @@ local elekid ={
   name = "elekid",
   pos = {x = 7, y = 8},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
-  loc_txt = {
-    name = "Elekid",
-    text = {
-      "{C:attention}Baby{}",
-      "Create a {C:attention}Coupon{} tag",
-      "when this Joker evolves",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -538,16 +465,6 @@ local magby={
   name = "magby",
   pos = {x = 8, y = 8},
   config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
-  loc_txt = {
-    name = "Magby",
-    text = {
-      "{C:attention}Baby{}",
-      "{C:red}+#2#{} discards",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}

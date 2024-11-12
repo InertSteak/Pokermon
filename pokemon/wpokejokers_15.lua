@@ -21,17 +21,6 @@ local mimejr={
   name = "mimejr",
   pos = {x = 10, y = 3},
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
-  loc_txt = {
-    name = "Mime Jr.",
-    text = {
-      "{C:attention}Baby{}",
-      "Apply a {C:attention}Red{} or {C:attention}Blue{} seal",
-      "to a random card in deck",
-      "at end of round",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -64,7 +53,7 @@ local mimejr={
       else _card:set_seal('Blue', true) 
       end
       card:juice_up(0.5, 0.5)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Mime!", colour = G.C.CHIPS})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_mime_ex"), colour = G.C.CHIPS})
     end
     return level_evo(self, card, context, "j_poke_mrmime")
   end,
@@ -92,16 +81,6 @@ local happiny={
   name = "happiny",
   pos = {x = 11, y = 3},
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
-  loc_txt = {
-    name = "Happiny",
-    text = {
-      "{C:attention}Baby{}",
-      "Unscored cards in your",
-      "{C:attention}first hand{} become {C:attention}Lucky{}",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -176,17 +155,6 @@ local munchlax={
   name = "munchlax",
   pos = {x = 3, y = 4},
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
-  loc_txt = {
-    name = "Munchlax",
-    text = {
-      "{C:attention}Baby{}",
-      "Create a random {C:item}Item{} card with",
-      "{C:dark_edition}Negative{} at end of round",
-      "{X:red,C:white} X#1# {} Mult",
-      "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}

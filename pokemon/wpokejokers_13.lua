@@ -16,16 +16,6 @@ local beldum={
   name = "beldum", 
   pos = {x = 4, y = 13},
   config = {extra = {chips = 0, chip_mod = 4, size = 4}},
-  loc_txt = {      
-    name = 'Beldum',      
-    text = {
-      "Gains {C:chips}+#2#{} Chips",
-      "if played hand contains at least",
-      "one scoring {C:attention}Ace{} and is exactly {C:attention}#3#{} cards",
-      "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}+36{}{C:inactive} Chips)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -65,16 +55,6 @@ local metang={
   name = "metang", 
   pos = {x = 5, y = 13},
   config = {extra = {chips = 36, chip_mod = 4, size = 4}},
-  loc_txt = {      
-    name = 'Metang',      
-    text = {
-      "Gains {C:chips}+#2#{} Chips",
-      "if played hand contains at least",
-      "two scoring {C:attention}Aces{} and is exactly {C:attention}#3#{} cards",
-      "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
-      "{C:inactive}(Evolves at {C:chips}+100{}{C:inactive} Chips)"
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -113,16 +93,6 @@ local metagross={
   name = "metagross", 
   pos = {x = 6, y = 13},
   config = {extra = {chips = 100,}},
-  loc_txt = {      
-    name = 'Metagross',      
-    text = {
-      "{C:chips}+#1#{} Chips",
-      "If played hand is a {C:attention}Four of a Kind{}",
-      "each played card gives {X:mult,C:white}X{} Mult",
-      "equal to the {C:attention}cube root{} ",
-      "of that card's total chips",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}

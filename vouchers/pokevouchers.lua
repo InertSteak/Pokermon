@@ -12,12 +12,6 @@ local energysearch = { --+1 max energy limit
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
-  loc_txt = {
-    name = "Energy Search",
-    text = {
-      "{C:pink}+2{} Energy Limit"
-    }
-  },
   redeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 2
@@ -48,12 +42,6 @@ local energyresearch = { --+1 max energy limit
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
-  loc_txt = {
-    name = "Energy Research",
-    text = {
-      "{C:pink}+3{} Energy Limit"
-    }
-  },
   redeem = function(self)
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 3
@@ -84,13 +72,6 @@ local goodrod = { --+1 card choice in pocket packs
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
-  loc_txt = {
-    name = "Good Rod",
-    text = {
-      "{C:attention}Pocket{} packs have",
-      "{C:attention}1{} more card in them",
-    }
-  },
   redeem = function(self)
     if not G.GAME.extra_pocket_picks then
       G.GAME.extra_pocket_picks = 1
@@ -122,13 +103,6 @@ local superrod = { --+1 card choice in pocket packs
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
-  loc_txt = {
-    name = "Super Rod",
-    text = {
-      "{C:attention}Pocket{} packs have",
-      "{C:attention}1{} more card in them",
-    }
-  },
   redeem = function(self)
     if not G.GAME.extra_pocket_picks then
       G.GAME.extra_pocket_picks = 1

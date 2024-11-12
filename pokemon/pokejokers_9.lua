@@ -4,16 +4,6 @@ local blissey={
   name = "blissey", 
   pos = {x = 0, y = 9}, 
   config = {extra = {limit = 2, triggers = 0}},
-  loc_txt = {      
-    name = 'Blissey',      
-    text = {
-      "The first {C:attention}#1#{} times a {C:attention}Lucky{}",
-      "card triggers each round, add a",
-      "permanent copy with {C:dark_edition}Polychrome{} to your",
-      "deck and draw it to {C:attention}Hand",
-      "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky

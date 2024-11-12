@@ -4,13 +4,6 @@ local pocket_tag = {
 	name = "pocket_tag",
 	order = 25,
 	pos = { x = 0, y = 0 },
-  loc_txt = {      
-    name = 'Pocket Tag',      
-    text = {
-      "Gives a free",
-      "{C:pink}Mega Pocket Pack",
-    } 
-  }, 
 	config = { type = "new_blind_choice" },
 	key = "pocket_tag",
 	min_ante = 2,
@@ -21,6 +14,9 @@ local pocket_tag = {
 	end,
 	apply = function(tag, context)
 		if context.type == "new_blind_choice" then
+			--Might want to change that colour to something else, G.C.SECONDARY_SET.Code won't work without cryptid XD
+			--I'll leave that up to you
+			-- -Jevonn
 			tag:yep("+", G.C.SECONDARY_SET.Code, function()
 				local key = "p_poke_pokepack_mega_"..math.random(1, 2)
 				local card = Card(
@@ -50,14 +46,6 @@ local shiny_tag = {
 	name = "shiny_tag",
 	order = 26,
 	pos = { x = 1, y = 0 },
-  loc_txt = {      
-    name = 'Shiny Tag',      
-    text = {
-      "Next base edition shop",
-      "Joker is free and",
-      "becomes {C:colorless}Shiny{}",
-    } 
-  }, 
 	config = { type = "store_joker_modify", edition = "poke_shiny" },
 	key = "shiny_tag",
 	min_ante = 3,

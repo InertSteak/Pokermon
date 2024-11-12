@@ -33,13 +33,6 @@ end
 
 local cgoose={
   key = "cgoose",
-  loc_txt = {      
-    name = 'Chartreuse Chamber',      
-    text = {
-      "Random Types get debuffed",
-      "every hand",
-    } 
-  },
   dollars = 8,
   mult = 2,
   boss = { showdown = true, min = 8, max = 80 },

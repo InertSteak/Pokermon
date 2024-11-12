@@ -1,12 +1,33 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Pokermon
 --- MOD_ID: Pokermon
+--- PREFIX: poke
 --- MOD_AUTHOR: [See Credits Tab]
 --- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
 --- BADGE_COLOUR: ED533A
 --- VERSION: 2.0.0
 
 pokermon = {}
+
+--Undiscovered sprites, mostly for testing some localization things since the game crashes without them
+--This can probably have a better integration or just be removed altogether since everything is discovered anyways
+-- -Jevonn
+SMODS.UndiscoveredSprite({
+	key = "Energy",
+	atlas = "Mart",
+	path = "Mart.png",
+	pos = { x = 0, y = 0 },
+	px = 71,
+	py = 95,
+}):register()
+SMODS.UndiscoveredSprite({
+	key = "Item",
+	atlas = "Mart",
+	path = "Mart.png",
+	pos = { x = 0, y = 0 },
+	px = 71,
+	py = 95,
+}):register()
 
 --Get mod path and load other files
 mod_dir = ''..SMODS.current_mod.path
@@ -15,14 +36,6 @@ pokermon_config = SMODS.current_mod.config
 --Load Custom Rarities
 SMODS.Rarity{
     key = "safari",
-    loc_txt = {
-      name = "Safari",
-      text = {
-        "Can only be obtained",
-        "through {C:attention}Evolution{}",
-        "or certain {C:attention}Pokeball Items{}"
-      } 
-    },
     default_weight = 0,
     badge_colour = HEX("F2C74E"),
     pools = {["Joker"] = true},
@@ -351,87 +364,6 @@ if not pokermon_config.jokers_only then
       end
     end
   end 
-end
-
-function SMODS.current_mod.process_loc_text()
-    G.localization.descriptions.Other['ancient'] = {
-      name = 'Ancient',
-      text = {
-        "Effect based on",
-        "number of {C:attention}#1#s{}",
-        "in scoring hand"
-      }
-    }
-    G.localization.descriptions.Other['eitem'] = {
-      name = "Evolution Card",
-      text = {
-        "Evolves leftmost",
-        "{C:attention}eligible{} Joker",
-      }
-    }
-    G.localization.descriptions.Other['hitem'] = {
-      name = "Held Card",
-      text = {
-        "Used by {C:attention}#1#{}"
-      }
-    }
-    G.localization.descriptions.Other['basic'] = {
-      name = "Basic",
-      text = {
-        "A Pokemon Joker",
-        "that hasn't {C:attention}Evolved{}"
-      }
-    }
-    G.localization.descriptions.Other['stage1'] = {
-      name = "Stage 1",
-      text = {
-        "A Pokemon Joker",
-        "that has {C:attention}Evolved{} once"
-      }
-    }
-    G.localization.descriptions.Other['stage2'] = {
-      name = "Stage 2",
-      text = {
-        "A Pokemon Joker",
-        "that has {C:attention}Evolved{} twice"
-      }
-    }
-    
-    G.localization.descriptions.Other['energy'] = {
-      name = "Energy Used",
-      text = {
-        "{C:attention}#1#{}/#2#",
-      }
-    }
-    
-    G.localization.descriptions.Other['baby'] = {
-      name = "Baby",
-      text = {
-        "{C:attention}Pins{} other Non-Baby Jokers",
-        "when you get this, Jokers are",
-        "unpinned when this card",
-        "evolves or is removed"
-      }
-    }
-        
-    G.localization.misc.dictionary['k_poke_pocket_pack'] = "Pocket Pack"
-    
-    G.localization.misc.dictionary.b_save = "SAVE"
-    
-    local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
-    for k, v in ipairs(ptype_list) do
-      local text_color = "white"
-      if v == "Lightning" then
-        text_color = "black"
-      end
-      local tooltip = {
-        name = "Type",
-        text = {
-          "{X:"..string.lower(v)..",C:"..text_color.."}"..v.."{}",
-        }
-      }
-      G.localization.descriptions.Other[v] = tooltip
-    end
 end
 
 --Override straight function for Rapidash

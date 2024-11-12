@@ -1,15 +1,6 @@
 local pink_seal = {
 	name = "pink_seal",
 	key = "pink_seal",
-  loc_txt = {
-    name = "Pink Seal",
-    label = "Pink Seal",
-    text = {
-      "Creates an {C:pink}Energy{} card",
-      "if it scores in the",
-      "{C:attention}first hand{} of round"
-    }
-  },
 	badge_colour = HEX("FF7ABF"), --pink
 	atlas = "pinkseal",
   pos = {x = 0, y = 0},

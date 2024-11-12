@@ -30,15 +30,6 @@ local buizel={
   name = "buizel", 
   pos = {x = 3, y = 2}, 
   config = {extra = {chips = 20, rounds = 4}},
-  loc_txt = {      
-    name = 'Buizel',      
-    text = {
-      "{C:chips}+#1#{} Chips for",
-      "each {C:attention}unscored{} card",
-      "in played hand",
-      "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)",
-    }  
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -70,14 +61,6 @@ local floatzel={
   name = "floatzel", 
   pos = {x = 4, y = 2}, 
   config = {extra = {chips = 40}},
-  loc_txt = {      
-    name = 'Floatzel',      
-    text = {
-      "{C:chips}+#1#{} Chips for",
-      "each {C:attention}unscored{} card",
-      "in played hand",
-    }  
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}

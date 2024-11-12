@@ -21,15 +21,6 @@ local annihilape={
   name = "annihilape", 
   pos = {x = 3, y = 5}, 
   config = {extra = {mult = 7, chips = 11}},
-  loc_txt = {      
-    name = 'Annihilape',      
-    text = {
-      "Each played {C:attention}2{}, {C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
-      "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips when scored",
-      "for each hand played this round",
-      "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult {C:chips}+#4#{C:inactive} Chips)",
-    } 
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult * (1 + G.GAME.current_round.hands_played), 
