@@ -113,14 +113,14 @@ local mdiscardorhand = function(self, card, context)
   end
 end
 
-missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
-]]--
 local mtag = function(self, card, context)
   if context.cardarea == G.jokers and context.scoring_hand then
     if context.joker_main then
+      
       G.E_MANAGER:add_event(Event({
         func = (function()
             local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+
             add_tag(Tag(tag.key))
             play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
             play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
@@ -131,7 +131,8 @@ local mtag = function(self, card, context)
   end
 end
 
-
+missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
+]]--
 
 
 local missingno ={
@@ -159,8 +160,18 @@ local missingno ={
       for i = 1, card.ability.extra.tags_created + more do
         G.E_MANAGER:add_event(Event({
           func = (function()
-              local tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
-              add_tag(Tag(tag.key))
+              local temp_tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+              local tag = Tag(temp_tag.key)
+              if tag.key == "tag_orbital" then 
+                local _poker_hands = {}
+                for k, v in pairs(G.GAME.hands) do
+                  if v.visible then
+                    _poker_hands[#_poker_hands + 1] = k
+                  end
+                end
+                tag.ability.orbital_hand = pseudorandom_element(_poker_hands, pseudoseed(mseed))
+              end
+              add_tag(tag)
               play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
               play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
               return true
