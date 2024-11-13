@@ -927,10 +927,10 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   local poke_keys = {}
   local pokearea = area or G.jokers
   local poke_key
-  local create_args = {set = "Joker", rarity = pokerarity, area = pokearea, key = ''}
+  local create_args = {set = "Joker", area = pokearea, key = ''}
   
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and not (stage and v.stage ~= stage) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and not (poketype and poketype ~= v.ptype) then
+    if v.stage and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and not (poketype and poketype ~= v.ptype) then
       table.insert(poke_keys, v.key)
     end
   end

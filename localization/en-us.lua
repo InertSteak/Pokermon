@@ -2305,6 +2305,20 @@ return {
                     "becomes {C:colorless}Shiny{}",
                 }, 
             },
+            tag_poke_stage_one_tag = {
+                name = "Stage 1 Tag",
+                text = {
+                    "Shop has a free",
+                    "{C:attention}Stage 1{} Joker",
+                }, 
+            },
+            tag_poke_safari_tag = {
+                name = "Safari Tag",
+                text = {
+                    "Shop has a free",
+                    "{C:safari}Safari{} Joker",
+                }, 
+            },
         },
         Tarot = {
            

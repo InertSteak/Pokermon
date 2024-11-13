@@ -16,8 +16,9 @@ local pocket_tag = {
 		if context.type == "new_blind_choice" then
 			--Might want to change that colour to something else, G.C.SECONDARY_SET.Code won't work without cryptid XD
 			--I'll leave that up to you
+      --Oops, meant to change that lol
 			-- -Jevonn
-			tag:yep("+", G.C.SECONDARY_SET.Code, function()
+			tag:yep("+", G.ARGS.LOC_COLOURS.item, function()
 				local key = "p_poke_pokepack_mega_"..math.random(1, 2)
 				local card = Card(
 					G.play.T.x + G.play.T.w / 2 - G.CARD_W * 1.27 / 2,
@@ -76,6 +77,73 @@ local shiny_tag = {
 	end,
 }
 
+local stage_one_tag = {
+	object_type = "Tag",
+	atlas = "poketag",
+	name = "stage_one_tag",
+	order = 27,
+	pos = { x = 2, y = 0 },
+	config = { type = "store_joker_create" },
+	key = "stage_one_tag",
+	min_ante = 2,
+  discovered = true,
+	loc_vars = function(self, info_queue)
+		info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
+		return { vars = {} }
+	end,
+	apply = function(tag, context)
+    if context.type == "store_joker_create" then
+      local card = nil
+      
+      card = create_random_poke_joker("stage1tag", "One", nil, context.area)
+      create_shop_card_ui(card, 'Joker', context.area)
+      card.states.visible = false
+      tag:yep('+', G.C.GREEN,function() 
+          card:start_materialize()
+          card.ability.couponed = true
+          card:set_cost()
+          return true
+      end)
+    
+      tag.triggered = true
+      return card
+    end
+	end,
+}
+
+local safari_tag = {
+	object_type = "Tag",
+	atlas = "poketag",
+	name = "safari_tag",
+	order = 27,
+	pos = { x = 3, y = 0 },
+	config = { type = "store_joker_create" },
+	key = "safari_tag",
+	min_ante = 3,
+  discovered = true,
+	loc_vars = function(self, info_queue)
+		return { vars = {} }
+	end,
+	apply = function(tag, context)
+    if context.type == "store_joker_create" then
+      local card = nil
+      
+      card = create_random_poke_joker("safaritag", nil, "poke_safari", context.area)
+      create_shop_card_ui(card, 'Joker', context.area)
+      card.states.visible = false
+      tag:yep('+', G.ARGS.LOC_COLOURS.safari,function() 
+          card:start_materialize()
+          card.ability.couponed = true
+          card:set_cost()
+          return true
+      end)
+    
+      tag.triggered = true
+      return card
+    end
+	end,
+}
+
 return {name = "Tags",
-        list = {pocket_tag, shiny_tag}
+        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag}
 }
