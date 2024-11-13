@@ -230,55 +230,40 @@ local tyrogue={
           Xmult_mod = card.ability.extra.Xmult_minus
         }
       end
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 then
-        if #context.full_hand == 2 then
-          local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
-          G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-              play_sound('tarot1')
-              card:juice_up(0.5, 0.5)
-              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_destroyed_ex"), colour = G.C.PURPLE})                       
-            return true end }))
-          G.E_MANAGER:add_event(Event({
-              trigger = 'after',
-              delay = 0.2,
-              func = function() 
-                  if target.ability.name == 'Glass Card' then 
-                      target:shatter()
-                  else
-                      target:start_dissolve()
-                  end
-              return true end }))
-          delay(0.3)
-          for i = 1, #G.jokers.cards do
-              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand > 2 then
+        local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
+        local copy = copy_card(target, nil, nil, G.playing_card)
+        copy:add_to_deck()
+        G.deck.config.card_limit = G.deck.config.card_limit + 1
+        table.insert(G.playing_cards, copy)
+        G.hand:emplace(copy)
+        copy.states.visible = nil
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              copy:start_materialize()
+              return true
           end
-        elseif #context.full_hand > 2 then
-          local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
-          local copy = copy_card(target, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.hand:emplace(copy)
-          copy.states.visible = nil
-          G.E_MANAGER:add_event(Event({
-            func = function()
-                copy:start_materialize()
-                return true
-            end
-          })) 
-          playing_card_joker_effects({copy})
-          return {
-              message = localize('k_copied_ex'),
-              colour = G.C.CHIPS,
-              card = card,
-              playing_cards_created = {true}
-          }
-        end
+        })) 
+        playing_card_joker_effects({copy})
+        return {
+            message = localize('k_copied_ex'),
+            colour = G.C.CHIPS,
+            card = card,
+            playing_cards_created = {true}
+        }
       end
     end
     
+    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+      return {
+        delay = 0.45, 
+        remove = true,
+        card = card
+      }
+    end
+    
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
     

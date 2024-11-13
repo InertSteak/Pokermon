@@ -1889,20 +1889,9 @@ return {
                 name = 'Tyrogue',
                 text = {
                     "{C:attention}Baby{}",
-                    "For the {C:attention}first hand{} of round",
-                    "If {C:attention}2{} cards played, {C:attention}destroy{} one",
-                    "If {C:attention}3+{} cards played, {C:attention}copy{} one to hand",
-                    "{X:red,C:white} X#1# {} Mult",
-                    "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
-                }  
-            },
-            j_poke_tyrogue = {
-                name = 'Tyrogue',
-                text = {
-                    "{C:attention}Baby{}",
-                    "For the {C:attention}first hand{} of round",
-                    "If {C:attention}2{} cards played, {C:attention}destroy{} one",
-                    "If {C:attention}3+{} cards played, {C:attention}copy{} one to hand",
+                    "For the {C:attention}first hand or discard{} of round",
+                    "If {C:attention}1{} card is {C:attention}discarded{}, {C:attention}destroy{} it",
+                    "If {C:attention}3+{} cards are {C:attention}played{}, {C:attention}copy{} one to hand",
                     "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }  
