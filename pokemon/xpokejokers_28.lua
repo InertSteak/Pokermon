@@ -61,7 +61,7 @@ local boltund={
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money}}
   end,
   rarity = 3, 
-  cost = 5, 
+  cost = 8, 
   stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex8",
