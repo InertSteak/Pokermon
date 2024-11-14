@@ -7,7 +7,7 @@ energy_values = {
 
 energy_max = 3
 
-scaled_evos = {"seadra", "golbat", "magmar", "scyther"}
+scaled_evos = {"seadra", "golbat", "magmar", "scyther", "sentret"}
 
 family = {
     {"bulbasaur","ivysaur","venusaur"},
@@ -517,7 +517,7 @@ scaling_evo = function (self, card, context, forced_key, current, target)
   end
   if can_evolve(self, card, context, forced_key, true) and current >= target and not card.ability.extra.juiced then
     card.ability.extra.juiced = true
-    local eval = function(card) return not card.REMOVED end
+    local eval = function(card) return current >= target and not card.REMOVED and not G.RESET_JIGGLES end
     juice_card_until(card, eval, true)
   end
 end

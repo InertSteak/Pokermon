@@ -1734,11 +1734,12 @@ return {
             j_poke_sentret = {
                 name = 'Sentret',
                 text = {
-                    "{C:mult}+#2#{} Mult when played hand",
+                    "{C:mult}+#2#{} Mult per",
+                    "{C:attention}consecutive{} hand played that",
                     "isn't the last played hand",
                     "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-                    "{C:inactive}(Evolves at {C:mult}+7{} {C:inactive}Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+10{} {C:inactive}Mult)"
                 }  
             },
             j_poke_furret = {

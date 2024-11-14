@@ -74,6 +74,12 @@ local sentret={
           message = localize('k_upgrade_ex'),
           colour = G.C.MULT
         }
+      elseif context.before and not context.blueprint and card.ability.extra.last_hand == context.scoring_name then
+        card.ability.extra.mult = 0
+        return {
+          message = localize('k_reset'),
+          card = card
+        }
       end
       if context.joker_main then
         if card.ability.extra.mult > 0 then
@@ -85,13 +91,13 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 7)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 10)
   end,
 }
 -- Furret 162
 local furret={
   name = "furret",
-  config = {extra = {mult = 9, mult_mod = 1, last_hand = 'None'}},
+  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 0, y = 1}, 
   rarity = 2, 
   cost = 6, 
