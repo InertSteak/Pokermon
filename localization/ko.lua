@@ -681,8 +681,8 @@ return {
                     "{C:inactive}(Evolves with a{} {C:attention}Fire Stone{}{C:inactive} card)"
                 } 
             },
-            j_poke_ninetails = {
-                name = "Ninetails",
+            j_poke_ninetales = {
+                name = "ninetales",
                 text = {
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
@@ -1068,7 +1068,7 @@ return {
                 } 
             },
             j_poke_slowbro = {
-                name = "Slowpoke",
+                name = "Slowbro",
                 text = {
                     "Gains {X:red,C:white} X#1# {} Mult",
                     "per hand played,",
