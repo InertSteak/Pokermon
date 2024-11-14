@@ -2200,7 +2200,7 @@ return {
                 } 
             },
             j_poke_pokedex = {
-                name = 'Missingno.',
+                name = 'Pokedex',
                 text = {
                     "{C:mult}+#2#{} Mult for each",
                     "Joker with a {C:pink}Type{} you have",
@@ -2210,7 +2210,7 @@ return {
                 } 
             },
             j_poke_everstone = {
-                name = 'Missingno.',
+                name = 'Everstone',
                 text = {
                     "Pokemon {C:attention}can't{} evolve",
                     "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
