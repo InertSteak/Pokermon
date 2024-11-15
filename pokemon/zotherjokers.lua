@@ -133,7 +133,7 @@ local jelly_donut={
       else
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.MULT})
       end
-      --Test
+
       if card.ability.extra.rounds <= 0 then 
         G.E_MANAGER:add_event(Event({
             func = function()
