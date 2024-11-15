@@ -278,8 +278,12 @@ local machoke={
       ease_discard(-card.ability.extra.discards)
   end,
   remove_from_deck = function(self, card, from_debuff)
+      if G.GAME.current_round.hands_left <= 2 then
+        ease_hands_played(-G.GAME.current_round.hands_left + 1)
+      elseif G.GAME.current_round.hands_left > 2 then
+        ease_hands_played(-card.ability.extra.hands)
+      end
       G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       ease_discard(card.ability.extra.discards)
   end
@@ -316,8 +320,12 @@ local machamp={
       ease_discard(-card.ability.extra.discards)
   end,
   remove_from_deck = function(self, card, from_debuff)
+      if G.GAME.current_round.hands_left <= 4 then
+        ease_hands_played(-G.GAME.current_round.hands_left + 1)
+      elseif G.GAME.current_round.hands_left > 4 then
+        ease_hands_played(-card.ability.extra.hands)
+      end
       G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       ease_discard(card.ability.extra.discards)
   end
