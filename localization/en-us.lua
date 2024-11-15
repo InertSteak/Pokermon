@@ -2209,6 +2209,16 @@ return {
                     "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
                 } 
             },
+            j_poke_tall_grass = {
+                name = 'Tall Grass',
+                text = {
+                    "{C:green}#1# in #2#{} chance to create a",
+                    "{C:chips}Common{} Pokemon {C:attention}Joker{}",
+                    "when hand is played",
+                    "Guaranteed if scoring hand",
+                    "contains a {C:attention}wild{} card",
+                } 
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?

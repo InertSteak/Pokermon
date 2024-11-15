@@ -66,6 +66,47 @@ local everstone={
   end,
 }
 
+local tall_grass={
+  name = "tall_grass",
+  pos = {x = 0, y = 0},
+  config = {extra = {odds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, }}
+  end,
+  rarity = 1,
+  cost = 6,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and #G.jokers.cards < G.jokers.config.card_limit then
+        local has_wild = false
+        for k, v in ipairs(context.scoring_hand) do
+          if v.ability.name == 'Wild Card' then
+            has_wild = true
+            break
+          end
+        end
+        
+        if has_wild or pseudorandom('tallgrass') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            play_sound('timpani')
+            local _card = create_random_poke_joker("tallgrass", nil, "common")
+            _card:add_to_deck()
+            G.jokers:emplace(_card)
+            return true end }))
+          delay(0.6)
+        end
+      end
+    end
+  end
+}
+
+
 return {name = "Other Jokers",
-        list = {pokedex, everstone}
+        list = {pokedex, everstone, tall_grass}
 }
