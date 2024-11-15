@@ -116,6 +116,7 @@ local jelly_donut={
   end,
   rarity = 2,
   cost = 6,
+  joblacklist = true,
   stage = "Other",
   atlas = "others",
   perishable_compat = true,
