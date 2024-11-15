@@ -1,15 +1,18 @@
 --Config UI
-local no_restart_toggles_left = { 
+local restart_toggles_left = { 
                  {ref_value = "jokers_only", label = "poke_settings_jokers_only"}, {ref_value = "no_evos", label = "poke_settings_no_evolutions"}, 
                  {ref_value = "pokeballs", label = "poke_settings_pokeballs"}
                 }
                 
-local no_restart_toggles_right = { 
+local restart_toggles_right = { 
   {ref_value = "pokemon_num", label = "poke_settings_pokedex_number"}, {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
 }
-local restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
-                         {ref_value = "shiny_playing_card", label = "poke_settings_shiny_playing_cards"}, {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
-                       
+
+local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_card", label = "poke_settings_shiny_playing_cards"},
+                          {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
+ 
+local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}}
+ 
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do
     parent.nodes[#parent.nodes + 1] = create_toggle({
@@ -24,14 +27,14 @@ local create_menu_toggles = function (parent, toggles)
 end
 
 pokemonconfig = function()
-  local no_restart_left_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(no_restart_left_settings, no_restart_toggles_left)
+  local restart_left_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(restart_left_settings, restart_toggles_left)
 
-  local no_restart_right_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(no_restart_right_settings, no_restart_toggles_right)
+  local restart_right_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(restart_right_settings, restart_toggles_right)
 
-  local restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(restart_settings, restart_toggles)
+  local no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(no_restart_settings, no_restart_toggles)
   
   local config_nodes =   
   {
@@ -53,7 +56,13 @@ pokemonconfig = function()
         }
       },
     },
-    restart_settings,
+    no_restart_settings,
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("FF7ABF"),
+      button = "pokermon_energy",
+      label = {"Energy Options"}
+    }),
     {
       n = G.UIT.R,
       config = {
@@ -78,7 +87,7 @@ pokemonconfig = function()
         padding = 0,
         align = "tm"
       },
-      nodes = {no_restart_left_settings, no_restart_right_settings},
+      nodes = {restart_left_settings, restart_right_settings},
     },
   }
   return config_nodes
@@ -346,6 +355,15 @@ function G.FUNCS.pokermon_github(e)
 end
 function G.FUNCS.pokermon_discord(e)
   love.system.openURL("https://discord.gg/3GZTGppef4")
+end
+function G.FUNCS.pokermon_energy(e)
+  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  create_menu_toggles(energy_settings, energy_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {energy_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
 end
 
 --Reserve Area for Pocket packs (adapted from betmma)
