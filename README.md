@@ -2,14 +2,14 @@
 Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded), [Cryptid](https://github.com/MathIsFun0/Cryptid) and [Betmma](https://github.com/betmma/my_balatro_mods)!
 This mod and its features would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
 
+We now have a discord server [here](https://discord.gg/3GZTGppef4)! Please report any to bugs or issues me so I can hopefully fix them and feel free to make suggestions or contribute to the mod.
 Please use the latest code before repoting issues, the releases may be out of date with the current code.
 
-Pokermon is a full content mod for Balatro, adding content based on Pokemon. There are 152 new Jokers, 10 new Tarot cards and 3 new Spectral cards currently implemented.
-There is also a new option to only play with Pokemon Jokers if you want to focus on the new content. (Option defaults to off)
+Pokermon is a full content mod for Balatro, adding content based on Pokemon. There are now 200(!!) Jokers that have been added alongside many other custom additions.
+There is also an option to only play with Pokemon Jokers if you want to focus on the new content. (Option defaults to off)
 
-![{8C37DDD7-35F2-4985-B619-33D9CA2CD068}](https://github.com/user-attachments/assets/b3a88632-f01b-4316-b88b-f71ca778c210)
+![{42EB5C12-7C08-4004-A380-B7CF92B5EB8F}](https://github.com/user-attachments/assets/1de6266d-10ab-4f39-a6b0-d23b94886e1c)
 
-Please note this is my first mod and a work in progress so there may be quite a few bugs and crashes. Please report any to me so I can hopefully fix them.
 
 **Prerequisites:**
 
@@ -33,11 +33,13 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.6.0 if 
 
 **Roadmap:**
 
-In the immediate future, I would like to polish and fine tune the Gen I Pokemon along with bug fixing. 
-In the near future, I would like to implement challenges based on Gym leaders and a new consumable type, TMs.
-Farther out in the future, I would like to implement additional generations of Pokemon Jokers.
+~~In the immediate future, I would like to polish and fine tune the Gen I Pokemon along with bug fixing.~~ 
+~~Implement pokemon related to existing pokemon~~
+Fan Favorite Pokemon
+Gen II
+TMs
+Gym Leader challenges
 
 **Card Images:**
 
-Right now the cards just have the offical Pokemon art pasted on top of the card as I am not really an artist. I'd love to have the card art fit more with Balatro. 
-If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you here in this readme file and via tooltip on the Joker itself.
+If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you here in this readme file and via tooltip on the Joker itself. Be sure to check in the discord before you work on art assets, we've got templates for the Pokemon Jokers.
