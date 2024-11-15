@@ -2216,7 +2216,7 @@ return {
                     "{C:chips}Common{} Pokemon {C:attention}Joker{}",
                     "when hand is played",
                     "Guaranteed if scoring hand",
-                    "contains a {C:attention}wild{} card",
+                    "contains a {C:attention}Wild{} card",
                 } 
             },
         },

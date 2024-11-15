@@ -30,6 +30,11 @@ local shiny = ({
             card.config.center.atlas = "poke_Pokedex"..i
             break
           end
+          if card.config.center.atlas == "poke_others" then
+            card.config.center.atlas = "poke_Shinyothers"
+            card:set_sprites(card.config.center)
+            card.config.center.atlas = "poke_Shinyothers"
+          end
         end
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
