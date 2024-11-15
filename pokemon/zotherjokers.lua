@@ -68,7 +68,7 @@ local everstone={
 
 local tall_grass={
   name = "tall_grass",
-  pos = {x = 0, y = 0},
+  pos = {x = 2, y = 0},
   config = {extra = {odds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
