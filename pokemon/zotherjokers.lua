@@ -106,7 +106,60 @@ local tall_grass={
   end
 }
 
+local jelly_donut={
+  name = "jelly_donut",
+  pos = {x = 3, y = 0},
+  config = {extra = {rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, "c_poke_colorless_energy", nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+        G.GAME.consumeable_buffer = 0
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = G.ARGS.LOC_COLOURS.pink})
+      else
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.MULT})
+      end
+      
+      if card.ability.extra.rounds <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                card.T.r = -0.2
+                card:juice_up(0.3, 0.4)
+                card.states.drag.is = true
+                card.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(card)
+                            card:remove()
+                            card = nil
+                        return true; end})) 
+                return true
+            end
+        })) 
+        return {
+            message = localize('k_eaten_ex'),
+            colour = G.C.RED
+        }
+      end
+    end
+  end
+}
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass}
+        list = {pokedex, everstone, tall_grass, jelly_donut}
 }

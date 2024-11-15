@@ -2219,6 +2219,15 @@ return {
                     "contains a {C:attention}Wild{} card",
                 } 
             },
+            j_poke_jelly_donut = {
+                name = "Jelly Donut",
+                text = {
+                  "Create a {C:colorless}Colorless",
+                  "{C:pink}Energy{} when blind",
+                  "is selected",
+                  "{C:inactive}({C:attention}#1#{}{C:inactive} rounds remaining){}"
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
