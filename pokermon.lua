@@ -328,7 +328,8 @@ if not pokermon_config.jokers_only then
   end
 end
 --Load Sleeves
-if not pokermon_config.jokers_only and (SMODS.Mods["CardSleeves"]) then
+
+if not pokermon_config.jokers_only and (SMODS.Mods["CardSleeves"] or {}).can_load then
   --Load Sleeves
   local sleeves = NFS.getDirectoryItems(mod_dir.."sleeves")
 
