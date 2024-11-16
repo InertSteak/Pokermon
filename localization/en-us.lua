@@ -203,6 +203,15 @@ return {
                     "{C:attention}Evolution Card{}",
                 }
             },
+            c_poke_dubious_disc = {
+                name = "Dubious Disc",
+                text = {
+                    "Randomizes or removes {C:attention}enhancements{}",
+                    "of all cards held in hand",
+                    "{C:attention}Evolution Card{}",
+                    "{C:inactive}(Includes cards without enhancements){}"
+                }
+            },
             c_poke_icestone = {
                 name = "Ice Stone",
                 text = {

@@ -507,9 +507,55 @@ local upgrade = {
     end
   end,
   in_pool = function(self)
-    return true
+    return not next(find_joker("porygon2"))
   end
 }
+
+local dubious_disc = {
+  name = "dubious_disc",
+  key = "dubious_disc",
+  set = "Item",
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+  end,
+  pos = { x = 0, y = 5 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return G.hand.cards and #G.hand.cards > 0
+  end,
+  use = function(self, card, area, copier)
+    for i = 1, #G.hand.cards do
+      local enhancement_type = pseudorandom(pseudoseed('dubious'))
+      local enhancement = nil
+      if enhancement_type > .89 then enhancement = G.P_CENTERS.m_bonus
+      elseif enhancement_type > .78 then enhancement = G.P_CENTERS.m_mult
+      elseif enhancement_type > .67 then enhancement = G.P_CENTERS.m_wild
+      elseif enhancement_type > .56 then enhancement = G.P_CENTERS.m_glass
+      elseif enhancement_type > .45 then enhancement = G.P_CENTERS.m_steel
+      elseif enhancement_type > .34 then enhancement = G.P_CENTERS.m_stone
+      elseif enhancement_type > .23 then enhancement = G.P_CENTERS.m_gold
+      elseif enhancement_type > .12 then enhancement = G.P_CENTERS.m_lucky
+      else enhancement = G.P_CENTERS.c_base end
+      juice_flip_single(G.hand.cards[i], i)
+      G.hand.cards[i]:set_ability(enhancement, nil, true)
+      delay(0.2)
+      juice_flip_single(G.hand.cards[i], i)
+    end
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return next(find_joker("porygon2"))
+  end
+}
+
 local icestone = {
   name = "icestone",
   key = "icestone",
@@ -578,5 +624,5 @@ local shinystone = {
 }
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, icestone, shinystone}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, dubious_disc, icestone, shinystone}
 }

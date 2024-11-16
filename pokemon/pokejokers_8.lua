@@ -159,7 +159,7 @@ local porygon2={
   end,
   rarity = "poke_safari", 
   cost = 6, 
-  item_req = "upgrade",
+  item_req = "dubious_disc",
   joblacklist = true,
   stage = "One",
   ptype = "Colorless",

@@ -947,6 +947,26 @@ juice_flip = function()
   end
 end
 
+juice_flip_single = function(card, index)
+  G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.4,
+      func = function()
+          play_sound('tarot1')
+          card:juice_up(0.3, 0.5)
+          return true
+      end
+  }))
+  local percent = 1.15 - (index - 0.999) / (#G.hand.cards - 0.998) * 0.3
+  G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.15,
+      func = function()
+          card:flip(); play_sound('card1', percent); card:juice_up(0.3, 0.3); return true
+      end
+  }))
+end
+
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   local poke_keys = {}
   local pokearea = area or G.jokers
