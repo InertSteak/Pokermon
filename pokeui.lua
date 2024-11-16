@@ -11,7 +11,7 @@ local restart_toggles_right = {
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_card", label = "poke_settings_shiny_playing_cards"},
                           {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
  
-local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}}
+local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, }
  
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do

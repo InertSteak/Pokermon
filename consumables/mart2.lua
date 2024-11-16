@@ -323,10 +323,17 @@ local teraorb = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    local leftmost = G.jokers.cards[1]
-    apply_type_sticker(leftmost)
-    energy_increase(leftmost, type_sticker_applied(leftmost))
-    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    elseif G.jokers.cards and #G.jokers.cards > 0 then
+      choice = G.jokers.cards[1]
+    else
+      return
+    end
+    apply_type_sticker(choice)
+    energy_increase(choice, type_sticker_applied(choice))
+    card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
   end,
   in_pool = function(self)
     return true
@@ -349,10 +356,15 @@ local metalcoat = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    local leftmost = G.jokers.cards[1]
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
     
-    apply_type_sticker(leftmost, "Metal")
-    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
+    apply_type_sticker(choice, "Metal")
+    card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
@@ -382,10 +394,15 @@ local dragonscale = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    local leftmost = G.jokers.cards[1]
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
     
-    apply_type_sticker(leftmost, "Dragon")
-    card_eval_status_text(leftmost, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
+    apply_type_sticker(choice, "Dragon")
+    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
     
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_emperor')

@@ -45,8 +45,15 @@ SMODS.Rarity{
     end,
 }
 
---Load helper function file
-local helper, load_error = SMODS.load_file("pokefunctions.lua")
+--Load helper function files
+local helper, load_error = SMODS.load_file("functions/pokefunctions.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  helper()
+end
+
+local helper, load_error = SMODS.load_file("functions/energyfunctions.lua")
 if load_error then
   sendDebugMessage ("The error is: "..load_error)
 else
@@ -54,7 +61,6 @@ else
 end
 
 --Load Sprites file
---Load UI file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then
   sendDebugMessage ("The error is: "..load_error)

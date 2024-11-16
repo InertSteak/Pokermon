@@ -165,7 +165,7 @@ return {
                 text = {
                     "Applies a random",
                     "{C:pink}Type{} sticker",
-                    "to leftmost Joker{}", 
+                    "to leftmost or selected Joker{}", 
                     "and gives {C:attention}+1{} {C:pink}Energy{}"
                 },
             },
@@ -173,7 +173,7 @@ return {
                 name = "Metal Coat",
                 text = {
                     "Applies a {C:metal}Metal{} sticker",
-                    "to leftmost Joker.",
+                    "to leftmost or selected Joker.",
                     "Creates a {C:attention}Chariot{} card",
                     "{C:inactive}(Must have room){}"
                 },
@@ -182,7 +182,7 @@ return {
                 name = "Dragon Scale",
                 text = {
                     "Applies a {C:dragon}Dragon{} sticker",
-                    "to leftmost Joker.",
+                    "to leftmost or selected Joker.",
                     "Creates an {C:attention}Emperor{} card",
                     "{C:inactive}(Must have room){}"
                 },
@@ -225,7 +225,7 @@ return {
                 name = "Grass Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Grass{} type",
+                    "values of leftmost or selected {C:attention}Grass{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -234,7 +234,7 @@ return {
                 name = "Fire Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Fire{} type",
+                    "values of leftmost or selected {C:attention}Fire{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -243,7 +243,7 @@ return {
                 name = "Water Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Water{} type",
+                    "values of leftmost or selected {C:attention}Water{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -252,7 +252,7 @@ return {
                 name = "Lightning Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Lightning{} type",
+                    "values of leftmost or selected {C:attention}Lightning{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -261,7 +261,7 @@ return {
                 name = "Psychic Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Psychic{} type",
+                    "values of leftmost or selected {C:attention}Psychic{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -270,7 +270,7 @@ return {
                 name = "Fighting Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Fighting{} type",
+                    "values of leftmost or selected {C:attention}Fighting{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -279,7 +279,7 @@ return {
                 name = "Colorless Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "of leftmost Joker permanently if able",
+                    "of leftmost or selected Joker permanently if able",
                     "Half as effective with ",
                     "non-{C:attention}Colorless{} Jokers",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
@@ -289,7 +289,7 @@ return {
                 name = "Darkness Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Dark{} type",
+                    "values of leftmost or selected {C:attention}Dark{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -298,7 +298,7 @@ return {
                 name = "Metal Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Metal{} type",
+                    "values of leftmost or selected {C:attention}Metal{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -307,7 +307,7 @@ return {
                 name = "Fairy Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Fairy{} type",
+                    "values of leftmost or selected {C:attention}Fairy{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -317,7 +317,7 @@ return {
                 name = "Dragon Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Dragon{} type",
+                    "values of leftmost or selected {C:attention}Dragon{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -326,7 +326,7 @@ return {
                 name = "Earth Energy",
                 text = {
                     "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost {C:attention}Earth{} type",
+                    "values of leftmost or selected {C:attention}Earth{} type",
                     "Joker permanently if able",
                     "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)",
                 },
@@ -2275,11 +2275,9 @@ return {
             c_poke_transformation = {
                 name = "Transformation",
                 text = {
-                    "Evolves leftmost Pokemon to",
+                    "Evolves leftmost or selected Pokemon to",
                     "the highest {C:attention}stage{}",
-                    "and increases most {C:attention}scoring{} and {C:money}${}", 
-                    "number values if able",
-                    "{C:inactive}(Max of {C:attention}#1#{}{C:inactive} increases per Joker)"
+                    "and gives {}+1{} {C:pink}Energy{}", 
                 },
             },
             c_poke_obituary = {

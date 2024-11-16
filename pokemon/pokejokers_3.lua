@@ -699,7 +699,7 @@ local slowpoke={
   end
 }
 local slowpoke2={
-  name = "slowpoke", 
+  name = "slowpoke2", 
   pos = {x = 0, y = 6}, 
   config = {extra = {Xmult = 2, rounds = 5, odds = 4}},
   loc_vars = function(self, info_queue, center)

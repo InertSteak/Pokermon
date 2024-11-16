@@ -143,10 +143,18 @@ local grass_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -164,10 +172,18 @@ local fire_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -185,10 +201,18 @@ local water_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -206,10 +230,18 @@ local lightning_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -227,10 +259,18 @@ local psychic_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -248,10 +288,18 @@ local fighting_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -269,10 +317,18 @@ local colorless_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -290,10 +346,18 @@ local darkness_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -311,10 +375,18 @@ local metal_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -332,10 +404,18 @@ local fairy_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -353,10 +433,18 @@ local dragon_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -374,10 +462,18 @@ local earth_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
   end
 }
 
@@ -398,27 +494,37 @@ local transformation = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.cards and #G.jokers.cards > 0 then
-      local joker = G.jokers.cards[1]
-      if joker.ability and joker.ability.extra and type(joker.ability.extra) == "table" and joker.ability.extra.ptype then
-        return true
-      else
-        return false
-      end
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    elseif G.jokers.cards and #G.jokers.cards > 0 then
+      choice = G.jokers.cards[1]
+    else
+      return false
+    end
+    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
+      return true
     else
       return false
     end
   end,
   use = function(self, card, area, copier)
-    if G.jokers.cards and #G.jokers.cards > 0 then
-      local leftmost = G.jokers.cards[1]
-      energy_use(self, leftmost, area, copier)
-      local highest = get_highest_evo(leftmost)
-      if highest and type(highest) == "string" then
-        local forced_key = "j_poke_"..highest
-        local context = {}
-        evolve(leftmost, leftmost, context, forced_key)
-      end
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+    if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
+      energy_increase(choice, choice.ability.extra.ptype)
+    elseif type_sticker_applied(choice) then
+      energy_increase(choice, type_sticker_applied(choice))
+    end
+    local highest = get_highest_evo(choice)
+    if highest and type(highest) == "string" then
+      local forced_key = "j_poke_"..highest
+      local context = {}
+      evolve(choice, choice, context, forced_key)
     end
   end
 }
