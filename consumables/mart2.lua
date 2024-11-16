@@ -23,8 +23,10 @@ local moonstone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -55,8 +57,10 @@ local sunstone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -87,8 +91,10 @@ local waterstone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -119,8 +125,10 @@ local thunderstone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -151,8 +159,10 @@ local firestone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -183,8 +193,10 @@ local leafstone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -215,8 +227,10 @@ local linkcable = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -442,8 +456,10 @@ local kingsrock = {
     }))
     delay(0.5)
     juice_flip()
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -484,8 +500,10 @@ local upgrade = {
     end
     delay(0.5)
     juice_flip()
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -515,8 +533,10 @@ local icestone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -546,8 +566,10 @@ local shinystone = {
       _card:add_to_deck()
       G.consumeables:emplace(_card)
     end
-    if #G.jokers.cards > 0 then
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)

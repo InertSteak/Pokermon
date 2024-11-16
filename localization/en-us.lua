@@ -2451,7 +2451,7 @@ return {
             eitem = {
                 name = "Evolution Card",
                 text = {
-                    "Evolves leftmost",
+                    "Evolves leftmost or selected",
                     "{C:attention}eligible{} Joker",
                 }
             },
@@ -2727,6 +2727,7 @@ return {
             poke_tera_ex = "Tera!",
             poke_metal_ex = "Metal!",
             poke_dragon_ex = "Dragon!",
+            poke_energized_ex = "Energized!",
             poke_unlimited_energy = "Infinity",
 
             --Some infoqueue/variable stuff

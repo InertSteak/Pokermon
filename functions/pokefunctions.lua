@@ -285,6 +285,7 @@ energize = function(card, etype, evolving)
       end
     end
   end
+  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
 end
 
 copy_scaled_values = function(card)
@@ -821,6 +822,29 @@ evo_item_use = function(self, card, area, copier)
           juice_card_until(v, eval, true)
         end
       end
+    end
+    return true
+end
+
+highlighted_evo_item = function(self, card, area, copier)
+    local evolve = false
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
+    local choice = G.jokers.highlighted[1]
+    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and type(choice.ability.extra.item_req) ~= "table" and choice.ability.extra.item_req == self.name and 
+       not choice.ability.extra.evolve then
+      evolve = true
+    elseif choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and type(choice.ability.extra.item_req) == "table" and not choice.ability.extra.evolve then
+      for l, p in pairs(choice.ability.extra.item_req) do
+        if p == self.name then
+          evolve = p
+        end
+      end
+    end
+    
+    if evolve then
+      choice.ability.extra.evolve = evolve
+      local eval = function(choice) return not choice.REMOVED end
+      juice_card_until(choice, eval, true)
     end
     return true
 end
