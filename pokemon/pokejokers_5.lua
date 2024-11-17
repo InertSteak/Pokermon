@@ -443,16 +443,15 @@ local ditto={
     end
   end,
   in_pool = function(self)
-    local availible = true
     if G.jokers.cards and #G.jokers.cards > 0 then
       for k, v in ipairs(G.jokers.cards) do
         if v.ability.perishable then
-          availible = false
-          break
+          sendDebugMessage("Perishable!")
+          return false
         end
       end
     end
-    return availible
+    return true
   end
 }
 local eevee={
