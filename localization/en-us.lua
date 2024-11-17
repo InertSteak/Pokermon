@@ -1559,6 +1559,7 @@ return {
                     "Sell this to duplicate",
                     "the leftmost Joker",
                     "with {C:attention}Perishable{}",
+                    "and a {C:colorless}Colorless{} sticker",
                     "{C:inactive}(removes Eternal){}",
                 } 
             },

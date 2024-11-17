@@ -95,7 +95,7 @@ for _, file in ipairs(pfiles) do
           if not item.key then
             item.key = item.name
           end
-          if not pokermon_config.no_evos and item.name ~= "taurosh" then
+          if not pokermon_config.no_evos and not item.custom_pool_func then
             item.in_pool = function(self)
               return pokemon_in_pool(self)
             end

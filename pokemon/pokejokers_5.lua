@@ -305,7 +305,7 @@ local taurosh={
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
-  blueprint_compat = true,
+  blueprint_compat = true, 
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -401,13 +401,14 @@ local ditto={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds}}
   end,
-  rarity = 3, 
+  rarity = 2, 
   cost = 8, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
   blueprint_compat = false,
   eternal_compat = false,
+  custom_pool_func = true, 
   calculate = function(self, card, context) --mostly copied from how invisible joker works
     if context.selling_self and not context.blueprint then
       local eval = function(card) return (card.ability.loyalty_remaining == 0) and not G.RESET_JIGGLES end
@@ -429,6 +430,7 @@ local ditto={
               --Setting it directly to overrule perishiable compatibility
               card.ability.perishable = true
               card.ability.perish_tally = G.GAME.perishable_rounds
+              apply_type_sticker(card, "Colorless")
               card:add_to_deck()
               G.jokers:emplace(card)
           else
@@ -438,6 +440,18 @@ local ditto={
           card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
       end
     end
+  end,
+  in_pool = function(self)
+    local availible = true
+    if G.jokers.cards and #G.jokers.cards > 0 then
+      for k, v in ipairs(#G.jokers.cards) do
+        if v.ability.perishable then
+          availible = false
+          break
+        end
+      end
+    end
+    return availible
   end
 }
 local eevee={
