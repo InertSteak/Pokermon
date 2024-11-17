@@ -1961,9 +1961,10 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips",
                     "if played hand contains at least",
-                    "one scoring {C:attention}Ace{} and is exactly {C:attention}#3#{} cards",
+                    "one scoring {C:attention}Ace{}, gain {C:attention}double{} if",
+                    "hand is a {C:attention}Four of a Kind{}",
                     "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
-                    "{C:inactive}(Evolves at {C:chips}+36{}{C:inactive} Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+64{}{C:inactive} Chips)"
                 } 
             },
             j_poke_metang = {
@@ -1971,9 +1972,10 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips",
                     "if played hand contains at least",
-                    "two scoring {C:attention}Aces{} and is exactly {C:attention}#3#{} cards",
+                    "two scoring {C:attention}Aces{}, gain {C:attention}double{}",
+                    "if hand is a {C:attention}Four of a Kind{}",
                     "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
-                    "{C:inactive}(Evolves at {C:chips}+100{}{C:inactive} Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+256{}{C:inactive} Chips)"
                 } 
             },
             j_poke_metagross = {

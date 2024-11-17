@@ -15,7 +15,7 @@
 local beldum={
   name = "beldum", 
   pos = {x = 4, y = 13},
-  config = {extra = {chips = 0, chip_mod = 4, size = 4}},
+  config = {extra = {chips = 0, chip_mod = 8, size = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -29,13 +29,17 @@ local beldum={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and #context.full_hand == card.ability.extra.size and not context.blueprint then
+      if context.before and not context.blueprint then
         local has_ace = false
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
         end
         if has_ace then
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          if context.scoring_name == "Four of a Kind" then
+            card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
+          else
+            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          end
         end
       end
       if context.joker_main then
@@ -47,14 +51,14 @@ local beldum={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, 36)
+    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, 64)
   end,
 }
 -- Metang 375
 local metang={
   name = "metang", 
   pos = {x = 5, y = 13},
-  config = {extra = {chips = 36, chip_mod = 4, size = 4}},
+  config = {extra = {chips = 64, chip_mod = 16, size = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -68,13 +72,17 @@ local metang={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and #context.full_hand == card.ability.extra.size and not context.blueprint then
-        local ace_count = 0
+      if context.before and not context.blueprint then
+        local has_ace = false
         for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
+            if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
         end
-        if ace_count > 1 then
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        if has_ace then
+          if context.scoring_name == "Four of a Kind" then
+            card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
+          else
+            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          end
         end
       end
       if context.joker_main then
@@ -85,14 +93,14 @@ local metang={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, 100)
+    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, 256)
   end,
 }
 -- Metagross 376
 local metagross={
   name = "metagross", 
   pos = {x = 6, y = 13},
-  config = {extra = {chips = 100,}},
+  config = {extra = {chips = 256,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}
