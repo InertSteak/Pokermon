@@ -445,7 +445,7 @@ local ditto={
   in_pool = function(self)
     local availible = true
     if G.jokers.cards and #G.jokers.cards > 0 then
-      for k, v in ipairs(#G.jokers.cards) do
+      for k, v in ipairs(G.jokers.cards) do
         if v.ability.perishable then
           availible = false
           break
