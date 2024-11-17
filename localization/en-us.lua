@@ -1972,7 +1972,7 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips",
                     "if played hand contains at least",
-                    "two scoring {C:attention}Aces{}, gain {C:attention}double{}",
+                    "two scoring {C:attention}Aces{}, gain {C:attention}quadruple{}",
                     "if hand is a {C:attention}Four of a Kind{}",
                     "{C:inactive}(Currently {C:chips}+#1#{}{C:inactive} Chips)",
                     "{C:inactive}(Evolves at {C:chips}+256{}{C:inactive} Chips)"
