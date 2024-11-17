@@ -2501,6 +2501,13 @@ return {
                     "{C:attention}#1#{}/#2#",
                 }
             },
+            availability = {
+                name = "Availability",
+                text = {
+                    "Not available if",
+                    "{C:attention}#1#{}",
+                }
+            },
             baby = {
                 name = "Baby",
                 text = {
