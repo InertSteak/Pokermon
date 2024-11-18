@@ -11,7 +11,8 @@ local restart_toggles_right = {
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_card", label = "poke_settings_shiny_playing_cards"},
                           {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
  
-local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, }
+local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
+                        {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"}, title = "Test", text = {"First Line", "Second Line"}}
  
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do
@@ -357,7 +358,8 @@ function G.FUNCS.pokermon_discord(e)
   love.system.openURL("https://discord.gg/3GZTGppef4")
 end
 function G.FUNCS.pokermon_energy(e)
-  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
+  local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
+  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR, detailed_tooltip = ttip}, nodes = {}}
   create_menu_toggles(energy_settings, energy_toggles)
   
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',

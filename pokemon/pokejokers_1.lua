@@ -23,12 +23,14 @@ local bulbasaur={
               card = card,
             }
           else
+            local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+              earned = earned + card.ability.extra.money
             end
-            ease_dollars(card.ability.extra.money)
+            earned = ease_poke_dollars(card, "bulba", earned)
             return {
-              message = localize('$')..card.ability.extra.money,
+              message = localize('$')..earned,
               colour = G.C.MONEY,
               card = card
             }
@@ -75,12 +77,14 @@ local ivysaur={
             else
               more = 1
             end
+            local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
+              earned = earned + card.ability.extra.money + more
             end
-            ease_dollars(card.ability.extra.money + more)
+            earned = ease_poke_dollars(card, "ivy", earned)
             return {
-              message = localize('$')..card.ability.extra.money + more,
+              message = localize('$')..earned,
               colour = G.C.MONEY,
               card = card
             }
@@ -121,12 +125,14 @@ local venusaur={
               card = card,
             }
           else
+            local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+              earned = earned + card.ability.extra.money
             end
-            ease_dollars(card.ability.extra.money)
+            earned = ease_poke_dollars(card, "venu", earned)
             return {
-                message = localize('$')..card.ability.extra.money,
+                message = localize('$')..earned,
                 colour = G.C.MONEY,
                 card = card
             }
@@ -659,7 +665,7 @@ local pidgeot={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      ease_dollars(card.ability.extra.money)
+      ease_poke_dollars(card, "pidgeot", card.ability.extra.money)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -887,7 +893,7 @@ local pikachu={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    return math.min(10, #G.jokers.cards * card.ability.extra.money)
+    return ease_poke_dollars(card, "pikachu", math.min(10, #G.jokers.cards * card.ability.extra.money), true) 
 	end,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_raichu")
@@ -915,7 +921,7 @@ local raichu={
       local edition = {negative = true}
       card:set_edition(edition, true)
     end
-    return math.min(10, #G.jokers.cards * card.ability.extra.money)
+    return ease_poke_dollars(card, "pikachu", math.min(10, #G.jokers.cards * card.ability.extra.money), true)
 	end,
 }
 local sandshrew={

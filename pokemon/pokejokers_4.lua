@@ -399,7 +399,7 @@ local electrode={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main and G.jokers.cards[1] == card then
-        ease_dollars(card.ability.extra.money)
+        ease_poke_dollars(card, "electrode", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()
               card.debuff = true
@@ -538,7 +538,7 @@ local marowak={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #G.consumeables.cards + #find_joker('thickclub')
-        if count > 1 then
+        if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi * (count + 1)}}, 
             colour = G.C.XMULT,
@@ -850,7 +850,7 @@ local tangela={
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = card.ability.extra.money,
+            dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money, true),
             card = card
           }
         else
@@ -872,7 +872,7 @@ local tangela={
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = card.ability.extra.money,
+              dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money, true),
               card = card
             }
           end

@@ -40,7 +40,7 @@ local yamper={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
-        ease_dollars(card.ability.extra.money)
+        ease_poke_dollars(card, "yamper", card.ability.extra.money)
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
@@ -69,7 +69,7 @@ local boltund={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
-        ease_dollars(card.ability.extra.money)
+        ease_poke_dollars(card, "boltund", card.ability.extra.money)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.MULT,

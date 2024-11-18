@@ -1,5 +1,3 @@
-scaled_evos = {"seadra", "golbat", "magmar", "scyther", "sentret"}
-
 family = {
     {"bulbasaur","ivysaur","venusaur"},
     {"charmander","charmeleon","charizard"},
@@ -167,7 +165,6 @@ evolve = function(self, card, context, forced_key)
     local previous_c_energy_count = nil
     local shiny = nil
     local type_sticker = nil
-    local scaled = nil
     local scaled_values = nil
     local reset_apply_type = nil
     local previous_extra_value = nil
@@ -199,20 +196,8 @@ evolve = function(self, card, context, forced_key)
       previous_c_energy_count  = card.ability.extra.c_energy_count
     end 
     
-    for i = 1, #scaled_evos do
-      local name = nil
-      if not card.name and card.ability.name then
-        name = card.ability.name
-      else
-        name = card.name
-      end
-      if name == scaled_evos[i] then
-        scaled_values = copy_scaled_values(card)
-        scaled = true
-        break
-      end
-    end
-    
+    scaled_values = copy_scaled_values(card)
+
     if type_sticker_applied then
       poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
       for l, v in pairs(poketype_list) do
@@ -278,7 +263,7 @@ evolve = function(self, card, context, forced_key)
       energize(new_card, nil, true)
     end
     
-    if scaled then
+    if scaled_values then
       for l, v in pairs(scaled_values) do
         if v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and v > new_card.ability.extra[l] then
           new_card.ability.extra[l] = v
@@ -546,8 +531,26 @@ type_tooltip = function(self, info_queue, center)
   end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
+      if center.ability.money_frac and center.ability.money_frac > 0 then
+        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+      end
+      if center.ability.money2_frac and center.ability.money2_frac > 0 then
+        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money2_frac * 100}}
+      end
+      if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
+        info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {center.ability.money_mod_frac * 100}}
+      end
+      if center.ability.mult_mod_frac and center.ability.mult_mod_frac > 0 then
+        info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {center.ability.mult_mod_frac * 100}}
+      end
+      if center.ability.chip_mod_frac and center.ability.chip_mod_frac > 0 then
+        info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {center.ability.chip_mod_frac * 100}}
+      end
   elseif (center.ability and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
+      if center.ability.money_frac then
+        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+      end
   end
 end
 
@@ -682,10 +685,9 @@ get_poke_allowed = function(key)
   
   for i=1, #banned_keys do
     if banned_keys[i] == key then
-      allowed = false
-      break
+      return false
     end
   end
   
-  return allowed
+  return true
 end

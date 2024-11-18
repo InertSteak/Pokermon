@@ -222,7 +222,7 @@ local crobat={
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
-      return card.ability.extra.money
+      return ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
     end
 	end
 }
@@ -258,7 +258,7 @@ local pichu={
     return level_evo(self, card, context, "j_poke_pikachu")
   end,
   calc_dollar_bonus = function(self, card)
-    return card.ability.extra.money
+    return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
 	end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then

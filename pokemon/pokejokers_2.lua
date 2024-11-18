@@ -325,10 +325,10 @@ local wigglytuff={
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
-  config = {extra = {mult = 2, zubat_tally = 0}},
+  config = {extra = {mult_mod = 2, zubat_tally = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult*center.ability.extra.zubat_tally, 12, center.ability.extra.zubat_tally}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.zubat_tally, 12, center.ability.extra.zubat_tally}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -348,9 +348,9 @@ local zubat={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * card.ability.extra.zubat_tally}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.zubat_tally}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * card.ability.extra.zubat_tally 
+          mult_mod = card.ability.extra.mult_mod * card.ability.extra.zubat_tally 
         }
       end
     end
@@ -436,7 +436,7 @@ local golbat={
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
-      return card.ability.extra.money
+      return ease_poke_dollars(card, "Golbat", card.ability.extra.money, true)
     end
 	end
 }
@@ -748,7 +748,7 @@ local meowth={
     return level_evo(self, card, context, "j_poke_persian")
   end,
   calc_dollar_bonus = function(self, card)
-    return card.ability.extra.money
+    return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
 	end
 }
 local persian={
@@ -766,7 +766,7 @@ local persian={
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-			return math.min(G.jokers.cards[1].sell_cost*2, 15)
+			return ease_poke_dollars(card, "persian", math.min(G.jokers.cards[1].sell_cost*2, 15), true)
     end
 	end
 }
@@ -787,10 +787,10 @@ local psyduck={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
       if context.joker_main then
-        ease_dollars(card.ability.extra.money)
+        local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
         return {
-          message = localize('$')..card.ability.extra.money,
-          dollars = card.ability.extra.money,
+          message = localize('$')..earned,
+          dollars = earned,
           colour = G.C.MONEY
         }
       end
@@ -830,10 +830,10 @@ local golduck={
         }
       end
       if context.joker_main then
-        ease_dollars(card.ability.extra.money)
+        local earned = ease_poke_dollars(card, "golduck", card.ability.extra.money)
         return {
-          message = localize('$')..card.ability.extra.money,
-          dollars = card.ability.extra.money,
+          message = localize('$')..earned,
+          dollars = earned,
           colour = G.C.MONEY
         }
       end

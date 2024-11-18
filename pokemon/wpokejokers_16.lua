@@ -169,7 +169,7 @@ local tangrowth={
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = card.ability.extra.money,
+            dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money, true),
             card = card
           }
         else
@@ -191,7 +191,7 @@ local tangrowth={
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = card.ability.extra.money,
+              dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money, true),
               card = card
             }
           end

@@ -2501,6 +2501,37 @@ return {
                     "{C:attention}#1#{}/#2#",
                 }
             },
+            money_chance = {
+                name = "Money Chance",
+                text = {
+                    "{C:attention}#1#%{} chance of",
+                    "earning an additional {C:money}$1{}"
+                }
+            },
+            mult_progress = {
+                name = "Mult Gain Progress",
+                text = {
+                    "{C:attention}#1#%{} progress",
+                    "towards {C:mult}Mult{} Gain",
+                    "increasing by {C:mult}+1{}"
+                }
+            },
+            chip_progress = {
+                name = "Chip Gain Progress",
+                text = {
+                    "{C:attention}#1#%{} progress",
+                    "towards {C:chips}Chip{} Gain",
+                    "increasing by {C:chips}+1{}"
+                }
+            },
+            money_progress = {
+                name = "Money Gain Progress",
+                text = {
+                    "{C:attention}#1#%{} progress",
+                    "towards {C:money}${} Gain",
+                    "increasing by {C:money}1${}"
+                }
+            },
             availability = {
                 name = "Availability",
                 text = {
@@ -2515,6 +2546,20 @@ return {
                     "when you get this, Jokers are",
                     "unpinned when this card",
                     "evolves or is removed"
+                }
+            },
+            precise_energy_tooltip = {
+                name = "Precise Energy Scaling",
+                text = {
+                    "{s:0.8}Use {C:attention,s:0.8}decimals{} for all values when applying {C:pink,s:0.8}Energy{}{s:0.8} bonus{}",
+                    "{s:0.8}With this option {C:attention,s:0.8}off{}{s:0.8} the following will occur for the bonus:{}",
+                    "{C:attenion}1. {X:mult,C:white,s:0.8}X{} {s:0.8}Mult - Uses Decimals",
+                    "{C:attenion}2. {s:0.8}Flat {C:mult,s:0.8}Mult{}{s:0.8} and {C:chips,s:0.8}Chips{}{s:0.8} - Rounds up to nearest whole number",
+                    "{C:attenion}3. {s:0.8}{C:mult,s:0.8}Mult Gain{}{s:0.8} and {C:chips,s:0.8}Chips Gain{}{s:0.8} - Decimal component displayed", 
+                    "{s:0.8}as a percentage, used to apply bonus to base {C:mult,s:0.8}Mult{}{s:0.8} and {C:chips,s:0.8}Chips{}",
+                    "{C:attenion}4. {C:money,s:0.8}${}{s:0.8} - Decimal component displayed as a percentage,",
+                    "{s:0.8}used as chance for extra {C:money,s:0.8}${}{s:0.8} to be gained{}",
+                    "{C:inactive,s:0.8}(Non-Pokemon Jokers will always use precise scaling){}"
                 }
             },
             safaridesc = {
@@ -2727,6 +2772,7 @@ return {
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
+            poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

@@ -16,7 +16,7 @@ local starmie={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        ease_dollars(card.ability.extra.money)
+        ease_poke_dollars(card, "starmie", card.ability.extra.money)
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
@@ -443,10 +443,9 @@ local ditto={
     end
   end,
   in_pool = function(self)
-    if G.jokers.cards and #G.jokers.cards > 0 then
+    if G.jokers and G.jokers.cards and #G.jokers.cards > 0 then
       for k, v in ipairs(G.jokers.cards) do
         if v.ability.perishable then
-          sendDebugMessage("Perishable!")
           return false
         end
       end
@@ -474,7 +473,7 @@ local eevee={
   calculate = function(self, card, context)
     if context.reroll_shop and card.ability.extra.limit < 5 then
       card.ability.extra.limit = card.ability.extra.limit + 1
-      ease_dollars(card.ability.extra.money)
+      ease_poke_dollars(card, "eevee", card.ability.extra.money)
       return {
           message = localize('$')..card.ability.extra.money,
           colour = G.C.MONEY
@@ -552,7 +551,7 @@ local jolteon={
           juice_card_until(card, eval, true)
         end
       else
-        ease_dollars(card.ability.extra.money)
+        ease_poke_dollars(card, "jolteon", card.ability.extra.money)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.MONEY})
         card.ability.extra.rerolls = 0
       end
@@ -683,10 +682,10 @@ local omanyte={
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
             end}))
         elseif threes == 2 then
-          ease_dollars(card.ability.extra.money2)
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
           return {
-            message = localize('$')..card.ability.extra.money2,
-            dollars = card.ability.extra.money2,
+            message = localize('$')..earned,
+            dollars = earned,
             colour = G.C.MONEY
           }
         elseif threes > 2 then
@@ -731,10 +730,10 @@ local omastar={
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
             end}))
         elseif threes == 3 then
-          ease_dollars(card.ability.extra.money2)
+          local earned = ease_poke_dollars(card, "omastar", card.ability.extra.money2)
           return {
-            message = localize('$')..card.ability.extra.money2,
-            dollars = card.ability.extra.money2,
+            message = localize('$')..earned,
+            dollars = earned,
             colour = G.C.MONEY
           }
         elseif threes > 3 then
