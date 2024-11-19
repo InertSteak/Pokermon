@@ -30,11 +30,11 @@ local shiny = ({
             card.config.center.atlas = "poke_Pokedex"..i
             break
           end
-          if card.config.center.atlas == "poke_others" then
-            card.config.center.atlas = "poke_Shinyothers"
-            card:set_sprites(card.config.center)
-            card.config.center.atlas = "poke_Shinyothers"
-          end
+        end
+        if card.config.center.atlas == "poke_others" then
+          card.config.center.atlas = "poke_Shinyothers"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_Shinyothers"
         end
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
@@ -57,6 +57,21 @@ local shiny = ({
       else
         G.GAME.modifiers.poke_booster_packs = 0
       end
+    end,
+    on_load = function(card)
+        for i = 1, 9 do
+          if card.config.center.atlas == "poke_Pokedex"..i then
+            card.config.center.atlas = "poke_Shinydex"..i
+            card:set_sprites(card.config.center)
+            card.config.center.atlas = "poke_Pokedex"..i
+            break
+          end
+        end
+        if card.config.center.atlas == "poke_others" then
+          card.config.center.atlas = "poke_Shinyothers"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_Shinyothers"
+        end
     end
 })
 

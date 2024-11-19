@@ -656,7 +656,7 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   
   for k, v in pairs(G.P_CENTERS) do
     if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) 
-       and not (poketype and poketype ~= v.ptype) then
+       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) then
       table.insert(poke_keys, v.key)
     end
   end
