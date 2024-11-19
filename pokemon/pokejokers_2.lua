@@ -2,7 +2,7 @@
 local nidoqueen={
   name = "nidoqueen", 
   pos = {x = 4, y = 2}, 
-  config = {extra = {chips = 75, chip_total = 0, h_size = 1}},
+  config = {extra = {chips = 85, chip_total = 0, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
@@ -50,7 +50,7 @@ local nidoqueen={
 local nidoranm={
   name = "nidoranm", 
   pos = {x = 5, y = 2}, 
-  config = {extra = {mult = 6, rounds = 4}},
+  config = {extra = {mult = 7, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -82,7 +82,7 @@ local nidoranm={
 local nidorino={
   name = "nidorino", 
   pos = {x = 6, y = 2}, 
-  config = {extra = {mult = 12}},
+  config = {extra = {mult = 14}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
@@ -116,7 +116,7 @@ local nidorino={
 local nidoking={
   name = "nidoking", 
   pos = {x = 7, y = 2},
-  config = {extra = {mult = 15, h_size = 1}},
+  config = {extra = {mult = 18, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.h_size}}
@@ -160,7 +160,7 @@ local clefairy={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   item_req = "moonstone",
   stage = "Basic", 
   ptype = "Fairy",
@@ -443,7 +443,7 @@ local golbat={
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
-  config = {extra = {mult = 1, mult2 = 3, rounds = 5}},
+  config = {extra = {mult = 1, mult2 = 5, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.rounds}}
@@ -480,7 +480,7 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult = 3, mult2 = 5}},
+  config = {extra = {mult = 3, mult2 = 9}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
@@ -519,7 +519,7 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.35, mult = 5}},
+  config = {extra = {Xmult_multi = 1.35, mult = 9}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -562,7 +562,7 @@ local paras={
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1", 
@@ -591,7 +591,7 @@ local paras={
 local parasect={
   name = "parasect", 
   pos = {x = 7, y = 3},
-   config = {extra = {mult = 8, mult_mod = 3, mult_mod2 = 3}},
+   config = {extra = {mult = 0, mult_mod = 3, mult_mod2 = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2}}
@@ -663,7 +663,7 @@ local venomoth={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.plus_odds}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   ptype = "Grass",
@@ -706,7 +706,7 @@ local diglett={
 local dugtrio={
   name = "dugtrio", 
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_mod = 0.2}},
+  config = {extra = {Xmult_mod = 0.15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.Xmult_mod,  1 + ((G.GAME.hands["Three of a Kind"].level - 1) * center.ability.extra.Xmult_mod)}}

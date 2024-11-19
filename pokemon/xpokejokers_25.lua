@@ -48,7 +48,7 @@ local grubbin={
 -- Charjabug 737
 local charjabug={
   name = "charjabug",
-  config = {extra = {mult = 12}},
+  config = {extra = {mult = 9}},
   pos = {x = 1, y = 1}, 
   rarity = 2, 
   cost = 5, 
@@ -81,7 +81,7 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = 1.2, mult = 12}},
+  config = {extra = {Xmult = 1.25, mult = 12}},
   pos = {x = 2, y = 1}, 
   rarity = "poke_safari", 
   cost = 10, 

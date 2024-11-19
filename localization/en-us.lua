@@ -1473,11 +1473,11 @@ return {
                 name = 'Scyther',      
                 text = {
                     "When Blind is selected, destroy",
-                    "Joker to the right and gain {C:mult}+#2#{} Mult or {C:chips}+#4#{} Chips",
+                    "Joker to the right and gain {C:mult}+#2#{} Mult",
                     "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
                     "if Joker was {C:red}Rare{} or higher",
                     "{C:inactive}(Evolves with a {C:metal}Metal{} {C:inactive}sticker){}",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {C:chips}+#3#{C:inactive} Chips)"
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult"
                 } 
             },
             j_poke_jynx = {
@@ -1535,6 +1535,7 @@ return {
             j_poke_magikarp = {
                 name = 'Magikarp',
                 text = {
+                    "{C:chips}+#2#{} Chips",
                     "Applies {C:attention}Splash{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
@@ -2063,7 +2064,7 @@ return {
                     "permanently gains",
                     "{C:chips}+#1#{} Chips when scored",
                     "{C:attention}Stone{} cards retrigger for each",
-                    "{C:attention}other{} {X:earth,C:white}Earth{} Joker you have",
+                    "{X:earth,C:white}Earth{} Joker you have",
                     "{C:inactive}(Currently #2# retriggers)"
                 } 
             },

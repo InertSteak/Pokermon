@@ -305,8 +305,8 @@ local hitmontop={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 7, 
   stage = "One", 
   ptype = "Fighting",
   atlas = "Pokedex2",

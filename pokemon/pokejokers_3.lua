@@ -446,7 +446,7 @@ local tentacool={
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -638,7 +638,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {chips = 105, chip_mod = 10}},
+  config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
@@ -740,7 +740,7 @@ local slowpoke2={
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_multi = 0.5, Xmult = 1, oXmult = 1}},
+  config = {extra = {Xmult_multi = 0.4, Xmult = 1, oXmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
@@ -1004,7 +1004,7 @@ local dewgong={
 local grimer={
   name = "grimer", 
   pos = {x = 9, y = 6}, 
-  config = {extra = {mult = 6, rounds = 5}},
+  config = {extra = {mult = 8, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, G.GAME.starting_deck_size}}
@@ -1039,7 +1039,7 @@ local grimer={
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
-  config = {extra = {mult = 1, Xmult = 1.5}},
+  config = {extra = {mult = 2, Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12, 

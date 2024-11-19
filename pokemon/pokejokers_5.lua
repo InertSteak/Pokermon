@@ -2,7 +2,7 @@
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 3, money = 1, suit = "Diamonds"}},
+  config = {extra = {mult = 4, money = 1, suit = "Diamonds"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -60,10 +60,10 @@ local mrmime={
 local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
-  config = {extra = {mult = 0, mult_mod = 4, chips = 0, chip_mod = 8}},
+  config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -89,11 +89,7 @@ local scyther={
           G.GAME.joker_buffer = G.GAME.joker_buffer - 1
           G.E_MANAGER:add_event(Event({func = function()
               G.GAME.joker_buffer = 0
-              if pseudorandom('scyther') < .50 then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-              else
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-              end
+              card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
               card:juice_up(0.8, 0.8)
               sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
               play_sound('slice1', 0.96+math.random()*0.08)
@@ -104,9 +100,8 @@ local scyther={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-            message = "Wing Attack!",
-            mult_mod = card.ability.extra.mult,
-            chip_mod = card.ability.extra.chips
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            mult_mod = card.ability.extra.mult
         }
       end
     end
@@ -321,11 +316,11 @@ local taurosh={
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
-  config = {extra = {rounds = 10}},
+  config = {extra = {rounds = 10, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
-    return {vars = {center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.rounds, center.ability.extra.chips}}
   end,
   rarity = 1, 
   cost = 3, 
@@ -334,6 +329,15 @@ local magikarp={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
     return level_evo(self, card, context, "j_poke_gyarados")
   end
 }

@@ -684,7 +684,7 @@ get_poke_allowed = function(key)
   local allowed = true
   
   for i=1, #banned_keys do
-    if banned_keys[i] == key then
+    if "j_poke_"..banned_keys[i] == key then
       return false
     end
   end

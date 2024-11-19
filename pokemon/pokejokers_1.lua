@@ -8,7 +8,7 @@ local bulbasaur={
                     center.ability.extra.h_size}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -157,7 +157,7 @@ local charmander={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Fire",
   atlas = "Pokedex1",
@@ -805,7 +805,7 @@ local fearow={
 local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
-  config = {extra = {mult = 6, rounds = 4}},
+  config = {extra = {mult = 8, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -832,7 +832,7 @@ local ekans={
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
-  config = {extra = {mult = 8, rounds = 4}},
+  config = {extra = {mult = 10, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
@@ -935,7 +935,7 @@ local sandshrew={
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5,
+  cost = 4,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
   ptype = "Earth",
@@ -983,7 +983,7 @@ local sandslash={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
   rarity = 2,
-  cost = 7, 
+  cost = 6, 
   enhancement_gate = 'm_glass',
   stage = "One", 
   atlas = "Pokedex1",
@@ -1023,13 +1023,13 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 30, chip_total = 0, rounds = 4}},
+  config = {extra = {chips = 35, chip_total = 0, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1,
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Dark",
   atlas = "Pokedex1", 
@@ -1066,7 +1066,7 @@ local nidoranf={
 local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},
-  config = {extra = {chips = 60, chip_total = 0}},
+  config = {extra = {chips = 70, chip_total = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone

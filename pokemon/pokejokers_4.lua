@@ -594,7 +594,7 @@ local hitmonchan={
   config = {extra = {Xmult_mod = 0.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size)/2 or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -605,7 +605,7 @@ local hitmonchan={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size)/2 * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((#G.playing_cards - G.GAME.starting_deck_size) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
@@ -718,7 +718,7 @@ local weezing={
 local rhyhorn={
   name = "rhyhorn", 
   pos = {x = 6, y = 8}, 
-  config = {extra = {chips = 8, rounds = 4}},
+  config = {extra = {chips = 12, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -747,7 +747,7 @@ local rhyhorn={
 local rhydon={
   name = "rhydon", 
   pos = {x = 7, y = 8},
-  config = {extra = {chips = 12}},
+  config = {extra = {chips = 16}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -919,7 +919,7 @@ local horsea={
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -1055,7 +1055,7 @@ local staryu={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5,
+  cost = 4,
   item_req = "waterstone",
   stage = "Basic",
   ptype = "Water",

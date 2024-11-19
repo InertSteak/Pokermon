@@ -110,7 +110,7 @@ local rhyperior={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-    return {vars = {center.ability.extra.chips, math.max(0, #find_pokemon_type("Earth") - (is_type(center, "Earth") and 1 or 0))}}
+    return {vars = {center.ability.extra.chips, #find_pokemon_type("Earth")}}
   end,
   rarity = "poke_safari", 
   cost = 8,
@@ -130,7 +130,7 @@ local rhyperior={
       }
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
-      local rhytriggers = math.max(0, #find_pokemon_type("Earth") - (is_type(card, "Earth") and 1 or 0))
+      local rhytriggers = #find_pokemon_type("Earth")
       if rhytriggers > 0 then
         return {
           message = localize('k_again_ex'),
