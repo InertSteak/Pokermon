@@ -443,10 +443,10 @@ local golbat={
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
-  config = {extra = {mult1 = 1, mult2 = 3, rounds = 5}},
+  config = {extra = {mult = 1, mult2 = 3, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult1, center.ability.extra.mult2, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -463,7 +463,7 @@ local oddish={
          context.other_card:get_id() == 14 then
           local value
           if pseudorandom('oddish') < .50 then
-            value = card.ability.extra.mult1
+            value = card.ability.extra.mult
           else
             value = card.ability.extra.mult2
           end
@@ -480,11 +480,11 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult1 = 3, mult2 = 5}},
+  config = {extra = {mult = 3, mult2 = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
-		return {vars = {center.ability.extra.mult1, center.ability.extra.mult2}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
   end,
   rarity = 2, 
   cost = 8,
@@ -503,7 +503,7 @@ local gloom={
          context.other_card:get_id() == 14 then
           local value
           if pseudorandom('gloom') < .50 then
-            value = card.ability.extra.mult1
+            value = card.ability.extra.mult
           else
             value = card.ability.extra.mult2
           end

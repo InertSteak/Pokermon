@@ -854,11 +854,11 @@ local kabutops={
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", mult1 = 12, mult2 = 16, chips = 80, Xmult = 2.5}},
+  config = {extra = {rank = "Ace", mult = 12, mult2 = 16, chips = 80, Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult1, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -875,9 +875,9 @@ local aerodactyl={
         end
         if aces == 2 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult1}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult1
+            mult_mod = card.ability.extra.mult
           }
         elseif aces == 3 then
           return {
