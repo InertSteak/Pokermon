@@ -161,6 +161,11 @@ energize = function(card, etype, evolving)
   local rounded = nil
   local frac = nil
   local frac_added = nil
+  if G.GAME.energies_used then
+    G.GAME.energies_used = G.GAME.energies_used  + 1
+  else
+    G.GAME.energies_used = 1
+  end
   if type(card.ability.extra) == "table" then
     for l, data in pairs(card.ability.extra) do
       if type(data) == "number" then

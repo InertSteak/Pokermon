@@ -377,10 +377,10 @@ local glaceon={
 local porygonz={
   name = "porygonz", 
   pos = {x = 3, y = 6},
-  config = {extra = {Xmult = 1, Xmult_mod = 0.1}},
+  config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+    return {vars = {1 + ((G.GAME.energies_used or 0) * center.ability.extra.Xmult_mod), center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -391,19 +391,13 @@ local porygonz={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Energy' then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      G.E_MANAGER:add_event(Event({
-          func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult}}}); return true
-          end}))
-      return
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = Xmult
         }
       end
     end

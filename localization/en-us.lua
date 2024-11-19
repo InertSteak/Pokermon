@@ -2123,9 +2123,8 @@ return {
                 name = 'Porygon-Z',
                 text = {
                     "{C:pink}+3{} Energy Limit",
-                    "This Joker gains",
-                    "{X:red,C:white} X#2# {} Mult every time",
-                    "an {C:pink}Energy{} card is used",
+                    "{X:red,C:white} X#2# {} Mult per {C:pink}Energy{}",
+                    "card used this {C:attention}run{}",
                     "{C:inactive}(Currently {X:red,C:white} X#1# {}{C:inactive} Mult)"
                 } 
             },
