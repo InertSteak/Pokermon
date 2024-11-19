@@ -952,7 +952,7 @@ local horsea={
 local seadra={
   name = "seadra", 
   pos = {x = 12, y = 8},
-  config = {extra = {mult = 12, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}

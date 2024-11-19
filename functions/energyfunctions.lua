@@ -134,8 +134,9 @@ energy_matches = function(card, etype, include_colorless)
   return false
 end
 
-set_frac = function(card, frac, field)
+set_frac = function(card, frac, field, increased)
   local frac_name = field.."_frac"
+  local bonus_amt = math.ceil(card.ability.extra[field]/(increased and 2 or 1))
   if card.ability[frac_name] then
     card.ability[frac_name] = card.ability[frac_name] + frac
   else
@@ -145,15 +146,16 @@ set_frac = function(card, frac, field)
     local int, frac = math.modf(card.ability[frac_name])
     card.ability.extra[field] = card.ability.extra[field] + int
     card.ability[frac_name] = frac
+    if not increased then bonus_amt = bonus_amt/2 end
   end
   if field == "mult_mod" and card.ability.extra.mult then
-    card.ability.extra.mult = card.ability.extra.mult + math.ceil(card.ability[frac_name] * 5)
+    card.ability.extra.mult = card.ability.extra.mult + bonus_amt
   end
   if field == "chip_mod" and card.ability.extra.chips then
-    card.ability.extra.chips = card.ability.extra.chips + math.ceil(card.ability[frac_name] * 35)
+    card.ability.extra.chips = card.ability.extra.chips + bonus_amt
   end
   if field == "money_mod" and card.ability.extra.money then
-    card.ability.extra.money = card.ability.extra.money + math.ceil(card.ability[frac_name] * 5)
+    card.ability.extra.money = card.ability.extra.money + bonus_amt
   end
 end
 
@@ -182,7 +184,7 @@ energize = function(card, etype, evolving)
               rounded, frac = round_energy_value(card.ability.extra[l], l)
               card.ability.extra[l] = rounded
               if frac then
-                set_frac(card, frac, l)
+                set_frac(card, frac, l, rounded > 0)
                 frac = nil
                 frac_added = true
               end
@@ -195,7 +197,7 @@ energize = function(card, etype, evolving)
               rounded, frac = round_energy_value(card.ability.extra[l], l)
               card.ability.extra[l] = rounded
               if frac then
-                set_frac(card, frac, l)
+                set_frac(card, frac, l, rounded > 0)
                 frac = nil
                 frac_added = true
               end

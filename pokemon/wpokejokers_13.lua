@@ -58,7 +58,7 @@ local beldum={
 local metang={
   name = "metang", 
   pos = {x = 5, y = 13},
-  config = {extra = {chips = 64, chip_mod = 8, size = 4}},
+  config = {extra = {chips = 0, chip_mod = 8, size = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -100,7 +100,7 @@ local metang={
 local metagross={
   name = "metagross", 
   pos = {x = 6, y = 13},
-  config = {extra = {chips = 256,}},
+  config = {extra = {chips = 0,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}

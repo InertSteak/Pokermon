@@ -722,7 +722,7 @@ return {
                     "{C:mult}+#1#{} Mult for each Enhanced",
                     "card in your full deck",
                     "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult, {C:attention}#4#{}{C:inactive} Enhancements)",
-                    "{C:inactive}(Evolves at {C:mult}#3#{C:inactive} Enhancements)"
+                    "{C:inactive}(Evolves at {C:attention}#3#{C:inactive} Enhancements)"
                 } 
             },
             j_poke_golbat = {

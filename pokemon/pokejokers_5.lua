@@ -1098,7 +1098,7 @@ local dratini={
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
-  config = {extra = {mult = 10, mult_mod = 1, size = 2}},
+  config = {extra = {mult = 0, mult_mod = 1, size = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
@@ -1129,7 +1129,7 @@ local dragonair={
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
-  config = {extra = {mult = 30, retriggers = 5}},
+  config = {extra = {mult = 0, retriggers = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 
