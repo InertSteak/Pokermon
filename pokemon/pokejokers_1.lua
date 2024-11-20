@@ -200,7 +200,7 @@ local charmander={
 local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
-  config = {extra = {mult = 16, mult_mod = 2, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -337,7 +337,7 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 16, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}

@@ -100,7 +100,7 @@ local metang={
 local metagross={
   name = "metagross", 
   pos = {x = 6, y = 13},
-  config = {extra = {chips = 0,}},
+  config = {extra = {chips = 256,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}

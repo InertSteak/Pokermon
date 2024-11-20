@@ -99,7 +99,7 @@ local scizor={
 local kingdra={
   name = "kingdra", 
   pos = {x = 8, y = 7},
-  config = {extra = {mult = 10, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
+  config = {extra = {mult = 0, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
