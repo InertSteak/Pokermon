@@ -649,10 +649,10 @@ local venonat={
     return level_evo(self, card, context, "j_poke_venomoth")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end
 }
 local venomoth={
@@ -670,10 +670,10 @@ local venomoth={
   atlas = "Pokedex1",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end
 }
 local diglett={
