@@ -1014,7 +1014,8 @@ local zapdos={
   config = {extra = {Xmult = 0.08, money_threshold = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.money_threshold , math.max(1, center.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/                    center.ability.extra.money_threshold))}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.money_threshold , 
+                    1 + center.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/center.ability.extra.money_threshold)}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -1025,7 +1026,7 @@ local zapdos={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
+        local Xmult = 1 + card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
