@@ -2847,7 +2847,6 @@ return {
             poke_credits_designer = "Design Assistants: ",
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
-            --This one is unused, for now
             poke_credits_localization = "Localization: ",
 
             poke_plus_pokeitem = "+1 Item",
