@@ -337,7 +337,6 @@ local glaceon={
   config = {extra = {rerolls = 0, odds = 6}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     return {vars = {center.ability.extra.rerolls, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
@@ -356,14 +355,12 @@ local glaceon={
           juice_card_until(card, eval, true)
         end
       else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
-          if pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds then
-            local edition = {negative = true}
-            _card:set_edition(edition, true)
+        for i = 1, pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds and 2 or 1 do
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
           end
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
         end
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
         card.ability.extra.rerolls = 0

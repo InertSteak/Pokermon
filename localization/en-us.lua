@@ -1212,7 +1212,7 @@ return {
                     "add {C:dark_edition}Negative{} to a",
                     "random {C:attention}Joker{}",
                     "at end of round",
-                    "{C:inactive,s:0.8}(Exludes self, odds can't be increased){}"
+                    "{C:inactive,s:0.8}(Exludes Gengars, odds can't be increased){}"
                 } 
             },
             j_poke_onix = {
@@ -1958,6 +1958,50 @@ return {
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
                 } 
             },
+            j_poke_torchic = {
+                name = "Torchic",
+                text = {
+                    "{C:mult}+#3#{} discards, {C:attention}Nature{}",
+                    "{C:mult}+#1#{} Mult for each {C:attention}#5#, #6# or #7#{} discarded this round",
+                    "Double Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Currently {C:mult}#4#{}{C:inactive} Mult){}",
+                    "{C:inactive}(Evolves after scoring {C:mult}#2#/70{} {C:inactive}Mult)"
+                } 
+            },
+            j_poke_mudkip = {
+                name = "Mudkip",
+                text = {
+                    "{C:chips}+#3#{} hands, {C:attention}Nature{}",
+                    "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
+                    "Double Chips gained if you have",
+                    "other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Evolves after scoring {C:chips}#2#/400{} {C:inactive}Chips)"
+                } 
+            },
+            j_poke_marshtomp = {
+                name = "Marshtomp",
+                text = {
+                    "{C:chips}+#3#{} hands, {C:attention}Nature{}",
+                    "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
+                    "Double Chips gained if you have",
+                    "other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Evolves after scoring {C:chips}#2#/960{} {C:inactive}Chips)"
+                } 
+            },
+            j_poke_swampert = {
+                name = "Swampert",
+                text = {
+                    "{C:chips}+#3#{} hands, {C:attention}Nature{}",
+                    "Played {C:attention}#5#s, #6#s or #7#s{} give {C:chips}+#1#{} Chips",
+                    "They give an additional {C:chips}+#1#{} Chips per",
+                    "other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} card",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Curently {C:chips}+#4#{}{C:inactive} total)"
+                } 
+            },
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
@@ -2115,7 +2159,7 @@ return {
                 text = {
                     "Create a random {C:attention}Tarot{} card",
                     "every {C:attention}3{} {C:green}rerolls{}",
-                    "{C:green}#2#{} in {C:green}#3#{} chance for {C:dark_edition}Negative{} edition",
+                    "{C:green}#2#{} in {C:green}#3#{} chance for {C:attention}2 Tarot{} cards",
                     "{C:inactive}(Must have room)",
                     "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
                 } 
@@ -2548,6 +2592,27 @@ return {
                     "evolves or is removed"
                 }
             },
+            nature = {
+                name = "Nature",
+                text = {
+                    "Desired {C:attention}#1#{} are",
+                    "set at random upon",
+                    "Joker creation"
+                }
+            },
+            eeveelution = {
+                name = "Evolutions",
+                text = {
+                    "{C:attention}Water Stone{} - {X:water,C:white}Vaporeon{}",
+                    "{C:attention}Thunder Stone{} - {X:lightning,C:black}Jolteon{}",
+                    "{C:attention}Fire Stone{} - {X:fire,C:white}Flareon{}",
+                    "{C:attention}Sun Stone{} - {X:psychic,C:white}Espeon{}",
+                    "{C:attention}Moon Stone{} - {X:dark,C:white}Umbreon{}",
+                    "{C:attention}Leaf Stone{} - {X:grass,C:white}Leafeon{}",
+                    "{C:attention}Ice Stone{} - {X:water,C:white}Glaceon{}",
+                    "{C:attention}Shiny Stone{} - {X:fairy,C:white}Sylveon{}"
+                }
+            },
             precise_energy_tooltip = {
                 name = "Precise Energy Scaling",
                 text = {
@@ -2779,6 +2844,7 @@ return {
             poke_credits_graphics = "Graphic Design: ",
             poke_credits_quality_assurance_main = "QA Lead: ",
             poke_credits_developer = "Developers: ",
+            poke_credits_designer = "Design Assistants: ",
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
             --This one is unused, for now

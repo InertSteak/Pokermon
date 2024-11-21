@@ -147,7 +147,7 @@ local gengar={
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and (not v.edition) and v ~= card then
+              if v.ability.set == 'Joker' and (not v.edition) and v.ability.name ~= "gengar" then
                   table.insert(eligible_editionless_jokers, v)
               end
             end
