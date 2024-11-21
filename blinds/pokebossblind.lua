@@ -25,7 +25,7 @@ end
 goose_disable = function(card, btype)
   if (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype == btype) then
     return true
-  elseif card.ability[string.lower(btype).."_sticker"] then
+  elseif btype and card.ability[string.lower(btype).."_sticker"] then
     return true
   end
   return false

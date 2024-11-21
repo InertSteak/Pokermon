@@ -463,6 +463,7 @@ local eevee={
   config = {extra = {money = 2, limit = 0, max = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
     return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
   end,
   rarity = 2, 
