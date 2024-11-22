@@ -1987,6 +1987,7 @@ return {
                     "Played {C:attention}#5#s, #6#s or #7#s{} earn {C:money}$#1#{}",
                     "Earn {C:money}$#1#{} at end of round for",
                     "each other {X:grass,C:white}Grass{} card you have",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:money}$#4#{}, Max of {C:money}$14{}{C:inactive}){}"
                 } 
             },
