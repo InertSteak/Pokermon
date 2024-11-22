@@ -1966,7 +1966,7 @@ return {
                     "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Evolves after earning {C:money}$#2#/36{})"
+                    "{C:inactive}(Evolves after earning {C:money}$#2#/16{})"
                 } 
             },
             j_poke_grovyle = {
