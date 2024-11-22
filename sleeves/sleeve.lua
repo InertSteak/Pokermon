@@ -15,13 +15,21 @@ init = function()
   end
 end
 
+
+SMODS.Atlas({
+      key = "pokesleeves",
+      path = "pokesleeves.png",
+      px = 71,
+      py = 95
+  }):register()
+
 -- Pokemon Sleeve
 	local pokemonsleeve = {
 		key = 'pokemonsleeve',
 		name = 'Trainer Sleeve',
 		prefix_config = {atlas=false},
-		atlas = "casl_sleeve_atlas",
-		pos = { x = 1, y = 3 },
+		atlas = "pokesleeves",
+		pos = { x = 0, y = 0 },
 		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
 		loc_vars = function(self, info_queue, center)
 			return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
@@ -33,7 +41,7 @@ end
 		name = 'Obituary Sleeve',
 		prefix_config = {atlas=false},
 		atlas = "casl_sleeve_atlas",
-		pos = { x = 1, y = 3 },
+		pos = { x = 2, y = 0 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
 		  return {vars = {localize("pinkseal_variable")}}
@@ -49,7 +57,7 @@ end
 		name = 'Luminous Sleeve',
 		prefix_config = {atlas=false},
 		atlas = "casl_sleeve_atlas",
-		pos = { x = 1, y = 3 },
+		pos = { x = 1, y = 0 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
 			return {
