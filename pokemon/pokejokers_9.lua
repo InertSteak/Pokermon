@@ -401,7 +401,7 @@ local blaziken={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = card.ability.extra.Xmult * card.ability.extra.cards_discarded 
+        local Xmult = 1 + card.ability.extra.Xmult * card.ability.extra.cards_discarded 
         if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
           Xmult = Xmult * 2
         end
