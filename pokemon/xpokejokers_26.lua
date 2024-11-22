@@ -28,7 +28,7 @@
 -- Mimikyu 778
 local mimikyu={
   name = "mimikyu",
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 12},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_txt = {
     name = "Mimikyu",
