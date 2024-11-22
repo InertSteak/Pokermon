@@ -1958,6 +1958,38 @@ return {
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
                 } 
             },
+            j_poke_treecko = {
+                name = "Treecko",
+                text = {
+                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "Played {C:attention}#6#s, #7#s or #8#s{} have",
+                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
+                    "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Evolves after earning {C:money}$#2#/36{})"
+                } 
+            },
+            j_poke_grovyle = {
+                name = "Grovyle",
+                text = {
+                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "Played {C:attention}#6#s, #7#s or #8#s{} have",
+                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
+                    "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Evolves after earning {C:money}$#2#/32{})"
+                } 
+            },
+            j_poke_sceptile = {
+                name = "Sceptile",
+                text = {
+                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "Played {C:attention}#5#s, #6#s or #7#s{} earn {C:money}$#1#{}",
+                    "Earn {C:money}$#1#{} at end of round for",
+                    "each other {X:grass,C:white}Grass{} card you have",
+                    "{C:inactive}(Currently {C:money}$#4#{}, Max of {C:money}$14{}{C:inactive}){}"
+                } 
+            },
             j_poke_torchic = {
                 name = "Torchic",
                 text = {
@@ -1966,7 +1998,28 @@ return {
                     "Double Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}#4#{}{C:inactive} Mult){}",
-                    "{C:inactive}(Evolves after scoring {C:mult}#2#/70{} {C:inactive}Mult)"
+                    "{C:inactive}(Evolves after scoring {C:mult}#2#/60{} {C:inactive}Mult)"
+                } 
+            },
+            j_poke_combusken = {
+                name = "Combusken",
+                text = {
+                    "{C:mult}+#3#{} discards, {C:attention}Nature{}",
+                    "{C:mult}+#1#{} Mult for each {C:attention}#5#, #6# or #7#{} discarded this round",
+                    "Double Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Currently {C:mult}#4#{}{C:inactive} Mult){}",
+                    "{C:inactive}(Evolves after scoring {C:mult}#2#/150{} {C:inactive}Mult)"
+                } 
+            },
+            j_poke_blaziken = {
+                name = "Blaziken",
+                text = {
+                    "{C:mult}+#2#{} discards, {C:attention}Nature{}",
+                    "{X:red,C:white} X#1# {} Mult for each {C:attention}#4#, #5# or #6#{} discarded this round",
+                    "Double {X:red,C:white} X {} Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "{C:inactive}(Currently {X:red,C:white} X#3# {}{C:inactive} Mult){}",
                 } 
             },
             j_poke_mudkip = {

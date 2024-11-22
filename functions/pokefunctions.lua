@@ -168,6 +168,7 @@ evolve = function(self, card, context, forced_key)
     local scaled_values = nil
     local reset_apply_type = nil
     local previous_extra_value = nil
+    local previous_targets = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -210,6 +211,10 @@ evolve = function(self, card, context, forced_key)
     
     if card.ability.extra_value then
       previous_extra_value = card.ability.extra_value
+    end
+    
+    if card.ability.extra and card.ability.extra.targets then
+      previous_targets = card.ability.extra.targets
     end
     
     G.E_MANAGER:add_event(Event({
@@ -278,6 +283,10 @@ evolve = function(self, card, context, forced_key)
     if previous_extra_value then
       new_card.ability.extra_value = previous_extra_value
       new_card:set_cost()
+    end
+    
+    if previous_targets then
+      new_card.ability.extra.targets = previous_targets
     end
     
     new_card:add_to_deck()
@@ -690,4 +699,61 @@ get_poke_allowed = function(key)
   end
   
   return true
+end
+
+get_poke_target_card_ranks = function(seed, num, default)
+  local target_ranks = {}
+  local valid_cards = {}
+  if not G.playing_cards then
+    return default
+  end
+  for i = 1, num do
+    for k, v in ipairs(G.playing_cards) do
+      if v.ability.effect ~= 'Stone Card' then
+          local already_picked = false
+          for j = 1, #target_ranks do
+            if target_ranks[j].id == v.base.id then already_picked = true; break end
+          end
+          if not already_picked then
+            valid_cards[#valid_cards+1] = v
+          end
+      end
+    end
+    if #valid_cards > 0 then
+      local picked = pseudorandom_element(valid_cards, pseudoseed(seed))
+      target_ranks[#target_ranks+1] = {value = picked.base.value, id = picked.base.id}
+      valid_cards = {}
+    elseif #target_ranks > 0 then
+      target_ranks[#target_ranks+1] = target_ranks[1]
+    else
+       target_ranks[#target_ranks+1] = {value = "Ace", id = 14}
+    end
+  end
+  return target_ranks
+end
+
+add_target_cards_to_vars = function(vars, targets)
+  for i=1, #targets do
+    vars[#vars+1] = localize(targets[i].value or "Ace", 'ranks')
+  end
+end
+
+find_other_poke_or_energy_type = function(card, poke_type)
+  local energy = nil
+  local type_count = 0
+  if string.lower(poke_type) == "dark" then
+    energy = "darkness_energy"
+  else
+    energy = string.lower(poke_type).."_energy"
+  end
+  type_count = #find_pokemon_type(poke_type)
+  if is_type(card, poke_type) then
+    type_count = type_count - 1
+  end
+  
+  if type_count > 0 or #find_joker(energy) > 0 then
+    return type_count + #find_joker(energy)
+  else
+    return 0
+  end
 end
