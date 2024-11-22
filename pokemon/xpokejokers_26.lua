@@ -29,6 +29,7 @@
 local mimikyu={
   name = "mimikyu",
   pos = {x = 8, y = 12},
+  broke_pos = {x = 9, y = 12},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_txt = {
     name = "Mimikyu",
@@ -82,6 +83,8 @@ local mimikyu={
         end
         if chips/blind_chips >= 0.50 then
           card.ability.extra.disguise = false
+          card.children.center:set_sprite_pos(card.config.center.broke_pos)
+          
           G.E_MANAGER:add_event(Event({
               func = function()
                   G.hand_text_area.blind_chips:juice_up()
@@ -96,7 +99,13 @@ local mimikyu={
           }
         end
       end
-  end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      card.children.center:set_sprite_pos(card.config.center.pos)
+      card.ability.extra.disguise = true
+    end
+  end,
 }
 -- Bruxish 779
 -- Drampa 780
