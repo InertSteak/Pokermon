@@ -2,7 +2,7 @@ energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chip
                     "Xmult_multi",  "Xmult_multi2"}
 energy_values = {
   mult = .2, mult1 = .2, mult2 = .2, chips = .2, chips1 = .2, chips2 = .2, chips3 = .2, Xmult = .2, money = .1, money2 = .1, money_mod = .1, mult_mod = .2, mult_mod2 = .2, s_mult = .2, chip_mod = .2, 
-  Xmult_mod = .2, Xmult_multi = .1, Xmult_multi2 = .1
+  Xmult_mod = .2, Xmult_multi = .05, Xmult_multi2 = .05
 }
 
 energy_max = 3

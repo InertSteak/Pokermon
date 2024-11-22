@@ -11,7 +11,7 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 7, y = 3},
-  config = {extra = {Xmult_multi = 1.2, suit = "Diamonds", rerolls = 0}},
+  config = {extra = {Xmult_multi = 1.1, suit = "Diamonds", rerolls = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_star
