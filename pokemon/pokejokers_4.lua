@@ -540,7 +540,7 @@ local marowak={
         local count = #G.consumeables.cards + #find_joker('thickclub')
         if count > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi * (count + 1)}}, 
+            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_multi * count)}}, 
             colour = G.C.XMULT,
             Xmult_mod = 1 + (card.ability.extra.Xmult_multi * count)
           }
