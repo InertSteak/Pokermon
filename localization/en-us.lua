@@ -2268,6 +2268,16 @@ return {
                      "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)",
                 }  
             },
+            j_poke_mimikyu = {
+                name = "Mimikyu",
+                text = {
+                  "{C:chips}+#1#{} Chips if played",
+                  "hand has no {C:hearts}#2#{}",
+                  "Prevents Death if chips scored are",
+                  "at least {C:attention}50%{} of required chips",
+                  "{C:inactive}(#3#){}"
+                }
+            },
             j_poke_yamper = {
                 name = 'Yamper',
                 text = {
