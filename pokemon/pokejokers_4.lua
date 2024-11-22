@@ -1009,7 +1009,7 @@ local goldeen={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' then
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -1036,7 +1036,7 @@ local seaking={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and not context.other_card.debuff and context.end_of_round and context.other_card.ability.name == 'Gold Card' then
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,

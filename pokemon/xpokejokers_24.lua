@@ -42,7 +42,7 @@ local sylveon={
         card.ability.extra.rerolls = 0
       end
     end
-    if context.individual and context.cardarea == G.hand and context.other_card:is_suit(card.ability.extra.suit) then
+    if context.individual and context.cardarea == G.hand and context.other_card:is_suit(card.ability.extra.suit) and not context.end_of_round then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),
