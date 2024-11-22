@@ -1735,7 +1735,7 @@ return {
                 name = 'Mew',
                 text = {
                     "At end of shop, create",
-                    "a random {C:dark_edition}Negative{} {C:attention}Tarot{}",
+                    "a random {C:dark_edition}Negative{} {C:attention}Tarot{},",
                     "{C:spectral}Spectral{} or {C:item}Item{} card",
                     "{C:green}#1# in {C:green}#2#{} chance to create",
                     "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}",

@@ -682,6 +682,7 @@ local diglett={
   config = {extra = {rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_venus
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
