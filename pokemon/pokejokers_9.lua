@@ -601,7 +601,6 @@ local swampert={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.chips_earned, 800)
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
