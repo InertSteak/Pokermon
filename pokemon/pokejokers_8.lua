@@ -6,6 +6,9 @@ local scizor={
   config = {extra = {mult = 0, chips = 0, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     local emult = 0 
     local echips = 0 
     local eXmult = 1

@@ -63,6 +63,9 @@ local scyther={
   config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
@@ -113,6 +116,7 @@ local jynx={
   pos = {x = 6, y = 9}, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid
   end,
   rarity = 2, 
   cost = 5, 
