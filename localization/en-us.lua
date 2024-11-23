@@ -496,7 +496,7 @@ return {
                     "All {C:planet}Planet{} cards and",
                     "{C:planet}Celestial Packs{} in",
                     "the shop cost {C:money}$2{} less",
-                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
+                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_pidgeotto = {
@@ -505,7 +505,7 @@ return {
                     "All {C:planet}Planet{} cards and",
                     "{C:planet}Celestial Packs{} in",
                     "the shop cost {C:money}$3{} less",
-                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
+                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_pidgeot = {
