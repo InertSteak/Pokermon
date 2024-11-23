@@ -2590,6 +2590,7 @@ return {
                 text = {
                     "Evolves leftmost or selected",
                     "{C:attention}eligible{} Joker",
+                    "at end of the next round"
                 }
             },
             --Infoqueue used by some Consumables
