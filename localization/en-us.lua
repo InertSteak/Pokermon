@@ -2664,6 +2664,14 @@ return {
                     "Joker creation"
                 }
             },
+            playing_card_to_evolve = {
+                name = "Requirement",
+                text = {
+                    "Must use on",
+                    "{C:attention}playing card{} in",
+                    "order to evolve"
+                }
+            },
             eeveelution = {
                 name = "Evolutions",
                 text = {
