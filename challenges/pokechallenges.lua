@@ -170,6 +170,105 @@ local poke_master = {
     }
 }
 
+local nuzlocke = {
+    object_type = "Challenge",
+    key = "nuzlocke",
+    rules = {
+        custom = {
+            {id = 'no_shop_jokers'},
+			{id = 'all_eternal'},
+            {id = 'poke_add_joker_slots'},
+            {id = 'poke_nuzlocke'}
+        },
+        modifiers = {
+            {id = 'joker_slots', value = 1},
+        }
+    },
+    restrictions = {
+        banned_cards = {
+            {id = 'c_judgement'},
+            {id = 'c_wraith'},
+            {id = 'c_soul'},
+            {id = 'c_poke_pokeball'},
+            {id = 'c_poke_greatball'},
+            {id = 'c_poke_ultraball'},
+            {id = 'c_poke_masterball'},
+            {id = 'v_antimatter'},
+            {id = 'p_buffoon_normal_1', ids = {
+                'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',
+            }},
+            {id = 'j_gros_michel'},
+            {id = 'j_ice_cream'},
+            {id = 'j_cavendish'},
+            {id = 'j_luchador'},
+            {id = 'j_turtle_bean'},
+            {id = 'j_diet_cola'},
+            {id = 'j_popcorn'},
+            {id = 'j_ramen'},
+            {id = 'j_selzer'},
+            {id = 'j_mr_bones'},
+            {id = 'j_invisible'},
+            {id = 'j_poke_gastly'},
+            {id = 'j_poke_haunter'},
+            {id = 'j_poke_gengar'},
+            {id = 'j_poke_koffing'},
+            {id = 'j_poke_weezing'},
+            {id = 'j_poke_ditto'},
+            {id = 'j_poke_mewtwo'},
+            {id = 'j_poke_scyther'},
+            {id = 'j_poke_scizor'},
+            {id = 'j_poke_jelly_donut'},
+        },
+        banned_tags = {
+            {id = 'tag_rare'},
+            {id = 'tag_uncommon'},
+            {id = 'tag_holo'},
+            {id = 'tag_polychrome'},
+            {id = 'tag_negative'},
+            {id = 'tag_foil'},
+            {id = 'tag_buffoon'},
+            {id = 'tag_top_up'},
+            {id = 'tag_poke_shiny_tag'},
+            {id = 'tag_poke_stage_one_tag'},
+            {id = 'tag_poke_safari_tag'},
+        },
+        banned_other = {
+            {id = 'bl_final_leaf', type = 'blind'}
+        },
+        deck = {
+            type = 'Challenge Deck'
+        },
+    }
+}
+
+-- add joker slots when ante increases with Nuzlocke
+-- todo: insert this in a better spot for mod compat
+local ea = ease_ante
+function ease_ante(m)
+    ea(m)
+    if m > 0 then
+        if G.GAME.modifiers.poke_add_joker_slots then
+            G.GAME.poke_slots_added = G.GAME.poke_slots_added or 0
+            G.GAME.poke_slots_added = G.GAME.poke_slots_added + 1
+            if G.GAME.poke_slots_added <= 5 then
+                G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+            end
+        end
+        if G.GAME.modifiers.poke_nuzlocke then
+            G.GAME.first_shop_buffoon = false
+        end
+    end
+end
+
+local gp = get_pack
+function get_pack(_key, _type)
+    if G.GAME.modifiers.poke_nuzlocke and not G.GAME.first_shop_buffoon then
+        G.GAME.first_shop_buffoon = true
+        return G.P_CENTERS['p_buffoon_normal_'..(math.random(1, 2))]
+    end
+    return gp(_key, _type)
+end
+
 return {name = "Challenges", 
-        list = {}
+        list = {nuzlocke}
 }
