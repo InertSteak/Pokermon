@@ -50,7 +50,7 @@ local everstone={
   atlas = "others",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker and context.other_joker.config and context.other_joker.config.center.stage == "Basic" then
+    if context.other_joker and context.other_joker.config and (context.other_joker.config.center.stage == "Basic" or context.other_joker.config.center.stage == "Baby") then
         G.E_MANAGER:add_event(Event({
           func = function()
               context.other_joker:juice_up(0.5, 0.5)
