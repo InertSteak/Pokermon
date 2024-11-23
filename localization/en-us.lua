@@ -228,6 +228,15 @@ return {
                     "{C:inactive}(Must have room){}"
                 }
             },
+            c_poke_twisted_spoon = {
+                name = "Twisted Spoon",
+                text = {
+                    "Creates the last",
+                    "{C:item}Item{} card",
+                    "used during this run",
+                    "{s:0.8,C:item}Twisted Spoon{s:0.8} excluded"
+                }
+            },
         },
         Energy = {
             c_poke_grass_energy = {

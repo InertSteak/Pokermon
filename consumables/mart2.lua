@@ -624,7 +624,66 @@ local shinystone = {
     return true
   end
 }
+local twisted_spoon = {
+  name = "twisted_spoon",
+  key = "twisted_spoon",
+  set = "Item",
+  loc_vars = function(self, info_queue, center)
+    local spoon = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
+    if not (not spoon or self.name == 'The Fool') then
+      info_queue[#info_queue+1] = spoon
+    end
+  end,
+  pos = { x = 4, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.last_poke_item and G.GAME.last_poke_item ~= 'c_poke_twisted_spoon' then 
+      return true 
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    local used_item = copier or card
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+        if G.consumeables.config.card_limit > #G.consumeables.cards then
+            play_sound('timpani')
+            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            used_item:juice_up(0.3, 0.5)
+        end
+        return true end }))
+    delay(0.6)
+  end,
+  in_pool = function(self)
+    return true
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
+		end
+    local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
+    local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
+    local colour = (not spoon_c or spoon_c.name == 'Twisted Spoon') and G.C.RED or G.C.GREEN
+    local main_end = {
+        {n=G.UIT.C, config={align = "bm", padding = 0.02}, nodes={
+            {n=G.UIT.C, config={align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes={
+                {n=G.UIT.T, config={text = ' '..last_poke_item ..' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.3, shadow = true}},
+            }}
+        }}
+    }
+   local loc_vars = {last_poke_item}
+   if not (not spoon_c or name == 'The Fool') then
+        info_queue[#info_queue+1] = spoon_c
+   end
+   localize{type = 'descriptions', key = self.key, set = self.set, nodes = desc_nodes, vars = loc_vars}
+   desc_nodes[#desc_nodes+1] = main_end 
+  end
+}
 
 return {name = "Items",
-        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, dubious_disc, icestone, shinystone}
+        list = {moonstone, sunstone, waterstone, leafstone, firestone, thunderstone, linkcable, leftovers, leek, thickclub, teraorb, metalcoat, dragonscale, kingsrock, upgrade, dubious_disc, icestone,                shinystone, twisted_spoon}
 }
