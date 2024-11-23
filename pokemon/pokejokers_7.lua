@@ -85,7 +85,8 @@ local politoed={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult 
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end

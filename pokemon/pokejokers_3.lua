@@ -354,7 +354,8 @@ local bellsprout={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -387,7 +388,8 @@ local weepinbell={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -418,7 +420,8 @@ local victreebel={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -464,7 +467,8 @@ local tentacool={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -490,7 +494,8 @@ local tentacruel={
       return {
         message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
         colour = G.C.MULT,
-        mult = card.ability.extra.mult
+        mult = card.ability.extra.mult,
+        card = card
       }
     end
   end

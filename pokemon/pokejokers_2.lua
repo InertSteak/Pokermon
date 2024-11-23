@@ -172,7 +172,8 @@ local clefairy={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -199,7 +200,8 @@ local clefable={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -288,7 +290,8 @@ local jigglypuff={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -316,7 +319,8 @@ local wigglytuff={
           message = "Tuff!", 
           colour = G.C.MULT,
           mult = card.ability.extra.mult,
-          chips = card.ability.extra.chips
+          chips = card.ability.extra.chips,
+          card = card
         }
       end
     end
@@ -470,7 +474,8 @@ local oddish={
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = value
+            mult = value, 
+            card = card
           }
       end
     end
@@ -510,7 +515,8 @@ local gloom={
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = value
+            mult = value,
+            card = card
           }
       end
     end
