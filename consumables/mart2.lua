@@ -634,7 +634,7 @@ local twisted_spoon = {
       info_queue[#info_queue+1] = spoon
     end
   end,
-  pos = { x = 4, y = 4 },
+  pos = { x = 1, y = 5 },
   atlas = "Mart",
   cost = 4,
   unlocked = true,
