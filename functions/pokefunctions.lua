@@ -67,6 +67,9 @@ family = {
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
+    {"treecko", "grovyle", "sceptile"},
+    {"torchic", "combusken", "blaziken"},
+    {"mudkip", "marshtomp", "swampert"},
     {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
     {"yamper","boltund"}
