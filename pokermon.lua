@@ -362,6 +362,7 @@ if not pokermon_config.jokers_only then
   for _, file in ipairs(pchallenges) do
     local challenge, load_error = SMODS.load_file("challenges/"..file)
     if load_error then
+      error(load_error)
       sendDebugMessage ("The error is: "..load_error)
     else
       local curr_challenge = challenge()
