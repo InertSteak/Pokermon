@@ -1194,7 +1194,7 @@ local mewtwo={
           local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
           local edition = {polychrome = true}
           _card:set_edition(edition, true)
-          if _card.config and _card.config.center.stage and not type_sticker_applied(_card) then
+          if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
             energy_increase(_card, _card.ability.extra.ptype)
           elseif type_sticker_applied(_card) then
             energy_increase(_card, type_sticker_applied(_card))

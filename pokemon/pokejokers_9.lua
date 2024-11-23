@@ -122,7 +122,7 @@ local treecko={
 -- Grovyle 253
 local grovyle={
   name = "grovyle",
-  pos = {x = 0, y = 0},
+  pos = {x = 1, y = 0},
   config = {extra = {money = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -180,7 +180,7 @@ local grovyle={
 -- Sceptile 254
 local sceptile={
   name = "sceptile",
-  pos = {x = 0, y = 0},
+  pos = {x = 2, y = 0},
   config = {extra = {money = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -235,7 +235,7 @@ local sceptile={
 -- Torchic 255
 local torchic={
   name = "torchic",
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 0},
   config = {extra = {mult = 1, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -308,7 +308,7 @@ local torchic={
 -- Combusken 256
 local combusken={
   name = "combusken",
-  pos = {x = 0, y = 0},
+  pos = {x = 4, y = 0},
   config = {extra = {mult = 3, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -381,7 +381,7 @@ local combusken={
 -- Blaziken 257
 local blaziken={
   name = "blaziken",
-  pos = {x = 0, y = 0},
+  pos = {x = 5, y = 0},
   config = {extra = {Xmult = .3, cards_discarded = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -401,7 +401,7 @@ local blaziken={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = card.ability.extra.Xmult * card.ability.extra.cards_discarded 
+        local Xmult = 1 + card.ability.extra.Xmult * card.ability.extra.cards_discarded 
         if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
           Xmult = Xmult * 2
         end
@@ -452,7 +452,7 @@ local blaziken={
 -- Mudkip 258
 local mudkip={
   name = "mudkip",
-  pos = {x = 0, y = 0},
+  pos = {x = 6, y = 0},
   config = {extra = {chips = 20, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -509,7 +509,7 @@ local mudkip={
 -- Marshtomp 259
 local marshtomp={
   name = "marshtomp",
-  pos = {x = 0, y = 0},
+  pos = {x = 7, y = 0},
   config = {extra = {chips = 30, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -566,7 +566,7 @@ local marshtomp={
 -- Swampert 260
 local swampert={
   name = "swampert",
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 0},
   config = {extra = {chips = 40, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -601,7 +601,6 @@ local swampert={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.chips_earned, 800)
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then

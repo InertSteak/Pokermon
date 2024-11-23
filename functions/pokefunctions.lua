@@ -67,6 +67,9 @@ family = {
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
+    {"treecko", "grovyle", "sceptile"},
+    {"torchic", "combusken", "blaziken"},
+    {"mudkip", "marshtomp", "swampert"},
     {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
     {"yamper","boltund"}
@@ -85,7 +88,7 @@ type_sticker_applied = function(card)
   elseif card.ability.psychic_sticker then
     return "Psychic"
   elseif card.ability.fighting_sticker then
-    return "Water"
+    return "Fighting"
   elseif card.ability.colorless_sticker then
     return "Colorless"
   elseif card.ability.dark_sticker then
