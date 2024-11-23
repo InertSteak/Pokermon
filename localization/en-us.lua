@@ -232,7 +232,7 @@ return {
                 name = "Twisted Spoon",
                 text = {
                     "Creates the last",
-                    "{C:item}Item{} card",
+                    "{C:item}Item{} card or {C:pink}Energy{} card",
                     "used during this run",
                     "{s:0.8,C:item}Twisted Spoon{s:0.8} excluded"
                 }
