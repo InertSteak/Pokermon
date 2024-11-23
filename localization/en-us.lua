@@ -1876,6 +1876,14 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_delibird = {
+                name = "Delibird",
+                text = {
+                  "At end of round",
+                  "receive a {S:1.1,C:green,E:2}Present{}",
+                  "{C:inactive}(Must have room)"
+                }
+            },
             j_poke_kingdra = {
                 name = 'Kingdra',
                 text = {
@@ -1896,6 +1904,15 @@ return {
                     "{C:attention}Booster Pack{} is opened",
                     "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
                 } 
+            },
+            j_poke_stantler = {
+                name = "Stantler",
+                text = {
+                  "If played hand contains a {C:attention}Pair{}",
+                  "gives {C:chips}+#1#{} Chips times the",
+                  "first scoring card's {C:attention}base{} chips",
+                  "Chips {C:attention}doubled{} on {C:attention}final hand{} of round",
+                }
             },
             j_poke_tyrogue = {
                 name = 'Tyrogue',
@@ -2672,6 +2689,15 @@ return {
                     "order to evolve"
                 }
             },
+            deli_gift = {
+                name = "Presents",
+                text = {
+                    "{C:green}35%{} - {C:money}$8{}",
+                    "{C:green}30%{} - {C:item}Item{} {C:attention}Card",
+                    "{C:green}20%{} - {C:attention}Coupon Tag",
+                    "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
+                }
+            },
             eeveelution = {
                 name = "Evolutions",
                 text = {
@@ -2972,6 +2998,7 @@ return {
             --From Vikavolt
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
+            poke_gift_ex = "Present!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
