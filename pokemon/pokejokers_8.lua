@@ -96,7 +96,7 @@ local scizor={
 -- Delibird 225
 local delibird={
   name = "delibird",
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 7},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -167,7 +167,7 @@ local kingdra={
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
-  ptype = "Water",
+  ptype = "Dragon",
   atlas = "Pokedex2",
   perishable_compat = false,
   blueprint_compat = true,
@@ -266,7 +266,7 @@ local porygon2={
 -- Stantler 234
 local stantler={
   name = "stantler",
-  pos = {x = 0, y = 0},
+  pos = {x = 2, y = 8},
   config = {extra = {chips = 10}},
   loc_txt = {
     name = "Stantler",
