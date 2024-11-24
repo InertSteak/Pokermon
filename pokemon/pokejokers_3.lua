@@ -153,7 +153,12 @@ local kadabra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local _card = nil
+            if pseudorandom(pseudoseed('spoon')) > .50 then
+              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            else
+              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            end
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
@@ -184,7 +189,12 @@ local alakazam={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local _card = nil
+            if pseudorandom(pseudoseed('spoon')) > .50 then
+              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            else
+              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            end
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})

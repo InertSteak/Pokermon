@@ -943,8 +943,8 @@ return {
                 name = "Kadabra",
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "create a {C:attention}Fool{} card if",
-                    "played {C:attention}poker hand{} has",
+                    "create a {C:attention}Fool{} or {C:item}Twisted Spoon{} card",
+                    "if played {C:attention}poker hand{} has",
                     "already been played this round",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
@@ -954,8 +954,8 @@ return {
                 text = {
                     "{C:attention}+#3#{} consumable slot",
                     "{C:green}#1# in #2#{} chance to",
-                    "create a {C:attention}Fool{} card if",
-                    "played {C:attention}poker hand{} has",
+                    "create a {C:attention}Fool{} or {C:item}Twisted Spoon{} card",
+                    "if played {C:attention}poker hand{} has",
                     "already been played this round",
                 } 
             },
