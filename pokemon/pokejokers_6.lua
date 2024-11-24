@@ -248,6 +248,7 @@ local pichu={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -259,25 +260,7 @@ local pichu={
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
-	end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
-  end,
+	end
 }
 -- Cleffa 173
 local cleffa={
@@ -302,6 +285,7 @@ local cleffa={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -317,24 +301,6 @@ local cleffa={
       G.consumeables:emplace(_card)
     end
     return level_evo(self, card, context, "j_poke_clefairy")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Igglybuff 174
@@ -360,6 +326,7 @@ local igglybuff={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context) 
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -375,24 +342,6 @@ local igglybuff={
       G.consumeables:emplace(_card)
     end
     return level_evo(self, card, context, "j_poke_jigglypuff")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Togepi 175

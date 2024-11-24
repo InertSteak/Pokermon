@@ -326,6 +326,7 @@ local tyrogue={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -378,25 +379,7 @@ local tyrogue={
       forced_key = "j_poke_hitmontop"
     end
     return level_evo(self, card, context, forced_key)
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
-  end,
+  end
 }
 -- Hitmontop 237
 local hitmontop={
@@ -447,6 +430,7 @@ local smoochum ={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -466,24 +450,6 @@ local smoochum ={
       }))
     end
     return evo
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Elekid 239
@@ -508,6 +474,7 @@ local elekid ={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -527,24 +494,6 @@ local elekid ={
       }))
     end
     return evo
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Magby 240
@@ -568,6 +517,7 @@ local magby={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -580,24 +530,10 @@ local magby={
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
     ease_discard(card.ability.extra.d_size)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end
 }
 return {name = "Pokemon Jokers 211-240", 

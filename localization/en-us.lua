@@ -2146,8 +2146,9 @@ return {
                 name = 'Happiny',
                 text = {
                     "{C:attention}Baby{}",
-                    "Unscored cards in your",
-                    "{C:attention}first hand{} become {C:attention}Lucky{}",
+                    "Scored cards in your",
+                    "{C:attention}last hand{} become {C:attention}Lucky{}",
+                    "if this is the rightmost Joker",
                     "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
@@ -2677,10 +2678,11 @@ return {
             baby = {
                 name = "Baby",
                 text = {
-                    "{C:attention}Pins{} other Non-Baby Jokers",
-                    "when you get this, Jokers are",
-                    "unpinned when this card",
-                    "evolves or is removed"
+                    "When hand is played",
+                    "if this Joker is",
+                    "to the left of any",
+                    "Joker that isn't a {C:attention}Baby{}",
+                    "{C:attention}debuff{} it"
                 }
             },
             nature = {
@@ -3010,6 +3012,7 @@ return {
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
+            poke_faint_ex = "Fainted!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

@@ -760,3 +760,37 @@ find_other_poke_or_energy_type = function(card, poke_type)
     return 0
   end
 end
+
+faint_baby_poke = function(self, card, context)
+  if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
+    if context.joker_main then
+      local alive = true
+      local self_pos = 0
+      local adult_pos = 0
+      local rightmost_stage = G.jokers.cards[#G.jokers.cards].config.center.stage
+      if not rightmost_stage or (rightmost_stage and rightmost_stage ~= "Baby") then alive = false end
+      if alive then
+        local stage = nil
+        for i = 1, #G.jokers.cards do
+          local stage = G.jokers.cards[i].config.center.stage
+          if G.jokers.cards[i] == card then
+            self_pos = i
+          end
+          if not stage or stage and stage ~= "Baby" then
+            adult_pos = i
+          end
+        end
+        if adult_pos > self_pos then alive = false end
+      end
+      if not alive then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.debuff = true
+              return true
+          end
+        })) 
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_faint_ex'), colour = G.C.MULT})
+      end
+    end
+  end
+end
