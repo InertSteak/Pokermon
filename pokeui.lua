@@ -237,7 +237,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Mus",
+                  text = "Mus, drspectred",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
