@@ -1911,7 +1911,7 @@ return {
                     "of the same {C:pink}Type{} of",
                     "leftmost Joker when any",
                     "{C:attention}Booster Pack{} is opened",
-                    "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
+                    "{C:inactive}(Evolves with a{} {C:attention}Dubious Disc{}{C:inactive} card)"
                 } 
             },
             j_poke_stantler = {

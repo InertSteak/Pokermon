@@ -721,6 +721,7 @@ local slowpoke2={
   config = {extra = {Xmult = 2, rounds = 5, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 1, 

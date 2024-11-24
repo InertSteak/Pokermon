@@ -215,6 +215,7 @@ local porygon2={
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dubious_disc
     return {vars = {}}
   end,
   rarity = "poke_safari", 
