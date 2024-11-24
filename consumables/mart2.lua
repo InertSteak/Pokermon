@@ -628,12 +628,6 @@ local twisted_spoon = {
   name = "twisted_spoon",
   key = "twisted_spoon",
   set = "Item",
-  loc_vars = function(self, info_queue, center)
-    local spoon = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
-    if not (not spoon or self.name == 'The Fool') then
-      info_queue[#info_queue+1] = spoon
-    end
-  end,
   pos = { x = 1, y = 5 },
   atlas = "Mart",
   cost = 4,
