@@ -2325,7 +2325,7 @@ return {
             j_poke_tinkatink = {
                 name = "Tinkatink",
                 text = {
-                  "Played cards give {C:mult}+#1#{} Mult",
+                  "Played cards give {C:mult}+#1#{} Mult.",
                   "When blind is selected ",
                   "debuffs {C:attention}#3#{} cards in your deck",
                   "that aren't {C:attention}Steel{} cards",
@@ -2335,7 +2335,7 @@ return {
             j_poke_tinkatuff = {
                 name = "Tinkatuff",
                 text = {
-                  "Played cards give {C:mult}+#1#{} Mult",
+                  "Played cards give {C:mult}+#1#{} Mult.",
                   "When blind is selected ",
                   "debuffs {C:attention}#3#{} cards in your deck",
                   "that aren't {C:attention}Steel{} cards",
@@ -2345,7 +2345,7 @@ return {
             j_poke_tinkaton = {
                 name = "Tinkaton",
                 text = {
-                  "Played cards give {C:mult}+#1#{} Mult",
+                  "Played cards give {C:mult}+#1#{} Mult.",
                   "When blind is selected ",
                   "debuffs {C:attention}#3#{} cards in your deck",
                   "that aren't {c:attention}Steel{} cards.",

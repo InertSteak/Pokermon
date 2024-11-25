@@ -27,7 +27,7 @@
 -- Tinkatink 957
 local tinkatink={
   name = "tinkatink",
-  pos = {x = 0, y = 0},
+  pos = {x = 9, y = 3},
   config = {extra = {mult = 5,rounds = 5, cards_debuffed = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -70,7 +70,7 @@ local tinkatink={
 -- Tinkatuff 958
 local tinkatuff={
   name = "tinkatuff",
-  pos = {x = 0, y = 0},
+  pos = {x = 10, y = 3},
   config = {extra = {mult = 10,rounds = 5, cards_debuffed = 16}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -113,7 +113,7 @@ local tinkatuff={
 -- Tinkaton 959
 local tinkaton={
   name = "tinkaton",
-  pos = {x = 0, y = 0},
+  pos = {x = 11, y = 3},
   config = {extra = {mult = 15,rounds = 5, cards_debuffed = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
