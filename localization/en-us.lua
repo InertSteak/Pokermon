@@ -2299,7 +2299,7 @@ return {
                 name = "Mimikyu",
                 text = {
                   "{C:chips}+#1#{} Chips if played",
-                  "hand has no {C:hearts}#2#{}",
+                  "hand has no scoring {C:hearts}#2#{}",
                   "Prevents Death if chips scored are",
                   "at least {C:attention}50%{} of required chips",
                   "{C:inactive}(#3#){}"

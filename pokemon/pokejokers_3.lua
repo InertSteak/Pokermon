@@ -771,7 +771,7 @@ local slowbro={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
-      card.ability.extra.oXmult = card.ability.extra.Xmult_multi
+      card.ability.extra.oXmult = card.ability.extra.Xmult
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
