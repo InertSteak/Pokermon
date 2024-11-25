@@ -2322,6 +2322,37 @@ return {
                     "a {C:attention}Straight{}",
                 } 
             },
+            j_poke_tinkatink = {
+                name = "Tinkatink",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {C:attention}Steel{} cards",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_tinkatuff = {
+                name = "Tinkatuff",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {C:attention}Steel{} cards",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_tinkaton = {
+                name = "Tinkaton",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {c:attention}Steel{} cards.",
+                  "Played {C:attention}Steel{} cards",
+                  "behave like {C:attention}Glass{} cards."
+                }
+            },
             j_poke_annihilape = {
                 name = 'Annihilape',
                 text = {

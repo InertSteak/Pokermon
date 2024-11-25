@@ -25,9 +25,161 @@
 -- Flittle 955
 -- Espathra 956
 -- Tinkatink 957
+local tinkatink={
+  name = "tinkatink",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 5,rounds = 5, cards_debuffed = 12}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Fairy",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local targets = {}
+      for i=1, #G.playing_cards do
+        if G.playing_cards[i].ability.name ~= 'Steel Card' then
+          targets[#targets+1] = G.playing_cards[i]
+        end
+      end
+      pseudoshuffle(targets, pseudoseed("tinkatink"))
+      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
+      for i=1, num_debuff do
+        targets[i].debuff = true
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      return {
+        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+        colour = G.C.MULT,
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+    return level_evo(self, card, context, "j_poke_tinkatuff")
+  end
+}
 -- Tinkatuff 958
+local tinkatuff={
+  name = "tinkatuff",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 10,rounds = 5, cards_debuffed = 16}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "One",
+  ptype = "Fairy",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local targets = {}
+      for i=1, #G.playing_cards do
+        if G.playing_cards[i].ability.name ~= 'Steel Card' then
+          targets[#targets+1] = G.playing_cards[i]
+        end
+      end
+      pseudoshuffle(targets, pseudoseed("tinkatuff"))
+      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
+      for i=1, num_debuff do
+        targets[i].debuff = true
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      return {
+        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+        colour = G.C.MULT,
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+    return level_evo(self, card, context, "j_poke_tinkaton")
+  end
+}
 -- Tinkaton 959
+local tinkaton={
+  name = "tinkaton",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 15,rounds = 5, cards_debuffed = 20}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "Two",
+  ptype = "Fairy",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local targets = {}
+      for i=1, #G.playing_cards do
+        if G.playing_cards[i].ability.name ~= 'Steel Card' then
+          targets[#targets+1] = G.playing_cards[i]
+        end
+      end
+      pseudoshuffle(targets, pseudoseed("tinkatink"))
+      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
+      for i=1, num_debuff do
+        targets[i].debuff = true
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card.ability.name == 'Steel Card' then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {2}}, 
+          colour = G.C.XMULT,
+          x_mult = 2,
+          mult = card.ability.extra.mult,
+          card = card
+        }
+      else
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult = card.ability.extra.mult,
+          card = card
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.after then
+        for i = 1, #context.scoring_hand do
+          if context.scoring_hand[i].ability.name == 'Steel Card' and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
+            context.scoring_hand[i].shattered = true
+            G.E_MANAGER:add_event(Event({
+              trigger = 'after',
+              delay = 0.2,
+              func = function() 
+                context.scoring_hand[i]:shatter()
+              return true end }))
+            delay(0.3)
+          end
+        end
+      end
+    end
+  end
+}
 -- Wiglett 960
 return {name = "Pokemon Jokers 931-960", 
-        list = {},
+        list = {tinkatink, tinkatuff, tinkaton},
 }
