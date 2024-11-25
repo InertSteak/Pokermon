@@ -35,9 +35,12 @@ local nidoqueen={
     if context.joker_main then
       local chip_temp_total = card.ability.extra.chip_total
       card.ability.extra.chip_total = 0
-      return {
-        chip_mod = chip_temp_total
-      }
+      if chip_temp_total > 0 then
+        return {
+          message = localize('poke_nido_ex'),
+          chip_mod = chip_temp_total
+        }
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)

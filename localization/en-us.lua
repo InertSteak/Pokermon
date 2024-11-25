@@ -3043,7 +3043,8 @@ return {
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
-            poke_faint_ex = "Fainted!"
+            poke_faint_ex = "Fainted!",
+            poke_nido_ex = "Nido!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

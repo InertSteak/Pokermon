@@ -1056,9 +1056,12 @@ local nidoranf={
     if context.joker_main then
       local chip_temp_total = card.ability.extra.chip_total
       card.ability.extra.chip_total = 0
-      return {
-        chip_mod = chip_temp_total
-      }
+      if chip_temp_total > 0 then
+        return {
+          message = localize('poke_nido_ex'),
+          chip_mod = chip_temp_total
+        }
+      end
     end
     return level_evo(self, card, context, "j_poke_nidorina")
   end
@@ -1101,9 +1104,12 @@ local nidorina={
     if context.joker_main then
       local chip_temp_total = card.ability.extra.chip_total
       card.ability.extra.chip_total = 0
-      return {
-        chip_mod = chip_temp_total
-      }
+      if chip_temp_total > 0 then
+        return {
+          message = localize('poke_nido_ex'),
+          chip_mod = chip_temp_total
+        }
+      end
     end
     return item_evo(self, card, context, "j_poke_nidoqueen")
   end
