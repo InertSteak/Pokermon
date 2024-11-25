@@ -166,6 +166,7 @@ local tinkaton={
         for i = 1, #context.scoring_hand do
           if context.scoring_hand[i].ability.name == 'Steel Card' and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
             context.scoring_hand[i].shattered = true
+            local destroyed = context.scoring_hand[i]
             G.E_MANAGER:add_event(Event({
               trigger = 'after',
               delay = 0.2,
@@ -173,6 +174,9 @@ local tinkaton={
                 context.scoring_hand[i]:shatter()
               return true end }))
             delay(0.3)
+            for i = 1, #G.jokers.cards do
+              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {destroyed}})
+            end
           end
         end
       end
