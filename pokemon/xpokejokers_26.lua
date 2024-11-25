@@ -31,15 +31,9 @@ local mimikyu={
   pos = {x = 8, y = 12},
   broke_pos = {x = 9, y = 12},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
-  loc_txt = {
-    name = "Mimikyu",
-    text = {
-      "{C:chips}+#1#{} Chips",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and "Diguise Intact!" or "Disguise Broken!"}}
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and "Disguise Intact!" or "Disguise Broken!"}}
   end,
   rarity = 2,
   cost = 5,
