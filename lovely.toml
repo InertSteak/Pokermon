@@ -24,6 +24,15 @@ if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas =
 '''
 match_indent = true
 
+# Magikarp functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if next(find_joker('Splash')) then"
+position = "at"
+payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) then"
+match_indent = true
+
 # Extra Booster Functionality
 [[patches]]
 [patches.pattern]
@@ -31,18 +40,6 @@ target = "game.lua"
 pattern = "for i = 1, 2 do"
 position = "at"
 payload = "for i = 1, (G.GAME.modifiers.cry_booster_packs or G.GAME.modifiers.poke_booster_packs) or 2 do"
-match_indent = true
-
-# Busted Disguise Functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''self:set_sprites(self.config.center, self.config.card)'''
-position = 'after'
-payload = '''if self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.disguise == false then
-  self.children.center:set_sprite_pos(G.P_CENTERS[self.config.center_key].broke_pos)
-end
-'''
 match_indent = true
 
 [[patches]]

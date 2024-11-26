@@ -320,7 +320,7 @@ local taurosh={
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
-  config = {extra = {acts_as = "Splash", rounds = 10, chips = 1}},
+  config = {extra = {rounds = 10, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
@@ -348,7 +348,7 @@ local magikarp={
 local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
-  config = {extra = {acts_as = "Splash", Xmult = 3}},
+  config = {extra = {Xmult = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
@@ -1194,7 +1194,7 @@ local mewtwo={
           local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
           local edition = {polychrome = true}
           _card:set_edition(edition, true)
-          if _card.config and _card.config.center.stage and not type_sticker_applied(_card) then
+          if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
             energy_increase(_card, _card.ability.extra.ptype)
           elseif type_sticker_applied(_card) then
             energy_increase(_card, type_sticker_applied(_card))

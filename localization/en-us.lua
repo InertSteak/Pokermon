@@ -496,7 +496,7 @@ return {
                     "All {C:planet}Planet{} cards and",
                     "{C:planet}Celestial Packs{} in",
                     "the shop cost {C:money}$2{} less",
-                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
+                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_pidgeotto = {
@@ -505,7 +505,7 @@ return {
                     "All {C:planet}Planet{} cards and",
                     "{C:planet}Celestial Packs{} in",
                     "the shop cost {C:money}$3{} less",
-                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
+                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_pidgeot = {
@@ -1876,6 +1876,14 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_delibird = {
+                name = "Delibird",
+                text = {
+                  "At end of round",
+                  "receive a {S:1.1,C:green,E:2}Present{}",
+                  "{C:inactive}(Must have room)"
+                }
+            },
             j_poke_kingdra = {
                 name = 'Kingdra',
                 text = {
@@ -1896,6 +1904,15 @@ return {
                     "{C:attention}Booster Pack{} is opened",
                     "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
                 } 
+            },
+            j_poke_stantler = {
+                name = "Stantler",
+                text = {
+                  "If played hand contains a {C:attention}Pair{}",
+                  "gives {C:chips}+#1#{} Chips times the",
+                  "first scoring card's {C:attention}base{} chips",
+                  "Chips {C:attention}doubled{} on {C:attention}final hand{} of round",
+                }
             },
             j_poke_tyrogue = {
                 name = 'Tyrogue',
@@ -2573,6 +2590,7 @@ return {
                 text = {
                     "Evolves leftmost or selected",
                     "{C:attention}eligible{} Joker",
+                    "at end of the next round"
                 }
             },
             --Infoqueue used by some Consumables
@@ -2662,6 +2680,23 @@ return {
                     "Desired {C:attention}#1#{} are",
                     "set at random upon",
                     "Joker creation"
+                }
+            },
+            playing_card_to_evolve = {
+                name = "Requirement",
+                text = {
+                    "Must use on",
+                    "{C:attention}playing card{} in",
+                    "order to evolve"
+                }
+            },
+            deli_gift = {
+                name = "Presents",
+                text = {
+                    "{C:green}35%{} - {C:money}$8{}",
+                    "{C:green}30%{} - {C:item}Item{} {C:attention}Card",
+                    "{C:green}20%{} - {C:attention}Coupon Tag",
+                    "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
             },
             eeveelution = {
@@ -2877,6 +2912,7 @@ return {
         },
         challenge_names = {
             c_poke_poke_master = "Pokemon Master",
+            c_poke_nuzlocke = "Nuzlocke",
         },
         dictionary = {
             k_energy = "Energy",
@@ -2964,9 +3000,7 @@ return {
             --From Vikavolt
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
-            --From Mimikyu
-            poke_disguise_intact = "Disguise Intact!",
-            poke_disguise_busted = "Disguise Busted",
+            poke_gift_ex = "Present!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
@@ -2994,7 +3028,8 @@ return {
             
         },
         v_text = {
-           
+           ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
+           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"}
         },
     }
 }

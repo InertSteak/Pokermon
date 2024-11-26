@@ -638,7 +638,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {acts_as = "Shortcut", chips = 0, chip_mod = 15}},
+  config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
@@ -652,20 +652,14 @@ local rapidash={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind and not context.blueprint then
-      card.ability.extra.acts_as = "Shortcut"
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        if not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
-          card.ability.extra.acts_as = nil
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.CHIPS,
-              card = card
-          }
-        end
+      if context.before and not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS,
+            card = card
+        }
       end
       if context.joker_main then
         return {
