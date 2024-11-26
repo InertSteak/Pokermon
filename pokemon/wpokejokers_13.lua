@@ -14,7 +14,7 @@
 -- Beldum 374
 local beldum={
   name = "beldum", 
-  pos = {x = 4, y = 13},
+  pos = {x = 6, y = 12},
   config = {extra = {chips = 0, chip_mod = 8, size = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -57,7 +57,7 @@ local beldum={
 -- Metang 375
 local metang={
   name = "metang", 
-  pos = {x = 5, y = 13},
+  pos = {x = 6, y = 12},
   config = {extra = {chips = 0, chip_mod = 8, size = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -99,7 +99,7 @@ local metang={
 -- Metagross 376
 local metagross={
   name = "metagross", 
-  pos = {x = 6, y = 13},
+  pos = {x = 8, y = 12},
   config = {extra = {chips = 256,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
