@@ -94,63 +94,6 @@ local scizor={
 -- Remoraid 223
 -- Octillery 224
 -- Delibird 225
-local delibird={
-  name = "delibird",
-  pos = {x = 0, y = 0},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'deli_gift'}
-    if not center.edition or (center.edition and not center.edition.polychrome) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-    end
-    info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
-    info_queue[#info_queue+1] = {key = 'j_gift', set = 'Joker', specific_vars = {1}}
-    return {vars = {}}
-  end,
-  rarity = 3,
-  cost = 7,
-  stage = "Basic",
-  ptype = "Water",
-  atlas = "Pokedex2",
-  perishable_compat = true,
-  blueprint_compat = false,
-  eternal_compat = true,
-  calc_dollar_bonus = function(self, card)
-    local gift = pseudorandom(pseudoseed('delibird'))
-    if gift > .65 then
-      return 8
-    elseif gift > .35 then
-      --create item
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-      end
-    elseif gift > .15 then
-      --create coupon tag
-      G.E_MANAGER:add_event(Event({
-        func = (function()
-            add_tag(Tag('tag_coupon'))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
-        end)
-      }))
-    else
-      --create polychrome gift card
-      if #G.jokers.cards < G.jokers.config.card_limit then
-        local temp_card = {set = "Joker", area = G.jokers, key = "j_gift", no_edition = true}
-        local new_card = SMODS.create_card(temp_card)
-        local edition = {polychrome = true}
-        new_card:set_edition(edition, true)
-        new_card:add_to_deck()
-        G.jokers:emplace(new_card)
-      end
-    end
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_gift_ex'), colour = G.C.GREEN})
-  end
-}
 -- Mantine 226
 -- Skarmory 227
 -- Houndour 228
@@ -167,7 +110,7 @@ local kingdra={
   rarity = "poke_safari", 
   cost = 10, 
   stage = "Two", 
-  ptype = "Water",
+  ptype = "Dragon",
   atlas = "Pokedex2",
   perishable_compat = false,
   blueprint_compat = true,
@@ -264,47 +207,6 @@ local porygon2={
   end
 }
 -- Stantler 234
-local stantler={
-  name = "stantler",
-  pos = {x = 0, y = 0},
-  config = {extra = {chips = 10}},
-  loc_txt = {
-    name = "Stantler",
-    text = {
-      "If played hand contains a {C:attention}Pair{}",
-      "gives {C:chips}+#1#{} Chips times the",
-      "first scoring card's {C:attention}base{} chips",
-      "Effect doubled on last hand of round",
-    }
-  },
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, }}
-  end,
-  rarity = 2,
-  cost = 4,
-  stage = "Basic",
-  ptype = "Colorless",
-  atlas = "Pokedex2",
-  perishable_compat = true,
-  blueprint_compat = true,
-  eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and next(context.poker_hands['Pair']) then
-        local chips = card.ability.extra.chips * context.scoring_hand[1].base.nominal
-        if G.GAME.current_round.hands_left == 0 then
-          chips = chips * 2
-        end
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = chips
-        }
-      end
-    end
-  end
-}
 -- Smeargle 235
 -- Tyrogue 236
 local tyrogue={
@@ -600,5 +502,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, kingdra, porygon2, tyrogue, hitmontop, smoochum, elekid, magby},
 }

@@ -39,7 +39,7 @@ local mimikyu={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and "Diguise Intact!" or "Disguise Broken!"}}
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), localize("poke_disguise_".. (center.ability.extra.disguise and "intact" or "busted"))}}
   end,
   rarity = 2,
   cost = 5,
@@ -85,6 +85,17 @@ local mimikyu={
           card.ability.extra.disguise = false
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
+          G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              delay = 0.8,
+              blockable = false,
+              func = function()
+                  play_sound('tarot2',1,0.4)
+                  delay(0.2)
+                  play_sound('tarot2',0.76,0.4)
+                  return true
+              end
+          }))
           G.E_MANAGER:add_event(Event({
               func = function()
                   G.hand_text_area.blind_chips:juice_up()
