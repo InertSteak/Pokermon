@@ -553,7 +553,7 @@ return {
                 } 
             },
             j_poke_fearow = {
-                name = "Spearow",
+                name = "Fearow",
                 text = {
                     "Adds {C:attention}quadruple{} the",
                     "level of the highest",
