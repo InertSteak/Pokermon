@@ -31,7 +31,7 @@ family = {
     {"tentacool","tentacruel"},
     {"geodude","graveler","golem"},
     {"ponyta","rapidash"},
-    {"slowpoke","slowbro", "slowking"},
+    {"slowpoke", "slowpoke2", "slowbro", "slowking"},
     {"magnemite","magneton", "magnezone"},
     {"doduo","dodrio"},
     {"seel","dewgong"},
@@ -72,7 +72,8 @@ family = {
     {"mudkip", "marshtomp", "swampert"},
     {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
-    {"yamper","boltund"}
+    {"yamper","boltund"},
+    {"tinkatink", "tinkatuff", "tinkaton"}
 }
 
 type_sticker_applied = function(card)
@@ -538,30 +539,49 @@ evo_item_in_pool = function(self)
 end
 
 type_tooltip = function(self, info_queue, center)
+  local percent
   if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
       if center.ability.money2_frac and center.ability.money2_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money2_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money2_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
       if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {center.ability.money_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {percent}}
+        end
       end
       if center.ability.mult_mod_frac and center.ability.mult_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {center.ability.mult_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.mult_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {percent}}
+        end
       end
       if center.ability.chip_mod_frac and center.ability.chip_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {center.ability.chip_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.chip_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {percent}}
+        end
       end
   elseif (center.ability and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
   end
 end
@@ -758,5 +778,39 @@ find_other_poke_or_energy_type = function(card, poke_type)
     return type_count + #find_joker(energy)
   else
     return 0
+  end
+end
+
+faint_baby_poke = function(self, card, context)
+  if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
+    if context.joker_main then
+      local alive = true
+      local self_pos = 0
+      local adult_pos = 0
+      local rightmost_stage = G.jokers.cards[#G.jokers.cards].config.center.stage
+      if not rightmost_stage or (rightmost_stage and rightmost_stage ~= "Baby") then alive = false end
+      if alive then
+        local stage = nil
+        for i = 1, #G.jokers.cards do
+          local stage = G.jokers.cards[i].config.center.stage
+          if G.jokers.cards[i] == card then
+            self_pos = i
+          end
+          if not stage or stage and stage ~= "Baby" then
+            adult_pos = i
+          end
+        end
+        if adult_pos > self_pos then alive = false end
+      end
+      if not alive then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.debuff = true
+              return true
+          end
+        })) 
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_faint_ex'), colour = G.C.MULT})
+      end
+    end
   end
 end

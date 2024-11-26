@@ -138,6 +138,7 @@ local kadabra={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_twisted_spoon
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
@@ -153,7 +154,12 @@ local kadabra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local _card = nil
+            if pseudorandom(pseudoseed('spoon')) > .50 then
+              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            else
+              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            end
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
@@ -171,6 +177,7 @@ local alakazam={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_twisted_spoon
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
   end,
   rarity = "poke_safari", 
@@ -184,7 +191,12 @@ local alakazam={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local _card = nil
+            if pseudorandom(pseudoseed('spoon')) > .50 then
+              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            else
+              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            end
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
@@ -354,7 +366,8 @@ local bellsprout={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -387,7 +400,8 @@ local weepinbell={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -418,7 +432,8 @@ local victreebel={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
             colour = G.C.CHIPS,
-            chips = card.ability.extra.chips
+            chips = card.ability.extra.chips,
+            card = card
           }
       end
     end
@@ -464,7 +479,8 @@ local tentacool={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -490,7 +506,8 @@ local tentacruel={
       return {
         message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
         colour = G.C.MULT,
-        mult = card.ability.extra.mult
+        mult = card.ability.extra.mult,
+        card = card
       }
     end
   end
@@ -638,7 +655,7 @@ local ponyta={
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
-  config = {extra = {chips = 0, chip_mod = 15}},
+  config = {extra = {acts_as = "Shortcut", chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
@@ -652,14 +669,20 @@ local rapidash={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      card.ability.extra.acts_as = "Shortcut"
+    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS,
-            card = card
-        }
+      if context.before then
+        if not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
+          card.ability.extra.acts_as = nil
+          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          return {
+              message = localize('k_upgrade_ex'),
+              colour = G.C.CHIPS,
+              card = card
+          }
+        end
       end
       if context.joker_main then
         return {
@@ -704,6 +727,7 @@ local slowpoke2={
   config = {extra = {Xmult = 2, rounds = 5, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 1, 
@@ -753,7 +777,7 @@ local slowbro={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
-      card.ability.extra.oXmult = card.ability.extra.Xmult_multi
+      card.ability.extra.oXmult = card.ability.extra.Xmult
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then

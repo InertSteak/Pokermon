@@ -438,7 +438,8 @@ local exeggcute={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult 
+          mult = card.ability.extra.mult ,
+          card = card
         }
       end
     end
@@ -468,7 +469,8 @@ local exeggutor={
             message = localize("poke_solar_ex"),
             colour = G.C.XMULT,
             mult = card.ability.extra.mult_mod, 
-            x_mult = card.ability.extra.Xmult_multi
+            x_mult = card.ability.extra.Xmult_multi,
+            card = card
           }
         end
       end
@@ -1067,7 +1069,8 @@ local staryu={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end

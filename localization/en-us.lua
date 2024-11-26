@@ -228,6 +228,15 @@ return {
                     "{C:inactive}(Must have room){}"
                 }
             },
+            c_poke_twisted_spoon = {
+                name = "Twisted Spoon",
+                text = {
+                    "Creates the last",
+                    "{C:item}Item{} card or {C:pink}Energy{} card",
+                    "used during this run",
+                    "{s:0.8,C:item}Twisted Spoon{s:0.8} excluded"
+                }
+            },
         },
         Energy = {
             c_poke_grass_energy = {
@@ -934,8 +943,8 @@ return {
                 name = "Kadabra",
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "create a {C:attention}Fool{} card if",
-                    "played {C:attention}poker hand{} has",
+                    "create a {C:attention}Fool{} or {C:item}Twisted Spoon{} card",
+                    "if played {C:attention}poker hand{} has",
                     "already been played this round",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
@@ -945,8 +954,8 @@ return {
                 text = {
                     "{C:attention}+#3#{} consumable slot",
                     "{C:green}#1# in #2#{} chance to",
-                    "create a {C:attention}Fool{} card if",
-                    "played {C:attention}poker hand{} has",
+                    "create a {C:attention}Fool{} or {C:item}Twisted Spoon{} card",
+                    "if played {C:attention}poker hand{} has",
                     "already been played this round",
                 } 
             },
@@ -1902,7 +1911,7 @@ return {
                     "of the same {C:pink}Type{} of",
                     "leftmost Joker when any",
                     "{C:attention}Booster Pack{} is opened",
-                    "{C:inactive}(Evolves with a{} {C:attention}Upgrade{}{C:inactive} card)"
+                    "{C:inactive}(Evolves with a{} {C:attention}Dubious Disc{}{C:inactive} card)"
                 } 
             },
             j_poke_stantler = {
@@ -2137,8 +2146,9 @@ return {
                 name = 'Happiny',
                 text = {
                     "{C:attention}Baby{}",
-                    "Unscored cards in your",
-                    "{C:attention}first hand{} become {C:attention}Lucky{}",
+                    "Scored cards in your",
+                    "{C:attention}last hand{} become {C:attention}Lucky{}",
+                    "if this is the rightmost Joker",
                     "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
@@ -2289,7 +2299,7 @@ return {
                 name = "Mimikyu",
                 text = {
                   "{C:chips}+#1#{} Chips if played",
-                  "hand has no {C:hearts}#2#{}",
+                  "hand has no scoring {C:hearts}#2#{}",
                   "Prevents Death if chips scored are",
                   "at least {C:attention}50%{} of required chips",
                   "{C:inactive}(#3#){}"
@@ -2311,6 +2321,37 @@ return {
                     "if played hand contains",
                     "a {C:attention}Straight{}",
                 } 
+            },
+            j_poke_tinkatink = {
+                name = "Tinkatink",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult.",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {C:attention}Steel{} cards",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_tinkatuff = {
+                name = "Tinkatuff",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult.",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {C:attention}Steel{} cards",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_tinkaton = {
+                name = "Tinkaton",
+                text = {
+                  "Played cards give {C:mult}+#1#{} Mult.",
+                  "When blind is selected ",
+                  "debuffs {C:attention}#3#{} cards in your deck",
+                  "that aren't {c:attention}Steel{} cards.",
+                  "Played {C:attention}Steel{} cards",
+                  "behave like {C:attention}Glass{} cards."
+                }
             },
             j_poke_annihilape = {
                 name = 'Annihilape',
@@ -2668,10 +2709,11 @@ return {
             baby = {
                 name = "Baby",
                 text = {
-                    "{C:attention}Pins{} other Non-Baby Jokers",
-                    "when you get this, Jokers are",
-                    "unpinned when this card",
-                    "evolves or is removed"
+                    "When hand is played",
+                    "if this Joker is",
+                    "to the left of any",
+                    "Joker that isn't a {C:attention}Baby{}",
+                    "{C:attention}debuff{} it"
                 }
             },
             nature = {
@@ -2942,7 +2984,7 @@ return {
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",
             poke_credits_graphics = "Graphic Design: ",
-            poke_credits_quality_assurance_main = "QA Lead: ",
+            poke_credits_quality_assurance_main = "QA: ",
             poke_credits_developer = "Developers: ",
             poke_credits_designer = "Design Assistants: ",
             poke_credits_community_manager = "Community Managers: ",
@@ -3001,6 +3043,10 @@ return {
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
+            poke_faint_ex = "Fainted!",
+            poke_nido_ex = "Nido!",
+            poke_disguise_intact = "Disguise Intact! Death Prevented!",
+            poke_disguise_broken = "Disguise Broken! Death Not Prevented!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

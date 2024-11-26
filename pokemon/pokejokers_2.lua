@@ -35,9 +35,12 @@ local nidoqueen={
     if context.joker_main then
       local chip_temp_total = card.ability.extra.chip_total
       card.ability.extra.chip_total = 0
-      return {
-        chip_mod = chip_temp_total
-      }
+      if chip_temp_total > 0 then
+        return {
+          message = localize('poke_nido_ex'),
+          chip_mod = chip_temp_total
+        }
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -172,7 +175,8 @@ local clefairy={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -199,7 +203,8 @@ local clefable={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -288,7 +293,8 @@ local jigglypuff={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          card = card
         }
       end
     end
@@ -316,7 +322,8 @@ local wigglytuff={
           message = "Tuff!", 
           colour = G.C.MULT,
           mult = card.ability.extra.mult,
-          chips = card.ability.extra.chips
+          chips = card.ability.extra.chips,
+          card = card
         }
       end
     end
@@ -470,7 +477,8 @@ local oddish={
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = value
+            mult = value, 
+            card = card
           }
       end
     end
@@ -510,7 +518,8 @@ local gloom={
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
             colour = G.C.MULT,
-            mult = value
+            mult = value,
+            card = card
           }
       end
     end

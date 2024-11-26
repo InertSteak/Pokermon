@@ -39,6 +39,7 @@ local mimejr={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -56,25 +57,7 @@ local mimejr={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_mime_ex"), colour = G.C.CHIPS})
     end
     return level_evo(self, card, context, "j_poke_mrmime")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
-  end,
+  end
 }
 -- Happiny 440
 local happiny={
@@ -97,26 +80,19 @@ local happiny={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and G.GAME.current_round.hands_played == 0 then
+      if context.before and G.GAME.current_round.hands_left == 0 and G.jokers.cards[#G.jokers.cards] == card then
         for k, v in ipairs(context.scoring_hand) do
-          v.poke_scored = true
-        end
-        for k, v in ipairs(context.full_hand) do
-          if not v.poke_scored then
-            v:set_ability(G.P_CENTERS.m_lucky, nil, true)
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    v:juice_up()
-                    return true
-                end
-            })) 
-          end
-        end
-        for k, v in ipairs(context.scoring_hand)do
-          v.poke_scored = nil
+          v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  v:juice_up()
+                  return true
+              end
+          })) 
         end
       end
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -125,24 +101,6 @@ local happiny={
       end
     end
     return level_evo(self, card, context, "j_poke_chansey")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Chatot 441
@@ -173,6 +131,7 @@ local munchlax={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -188,24 +147,6 @@ local munchlax={
       G.consumeables:emplace(_card)
     end
     return level_evo(self, card, context, "j_poke_snorlax")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = true
-        end
-      end
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      for i=1, #G.jokers.cards do
-        if not (G.jokers.cards[i].config and G.jokers.cards[i].config.center.stage == "Baby") then
-          G.jokers.cards[i].pinned = false
-        end
-      end
-    end
   end,
 }
 -- Riolu 447

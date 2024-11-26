@@ -16,11 +16,13 @@ local starmie={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        ease_poke_dollars(card, "starmie", card.ability.extra.money)
+        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money, true)
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult
+          mult = card.ability.extra.mult,
+          dollars = earned,
+          card = card
         }
       end
     end
@@ -320,7 +322,7 @@ local taurosh={
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
-  config = {extra = {rounds = 10, chips = 1}},
+  config = {extra = {acts_as = "Splash", rounds = 10, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
@@ -374,7 +376,7 @@ local gyarados={
 local lapras={
   name = "lapras", 
   pos = {x = 1, y = 10},
-  config = {extra = {chips = 0, chip_mod = 100}},
+  config = {extra = {acts_as = "Splash", chips = 0, chip_mod = 100}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -615,6 +617,7 @@ local porygon={
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_upgrade
     return {vars = {}}
   end,
   rarity = 2, 
@@ -1135,7 +1138,7 @@ local dragonair={
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
-  config = {extra = {mult = 0, retriggers = 5}},
+  config = {extra = {mult = 30, retriggers = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 

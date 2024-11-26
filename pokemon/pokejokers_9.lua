@@ -90,11 +90,12 @@ local treecko={
       if (pseudorandom('treecko') < G.GAME.probabilities.normal/card.ability.extra.odds) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
-              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money)
+              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
                 message = localize('$')..earned,
                 colour = G.C.MONEY,
+                dollars = earned,
                 card = card
               }
           end
@@ -148,11 +149,12 @@ local grovyle={
       if (pseudorandom('treecko') < G.GAME.probabilities.normal/card.ability.extra.odds) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
-              local earned = ease_poke_dollars(card, "bulba", card.ability.extra.money)
+              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
                 message = localize('$')..earned,
                 colour = G.C.MONEY,
+                dollars = earned,
                 card = card
               }
           end
@@ -202,11 +204,12 @@ local sceptile={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money)
+            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money, true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
               message = localize('$')..earned,
               colour = G.C.MONEY,
+              dollars = earned,
               card = card
             }
         end

@@ -31,15 +31,10 @@ local mimikyu={
   pos = {x = 8, y = 12},
   broke_pos = {x = 9, y = 12},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
-  loc_txt = {
-    name = "Mimikyu",
-    text = {
-      "{C:chips}+#1#{} Chips",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and "Diguise Intact!" or "Disguise Broken!"}}
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and 
+                    localize('poke_disguise_intact') or localize('poke_disguise_broken')}}
   end,
   rarity = 2,
   cost = 5,
@@ -84,6 +79,18 @@ local mimikyu={
         if chips/blind_chips >= 0.50 then
           card.ability.extra.disguise = false
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
+          
+          G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              delay = 0.8,
+              blockable = false,
+              func = function()
+                  play_sound('tarot2',1.2,0.4)
+                  delay(0.2)
+                  play_sound('tarot2',0.96,0.4)
+                  return true
+              end
+          }))
           
           G.E_MANAGER:add_event(Event({
               func = function()
