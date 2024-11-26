@@ -81,6 +81,18 @@ local mimikyu={
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
           G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              delay = 0.8,
+              blockable = false,
+              func = function()
+                  play_sound('tarot2',1,0.4)
+                  delay(0.2)
+                  play_sound('tarot2',0.76,0.4)
+                  return true
+              end
+          }))
+          
+          G.E_MANAGER:add_event(Event({
               func = function()
                   G.hand_text_area.blind_chips:juice_up()
                   G.hand_text_area.game_chips:juice_up()

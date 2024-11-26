@@ -33,6 +33,22 @@ position = "at"
 payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) then"
 match_indent = true
 
+# Mimikyu Localization Functionality
+[[patches]]
+[patches.regex]
+target = 'functions/state_events.lua'
+pattern = '''if eval.saved then
+  game_over = false
+end'''
+position = 'after'
+payload = '''
+  if not G.localization.misc.dictionary.ph_mr_bones_numbutils then
+    G.localization.misc.dictionary.ph_mr_bones_numbutils = ""..G.localization.misc.dictionary.ph_mr_bones
+  end
+  sendDebugMessage(tostring(G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name))
+  G.localization.misc.dictionary.ph_mr_bones = G.localization.misc.dictionary.ph_mr_bones_numbutils:gsub("Mr. Bones", G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name)
+  '''
+
 # Extra Booster Functionality
 [[patches]]
 [patches.pattern]
