@@ -3044,7 +3044,9 @@ return {
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
             poke_faint_ex = "Fainted!",
-            poke_nido_ex = "Nido!"
+            poke_nido_ex = "Nido!",
+            poke_disguise_intact = "Disguise Intact! Death Prevented!",
+            poke_disguise_broken = "Disguise Broken! Death Not Prevented!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

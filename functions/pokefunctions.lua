@@ -539,30 +539,49 @@ evo_item_in_pool = function(self)
 end
 
 type_tooltip = function(self, info_queue, center)
+  local percent
   if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
       if center.ability.money2_frac and center.ability.money2_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money2_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money2_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
       if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {center.ability.money_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {percent}}
+        end
       end
       if center.ability.mult_mod_frac and center.ability.mult_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {center.ability.mult_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.mult_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {percent}}
+        end
       end
       if center.ability.chip_mod_frac and center.ability.chip_mod_frac > 0 then
-        info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {center.ability.chip_mod_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.chip_mod_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {percent}}
+        end
       end
   elseif (center.ability and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac then
-        info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {center.ability.money_frac * 100}}
+        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
       end
   end
 end

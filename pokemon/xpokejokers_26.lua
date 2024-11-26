@@ -33,7 +33,8 @@ local mimikyu={
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and "Disguise Intact!" or "Disguise Broken!"}}
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and 
+                    localize('poke_disguise_intact') or localize('poke_disguise_broken')}}
   end,
   rarity = 2,
   cost = 5,
