@@ -673,7 +673,7 @@ local twisted_spoon = {
    if not (not spoon_c or name == 'The Fool') then
         info_queue[#info_queue+1] = spoon_c
    end
-   localize{type = 'descriptions', key = self.key, set = self.set, nodes = desc_nodes, vars = loc_vars}
+   localize{type = 'descriptions', key = card.config.center.key, set = card.config.center.set, nodes = desc_nodes, vars = loc_vars}
    desc_nodes[#desc_nodes+1] = main_end 
   end
 }
