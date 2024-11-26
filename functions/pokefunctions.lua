@@ -814,3 +814,25 @@ faint_baby_poke = function(self, card, context)
     end
   end
 end
+
+pseudorandom_multi = function(args)
+  --Args: array(table), amt(num), seed(string), add_con(function), mod_func(function)
+  local elements = {}
+  local result = {}
+  if args.array then
+    for i = 1, #args.array do
+      if not args.add_con or args.add_con(args.array[i]) then
+        elements[#elements+1] = args.array[i]
+      end
+    end
+    pseudoshuffle(elements, args.seed and pseudoseed(args.seed) or pseudoseed('default'))
+    local amt = args.amt and math.min(#elements, args.amt) or #elements
+    for j = 1, amt do
+      if args.mod_func then
+        args.mod_func(elements[j])
+      end
+      result[#result+1] = elements[j]
+    end
+  end
+  return result
+end

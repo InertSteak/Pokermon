@@ -44,17 +44,10 @@ local tinkatink={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local targets = {}
-      for i=1, #G.playing_cards do
-        if G.playing_cards[i].ability.name ~= 'Steel Card' then
-          targets[#targets+1] = G.playing_cards[i]
-        end
-      end
-      pseudoshuffle(targets, pseudoseed("tinkatink"))
-      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
-      for i=1, num_debuff do
-        targets[i].debuff = true
-      end
+      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local modify = function(v) v.debuff = true end
+      local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
+      pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       return {
@@ -87,17 +80,10 @@ local tinkatuff={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local targets = {}
-      for i=1, #G.playing_cards do
-        if G.playing_cards[i].ability.name ~= 'Steel Card' then
-          targets[#targets+1] = G.playing_cards[i]
-        end
-      end
-      pseudoshuffle(targets, pseudoseed("tinkatuff"))
-      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
-      for i=1, num_debuff do
-        targets[i].debuff = true
-      end
+      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local modify = function(v) v.debuff = true end
+      local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
+      pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       return {
@@ -131,17 +117,10 @@ local tinkaton={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local targets = {}
-      for i=1, #G.playing_cards do
-        if G.playing_cards[i].ability.name ~= 'Steel Card' then
-          targets[#targets+1] = G.playing_cards[i]
-        end
-      end
-      pseudoshuffle(targets, pseudoseed("tinkatink"))
-      local num_debuff = math.min(#targets, card.ability.extra.cards_debuffed)
-      for i=1, num_debuff do
-        targets[i].debuff = true
-      end
+      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local modify = function(v) v.debuff = true end
+      local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
+      pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       if context.other_card.ability.name == 'Steel Card' then
