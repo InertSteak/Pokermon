@@ -656,8 +656,9 @@ local twisted_spoon = {
     return true
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
     if not full_UI_table.name then
-			full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
 		end
     local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
     local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
@@ -673,7 +674,8 @@ local twisted_spoon = {
    if not (not spoon_c or name == 'The Fool') then
         info_queue[#info_queue+1] = spoon_c
    end
-   localize{type = 'descriptions', key = card.config.center.key, set = card.config.center.set, nodes = desc_nodes, vars = loc_vars}
+   
+   localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
    desc_nodes[#desc_nodes+1] = main_end 
   end
 }
