@@ -138,7 +138,7 @@ local kadabra={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_twisted_spoon
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
@@ -177,7 +177,7 @@ local alakazam={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_twisted_spoon
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
   end,
   rarity = "poke_safari", 

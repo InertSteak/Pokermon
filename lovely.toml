@@ -228,3 +228,20 @@ if card.config.center.set == 'Item' or card.config.center.set == 'Energy' then
 end
 '''
 match_indent = true
+
+# Description functionality, a little hacky but it works
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if main_end then 
+    desc_nodes[#desc_nodes+1] = main_end 
+end
+'''
+position = "after"
+payload = '''
+if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
+  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+end
+'''
+match_indent = true
