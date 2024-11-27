@@ -145,11 +145,11 @@ local rhyperior={
 local tangrowth={
   name = "tangrowth", 
   pos = {x = 8, y = 5},
-  config = {extra = {mult = 15, chips = 75, money = 3, odds = 4}},
+  config = {extra = {mult = 15, chips = 75, money_mod = 3, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
   cost = 10,
@@ -162,14 +162,14 @@ local tangrowth={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Wild Card' then
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
           return {
             message = localize("poke_tangela_bonus"),
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money, true),
+            dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
             card = card
           }
         else
@@ -188,10 +188,10 @@ local tangrowth={
               chips = card.ability.extra.chips
             }
           elseif bonus == "Money" then
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money, true),
+              dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
               card = card
             }
           end
@@ -203,11 +203,11 @@ local tangrowth={
 local electivire={
   name = "electivire", 
   pos = {x = 9, y = 5}, 
-  config = {extra = {money = 2, Xmult_mod = 0.02}},
+  config = {extra = {money_mod = 2, Xmult_mod = 0.02}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
-    return {vars = {center.ability.extra.money, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
+    return {vars = {center.ability.extra.money_mod, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
   end,
   rarity = "poke_safari", 
   cost = 1,
@@ -217,7 +217,7 @@ local electivire={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
-      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
+      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
       card:set_cost()
       G.E_MANAGER:add_event(Event({
         func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true

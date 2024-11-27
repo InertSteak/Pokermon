@@ -1,10 +1,10 @@
 local bulbasaur={ 
   name = "bulbasaur",
   pos = {x = 0, y = 0},
-  config = {extra = {money = 1, earned = 0, h_size = 1}},
+  config = {extra = {money_mod = 1, earned = 0, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
+		return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
                     center.ability.extra.h_size}}
   end,
   rarity = 2, 
@@ -25,8 +25,8 @@ local bulbasaur={
           else
             local earned = 0
             if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
-              earned = earned + card.ability.extra.money
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
+              earned = earned + card.ability.extra.money_mod
             end
             earned = ease_poke_dollars(card, "bulba", earned)
             return {
@@ -50,10 +50,10 @@ local bulbasaur={
 local ivysaur={
   name = "ivysaur", 
   pos = {x = 1, y = 0}, 
-  config = {extra = {money = 1, earned = 0, h_size = 1}},
+  config = {extra = {money_mod = 1, earned = 0, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money + 1}}
+		return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money_mod + 1}}
   end,
   rarity = "poke_safari", 
   cost = 9, 
@@ -79,8 +79,8 @@ local ivysaur={
             end
             local earned = 0
             if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money + more
-              earned = earned + card.ability.extra.money + more
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
+              earned = earned + card.ability.extra.money_mod + more
             end
             earned = ease_poke_dollars(card, "ivy", earned)
             return {
@@ -104,10 +104,10 @@ local ivysaur={
 local venusaur={
   name = "venusaur", 
   pos = {x = 2, y = 0}, 
-  config = {extra = {money = 2, earned = 0, h_size = 1}},
+  config = {extra = {money_mod = 2, earned = 0, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
+		return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'                   )}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -127,8 +127,8 @@ local venusaur={
           else
             local earned = 0
             if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
-              earned = earned + card.ability.extra.money
+              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
+              earned = earned + card.ability.extra.money_mod
             end
             earned = ease_poke_dollars(card, "venu", earned)
             return {

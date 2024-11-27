@@ -65,11 +65,11 @@ local blissey={
 local treecko={
   name = "treecko",
   pos = {x = 0, y = 0},
-  config = {extra = {money = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
+  config = {extra = {money_mod = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.money, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
+    local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -90,7 +90,7 @@ local treecko={
       if (pseudorandom('treecko') < G.GAME.probabilities.normal/card.ability.extra.odds) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
-              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money, true)
+              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
                 message = localize('$')..earned,
@@ -124,11 +124,11 @@ local treecko={
 local grovyle={
   name = "grovyle",
   pos = {x = 1, y = 0},
-  config = {extra = {money = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
+  config = {extra = {money_mod = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.money, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
+    local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -149,7 +149,7 @@ local grovyle={
       if (pseudorandom('treecko') < G.GAME.probabilities.normal/card.ability.extra.odds) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
-              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money, true)
+              local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
                 message = localize('$')..earned,
@@ -183,12 +183,12 @@ local grovyle={
 local sceptile={
   name = "sceptile",
   pos = {x = 2, y = 0},
-  config = {extra = {money = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
+  config = {extra = {money_mod = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.money, center.ability.extra.money_earned, center.ability.extra.h_size, 
-                       math.min(14, find_other_poke_or_energy_type(center, "Grass") * center.ability.extra.money)}
+    local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, 
+                       math.min(14, find_other_poke_or_energy_type(center, "Grass") * center.ability.extra.money_mod)}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -204,7 +204,7 @@ local sceptile={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money, true)
+            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod, true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
               message = localize('$')..earned,
@@ -217,7 +217,7 @@ local sceptile={
     end
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "sceptile", math.min(14, find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money), true) 
+    return ease_poke_dollars(card, "sceptile", math.min(14, find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money_mod), true) 
 	end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then

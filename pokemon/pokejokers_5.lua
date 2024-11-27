@@ -2,10 +2,10 @@
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 4, money = 1, suit = "Diamonds"}},
+  config = {extra = {mult = 4, money_mod = 1, suit = "Diamonds"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.money, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.money_mod, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -16,7 +16,7 @@ local starmie={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money, true)
+        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
@@ -148,11 +148,11 @@ local jynx={
 local electabuzz={
   name = "electabuzz", 
   pos = {x = 7, y = 9}, 
-  config = {extra = {money = 2}},
+  config = {extra = {money_mod = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
-    return {vars = {center.ability.extra.money}}
+    return {vars = {center.ability.extra.money_mod}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -163,7 +163,7 @@ local electabuzz={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
-      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
+      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
       card:set_cost()
       G.E_MANAGER:add_event(Event({
         func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
@@ -466,11 +466,11 @@ local ditto={
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
-  config = {extra = {money = 2, limit = 0, max = 5}},
+  config = {extra = {money_mod = 2, limit = 0, max = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
-    return {vars = {center.ability.extra.money, center.ability.extra.limit, center.ability.extra.max}}
+    return {vars = {center.ability.extra.money_mod, center.ability.extra.limit, center.ability.extra.max}}
   end,
   rarity = 2, 
   cost = 4,
@@ -484,9 +484,9 @@ local eevee={
   calculate = function(self, card, context)
     if context.reroll_shop and card.ability.extra.limit < 5 then
       card.ability.extra.limit = card.ability.extra.limit + 1
-      ease_poke_dollars(card, "eevee", card.ability.extra.money)
+      ease_poke_dollars(card, "eevee", card.ability.extra.money_mod)
       return {
-          message = localize('$')..card.ability.extra.money,
+          message = localize('$')..card.ability.extra.money_mod,
           colour = G.C.MONEY
       }
     end

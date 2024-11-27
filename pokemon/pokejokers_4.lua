@@ -828,11 +828,11 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money = 3, odds = 4}},
+  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
   cost = 6,
@@ -845,14 +845,14 @@ local tangela={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Wild Card' then
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
           return {
             message = localize("poke_tangela_bonus"),
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money, true),
+            dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
             card = card
           }
         else
@@ -871,10 +871,10 @@ local tangela={
               chips = card.ability.extra.chips
             }
           elseif bonus == "Money" then
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money, true),
+              dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
               card = card
             }
           end
