@@ -46,6 +46,13 @@ SMODS.Rarity{
 }
 
 --Load helper function files
+local helper, load_error = SMODS.load_file("functions/pokeutils.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  helper()
+end
+
 local helper, load_error = SMODS.load_file("functions/pokefunctions.lua")
 if load_error then
   sendDebugMessage ("The error is: "..load_error)

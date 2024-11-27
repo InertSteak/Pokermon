@@ -632,48 +632,6 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-juice_flip = function()
-  for i = 1, #G.hand.highlighted do
-      G.E_MANAGER:add_event(Event({
-          trigger = 'after',
-          delay = 0.4,
-          func = function()
-              play_sound('tarot1')
-              G.hand.highlighted[i]:juice_up(0.3, 0.5)
-              return true
-          end
-      }))
-      local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
-      G.E_MANAGER:add_event(Event({
-          trigger = 'after',
-          delay = 0.15,
-          func = function()
-              G.hand.highlighted[i]:flip(); play_sound('card1', percent); G.hand.highlighted[i]:juice_up(0.3, 0.3); return true
-          end
-      }))
-  end
-end
-
-juice_flip_single = function(card, index)
-  G.E_MANAGER:add_event(Event({
-      trigger = 'after',
-      delay = 0.4,
-      func = function()
-          play_sound('tarot1')
-          card:juice_up(0.3, 0.5)
-          return true
-      end
-  }))
-  local percent = 1.15 - (index - 0.999) / (#G.hand.cards - 0.998) * 0.3
-  G.E_MANAGER:add_event(Event({
-      trigger = 'after',
-      delay = 0.15,
-      func = function()
-          card:flip(); play_sound('card1', percent); card:juice_up(0.3, 0.3); return true
-      end
-  }))
-end
-
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   local poke_keys = {}
   local pokearea = area or G.jokers
@@ -724,33 +682,48 @@ get_poke_allowed = function(key)
   return true
 end
 
-get_poke_target_card_ranks = function(seed, num, default)
+get_poke_target_card_ranks = function(seed, num, default, use_deck)
   local target_ranks = {}
   local valid_cards = {}
   if not G.playing_cards then
     return default
   end
-  for i = 1, num do
-    for k, v in ipairs(G.playing_cards) do
-      if v.ability.effect ~= 'Stone Card' then
-          local already_picked = false
-          for j = 1, #target_ranks do
-            if target_ranks[j].id == v.base.id then already_picked = true; break end
-          end
-          if not already_picked then
-            valid_cards[#valid_cards+1] = v
-          end
+  if use_deck then
+    for i = 1, num do
+      for k, v in ipairs(G.playing_cards) do
+        if v.ability.effect ~= 'Stone Card' then
+            local already_picked = false
+            for j = 1, #target_ranks do
+              if target_ranks[j].id == v.base.id then already_picked = true; break end
+            end
+            if not already_picked then
+              valid_cards[#valid_cards+1] = v
+            end
+        end
+      end
+      if #valid_cards > 0 then
+        local picked = pseudorandom_element(valid_cards, pseudoseed(seed))
+        target_ranks[#target_ranks+1] = {value = picked.base.value, id = picked.base.id}
+        valid_cards = {}
+      elseif #target_ranks > 0 then
+        target_ranks[#target_ranks+1] = target_ranks[1]
+      else
+         target_ranks[#target_ranks+1] = {value = "Ace", id = 14}
       end
     end
-    if #valid_cards > 0 then
-      local picked = pseudorandom_element(valid_cards, pseudoseed(seed))
-      target_ranks[#target_ranks+1] = {value = picked.base.value, id = picked.base.id}
-      valid_cards = {}
-    elseif #target_ranks > 0 then
-      target_ranks[#target_ranks+1] = target_ranks[1]
-    else
-       target_ranks[#target_ranks+1] = {value = "Ace", id = 14}
+  else
+    local random = {}
+    local cvalue = nil
+    for i = 2, 14 do
+      if i == 11 then cvalue = 'Jack'
+      elseif i == 12 then cvalue = 'Queen'
+      elseif i == 13 then cvalue = 'King'
+      elseif i == 14 then cvalue = 'Ace'
+      else cvalue = ''..i end
+      random[#random+1] = {value = cvalue, id = i}
     end
+    local args = {array = random, amt = num}
+    target_ranks = pseudorandom_multi(args)
   end
   return target_ranks
 end
@@ -815,24 +788,4 @@ faint_baby_poke = function(self, card, context)
   end
 end
 
-pseudorandom_multi = function(args)
-  --Args: array(table), amt(num), seed(string), add_con(function), mod_func(function)
-  local elements = {}
-  local result = {}
-  if args.array then
-    for i = 1, #args.array do
-      if not args.add_con or args.add_con(args.array[i]) then
-        elements[#elements+1] = args.array[i]
-      end
-    end
-    pseudoshuffle(elements, args.seed and pseudoseed(args.seed) or pseudoseed('default'))
-    local amt = args.amt and math.min(#elements, args.amt) or #elements
-    for j = 1, amt do
-      if args.mod_func then
-        args.mod_func(elements[j])
-      end
-      result[#result+1] = elements[j]
-    end
-  end
-  return result
-end
+
