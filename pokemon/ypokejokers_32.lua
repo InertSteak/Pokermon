@@ -45,7 +45,7 @@ local tinkatink={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return v.ability.name ~= 'Steel Card' end
-      local modify = function(v) v.debuff = true end
+      local modify = function(v) SMODS.debuff_card(v, true, card); end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -57,7 +57,19 @@ local tinkatink={
         card = card
       }
     end
+    if context.end_of_round and not context.individual and not context.repetition then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
+      end
+    end
     return level_evo(self, card, context, "j_poke_tinkatuff")
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
+      end
+    end
   end
 }
 -- Tinkatuff 958
@@ -81,7 +93,7 @@ local tinkatuff={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return v.ability.name ~= 'Steel Card' end
-      local modify = function(v) v.debuff = true end
+      local modify = function(v) SMODS.debuff_card(v, true, card) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -93,7 +105,19 @@ local tinkatuff={
         card = card
       }
     end
+    if context.end_of_round and not context.individual and not context.repetition then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
+      end
+    end
     return level_evo(self, card, context, "j_poke_tinkaton")
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
+      end
+    end
   end
 }
 -- Tinkaton 959
@@ -118,7 +142,7 @@ local tinkaton={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return v.ability.name ~= 'Steel Card' end
-      local modify = function(v) v.debuff = true end
+      local modify = function(v) SMODS.debuff_card(v, true, card) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -158,6 +182,18 @@ local tinkaton={
             end
           end
         end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      for k, v in pairs(G.playing_cards) do
+        SMODS.debuff_card(v,false, card)
       end
     end
   end
