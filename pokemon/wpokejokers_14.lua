@@ -35,7 +35,7 @@ local buizel={
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   atlas = "Pokedex4",
   ptype = "Water",

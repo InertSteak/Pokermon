@@ -261,7 +261,7 @@ local tauros={
     return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 8, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -322,14 +322,14 @@ local taurosh={
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
-  config = {extra = {rounds = 10, chips = 1}},
+  config = {extra = {rounds = 8, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
     return {vars = {center.ability.extra.rounds, center.ability.extra.chips}}
   end,
   rarity = 1, 
-  cost = 3, 
+  cost = 2, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -350,7 +350,7 @@ local magikarp={
 local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
-  config = {extra = {Xmult = 3}},
+  config = {extra = {Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
@@ -376,7 +376,7 @@ local gyarados={
 local lapras={
   name = "lapras", 
   pos = {x = 1, y = 10},
-  config = {extra = {chips = 0, chip_mod = 100}},
+  config = {extra = {chips = 0, chip_mod = 80}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -675,7 +675,7 @@ local omanyte={
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -772,7 +772,7 @@ local kabuto={
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Earth",
   atlas = "Pokedex1",
@@ -873,7 +873,7 @@ local aerodactyl={
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic",
   ptype = "Earth",
   atlas = "Pokedex1",
@@ -919,7 +919,7 @@ local snorlax={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,

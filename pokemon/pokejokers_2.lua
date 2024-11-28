@@ -281,7 +281,7 @@ local jigglypuff={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   item_req = "moonstone",
   stage = "Basic", 
   ptype = "Fairy",
@@ -304,7 +304,7 @@ local jigglypuff={
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
-  config = {extra = {mult = 2, chips = 40, suit = "Spades"}},
+  config = {extra = {mult = 3, chips = 30, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -488,14 +488,14 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult = 3, mult2 = 9}},
+  config = {extra = {mult = 3, mult2 = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
   end,
   rarity = 2, 
-  cost = 8,
+  cost = 6,
   item_req = {"leafstone", "sunstone"},
   evo_list = {leafstone = "j_poke_vileplume", sunstone = "j_poke_bellossom"},
   stage = "One", 
@@ -528,7 +528,7 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.35, mult = 9}},
+  config = {extra = {Xmult_multi = 1.35, mult = 7}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -606,7 +606,7 @@ local parasect={
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 8, 
   stage = "One", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -649,7 +649,7 @@ local venonat={
     return {vars = {center.ability.extra.plus_odds, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -859,7 +859,7 @@ local mankey={
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Fighting",
   atlas = "Pokedex1",
@@ -912,7 +912,7 @@ local primeape={
 local growlithe={
   name = "growlithe", 
   pos = {x = 5, y = 4},
-  config = {extra = {mult = 6}},
+  config = {extra = {mult = 8}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone

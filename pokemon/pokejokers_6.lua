@@ -56,7 +56,7 @@ local sentret={
   config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
   pos = {x = 9, y = 0}, 
   rarity = 1, 
-  cost = 4, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex2",
@@ -91,7 +91,7 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 10)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 15)
   end,
 }
 -- Furret 162

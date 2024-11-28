@@ -200,7 +200,7 @@ local onix={
 local drowzee={
   name = "drowzee", 
   pos = {x = 4, y = 7}, 
-  config = {extra = {mult = 0, mult_mod = 3}},
+  config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -223,7 +223,7 @@ local drowzee={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 21)
+    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 28)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -426,7 +426,7 @@ local exeggcute={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
-  cost = 5,
+  cost = 4,
   item_req = "leafstone",
   stage = "Basic", 
   ptype = "Grass",
@@ -480,7 +480,7 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 4, rounds = 5,}},
+  config = {extra = {mult = 6, rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
@@ -570,7 +570,7 @@ local hitmonlee={
     return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards)/2 or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Fighting",
   atlas = "Pokedex1",
@@ -599,7 +599,7 @@ local hitmonchan={
     return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Fighting",
   atlas = "Pokedex1",

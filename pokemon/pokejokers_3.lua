@@ -345,7 +345,7 @@ local machamp={
 local bellsprout={
   name = "bellsprout", 
   pos = {x = 3, y = 5},
-  config = {extra = {chips = 12, rounds = 4}},
+  config = {extra = {chips = 16, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -377,7 +377,7 @@ local bellsprout={
 local weepinbell={
   name = "weepinbell", 
   pos = {x = 4, y = 5},
-  config = {extra = {chips = 24}},
+  config = {extra = {chips = 32}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
@@ -411,7 +411,7 @@ local weepinbell={
 local victreebel={
   name = "victreebel", 
   pos = {x = 5, y = 5},
-  config = {extra = {chips = 12, retriggers = 1}},
+  config = {extra = {chips = 16, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
@@ -455,7 +455,7 @@ local victreebel={
 local tentacool={
   name = "tentacool", 
   pos = {x = 6, y = 5},
-  config = {extra = {mult = 5, rounds = 5}},
+  config = {extra = {mult = 8, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -490,7 +490,7 @@ local tentacool={
 local tentacruel={
   name = "tentacruel", 
   pos = {x = 7, y = 5}, 
-  config = {extra = {mult = 8}},
+  config = {extra = {mult = 10}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
@@ -625,7 +625,7 @@ local ponyta={
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Fire",
   atlas = "Pokedex1", 
@@ -861,7 +861,7 @@ local farfetchd={
     return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,
@@ -1028,7 +1028,7 @@ local grimer={
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, G.GAME.starting_deck_size}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Dark",
   atlas = "Pokedex1", 

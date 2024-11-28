@@ -84,7 +84,7 @@ local vikavolt={
   config = {extra = {Xmult = 1.25, mult = 12}},
   pos = {x = 2, y = 1}, 
   rarity = "poke_safari", 
-  cost = 10, 
+  cost = 6, 
   stage = "Two", 
   ptype = "Lightning",
   atlas = "Pokedex7",

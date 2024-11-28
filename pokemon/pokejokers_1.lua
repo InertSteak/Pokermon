@@ -286,7 +286,7 @@ local charizard={
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 1, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -309,11 +309,11 @@ local squirtle={
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        if card.ability.extra.chips == 14 then
+        if card.ability.extra.chips == 30 then
           local eval = function(card) return not card.REMOVED end
           juice_card_until(card, eval, true)
         end
-        if card.ability.extra.chips >= 16 then
+        if card.ability.extra.chips >= 32 then
           return {
             message = evolve (self, card, context, 'j_poke_wartortle')
           }
@@ -337,7 +337,7 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 4, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -359,11 +359,11 @@ local wartortle={
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        if card.ability.extra.chips == 34 then
+        if card.ability.extra.chips == 68 then
           local eval = function(card) return not card.REMOVED end
           juice_card_until(card, eval, true)
         end
-        if card.ability.extra.chips >= 36 then
+        if card.ability.extra.chips >= 72 then
           return {
             message = evolve (self, card, context, 'j_poke_blastoise')
           }
@@ -387,7 +387,7 @@ local wartortle={
 local blastoise={
   name = "blastoise", 
   pos = {x = 8, y = 0},
-  config = {extra = {chips = 36, chip_mod = 40, hands = 1}},
+  config = {extra = {chips = 72, chip_mod = 32, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -481,7 +481,7 @@ local butterfree={
 		return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "Two", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -564,7 +564,7 @@ local beedrill={
     } 
   }, 
   rarity = 2,
-  cost = 6,
+  cost = 5,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
@@ -748,7 +748,7 @@ local spearow={
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 3, 
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Colorless",
@@ -779,7 +779,7 @@ local fearow={
     type_tooltip(self, info_queue, center)
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 5, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Colorless",
@@ -832,7 +832,7 @@ local ekans={
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
-  config = {extra = {mult = 10, rounds = 4}},
+  config = {extra = {mult = 15, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}

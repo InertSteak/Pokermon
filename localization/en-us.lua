@@ -438,7 +438,7 @@ return {
                     "Gains {C:chips}+#2#{} Chips for each hand",
                     "remaining at end of round",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-                    "{C:inactive}(Evolves at {C:chips}+16{} {C:inactive}Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+32{} {C:inactive}Chips)"
                 } 
             },
             j_poke_wartortle = {
@@ -448,7 +448,7 @@ return {
                     "Gains {C:chips}+#2#{} Chips for each hand",
                     "remaining at end of round",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-                    "{C:inactive}(Evolves at {C:chips}+36{} {C:inactive}Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+72{} {C:inactive}Chips)"
                 } 
             },
             j_poke_blastoise = {
@@ -1240,7 +1240,7 @@ return {
                     "unique {C:planet}Planet{} card",
                     "used this run",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive}(Evolves at {C:mult}+21{C:inactive} Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+28{C:inactive} Mult)"
                 } 
             },
             j_poke_hypno = {
@@ -1341,7 +1341,7 @@ return {
             j_poke_hitmonchan = {
                 name = 'Hitmonchan',      
                 text = {
-                    "{X:red,C:white}X#1#{} Mult for every 2 cards",
+                    "{X:red,C:white}X#1#{} Mult for every card",
                     "above {C:attention}#2#{} in your full deck",
                     "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
@@ -1759,7 +1759,7 @@ return {
                     "isn't the last played hand",
                     "{C:inactive}(Last hand: {C:attention}#3#{}{C:inactive})",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-                    "{C:inactive}(Evolves at {C:mult}+10{} {C:inactive}Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+15{} {C:inactive}Mult)"
                 }  
             },
             j_poke_furret = {
