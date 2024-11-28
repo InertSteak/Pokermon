@@ -134,7 +134,7 @@ energy_matches = function(card, etype, include_colorless)
   return false
 end
 
-set_frac = function(card, frac, field, increased)
+set_frac = function(card, frac, field, increased, ratio)
   local frac_name = field.."_frac"
   local bonus_amt = math.ceil(card.ability.extra[field]/(increased and 2 or 1))
   if card.ability[frac_name] then
@@ -149,9 +149,11 @@ set_frac = function(card, frac, field, increased)
     if not increased then bonus_amt = bonus_amt/2 end
   end
   if field == "mult_mod" and card.ability.extra.mult then
+    if ratio then card.ability.extra.mult = math.ceil(card.ability.extra.mult * ratio) end
     card.ability.extra.mult = card.ability.extra.mult + bonus_amt
   end
   if field == "chip_mod" and card.ability.extra.chips then
+    if ratio then card.ability.extra.chips = math.ceil(card.ability.extra.chips * ratio) end
     card.ability.extra.chips = card.ability.extra.chips + bonus_amt
   end
   if field == "money_mod" and card.ability.extra.money then
@@ -174,6 +176,9 @@ energize = function(card, etype, evolving)
         for m, name in ipairs(energy_whitelist) do
           if l == name then
             local addition = energy_values[name]
+            local previous_mod = nil
+            local updated_mod = nil
+            if l == "mult_mod" or l == "chip_mod" then previous_mod = card.ability.extra[l] end
             if evolving then
               if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
                 addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
@@ -181,10 +186,15 @@ energize = function(card, etype, evolving)
                 addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
               end
               card.ability.extra[l] =  data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
+              updated_mod = card.ability.extra[l]
               rounded, frac = round_energy_value(card.ability.extra[l], l)
               card.ability.extra[l] = rounded
               if frac then
-                set_frac(card, frac, l, rounded > 0)
+                if l == "mult_mod" or l == "chip_mod" then
+                  set_frac(card, frac, l, rounded > 0, updated_mod/previous_mod)
+                else
+                  set_frac(card, frac, l, rounded > 0)
+                end
                 frac = nil
                 frac_added = true
               end
@@ -194,10 +204,15 @@ energize = function(card, etype, evolving)
               else
                 card.ability.extra[l] = data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
               end
+              updated_mod = card.ability.extra[l]
               rounded, frac = round_energy_value(card.ability.extra[l], l)
               card.ability.extra[l] = rounded
               if frac then
-                set_frac(card, frac, l, rounded > 0)
+                if l == "mult_mod" or l == "chip_mod" then
+                  set_frac(card, frac, l, rounded > 0, updated_mod/previous_mod)
+                else
+                  set_frac(card, frac, l, rounded > 0)
+                end
                 frac = nil
                 frac_added = true
               end
