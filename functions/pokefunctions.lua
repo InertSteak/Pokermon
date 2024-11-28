@@ -173,6 +173,8 @@ evolve = function(self, card, context, forced_key)
     local reset_apply_type = nil
     local previous_extra_value = nil
     local previous_targets = nil
+    local previous_rank = nil
+    local previous_id = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -219,6 +221,11 @@ evolve = function(self, card, context, forced_key)
     
     if card.ability.extra and card.ability.extra.targets then
       previous_targets = card.ability.extra.targets
+    end
+    
+    if card.ability.name == "fidough" then
+      previous_rank = card.ability.extra.rank
+      previous_id = card.ability.extra.id
     end
     
     G.E_MANAGER:add_event(Event({
@@ -291,6 +298,11 @@ evolve = function(self, card, context, forced_key)
     
     if previous_targets then
       new_card.ability.extra.targets = previous_targets
+    end
+    
+    if previous_rank and previous_id then
+      new_card.ability.extra.rank = previous_rank
+      new_card.ability.extra.id = previous_id
     end
     
     new_card:add_to_deck()

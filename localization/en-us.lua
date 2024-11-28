@@ -2322,6 +2322,27 @@ return {
                     "a {C:attention}Straight{}",
                 } 
             },
+            j_poke_fidough = {
+                name = "Fidough",
+                text = {
+                  "Gains {C:chips}+#2#{} Chips if played hand contains a {C:attention}#3#{}",
+                  "Required {C:attention}rank{} rises with each gain",
+                  "{C:inactive,s:0.8}(If rank is highest, it becomes lowest)",
+                  "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                  "{C:inactive}(Evolves when you have a {X:fire,C:white}Fire{}{C:inactive} Joker)",
+                }
+            },
+            j_poke_dachsbun = {
+                name = "Dachsbun",
+                text = {
+                  "Gains {C:chips}+#2#{} Chips if played hand contains a {C:attention}#3#{}",
+                  "Required {C:attention}rank{} rises with each gain",
+                  "Chip gain increased by {C:chips}+1{} for each",
+                  "{X:fire,C:white}Fire{} Joker you have",
+                  "{C:inactive,s:0.8}(If rank is highest, it becomes lowest)",
+                  "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                }
+            },
             j_poke_tinkatink = {
                 name = "Tinkatink",
                 text = {
