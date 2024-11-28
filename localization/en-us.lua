@@ -518,7 +518,7 @@ return {
                 } 
             },
             j_poke_pidgeot = {
-                name = "Pidgeotto",
+                name = "Pidgeot",
                 text = {
                     "All {C:planet}Planet{} cards and",
                     "{C:planet}Celestial Packs{} in the",
