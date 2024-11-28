@@ -131,7 +131,7 @@ local nidoking={
   atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 and not context.end_of_round then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),
