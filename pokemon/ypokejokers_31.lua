@@ -26,7 +26,7 @@
 -- Fidough 926
 local fidough={
   name = "fidough",
-  pos = {x = 0, y = 0},
+  pos = {x = 8, y = 1},
   config = {extra = {chips = 0,chip_mod = 4, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -112,7 +112,7 @@ local fidough={
 -- Dachsbun 927
 local dachsbun={
   name = "dachsbun",
-  pos = {x = 0, y = 0},
+  pos = {x = 9, y = 1},
   config = {extra = {chips = 0,chip_mod = 6, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
