@@ -662,7 +662,7 @@ local twisted_spoon = {
 		end
     local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
     local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
-    local colour = (not spoon_c or spoon_c.name == 'Twisted Spoon') and G.C.RED or G.C.GREEN
+    local colour = (not spoon_c or spoon_c.name == 'twisted_spoon') and G.C.RED or G.C.GREEN
     local main_end = {
         {n=G.UIT.C, config={align = "bm", padding = 0.02}, nodes={
             {n=G.UIT.C, config={align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes={
@@ -671,8 +671,8 @@ local twisted_spoon = {
         }}
     }
    local loc_vars = {last_poke_item}
-   if not (not spoon_c or name == 'The Fool') then
-        info_queue[#info_queue+1] = spoon_c
+   if not (not spoon_c or spoon_c.name == 'twisted_spoon') then
+      info_queue[#info_queue+1] = spoon_c
    end
    
    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
