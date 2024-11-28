@@ -40,10 +40,14 @@ local bulbasaur={
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.hand:change_size(card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(card.ability.extra.h_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.hand:change_size(-card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(-card.ability.extra.h_size)
+    end
   end
 }
 
@@ -94,10 +98,14 @@ local ivysaur={
     return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.hand:change_size(card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(card.ability.extra.h_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.hand:change_size(-card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(-card.ability.extra.h_size)
+    end
   end
 }
 
@@ -141,10 +149,14 @@ local venusaur={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.hand:change_size(card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(card.ability.extra.h_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.hand:change_size(-card.ability.extra.h_size)
+    if not from_debuff then
+      G.hand:change_size(-card.ability.extra.h_size)
+    end
   end
 }
 
@@ -188,12 +200,16 @@ local charmander={
     return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-        ease_discard(card.ability.extra.d_size)
+    if not from_debuff then
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+      ease_discard(card.ability.extra.d_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-        ease_discard(-card.ability.extra.d_size)
+    if not from_debuff then
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+      ease_discard(-card.ability.extra.d_size)
+    end
   end
 }
 
@@ -233,12 +249,16 @@ local charmeleon={
     return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, 36)
   end,
   add_to_deck = function(self, card, from_debuff)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-        ease_discard(card.ability.extra.d_size)
+    if not from_debuff then
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+      ease_discard(card.ability.extra.d_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-          G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-          ease_discard(-card.ability.extra.d_size)
+    if not from_debuff then
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+      ease_discard(-card.ability.extra.d_size)
+    end
   end
 }
 

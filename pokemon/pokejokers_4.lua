@@ -898,18 +898,22 @@ local kangaskhan={
   atlas = "Pokedex1",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
-      return true end }))
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    ease_hands_played(-card.ability.extra.hands)
+    if not from_debuff then
+      G.E_MANAGER:add_event(Event({func = function()
+        G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
+        return true end }))
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      ease_hands_played(-card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
-      return true end }))
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      G.E_MANAGER:add_event(Event({func = function()
+        G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
+        return true end }))
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+      ease_hands_played(card.ability.extra.hands)
+    end
   end, 
 }
 local horsea={
