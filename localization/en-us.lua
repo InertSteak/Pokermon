@@ -546,18 +546,18 @@ return {
             j_poke_spearow = {
                 name = "Spearow",
                 text = {
-                    "Adds {C:attention}double{} the",
-                    "level of the highest",
-                    "level poker hand to Mult",
+                    "After scoring {C:attention}#2#{} cards",
+                    "upgrade level of next played {C:attention}poker hand{}",
+                    "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/#2#) {C:inactive}#4#{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_fearow = {
                 name = "Fearow",
                 text = {
-                    "Adds {C:attention}quadruple{} the",
-                    "level of the highest",
-                    "level poker hand to Mult",
+                    "After scoring {C:attention}#1#{} cards",
+                    "upgrade level of next played {C:attention}poker hand{}",
+                    "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#1#) {C:inactive}#3#{}",
                 } 
             },
             j_poke_ekans = {
@@ -2325,7 +2325,7 @@ return {
             j_poke_fidough = {
                 name = "Fidough",
                 text = {
-                  "Gains {C:chips}+#2#{} Chips if played hand contains a {C:attention}#3#{}",
+                  "Gains {C:chips}+#2#{} Chips if scoring hand contains a {C:attention}#3#{}",
                   "Required {C:attention}rank{} rises with each gain",
                   "{C:inactive,s:0.8}(If rank is highest, it becomes lowest)",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
@@ -2335,7 +2335,7 @@ return {
             j_poke_dachsbun = {
                 name = "Dachsbun",
                 text = {
-                  "Gains {C:chips}+#2#{} Chips if played hand contains a {C:attention}#3#{}",
+                  "Gains {C:chips}+#2#{} Chips if scoring hand contains a {C:attention}#3#{}",
                   "Required {C:attention}rank{} rises with each gain",
                   "Chip gain increased by {C:chips}+1{} for each",
                   "{X:fire,C:white}Fire{} Joker you have",

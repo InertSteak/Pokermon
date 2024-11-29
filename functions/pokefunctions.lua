@@ -175,6 +175,8 @@ evolve = function(self, card, context, forced_key)
     local previous_targets = nil
     local previous_rank = nil
     local previous_id = nil
+    local previous_cards_scored = nil
+    local previous_upgrade = nil
     
     if card.edition then
       previous_edition = card.edition
@@ -226,6 +228,11 @@ evolve = function(self, card, context, forced_key)
     if card.ability.name == "fidough" then
       previous_rank = card.ability.extra.rank
       previous_id = card.ability.extra.id
+    end
+    
+    if card.ability.name == "spearow" then
+      previous_cards_scored = card.ability.extra.cards_scored
+      previous_upgrade = card.ability.extra.upgrade
     end
     
     G.E_MANAGER:add_event(Event({
@@ -303,6 +310,15 @@ evolve = function(self, card, context, forced_key)
     if previous_rank and previous_id then
       new_card.ability.extra.rank = previous_rank
       new_card.ability.extra.id = previous_id
+    end
+    
+    if previous_cards_scored then
+      if previous_cards_scored >= 10 then
+        previous_upgrade = true
+        previous_cards_scored = previous_cards_scored - 10
+      end
+      new_card.ability.extra.cards_scored = previous_cards_scored
+      new_card.ability.extra.upgrade = previous_upgrade
     end
     
     new_card:add_to_deck()
