@@ -965,28 +965,28 @@ local raichu={
 local sandshrew={
   name = "sandshrew", 
   pos = {x = 0, y = 2},
-  config = {extra = {rounds = 5}},
+  config = {extra = {rounds = 5, chip_mod = 25, sandshrew_tally = 0, glass_restored = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
-    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-		return {vars = {center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
+                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = 1, 
-  cost = 4,
+  cost = 5,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
   ptype = "Earth",
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards then
+    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        if v.shattered then
+        if v.shattered and card.ability.extra.glass_restored <= 0 then
           card_to_copy = v
           local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:set_ability(G.P_CENTERS.m_stone, nil, true)
+          copy:set_ability(G.P_CENTERS.m_glass, nil, true)
           copy:add_to_deck()
           G.deck.config.card_limit = G.deck.config.card_limit + 1
           table.insert(G.playing_cards, copy)
@@ -1000,6 +1000,8 @@ local sandshrew={
               end
           }))
           playing_card_joker_effects({true})
+          
+          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       return {
@@ -1009,16 +1011,41 @@ local sandshrew={
         playing_cards_created = {true}
       }
     end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chip_mod * card.ability.extra.sandshrew_tally}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chip_mod * card.ability.extra.sandshrew_tally 
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if card.ability.extra.glass_restored > 0 then
+        card.ability.extra.glass_restored = 0
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      end
+    end
     return level_evo(self, card, context, "j_poke_sandslash")
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      card.ability.extra.sandshrew_tally = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.ability.name == 'Glass Card' then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
+      end
+    end
   end
 }
 local sandslash={
   name = "sandslash", 
   pos = {x = 1, y = 2},
+  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
+                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = 2,
   cost = 6, 
@@ -1028,12 +1055,13 @@ local sandslash={
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards then
-      for k, v in pairs(context.removed) do
-        if v.shattered then
-          local card_to_copy = v
+    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 then
+      local card_to_copy = nil
+      for k, v in ipairs(context.removed) do
+        if v.shattered and card.ability.extra.glass_restored <= 0 then
+          card_to_copy = v
           local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:set_ability(G.P_CENTERS.m_steel, nil, true)
+          copy:set_ability(G.P_CENTERS.m_glass, nil, true)
           copy:add_to_deck()
           G.deck.config.card_limit = G.deck.config.card_limit + 1
           table.insert(G.playing_cards, copy)
@@ -1047,6 +1075,8 @@ local sandslash={
               end
           }))
           playing_card_joker_effects({true})
+          
+          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       return {
@@ -1055,6 +1085,30 @@ local sandslash={
         card = card,
         playing_cards_created = {true}
       }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chip_mod * card.ability.extra.sandshrew_tally}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chip_mod * card.ability.extra.sandshrew_tally 
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if card.ability.extra.glass_restored > 0 then
+        card.ability.extra.glass_restored = 0
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      end
+    end
+    return level_evo(self, card, context, "j_poke_sandslash")
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      card.ability.extra.sandshrew_tally = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.ability.name == 'Glass Card' then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
+      end
     end
   end
 }

@@ -603,18 +603,22 @@ return {
             j_poke_sandshrew = {
                 name = "Sandshrew",
                 text = {
-                    "When a {C:attention}Glass{} card is",
-                    "destroyed, add a {C:attention}Stone{} copy to",
-                    "deck and draw it to {C:attention}hand{}",
+                    "{C:chips}+#2#{} Chips for each {C:attention}Glass{}",
+                    "card in your full deck",
+                    "The first {C:attention}Glass{} card shattered each",
+                    "round adds a copy of itself to hand",
+                    "{C:inactive}(Currently {C:chips}+#3#{}{C:inactive} Chips){C:inactive}#4#{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_sandslash = {
                 name = "Sandslash",
                 text = {
-                    "When a {C:attention}Glass{} card is",
-                    "destroyed, add a {C:attention}Steel{} copy to",
-                    "deck and draw it to {C:attention}hand{}",
+                    "{C:chips}+#1#{} Chips for each {C:attention}Glass{}",
+                    "card in your full deck",
+                    "The first {C:attention}Glass{} card shattered each",
+                    "round adds a copy of itself to hand",
+                    "{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} Chips){C:inactive}#3#{}",
                 } 
             },
             j_poke_nidoranf = {
