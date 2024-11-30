@@ -238,8 +238,6 @@ local vulpix={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
-    info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
@@ -247,10 +245,10 @@ local vulpix={
     if context.individual and context.cardarea == G.play then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('vulpix') < G.GAME.probabilities.normal/card.ability.extra.odds) then
-          local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
+          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
           _card:add_to_deck()
           G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
         end
       end 
     end
@@ -260,7 +258,7 @@ local vulpix={
 local ninetales={
   name = "ninetales", 
   pos = {x = 11, y = 2},
-  config = {extra = {odds = 3}},
+  config = {extra = {odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}

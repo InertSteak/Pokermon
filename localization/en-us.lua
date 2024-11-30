@@ -700,7 +700,7 @@ return {
                 text = {
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
-                    "{C:spectral}Medium{} card when scored",
+                    "{C:attention}Tarot{} card when scored",
                     "{C:inactive}(Must have room)",
                     "{C:inactive}(Evolves with a{} {C:attention}Fire Stone{}{C:inactive} card)"
                 } 
