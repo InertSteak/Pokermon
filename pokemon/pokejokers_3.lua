@@ -868,6 +868,7 @@ local farfetchd={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
     return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 

@@ -932,6 +932,7 @@ local snorlax={
   config = {extra = {Xmult_mod = 0.2, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leftovers"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,

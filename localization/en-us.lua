@@ -708,9 +708,10 @@ return {
             j_poke_ninetales = {
                 name = "Ninetales",
                 text = {
+                    "{C:attention}Holding Medium{}",
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
-                    "{C:spectral}Medium{} card when scored",
+                    "{C:attention}Tarot{} or {C:planet}Planet{} card when scored",
                     "{C:inactive}(Must have room)"
                 } 
             },
@@ -1121,8 +1122,7 @@ return {
             j_poke_farfetchd = {
                 name = 'Farfetch\'d',      
                 text = {
-                    "When you get this,",
-                    "create a {C:attention}Leek{} card.",
+                    "{C:attention}Holding Leek{}",
                     "{C:green}#2# in #3#{} chance for {X:red,C:white}X#1#{} Mult",
                     "The chance is doubled for",
                     "each {C:attention}Leek{} card you have",
@@ -1253,10 +1253,9 @@ return {
             j_poke_hypno = {
                 name = 'Hypno',      
                 text = {
+                    "{C:attention}Holding Trance{}",
                     "{C:mult}+#2#{} Mult per unique",
                     "{C:planet}Planet{} card used this run.",
-                    "When you get this,",
-                    "create a {C:spectral}Trance{} card",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 } 
             },
@@ -1318,8 +1317,7 @@ return {
             j_poke_cubone = {
                 name = 'Cubone',      
                 text = {
-                    "When you get this, create",
-                    "a {C:attention}Thick Club{} card",
+                    "{C:attention}Holding Thick Club{}",
                     "Gives {C:mult}+#1#{} Mult for each",
                     "filled consumable slot",
                     "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{}{C:inactive,s:0.75} count as double){}",
@@ -1675,9 +1673,8 @@ return {
             j_poke_snorlax = {
                 name = 'Snorlax',
                 text = {
-                    "When you get this, create a",
-                    "{C:attention}Leftovers{} card. At end of",
-                    "round gain {X:red,C:white}X#1#{} Mult ",
+                    "{C:attention}Holding Leftovers{}",
+                    "At end of round gain {X:red,C:white}X#1#{} Mult",
                     "for each {C:attention}Leftovers{} you have",
                     "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
                 } 
@@ -2767,6 +2764,14 @@ return {
                     "{C:green}30%{} - {C:item}Item{} {C:attention}Card",
                     "{C:green}20%{} - {C:attention}Coupon Tag",
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
+                }
+            },
+            holding = {
+                name = "Holding",
+                text = {
+                  "This Joker comes with",
+                  "a {C:attention}#1#{} card",
+                  "{C:inactive}(Must have room){}"
                 }
             },
             eeveelution = {

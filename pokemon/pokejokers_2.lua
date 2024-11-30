@@ -228,7 +228,7 @@ local clefable={
 local vulpix={
   name = "vulpix", 
   pos = {x = 10, y = 2},
-  config = {extra = {odds = 6}},
+  config = {extra = {odds = 4}},
   rarity = 1, 
   cost = 6, 
   item_req = "firestone",
@@ -258,9 +258,10 @@ local vulpix={
 local ninetales={
   name = "ninetales", 
   pos = {x = 11, y = 2},
-  config = {extra = {odds = 4}},
+  config = {extra = {odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
     info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -274,13 +275,26 @@ local ninetales={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('vulpix') < G.GAME.probabilities.normal/card.ability.extra.odds) then
-          local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
+        if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('ninetails') < G.GAME.probabilities.normal/card.ability.extra.odds) then
+          local _card = nil
+          if pseudorandom('ninetails') > .50 then
+            _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+          else
+            _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
+          end
           _card:add_to_deck()
           G.consumeables:emplace(_card)
           card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
         end
       end 
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not from_debuff then
+      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
   end
 }
