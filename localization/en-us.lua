@@ -691,7 +691,7 @@ return {
                     "",
                     "{C:mult}+#1#{} Mult for each {C:clubs}#2#{}",
                     "in scoring hands this round",
-                    "{C:inactive,s:0.8}(If you've played 5 clubs, each would give {C:mult,s:0.8}5{} {C:inactive,s:0.8}Mult){}",
+                    "{C:inactive,s:0.8}(If you've played 5 clubs, each would give {C:mult,s:0.8}+5{} {C:inactive,s:0.8}Mult){}",
                     "{C:inactive}(Currently {C:mult}#3#{}{C:inactive} Mult){}"
                 } 
             },
@@ -2910,65 +2910,57 @@ return {
             p_poke_pokepack_normal_1 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_normal_2 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_jumbo_1 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_mega_1 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_normal_3 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_normal_4 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_jumbo_2 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
             p_poke_pokepack_mega_2 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of",
-                    "up to {C:attention}#2#",
-                    "{C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
                 },
             },
         },

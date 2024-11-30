@@ -31,6 +31,23 @@ local starmie={
         message = evolve (self, card, context, 'j_poke_starmie')
       }
     end
+    if context.individual and context.cardarea == G.hand and context.end_of_round then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+          card = card,
+        }
+      else
+        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
+        return {
+          message = localize('$')..earned,
+          colour = G.C.MONEY,
+          dollars = earned,
+          card = card
+        }
+      end
+    end
   end
 }
 local mrmime={
