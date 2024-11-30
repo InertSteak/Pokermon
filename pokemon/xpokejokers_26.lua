@@ -66,17 +66,13 @@ local mimikyu={
     if context.end_of_round and context.game_over and card.ability.extra.disguise then
         local chips = 0
         local blind_chips = 0
-        if type(G.GAME.chips) == "table" then
-          chips = G.GAME.chips.array[1]
-        else
-          chips = G.GAME.chips
+        local save = false
+        if (SMODS.Mods["Talisman"] or {}).can_load and to_big(G.GAME.chips)/G.GAME.blind.chips >= to_big(0.50) then
+          save = true
+        elseif not (SMODS.Mods["Talisman"] or {}).can_load and G.GAME.chips/G.GAME.blind.chips >= 0.50 then
+          save = true
         end
-        if type(G.GAME.blind.chips) == "table" then
-          blind_chips = G.GAME.blind.chips.array[1]
-        else
-          blind_chips = G.GAME.blind.chips
-        end
-        if chips/blind_chips >= 0.50 then
+        if save then
           card.ability.extra.disguise = false
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
