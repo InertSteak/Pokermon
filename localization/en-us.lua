@@ -687,9 +687,12 @@ return {
             j_poke_clefable = {
                 name = "Clefable",
                 text = {
-                    "Played cards with",
-                    "{C:clubs}#2#{} suit give",
-                    "{C:mult}+#1#{} Mult when scored",
+                    "Played cards with {C:clubs}#2#{} suit give",
+                    "",
+                    "{C:mult}+#1#{} Mult for each {C:clubs}#2#{}",
+                    "in scoring hands this round",
+                    "{C:inactive,s:0.8}(If you've played 5 clubs, each would give {C:mult,s:0.8}5{} {C:inactive,s:0.8}Mult){}",
+                    "{C:inactive}(Currently {C:mult}#3#{}{C:inactive} Mult){}"
                 } 
             },
             j_poke_vulpix = {

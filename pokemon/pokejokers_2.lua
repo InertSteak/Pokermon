@@ -186,10 +186,10 @@ local clefairy={
 local clefable={
   name = "clefable", 
   pos = {x = 9, y = 2},
-  config = {extra = {mult = 9, suit = "Clubs"}},
+  config = {extra = {mult_mod = 1, suit = "Clubs", clubs_scored = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult_mod * center.ability.extra.clubs_scored}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -198,14 +198,29 @@ local clefable={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local club_count = 0
+        for k, v in ipairs(context.scoring_hand) do
+          if v:is_suit(card.ability.extra.suit) then club_count = club_count + 1 end
+        end
+        card.ability.extra.clubs_scored = card.ability.extra.clubs_scored + club_count
+      end
+    end
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult = card.ability.extra.mult,
+          mult = card.ability.extra.mult_mod * card.ability.extra.clubs_scored,
           card = card
         }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if card.ability.extra.clubs_scored > 0 then
+        card.ability.extra.clubs_scored = 0
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
       end
     end
   end
