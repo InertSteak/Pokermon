@@ -331,7 +331,7 @@ local jigglypuff={
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
-  config = {extra = {mult = 3, chips = 30, suit = "Spades"}},
+  config = {extra = {mult = 2, chips = 30, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -345,11 +345,15 @@ local wigglytuff={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        local total_chips = (context.other_card.base.nominal) + (context.other_card.ability.bonus) + (context.other_card.ability.perma_bonus or 0) 
+        if context.other_card.edition then
+          total_chips = total_chips + (context.other_card.edition.chips or 0)
+        end
         return {
           message = "Tuff!", 
           colour = G.C.MULT,
           mult = card.ability.extra.mult,
-          chips = card.ability.extra.chips,
+          chips = card.ability.extra.chips + total_chips,
           card = card
         }
       end

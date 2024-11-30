@@ -727,10 +727,10 @@ return {
             j_poke_wigglytuff = {
                 name = "Wigglytuff",
                 text = {
-                    "Played cards with",
-                    "{C:spades}#3#{} suit give",
-                    "{C:mult}+#1#{} Mult and ",
-                    "{C:chips}+#2#{} Chips when scored",
+                    "Played cards with {C:spades}#3#{}",
+                    "suit give {C:mult}+#1#{} Mult and",
+                    "{C:chips}+#2#{} Chips plus that card's",
+                    "total chips when scored",
                 } 
             },
             j_poke_zubat = {
