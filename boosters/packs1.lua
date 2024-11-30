@@ -18,7 +18,7 @@ local create_pocket_card = function(self, card)
       return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
     else
       local evo_item_chance = pseudorandom(pseudoseed('match'))
-      if evo_item_chance > .95 then
+      if evo_item_chance > .92 then
         local evo_item_keys = {}
         for k, v in pairs(G.jokers.cards) do
           if v.item_req then
