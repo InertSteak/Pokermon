@@ -827,9 +827,9 @@ return {
             j_poke_dugtrio = {
                 name = "Dugtrio",
                 text = {
-                    "Gives {C:chips}+#2#{} Chips if played hand",
+                    "{C:chips}+#2#{} Chips if played hand",
                     "contains a {C:attention}Three of a kind{}",
-                    "Gives {X:red,C:white} X#1# {} Mult if played hand",
+                    "{X:red,C:white} X#1# {} Mult if played hand",
                     "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                 } 
             },
