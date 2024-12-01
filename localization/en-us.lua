@@ -721,7 +721,7 @@ return {
                     "Played cards with",
                     "{C:spades}#2#{} suit give",
                     "{C:mult}+#1#{} Mult when scored",
-                    "{C:inactive}(Evolves with a{} {C:attention}Moonstone{}{C:inactive} card)"
+                    "{C:inactive}(Evolves with a{} {C:attention}Moon Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_wigglytuff = {
