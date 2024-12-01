@@ -1575,7 +1575,7 @@ return {
                     "the leftmost Joker",
                     "with {C:attention}Perishable{}",
                     "and a {C:colorless}Colorless{} sticker",
-                    "{C:inactive}(removes Eternal){}",
+                    "{C:inactive}(removes Eternal, excludes Dittos){}",
                 } 
             },
             j_poke_eevee = {

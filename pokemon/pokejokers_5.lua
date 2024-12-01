@@ -443,7 +443,7 @@ local ditto={
                     juice_card_until(card, eval, true)
       local jokers = {}
       for i=1, #G.jokers.cards do 
-          if G.jokers.cards[i] ~= card then
+          if G.jokers.cards[i] ~= card and G.jokers.cards[i].ability.name ~= "ditto" then
               jokers[#jokers+1] = G.jokers.cards[i]
           end
       end
