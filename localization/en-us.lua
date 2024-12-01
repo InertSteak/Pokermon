@@ -721,7 +721,7 @@ return {
                     "Played cards with",
                     "{C:spades}#2#{} suit give",
                     "{C:mult}+#1#{} Mult when scored",
-                    "{C:inactive}(Evolves with a{} {C:attention}Moonstone{}{C:inactive} card)"
+                    "{C:inactive}(Evolves with a{} {C:attention}Moon Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_wigglytuff = {
@@ -1549,7 +1549,7 @@ return {
             j_poke_magikarp = {
                 name = 'Magikarp',
                 text = {
-                    "{C:chips}+#2#{} Chips",
+                    "{C:chips}+#2#{} Chip",
                     "Applies {C:attention}Splash{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
