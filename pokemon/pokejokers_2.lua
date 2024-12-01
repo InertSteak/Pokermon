@@ -719,11 +719,10 @@ local venomoth={
 local diglett={
   name = "diglett", 
   pos = {x = 10, y = 3}, 
-  config = {extra = {rounds = 4}},
+  config = {extra = {rounds = 4, chips = 60, mult = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_venus
-		return {vars = {center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.chips, center.ability.extra.mult}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -731,29 +730,56 @@ local diglett={
   ptype = "Earth",
   atlas = "Pokedex1",
   blueprint_compat = false,
-  add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local card = create_card('Planet', G.consumeables, nil, nil, nil, nil, 'c_venus')
-      card:add_to_deck()
-      G.consumeables:emplace(card)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
-      return true
-    end
-  end,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local score_chips = false
+        local score_mult = false
+        if next(context.poker_hands['Three of a Kind']) then score_chips = true end
+        for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 2 or v:get_id() == 3 or v:get_id() == 4 then
+            score_mult = true
+            break
+          end
+        end
+        if score_mult and score_chips then
+          return {
+            message = localize('poke_dig_ex'), 
+            colour = G.C.MULT,
+            chip_mod = card.ability.extra.chips,
+            mult_mod = card.ability.extra.mult,
+            card = card
+          }
+        elseif score_chips then
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips,
+            card = card
+          }
+        elseif score_mult then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult,
+            card = card
+          }
+        end
+      end
+    end
     return level_evo(self, card, context, "j_poke_dugtrio")
   end
 }
 local dugtrio={
   name = "dugtrio", 
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_mod = 0.15}},
+  config = {extra = {chips = 120, Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_mod,  1 + ((G.GAME.hands["Three of a Kind"].level - 1) * center.ability.extra.Xmult_mod)}}
+		return {vars = {center.ability.extra.Xmult, center.ability.extra.chips}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Earth",
@@ -761,12 +787,38 @@ local dugtrio={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((G.GAME.hands["Three of a Kind"].level - 1) * card.ability.extra.Xmult_mod)
-        return{
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.CHIPS,
-          Xmult_mod = Xmult
-        }
+        local score_chips = false
+        local score_mult = false
+        if next(context.poker_hands['Three of a Kind']) then score_chips = true end
+        for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 2 or v:get_id() == 3 or v:get_id() == 4 then
+            score_mult = true
+            break
+          end
+        end
+        if score_mult and score_chips then
+          return {
+            message = localize('poke_dig_ex'), 
+            colour = G.C.MULT,
+            chip_mod = card.ability.extra.chips,
+            Xmult_mod = card.ability.extra.Xmult,
+            card = card
+          }
+        elseif score_chips then
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips,
+            card = card
+          }
+        elseif score_mult then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.MULT,
+            Xmult_mod = card.ability.extra.Xmult,
+            card = card
+          }
+        end
       end
     end
   end

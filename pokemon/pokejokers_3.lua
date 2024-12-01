@@ -909,7 +909,7 @@ local farfetchd={
 local doduo={
   name = "doduo", 
   pos = {x = 5, y = 6}, 
-  config = {extra = {mult = 12, rounds = 4}},
+  config = {extra = {mult = 8, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -923,13 +923,21 @@ local doduo={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local full_house = false
         local face_count = 0
+        if next(context.poker_hands['Full House']) then full_house = true end
         for i = 1, #context.scoring_hand do
           if context.scoring_hand[i]:is_face() then
             face_count = face_count + 1
           end
         end
-        if face_count > 1 then
+        if face_count > 1 and full_house then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * 2}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult * 2
+          }
+        elseif face_count > 1 or full_house then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
@@ -944,7 +952,7 @@ local doduo={
 local dodrio={
   name = "dodrio", 
   pos = {x = 6, y = 6}, 
-  config = {extra = {mult = 33}},
+  config = {extra = {mult = 16}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
@@ -958,13 +966,21 @@ local dodrio={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local full_house = false
         local face_count = 0
+        if next(context.poker_hands['Full House']) then full_house = true end
         for i = 1, #context.scoring_hand do
           if context.scoring_hand[i]:is_face() then
             face_count = face_count + 1
           end
         end
-        if face_count > 2 then
+        if face_count > 2 and full_house then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * 2}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult * 2
+          }
+        elseif face_count > 1 or full_house then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,

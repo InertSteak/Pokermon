@@ -817,19 +817,20 @@ return {
             j_poke_diglett = {
                 name = "Diglett",
                 text = {
-                    "When you get this,",
-                    "create a {C:attention}Venus{} card",
-                    "{C:inactive}(Must have room){}",
+                    "{C:chips}+#2#{} Chips if played hand",
+                    "contains a {C:attention}Three of a kind{}",
+                    "{C:mult}+#3#{} Mult if played hand",
+                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_dugtrio = {
                 name = "Dugtrio",
                 text = {
-                    "{X:red,C:white} X#1# {} Mult for each",
-                    "level of {C:attention}Three of a Kind{},",
-                    "beyond the first",
-                    "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
+                    "Gives {C:chips}+#2#{} Chips if played hand",
+                    "contains a {C:attention}Three of a kind{}",
+                    "Gives {X:red,C:white} X#1# {} Mult if played hand",
+                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                 } 
             },
             j_poke_meowth = {
@@ -1132,8 +1133,9 @@ return {
                 name = 'Doduo',      
                 text = {
                     "{C:mult}+#1#{} Mult if scoring hand",
-                    "contains at least",
-                    "{C:attention}2{} face cards",
+                    "contains at least {C:attention}2{} face cards",
+                    "{C:mult}+#1#{} Mult if scoring hand",
+                    "contains a {C:attention}Full House{}",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 } 
             },
@@ -1141,8 +1143,9 @@ return {
                 name = 'Dodrio',      
                 text = {
                     "{C:mult}+#1#{} Mult if scoring hand",
-                    "contains at least",
-                    "{C:attention}3{} face cards"
+                    "contains at least {C:attention}3{} face cards",
+                    "{C:mult}+#1#{} Mult if scoring hand",
+                    "contains a {C:attention}Full House{}",
                 } 
             },
             j_poke_seel = {
@@ -3071,7 +3074,8 @@ return {
             poke_faint_ex = "Fainted!",
             poke_nido_ex = "Nido!",
             poke_disguise_intact = "Disguise Intact! Death Prevented!",
-            poke_disguise_broken = "Disguise Broken! Death Not Prevented!"
+            poke_disguise_broken = "Disguise Broken! Death Not Prevented!",
+            poke_dig_ex = "Dig!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
