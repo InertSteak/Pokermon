@@ -1549,7 +1549,7 @@ return {
             j_poke_magikarp = {
                 name = 'Magikarp',
                 text = {
-                    "{C:chips}+#2#{} Chips",
+                    "{C:chips}+#2#{} Chip",
                     "Applies {C:attention}Splash{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
