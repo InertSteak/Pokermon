@@ -1153,18 +1153,19 @@ return {
             j_poke_seel = {
                 name = 'Seel',      
                 text = {
-                    "If {C:attention}first hand{} of round", 
-                    "has only {C:attention}1{} card, {C:green}#1# in #2#{} chance to",
-                    "add a random {C:attention}seal{} to that card",
-                    "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
+                    "{C:green}#1# in #2#{} chance to",
+                    "add a random {C:attention}seal{} to the",
+                    "leftmost scoring card on",
+                    "{C:attention}first hand{} of round",
+                    "{C:inactive,s:0.75}(Evolves when your full deck has at least {C:attention,s:0.75}#3#{}{C:inactive,s:0.75} {C:attention,s:0.75}seals{C:inactive,s:0.75})"
                 } 
             },
             j_poke_dewgong = {
                 name = 'Dewgong',      
                 text = {
-                    "If {C:attention}first hand{} of round", 
-                    "has only {C:attention}1{} card, add a",
-                    "random {C:attention}seal{} to that card",
+                    "Add a random {C:attention}seal{} to the",
+                    "leftmost scoring card on",
+                    "{C:attention}first hand{} of round",
                 } 
             },
             j_poke_grimer = {

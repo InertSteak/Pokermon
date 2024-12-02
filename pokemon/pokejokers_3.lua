@@ -1017,10 +1017,10 @@ local dodrio={
 local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
-  config = {extra = {odds = 2, rounds = 5}},
+  config = {extra = {odds = 3, seal_goal = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.seal_goal}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1029,9 +1029,9 @@ local seel={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
       if pseudorandom('seel') < G.GAME.probabilities.normal/card.ability.extra.odds then
-        _card = context.full_hand[1]
+        _card = context.scoring_hand[1]
         local args = {guaranteed = true}
         local seal_type = SMODS.poll_seal(args)
         _card:set_seal(seal_type, true)
@@ -1041,7 +1041,7 @@ local seel={
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    return level_evo(self, card, context, "j_poke_dewgong")
+    return deck_seal_evo(self, card, context, "j_poke_dewgong", nil, nil, card.ability.extra.seal_goal)
   end
 }
 local dewgong={
@@ -1050,15 +1050,15 @@ local dewgong={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 9, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
-      _card = context.full_hand[1]
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      _card = context.scoring_hand[1]
       local args = {guaranteed = true}
       local seal_type = SMODS.poll_seal(args)
       _card:set_seal(seal_type, true)

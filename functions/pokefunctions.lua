@@ -413,13 +413,39 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
   end
 end
 
-deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage)
+deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage, flat)
   if can_evolve(self, card, context, forced_key) then
     local enhance_count = 0
     for k, v in pairs(G.playing_cards) do
       if v.ability.name == enhancement.." Card" then enhance_count  = enhance_count  + 1 end
     end
-    if enhance_count/#G.playing_cards >= percentage then
+    if percentage and (enhance_count/#G.playing_cards >= percentage) then
+      return {
+        message = evolve (self, card, context, forced_key)
+      }
+    elseif flat and (enhance_count >= flat) then
+      return {
+        message = evolve (self, card, context, forced_key)
+      }
+    end
+  end
+end
+
+deck_seal_evo = function (self, card, context, forced_key, seal, percentage, flat)
+  if can_evolve(self, card, context, forced_key) then
+    local seal_count = 0
+    for k, v in pairs(G.playing_cards) do
+      if seal and v.seal == seal then 
+        seal_count = seal_count + 1 
+      elseif not seal and v.seal then
+        seal_count = seal_count + 1 
+      end
+    end
+    if percentage and (seal_count/#G.playing_cards >= percentage) then
+      return {
+        message = evolve (self, card, context, forced_key)
+      }
+    elseif flat and (seal_count >= flat) then
       return {
         message = evolve (self, card, context, forced_key)
       }
