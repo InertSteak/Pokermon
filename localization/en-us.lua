@@ -1230,11 +1230,11 @@ return {
             j_poke_gengar = {
                 name = 'Gengar',      
                 text = {
-                    "{C:green}#1# in #2#{} chance to",
-                    "add {C:dark_edition}Negative{} to a",
-                    "random {C:attention}Joker{}",
-                    "at end of round",
-                    "{C:inactive,s:0.8}(Exludes Gengars, odds can't be increased){}"
+                    "{C:green}Percent Chance{}",
+                    "Sometimes sets the edition",
+                    "of a random {C:attention}Joker{} to",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Exludes Gengars){}"
                 } 
             },
             j_poke_onix = {
@@ -2772,12 +2772,12 @@ return {
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
             },
-            holding = {
-                name = "Holding",
+            percent_chance = {
+                name = "Percent Chance",
                 text = {
-                  "This Joker comes with",
-                  "a {C:attention}#1#{} card",
-                  "{C:inactive}(Must have room){}"
+                  "{C:green}#1#%{} chance",
+                  "for {C:attention}effect{} to occur",
+                  "{C:inactive}(Odds can't be increased){}"
                 }
             },
             eeveelution = {
