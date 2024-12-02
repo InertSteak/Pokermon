@@ -806,7 +806,7 @@ local slowbro={
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {Xmult_multi = 1.3, rounds = 4}},
+  config = {extra = {Xmult_multi = 1.5, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -834,12 +834,24 @@ local magnemite={
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
-  config = {extra = {Xmult_multi = 1.6}},
+  config = {extra = {Xmult_multi = 1.5, Xmult_multi2 = 0.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
-    return {vars = {center.ability.extra.Xmult_multi}}
+    local adjacent = 0
+    local pos = 0
+    if G.STAGE == G.STAGES.RUN then
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == center then
+          pos = i
+          break
+        end
+      end
+      if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
+      if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
+    end
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -852,10 +864,21 @@ local magneton={
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
+        local adjacent = 0
+        local pos = 0
+        for i = 1, #G.jokers.cards do
+          if G.jokers.cards[i] == card then
+            pos = i
+            break
+          end
+        end
+        if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
+        if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
+        
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)}}, 
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_multi
+          x_mult = card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)
         }
     end
     return item_evo(self, card, context, "j_poke_magnezone")

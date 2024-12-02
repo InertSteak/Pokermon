@@ -13,11 +13,12 @@
 local magnezone={
   name = "magnezone", 
   pos = {x = 5, y = 5}, 
-  config = {extra = {Xmult_multi = 1.8, Xmult_multi2 = 1.3}},
+  config = {extra = {Xmult_multi = 1.5, Xmult_multi2 = .25}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2}}
+    local total = #find_pokemon_type("Metal")
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (total * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -29,31 +30,13 @@ local magnezone={
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
+        local total = #find_pokemon_type("Metal")
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2)}}, 
           colour = G.C.XMULT,
-          x_mult = card.ability.extra.Xmult_multi,
+          x_mult = card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2),
           card = card
         }
-    end
-    if context.other_joker then
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == context.other_joker and ((G.jokers.cards[i + 1] and G.jokers.cards[i + 1] == card) or (G.jokers.cards[i - 1] and G.jokers.cards[i - 1] == card)) then
-          if is_type(G.jokers.cards[i], "Metal") then
-            G.E_MANAGER:add_event(Event({
-              func = function()
-                  context.other_joker:juice_up(0.5, 0.5)
-                  return true
-              end
-            })) 
-            return {
-              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi2}}, 
-              colour = G.C.XMULT,
-              Xmult_mod = card.ability.extra.Xmult_multi
-            }
-          end
-        end
-      end
     end
   end
 }

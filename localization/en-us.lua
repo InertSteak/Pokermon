@@ -1115,8 +1115,10 @@ return {
             j_poke_magneton = {
                 name = "Magneton",
                 text = {
-                    "Played {C:attention}Steel{} cards",
-                    "give {X:red,C:white}X#1#{} Mult",
+                    "Played {C:attention}Steel{} cards give {X:red,C:white}X#1#{} Mult",
+                    "plus {X:red,C:white}X#2#{} Mult for each",
+                    "{X:metal,C:white}Metal{} Joker next to this Joker",
+                    "{C:inactive}(Currently {X:red,C:white}X#3#{}{C:inactive} Mult){}",
                     "{C:inactive}(Evolves with a {C:attention}Thunder Stone{}{C:inactive})"
                 } 
             },
@@ -2174,10 +2176,10 @@ return {
             j_poke_magnezone = {
                 name = 'Magnezone',
                 text = {
-                    "Played {C:attention}Steel{} cards",
-                    "give {X:red,C:white}X#1#{} Mult",
-                    "{X:metal,C:white}Metal{} Jokers next to",
-                    "this Joker each give {X:red,C:white}X#2#{} Mult"
+                    "Played {C:attention}Steel{} cards give {X:red,C:white}X#1#{} Mult",
+                    "plus {X:red,C:white}X#2#{} Mult for each",
+                    "{X:metal,C:white}Metal{} Joker you have",
+                    "{C:inactive}(Currently {X:red,C:white}X#3#{}{C:inactive} Mult){}",
                 } 
             },
             j_poke_lickilicky = {
