@@ -1211,8 +1211,8 @@ return {
                 name = 'Gastly',      
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "add {C:dark_edition}Negative{} to a",
-                    "random {C:attention}Joker{}",
+                    "set the edition of a",
+                    "random {C:attention}Joker{} to {C:dark_edition}Negative{}",
                     "{S:1.1,C:red,E:2}self destructs{}",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
                 } 
@@ -1221,8 +1221,8 @@ return {
                 name = 'Haunter',      
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "add {C:dark_edition}Negative{} to a",
-                    "random {C:attention}Joker{}",
+                    "set the edition of a",
+                    "random {C:attention}Joker{} to {C:dark_edition}Negative{}",
                     "{S:1.1,C:red,E:2}self destructs{}",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
