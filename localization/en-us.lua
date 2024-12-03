@@ -1279,6 +1279,7 @@ return {
                 text = {
                     "All played {C:attention}face{} cards",
                     "become {C:attention}Bonus{} cards",
+                    "and give {C:chips}+#1#{} Chips",
                     "when scored",
                 } 
             },
@@ -1945,8 +1946,9 @@ return {
                 name = 'Hitmontop',
                 text = {
                     "{X:red,C:white} X#1# {} Mult",
-                    "if deck size",
-                    "is exactly {C:attention}#2#{}"
+                    "When blind is selected",
+                    "gains {X:red,C:white} X#3# {} Mult if",
+                    "deck size is exactly {C:attention}#2#{}",
                 } 
             },
             j_poke_smoochum = {

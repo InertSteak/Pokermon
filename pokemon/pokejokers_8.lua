@@ -394,10 +394,10 @@ local tyrogue={
 local hitmontop={
   name = "hitmontop", 
   pos = {x = 5, y = 8},
-  config = {extra = {Xmult = 2.2}},
+  config = {extra = {Xmult = 1.5, Xmult_mod = .1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size}}
+    return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size, center.ability.extra.Xmult_mod}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -407,13 +407,17 @@ local hitmontop={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and #G.playing_cards == G.GAME.starting_deck_size then
+      if context.joker_main then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
           Xmult_mod = card.ability.extra.Xmult
         }
       end
+    end
+    if context.setting_blind and #G.playing_cards == G.GAME.starting_deck_size and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
   end
 }

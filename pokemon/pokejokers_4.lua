@@ -333,9 +333,11 @@ local krabby={
 local kingler={
   name = "kingler", 
   pos = {x = 7, y = 7},
+  config = {extra = {chips = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
+    return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -364,6 +366,17 @@ local kingler={
               colour = G.C.CHIPS,
               card = self
           }
+      end
+    end
+    if context.individual and context.cardarea == G.play and context.other_card:is_face() then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+            G.E_MANAGER:add_event(Event({func = function()
+                card:juice_up(0.8, 0.8)
+            return true end }))
+        return {
+          colour = G.C.CHIPS,
+          chips = card.ability.extra.chips
+        }
       end
     end
   end
