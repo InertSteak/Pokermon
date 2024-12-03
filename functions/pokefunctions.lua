@@ -73,6 +73,7 @@ family = {
     {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
     {"yamper","boltund"},
+    {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"}
 }
 
