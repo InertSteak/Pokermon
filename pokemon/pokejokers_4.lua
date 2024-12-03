@@ -540,14 +540,14 @@ local cubone={
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
-  config = {extra = {Xmult_multi = 0.4, card_limit = 1}},
+  config = {extra = {Xmult_mod = 0.4, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     local count = (G.consumeables and #G.consumeables.cards) or 0 
     count = count + #find_joker('thickclub')
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.card_limit, 
-                    1 + (center.ability.extra.Xmult_multi * count)}}
+    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.card_limit, 
+                    1 + (center.ability.extra.Xmult_mod * count)}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -562,9 +562,9 @@ local marowak={
         local count = #G.consumeables.cards + #find_joker('thickclub')
         if count > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_multi * count)}}, 
+            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * count)}}, 
             colour = G.C.XMULT,
-            Xmult_mod = 1 + (card.ability.extra.Xmult_multi * count)
+            Xmult_mod = 1 + (card.ability.extra.Xmult_mod * count)
           }
         end
       end

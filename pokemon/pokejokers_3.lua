@@ -728,7 +728,7 @@ local slowpoke={
 local slowpoke2={
   name = "slowpoke2", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, rounds = 5, odds = 4}},
+  config = {extra = {Xmult = 2, rounds = 5, odds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
@@ -768,10 +768,10 @@ local slowpoke2={
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_multi = 0.4, Xmult = 1, oXmult = 1}},
+  config = {extra = {Xmult_mod = 0.4, Xmult = 1, oXmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult}}
+    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -786,7 +786,7 @@ local slowbro={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_multi
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
         end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 

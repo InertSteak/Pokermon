@@ -333,7 +333,7 @@ local tyrogue={
           Xmult_mod = card.ability.extra.Xmult_minus
         }
       end
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand > 2 then
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 5 then
         local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
         local copy = copy_card(target, nil, nil, G.playing_card)
         copy:add_to_deck()
@@ -357,17 +357,26 @@ local tyrogue={
       end
     end
     
-    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
-      return {
-        delay = 0.45, 
-        remove = true,
-        card = card
-      }
+    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 5 then
+      if not card.ability.extra.destroyed_card then
+        card.ability.extra.destroyed_card = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
+      end
+      if context.other_card == card.ability.extra.destroyed_card then
+        return {
+          delay = 0.45, 
+          remove = true,
+          card = card
+        }
+      end
     end
     
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
+    end
+    
+    if not context.repetition and not context.individual and context.end_of_round then
+      card.ability.extra.destroyed_card = nil
     end
     
     local forced_key = nil

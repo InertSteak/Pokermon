@@ -38,13 +38,13 @@ local pokedex={
 local everstone={ 
   name = "everstone",
   pos = {x = 1, y = 0},
-  config = {extra = {Xmult_mod = 1.75}},
+  config = {extra = {Xmult_multi = 1.75}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
-		return {vars = {center.ability.extra.Xmult_mod}}
+		return {vars = {center.ability.extra.Xmult_multi}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 8, 
   stage = "Other",
   atlas = "others",
@@ -58,9 +58,9 @@ local everstone={
           end
         })) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_mod
+          Xmult_mod = card.ability.extra.Xmult_multi
         }
     end
   end,

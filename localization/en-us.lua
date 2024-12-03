@@ -1795,30 +1795,27 @@ return {
             j_poke_pichu = {
                 name = 'Pichu',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#2# {} Mult",
                     "Earn {C:money}$#1#{} at",
                     "end of round",
-                    "{X:red,C:white} X#2# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_cleffa = {
                 name = 'Cleffa',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a {C:attention}Moon{} card with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },
             j_poke_igglybuff = {
                 name = 'Igglybuff',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a {C:attention}World{} card with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },
@@ -1936,11 +1933,11 @@ return {
             j_poke_tyrogue = {
                 name = 'Tyrogue',
                 text = {
-                    "{C:attention}Baby{}",
-                    "For the {C:attention}first hand or discard{} of round",
-                    "If {C:attention}1{} card is {C:attention}discarded{}, {C:attention}destroy{} it",
-                    "If {C:attention}3+{} cards are {C:attention}played{}, {C:attention}copy{} one to hand",
-                    "{X:red,C:white} X#1# {} Mult",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
+                    "If the {C:attention}first hand or discard{} of round",
+                    "is exactly {C:attention}5{} cards, one of them",
+                    "is selected at random to be",
+                    "copied if played or destroyed if discarded",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }  
             },
@@ -1955,10 +1952,9 @@ return {
             j_poke_smoochum = {
                 name = 'Smoochum',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a {C:attention}Standard{} tag",
                     "when this Joker evolves",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
@@ -1966,10 +1962,9 @@ return {
             j_poke_elekid = {
                 name = 'Elekid',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a {C:attention}Coupon{} tag",
                     "when this Joker evolves",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
@@ -1977,9 +1972,8 @@ return {
             j_poke_magby = {
                 name = 'Magby',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "{C:red}+#2#{} discards",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
                 }
@@ -2144,32 +2138,29 @@ return {
             j_poke_mimejr = {
                 name = 'Mime Jr.',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Apply a {C:attention}Red{} or {C:attention}Blue{} seal",
                     "to a random card in deck",
                     "at end of round",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },
             j_poke_happiny = {
                 name = 'Happiny',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Scored cards in your",
                     "{C:attention}last hand{} become {C:attention}Lucky{}",
                     "if this is the rightmost Joker",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },
             j_poke_munchlax = {
                 name = 'Munchlax',
                 text = {
-                    "{C:attention}Baby{}",
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a random {C:item}Item{} card with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{X:red,C:white} X#1# {} Mult",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
@@ -2741,10 +2732,9 @@ return {
                 name = "Baby",
                 text = {
                     "When hand is played",
-                    "if this Joker is",
-                    "to the left of any",
-                    "Joker that isn't a {C:attention}Baby{}",
-                    "{C:attention}debuff{} it"
+                    "if there are any {C:attention}non-Baby{}",
+                    "Jokers to the right of this",
+                    "Joker, {C:attention}debuff{} this Joker"
                 }
             },
             nature = {
