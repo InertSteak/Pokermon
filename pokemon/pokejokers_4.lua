@@ -512,12 +512,13 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 6, rounds = 5,}},
+  config = {extra = {mult = 6, consumables_used = 0, consumable_goal = 28}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub'))}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub')),
+                    center.ability.extra.consumables_used, center.ability.extra.consumable_goal}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -547,13 +548,16 @@ local cubone={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_marowak")
+    if context.using_consumeable then
+      card.ability.extra.consumables_used = card.ability.extra.consumables_used + 1
+    end
+    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, card.ability.extra.consumable_goal)
   end,
 }
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
-  config = {extra = {Xmult_mod = 0.4, card_limit = 1}},
+  config = {extra = {Xmult_mod = 0.5, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
@@ -562,7 +566,7 @@ local marowak={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.card_limit, 
                     1 + (center.ability.extra.Xmult_mod * count)}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Earth",
@@ -966,7 +970,7 @@ local horsea={
   perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and G.GAME.current_round.hands_played == 0 then
+      if context.before and not context.blueprint then
         for k, v in ipairs(context.scoring_hand) do
           if v:get_id() == 6 then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
@@ -1005,27 +1009,26 @@ local seadra={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and G.GAME.current_round.hands_played <= 1 then
-        local upgraded
-        for k, v in ipairs(context.scoring_hand) do
-          if v:get_id() == 6 then
-            upgraded = true
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-          end
-        end
-        if upgraded then
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.MULT
-          }
-        end
-      end
       if context.joker_main and card.ability.extra.mult > 0 then
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult
         }
+      end
+    end
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint then
+      if context.other_card:get_id() == 6 then
+        local has_king = false
+        for i = 1, #G.hand.cards do 
+          if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
+        end
+        if has_king then
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * 2
+        else
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        end
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
     end
     return type_evo(self, card, context, "j_poke_kingdra", "dragon")

@@ -159,7 +159,7 @@ local delibird={
 local kingdra={
   name = "kingdra", 
   pos = {x = 8, y = 7},
-  config = {extra = {mult = 0, mult_mod = 2, Xmult = 1, Xmult_mod = .06}},
+  config = {extra = {mult = 0, mult_mod = 1, Xmult = 1, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
@@ -172,29 +172,21 @@ local kingdra={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        local upgraded = nil
-        local has_king = nil
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint then
+      if context.other_card:get_id() == 6 then
+        local has_king = false
         for i = 1, #G.hand.cards do 
           if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
         end
-        for k, v in ipairs(context.scoring_hand) do
-          if v:get_id() == 6 then
-            upgraded = true
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            if has_king then
-              card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-            end
-          end
+        if has_king then
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        else
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         end
-        if upgraded then
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.MULT
-          }
-        end
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
           message = localize("poke_twister_ex"),

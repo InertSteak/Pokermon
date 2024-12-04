@@ -1329,7 +1329,7 @@ return {
                     "filled consumable slot",
                     "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{}{C:inactive,s:0.75} count as double){}",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-                    "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+                    "{C:inactive}(Evolves after using consumables {C:attention}#4#{}{C:inactive}/#5# times)"
                 } 
             },
             j_poke_marowak = {
@@ -1434,8 +1434,8 @@ return {
                 name = 'Horsea',      
                 text = {
                     "Gains {C:mult}+#2#{} Mult",
-                    "for each scoring {C:attention}6{}",
-                    "in {C:attention}first hand{} of round",
+                    "for each {C:attention}6{}",
+                    "in scoring hand",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Evolves at {C:mult}+12{} {C:inactive}Mult)"
                 } 
@@ -1444,8 +1444,9 @@ return {
                 name = 'Seadra',      
                 text = {
                     "Gains {C:mult}+#2#{} Mult",
-                    "for each scoring {C:attention}6{}",
-                    "in your first {C:attention}2{} hands",
+                    "when a {C:attention}6{} is scored",
+                    "Double gains if a {C:attention}King{}",
+                    "is held in hand",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Evolves with a {C:dragon}Dragon{} {C:inactive}sticker){}"
                 } 
@@ -1904,10 +1905,10 @@ return {
             j_poke_kingdra = {
                 name = 'Kingdra',
                 text = {
-                    "Gains {C:mult}+#2#{} Mult for each",
-                    "scoring {C:attention}6{}, if you have",
-                    "a {C:attention}King{} held in hand gain",
-                    "{X:red,C:white}X#4#{} Mult {C:attention}as well{}",
+                    "Gains {C:mult}+#2#{} Mult",
+                    "when a {C:attention}6{} is scored",
+                    "Gains {X:red,C:white}X#4#{} Mult {C:attention}instead{} if a",
+                    "{C:attention}King{} is held in hand",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{} Mult{C:inactive})",
                 } 
             },
@@ -2770,6 +2771,14 @@ return {
                   "{C:green}#1#%{} chance",
                   "for {C:attention}effect{} to occur",
                   "{C:inactive}(Odds can't be increased){}"
+                }
+            },
+            holding = {
+                name = "Holding",
+                text = {
+                  "This Joker comes with",
+                  "a {C:attention}#1#{} card",
+                  "{C:inactive}(Must have room){}"
                 }
             },
             eeveelution = {
