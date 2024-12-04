@@ -1886,9 +1886,9 @@ return {
             j_poke_scizor = {
                 name = 'Scizor',
                 text = {
-                    "When Blind is selected, destroy",
-                    "Joker to the right and gain",
-                    "{C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
+                    "When Blind is selected, destroy Joker to",
+                    "the right and gain {C:mult}+#4#{} Mult. Gain {C:attention}Foil{}",
+                    "{C:attention}Holographic{}, or {C:attention}Polychrome{} if it wasn't {C:attention}Common{}",
                     "Those editions {C:attention}stack{} on this Joker",
                     "{C:inactive,s:0.75}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
@@ -2082,8 +2082,8 @@ return {
                 name = "Swampert",
                 text = {
                     "{C:chips}+#3#{} hands, {C:attention}Nature{}",
-                    "Played {C:attention}#5#s, #6#s or #7#s{} give {C:chips}+#1#{} Chips",
-                    "They give an additional {C:chips}+#1#{} Chips per",
+                    "Played {C:attention}#6#s, #7#s or #8#s{} give {C:chips}+#1#{} Chips",
+                    "They give an additional {C:chips}+#5#{} Chips per",
                     "other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} card",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Curently {C:chips}+#4#{}{C:inactive} total)"

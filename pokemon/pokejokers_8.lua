@@ -3,7 +3,7 @@
 local scizor={
   name = "scizor", 
   pos = {x = 0, y = 6},
-  config = {extra = {mult = 0, chips = 0, Xmult = 1}},
+  config = {extra = {mult = 0, chips = 0, Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -21,7 +21,7 @@ local scizor={
     if center.edition and center.edition.polychrome then
      eXmult = center.edition.x_mult or 1
     end
-    return {vars = {center.ability.extra.mult + emult, center.ability.extra.chips + echips, center.ability.extra.Xmult * eXmult}}
+    return {vars = {center.ability.extra.mult + emult, center.ability.extra.chips + echips, center.ability.extra.Xmult * eXmult, center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -39,24 +39,28 @@ local scizor={
       if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
           local sliced_card = G.jokers.cards[my_pos+1]
           sliced_card.getting_sliced = true
-          if card.edition then
-            if card.edition.chips then
-              card.ability.extra.chips = card.ability.extra.chips + card.edition.chips
+          if (sliced_card.config.center.rarity ~= 1) then
+            if card.edition then
+              if card.edition.chips then
+                card.ability.extra.chips = card.ability.extra.chips + card.edition.chips
+              end
+              if card.edition.mult then
+                card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
+              end
+              if card.edition.x_mult then
+                card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
+              end
             end
-            if card.edition.mult then
-              card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
+            local edition = nil
+            if sliced_card.edition and (sliced_card.edition.foil or sliced_card.edition.holo or sliced_card.edition.polychrome) then
+              edition = sliced_card.edition
+            else
+              edition = poll_edition('wheel_of_fortune', nil, true, true)
             end
-            if card.edition.x_mult then
-              card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
-            end
+            card:set_edition(edition, true)
           end
-          local edition = nil
-          if sliced_card.edition and (sliced_card.edition.foil or sliced_card.edition.holo or sliced_card.edition.polychrome) then
-            edition = sliced_card.edition
-          else
-            edition = poll_edition('wheel_of_fortune', nil, true, true)
-          end
-          card:set_edition(edition, true)
+          
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
           
           G.GAME.joker_buffer = G.GAME.joker_buffer - 1
           G.E_MANAGER:add_event(Event({func = function()
@@ -65,7 +69,7 @@ local scizor={
               sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
               play_sound('slice1', 0.96+math.random()*0.08)
           return true end }))
-          card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED, no_juice = true})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED, no_juice = true})
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then

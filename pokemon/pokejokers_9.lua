@@ -484,7 +484,8 @@ local mudkip={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
             colour = G.C.CHIPS,
-            chips = chips
+            chips = chips,
+            card = card
           }
         end
       end
@@ -541,7 +542,8 @@ local marshtomp={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
             colour = G.C.CHIPS,
-            chips = chips
+            chips = chips,
+            card = card
           }
         end
       end
@@ -570,12 +572,12 @@ local marshtomp={
 local swampert={
   name = "swampert",
   pos = {x = 8, y = 0},
-  config = {extra = {chips = 40, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
+  config = {extra = {chips = 40, chip_mod = 20, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
     local card_vars = {center.ability.extra.chips, center.ability.extra.chips_earned, center.ability.extra.hands, 
-                       center.ability.extra.chips + center.ability.extra.chips * (find_other_poke_or_energy_type(center, "Water") + find_other_poke_or_energy_type(center, "Earth"))}
+                       center.ability.extra.chips + center.ability.extra.chip_mod * (find_other_poke_or_energy_type(center, "Water") + find_other_poke_or_energy_type(center, "Earth")),                       center.ability.extra.chip_mod}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -591,7 +593,7 @@ local swampert={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       local chips = card.ability.extra.chips
       if find_other_poke_or_energy_type(card, "Water") or find_other_poke_or_energy_type(card, "Earth") then
-        chips = chips + card.ability.extra.chips * (find_other_poke_or_energy_type(card, "Water") + find_other_poke_or_energy_type(card, "Earth"))
+        chips = chips + card.ability.extra.chip_mod * (find_other_poke_or_energy_type(card, "Water") + find_other_poke_or_energy_type(card, "Earth"))
       end
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
@@ -599,7 +601,8 @@ local swampert={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
             colour = G.C.CHIPS,
-            chips = chips
+            chips = chips,
+            card = card
           }
         end
       end
