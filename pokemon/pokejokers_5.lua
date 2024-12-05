@@ -234,7 +234,7 @@ local magmar={
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
-  config = {extra = {Xmult = 1.75}},
+  config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
@@ -248,23 +248,13 @@ local pinsir={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    end
-    if context.ending_shop and not context.blueprint then
-      if not G.jokers.cards[1].pinned then
-        G.jokers.cards[1].pinned = true
-        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_pinsir_pin"), colour = G.C.CHIPS})
-      end
-    end
-    if not context.repetition and not context.individual and context.end_of_round then
-      if G.jokers.cards[1].pinned then
-        G.jokers.cards[1].pinned = false
-        card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_pinsir_remove_pin"), colour = G.C.CHIPS})
+        if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[1]:get_id() == context.full_hand[1]:get_id() then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        end
       end
     end
   end

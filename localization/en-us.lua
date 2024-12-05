@@ -1373,7 +1373,7 @@ return {
                     "Sell this card to reduce the",
                     "score requirement of the",
                     "current {C:attention}Boss Blind{} by {C:attention}half{}",
-                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} round)"
+                    "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
                 } 
             },
             j_poke_weezing = {
@@ -1533,10 +1533,10 @@ return {
             j_poke_pinsir = {
                 name = 'Pinsir',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult",
-                    "{C:attention}Leftmost{} Joker becomes",
-                    "{C:attention}pinned{} at end of shop",
-                    "{C:attention}Unpin{} that Joker at end of round"
+                    "{X:mult,C:white} X#1# {} Mult if leftmost",
+                    "card of played hand is the",
+                    "same {C:attention}rank{} as leftmost",
+                    "card held in hand"
                 } 
             },
             j_poke_tauros = {
@@ -1758,9 +1758,8 @@ return {
                     "At end of shop, create",
                     "a random {C:dark_edition}Negative{} {C:attention}Tarot{},",
                     "{C:spectral}Spectral{} or {C:item}Item{} card",
-                    "{C:green}#1# in {C:green}#2#{} chance to create",
-                    "a random {C:dark_edition}Negative{} Joker {C:attention}instead{}",
-                    "{C:inactive,s:0.8}(Odds can't be increased){}"
+                    "Sometimes creates a random",
+                    "{C:dark_edition}Negative{} Joker {C:attention}instead{}",
                 } 
             },
             j_poke_sentret = {

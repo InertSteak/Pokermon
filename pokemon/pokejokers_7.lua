@@ -25,7 +25,7 @@ local bellossom={
           local upgrade = pseudorandom(pseudoseed('bellossom'))
           if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 then
               odds[#odds+1] = v
-              if v.ability.name == 'Wild Card' then
+              if v.ability.name == 'Wild Card' and not v.edition then
                 local edition = {polychrome = true}
                 v:set_edition(edition, true, true)
               end

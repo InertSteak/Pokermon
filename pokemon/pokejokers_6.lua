@@ -3,14 +3,15 @@ local mew ={
   name = "mew", 
   pos = {x = 12, y = 11},
   soul_pos = { x = 0, y = 12},
-  config = {extra = {odds = 6}},
+  config = {extra = {percent = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {1, center.ability.extra.odds}}
+    info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {center.ability.extra.percent}}
+    return {vars = {1}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -20,7 +21,7 @@ local mew ={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.ending_shop then
-      if pseudorandom('mew') < 1/card.ability.extra.odds then
+      if pseudorandom('mew') < card.ability.extra.percent/100 then
         --create random joker
         local _card = create_card('Joker', G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
