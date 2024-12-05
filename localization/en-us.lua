@@ -1211,8 +1211,8 @@ return {
                 name = 'Gastly',      
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "set the edition of a",
-                    "random {C:attention}Joker{} to {C:dark_edition}Negative{}",
+                    "{C:attention}replace{} the edition of a",
+                    "random {C:attention}Joker{} with {C:dark_edition}Negative{}",
                     "{S:1.1,C:red,E:2}self destructs{}",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
                 } 
@@ -1221,8 +1221,8 @@ return {
                 name = 'Haunter',      
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "set the edition of a",
-                    "random {C:attention}Joker{} to {C:dark_edition}Negative{}",
+                    "{C:attention}replace{} the edition of a",
+                    "random {C:attention}Joker{} with {C:dark_edition}Negative{}",
                     "{S:1.1,C:red,E:2}self destructs{}",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
@@ -1231,8 +1231,8 @@ return {
                 name = 'Gengar',      
                 text = {
                     "{C:green}Percent Chance{}",
-                    "Sometimes sets the edition",
-                    "of a random {C:attention}Joker{} to",
+                    "Sometimes {C:attention}replaces{} the edition",
+                    "of a random {C:attention}Joker{} with",
                     "{C:dark_edition}Negative{} at end of round",
                     "{C:inactive,s:0.8}(Exludes Gengars){}"
                 } 
@@ -1824,9 +1824,9 @@ return {
             j_poke_bellossom = {
                 name = 'Bellossom',
                 text = {
-                    "During the {C:attention}Small Blind{}",
-                    "played cards with {C:attention}Odd{} rank",
-                    "become {C:attention}Wild{} cards when scored",
+                    "Played cards with {C:attention}Odd{} rank",
+                    "give {C:mult}+#1#{} Mult or become",
+                    "{C:attention}Wild{} cards when scored",
                     "If already {C:attention}Wild{}, adds {C:dark_edition}Polychrome"
                 } 
             },
@@ -2050,10 +2050,11 @@ return {
                 name = "Blaziken",
                 text = {
                     "{C:mult}+#2#{} discards, {C:attention}Nature{}",
-                    "{X:red,C:white} X#1# {} Mult for each {C:attention}#4#, #5# or #6#{} discarded this round",
-                    "Double {X:red,C:white} X {} Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "{C:mult}+#4#{} Mult, {X:red,C:white} X#1# {} Mult for each {C:attention}#6#, #7# or #8#{}",
+                    "discarded this round, double {X:red,C:white} X {} Mult if",
+                    "you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {X:red,C:white} X#3# {}{C:inactive} Mult){}",
+                    "{C:inactive}(Currently {C:mult}+#5#{}{C:inactive} Mult, {X:red,C:white} X#3# {}{C:inactive} Mult){}",
                 } 
             },
             j_poke_mudkip = {
@@ -3079,7 +3080,8 @@ return {
             poke_nido_ex = "Nido!",
             poke_disguise_intact = "Disguise Intact! Death Prevented!",
             poke_disguise_broken = "Disguise Broken! Death Not Prevented!",
-            poke_dig_ex = "Dig!"
+            poke_dig_ex = "Dig!",
+            poke_blazekick_ex = "Blaze Kick!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

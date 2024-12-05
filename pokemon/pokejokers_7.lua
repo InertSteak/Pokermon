@@ -2,11 +2,15 @@
 -- Bellossom 182
 local bellossom={
   name = "bellossom",
-  config = {extra = {blind = ""}},
+  config = {extra = {mult = 7}},
   pos = {x = 0, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_multi}}
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+		return {vars = {center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -15,11 +19,11 @@ local bellossom={
   atlas = "Pokedex2",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and card.ability.extra.blind == "Small Blind" and not context.blueprint then
-      
+    if context.before and context.cardarea == G.jokers and not context.blueprint then
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14 then
+          local upgrade = pseudorandom(pseudoseed('bellossom'))
+          if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 then
               odds[#odds+1] = v
               if v.ability.name == 'Wild Card' then
                 local edition = {polychrome = true}
@@ -32,6 +36,8 @@ local bellossom={
                       return true
                   end
               })) 
+          else
+            v.bellossom_score = true
           end
       end
       if #odds > 0 then 
@@ -42,8 +48,22 @@ local bellossom={
           }
       end
     end
-    if context.setting_blind then
-      card.ability.extra.blind = context.blind.name
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+      if context.other_card:get_id() == 3 or 
+         context.other_card:get_id() == 5 or 
+         context.other_card:get_id() == 7 or 
+         context.other_card:get_id() == 9 or 
+         context.other_card:get_id() == 14 then
+          if context.other_card.bellossom_score then
+            context.other_card.bellossom_score = nil
+            return {
+              message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+              colour = G.C.MULT,
+              mult = card.ability.extra.mult,
+              card = card
+            }
+          end
+      end
     end
   end
 }
