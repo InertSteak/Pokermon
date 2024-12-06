@@ -397,7 +397,7 @@ local hitmontop={
   end,
   rarity = 2, 
   cost = 7, 
-  stage = "One", 
+  stage = "Basic", 
   ptype = "Fighting",
   atlas = "Pokedex2",
   blueprint_compat = true,

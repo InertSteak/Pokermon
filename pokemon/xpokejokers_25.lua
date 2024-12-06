@@ -81,7 +81,7 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = 1.25, mult = 12}},
+  config = {extra = {Xmult = .75, mult = 12}},
   pos = {x = 2, y = 1}, 
   rarity = "poke_safari", 
   cost = 6, 
@@ -95,7 +95,7 @@ local vikavolt={
       if is_type(center, "Lightning") then
         count = count - 1
       end
-		return {vars = {center.ability.extra.Xmult, math.max(1, center.ability.extra.Xmult * count), center.ability.extra.mult}}
+		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count), center.ability.extra.mult}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -107,7 +107,7 @@ local vikavolt={
         return {
           message = localize("poke_thunder_ex"),
           colour = G.C.XMULT,
-          Xmult_mod = math.max(1, card.ability.extra.Xmult * count),
+          Xmult_mod = math.max(1, 1 + card.ability.extra.Xmult * count),
           mult_mod = card.ability.extra.mult
         }
       end
