@@ -34,7 +34,13 @@ local shiny = ({
         if card.config.center.atlas == "poke_others" then
           card.config.center.atlas = "poke_Shinyothers"
           card:set_sprites(card.config.center)
-          card.config.center.atlas = "poke_Shinyothers"
+          card.config.center.atlas = "poke_others"
+        end
+        if card.children.center.atlas.name == "Joker" then
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
+          card.config.center.shiny = true
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "Joker"
         end
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
@@ -70,7 +76,13 @@ local shiny = ({
         if card.config.center.atlas == "poke_others" then
           card.config.center.atlas = "poke_Shinyothers"
           card:set_sprites(card.config.center)
-          card.config.center.atlas = "poke_Shinyothers"
+          card.config.center.atlas = "poke_others"
+        end
+        if card.children.center.atlas.name == "Joker" then
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
+          card.config.center.shiny = true
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "Joker"
         end
     end
 })
