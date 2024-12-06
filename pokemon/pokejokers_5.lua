@@ -248,7 +248,7 @@ local pinsir={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[1]:get_id() == context.full_hand[1]:get_id() then
+        if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[#G.hand.cards]:get_id() == context.full_hand[1]:get_id() then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
             colour = G.C.XMULT,

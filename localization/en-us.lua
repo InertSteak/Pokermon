@@ -1533,9 +1533,9 @@ return {
             j_poke_pinsir = {
                 name = 'Pinsir',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult if leftmost",
+                    "{X:mult,C:white} X#1# {} Mult if {C:attention}leftmost{}",
                     "card of played hand is the",
-                    "same {C:attention}rank{} as leftmost",
+                    "same {C:attention}rank{} as {C:attention}rightmost{}",
                     "card held in hand"
                 } 
             },
