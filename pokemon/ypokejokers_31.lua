@@ -120,7 +120,7 @@ local dachsbun={
   end,
   rarity = 2,
   cost = 5,
-  stage = "Basic",
+  stage = "One",
   ptype = "Fairy",
   atlas = "Pokedex9",
   perishable_compat = false,

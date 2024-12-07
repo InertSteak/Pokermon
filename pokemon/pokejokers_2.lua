@@ -338,7 +338,7 @@ local wigglytuff={
   end,
   rarity = "poke_safari", 
   cost = 10, 
-  stage = "Two", 
+  stage = "One", 
   ptype = "Fairy",
   atlas = "Pokedex1",
   blueprint_compat = true,
