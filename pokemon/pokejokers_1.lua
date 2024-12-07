@@ -763,7 +763,7 @@ local raticate={
 local spearow={
   name = "spearow", 
   pos = {x = 7, y = 1},
-  config = {extra = {rounds = 4, card_threshold = 15, cards_scored = 0, upgrade = false}},
+  config = {extra = {rounds = 4, card_threshold = 20, cards_scored = 0, upgrade = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds, center.ability.extra.card_threshold, center.ability.extra.cards_scored, center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
@@ -804,7 +804,7 @@ local spearow={
 local fearow={
   name = "fearow", 
   pos = {x = 8, y = 1}, 
-  config = {extra = {card_threshold = 10, cards_scored = 0, upgrade = false}},
+  config = {extra = {card_threshold = 15, cards_scored = 0, upgrade = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.card_threshold, center.ability.extra.cards_scored, center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}

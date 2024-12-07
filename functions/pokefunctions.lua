@@ -314,9 +314,9 @@ evolve = function(self, card, context, forced_key)
     end
     
     if previous_cards_scored then
-      if previous_cards_scored >= 10 then
+      if previous_cards_scored >= 15 then
         previous_upgrade = true
-        previous_cards_scored = previous_cards_scored - 10
+        previous_cards_scored = previous_cards_scored - 15
       end
       new_card.ability.extra.cards_scored = previous_cards_scored
       new_card.ability.extra.upgrade = previous_upgrade
