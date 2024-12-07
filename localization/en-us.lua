@@ -1680,7 +1680,8 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}One{} : {C:mult}+#2#{} Mult",
                     "{X:attention,C:white}Two{} : {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
-                    "{X:attention,C:white}Three+{} : {X:red,C:white}X#5#{} Mult"
+                    "{X:attention,C:white}Three{} : {X:red,C:white}X#5#{} Mult",
+                    "{X:attention,C:white}Four+{} : This Joker scores {C:attention}double{} its scoring values"
                 } 
             },
             j_poke_snorlax = {

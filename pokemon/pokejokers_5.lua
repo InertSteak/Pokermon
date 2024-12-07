@@ -926,13 +926,13 @@ local kabutops={
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", mult = 4, mult2 = 8, chips = 40, Xmult = 2}},
+  config = {extra = {rank = "Ace", mult = 4, mult2 = 6, chips = 50, Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 6, 
   stage = "Basic",
   ptype = "Earth",
@@ -944,6 +944,7 @@ local aerodactyl={
         local first_level = nil
         local second_level = nil
         local third_level = nil
+        local fourth_level = nil
         local mult = 0
         local ret_values = {}
         local aces = 0
@@ -953,6 +954,7 @@ local aerodactyl={
         first_level = aces > 0
         second_level = aces > 1
         third_level = aces > 2
+        fourth_level = aces > 3
         
         if first_level then
           mult = mult + card.ability.extra.mult
@@ -971,6 +973,12 @@ local aerodactyl={
         if third_level then
           ret_values.Xmult_mod = card.ability.extra.Xmult
           ret_values.colour = G.C.XMULT
+        end
+        
+        if fourth_level then
+          ret_values.mult_mod = ret_values.mult_mod * 2
+          ret_values.chip_mod = ret_values.chip_mod * 2
+          ret_values.Xmult_mod = ret_values.Xmult_mod * 2
         end
         
         if ret_values.mult_mod then
