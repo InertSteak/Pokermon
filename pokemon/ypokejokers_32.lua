@@ -59,7 +59,7 @@ local tinkatink={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
     return level_evo(self, card, context, "j_poke_tinkatuff")
@@ -67,7 +67,7 @@ local tinkatink={
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
   end
@@ -107,7 +107,7 @@ local tinkatuff={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
     return level_evo(self, card, context, "j_poke_tinkaton")
@@ -115,7 +115,7 @@ local tinkatuff={
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
   end
@@ -186,14 +186,14 @@ local tinkaton={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,false, card)
+        SMODS.debuff_card(v,'reset', card)
       end
     end
   end

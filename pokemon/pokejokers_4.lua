@@ -601,10 +601,10 @@ local marowak={
 local hitmonlee={
   name = "hitmonlee", 
   pos = {x = 1, y = 8},
-  config = {extra = {Xmult_mod = 0.2}},
+  config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards)/2 or 0) * center.ability.extra.Xmult_mod)}}
+    return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0) * center.ability.extra.Xmult_mod)}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -615,7 +615,7 @@ local hitmonlee={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards)/2 * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((G.GAME.starting_deck_size - #G.playing_cards) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 

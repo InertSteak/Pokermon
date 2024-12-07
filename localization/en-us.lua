@@ -1345,7 +1345,7 @@ return {
             j_poke_hitmonlee = {
                 name = 'Hitmonlee',      
                 text = {
-                    "{X:red,C:white}X#1#{} Mult for every 2 cards",
+                    "{X:red,C:white}X#1#{} Mult for every card",
                     "below {C:attention}#2#{} in your full deck",
                     "{C:inactive}(Currently {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
