@@ -160,7 +160,13 @@ local missingno ={
       for i = 1, card.ability.extra.tags_created + more do
         G.E_MANAGER:add_event(Event({
           func = (function()
-              local temp_tag = pseudorandom_element(G.P_TAGS, pseudoseed(mseed))
+              local tags = {}
+              for k, v in pairs(G.P_TAGS) do
+                if v.key ~= "tag_boss" then
+                  tags[#tags + 1] = v
+                end
+              end
+              local temp_tag = pseudorandom_element(tags, pseudoseed(mseed))
               local tag = Tag(temp_tag.key)
               if tag.key == "tag_orbital" then 
                 local _poker_hands = {}
