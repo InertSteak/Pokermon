@@ -26,8 +26,8 @@ local bulbasaur={
             local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-              earned = earned + card.ability.extra.money_mod
             end
+            earned = earned + card.ability.extra.money_mod
             earned = ease_poke_dollars(card, "bulba", earned)
             return {
               message = localize('$')..earned,
@@ -84,8 +84,8 @@ local ivysaur={
             local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
-              earned = earned + card.ability.extra.money_mod + more
             end
+            earned = earned + card.ability.extra.money_mod + more
             earned = ease_poke_dollars(card, "ivy", earned)
             return {
               message = localize('$')..earned,
@@ -136,8 +136,9 @@ local venusaur={
             local earned = 0
             if not context.blueprint then
               card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-              earned = earned + card.ability.extra.money_mod
             end
+            
+            earned = earned + card.ability.extra.money_mod
             earned = ease_poke_dollars(card, "venu", earned)
             return {
                 message = localize('$')..earned,
