@@ -1635,47 +1635,52 @@ return {
                 name = 'Omanyte',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{C:attention}1{} #1#: Gain {C:money}$#2#{} of sell value",
-                    "{C:attention}2{} #1#s: Earn {C:money}$#3#{}",
-                    "{C:attention}3+{} #1#s: Create a random {C:attention}Tarot{} card {C:inactive}(Must have room)",
-                    "{C:inactive}(Evolves after {C:attention}#4#{}{C:inactive} rounds)"
+                    "{X:attention,C:white}One{} : Gain {C:money}$#2#{} of sell value",
+                    "{X:attention,C:white}Two{} : Earn {C:money}$#3#{}",
+                    "{X:attention,C:white}Three+{} : Create a random {C:attention}Tarot{} card",
+                    "{C:inactive}(Must have room)",
+                    "{C:inactive}(Evolves after triggering third level {C:attention}#4#{}{C:inactive}/#5# times)"
                 } 
             },
             j_poke_omastar = {
                 name = 'Omastar',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{C:attention}2{} #1#s: Gain {C:money}$#2#{} of sell value",
-                    "{C:attention}3{} #1#s: Earn {C:money}$#3#{}",
-                    "{C:attention}4+{} #1#s: Create 2 random {C:attention}Tarot{} cards {C:inactive}(Must have room)",
+                    "{X:attention,C:white}One{} : Gain {C:money}$#2#{} of sell value",
+                    "{X:attention,C:white}Two{} : Earn {C:money}$#3#{}",
+                    "{X:attention,C:white}Three{} : Create a random {C:attention}Tarot{} card",
+                    "{X:attention,C:white}Four+{} : Create a random {C:item}Item{} card",
+                    "{C:inactive}(Must have room){}"
                 } 
             },
             j_poke_kabuto = {
                 name = 'Kabuto',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{C:attention}1{} #1#s: {C:chips}+#2#{} Chips",
-                    "{C:attention}2{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-                    "{C:attention}3+{} #1#s: {C:chips}+#4#{} Chips",
-                    "{C:inactive}(Evolves after {C:attention}#5#{}{C:inactive} rounds)"
+                    "{X:attention,C:white}One{} : {C:chips}+#2#{} Chips",
+                    "{X:attention,C:white}Two{} : Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
+                    "{X:attention,C:white}Three+{} : {C:chips}+#4#{} Chips",
+                    "{C:inactive}(Evolves after triggering third level {C:attention}#5#{}{C:inactive}/#6# times)"
                 } 
             },
             j_poke_kabutops = {
                 name = 'Kabutops',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{C:attention}2{} #1#s: {C:chips}+#2#{} Chips",
-                    "{C:attention}3{} #1#s: Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-                    "{C:attention}4+{} #1#s: {C:chips}+#4#{} Chips",
+                    "{X:attention,C:white}One{} : {C:chips}+#2#{} Chips",
+                    "{X:attention,C:white}Two{} : Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
+                    "{X:attention,C:white}Three{} : {C:chips}+#4#{} Chips",
+                    "{X:attention,C:white}Four+{} : Retrigger {C:attention}first{} and {C:attention}second{}",
+                    "played cards {C:attention}#5#{} additional time"
                 } 
             },
             j_poke_aerodactyl = {
                 name = 'Aerodactyl',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{C:attention}2{} #1#s: {C:mult}+#2#{} Mult",
-                    "{C:attention}3{} #1#s: {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
-                    "{C:attention}4+{} #1#s: {X:red,C:white}X#5#{} Mult"
+                    "{X:attention,C:white}One{} : {C:mult}+#2#{} Mult",
+                    "{X:attention,C:white}Two{} : {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
+                    "{X:attention,C:white}Three+{} : {X:red,C:white}X#5#{} Mult"
                 } 
             },
             j_poke_snorlax = {
@@ -2648,7 +2653,8 @@ return {
                 text = {
                     "Effect based on",
                     "number of {C:attention}#1#s{}",
-                    "in poker hand"
+                    "in poker hand",
+                    "{C:inactive}(Effects are {C:attention}cumulative{}{C:inactive})"
                 }
             },
             eitem = {

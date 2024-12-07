@@ -675,11 +675,11 @@ local porygon={
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
-  config = {extra = {rank = "3", money1 = 3, money2 = 2, rounds = 5}},
+  config = {extra = {rank = "3", money1 = 1, money2 = 2, third_goal = 5, third_times = 0}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.rounds}}
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.third_times, center.ability.extra.third_goal}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -690,24 +690,26 @@ local omanyte={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
         local threes = 0
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
         end
-        if threes == 1 and not context.blueprint then
+        first_level = threes > 0
+        second_level = threes > 1
+        third_level = threes > 2
+        
+        if first_level and not context.blueprint then
           card.ability.extra_value = card.ability.extra_value + card.ability.extra.money1
           card:set_cost()
           G.E_MANAGER:add_event(Event({
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
             end}))
-        elseif threes == 2 then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
-          return {
-            message = localize('$')..earned,
-            dollars = earned,
-            colour = G.C.MONEY
-          }
-        elseif threes > 2 then
+        end
+        if third_level then
+          card.ability.extra.third_times = card.ability.extra.third_times + 1
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
@@ -715,15 +717,23 @@ local omanyte={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
           end
         end
+        if second_level then
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
+          return {
+            message = localize('$')..earned,
+            dollars = earned,
+            colour = G.C.MONEY
+          }
+        end
       end
     end
-    return level_evo(self, card, context, "j_poke_omastar")
+    return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, card.ability.extra.third_goal)
   end,
 }
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
-  config = {extra = {rank = "3", money1 = 5, money2 = 4}},
+  config = {extra = {rank = "3", money1 = 2, money2 = 3}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -738,32 +748,49 @@ local omastar={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
+        local fourth_level = nil
         local threes = 0
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
         end
-        if threes == 2 and not context.blueprint then
+        first_level = threes > 0
+        second_level = threes > 1
+        third_level = threes > 2
+        fourth_level = threes > 3
+        
+        if first_level and not context.blueprint then
           card.ability.extra_value = card.ability.extra_value + card.ability.extra.money1
           card:set_cost()
           G.E_MANAGER:add_event(Event({
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
             end}))
-        elseif threes == 3 then
-          local earned = ease_poke_dollars(card, "omastar", card.ability.extra.money2)
+        end
+        if third_level then
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          end
+        end
+        if fourth_level then
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          end
+        end
+        if second_level then
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
           return {
             message = localize('$')..earned,
             dollars = earned,
             colour = G.C.MONEY
           }
-        elseif threes > 3 then
-          for i = 1, 2 do
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-            end
-          end
         end
       end
     end
@@ -772,11 +799,12 @@ local omastar={
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 40, chips2 = 6, chips3 = 80, rounds = 5}},
+  config = {extra = {rank = "2", chips1 = 20, chips2 = 2, chips3 = 60, third_goal = 5, third_times = 0}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.rounds}}
+   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3,
+                            center.ability.extra.third_times, center.ability.extra.third_goal}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -786,48 +814,56 @@ local kabuto={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.before then
         local twos = 0
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 2 then twos = twos + 1 end
         end
-        if twos == 1 then
+        card.ability.extra.first_level = twos > 0
+        card.ability.extra.second_level = twos > 1
+        card.ability.extra.third_level = twos > 2
+      end
+      if context.joker_main then
+        local chips = 0
+        if card.ability.extra.first_level then
+          chips = chips + card.ability.extra.chips1
+        end
+        if card.ability.extra.third_level then
+          card.ability.extra.third_times = card.ability.extra.third_times + 1
+          chips = chips + card.ability.extra.chips3
+        end
+        
+        if chips > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips1}}, 
+            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
             colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips1
-          }
-        elseif twos == 2 then
-          for k, v in ipairs(context.scoring_hand) do
-            if v:get_id() == 2 then 
-              v.ability.perma_bonus = v.ability.perma_bonus or 0
-              v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.chips2
-            end
-          end
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS
-          }
-        elseif twos > 2 then
-          return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips3}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips3
+            chip_mod = chips
           }
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_kabutops")
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.second_level then
+      if context.other_card:get_id() == 2 then 
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
+        return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, card.ability.extra.third_goal)
   end,
 }
 local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 60, chips2 = 10, chips3 = 120}},
+  config = {extra = {rank = "2", chips1 = 40, chips2 = 4, chips3 = 80, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3}}
+   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.retriggers}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -837,35 +873,52 @@ local kabutops={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.before then
         local twos = 0
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 2 then twos = twos + 1 end
         end
-        if twos == 2 then
+        card.ability.extra.first_level = twos > 0
+        card.ability.extra.second_level = twos > 1
+        card.ability.extra.third_level = twos > 2
+        card.ability.extra.fourth_level = twos > 3
+      end
+      if context.joker_main then
+        local chips = 0
+        if card.ability.extra.first_level then
+          chips = chips + card.ability.extra.chips1
+        end
+        if card.ability.extra.third_level then
+          chips = chips + card.ability.extra.chips3
+        end
+        
+        if chips > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips1}}, 
+            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
             colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips1
-          }
-        elseif twos == 3 then
-          for k, v in ipairs(context.scoring_hand) do
-            if v:get_id() == 2 then 
-              v.ability.perma_bonus = v.ability.perma_bonus or 0
-              v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.chips2
-            end
-          end
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS
-          }
-        elseif twos > 3 then
-          return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips3}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips3
+            chip_mod = chips
           }
         end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.second_level then
+      if context.other_card:get_id() == 2 then 
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
+        return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card
+        }
+      end
+    end
+    if context.repetition and context.cardarea == G.play and card.ability.extra.fourth_level then
+      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) then
+        return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+        }
       end
     end
   end,
@@ -873,7 +926,7 @@ local kabutops={
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", mult = 12, mult2 = 16, chips = 80, Xmult = 2.5}},
+  config = {extra = {rank = "Ace", mult = 4, mult2 = 8, chips = 40, Xmult = 2}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -888,29 +941,41 @@ local aerodactyl={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
+        local mult = 0
+        local ret_values = {}
         local aces = 0
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
         end
-        if aces == 2 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        elseif aces == 3 then
-          return {
-            message = "Wing Attack!",
-            mult_mod = card.ability.extra.mult2,
-            chip_mod = card.ability.extra.chips,
-            card = card
-          }
-        elseif aces > 3 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
+        first_level = aces > 0
+        second_level = aces > 1
+        third_level = aces > 2
+        
+        if first_level then
+          mult = mult + card.ability.extra.mult
+          ret_values.mult_mod = mult
+          ret_values.message = localize{type = 'variable', key = 'a_mult', vars = {mult}}
+          ret_values.colour = G.C.MULT
+        end
+        
+        if second_level then
+          mult = mult + card.ability.extra.mult2
+          ret_values.mult_mod = mult
+          ret_values.chip_mod = card.ability.extra.chips
+          ret_values.message = "Wing Attack!"
+        end
+        
+        if third_level then
+          ret_values.Xmult_mod = card.ability.extra.Xmult
+          ret_values.colour = G.C.XMULT
+        end
+        
+        if ret_values.mult_mod then
+          ret_values['card'] = card
+          return ret_values
         end
       end
     end
