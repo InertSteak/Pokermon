@@ -8,7 +8,8 @@ Please use the latest code before repoting issues, the releases may be out of da
 Pokermon is a full content mod for Balatro, adding content based on Pokemon. There are now 200(!!) Jokers that have been added alongside many other custom additions.
 There is also an option to only play with Pokemon Jokers if you want to focus on the new content. (Option defaults to off)
 
-![{42EB5C12-7C08-4004-A380-B7CF92B5EB8F}](https://github.com/user-attachments/assets/1de6266d-10ab-4f39-a6b0-d23b94886e1c)
+![{A079EB8D-3755-4172-A5B1-AF715BB81778}](https://github.com/user-attachments/assets/dc96e3d5-43b3-4b9d-9c85-23f6bcc998c8)
+
 
 
 **Prerequisites:**
