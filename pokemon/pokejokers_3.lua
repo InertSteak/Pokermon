@@ -701,12 +701,12 @@ local rapidash={
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, rounds = 5}},
+  config = {extra = {Xmult = 2, last_goal = 4, last_counter = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.last_counter, center.ability.extra.last_goal}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 6, 
   stage = "Basic", 
   ptype = "Water",
@@ -715,6 +715,7 @@ local slowpoke={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.current_round.hands_left == 0 then
+        card.ability.extra.last_counter = card.ability.extra.last_counter + 1
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
@@ -722,7 +723,11 @@ local slowpoke={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_slowbro")
+    local evo = item_evo(self, card, context, "j_poke_slowking")
+    if not evo then
+      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, card.ability.extra.last_goal)
+    end
+    return evo
   end
 }
 local slowpoke2={
@@ -1196,14 +1201,7 @@ local shellder={
   end,
 }
 
-local slowpoke_to_use = nil
-if pokermon_config.no_evos then
-  slowpoke_to_use = slowpoke
-else
-  slowpoke_to_use = slowpoke2
-end
-
 return {name = "Pokemon Jokers 61-90", 
         list = { poliwhirl, poliwrath, abra, kadabra, alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
-                 golem, ponyta, rapidash, slowpoke_to_use, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
+                 golem, ponyta, rapidash, slowpoke, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

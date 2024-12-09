@@ -242,7 +242,7 @@ local umbreon={
 local slowking={
   name = "slowking",
   pos = {x = 7, y = 4},
-  config = {extra = {Xmult_multi = 1, Xmult_multi2 = 0.15, oXmult = 1}},
+  config = {extra = {Xmult_multi = 1, Xmult_multi2 = 0.1, oXmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, }}
@@ -260,7 +260,7 @@ local slowking={
       card.ability.extra.oXmult = card.ability.extra.Xmult_multi
     end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
+      if context.before and G.GAME.current_round.hands_played > 0 and not context.blueprint then
         card.ability.extra.Xmult_multi = card.ability.extra.Xmult_multi + card.ability.extra.Xmult_multi2
         return {
           message = localize('k_upgrade_ex'),

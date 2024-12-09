@@ -1080,9 +1080,9 @@ return {
             j_poke_slowpoke = {
                 name = "Slowpoke",
                 text = {
-                    "{X:red,C:white} X#1# {} Mult on {C:attention}final",
-                    "{C:attention}hand{} of round",
-                    "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
+                    "{X:red,C:white} X#1# {} Mult on {C:attention}final {C:attention}hand{} of round",
+                    "{C:inactive}(Evolves after triggering {C:attention}#2#{}{C:inactive}/#3# times)",
+                    "{C:inactive}(Evolves with a {C:attention}King's Rock{} {C:inactive}card)"
                 } 
             },
             j_poke_slowpoke2 = {
@@ -1100,7 +1100,7 @@ return {
                 text = {
                     "Gains {X:red,C:white} X#1# {} Mult",
                     "per hand played,",
-                    "resets at end of round",
+                    "Resets at end of round",
                     "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
                 } 
             },
@@ -1872,10 +1872,9 @@ return {
                 name = 'Slowking',
                 text = {
                     "Played {C:attention}Kings{} give {X:red,C:white}X#1#{} Mult",
-                    "when scored",
-                    "Increases by {X:red,C:white}X#2#{} Mult",
-                    "per hand played",
-                    "resets at end of round",      
+                    "when scored, increases by {X:red,C:white}X#2#{} Mult",
+                    "per hand played beyond the first",
+                    "Resets at end of round",      
                 }
             },
             j_poke_steelix = {
