@@ -2503,6 +2503,13 @@ return {
                     "random {C:pink}Energy{} with {C:dark_edition}Negative{}"
                 },
             },
+            c_poke_revenant = {
+                name = "Revenant",
+                text = {
+                    "Adds a {C:item}Silver{} seal",
+                    "to {C:attention}1{} selected card",
+                }
+            },
         },
         Tag = {
             tag_poke_pocket_tag = {
@@ -2829,8 +2836,21 @@ return {
                 text = {
                     "Creates an {C:pink}Energy{} card",
                     "if it scores in the",
-                    "{C:attention}first hand{} of round"
+                    "{C:attention}first hand{} of round",
+                    "{C:inactive}(Must have room){}"
                 },
+            },
+            
+            --less cursed
+            poke_silver_seal = {
+                name = "Silver Seal",
+                text = {
+                  "If played hand has at least",
+                  "{C:attention}#1#{} cards with the same {C:attention}rank{}",
+                  "or {C:attention}suit{} as this card, discard",
+                  "this card and create an {C:item}Item{} card",
+                  "{C:inactive}(Must have room){}"
+                }
             },
 
             grass_sticker = {
@@ -3092,6 +3112,7 @@ return {
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
         labels = {
             poke_pink_seal_seal = "Pink Seal",
+            poke_silver_seal = "Silver Seal",
 
             poke_shiny = "Shiny",
 

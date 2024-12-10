@@ -557,6 +557,34 @@ local obituary = {
   end,
 }
 
+local revenant = {
+  name = "revenant",
+  key = "revenant",
+  set = "Spectral",
+  config = {extra = "Silver", max_highlighted = 1},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'poke_silver_seal', set = 'Other', specific_vars = {2}}
+  end,
+  pos = { x = 1, y = 4 },
+  atlas = "Mart",
+  cost = 4,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card)
+    local conv_card = G.hand.highlighted[1]
+    G.E_MANAGER:add_event(Event({func = function()
+      play_sound('tarot1')
+      return true end }))
+    
+    G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+        conv_card:set_seal("poke_silver", nil, true)
+        return true end }))
+    
+    delay(0.5)
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+  end,
+}
+
 local nightmare = {
   name = "nightmare",
   key = "nightmare",
@@ -657,7 +685,7 @@ if pokermon_config.jokers_only then
 end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare}
+        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)
