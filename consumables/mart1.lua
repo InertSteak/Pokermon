@@ -565,7 +565,7 @@ local revenant = {
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'poke_silver_seal', set = 'Other', specific_vars = {2}}
   end,
-  pos = { x = 1, y = 4 },
+  pos = { x = 2, y = 5 },
   atlas = "Mart",
   cost = 4,
   unlocked = true,
