@@ -31,7 +31,7 @@ local silver = {
       return { vars = {self.config.match_amount, } }
   end,
 	atlas = "pinkseal",
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
 		if context.cardarea == G.hand and not context.repetition_only then
       local matches = 0
