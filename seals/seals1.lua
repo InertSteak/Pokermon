@@ -51,7 +51,39 @@ local silver = {
             end
             G.hand:add_to_highlighted(card, true)
             play_sound('card1', 1)
-            G.FUNCS.discard_cards_from_highlighted(nil, true)
+            local removed = false
+            local destroyed = false
+            for j = 1, #G.jokers.cards do
+                local eval = nil
+                eval = G.jokers.cards[j]:calculate_joker({discard = true, other_card =  card, full_hand = G.hand.highlighted})
+                if eval then
+                  if eval.remove then removed = true end
+                  card_eval_status_text(G.jokers.cards[j], 'jokers', nil, 1, nil, eval)
+                end
+            end
+            
+            if removed then
+              destroyed = true
+              if card.ability.name == 'Glass Card' then 
+                  card:shatter()
+              else
+                  card:start_dissolve()
+              end
+              for j=1, #G.jokers.cards do
+                eval_card(G.jokers.cards[j], {cardarea = G.jokers, remove_playing_cards = true, removed = card})
+              end
+            else 
+              card.ability.discarded = true
+              draw_card(G.hand, G.discard, 100, 'down', false, card)
+              G.GAME.round_scores.cards_discarded.amt = G.GAME.round_scores.cards_discarded.amt + 1
+            end
+            
+            if destroyed then 
+              for j=1, #G.jokers.cards do
+                  eval_card(G.jokers.cards[j], {cardarea = G.jokers, remove_playing_cards = true, removed = card})
+              end
+            end
+            
             return true
           end,
         }))
