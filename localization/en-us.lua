@@ -2845,7 +2845,7 @@ return {
             poke_silver_seal = {
                 name = "Silver Seal",
                 text = {
-                  "If played hand has at least",
+                  "If scoring hand has at least",
                   "{C:attention}#1#{} cards with the same {C:attention}rank{}",
                   "or {C:attention}suit{} as this card, discard",
                   "this card and create an {C:item}Item{} card",
