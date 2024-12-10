@@ -563,7 +563,7 @@ local revenant = {
   set = "Spectral",
   config = {extra = "Silver", max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {key = 'poke_silver_seal', set = 'Other', specific_vars = {2}}
+    info_queue[#info_queue+1] = {key = 'poke_silver_seal', set = 'Other'}
   end,
   pos = { x = 2, y = 5 },
   atlas = "Mart",

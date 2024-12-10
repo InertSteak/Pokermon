@@ -33,14 +33,7 @@ local silver = {
 	atlas = "pinkseal",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
-		if context.cardarea == G.hand and not context.repetition_only then
-      local matches = 0
-      for k, v in ipairs(context.scoring_hand) do
-        if v:get_id() == card:get_id() or card:is_suit(v.base.suit) then
-          matches = matches + 1
-        end
-      end
-      if matches >= self.config.match_amount then
+		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand then
         G.E_MANAGER:add_event(Event({
           func = function()
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -88,8 +81,7 @@ local silver = {
           end,
         }))
       delay(0.3)
-      end
-		end
+    end
 	end,
 }
 
