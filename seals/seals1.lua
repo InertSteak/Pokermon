@@ -33,7 +33,8 @@ local silver = {
 	atlas = "pinkseal",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
-		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand then
+		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded then
+        card.ability.discarded = true
         G.E_MANAGER:add_event(Event({
           func = function()
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -66,7 +67,6 @@ local silver = {
                 eval_card(G.jokers.cards[j], {cardarea = G.jokers, remove_playing_cards = true, removed = card})
               end
             else 
-              card.ability.discarded = true
               draw_card(G.hand, G.discard, 100, 'down', false, card)
               G.GAME.round_scores.cards_discarded.amt = G.GAME.round_scores.cards_discarded.amt + 1
             end
