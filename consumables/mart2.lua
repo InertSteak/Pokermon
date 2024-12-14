@@ -496,12 +496,11 @@ local upgrade = {
     elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
     else enhancement = G.P_CENTERS.m_lucky
     end
-    juice_flip()
+    juice_flip(card)
     for i = 1, #G.hand.highlighted do
       G.hand.highlighted[i]:set_ability(enhancement, nil, true)
     end
-    delay(0.5)
-    juice_flip()
+    juice_flip(card, true)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
