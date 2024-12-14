@@ -277,14 +277,20 @@ local ninetales={
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('ninetails') < G.GAME.probabilities.normal/card.ability.extra.odds) then
           local _card = nil
+          local text = nil
+          local text_colour = nil
           if pseudorandom('ninetails') > .50 then
             _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+            text = 'k_plus_tarot'
+            text_colour = G.C.PURPLE
           else
             _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
+            text = 'k_plus_planet'
+            text_colour = G.C.SECONDARY_SET.Planet
           end
           _card:add_to_deck()
           G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(text), colour = text_colour})
         end
       end 
     end
