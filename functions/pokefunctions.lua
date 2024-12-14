@@ -72,6 +72,7 @@ family = {
     {"mudkip", "marshtomp", "swampert"},
     {"buizel", "floatzel"},
     {"grubbin", "charjabug", "vikavolt"},
+    {"dreepy", "drakloak", "dragapult"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"}
@@ -725,7 +726,7 @@ get_gen_allowed = function(atlas)
 end
 
 get_poke_allowed = function(key)
-  local banned_keys = {"taurosh"}
+  local banned_keys = {"taurosh", "dreepy_dart"}
   local allowed = true
   
   for i=1, #banned_keys do

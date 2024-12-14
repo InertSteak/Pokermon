@@ -20,26 +20,50 @@ pseudorandom_multi = function(args)
   return result
 end
 
-juice_flip = function()
-  for i = 1, #G.hand.highlighted do
-      G.E_MANAGER:add_event(Event({
-          trigger = 'after',
-          delay = 0.4,
-          func = function()
-              play_sound('tarot1')
-              G.hand.highlighted[i]:juice_up(0.3, 0.5)
-              return true
-          end
-      }))
-      local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
-      G.E_MANAGER:add_event(Event({
-          trigger = 'after',
-          delay = 0.15,
-          func = function()
-              G.hand.highlighted[i]:flip(); play_sound('card1', percent); G.hand.highlighted[i]:juice_up(0.3, 0.3); return true
-          end
-      }))
+juice_flip = function(card, second)
+  local sound = 'card1'
+  local base_percent = 1.15
+  local extra = nil
+  if second then sound = 'tarot2' end
+  if second then base_percent = 0.85 end
+  if second then extra = .6 end
+  G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+      play_sound('tarot1')
+      card:juice_up(0.3, 0.5)
+      return true end }))
+  for i=1, #G.hand.highlighted do
+      local percent = nil
+      if second then
+        percent = base_percent + (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+      else
+        percent = base_percent - (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+      end
+      G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.highlighted[i]:flip();play_sound(sound, percent, extra);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true      end }))
   end
+  delay(0.2)
+end
+
+juice_flip_hand = function(card, second)
+  local sound = 'card1'
+  local base_percent = 1.15
+  local extra = nil
+  if second then sound = 'tarot2' end
+  if second then base_percent = 0.85 end
+  if second then extra = .6 end
+  G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+      play_sound('tarot1')
+      card:juice_up(0.3, 0.5)
+      return true end }))
+  for i=1, #G.hand.cards do
+      local percent = nil
+      if second then
+        percent = base_percent + (i-0.999)/(#G.hand.cards-0.998)*0.3
+      else
+        percent = base_percent - (i-0.999)/(#G.hand.cards-0.998)*0.3
+      end
+      G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.cards[i]:flip();play_sound(sound, percent, extra);G.hand.cards[i]:juice_up(0.3, 0.3);return true end }))
+  end
+  delay(0.2)
 end
 
 juice_flip_single = function(card, index)

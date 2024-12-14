@@ -2331,6 +2331,37 @@ return {
                     "a {C:attention}Straight{}",
                 } 
             },
+            j_poke_dreepy = {
+                name = "Dreepy",
+                text = {
+                  "When sold, adds {C:money}$#1#{} of sell value",
+                  "to every Joker card and",
+                  "converts all cards {C:attention}held",
+                  "in hand to {C:spades}#2#{}",
+                  "{C:inactive}(Evolves when a straight flush is played){}",
+                }
+            },
+            j_poke_drakloak = {
+                name = "Drakloak",
+                text = {
+                  "Adds the sell value of all",
+                  "owned {C:attention}Jokers{} to Mult {C:inactive}({C:mult}+#2#{C:inactive})",
+                  "If played hand is a {C:attention}Straight Flush{}",
+                  "adds {C:money}$#1#{} of sell value to every Joker card",
+                  "{C:inactive}(Evolves at {C:money}$#2#{}{C:inactive}/#3# total sell value of Jokers)",
+                }
+            },
+            j_poke_dragapult = {
+                name = "Dragapult",
+                text = {
+                  "{X:red,C:white} X#2# {} Mult for every {C:money}${} of",
+                  "sell value of all owned {C:attention}Jokers{}",
+                  "If played hand is a {C:attention}Straight Flush{}",
+                  "and you have no {C:attention}Dreepy Darts{}",
+                  "create {C:attention}2 Dreepy Darts{} with {C:dark_edition}Negative{}",
+                  "{C:inactive}(Currently {X:red,C:white} X#3# {C:inactive} Mult){}"
+                }
+            },
             j_poke_fidough = {
                 name = "Fidough",
                 text = {
@@ -2821,6 +2852,12 @@ return {
                     "{C:inactive,s:0.8}(Non-Pokemon Jokers will always use precise scaling){}"
                 }
             },
+            designed_by = {
+              name = "Designed By",
+              text = {
+                "{C:dark_edition}#1#{}"
+              }
+            },
             safaridesc = {
                 name = "Safari",
                 text = {
@@ -3104,7 +3141,8 @@ return {
             poke_disguise_intact = "Disguise Intact! Death Prevented!",
             poke_disguise_broken = "Disguise Broken! Death Not Prevented!",
             poke_dig_ex = "Dig!",
-            poke_blazekick_ex = "Blaze Kick!"
+            poke_blazekick_ex = "Blaze Kick!",
+            poke_darts_ex = "Darts!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

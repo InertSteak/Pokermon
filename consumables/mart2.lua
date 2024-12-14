@@ -447,7 +447,7 @@ local kingsrock = {
   discovered = true,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
-    juice_flip()
+    juice_flip(card)
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = 0.2,
@@ -456,7 +456,7 @@ local kingsrock = {
         end
     }))
     delay(0.5)
-    juice_flip()
+    juice_flip(card, true)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -530,6 +530,7 @@ local dubious_disc = {
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
+    juice_flip_hand(card)
     for i = 1, #G.hand.cards do
       local enhancement_type = pseudorandom(pseudoseed('dubious'))
       local enhancement = nil
@@ -542,11 +543,9 @@ local dubious_disc = {
       elseif enhancement_type > .23 then enhancement = G.P_CENTERS.m_gold
       elseif enhancement_type > .12 then enhancement = G.P_CENTERS.m_lucky
       else enhancement = G.P_CENTERS.c_base end
-      juice_flip_single(G.hand.cards[i], i)
       G.hand.cards[i]:set_ability(enhancement, nil, true)
-      delay(0.2)
-      juice_flip_single(G.hand.cards[i], i)
     end
+    juice_flip_hand(card, true)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
