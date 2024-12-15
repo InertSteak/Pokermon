@@ -677,11 +677,11 @@ local porygon={
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
-  config = {extra = {rank = "3", money1 = 1, money2 = 2, third_goal = 5, third_times = 0}},
+  config = {extra = {rank = "3", money = 1, money2 = 2, third_goal = 5, third_times = 0}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2, center.ability.extra.third_times, center.ability.extra.third_goal}}
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, center.ability.extra.money2, center.ability.extra.third_times, center.ability.extra.third_goal}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -704,7 +704,7 @@ local omanyte={
         third_level = threes > 2
         
         if first_level and not context.blueprint then
-          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money1
+          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
           card:set_cost()
           G.E_MANAGER:add_event(Event({
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
@@ -735,11 +735,11 @@ local omanyte={
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
-  config = {extra = {rank = "3", money1 = 2, money2 = 3}},
+  config = {extra = {rank = "3", money = 2, money2 = 3}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money1, center.ability.extra.money2}}
+   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, center.ability.extra.money2}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -764,7 +764,7 @@ local omastar={
         fourth_level = threes > 3
         
         if first_level and not context.blueprint then
-          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money1
+          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
           card:set_cost()
           G.E_MANAGER:add_event(Event({
             func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
