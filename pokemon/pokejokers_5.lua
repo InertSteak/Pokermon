@@ -207,11 +207,13 @@ local magmar={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      card.ability.extra.remove_triggered = false
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES and not card.ability.extra.remove_triggered end
       juice_card_until(card, eval, true)
     end
     if context.discard and not context.blueprint then
-      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
+        card.ability.extra.remove_triggered = true
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
         return {
