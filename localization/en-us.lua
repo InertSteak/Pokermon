@@ -1234,7 +1234,7 @@ return {
                     "Sometimes {C:attention}replaces{} the edition",
                     "of a random {C:attention}Joker{} with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{C:inactive,s:0.8}(Exludes Gengars){}"
+                    "{C:inactive,s:0.8}(Excludes Gengars){}"
                 } 
             },
             j_poke_onix = {
