@@ -156,6 +156,64 @@ local delibird={
   end
 }
 -- Mantine 226
+local mantine={
+  name = "mantine",
+  pos = {x = 4, y = 7},
+  config = {extra = {chips = 0, chip_mod = 5,}},
+  loc_txt = {
+    name = "Mantine",
+    text = {
+      "Gains {C:chips}+#2#{} Chips when a",
+      "{C:attention}Gold{} card is held in hand",
+      "or when a played {C:attention}Gold{} card scores",
+      "{C:inactive}(Currently{C:chips}+#1#{C:inactive} Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,}}
+  end,
+  rarity = 3,
+  cost = 8,
+  enhancement_gate = "m_gold",
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
+      if context.other_card.ability.name == 'Gold Card' then 
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        if context.cardarea == G.play then
+          return {
+            extra = {focus = card, message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+            card = card,
+            colour = G.C.CHIPS
+          }
+        else
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+          return {
+              message = '',
+              colour = G.C.CHIPS,
+              card = card
+          }
+        end
+      end
+    end
+  end
+}
 -- Skarmory 227
 -- Houndour 228
 -- Houndoom 229
@@ -546,5 +604,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

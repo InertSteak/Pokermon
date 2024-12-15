@@ -6,6 +6,84 @@
 -- Finneon 456
 -- Lumineon 457
 -- Mantyke 458
+local mantyke={
+  name = "mantyke",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2, chip_total = 0,}},
+  loc_txt = {
+    name = "Mantyke",
+    text = {
+      "{C:attention}Baby{}, {X:red,C:white}X#2#{} Mult",
+      "At end of round, a random",
+      "card in {C:attention}deck{} becomes {C:attention}Gold{}.",
+      "{C:attention}Gold{} cards {C:attention}held{} in",
+      "hand give {C:chips}+#1#{} Chips",
+      "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    return {vars = {center.ability.extra.chips, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Baby",
+  ptype = "Water",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context)
+        local chip_temp_total = card.ability.extra.chip_total
+        card.ability.extra.chip_total = 0
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus,
+          chip_mod = chip_temp_total
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand then
+      if context.other_card.ability.name == 'Gold Card' then 
+        if context.other_card.debuff then
+          return {
+            message = localize("k_debuffed"),
+            colour = G.C.RED,
+            card = card,
+          }
+        else
+          card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            card = card,
+          }
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local target = nil
+      local unenhaced_cards = {}
+      
+      for k, v in pairs(G.playing_cards) do
+        if v.config.center == G.P_CENTERS.c_base then
+          unenhaced_cards[#unenhaced_cards + 1] = v
+        end
+      end
+      
+      target = pseudorandom_element(unenhaced_cards, pseudoseed('mantyke'))
+      target:set_ability(G.P_CENTERS.m_gold, nil, true)
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_gold")})
+    end
+    return level_evo(self, card, context, "j_poke_mantine")
+  end
+}
 -- Snover 459
 -- Abomasnow 460
 -- Weavile 461
@@ -408,5 +486,5 @@ local porygonz={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
 }
