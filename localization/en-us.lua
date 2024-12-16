@@ -1906,6 +1906,15 @@ return {
                   "{C:inactive}(Must have room)"
                 }
             },
+            j_poke_mantine = {
+                name = "Mantine",
+                text = {
+                  "Gains {C:chips}+#2#{} Chips when a",
+                  "{C:attention}Gold{} card is held in hand",
+                  "or when a played {C:attention}Gold{} card scores",
+                  "{C:inactive}(Currently{C:chips}+#1#{C:inactive} Chips)",
+                }
+            },
             j_poke_kingdra = {
                 name = 'Kingdra',
                 text = {
@@ -2173,6 +2182,17 @@ return {
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },
+            j_poke_mantyke = {
+                name = "Mantyke",
+                text = {
+                  "{C:attention}Baby{}, {X:red,C:white}X#2#{} Mult",
+                  "At end of round, a random",
+                  "card in {C:attention}deck{} becomes {C:attention}Gold{}.",
+                  "{C:attention}Gold{} cards {C:attention}held{} in",
+                  "hand give {C:chips}+#1#{} Chips",
+                  "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
+                }
+            },
             j_poke_magnezone = {
                 name = 'Magnezone',
                 text = {
@@ -2273,6 +2293,26 @@ return {
                     "{C:inactive}(Must have room)",
                     "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
                 } 
+            },
+            j_poke_elgyem = {
+              name = "Elgyem",
+              text = {
+                "Create a {C:dark_edition}Negative{} {C:planet}Planet{} card",
+                "of one of your {C:attention}#1#{}",
+                "highest level {}poker hands{}",
+                "when {C:attention}Blind{} is selected",
+                "{C:inactive,s:0.8}(Evolves when holding {C:planet,s:0.8}#2#{C:inactive,s:0.8}/#3# different planet cards){}"
+              }
+            },
+            j_poke_beheeyem = {
+                name = "Beheeyem",
+                text = {
+                  "Create a {C:dark_edition}Negative{} {C:planet}Planet{} card of",
+                  "one of your {C:attention}#1#{} highest level",
+                  "{}poker hands{} when {C:attention}Blind{} is selected",
+                  "When any {C:attention}Booster{} is opened, create a",
+                  "{C:attention}Telescope{} or {C:attention}Observatory{} if applicable"
+                }
             },
             j_poke_grubbin = {
                 name = 'Grubbin',

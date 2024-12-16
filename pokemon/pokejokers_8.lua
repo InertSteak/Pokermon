@@ -160,15 +160,6 @@ local mantine={
   name = "mantine",
   pos = {x = 4, y = 7},
   config = {extra = {chips = 0, chip_mod = 5,}},
-  loc_txt = {
-    name = "Mantine",
-    text = {
-      "Gains {C:chips}+#2#{} Chips when a",
-      "{C:attention}Gold{} card is held in hand",
-      "or when a played {C:attention}Gold{} card scores",
-      "{C:inactive}(Currently{C:chips}+#1#{C:inactive} Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}

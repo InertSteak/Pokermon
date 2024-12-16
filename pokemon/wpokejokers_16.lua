@@ -10,17 +10,6 @@ local mantyke={
   name = "mantyke",
   pos = {x = 0, y = 0},
   config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2, chip_total = 0,}},
-  loc_txt = {
-    name = "Mantyke",
-    text = {
-      "{C:attention}Baby{}, {X:red,C:white}X#2#{} Mult",
-      "At end of round, a random",
-      "card in {C:attention}deck{} becomes {C:attention}Gold{}.",
-      "{C:attention}Gold{} cards {C:attention}held{} in",
-      "hand give {C:chips}+#1#{} Chips",
-      "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
