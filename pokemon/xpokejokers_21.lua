@@ -70,7 +70,8 @@ local elgyem={
             break
           end
         end
-        if unique then
+
+        if unique and G.consumeables.cards[i].ability.set == 'Planet' then
           uniques[#uniques + 1] = G.consumeables.cards[i]
         end
       end
