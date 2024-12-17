@@ -21,18 +21,18 @@ local create_pocket_card = function(self, card)
       if evo_item_chance > .92 then
         local evo_item_keys = {}
         for k, v in pairs(G.jokers.cards) do
-          if v.item_req then
-            if type(v.item_req) == "table" then
-              table.insert(evo_item_keys, "c_poke_"..pseudorandom_element(v.item_req, pseudoseed('match')))
+          if v.config.center.item_req then
+            if type(v.config.center.item_req) == "table" then
+              table.insert(evo_item_keys, "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match')))
             else
-              table.insert(evo_item_keys, "c_poke_"..v.item_req)
+              table.insert(evo_item_keys, "c_poke_"..v.config.center.item_req)
             end
           end
         end
         if #evo_item_keys > 0 then
-          return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
-        else
           return create_card("Item", G.pack_cards, nil, nil, true, true, pseudorandom_element(evo_item_keys, pseudoseed('match')), nil)
+        else
+          return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
         end
       end
       return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
