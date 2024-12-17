@@ -2310,7 +2310,7 @@ return {
                   "Create a {C:dark_edition}Negative{} {C:planet}Planet{} card of",
                   "one of your {C:attention}#1#{} highest level",
                   "{}poker hands{} when {C:attention}Blind{} is selected",
-                  "When any {C:attention}Booster{} is opened, create a",
+                  "After opening {C:attention}#2# Boosters{}, create a",
                   "{C:attention}Telescope{} or {C:attention}Observatory{} if applicable"
                 }
             },

@@ -13,8 +13,8 @@ local elgyem={
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
     return {vars = {center.ability.extra.top_planets, center.ability.extra.current_planet_count, center.ability.extra.target_planet_count}}
   end,
-  rarity = 2,
-  cost = 6,
+  rarity = 3,
+  cost = 7,
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex5",
@@ -83,15 +83,15 @@ local elgyem={
 local beheeyem={
   name = "beheeyem",
   pos = {x = 13, y = 7},
-  config = {extra = {top_planets = 3}},
+  config = {extra = {top_planets = 3, boosters_to_open = 9}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
-    return {vars = {center.ability.extra.top_planets}}
+    return {vars = {center.ability.extra.top_planets, center.ability.extra.boosters_to_open}}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex5",
@@ -138,33 +138,39 @@ local beheeyem={
       local added = false
       local telescope_in_shop = false
       local observatory_in_shop = false
-      for i = 1, #G.shop_vouchers.cards do
-        if G.shop_vouchers.cards[i].ability.name == "Telescope" then
-          telescope_in_shop = true
+      if not (G.GAME.used_vouchers.v_telescope and G.GAME.used_vouchers.v_observatory) then
+        card.ability.extra.boosters_to_open = card.ability.extra.boosters_to_open - 1
+      end
+      if card.ability.extra.boosters_to_open == 0 then
+        card.ability.extra.boosters_to_open = 9
+        for i = 1, #G.shop_vouchers.cards do
+          if G.shop_vouchers.cards[i].ability.name == "Telescope" then
+            telescope_in_shop = true
+          end
+          if G.shop_vouchers.cards[i].ability.name == "Observatory" then
+            observatory_in_shop = true
+          end
         end
-        if G.shop_vouchers.cards[i].ability.name == "Observatory" then
-          observatory_in_shop = true
+        if not G.GAME.used_vouchers.v_telescope and not telescope_in_shop then
+          G.shop_vouchers.config.card_limit = G.shop_vouchers.config.card_limit + 1
+          local _card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
+          G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_telescope'],{bypass_discovery_center = true, bypass_discovery_ui = true})
+          create_shop_card_ui(_card, 'Voucher', G.shop_vouchers)
+          _card:start_materialize()
+          G.shop_vouchers:emplace(_card)
+          added = true
         end
+        if G.GAME.used_vouchers.v_telescope and not G.GAME.used_vouchers.v_observatory and not observatory_in_shop then
+          G.shop_vouchers.config.card_limit = G.shop_vouchers.config.card_limit + 1
+          local _card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
+          G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_observatory'],{bypass_discovery_center = true, bypass_discovery_ui = true})
+          create_shop_card_ui(_card, 'Voucher', G.shop_vouchers)
+          _card:start_materialize()
+          G.shop_vouchers:emplace(_card)
+          added = true
+        end
+        if added then card:juice_up() end
       end
-      if not G.GAME.used_vouchers.v_telescope and not telescope_in_shop then
-        G.shop_vouchers.config.card_limit = G.shop_vouchers.config.card_limit + 1
-        local _card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
-        G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_telescope'],{bypass_discovery_center = true, bypass_discovery_ui = true})
-        create_shop_card_ui(_card, 'Voucher', G.shop_vouchers)
-        _card:start_materialize()
-        G.shop_vouchers:emplace(_card)
-        added = true
-      end
-      if G.GAME.used_vouchers.v_telescope and not G.GAME.used_vouchers.v_observatory and not observatory_in_shop then
-        G.shop_vouchers.config.card_limit = G.shop_vouchers.config.card_limit + 1
-        local _card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
-        G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['v_observatory'],{bypass_discovery_center = true, bypass_discovery_ui = true})
-        create_shop_card_ui(_card, 'Voucher', G.shop_vouchers)
-        _card:start_materialize()
-        G.shop_vouchers:emplace(_card)
-        added = true
-      end
-      if added then card:juice_up() end
     end
   end
 }
