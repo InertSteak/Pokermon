@@ -12,7 +12,7 @@ local pocket_tag = {
 		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_mega_1", specific_vars = { 2, 5 } }
 		return { vars = {} }
 	end,
-	apply = function(tag, context)
+	apply = function(self, tag, context)
 		if context.type == "new_blind_choice" then
 			--Might want to change that colour to something else, G.C.SECONDARY_SET.Code won't work without cryptid XD
 			--I'll leave that up to you
@@ -55,7 +55,7 @@ local shiny_tag = {
 		info_queue[#info_queue + 1] = G.P_CENTERS.e_poke_shiny
 		return { vars = {} }
 	end,
-	apply = function(tag, context)
+	apply = function(self, tag, context)
     if context.type == "store_joker_modify" then
       local _applied = nil
       if not context.card.edition and not context.card.temp_edition and context.card.ability.set == 'Joker' then
@@ -91,7 +91,7 @@ local stage_one_tag = {
 		info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
 		return { vars = {} }
 	end,
-	apply = function(tag, context)
+	apply = function(self, tag, context)
     if context.type == "store_joker_create" then
       local card = nil
       
@@ -124,7 +124,7 @@ local safari_tag = {
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
-	apply = function(tag, context)
+	apply = function(self, tag, context)
     if context.type == "store_joker_create" then
       local card = nil
       
