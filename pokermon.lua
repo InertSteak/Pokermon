@@ -1,13 +1,3 @@
---- STEAMODDED HEADER
---- MOD_NAME: Pokermon
---- MOD_ID: Pokermon
---- PREFIX: poke
---- MOD_AUTHOR: [See Credits Tab]
---- MOD_DESCRIPTION: A full content Balatro mod where every joker is a Pokemon.
---- BADGE_COLOUR: ED533A
---- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-1030F]
---- VERSION: 2.1.0
-
 pokermon = {}
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them

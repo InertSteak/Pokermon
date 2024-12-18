@@ -1,0 +1,20 @@
+{
+	"id": "Pokermon",
+	"name": "Pokermon",
+	"author": ["InertSteak", "Please See Credits Page"],
+	"description": "A full content Balatro mod where every joker is a Pokemon.",
+	"prefix": "poke",
+	"main_file": "pokermon.lua",
+	"priority": 0,
+	"badge_colour": "ED533A",
+	"badge_text_colour": "FFFFFF",
+  "display_name": "Pokermon",
+	"version": "2.1.0",
+	"dependencies": [
+			"Steamodded (>=1.0.0~ALPHA-1217c)",
+      "Lovely (>=0.6)"
+	],
+  "conflicts": [],
+	"provides": [],
+	"dump_loc": false 
+}
