@@ -716,7 +716,9 @@ local slowpoke={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.current_round.hands_left == 0 then
-        card.ability.extra.last_counter = card.ability.extra.last_counter + 1
+        if not context.blueprint then
+          card.ability.extra.last_counter = card.ability.extra.last_counter + 1
+        end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
