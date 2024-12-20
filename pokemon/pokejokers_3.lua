@@ -707,7 +707,8 @@ local slowpoke={
     return {vars = {center.ability.extra.Xmult, center.ability.extra.last_counter, center.ability.extra.last_goal}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 6,
+  item_req = "kingsrock",
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1", 
