@@ -505,7 +505,7 @@ create_UIBox_pokedex_jokers = function(keys)
   G.your_collection = {}
   G.your_collection[1] = CardArea(
     G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-    4*G.CARD_W,
+    math.min(4, #keys)*G.CARD_W,
     0.95*G.CARD_H, 
     {card_limit = #keys, type = 'title', highlight_limit = 0, collection = true})
   table.insert(deck_tables, 
