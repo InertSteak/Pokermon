@@ -505,9 +505,9 @@ create_UIBox_pokedex_jokers = function(keys)
   G.your_collection = {}
   G.your_collection[1] = CardArea(
     G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-    5*G.CARD_W,
+    4*G.CARD_W,
     0.95*G.CARD_H, 
-    {card_limit = 8, type = 'title', highlight_limit = 0, collection = true})
+    {card_limit = #keys, type = 'title', highlight_limit = 0, collection = true})
   table.insert(deck_tables, 
   {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
     {n=G.UIT.O, config={object = G.your_collection[1]}}
