@@ -554,7 +554,7 @@ function Controller:queue_R_cursor_press(x, y)
     controller_queue_R_cursor_press_ref(self, x, y)
     local clicked = self.hovering.target or self.focused.target
     if not G.SETTINGS.paused then
-      if clicked then
+      if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center then
         if clicked.config.center.stage then
           G.FUNCS.overlay_menu{
             definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name)),
