@@ -971,15 +971,19 @@ local horsea={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint then
+        local upgraded = false
         for k, v in ipairs(context.scoring_hand) do
           if v:get_id() == 6 then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+            if not upgraded then upgraded = true end
           end
         end
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
+        if upgraded then
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.MULT
+          }
+        end
       end
       if context.joker_main and card.ability.extra.mult > 0 then
         return {
