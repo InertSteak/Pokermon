@@ -534,8 +534,6 @@ G.FUNCS.pokedexui = function(e)
         G.FUNCS.overlay_menu{
           definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name)),
         }
-        sendDebugMessage("Open Pokedex")
-        sendDebugMessage("Pokemon key is "..selected.config.center.key)
       end
     end
   end
@@ -551,3 +549,17 @@ SMODS.Keybind({
     end
 })
 
+local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
+function Controller:queue_R_cursor_press(x, y)
+    controller_queue_R_cursor_press_ref(self, x, y)
+    local clicked = self.hovering.target or self.focused.target
+    if not G.SETTINGS.paused then
+      if clicked then
+        if clicked.config.center.stage then
+          G.FUNCS.overlay_menu{
+            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name)),
+          }
+        end
+      end
+    end
+end
