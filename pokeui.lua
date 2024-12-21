@@ -499,3 +499,55 @@ local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
         }))
     end
 
+create_UIBox_pokedex_jokers = function(keys)
+  local deck_tables = {}
+
+  G.your_collection = {}
+  G.your_collection[1] = CardArea(
+    G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+    5*G.CARD_W,
+    0.95*G.CARD_H, 
+    {card_limit = 8, type = 'title', highlight_limit = 0, collection = true})
+  table.insert(deck_tables, 
+  {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
+    {n=G.UIT.O, config={object = G.your_collection[1]}}
+  }}
+  )
+  
+  for i = 1, #keys do
+    local card = Card(G.your_collection[1].T.x + G.your_collection[1].T.w/2, G.your_collection[1].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[keys[i]])
+    G.your_collection[1]:emplace(card)
+  end
+
+  
+  local t =  create_UIBox_generic_options({ back_func = 'exit_overlay_menu', contents = {
+        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
+    }})
+  return t
+end
+
+G.FUNCS.pokedexui = function(e)
+  if G.STAGE == G.STAGES.RUN then
+    if G.jokers and G.jokers.highlighted and G.jokers.highlighted[1] then
+      local selected = G.jokers.highlighted[1]
+      if selected.config.center.stage then
+        G.FUNCS.overlay_menu{
+          definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name)),
+        }
+        sendDebugMessage("Open Pokedex")
+        sendDebugMessage("Pokemon key is "..selected.config.center.key)
+      end
+    end
+  end
+end
+
+
+-- Functionality for Pokedex View
+SMODS.Keybind({
+    key = "openPokedex",
+    key_pressed = "p",
+    action = function(controller)
+        G.FUNCS.pokedexui()
+    end
+})
+

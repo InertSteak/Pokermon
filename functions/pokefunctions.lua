@@ -489,6 +489,24 @@ get_highest_evo = function(card)
   return false
 end
 
+get_family_keys = function(cardname)
+  local keys = {}
+  local line = nil
+  for k, v in pairs(family) do
+    for x, y in pairs(v) do
+      if y == cardname then line = v; break end
+    end
+  end
+  if line then
+    for i = 1, #line do
+      table.insert(keys, 'j_poke_'..line[i])
+    end
+  else
+    table.insert(keys, 'j_poke_'..cardname)
+  end
+  return keys
+end
+
 pokemon_in_pool = function (self)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true
