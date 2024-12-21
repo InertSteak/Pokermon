@@ -73,11 +73,11 @@ local metang={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint then
-        local has_ace = false
+        local ace_count = 0
         for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
+            if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
         end
-        if has_ace then
+        if ace_count > 1 then
           if context.scoring_name == "Four of a Kind" then
             card.ability.extra.chips = card.ability.extra.chips + 4 * card.ability.extra.chip_mod
           else
