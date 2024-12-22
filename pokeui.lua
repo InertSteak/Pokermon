@@ -499,7 +499,9 @@ local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
         }))
     end
 
-create_UIBox_pokedex_jokers = function(keys)
+poke_joker_page = 1
+
+create_UIBox_pokedex_jokers = function(keys, previous_menu)
   local deck_tables = {}
 
   G.your_collection = {}
@@ -520,7 +522,7 @@ create_UIBox_pokedex_jokers = function(keys)
   end
 
   
-  local t =  create_UIBox_generic_options({ back_func = 'exit_overlay_menu', contents = {
+  local t =  create_UIBox_generic_options({ back_func = previous_menu or 'exit_overlay_menu', contents = {
         {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
     }})
   return t
@@ -539,6 +541,13 @@ G.FUNCS.pokedexui = function(e)
   end
 end
 
+G.FUNCS.pokedex_back = function()
+  G.FUNCS.your_collection_jokers()
+  G.FUNCS.your_collection_joker_page({cycle_config = {current_option = poke_joker_page}})
+  local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
+  page.config.ref_table.current_option = poke_joker_page
+  page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]
+end
 
 -- Functionality for Pokedex View
 SMODS.Keybind({
@@ -553,13 +562,13 @@ local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
     controller_queue_R_cursor_press_ref(self, x, y)
     local clicked = self.hovering.target or self.focused.target
-    if not G.SETTINGS.paused then
-      if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center then
-        if clicked.config.center.stage then
-          G.FUNCS.overlay_menu{
-            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name)),
-          }
-        end
+    if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center then
+      if clicked.config.center.stage then
+        local menu = G.SETTINGS.paused and 'pokedex_back' or nil
+        if menu then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+        G.FUNCS.overlay_menu{
+          definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name), menu),
+        }
       end
     end
 end
