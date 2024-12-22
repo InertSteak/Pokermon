@@ -92,7 +92,7 @@ local stage_one_tag = {
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)
-    if context.type == "store_joker_create" then
+    if context and context.type == "store_joker_create" then
       local card = nil
       
       card = create_random_poke_joker("stage1tag", "One", nil, context.area)
@@ -125,7 +125,7 @@ local safari_tag = {
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)
-    if context.type == "store_joker_create" then
+    if context and context.type == "store_joker_create" then
       local card = nil
       
       card = create_random_poke_joker("safaritag", nil, "poke_safari", context.area)
