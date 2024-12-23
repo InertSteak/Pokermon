@@ -237,6 +237,15 @@ return {
                     "{s:0.8,C:item}Twisted Spoon{s:0.8} excluded"
                 }
             },
+            c_poke_prismscale = {
+                name = "Prism Scale",
+                text = {
+                    "Converts {C:attention}#2#{} random {C:attention}held{}",
+                    "cards to be the {C:attention}suit{} of",
+                    "{C:attention}#1#{} selected card",
+                    "{C:attention}Evolution Card{}"
+                }
+            },
         },
         Energy = {
             c_poke_grass_energy = {
@@ -2007,7 +2016,7 @@ return {
             j_poke_treecko = {
                 name = "Treecko",
                 text = {
-                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
                     "Played {C:attention}#6#s, #7#s or #8#s{} have",
                     "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
@@ -2018,7 +2027,7 @@ return {
             j_poke_grovyle = {
                 name = "Grovyle",
                 text = {
-                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
                     "Played {C:attention}#6#s, #7#s or #8#s{} have",
                     "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
@@ -2029,7 +2038,7 @@ return {
             j_poke_sceptile = {
                 name = "Sceptile",
                 text = {
-                    "{C:attention}+#3#{} handsize, {C:attention}Nature{}",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
                     "Played {C:attention}#5#s, #6#s or #7#s{} earn {C:money}$#1#{}",
                     "Earn {C:money}$#1#{} at end of round for",
                     "each other {X:grass,C:white}Grass{} card you have",
@@ -2101,6 +2110,14 @@ return {
                     "other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} card",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Curently {C:chips}+#4#{}{C:inactive} total)"
+                } 
+            },
+            j_poke_feebas = {
+                name = 'Feebas',
+                text = {
+                    "{C:mult}+#1#{} Mult",
+                    "Applies {C:attention}Splash{}",
+                    "{C:inactive}(Evolves with a {C:attention}Prism Scale{}{C:inactive})"
                 } 
             },
             j_poke_beldum = {

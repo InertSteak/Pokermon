@@ -65,6 +65,7 @@ family = {
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
+    {"feebas", "milotic"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
     {"mantyke", "mantine"},

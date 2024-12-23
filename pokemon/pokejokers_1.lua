@@ -1220,7 +1220,7 @@ return {name = "Pokemon Jokers 01-30",
             local rmr = reset_mail_rank;
             function reset_mail_rank()
               rmr()
-              G.GAME.current_round.bulb1card.rank = "Ace"
+              G.GAME.current_round.bulb1card = {rank = 'Ace'}
               local valid_bulb_cards = {}
               for k, v in ipairs(G.playing_cards) do
                 if v.ability.effect ~= 'Stone Card' then

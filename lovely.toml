@@ -30,7 +30,7 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if next(find_joker('Splash')) then"
 position = "at"
-payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) then"
+payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) or next(find_joker('feebas')) then"
 match_indent = true
 
 # Mimikyu Localization Functionality
