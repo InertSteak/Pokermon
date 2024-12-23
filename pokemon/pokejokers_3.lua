@@ -1013,7 +1013,7 @@ local dodrio={
             colour = G.C.MULT,
             mult_mod = card.ability.extra.mult * 2
           }
-        elseif face_count > 1 or full_house then
+        elseif face_count > 2 or full_house then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
