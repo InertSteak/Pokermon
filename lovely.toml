@@ -246,3 +246,20 @@ if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
 end
 '''
 match_indent = true
+
+# Rapidash Shortcut effect 1/2
+# Make the game think that Rapidash is Shortcut for find_joker
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''function find_joker(name, non_debuff)'''
+position = 'after'
+payload = '''  if name == "Shortcut" then
+    local asdf = find_joker("poke_Shortcut")
+    local fdsa = find_joker("rapidash")
+    return (next(asdf) and asdf) or (next(fdsa) and fdsa) or {}
+  end
+  if name == "poke_Shortcut" then
+    name = "Shortcut"
+  end'''
+match_indent = true
