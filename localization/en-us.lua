@@ -1222,6 +1222,7 @@ return {
                     "{C:green}#1# in #2#{} chance to",
                     "{C:attention}replace{} the edition of a",
                     "random {C:attention}Joker{} with {C:dark_edition}Negative{}",
+                    "at end of round",
                     "{S:1.1,C:red,E:2}self destructs{}",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
                 } 
@@ -1233,6 +1234,7 @@ return {
                     "{C:attention}replace{} the edition of a",
                     "random {C:attention}Joker{} with {C:dark_edition}Negative{}",
                     "{S:1.1,C:red,E:2}self destructs{}",
+                    "at end of round",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
             },
