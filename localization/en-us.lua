@@ -2018,7 +2018,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
                     "Played {C:attention}#6#s, #7#s or #8#s{} have",
-                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
+                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Evolves after earning {C:money}$#2#/16{})"
@@ -2029,7 +2029,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
                     "Played {C:attention}#6#s, #7#s or #8#s{} have",
-                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{}",
+                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Evolves after earning {C:money}$#2#/32{})"
@@ -2039,7 +2039,7 @@ return {
                 name = "Sceptile",
                 text = {
                     "{C:attention}+#3#{} hand size, {C:attention}Nature{}",
-                    "Played {C:attention}#5#s, #6#s or #7#s{} earn {C:money}$#1#{}",
+                    "Played {C:attention}#5#s, #6#s or #7#s{} earn {C:money}$#1#{} when scored",
                     "Earn {C:money}$#1#{} at end of round for",
                     "each other {X:grass,C:white}Grass{} card you have",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
