@@ -298,6 +298,8 @@ local ninetales={
   add_to_deck = function(self, card, from_debuff)
     if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not from_debuff then
       local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
+      local edition = {negative = true}
+      _card:set_edition(edition, true)
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
@@ -565,7 +567,7 @@ local gloom={
 }
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.35, mult = 7}},
+  config = {extra = {Xmult_multi = 1.5, mult = 7}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)

@@ -717,7 +717,7 @@ return {
             j_poke_ninetales = {
                 name = "Ninetales",
                 text = {
-                    "{C:attention}Holding Medium{}",
+                    "{C:attention}Holding {C:dark_edition}Negative{} Medium{}",
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
                     "{C:attention}Tarot{} or {C:planet}Planet{} card when scored",
@@ -1409,8 +1409,9 @@ return {
                 name = 'Rhydon',      
                 text = {
                     "Every played {C:attention}Stone{} card",
-                    "permanently gains",
-                    "{C:chips}+#1#{} Chips when scored",
+                    "permanently gains {C:chips}+#1#{} Chips when scored",
+                    "Retrigger {C:attention}first{} played",
+                    "{C:attention}Stone{} card used in scoring",
                     "{C:inactive}(Evolves with a{} {C:attention}Linking Cord{}{C:inactive} card)"
                 } 
             },

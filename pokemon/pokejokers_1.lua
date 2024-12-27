@@ -266,7 +266,7 @@ local charmeleon={
 local charizard={
   name = "charizard", 
   pos = {x = 5, y = 0}, 
-  config = {extra = {mult = 36, Xmult = 1.25, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 36, Xmult = 1.5, d_remaining = 0, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}

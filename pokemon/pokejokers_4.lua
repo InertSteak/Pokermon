@@ -786,7 +786,7 @@ local rhyhorn={
 local rhydon={
   name = "rhydon", 
   pos = {x = 7, y = 8},
-  config = {extra = {chips = 16}},
+  config = {extra = {chips = 16, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -810,6 +810,26 @@ local rhydon={
           colour = G.C.CHIPS,
           card = card
       }
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card.ability.name == 'Stone Card' then
+        local first = nil
+        for i = 1, #context.scoring_hand do
+          if context.scoring_hand[i] == context.other_card then
+            first = true
+            break
+          elseif context.scoring_hand[i].ability.name == 'Stone Card' then
+            break
+          end
+        end
+        if first then
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
+      end
     end
     return item_evo(self, card, context, "j_poke_rhyperior")
   end
