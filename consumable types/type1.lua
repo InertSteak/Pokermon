@@ -7,7 +7,7 @@ local energy = {
  		collection = 'Energy Cards', -- label for the button to access the collection
  	},
   collection_row = {6, 6},
-  shop_rate = 4,
+  shop_rate = 2,
   default = "c_poke_grass_energy"
 }
 
