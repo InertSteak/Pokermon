@@ -7,8 +7,8 @@ local prismscale = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     return {vars = {self.config.max_highlighted, self.config.converted}}
   end,
-  pos = { x = 0, y = 0 },
-  atlas = "placeholder_item",
+  pos = { x = 3, y = 5 },
+  atlas = "Mart",
   cost = 4,
   evo_item = true,
   unlocked = true,
