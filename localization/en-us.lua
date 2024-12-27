@@ -2931,6 +2931,7 @@ return {
                 name = "Pink Seal",
                 text = {
                     "Creates an {C:pink}Energy{} card",
+                    "matching an owned Joker's {C:attention}type",
                     "if it scores in the",
                     "{C:attention}first hand{} of round",
                     "{C:inactive}(Must have room){}"

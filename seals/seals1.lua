@@ -10,7 +10,20 @@ local pink_seal = {
 				trigger = "after",
 				func = function()
 					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-						local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+            local energy_types = {}
+            local _card = nil
+            for l, v in pairs(G.jokers.cards) do
+              local match = matching_energy(v)
+              if match then
+                table.insert(energy_types, match)
+              end
+            end
+            if #energy_types > 0 then
+              local energy = pseudorandom_element(energy_types, pseudoseed('pink'))
+              _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+            else
+              _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+            end
 						_card:add_to_deck()
 						G.consumeables:emplace(_card)
 						card:juice_up()
@@ -18,6 +31,9 @@ local pink_seal = {
           return true
 				end,
 			}))
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+      end
 		end
 	end,
 }
