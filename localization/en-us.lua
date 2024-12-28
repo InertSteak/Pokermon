@@ -2589,9 +2589,10 @@ return {
             c_poke_nightmare = {
                 name = "Nightmare",
                 text = {
-                    "Destroys a random Pokemon",
-                    "Joker and creates {C:attention}3{}",
-                    "random {C:pink}Energy{} with {C:dark_edition}Negative{}"
+                    "Destroys selected Joker with",
+                    "a {C:pink}type{} and creates {C:attention}2{}",
+                    "{C:pink}Energy{} of that Joker's", 
+                    "{C:pink}type{} with {C:dark_edition}Negative{}"
                 },
             },
             c_poke_revenant = {
