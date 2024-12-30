@@ -99,9 +99,10 @@ return {
             c_poke_waterstone = {
                 name = "Water Stone",
                 text = {
-                    "Creates a {C:attention}Hierophant{} card",
+                    "Enhances {C:attention}#1#{} selected card",
+                    "to a {C:attention}Bonus Card{} and",
+                    "permanently gives it {C:chips}+#2#{} Chips",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_thunderstone = {
@@ -183,7 +184,8 @@ return {
                 text = {
                     "Applies a {C:dragon}Dragon{} sticker",
                     "to leftmost or selected Joker.",
-                    "Creates an {C:attention}Emperor{} card",
+                    "Creates up to {C:attention}3{} random",
+                    "{C:item}Item{} or {C:pink}Energy{} cards",
                     "{C:inactive}(Must have room){}"
                 },
             },
@@ -215,9 +217,11 @@ return {
             c_poke_icestone = {
                 name = "Ice Stone",
                 text = {
-                    "Creates a {C:attention}Justice{} card",
+                    "Enhances {C:attention}#1#{} selected cards",
+                    "to {C:attention}Glass Cards{}",
+                    "{C:green}#2# in #3#{} chance for each",
+                    "selected card to {C:attention}shatter{}",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 }
             },
             c_poke_shinystone = {
@@ -2123,6 +2127,13 @@ return {
                     "{C:inactive}(Evolves with a {C:attention}Prism Scale{}{C:inactive})"
                 } 
             },
+            j_poke_milotic = {
+                name = "Milotic",
+                text = {
+                  "Retrigger all played cards if",
+                  "they all have the same {C:attention}suit{}",
+                }
+            },
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
@@ -2287,11 +2298,11 @@ return {
             j_poke_glaceon = {
                 name = 'Glaceon',
                 text = {
-                    "Create a random {C:attention}Tarot{} card",
-                    "every {C:attention}3{} {C:green}rerolls{}",
-                    "{C:green}#2#{} in {C:green}#3#{} chance for {C:attention}2 Tarot{} cards",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
+                    "{C:attention}1{}{C:inactive,s:0.8} (Minimum){} free {C:green}Reroll{} per shop",
+                    "for every {C:attention}Glass Card{} in your full deck",
+                    "{C:green}#2#{} in {C:green}#3#{} chance per {C:green}Reroll{}",
+                    "to lose remaining free {C:green}Rerolls{}",
+                    "{C:inactive}(Currently {C:green}#4#{}{C:inactive}/#1# rerolls availible){}"
                 } 
             },
             j_poke_porygonz = {
@@ -2404,10 +2415,11 @@ return {
             j_poke_drakloak = {
                 name = "Drakloak",
                 text = {
-                  "Adds the sell value of all",
-                  "owned {C:attention}Jokers{} to Mult {C:inactive}({C:mult}+#2#{C:inactive})",
+                  "{X:red,C:white} X#4# {} Mult for every {C:money}${} of",
+                  "sell value of all owned {C:attention}Jokers{}",
                   "If played hand is a {C:attention}Straight Flush{}",
                   "adds {C:money}$#1#{} of sell value to every Joker card",
+                  "{C:inactive}(Currently {X:red,C:white} X#5# {C:inactive} Mult){}",
                   "{C:inactive}(Evolves at {C:money}$#2#{}{C:inactive}/#3# total sell value of Jokers)",
                 }
             },
@@ -2420,6 +2432,15 @@ return {
                   "and you have no {C:attention}Dreepy Darts{}",
                   "create {C:attention}2 Dreepy Darts{} with {C:dark_edition}Negative{}",
                   "{C:inactive}(Currently {X:red,C:white} X#3# {C:inactive} Mult){}"
+                }
+            },
+            j_poke_dreepy_dart = {
+                name = "Dreepy Dart",
+                text = {
+                  "When sold, adds {C:money}$#1#{} of sell value",
+                  "to every Joker card and",
+                  "converts all cards {C:attention}held{}",
+                  "in hand to {C:spades}#2#{}",
                 }
             },
             j_poke_fidough = {

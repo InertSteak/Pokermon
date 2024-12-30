@@ -264,7 +264,7 @@ local pinsir={
 local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
-  config = {extra = {Xmult_multi = 1.5, odds = 15}},
+  config = {extra = {Xmult_multi = 1.75, odds = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}

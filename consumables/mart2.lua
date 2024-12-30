@@ -72,9 +72,11 @@ local waterstone = {
   name = "waterstone",
   key = "waterstone",
   set = "Item",
+  config = {max_highlighted = 1, bonus = 15},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_heirophant
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
+    return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,
   pos = { x = 5, y = 3 },
   atlas = "Mart",
@@ -82,15 +84,14 @@ local waterstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_heirophant')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-    end
+    local conv_card = G.hand.highlighted[1]
+      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
+      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + self.config.bonus
+    juice_flip(card)
+    conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+    juice_flip(card, true)
+    delay(0.5)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -396,7 +397,6 @@ local dragonscale = {
   key = "dragonscale",
   set = "Item",
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_emperor
   end,
   pos = { x = 7, y = 2 },
   atlas = "Mart",
@@ -418,10 +418,19 @@ local dragonscale = {
     apply_type_sticker(choice, "Dragon")
     card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
     
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_emperor')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    for i = 1, 3 do
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local card_type = nil
+        if pseudorandom(pseudoseed('dragonscale')) > .50 then
+          card_type = "Item"
+        else
+          card_type = "Energy"
+        end
+        
+        local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
     end
   end,
   in_pool = function(self)
@@ -560,9 +569,11 @@ local icestone = {
   name = "icestone",
   key = "icestone",
   set = "Item",
+  config = {max_highlighted = 2, odds = 4},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_justice
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
+    return {vars = {self.config.max_highlighted, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
   end,
   pos = { x = 5, y = 4 },
   atlas = "Mart",
@@ -570,15 +581,18 @@ local icestone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_justice')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    juice_flip(card)
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_glass, nil, true)
     end
+    juice_flip(card, true)
+    for i = 1, #G.hand.highlighted do
+      if pseudorandom(pseudoseed('icestone')) <  G.GAME.probabilities.normal/self.config.odds then
+        poke_remove_card(G.hand.highlighted[i], card)
+      end
+    end
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
