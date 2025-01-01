@@ -314,15 +314,6 @@ local stantler={
   name = "stantler",
   pos = {x = 2, y = 8},
   config = {extra = {chips = 10}},
-  loc_txt = {
-    name = "Stantler",
-    text = {
-      "If played hand contains a {C:attention}Pair{}",
-      "gives {C:chips}+#1#{} Chips times the",
-      "first scoring card's {C:attention}base{} chips",
-      "Effect doubled on last hand of round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, }}

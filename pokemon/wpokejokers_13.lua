@@ -123,10 +123,7 @@ local metagross={
       end
     end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.scoring_name and context.scoring_name == "Four of a Kind" then
-      local total_chips = (context.other_card.base.nominal) + (context.other_card.ability.bonus) + (context.other_card.ability.perma_bonus or 0) 
-      if context.other_card.edition then
-        total_chips = total_chips + (context.other_card.edition.chips or 0)
-      end
+      local total_chips = poke_total_chips(context.other_card)
       local Xmult = (total_chips)^(1/3)
       if Xmult > 0 then
         return {

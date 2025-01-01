@@ -869,4 +869,10 @@ faint_baby_poke = function(self, card, context)
   end
 end
 
-
+poke_total_chips = function(card)
+  local total_chips = (card.base.nominal) + (card.ability.bonus) + (card.ability.perma_bonus or 0) 
+  if card.edition then
+    total_chips = total_chips + (card.edition.chips or 0)
+  end
+  return total_chips
+end

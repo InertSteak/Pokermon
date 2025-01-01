@@ -51,13 +51,6 @@ local milotic={
   name = "milotic",
   pos = {x = 8, y = 9},
   config = {extra = {mult = 1,mult_mod = 1,retriggers = 1, active = false}},
-  loc_txt = {
-    name = "Milotic",
-    text = {
-      "Retrigger all played cards if",
-      "they all have the same {C:attention}suit{}",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,

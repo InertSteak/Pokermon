@@ -99,9 +99,9 @@ return {
             c_poke_waterstone = {
                 name = "Water Stone",
                 text = {
-                    "Enhances {C:attention}#1#{} selected card",
-                    "to a {C:attention}Bonus Card{} and",
-                    "permanently gives it {C:chips}+#2#{} Chips",
+                    "{C:attention}Doubles{} total chips of",
+                    "{C:attention}#1#{} selected card",
+                    "{C:inactive}(Max of {C:chips}+#2#{C:inactive} Chips)",
                     "{C:attention}Evolution Card{}",
                 },
             },

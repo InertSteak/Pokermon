@@ -72,11 +72,11 @@ local waterstone = {
   name = "waterstone",
   key = "waterstone",
   set = "Item",
-  config = {max_highlighted = 1, bonus = 15},
+  config = {max_highlighted = 1, max_chips = 50},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
-    return {vars = {self.config.max_highlighted, self.config.bonus}}
+    return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
   pos = { x = 5, y = 3 },
   atlas = "Mart",
@@ -86,10 +86,10 @@ local waterstone = {
   discovered = true,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
-      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
-      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + self.config.bonus
+    local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
     juice_flip(card)
-    conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+    conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
+    conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
     juice_flip(card, true)
     delay(0.5)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
@@ -141,8 +141,8 @@ local firestone = {
   name = "firestone",
   key = "firestone",
   set = "Item",
+  config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_lovers
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 4, y = 3 },
@@ -151,15 +151,14 @@ local firestone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-    end
+    local conv_card = G.hand.highlighted[1]
+    juice_flip(card)
+    conv_card.ability.mult = conv_card.ability.mult or 0
+    conv_card.ability.mult = conv_card.ability.mult + 1
+    juice_flip(card, true)
+    delay(0.5)
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
