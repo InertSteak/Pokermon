@@ -219,7 +219,7 @@ local alakazam={
 local machop={
   name = "machop", 
   pos = {x = 0, y = 5},
-  config = {extra = {hands = 1, discards = 2, rounds = 5, mult = 4}},
+  config = {extra = {hands = 1, discards = 1, rounds = 5, mult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.rounds, center.ability.extra.mult}}

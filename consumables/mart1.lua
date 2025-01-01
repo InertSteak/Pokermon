@@ -598,19 +598,12 @@ local nightmare = {
   unlocked = true,
   discovered = true,
   use = function(self, card)
-    local victims = {}
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype and not v.ability.eternal then
-        table.insert(victims, v)
-      end
-    end
-    if #victims > 0 then
-      local victim = pseudorandom_element(victims, pseudoseed("nightmare"))
-      local context = {}
-      remove(victim, victim, context)
-    end
-    for i= 1, 3 do
-      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+    local selected = G.jokers.highlighted[1]
+    local energy = matching_energy(selected)
+    local context = {}
+    remove(selected, selected, context)
+    for i= 1, 2 do
+      local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)
       _card:add_to_deck()
@@ -618,12 +611,7 @@ local nightmare = {
     end
   end,
   can_use = function(self, card)
-    for k, v in pairs(G.jokers.cards) do
-      if v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype then
-        return true
-      end
-    end
-    return false
+    return G.jokers.highlighted and #G.jokers.highlighted == 1 and has_type(G.jokers.highlighted[1]) and not G.jokers.highlighted[1].ability.eternal
   end,
 }
 

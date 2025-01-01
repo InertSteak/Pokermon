@@ -16,7 +16,7 @@
 local dreepy={
   name = "dreepy",
   pos = {x = 0, y = 11},
-  config = {extra = {money = 2, straight_flush_played = 0, suit = "Spades"}},
+  config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
@@ -62,11 +62,12 @@ local dreepy={
 local drakloak={
   name = "drakloak",
   pos = {x = 2, y = 11},
-  config = {extra = {money = 2, total_sell_value = 0, sell_value_goal = 50}},
+  config = {extra = {money = 1, total_sell_value = 0, sell_value_goal = 40, Xmult = .01}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
-    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, center.ability.extra.sell_value_goal}}
+    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, center.ability.extra.sell_value_goal, center.ability.extra.Xmult, 
+                    1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -88,10 +89,12 @@ local drakloak={
           end
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.MONEY})
         end
+        
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.total_sell_value}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.total_sell_value
+          Xmult_mod = 1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult, 
+          card = card
         }
       end
     end
@@ -135,14 +138,18 @@ local dragapult={
       if context.joker_main then
         if next(context.poker_hands['Straight Flush']) and not next(find_joker('dreepy_dart')) then
           for i = 1, 2 do
-            local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_dreepy_dart", no_edition = true}
-            local new_card = SMODS.create_card(temp_card)
-            local edition = {negative = true}
-            new_card:set_edition(edition, true)
-            new_card:add_to_deck()
-            G.jokers:emplace(new_card)
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_darts_ex'), colour = G.C.MULT})
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+              play_sound('timpani')
+              local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_dreepy_dart", no_edition = true}
+              local new_card = SMODS.create_card(temp_card)
+              local edition = {negative = true}
+              new_card:set_edition(edition, true)
+              new_card:add_to_deck()
+              G.jokers:emplace(new_card)
+              return true end }))
           end
+          delay(0.6)
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_darts_ex'), colour = G.C.MULT})
         end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.total_sell_value * card.ability.extra.Xmult}}, 
@@ -168,16 +175,7 @@ local dragapult={
 local dreepy_dart={
   name = "dreepy_dart",
   pos = {x = 1, y = 11},
-  config = {extra = {money = 2, suit = "Spades"}},
-  loc_txt = {
-    name = "Dreepy Dart",
-    text = {
-      "When sold, adds {C:money}$#1#{} of sell value",
-      "to every Joker card and",
-      "converts all cards {C:attention}held{}",
-      "in hand to {C:spades}#2#{}",
-    }
-  },
+  config = {extra = {money = 1, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}

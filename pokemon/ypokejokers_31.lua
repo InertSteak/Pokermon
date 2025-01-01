@@ -27,7 +27,7 @@
 local fidough={
   name = "fidough",
   pos = {x = 8, y = 1},
-  config = {extra = {chips = 0,chip_mod = 4, rank = "2", id = 2}},
+  config = {extra = {chips = 0,chip_mod = 8, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
@@ -113,7 +113,7 @@ local fidough={
 local dachsbun={
   name = "dachsbun",
   pos = {x = 9, y = 1},
-  config = {extra = {chips = 0,chip_mod = 6, rank = "2", id = 2}},
+  config = {extra = {chips = 0,chip_mod = 12, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
@@ -137,7 +137,7 @@ local dachsbun={
           end
         end
         if contains then
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod + #find_pokemon_type("Fire")
+          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod + (#find_pokemon_type("Fire") * 2)
           local next_highest_id = 14
           local next_highest_rank = "Ace"
           for k, v in pairs(G.playing_cards) do

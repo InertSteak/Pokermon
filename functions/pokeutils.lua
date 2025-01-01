@@ -132,3 +132,18 @@ poke_remove_card = function(target, card)
       end
       card:juice_up()
 end
+
+poke_debug = function(message, verbose, depth)
+  if verbose then
+    sendDebugMessage("The type of the message variable is ["..type(message).."]")
+  end
+  if type(message) == "table" then
+    if depth then
+      sendDebugMessage(inspectDepth(message))
+    else
+      sendDebugMessage(inspect(message))
+    end
+  else
+    sendDebugMessage(message)
+  end
+end 

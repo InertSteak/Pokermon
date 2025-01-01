@@ -133,6 +133,10 @@ is_type = function(card, target_type)
   end
 end
 
+has_type = function(card)
+  return (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) or type_sticker_applied(card)
+end
+
 copy_scaled_values = function(card)
   local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
