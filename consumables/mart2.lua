@@ -141,9 +141,10 @@ local firestone = {
   name = "firestone",
   key = "firestone",
   set = "Item",
+  config = {max_highlighted = 4, min_highlighted = 4},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_lovers
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 4, y = 3 },
   atlas = "Mart",
@@ -151,15 +152,16 @@ local firestone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    juice_flip(card)
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_mult, nil, true)
     end
+    juice_flip(card, true)
+    
+    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
+    poke_remove_card(target, card)
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -209,9 +211,10 @@ local linkcable = {
   name = "linkcable",
   key = "linkcable",
   set = "Item",
+  config = {max_highlighted = 2, min_highlighted = 2},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_death
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 4 },
   atlas = "Mart",
@@ -219,15 +222,15 @@ local linkcable = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_death')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-    end
+    local conv_card_left = G.hand.highlighted[1]
+    local conv_card_right = G.hand.highlighted[2]
+    juice_flip(card)
+    poke_vary_rank(conv_card_left)
+    poke_vary_rank(conv_card_right, true)
+    juice_flip(card, true)
+    delay(0.5)
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -243,23 +246,31 @@ local leftovers = {
   name = "leftovers",
   key = "leftovers",
   set = "Item",
+  config = {max_highlighted = 3, min_highlighted = 3},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_hanged_man
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("snorlax_infoqueue")}}
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 7, y = 4 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_hanged_man')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    local leftover =  pseudorandom_element(G.hand.highlighted, pseudoseed('leftover'))
+    local deselect = {}
+    for i = 1, #G.hand.highlighted do
+      if G.hand.highlighted[i] ~= leftover then
+        table.insert(deselect, G.hand.highlighted[i])
+      end
+    end
+    for k = 1, #deselect do
+      G.hand:remove_from_highlighted(deselect[k])
+    end
+
+    for j = 1, 2 do
+      local leftover_copy = copy_card(leftover, nil, nil, G.playing_card)
+      poke_add_card(leftover_copy, card)
     end
   end,
   in_pool = function(self)

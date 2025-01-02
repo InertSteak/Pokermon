@@ -116,9 +116,10 @@ return {
             c_poke_firestone = {
                 name = "Fire Stone",
                 text = {
-                    "Creates a {C:attention}Lovers{} card",
+                    "Select {C:attention}#1#{} cards,",
+                    "Enhances selected cards to {C:attention}Mult Cards{}",
+                    "then destroys {C:attention}1{} at random",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_leafstone = {
@@ -132,17 +133,20 @@ return {
             c_poke_linkcable = {
                 name = "Linking Cord",
                 text = {
-                    "Creates a {C:attention}Death{} card",
+                    "Select {C:attention}#1#{} cards,",
+                    "{C:attention}Increase{} the rank of the {C:attention}left{} card",
+                    "{C:attention}Decrease{} the rank of the {C:attention}right{} card",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_leftovers = {
                 name = "Leftovers",
                 text = {
-                    "Creates a {C:attention}Hanged Man{} card",
+                    "Select {C:attention}#1#{} cards,",
+                    "{C:attention}2{} are deselected at random",
+                    "Create {C:attention}2{} copies of",
+                    "the remaining card",
                     "{C:attention}Held Card{}",
-                    "{C:inactive}(Must have room){}"
                 }
             },
             c_poke_leek = {
