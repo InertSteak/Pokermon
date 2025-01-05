@@ -38,9 +38,11 @@ local sunstone = {
   name = "sunstone",
   key = "sunstone",
   set = "Item",
+  config = {max_highlighted = 2,},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_sun
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 9, y = 3 },
   atlas = "Mart",
@@ -48,15 +50,14 @@ local sunstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_sun')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    juice_flip(card)
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
+      poke_vary_rank(G.hand.highlighted[i], nil, "sunstone")
     end
+    juice_flip(card, true)
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -144,6 +145,7 @@ local firestone = {
   config = {max_highlighted = 4, min_highlighted = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_mult
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 4, y = 3 },
@@ -177,9 +179,11 @@ local leafstone = {
   name = "leafstone",
   key = "leafstone",
   set = "Item",
+  config = {odds = 3},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_world
+    info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds,}}
   end,
   pos = { x = 7, y = 3 },
   atlas = "Mart",
@@ -188,14 +192,16 @@ local leafstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    juice_flip_hand(card)
+    for i = 1, #G.hand.cards do
+      if pseudorandom('leafstone') < G.GAME.probabilities.normal/self.config.odds then
+        G.hand.cards[i]:set_ability(G.P_CENTERS.m_lucky, nil, true)
+      end
     end
+    juice_flip_hand(card, true)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -223,11 +229,16 @@ local linkcable = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
-    local conv_card_left = G.hand.highlighted[1]
-    local conv_card_right = G.hand.highlighted[2]
+    local rightmost = G.hand.highlighted[1]
+    for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
     juice_flip(card)
-    poke_vary_rank(conv_card_left)
-    poke_vary_rank(conv_card_right, true)
+    for i=1, #G.hand.highlighted do
+      if G.hand.highlighted[i] ~= rightmost then
+        poke_vary_rank(G.hand.highlighted[i])
+      else
+        poke_vary_rank(G.hand.highlighted[i], true)
+      end
+    end
     juice_flip(card, true)
     delay(0.5)
     
@@ -583,7 +594,7 @@ local icestone = {
   config = {max_highlighted = 2, odds = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     return {vars = {self.config.max_highlighted, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
   end,
   pos = { x = 5, y = 4 },

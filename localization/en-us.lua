@@ -91,9 +91,10 @@ return {
             c_poke_sunstone = {
                 name = "Sun Stone",
                 text = {
-                    "Creates a {C:attention}Sun{} card",
+                    "Enhances {C:attention}#1#{} selected cards",
+                    "to {C:attention}Wild Cards{} and",
+                    "{C:attention}randomizes{} their ranks",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_waterstone = {
@@ -125,9 +126,10 @@ return {
             c_poke_leafstone = {
                 name = "Leaf Stone",
                 text = {
-                    "Creates a {C:attention}World{} card",
+                    "{C:green}#1# in #2#{} chance for",
+                    "each card in hand to",
+                    "be enhanced to a {C:attention}Lucky Card{}",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_linkcable = {

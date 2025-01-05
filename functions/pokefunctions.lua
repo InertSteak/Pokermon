@@ -158,7 +158,7 @@ remove = function(self, card, context)
   G.E_MANAGER:add_event(Event({
       trigger = 'after', delay = 0.3, blockable = false,
       func = function()
-          G.jokers:remove_card(self)
+          G.jokers:remove_card(card)
           card:remove()
           card = nil
           return true

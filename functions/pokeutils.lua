@@ -172,7 +172,7 @@ poke_debug = function(message, verbose, depth)
   end
 end 
 
-poke_vary_rank = function(card, decrease)
+poke_vary_rank = function(card, decrease, seed)
   local ranks = {'2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'}
   local current_rank_index = nil
   local new_rank_index = nil
@@ -188,6 +188,9 @@ poke_vary_rank = function(card, decrease)
     else
       new_rank_index = current_rank_index - 1
     end
+  elseif seed then
+    new_rank_index = pseudorandom_element(ranks, pseudoseed(seed))
+    sendDebugMessage(new_rank_index)
   else
     if current_rank_index == 13 then
       new_rank_index = 1
@@ -195,5 +198,10 @@ poke_vary_rank = function(card, decrease)
       new_rank_index = current_rank_index + 1
     end
   end
-  SMODS.change_base(card, nil, ranks[new_rank_index])
+  G.E_MANAGER:add_event(Event({
+      func = function()
+          SMODS.change_base(card, nil, seed and new_rank_index or ranks[new_rank_index])
+          return true
+      end
+  })) 
 end
