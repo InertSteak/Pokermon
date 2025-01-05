@@ -340,7 +340,7 @@ local magmortar={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {chip_mod = 25, odds = 10, rerolls = 0}},
+  config = {extra = {chip_mod = 6, suit = "Spades", rerolls = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_world
@@ -371,8 +371,7 @@ local leafeon={
         card.ability.extra.rerolls = 0
       end
     end
-        if self.ability.effect == "Lucky Card" then 
-    if context.individual and context.cardarea == G.play and context.other_card.ability.effect == "Lucky Card" and not context.other_card.debuff then
+    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) and not context.other_card.debuff then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
       return {
