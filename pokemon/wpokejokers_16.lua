@@ -340,11 +340,10 @@ local magmortar={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {chip_mod = 6, suit = "Spades", rerolls = 0}},
+  config = {extra = {chip_mod = 5, rerolls = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_world
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.chip_mod}}
+    return {vars = {center.ability.extra.rerolls, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.rerolls}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -354,31 +353,20 @@ local leafeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.TAROT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
-        card.ability.extra.rerolls = 0
-      end
+      card.ability.extra.rerolls = card.ability.extra.rerolls + 1
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
-    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) and not context.other_card.debuff then
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.rerolls > 0 then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod * card.ability.extra.rerolls
       return {
         extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
         colour = G.C.CHIPS,
         card = card
       }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.rerolls = 0
     end
   end
 }

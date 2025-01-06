@@ -2293,12 +2293,10 @@ return {
             j_poke_leafeon = {
                 name = 'Leafeon',
                 text = {
-                    "Create a {C:attention}World{} card",
-                    "every {C:attention}3{} {C:green}rerolls{}",
-                    "Every played card with {C:spades}#2#{} suit",
-                    "permanently gains {C:chips}+#3#{} Chips",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
+                    "When a {C:attention}Lucky{} card triggers",
+                    "it permanently gains {C:chips}+#2#{} Chips",
+                    "per {C:green}Reroll{} used in last shop",
+                    "{C:inactive}(Currently {C:chips}+#3#{}{C:inactive} Chips gained)"
                 } 
             },
             j_poke_glaceon = {
