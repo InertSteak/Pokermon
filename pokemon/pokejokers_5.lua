@@ -212,7 +212,7 @@ local magmar={
       juice_card_until(card, eval, true)
     end
     if context.discard and not context.blueprint then
-      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
+      if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
         card.ability.extra.remove_triggered = true
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
@@ -248,7 +248,7 @@ local pinsir={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
         if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[#G.hand.cards]:get_id() == context.full_hand[1]:get_id() then
           return {
@@ -1054,7 +1054,7 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint and context.full_hand then
       for k, v in ipairs(context.scoring_hand) do
         v.poke_scored = true
       end
@@ -1172,7 +1172,7 @@ local dratini={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
       end
@@ -1203,7 +1203,7 @@ local dragonair={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
       end
@@ -1242,7 +1242,7 @@ local dragonite={
         }
       end
     end
-    if context.repetition and context.cardarea == G.play and context.scoring_hand and #context.full_hand == 1 then
+    if context.repetition and context.cardarea == G.play and context.scoring_hand and context.full_hand and #context.full_hand == 1 then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,

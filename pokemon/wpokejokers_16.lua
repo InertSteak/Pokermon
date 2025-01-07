@@ -307,7 +307,7 @@ local magmortar={
     end
     if context.discard and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
+      if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
         card.ability.extra.remove_triggered = true

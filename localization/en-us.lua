@@ -100,8 +100,10 @@ return {
             c_poke_waterstone = {
                 name = "Water Stone",
                 text = {
-                    "{C:attention}Doubles{} total chips of",
-                    "{C:attention}#1#{} selected card",
+                    "Enhances {C:attention}#1#{} selected card",
+                    "into a {C:attention}Bonus{} card",
+                    "If already a {C:attention}Bonus{} card",
+                    "{C:attention}Doubles{} its total chips",
                     "{C:inactive}(Max of {C:chips}+#2#{C:inactive} Chips)",
                     "{C:attention}Evolution Card{}",
                 },
@@ -2243,7 +2245,7 @@ return {
                 name = 'Lickilicky',
                 text = {
                     "First and second played",
-                    "Played {C:attention}Jacks{} give {X:mult,C:white} X#1# {} Mult",
+                    "{C:attention}Jacks{} give {X:mult,C:white} X#1# {} Mult",
                     "when scored and further {C:attention}Jacks{}",
                     "give {X:mult,C:white} X#2# {} Mult when scored"
                 } 

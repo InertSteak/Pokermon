@@ -76,7 +76,7 @@ local waterstone = {
   config = {max_highlighted = 1, max_chips = 50},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
     return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
   pos = { x = 5, y = 3 },
@@ -87,10 +87,14 @@ local waterstone = {
   discovered = true,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
-    local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
     juice_flip(card)
-    conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
-    conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
+    if conv_card.ability.name == 'Bonus' then
+      local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
+      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
+      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
+    else
+      conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+    end
     juice_flip(card, true)
     delay(0.5)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then

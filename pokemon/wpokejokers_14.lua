@@ -41,7 +41,7 @@ local buizel={
   ptype = "Water",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
         local chips = card.ability.extra.chips * math.abs(#context.scoring_hand - #context.full_hand)
         if chips > 0 then
@@ -72,7 +72,7 @@ local floatzel={
   ptype = "Water",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
         local chips = card.ability.extra.chips * math.abs(#context.scoring_hand - #context.full_hand)
         if chips > 0 then
