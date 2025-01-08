@@ -2786,9 +2786,9 @@ return {
             eitem = {
                 name = "Evolution Card",
                 text = {
-                    "Evolves leftmost or selected",
-                    "{C:attention}eligible{} Joker",
-                    "at end of the next round"
+                    "When consumed, evolves leftmost",
+                    "or selected {C:attention}eligible{} Joker",
+                    "at end of the next round",
                 }
             },
             --Infoqueue used by some Consumables
