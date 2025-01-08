@@ -1531,7 +1531,7 @@ return {
                 text = {
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-                    "{C:spectral}Cryptid{} and certain Jokers",
+                    "{C:spectral}Cryptid{}, {C:item}Leftovers{} and certain Jokers",
                     "are {C:attention}duplicated{}"
                 } 
             },
