@@ -261,11 +261,12 @@ local leftovers = {
   name = "leftovers",
   key = "leftovers",
   set = "Item",
+  config = {joker_highlighted = 1, previous_round = 0, money_mod = 2},
   config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("snorlax_infoqueue")}}
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    return {vars = {center.ability.extra.joker_highlighted, center.ability.extra.money_mod}}
+    return {vars = {self.config.joker_highlighted, self.config.extra.money_mod}}
   end,
   pos = { x = 7, y = 4 },
   atlas = "Mart",
