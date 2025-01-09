@@ -205,3 +205,17 @@ poke_vary_rank = function(card, decrease, seed)
       end
   })) 
 end
+
+poke_create_base_copy = function(selected)
+  local suit = string.sub(selected.base.suit, 1, 1)
+  local rank = (selected.base.value == 'Ace' and 'A') or
+  (selected.base.value == 'King' and 'K') or
+  (selected.base.value == 'Queen' and 'Q') or
+  (selected.base.value == 'Jack' and 'J') or
+  (selected.base.value == '10' and 'T') or 
+  (selected.base.value)
+  
+  for j = 1, 2 do
+    create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE})
+  end
+end

@@ -261,32 +261,37 @@ local leftovers = {
   name = "leftovers",
   key = "leftovers",
   set = "Item",
-  config = {max_highlighted = 3, min_highlighted = 3},
+  config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("snorlax_infoqueue")}}
-    return {vars = {self.config.max_highlighted}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
+    return {vars = {center.ability.extra.joker_highlighted, center.ability.extra.money_mod}}
   end,
   pos = { x = 7, y = 4 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if #G.jokers.cards == 0 then return false end
+    return G.GAME.round > card.ability.extra.previous_round
+  end,
   use = function(self, card, area, copier)
-    local leftover =  pseudorandom_element(G.hand.highlighted, pseudoseed('leftover'))
-    local deselect = {}
-    for i = 1, #G.hand.highlighted do
-      if G.hand.highlighted[i] ~= leftover then
-        table.insert(deselect, G.hand.highlighted[i])
-      end
+    local target = nil
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      target = G.jokers.cards[1]
+    else
+      target = G.jokers.highlighted[1]
     end
-    for k = 1, #deselect do
-      G.hand:remove_from_highlighted(deselect[k])
-    end
-
-    for j = 1, 2 do
-      local leftover_copy = copy_card(leftover, nil, nil, G.playing_card)
-      poke_add_card(leftover_copy, card)
-    end
+    target.ability.extra_value = target.ability.extra_value + card.ability.extra.money_mod
+    target:set_cost()
+    G.E_MANAGER:add_event(Event({
+      func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
+    end}))
+    card.ability.extra.previous_round = G.GAME.round
+  end,
+  keep_on_use = function(self, card)
+    return true
   end,
   in_pool = function(self)
     return true

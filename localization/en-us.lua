@@ -146,11 +146,10 @@ return {
             c_poke_leftovers = {
                 name = "Leftovers",
                 text = {
-                    "Select {C:attention}#1#{} cards,",
-                    "{C:attention}2{} are deselected at random",
-                    "Create {C:attention}2{} copies of",
-                    "the remaining card",
-                    "{C:attention}Held Card{}",
+                    "{C:attention}Endless{}",
+                    "Adds {C:money}$#2#{} of sell value to",
+                    "leftmost or selected Joker",
+                    "Useable once per round",
                 }
             },
             c_poke_leek = {
@@ -1531,7 +1530,7 @@ return {
                 text = {
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-                    "{C:spectral}Cryptid{}, {C:item}Leftovers{} and certain Jokers",
+                    "{C:spectral}Cryptid{} and certain Jokers",
                     "are {C:attention}duplicated{}"
                 } 
             },
@@ -2944,6 +2943,12 @@ return {
               name = "Designed By",
               text = {
                 "{C:dark_edition}#1#{}"
+              }
+            },
+            endless = {
+              name = "Endless",
+              text = {
+                "Not consumed when used"
               }
             },
             safaridesc = {
