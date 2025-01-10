@@ -274,6 +274,7 @@ local leftovers = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
+    if not (G.jokers and G.jokers.cards) then return false end
     if #G.jokers.cards == 0 then return false end
     return G.GAME.round > card.ability.extra.previous_round
   end,
