@@ -241,7 +241,6 @@ local pichu={
   end,
   rarity = 1, 
   cost = 3,
-  item_req = "thunderstone",
   stage = "Baby", 
   ptype = "Lightning",
   atlas = "Pokedex2",
