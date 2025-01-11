@@ -172,7 +172,7 @@ local espeon={
       local suits = {'Spades','Hearts','Diamonds','Clubs'}
       card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
       card:juice_up()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize(card.ability.extra.rank or "2", 'ranks').."s and "..localize(card.ability.extra.suit, 'suits_plural')})
     end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
       return {
