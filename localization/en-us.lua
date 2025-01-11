@@ -1872,12 +1872,11 @@ return {
             j_poke_espeon = {
                 name = 'Espeon',
                 text = {
-                    "Create a {C:attention}Sun{} card",
-                    "every {C:attention}3{} {C:green}rerolls{}",
-                    "Retrigger all played cards with",
-                    "{C:hearts}Hearts{} suit in your {C:attention}first hand{}",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
+                    "Retrigger each played {C:attention}#3#{} when scored",
+                    "Each played card with {V:1}#4#{} suit",
+                    "gives {X:red,C:white}X#2#{} Mult when scored",
+                    "Required {C:attention}rank{} and {C:attention}suit{} are",
+                    "{C:attention}randomized{} on each {C:green}Reroll{}"
                 } 
             },
             j_poke_umbreon = {

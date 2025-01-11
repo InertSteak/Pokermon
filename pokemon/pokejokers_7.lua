@@ -149,11 +149,11 @@ local politoed={
 local espeon={
   name = "espeon", 
   pos = {x = 4, y = 4},
-  config = {extra = {retriggers = 1, suit = "Hearts", rerolls = 0}},
+  config = {extra = {retriggers = 1, Xmult_multi = 1.2, rank = "Ace", id = 14, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_sun
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(center.ability.extra.rank or "2", 'ranks'),
+                    localize(center.ability.extra.suit, 'suits_singular'), colours = {G.C.SUITS[center.ability.extra.suit]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -163,31 +163,43 @@ local espeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.TAROT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_sun')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
-        card.ability.extra.rerolls = 0
-      end
+      local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
+                        {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
+      local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'..G.GAME.round))
+      card.ability.extra.rank = rank_id.rank
+      card.ability.extra.id = rank_id.id
+      
+      local suits = {'Spades','Hearts','Diamonds','Clubs'}
+      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
+      card:juice_up()
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
-    if context.repetition and context.cardarea == G.play and not context.end_of_round and G.GAME.current_round.hands_played == 0 then
-      if context.other_card:is_suit(card.ability.extra.suit) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+        colour = G.C.XMULT,
+        x_mult = card.ability.extra.Xmult_multi,
+        card = card
+      }
+    end
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == card.ability.extra.id then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
+                  {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
+      local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'))
+      card.ability.extra.rank = rank_id.rank
+      card.ability.extra.id = rank_id.id
+      
+      local suits = {'Spades','Hearts','Diamonds','Clubs'}
+      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'))
     end
   end
 }
