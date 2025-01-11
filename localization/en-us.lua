@@ -617,7 +617,7 @@ return {
                     "{C:inactive,s:0.8}(Increases per Raichu you have){}",
                     "Earn {C:money}$#1#{} at end of",
                     "round for each Joker you have",
-                    "{C:inactive}(Max of {C:money}$10{C:inactive})"
+                    "{C:inactive}(Max of {C:money}$#3#{C:inactive})"
                 } 
             },
             j_poke_sandshrew = {

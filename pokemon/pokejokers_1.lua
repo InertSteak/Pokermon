@@ -941,13 +941,14 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
-  config = {extra={money = 1, threshold = 120, plus_slot = false}},
+  config = {extra={money = 2, threshold = 120, plus_slot = false, money_limit = 16}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {center.ability.extra.money, math.max(center.ability.extra.threshold, center.ability.extra.threshold + (center.ability.extra.threshold * (#find_joker("raichu") - 1)))}}
+    return {vars = {center.ability.extra.money, math.max(center.ability.extra.threshold, center.ability.extra.threshold + (center.ability.extra.threshold * (#find_joker("raichu") - 1))), 
+                    center.ability.extra.money_limit}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -960,7 +961,7 @@ local raichu={
       local edition = {negative = true}
       card:set_edition(edition, true)
     end
-    return ease_poke_dollars(card, "pikachu", math.min(10, #G.jokers.cards * card.ability.extra.money), true)
+    return ease_poke_dollars(card, "pikachu", math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money), true)
 	end,
 }
 local sandshrew={
