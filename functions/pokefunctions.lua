@@ -164,6 +164,7 @@ remove = function(self, card, context)
           return true
       end
   }))
+  card.gone = true
   return true
 end
 
@@ -339,7 +340,7 @@ end
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
-  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos then
+  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos and not card.gone then
     return true
   else
     return false
