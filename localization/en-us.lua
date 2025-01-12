@@ -111,9 +111,11 @@ return {
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
-                    "Creates a {C:attention}Devil{} card",
+                    "Select #1# cards with different {C:attention}suits{}.",
+                    "Creates a {C:attention}Gold{} copy",
+                    "of {C:attention}1{} of them at",
+                    "random and earn {C:money}$#2#{}",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_firestone = {
@@ -171,28 +173,26 @@ return {
             c_poke_teraorb = {
                 name = "Tera Orb",
                 text = {
-                    "Applies a random",
-                    "{C:pink}Type{} sticker",
-                    "to leftmost or selected Joker{}", 
-                    "and gives {C:attention}+1{} {C:pink}Energy{}"
+                    "Gives {C:attention}+1{} {C:pink}Energy{}",
+                    "to leftmost or selected Joker{}",
+                    "{C:attention}Type Changer{}"
                 },
             },
             c_poke_metalcoat = {
                 name = "Metal Coat",
                 text = {
-                    "Applies a {C:metal}Metal{} sticker",
-                    "to leftmost or selected Joker.",
-                    "Creates a {C:attention}Chariot{} card",
-                    "{C:inactive}(Must have room){}"
+                    "Select #1# cards with different {C:attention}ranks{}.",
+                    "Creates a {C:attention}Steel{} copy of",
+                    "{C:attention}1{} of them at random",
+                    "{C:attention}Type Changer{}"
                 },
             },
             c_poke_dragonscale = {
                 name = "Dragon Scale",
                 text = {
-                    "Applies a {C:dragon}Dragon{} sticker",
-                    "to leftmost or selected Joker.",
                     "Creates up to {C:attention}3{} random",
                     "{C:item}Item{} or {C:pink}Energy{} cards",
+                    "{C:attention}Type Changer{}",
                     "{C:inactive}(Must have room){}"
                 },
             },
@@ -255,6 +255,27 @@ return {
                     "cards to be the {C:attention}suit{} of",
                     "{C:attention}#1#{} selected card",
                     "{C:attention}Evolution Card{}"
+                }
+            },
+            c_poke_duskstone = {
+                name = "Dusk Stone",
+                text = {
+                    "Earn {C:money}$#1#{}",
+                    "if used {C:attention}#2#{} rounds",
+                    "after you get this",
+                    "{C:attention}Evolution Card{}",
+                    "{C:inactive}(Earns {C:money}${C:inactive} starting Round {C:attention}#3#{C:inactive})"
+                }
+            },
+            c_poke_dawnstone = {
+                name = "Dawn Stone",
+                text = {
+                    "Earn {C:money}${} equal to {c:attention}twice{}",
+                    "the {C:mult}mult{} value of the ",
+                    "first hand you play",
+                    "after you get this{C:inactive}(Max of {C:money}$#3#{C:inactive}){}",
+                    "{C:attention}Evolution Card{}",
+                    "{C:inactive}(Currently {C:money}$#2#{C:inactive}, Hand: {C:attention}#1#{}{C:inactive})",
                 }
             },
         },
@@ -2794,6 +2815,13 @@ return {
                 name = "Held Card",
                 text = {
                     "Used by {C:attention}#1#{}"
+                }
+            },
+            typechanger = {
+                name = "Type Changer",
+                text = {
+                    "Applies a {V:1}#1#{} sticker",
+                    "to leftmost or selected Joker."
                 }
             },
             basic = {

@@ -112,9 +112,10 @@ local thunderstone = {
   name = "thunderstone",
   key = "thunderstone",
   set = "Item",
+  config = {max_highlighted = 2, money = 3},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_devil
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted, self.config.money}}
   end,
   pos = { x = 6, y = 3 },
   atlas = "Mart",
@@ -123,14 +124,22 @@ local thunderstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    if G.hand and G.hand.cards and G.hand.highlighted and #G.hand.highlighted == self.config.max_highlighted then
+      if not G.hand.highlighted[1]:is_suit(G.hand.highlighted[2].base.suit) and not G.hand.highlighted[2]:is_suit(G.hand.highlighted[1].base.suit) then
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
   end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_devil')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-    end
+    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('thunderstone'))
+    local copy = copy_card(target, nil, nil, G.playing_card)
+    copy:set_ability(G.P_CENTERS.m_gold, nil, true)
+    poke_add_card(copy, card)
+    ease_dollars(self.config.money)
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -261,12 +270,11 @@ local leftovers = {
   name = "leftovers",
   key = "leftovers",
   set = "Item",
-  config = {joker_highlighted = 1, previous_round = 0, money_mod = 2},
   config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("snorlax_infoqueue")}}
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    return {vars = {self.config.joker_highlighted, self.config.extra.money_mod}}
+    return {vars = {self.config.extra.joker_highlighted, self.config.extra.money_mod}}
   end,
   pos = { x = 7, y = 4 },
   atlas = "Mart",
@@ -364,6 +372,7 @@ local teraorb = {
   key = "teraorb",
   set = "Item",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Random Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
   end,
   pos = { x = 9, y = 2 },
   atlas = "Mart",
@@ -395,8 +404,10 @@ local metalcoat = {
   name = "metalcoat",
   key = "metalcoat",
   set = "Item",
+  config = {max_highlighted = 2},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_chariot
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {G.ARGS.LOC_COLOURS.metal}}}
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 2 },
   atlas = "Mart",
@@ -404,7 +415,15 @@ local metalcoat = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return #G.jokers.cards > 0
+    if G.hand and G.hand.cards and G.hand.highlighted and #G.hand.highlighted == self.config.max_highlighted then
+      if G.hand.highlighted[1].base.id ~= G.hand.highlighted[2].base.id then
+        return #G.jokers.cards > 0
+      else
+        return false
+      end
+    else
+      return false
+    end
   end,
   use = function(self, card, area, copier)
     local choice = nil
@@ -417,11 +436,10 @@ local metalcoat = {
     apply_type_sticker(choice, "Metal")
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
     
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-    end
+    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('metalcoat'))
+    local copy = copy_card(target, nil, nil, G.playing_card)
+    copy:set_ability(G.P_CENTERS.m_steel, nil, true)
+    poke_add_card(copy, card)
   end,
   in_pool = function(self)
     return true
@@ -433,6 +451,7 @@ local dragonscale = {
   key = "dragonscale",
   set = "Item",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {G.ARGS.LOC_COLOURS.dragon}}}
   end,
   pos = { x = 7, y = 2 },
   atlas = "Mart",

@@ -42,7 +42,130 @@ local prismscale = {
   end
 }
 
+local duskstone = {
+  name = "duskstone",
+  key = "duskstone",
+  set = "Item",
+  config = {extra = {money = 20, rounds = 3, round_on_add = 1}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {center and center.ability.extra.money or self.config.extra.money, center and center.ability.extra.rounds or self.config.extra.rounds, 
+                    center and (center.ability.extra.round_on_add + center.ability.extra.rounds) or (self.config.extra.round_on_add + self.config.extra.rounds),}}
+  end,
+  pos = { x = 3, y = 4 },
+  atlas = "Mart",
+  cost = 3,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return true
+  end,
+  use = function(self, card, area, copier)
+    if G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds then
+      ease_dollars(card.ability.extra.money)
+    end
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.round_on_add = G.GAME.round
+    end
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      if G.GAME.round >= (card.ability.extra.round_on_add + card.ability.extra.rounds) and not card.ability.extra.juiced then
+        card.ability.extra.juiced = true
+        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
 
-return {name = "Items 2",
-        list = {prismscale}
+local dawnstone = {
+  name = "dawnstone",
+  key = "dawnstone",
+  set = "Item",
+  config = {extra = {hand_played = "None", money_limit = 40}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    local money = 0
+    local hand_played = center and center.ability.extra.hand_played or self.config.extra.hand_played
+    local money_limit = center and center.ability.extra.money_limit or self.config.extra.money_limit
+    
+    if hand_played ~= "None" then
+      local mult = nil
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        mult = to_big(G.GAME.hands[hand_played].mult)
+        money = mult * 2
+        if to_big(money) > to_big(money_limit) then
+          money = money_limit
+        end
+      elseif not (SMODS.Mods["Talisman"] or {}).can_load then
+        mult = G.GAME.hands[hand_played].mult
+        money = mult * 2
+      end
+    end
+    return {vars = {hand_played, money, money_limit}}
+  end,
+  pos = { x = 4, y = 4 },
+  atlas = "Mart",
+  cost = 3,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    return card.ability.extra.hand_played ~= "None"
+  end,
+  use = function(self, card, area, copier)
+    local money = 0
+    local hand_played = card.ability.extra.hand_played
+    local money_limit = card.ability.extra.money_limit
+    
+    if hand_played ~= "None" then
+      local mult = nil
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        mult = to_big(G.GAME.hands[hand_played].mult)
+        money = mult * 2
+        if to_big(money) > to_big(money_limit) then
+          ease_dollars(money_limit) 
+        else
+          ease_dollars(to_number(money))
+        end
+      elseif not (SMODS.Mods["Talisman"] or {}).can_load then
+        mult = G.GAME.hands[hand_played].mult
+        money = mult * 2
+        money = math.min(money, money_limit)
+        ease_dollars(money)
+      end
+    end
+    
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return evo_item_use(self, card, area, copier)
+    else
+      return highlighted_evo_item(self, card, area, copier)
+    end
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.hand_played == "None" then
+        card.ability.extra.hand_played = context.scoring_name
+      end
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
+return {name = "Items 3",
+        list = {prismscale, dawnstone,duskstone}
 }

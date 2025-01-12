@@ -370,7 +370,7 @@ local kingler={
           return {
               message = localize("poke_surf_ex"),
               colour = G.C.CHIPS,
-              card = self
+              card = card
           }
       end
     end
