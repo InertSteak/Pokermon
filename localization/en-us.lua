@@ -113,8 +113,8 @@ return {
                 text = {
                     "Select #1# cards with different {C:attention}suits{}.",
                     "Creates a {C:attention}Gold{} copy",
-                    "of {C:attention}1{} of them at",
-                    "random and earn {C:money}$#2#{}",
+                    "of {C:attention}1{} at random",
+                    "and earn {C:money}$#2#{}",
                     "{C:attention}Evolution Card{}",
                 },
             },
@@ -183,7 +183,7 @@ return {
                 text = {
                     "Select #1# cards with different {C:attention}ranks{}.",
                     "Creates a {C:attention}Steel{} copy of",
-                    "{C:attention}1{} of them at random",
+                    "{C:attention}1{} at random",
                     "{C:attention}Type Changer{}"
                 },
             },
