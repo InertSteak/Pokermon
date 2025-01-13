@@ -668,7 +668,7 @@ local parasect={
           return {
             message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod2}},
             colour = G.C.RED,
-            card = self
+            card = card
           }
         end
       end
