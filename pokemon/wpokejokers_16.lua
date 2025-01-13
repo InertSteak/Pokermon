@@ -318,7 +318,8 @@ local magmortar={
         return {
             delay = 0.2,
             message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult_mod}},
-            colour = G.C.RED
+            colour = G.C.RED,
+            card = card
         }
       end
     end
