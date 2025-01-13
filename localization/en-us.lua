@@ -111,10 +111,9 @@ return {
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
-                    "Adds {C:attention}2 Gold{} cards",
+                    "Creates {C:attention}2 Gold{} cards",
                     "with the same rank as",
                     "{C:attention}1{} selected card",
-                    "to your {C:attention}deck{}",
                     "{C:attention}Evolution Card{}",
                 },
             },
@@ -2527,6 +2526,33 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult {C:chips}+#4#{C:inactive} Chips)",
                 } 
             },
+            j_poke_gimmighoul = {
+                name = "Gimmighoul (Chest)",
+                text = {
+                  "Played {C:attention}Gold{} cards",
+                  "earn {C:money}$#1#{} when scored",
+                  "Skip a {C:attention}Booster Pack{} for...?",
+                  "{C:inactive}(Evolves when {C:money}$#2#{C:inactive}/$#3# total is earned or spent){}"
+                }
+            },
+            j_poke_gimmighoulr = {
+                name = "Gimmighoul (Roaming)",
+                text = {
+                  "Earn some {C:money}${}",
+                  "{S:1.1,C:red,E:2}self destructs{}",
+                }
+            },
+            j_poke_gholdengo = {
+                name = "Gholdengo",
+                text = {
+                  "Played {C:attention}Gold{} cards {C:red}spend{} {C:money}$#2#{}",
+                  "when scored and multiply",
+                  "this Joker's {X:red,C:white}X{} Mult by {X:red,C:white}X#3#",
+                  "This Joker can't be debuffed",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                  "{C:inactive}(Resets at end of round)",
+                }
+            },
             j_poke_missingno = {
                 name = 'Missingno.',
                 text = {
@@ -3265,6 +3291,7 @@ return {
             poke_none = "None",
             poke_dawn_info1 = "(Next hand played sets hand type)",
             poke_dawn_info2 = "(Hand type set!)",
+            poke_make_it_rain = "Make it Rain!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

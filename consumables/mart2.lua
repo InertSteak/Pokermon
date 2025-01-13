@@ -135,7 +135,7 @@ local thunderstone = {
     for i = 1, 2 do
       local _card = create_playing_card({
             front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
-            center = G.P_CENTERS.c_base}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+            center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.SECONDARY_SET.Enhanced})
       _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
       _card:set_ability(G.P_CENTERS.m_gold, nil, true)
     end

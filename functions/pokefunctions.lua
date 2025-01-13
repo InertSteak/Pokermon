@@ -752,7 +752,7 @@ get_gen_allowed = function(atlas)
 end
 
 get_poke_allowed = function(key)
-  local banned_keys = {"taurosh", "dreepy_dart"}
+  local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
   local allowed = true
   
   for i=1, #banned_keys do
