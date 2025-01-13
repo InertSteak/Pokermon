@@ -94,14 +94,15 @@ local dawnstone = {
   name = "dawnstone",
   key = "dawnstone",
   set = "Item",
-  config = {extra = {hand_played = "None", money_limit = 40}},
+  config = {extra = {hand_played = nil, money_limit = 40}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     local money = 0
+    local message = localize('poke_dawn_info2')
     local hand_played = center and center.ability.extra.hand_played or self.config.extra.hand_played
     local money_limit = center and center.ability.extra.money_limit or self.config.extra.money_limit
     
-    if hand_played ~= "None" then
+    if hand_played then
       local mult = nil
       if (SMODS.Mods["Talisman"] or {}).can_load then
         mult = to_big(G.GAME.hands[hand_played].mult)
@@ -114,7 +115,11 @@ local dawnstone = {
         money = mult * 2
       end
     end
-    return {vars = {hand_played, money, money_limit}}
+    if not hand_played then
+      message = localize('poke_dawn_info1')
+    end
+  
+    return {vars = {hand_played or localize('poke_none'), money, money_limit, message}}
   end,
   pos = { x = 4, y = 4 },
   atlas = "Mart",
@@ -123,14 +128,14 @@ local dawnstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return card.ability.extra.hand_played ~= "None"
+    return card.ability.extra.hand_played
   end,
   use = function(self, card, area, copier)
     local money = 0
     local hand_played = card.ability.extra.hand_played
     local money_limit = card.ability.extra.money_limit
     
-    if hand_played ~= "None" then
+    if hand_played then
       local mult = nil
       if (SMODS.Mods["Talisman"] or {}).can_load then
         mult = to_big(G.GAME.hands[hand_played].mult)
@@ -156,8 +161,9 @@ local dawnstone = {
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.hand_played == "None" then
+      if context.joker_main and not card.ability.extra.hand_played then
         card.ability.extra.hand_played = context.scoring_name
+        card:juice_up()
       end
     end
   end,

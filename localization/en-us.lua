@@ -111,10 +111,10 @@ return {
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
-                    "Select #1# cards with different {C:attention}suits{}.",
-                    "Creates a {C:attention}Gold{} copy",
-                    "of {C:attention}1{} at random",
-                    "and earn {C:money}$#2#{}",
+                    "Adds {C:attention}2 Gold{} cards",
+                    "with the same rank as",
+                    "{C:attention}1{} selected card",
+                    "to your {C:attention}deck{}",
                     "{C:attention}Evolution Card{}",
                 },
             },
@@ -181,9 +181,8 @@ return {
             c_poke_metalcoat = {
                 name = "Metal Coat",
                 text = {
-                    "Select #1# cards with different {C:attention}ranks{}.",
                     "Creates a {C:attention}Steel{} copy of",
-                    "{C:attention}1{} at random",
+                    "{C:attention}1{} selected card",
                     "{C:attention}Type Changer{}"
                 },
             },
@@ -271,11 +270,10 @@ return {
                 name = "Dawn Stone",
                 text = {
                     "Earn {C:money}${} equal to {c:attention}twice{}",
-                    "the {C:mult}mult{} value of the ",
-                    "first hand you play",
-                    "after you get this{C:inactive}(Max of {C:money}$#3#{C:inactive}){}",
+                    "the {C:mult}Mult{} value of {C:attention}#1#{}",
+                    "{C:inactive}#4#{}",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Currently {C:money}$#2#{C:inactive}, Hand: {C:attention}#1#{}{C:inactive})",
+                    "{C:inactive}(Currently {C:money}$#2#{C:inactive}/$40 Max)",
                 }
             },
         },
@@ -3263,7 +3261,10 @@ return {
             poke_disguise_broken = "Disguise Broken! Death Not Prevented!",
             poke_dig_ex = "Dig!",
             poke_blazekick_ex = "Blaze Kick!",
-            poke_darts_ex = "Darts!"
+            poke_darts_ex = "Darts!",
+            poke_none = "None",
+            poke_dawn_info1 = "(Next hand played sets hand type)",
+            poke_dawn_info2 = "(Hand type set!)",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

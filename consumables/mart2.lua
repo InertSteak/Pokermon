@@ -112,10 +112,10 @@ local thunderstone = {
   name = "thunderstone",
   key = "thunderstone",
   set = "Item",
-  config = {max_highlighted = 2, money = 3},
+  config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    return {vars = {self.config.max_highlighted, self.config.money}}
+    return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 3 },
   atlas = "Mart",
@@ -123,23 +123,23 @@ local thunderstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    if G.hand and G.hand.cards and G.hand.highlighted and #G.hand.highlighted == self.config.max_highlighted then
-      if not G.hand.highlighted[1]:is_suit(G.hand.highlighted[2].base.suit) and not G.hand.highlighted[2]:is_suit(G.hand.highlighted[1].base.suit) then
-        return true
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end,
   use = function(self, card, area, copier)
-    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('thunderstone'))
-    local copy = copy_card(target, nil, nil, G.playing_card)
-    copy:set_ability(G.P_CENTERS.m_gold, nil, true)
-    poke_add_card(copy, card)
-    ease_dollars(self.config.money)
+    local suits = {'S','H','D','C'}
+    local selected = G.hand.highlighted[1]
+    local rank = (selected.base.value == 'Ace' and 'A') or
+    (selected.base.value == 'King' and 'K') or
+    (selected.base.value == 'Queen' and 'Q') or
+    (selected.base.value == 'Jack' and 'J') or
+    (selected.base.value == '10' and 'T') or 
+    (selected.base.value)
+    for i = 1, 2 do
+      local _card = create_playing_card({
+            front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
+            center = G.P_CENTERS.c_base}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+      _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
+      _card:set_ability(G.P_CENTERS.m_gold, nil, true)
+    end
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else
@@ -404,7 +404,7 @@ local metalcoat = {
   name = "metalcoat",
   key = "metalcoat",
   set = "Item",
-  config = {max_highlighted = 2},
+  config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {G.ARGS.LOC_COLOURS.metal}}}
     return {vars = {self.config.max_highlighted}}
@@ -414,30 +414,20 @@ local metalcoat = {
   cost = 4,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    if G.hand and G.hand.cards and G.hand.highlighted and #G.hand.highlighted == self.config.max_highlighted then
-      if G.hand.highlighted[1].base.id ~= G.hand.highlighted[2].base.id then
-        return #G.jokers.cards > 0
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end,
   use = function(self, card, area, copier)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
-    else
+    elseif G.jokers and G.jokers.cards and #G.jokers.cards > 0 then
       choice = G.jokers.cards[1]
     end
     
-    apply_type_sticker(choice, "Metal")
-    card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
+    if choice then
+      apply_type_sticker(choice, "Metal")
+      card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
+    end
     
-    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('metalcoat'))
-    local copy = copy_card(target, nil, nil, G.playing_card)
+    local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
     copy:set_ability(G.P_CENTERS.m_steel, nil, true)
     poke_add_card(copy, card)
   end,

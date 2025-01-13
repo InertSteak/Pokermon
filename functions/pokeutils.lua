@@ -110,11 +110,12 @@ juice_flip_single = function(card, index)
   }))
 end
 
-poke_add_card = function(add_card, card)
+poke_add_card = function(add_card, card, area)
+      if not area then area = G.hand end
       add_card:add_to_deck()
       G.deck.config.card_limit = G.deck.config.card_limit + 1
       table.insert(G.playing_cards, add_card)
-      G.hand:emplace(add_card)
+      area:emplace(add_card)
       add_card.states.visible = nil
       G.E_MANAGER:add_event(Event({
         func = function()
