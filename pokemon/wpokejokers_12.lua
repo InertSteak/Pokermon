@@ -23,7 +23,7 @@ local feebas={
   config = {extra = {mult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', specific_vars = {}}
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 3, 

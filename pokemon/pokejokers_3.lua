@@ -670,7 +670,7 @@ local rapidash={
   config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut', specific_vars = {}}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
