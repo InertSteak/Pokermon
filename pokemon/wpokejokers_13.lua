@@ -90,6 +90,7 @@ local metang={
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips,
+          card = card
         }
       end
     end
@@ -119,6 +120,7 @@ local metagross={
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips,
+          card = card
         }
       end
     end
@@ -130,7 +132,8 @@ local metagross={
           message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
           colour = G.C.XMULT,
           mult = card.ability.extra.mult_mod, 
-          x_mult = Xmult
+          x_mult = Xmult,
+          card = card
         }
       end
     end

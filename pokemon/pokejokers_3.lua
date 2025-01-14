@@ -243,17 +243,17 @@ local machop={
     return level_evo(self, card, context, "j_poke_machoke")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
       ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       ease_hands_played(-card.ability.extra.hands)
       ease_discard(card.ability.extra.discards)
     end
@@ -288,17 +288,17 @@ local machoke={
     return item_evo(self, card, context, "j_poke_machamp")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
       ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       if G.GAME.current_round.hands_left <= 2 then
         ease_hands_played(-G.GAME.current_round.hands_left + 1)
       elseif G.GAME.current_round.hands_left > 2 then
@@ -334,17 +334,17 @@ local machamp={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
       ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       if G.GAME.current_round.hands_left <= 4 then
         ease_hands_played(-G.GAME.current_round.hands_left + 1)
       elseif G.GAME.current_round.hands_left > 4 then
