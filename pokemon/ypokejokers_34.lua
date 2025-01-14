@@ -103,10 +103,10 @@ local gimmighoulr={
 local gholdengo={
   name = "gholdengo",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult = 1, money = 3, oXmult = 1, Xmult_multi = 1.5, future_dollars = 0}},
+  config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5, future_dollars = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.money, center.ability.extra.Xmult_multi}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.money_minus, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -130,13 +130,13 @@ local gholdengo={
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
-      card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money
+      card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
       if card.ability.extra.future_dollars >= 0 then
         card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
         return {
-          message = '-'..localize('$')..card.ability.extra.money,
+          message = '-'..localize('$')..card.ability.extra.money_minus,
           colour = G.C.MONEY,
-          dollars = -card.ability.extra.money,
+          dollars = -card.ability.extra.money_minus,
           card = card
         }
       end
