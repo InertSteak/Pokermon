@@ -78,7 +78,8 @@ family = {
     {"dreepy", "drakloak", "dragapult"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
-    {"tinkatink", "tinkatuff", "tinkaton"}
+    {"tinkatink", "tinkatuff", "tinkaton"},
+    {"gimmighoul", "gholdengo"},
 }
 
 type_sticker_applied = function(card)
