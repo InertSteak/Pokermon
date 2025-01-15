@@ -110,7 +110,7 @@ local gholdengo={
   end,
   rarity = "poke_safari",
   cost = 8,
-  stage = "Basic",
+  stage = "One",
   ptype = "Metal",
   atlas = "Pokedex9",
   perishable_compat = false,
