@@ -670,7 +670,7 @@ local rapidash={
   config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut', specific_vars = {}}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut', config={}}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
@@ -897,12 +897,12 @@ local magneton={
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {Xmult = 3, odds = 4}},
+  config = {extra = {money = 4, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
-    return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -921,20 +921,10 @@ local farfetchd={
     end
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      local count = #find_joker('leek')
-      local chance
-      if count > 0 then
-        chance = G.GAME.probabilities.normal * 2 * count
-      else
-        chance = G.GAME.probabilities.normal
-      end
-      if context.joker_main and pseudorandom('farfet') < chance/card.ability.extra.odds then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+    if context.using_consumeable then
+      if (pseudorandom('farfet') < G.GAME.probabilities.normal/card.ability.extra.odds) or context.consumeable.ability.name == "leek" then
+        card:juice_up()
+        ease_poke_dollars(card, "farfet", card.ability.extra.money)
       end
     end
   end

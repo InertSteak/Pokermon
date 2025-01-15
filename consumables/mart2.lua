@@ -315,9 +315,22 @@ local leek = {
   name = "leek",
   key = "leek",
   set = "Item",
+  config = {extra = {odds = 3, odds2 = 8, previous_round = 0}},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_wheel_of_fortune
+    info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("farfetchd_infoqueue")}}
+    local card = center or self
+    if not card.edition or (card.edition and not card.edition.foil) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    end
+    if not card.edition or (card.edition and not card.edition.holo) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    end
+    if not card.edition or (card.edition and not card.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds, 
+            card.ability and card.ability.extra.odds2 or card.config.extra.odds2}}
   end,
   pos = { x = 8, y = 4 },
   atlas = "Mart",
@@ -325,14 +338,44 @@ local leek = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+       or G.STATE == G.STATES.STANDARD_PACK then return false end
+    if card.area == G.shop_jokers then return false end
+    return G.GAME.round > card.ability.extra.previous_round
   end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_wheel_of_fortune')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    local item_chance = pseudorandom('leek')
+    local removed = nil
+    if item_chance < G.GAME.probabilities.normal/card.ability.extra.odds2 then
+      removed = true
+      remove(self, card, {})
+    elseif item_chance < G.GAME.probabilities.normal/card.ability.extra.odds then
+      local edition = poll_edition('wheel_of_fortune', nil, true, true)
+      card:set_edition(edition, true)
+    else
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+          attention_text({
+              text = localize('k_nope_ex'),
+              scale = 1.3, 
+              hold = 1.4,
+              major = card,
+              backdrop_colour = G.C.SECONDARY_SET.Tarot,
+              align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
+              offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
+              silent = true
+              })
+              G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
+                  play_sound('tarot2', 0.76, 0.4);return true end}))
+              play_sound('tarot2', 1, 0.4)
+              card:juice_up(0.3, 0.5)
+      return true end }))
     end
+    if not removed then
+      card.ability.extra.previous_round = G.GAME.round
+    end
+  end,
+  keep_on_use = function(self, card)
+    return true
   end,
   in_pool = function(self)
     return true

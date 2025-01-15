@@ -334,7 +334,7 @@ local magikarp={
   config = {extra = {rounds = 8, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', specific_vars = {}}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
     return {vars = {center.ability.extra.rounds, center.ability.extra.chips}}
   end,
   rarity = 1, 

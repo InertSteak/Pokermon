@@ -150,15 +150,18 @@ return {
                     "{C:attention}Endless{}",
                     "Adds {C:money}$#2#{} of sell value to",
                     "leftmost or selected Joker",
-                    "Useable once per round",
+                    "{C:inactive}(Useable once per round)",
                 }
             },
             c_poke_leek = {
                 name = "Leek",
                 text = {
-                    "Creates a {C:attention}Wheel of Fortune{} card",
-                    "{C:attention}Held Card{}",
-                    "{C:inactive}(Must have room){}"
+                    "{C:attention}Endless{}",
+                    "{C:green}#1# in #2#{} chance to add",
+                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
+                    "{C:dark_edition}Polychrome{} edition to self",
+                    "{C:green}#1# in #3#{} chance to {S:1.1,C:red,E:2}self destruct{}",
+                    "{C:inactive}(Useable once per round)",
                 }
             },
             c_poke_thickclub = {
@@ -1164,9 +1167,9 @@ return {
                 name = 'Farfetch\'d',      
                 text = {
                     "{C:attention}Holding Leek{}",
-                    "{C:green}#2# in #3#{} chance for {X:red,C:white}X#1#{} Mult",
-                    "The chance is doubled for",
-                    "each {C:attention}Leek{} card you have",
+                    "{C:green}#2# in #3#{} chance to earn {C:money}$#1#",
+                    "every time a {C:attention}Consumable{} is used",
+                    "{C:money}${} guaranteed when using {C:attention}Leeks{}",
                 } 
             },
             j_poke_doduo = {
