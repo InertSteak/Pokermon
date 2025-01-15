@@ -957,7 +957,7 @@ local raichu={
   atlas = "Pokedex1", 
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    if G.GAME.dollars > card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative) then
+    if G.GAME.dollars >= card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative) then
       local edition = {negative = true}
       card:set_edition(edition, true)
     end
