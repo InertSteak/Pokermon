@@ -4,9 +4,15 @@ local moonstone = {
   name = "moonstone",
   key = "moonstone",
   set = "Item",
+  config = {max_highlighted = 5, min_highlighted = 1, odds = 2},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_moon
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    local handtext = localize('poke_none')
+    if G.hand and G.hand.highlighted and #G.hand.highlighted > 0 then
+      local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+      handtext = text
+    end
+    return {vars = {handtext, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
   end,
   pos = { x = 8, y = 3 },
   atlas = "Mart",
@@ -14,15 +20,36 @@ local moonstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return true
-  end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    if pseudorandom('moonstone') < G.GAME.probabilities.normal/self.config.odds then
+      local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+
+      level_up_hand(card, text)
+      if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+         or G.STATE == G.STATES.STANDARD_PACK then
+        update_hand_text({nopulse = true, delay = 0.3}, {mult = 0, chips = 0, level = '', handname = ''})
+      else
+        update_hand_text({nopulse = nil, delay = 0.3}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
+      end
+    else
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+          attention_text({
+              text = localize('k_nope_ex'),
+              scale = 1.3, 
+              hold = 1.4,
+              major = card,
+              backdrop_colour = G.C.SECONDARY_SET.Tarot,
+              align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
+              offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
+              silent = true
+              })
+              G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
+                  play_sound('tarot2', 0.76, 0.4);return true end}))
+              play_sound('tarot2', 1, 0.4)
+              card:juice_up(0.3, 0.5)
+      return true end }))
     end
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else

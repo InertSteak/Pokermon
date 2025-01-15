@@ -83,9 +83,11 @@ return {
             c_poke_moonstone = {
                 name = "Moon Stone",
                 text = {
-                    "Creates a {C:attention}Moon{} card",
+                    "{C:green}#2# in #3#{} chance to",
+                    "upgrade level of",
+                    "selected {C:attention}poker hand{}",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
+                    "{C:inactive}(Hand: {C:attention}#1#{Cinactive}){}"
                 },
             },
             c_poke_sunstone = {
