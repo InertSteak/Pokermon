@@ -38,7 +38,7 @@ local gimmighoul={
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
         new_card:set_edition(edition, true)
-        create_shop_card_ui(new_card, 'Joker', G.shop_jokers)
+        create_shop_card_ui(new_card)
         new_card.states.visible = false
         G.shop_jokers:emplace(new_card)
         new_card:start_materialize()
