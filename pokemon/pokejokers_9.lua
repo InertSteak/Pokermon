@@ -479,8 +479,6 @@ local mudkip={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
@@ -537,8 +535,6 @@ local marshtomp={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
@@ -596,8 +592,6 @@ local swampert={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
