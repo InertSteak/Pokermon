@@ -27,8 +27,6 @@ local gimmighoul={
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
       local earned = ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
       return {
-        message = localize('$')..earned,
-        colour = G.C.MONEY,
         dollars = earned,
         card = card
       }
@@ -134,8 +132,6 @@ local gholdengo={
       if card.ability.extra.future_dollars >= 0 then
         card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
         return {
-          message = '-'..localize('$')..card.ability.extra.money_minus,
-          colour = G.C.MONEY,
           dollars = -card.ability.extra.money_minus,
           card = card
         }
