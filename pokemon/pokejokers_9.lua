@@ -93,8 +93,6 @@ local treecko={
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
                 dollars = earned,
                 card = card
               }
@@ -152,8 +150,6 @@ local grovyle={
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
                 dollars = earned,
                 card = card
               }
@@ -207,8 +203,6 @@ local sceptile={
             local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod, true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
               dollars = earned,
               card = card
             }
