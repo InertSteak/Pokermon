@@ -1,3 +1,11 @@
+local check_main_scoring = function(main)
+  if SMODS.version >= '1.0.0~ALPHA-1315b' then
+    return main
+  else
+    return true
+  end
+end
+
 local pink_seal = {
 	name = "pink_seal",
 	key = "pink_seal",
@@ -5,7 +13,7 @@ local pink_seal = {
 	atlas = "pinkseal",
   pos = {x = 0, y = 0},
 	calculate = function(self, card, context)
-		if context.cardarea == G.play and not context.repetition_only and G.GAME.current_round.hands_played == 0 then
+		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and G.GAME.current_round.hands_played == 0 then
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
 				func = function()
@@ -49,7 +57,7 @@ local silver = {
 	atlas = "pinkseal",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
-		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded then
+		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) then
         card.ability.discarded = true
         G.E_MANAGER:add_event(Event({
           func = function()
