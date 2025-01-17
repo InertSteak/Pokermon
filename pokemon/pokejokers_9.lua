@@ -189,7 +189,7 @@ local sceptile={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Grass",
   atlas = "Pokedex3",
@@ -389,7 +389,7 @@ local blaziken={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Fire",
   atlas = "Pokedex3",
@@ -575,7 +575,7 @@ local swampert={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Water",
   atlas = "Pokedex3",

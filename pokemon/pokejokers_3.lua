@@ -63,7 +63,7 @@ local poliwrath={
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two",
   ptype = "Water",
   atlas = "Pokedex1",
@@ -429,7 +429,7 @@ local victreebel={
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -784,7 +784,7 @@ local slowbro={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -864,7 +864,7 @@ local magneton={
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   enhancement_gate = 'm_steel',
   stage = "One", 
   ptype = "Lightning",

@@ -679,7 +679,7 @@ local pidgeot={
 		return {vars = {center.ability.extra.money}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two", 
   atlas = "Pokedex1",
   ptype = "Colorless",

@@ -163,7 +163,7 @@ local rhyperior={
     return {vars = {center.ability.extra.chips, #find_pokemon_type("Earth")}}
   end,
   rarity = "poke_safari", 
-  cost = 8,
+  cost = 10,
   enhancement_gate = 'm_stone',
   stage = "Two", 
   ptype = "Earth",
@@ -260,7 +260,7 @@ local electivire={
     return {vars = {center.ability.extra.money_mod, center.ability.extra.Xmult_mod , 1 + center.ability.extra.Xmult_mod * center.sell_cost}}
   end,
   rarity = "poke_safari", 
-  cost = 1,
+  cost = 7,
   stage = "One",
   ptype = "Lightning",
   atlas = "Pokedex4",
