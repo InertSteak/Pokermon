@@ -864,7 +864,7 @@ local magneton={
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   enhancement_gate = 'm_steel',
   stage = "One", 
   ptype = "Lightning",
