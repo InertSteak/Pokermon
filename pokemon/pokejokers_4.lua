@@ -48,9 +48,6 @@ local gastly={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          G.E_MANAGER:add_event(Event({
-              remove(self, card, context)
-            }))
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -65,12 +62,16 @@ local gastly={
             end
           end
           
+          remove(self, card, context)
+          
           return {
               message = localize("poke_lick_ex")
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_haunter")
+    if not card.gone then
+      return level_evo(self, card, context, "j_poke_haunter")
+    end
   end
 }
 local haunter={
@@ -96,9 +97,6 @@ local haunter={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
-          G.E_MANAGER:add_event(Event({
-              remove(self, card, context)
-            }))
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -113,12 +111,14 @@ local haunter={
             end
           end
           
+          remove(self, card, context)
+          
           return {
             message = localize("poke_lick_ex")
           }
       end
     end
-    if card and not card.REMOVED then
+    if not card.gone then
       return item_evo(self, card, context, "j_poke_gengar")
     end
   end
