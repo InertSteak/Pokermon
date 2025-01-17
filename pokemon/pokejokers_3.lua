@@ -784,7 +784,7 @@ local slowbro={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
