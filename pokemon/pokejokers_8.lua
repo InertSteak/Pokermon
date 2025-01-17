@@ -264,7 +264,7 @@ local porygon2={
     return {vars = {}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   item_req = "dubious_disc",
   joblacklist = true,
   stage = "One",
