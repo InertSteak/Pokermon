@@ -58,17 +58,19 @@ local mantyke={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       local target = nil
-      local unenhaced_cards = {}
+      local unenhanced_cards = {}
       
       for k, v in pairs(G.playing_cards) do
         if v.config.center == G.P_CENTERS.c_base then
-          unenhaced_cards[#unenhaced_cards + 1] = v
+          unenhanced_cards[#unenhanced_cards + 1] = v
         end
       end
       
-      target = pseudorandom_element(unenhaced_cards, pseudoseed('mantyke'))
-      target:set_ability(G.P_CENTERS.m_gold, nil, true)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_gold")})
+      if #unenhanced_cards > 0 then
+        target = pseudorandom_element(unenhanced_cards, pseudoseed('mantyke'))
+        target:set_ability(G.P_CENTERS.m_gold, nil, true)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_gold")})
+      end
     end
     return level_evo(self, card, context, "j_poke_mantine")
   end
