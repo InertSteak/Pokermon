@@ -63,7 +63,7 @@ local poliwrath={
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two",
   ptype = "Water",
   atlas = "Pokedex1",
