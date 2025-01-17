@@ -36,11 +36,11 @@ local gimmighoul={
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
         new_card:set_edition(edition, true)
-        create_shop_card_ui(new_card)
         new_card.states.visible = false
         G.shop_jokers:emplace(new_card)
         new_card:start_materialize()
         new_card.cost = 0
+        create_shop_card_ui(new_card)
     end
     return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
   end,
