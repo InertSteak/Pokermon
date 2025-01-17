@@ -429,7 +429,7 @@ local victreebel={
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two", 
   ptype = "Grass",
   atlas = "Pokedex1",
