@@ -293,11 +293,11 @@ local tauros={
       if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
         local new_card = SMODS.create_card(temp_card)
-        create_shop_card_ui(new_card)
         new_card.states.visible = false
         G.shop_jokers:emplace(new_card)
         new_card:start_materialize()
         new_card:set_cost()
+        create_shop_card_ui(new_card)
       end
     end
   end
