@@ -314,7 +314,7 @@ local steelix={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   stage = "One",
   ptype = "Metal",
   atlas = "Pokedex2",
