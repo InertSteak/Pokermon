@@ -1905,12 +1905,11 @@ return {
             j_poke_umbreon = {
                 name = 'Umbreon',
                 text = {
-                    "Create a {C:attention}Moon{} card every",
-                    "{C:attention}3{} {C:green}rerolls{}, retrigger",
-                    "all {C:attention}held in hand{} abilities of",
-                    "cards with {C:clubs}#2#{} suit in {C:attention}final hand{}",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
+                    "Decrease level of played {C:attention}#1#{}",
+                    "Every {C:attention}#2#{} decreases, create",
+                    "an {C:attention}Orbital Tag{} or {C:dark_edition}Negative Tag{}",
+                    "Required hand {C:attention}cycles{} on each {C:green}Reroll{}",
+                    "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/#2# decreases)"
                 } 
             },
             j_poke_slowking = {

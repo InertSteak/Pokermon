@@ -15,7 +15,7 @@ local gimmighoul={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.money_seen, center.ability.extra.money_goal}}
   end,
-  rarity = 2,
+  rarity = 3,
   cost = 7,
   stage = "Basic",
   ptype = "Psychic",
