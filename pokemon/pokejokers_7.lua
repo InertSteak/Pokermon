@@ -207,7 +207,7 @@ local espeon={
 local umbreon={
   name = "umbreon", 
   pos = {x = 5, y = 4},
-  config = {extra = {hand_played = "High Card", decrease_goal = 4, decreases = 0}},
+  config = {extra = {hand_played = "High Card", decrease_goal = 3, decreases = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'tag_orbital', set = 'Tag', specific_vars = {"Random Hand", 3}}
