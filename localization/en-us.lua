@@ -237,9 +237,10 @@ return {
             c_poke_shinystone = {
                 name = "Shiny Stone",
                 text = {
-                    "Creates a {C:attention}Star{} card",
+                    "Add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
+                    "or {C:dark_edition}Polychrome{} edition to",
+                    "{C:attention}1{} random card in hand",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Must have room){}"
                 }
             },
             c_poke_twisted_spoon = {
@@ -2343,12 +2344,11 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Create a {C:attention}Star{} card",
-                    "every {C:attention}3{} {C:green}rerolls{}",
-                    "Each card with {C:diamonds}#2#{} suit",
-                    "held in hand gives {X:mult,C:white} X#3# {} Mult",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive}(Currently {C:attention}#1#{}{C:inactive}/3 rerolls)"
+                    "Each {C:green}Reroll{} {C:attention}randomizes{} the",
+                    "enhancements of the top",
+                    "{C:attention}2{} cards of your deck",
+                    "Each card with an {C:attention}edition{}",
+                    "held in hand gives {X:mult,C:white} X#1# {} Mult",
                 } 
             },
             j_poke_elgyem = {
@@ -2979,6 +2979,13 @@ return {
                     "{C:attention}Ice Stone{} - {X:water,C:white}Glaceon{}",
                     "{C:attention}Shiny Stone{} - {X:fairy,C:white}Sylveon{}"
                 }
+            },
+            poke_top_cards = {
+              name = "Top Cards",
+              text = {
+                "{C:attention}#1#{}",
+                "{C:attention}#2#{}",
+              }
             },
             precise_energy_tooltip = {
                 name = "Precise Energy Scaling",

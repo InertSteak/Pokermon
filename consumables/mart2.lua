@@ -723,7 +723,9 @@ local shinystone = {
   key = "shinystone",
   set = "Item",
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_star
+    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 2, y = 4 },
@@ -733,14 +735,26 @@ local shinystone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    return G.hand and G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    local editionless = {}
+    for i = 1, #G.hand.cards do
+      if not G.hand.cards[i].edition then
+        table.insert(editionless, G.hand.cards[i])
+      end
     end
+    
+    if #editionless > 0 then
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+          local over = false
+          local edition = poll_edition('shiny', nil, true, true)
+          local shiny_card = pseudorandom_element(editionless, pseudoseed('shiny'))
+          shiny_card:set_edition(edition, true)
+          card:juice_up(0.3, 0.5)
+      return true end }))
+    end
+    
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
     else

@@ -511,8 +511,6 @@ local oddish={
             value = card.ability.extra.mult2
           end
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
-            colour = G.C.MULT,
             mult = value, 
             card = card
           }
@@ -552,8 +550,6 @@ local gloom={
             value = card.ability.extra.mult2
           end
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
-            colour = G.C.MULT,
             mult = value,
             card = card
           }
