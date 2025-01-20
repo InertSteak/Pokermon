@@ -82,7 +82,8 @@ local sylveon={
       end
       
       card_eval_status_text(card, 'extra', nil, nil, nil,
-        {message = (enhancement1 and string.sub(enhancement1.effect, 1, string.len(enhancement1.effect) - 5) or '').." + "..(enhancement2 and string.sub(enhancement2.effect, 1, string.len(                    enhancement2.effect) - 5) or '')})
+        {message = ((enhancement1 and enhancement1.effect) and string.sub(enhancement1.effect, 1, string.len(enhancement1.effect) - 5) or '').." + "..((enhancement2 and enhancement2.effect) 
+                     and string.sub(enhancement2.effect, 1, string.len(enhancement2.effect) - 5) or '')})
     end
     if context.individual and context.cardarea == G.hand and context.other_card.edition and not context.end_of_round then
       if context.other_card.debuff then
