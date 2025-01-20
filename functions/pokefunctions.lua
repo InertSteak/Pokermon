@@ -82,6 +82,15 @@ family = {
     {"gimmighoul", "gholdengo"},
 }
 
+-- Little bit of automation to turn the above into full keys
+-- The purpose of this is to enable this mod's functions to
+-- safely handle pokemon and families added by other mods
+for i = 1, #family do
+  for ii = 1, #family[i] do
+    family[i][ii] = "j_poke_"..family[i][ii]
+  end
+end
+
 type_sticker_applied = function(card)
   if not card then return false end
   if card.ability.grass_sticker then
@@ -465,21 +474,21 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
 end
 
 get_highest_evo = function(card)
-  local name = nil
+  local key = nil
   local found = nil
-  if not card.name and card.ability.name then
-    name = card.ability.name
+  if not card.key and card.ability.key then
+    key = card.ability.key
   else
-    name = card.name or "bulbasaur"
+    key = card.key or "j_poke_bulbasaur"
   end
   for k, v in ipairs(family) do
     local evos = {}
     for x, y in ipairs(v) do
-      if found and y == v[#v] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+      if found and y == v[#v] and G.P_CENTERS[y].stage ~= G.P_CENTERS[key].stage then
         table.insert(evos, y)
-      elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[#v]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+      elseif found and G.P_CENTERS[y].stage == G.P_CENTERS[v[#v]].stage and G.P_CENTERS[y].stage ~= G.P_CENTERS[key].stage then
         table.insert(evos, y)
-      elseif not found and y == name then
+      elseif not found and y == key then
         found = true
       end
     end
@@ -496,20 +505,22 @@ get_highest_evo = function(card)
   return false
 end
 
-get_family_keys = function(cardname)
+get_family_keys = function(cardkey)
   local keys = {}
   local line = nil
   for k, v in pairs(family) do
     for x, y in pairs(v) do
-      if y == cardname then line = v; break end
+      if y == cardkey then
+        line = v; break 
+      end
     end
   end
   if line then
     for i = 1, #line do
-      table.insert(keys, 'j_poke_'..line[i])
+      table.insert(keys, line[i])
     end
   else
-    table.insert(keys, 'j_poke_'..cardname)
+    table.insert(keys, cardkey)
   end
   return keys
 end
@@ -518,19 +529,19 @@ pokemon_in_pool = function (self)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
       return true
   end
-  local name
-  if not self.name and self.ability.name then
-    name = self.ability.name
+  local key
+  if not self.key and self.ability.key then
+    key = self.ability.key
   else
-    name = self.name or "bulbasaur"
+    key = self.key or "j_poke_bulbasaur"
   end
   local found_other
   local in_family
   for k, v in ipairs(family) do
     for l, p in ipairs(v) do
-      if p ~= name and next(find_joker(p)) then
+      if p ~= key and next(find_joker(p)) then
         found_other = true 
-      elseif p == name then
+      elseif p == key then
         in_family = true
       end
     end
