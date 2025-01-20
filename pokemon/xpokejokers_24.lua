@@ -30,8 +30,20 @@ local sylveon={
       local suit1 = (card1 and card1.ability.effect ~= "Stone Card") and localize(card1.base.suit, 'suits_plural') or ''
       local suit2 = (card2 and card2.ability.effect ~= "Stone Card") and localize(card2.base.suit, 'suits_plural') or ''
       
-      local text1 = string.sub(effect1, 1, string.len(effect1) - 5)..' '..rank1..(rank1 ~= '' and ' of ' or '')..suit1
-      local text2 = string.sub(effect2, 1, string.len(effect2) - 5)..' '..rank2..(rank2 ~= '' and ' of ' or '')..suit2
+      local seal1 = card1 and card1.seal or ''
+      local seal2 = card2 and card2.seal or ''
+      if seal1 == "poke_pink_seal" then seal1 = "Pink" end
+      if seal1 == "poke_silver" then seal1 = "Silver" end
+      if seal2 == "poke_pink_seal" then seal2 = "Pink" end
+      if seal2 == "poke_silver" then seal2 = "Silver" end
+      if seal1 ~= '' then seal1 = seal1.." Seal" end
+      if seal2 ~= '' then seal2 = seal2.." Seal" end
+      
+      local edition1 = (card1 and card1.edition) and G.P_CENTERS[card1.edition.key].name or ''
+      local edition2 = (card2 and card2.edition) and G.P_CENTERS[card2.edition.key].name or ''
+      
+      local text1 = seal1..' '..edition1..' '..string.sub(effect1, 1, string.len(effect1) - 5)..' '..rank1..(rank1 ~= '' and ' of ' or '')..suit1
+      local text2 = seal2..' '..edition2..' '..string.sub(effect2, 1, string.len(effect2) - 5)..' '..rank2..(rank2 ~= '' and ' of ' or '')..suit2
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_top_cards', specific_vars = {text1 or localize('poke_none'), text2 or localize('poke_none')}}
     end
     return {vars = {center.ability.extra.Xmult_multi}}
