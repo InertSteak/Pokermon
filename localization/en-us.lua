@@ -169,9 +169,12 @@ return {
             c_poke_thickclub = {
                 name = "Thick Club",
                 text = {
-                    "Creates a {C:attention}Strength{} card",
-                    "{C:attention}Held Card{}",
-                    "{C:inactive}(Must have room){}"
+                    "{C:attention}Endless{}",
+                    "Permanently adds {C:chips}+#2#{} Chips",
+                    "to {C:attention}#1#{} selected card and",
+                    "enhances it to {C:attention}Stone{} if it",
+                    "already has permanent bonus Chips",
+                    "{C:inactive}(Useable once per round)",
                 }
             },
             c_poke_teraorb = {

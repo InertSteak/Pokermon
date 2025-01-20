@@ -413,9 +413,11 @@ local thickclub = {
   name = "thickclub",
   key = "thickclub",
   set = "Item",
+  config = {max_highlighted = 1, bonus = 5, extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_strength
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("cubone_marowak_infoqueue")}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,
   pos = { x = 9, y = 4 },
   atlas = "Mart",
@@ -423,14 +425,26 @@ local thickclub = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return true
+    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+       or G.STATE == G.STATES.STANDARD_PACK then return false end
+    if card.area == G.shop_jokers then return false end
+    if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
+    return G.GAME.round > card.ability.extra.previous_round
   end,
   use = function(self, card, area, copier)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_strength')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    local conv_card = G.hand.highlighted[1]
+    local current_bonus = conv_card.ability.perma_bonus or 0
+    juice_flip(card)
+    conv_card.ability.perma_bonus = current_bonus + self.config.bonus
+    if current_bonus > 0 then
+      conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
     end
+    juice_flip(card, true)
+    delay(0.5)
+    card.ability.extra.previous_round = G.GAME.round
+  end,
+  keep_on_use = function(self, card)
+    return true
   end,
   in_pool = function(self)
     return true
