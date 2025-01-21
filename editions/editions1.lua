@@ -19,6 +19,11 @@ local shiny = ({
     weight = 2,
     extra_cost = 6,
     apply_to_float = true,
+    sound = {
+      sound = "poke_e_shiny",
+      per = 1, 
+      vol = 0.2
+    },
     loc_vars = function(self)
         return { vars = {} }
     end,
