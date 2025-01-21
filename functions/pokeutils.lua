@@ -191,7 +191,6 @@ poke_vary_rank = function(card, decrease, seed)
     end
   elseif seed then
     new_rank_index = pseudorandom_element(ranks, pseudoseed(seed))
-    sendDebugMessage(new_rank_index)
   else
     if current_rank_index == 13 then
       new_rank_index = 1
