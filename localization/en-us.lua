@@ -149,7 +149,7 @@ return {
             c_poke_leftovers = {
                 name = "Leftovers",
                 text = {
-                    "{C:attention}Endless{}",
+                    "{C:attention}Reusable{}",
                     "Adds {C:money}$#2#{} of sell value to",
                     "leftmost or selected Joker",
                     "{C:inactive}(Useable once per round)",
@@ -158,7 +158,7 @@ return {
             c_poke_leek = {
                 name = "Leek",
                 text = {
-                    "{C:attention}Endless{}",
+                    "{C:attention}Reusable{}",
                     "{C:green}#1# in #2#{} chance to add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
                     "{C:dark_edition}Polychrome{} edition to self",
@@ -169,7 +169,7 @@ return {
             c_poke_thickclub = {
                 name = "Thick Club",
                 text = {
-                    "{C:attention}Endless{}",
+                    "{C:attention}Reusable{}",
                     "Permanently adds {C:chips}+#2#{} Chips",
                     "to {C:attention}#1#{} selected card and",
                     "enhances it to {C:attention}Stone{} if it",
@@ -3011,9 +3011,10 @@ return {
               }
             },
             endless = {
-              name = "Endless",
+              name = "Reusable",
               text = {
-                "Not consumed when used"
+                "Not consumed when used",
+                "{C:inactive}(Can't be created by {C:attention}Twisted Spoon{C:inactive})"
               }
             },
             safaridesc = {

@@ -789,7 +789,8 @@ local twisted_spoon = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.last_poke_item and G.GAME.last_poke_item ~= 'c_poke_twisted_spoon' then 
+    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.last_poke_item and G.GAME.last_poke_item ~= 'c_poke_twisted_spoon' 
+        and G.GAME.last_poke_item ~= 'c_poke_leftovers' and G.GAME.last_poke_item ~= 'c_poke_leek' and G.GAME.last_poke_item ~= 'c_poke_thickclub' then 
       return true 
     end
     return false
@@ -817,7 +818,7 @@ local twisted_spoon = {
 		end
     local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
     local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
-    local colour = (not spoon_c or spoon_c.name == 'twisted_spoon') and G.C.RED or G.C.GREEN
+    local colour = (not spoon_c or spoon_c.name == 'twisted_spoon' or spoon_c.name == 'leftovers' or spoon_c.name == 'leek' or spoon_c.name == 'thickclub') and G.C.RED or G.C.GREEN
     local main_end = {
         {n=G.UIT.C, config={align = "bm", padding = 0.02}, nodes={
             {n=G.UIT.C, config={align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes={
@@ -826,7 +827,7 @@ local twisted_spoon = {
         }}
     }
    local loc_vars = {last_poke_item}
-   if not (not spoon_c or spoon_c.name == 'twisted_spoon') then
+   if not (not spoon_c or (spoon_c.name == 'twisted_spoon' or spoon_c.name == 'leftovers' or spoon_c.name == 'leek' or spoon_c.name == 'thickclub')) then
       info_queue[#info_queue+1] = spoon_c
    end
    
