@@ -18,31 +18,7 @@ local starmie={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
-          dollars = earned,
-          card = card
-        }
-      end
-    end
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve == true then
-      return {
-        message = evolve (self, card, context, 'j_poke_starmie')
-      }
-    end
-    if context.individual and context.cardarea == G.hand and context.end_of_round then
-      if context.other_card.debuff then
-        return {
-          message = localize("k_debuffed"),
-          colour = G.C.RED,
-          card = card,
-        }
-      else
-        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
-        return {
-          message = localize('$')..earned,
-          colour = G.C.MONEY,
           dollars = earned,
           card = card
         }
