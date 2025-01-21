@@ -274,6 +274,12 @@ local tauros={
         new_card:start_materialize()
         new_card:set_cost()
         create_shop_card_ui(new_card)
+        
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          if Talisman.config_file.disable_anims then 
+            new_card.states.visible = true
+          end
+        end
       end
     end
   end
