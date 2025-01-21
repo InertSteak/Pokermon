@@ -905,7 +905,7 @@ local farfetchd={
     return {vars = {center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 5, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,

@@ -2521,7 +2521,7 @@ return {
                   "debuffs {C:attention}#3#{} cards in your deck",
                   "that aren't {c:attention}Steel{} cards.",
                   "Played {C:attention}Steel{} cards",
-                  "behave like {C:attention}Glass{} cards."
+                  "behave like {C:attention}Glass{} cards"
                 }
             },
             j_poke_annihilape = {
