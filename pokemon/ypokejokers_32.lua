@@ -145,8 +145,6 @@ local tinkaton={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {2}}, 
-          colour = G.C.XMULT,
           x_mult = 2,
           mult = card.ability.extra.mult,
           card = card
