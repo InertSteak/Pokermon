@@ -415,6 +415,7 @@ local thickclub = {
   set = "Item",
   config = {max_highlighted = 1, bonus = 5, extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("cubone_marowak_infoqueue")}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {vars = {self.config.max_highlighted, self.config.bonus}}
