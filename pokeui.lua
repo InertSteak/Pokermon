@@ -572,3 +572,24 @@ function Controller:queue_R_cursor_press(x, y)
       end
     end
 end
+
+local poke_capture_focused_input = Controller.capture_focused_input
+function Controller:capture_focused_input(button, input_type, dt)
+  if self.focused then
+    local clicked = self.focused.target
+    if input_type == 'press' and button == 'rightshoulder' then
+      if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center then
+        if clicked.config.center.stage then
+          local menu = G.SETTINGS.paused and 'pokedex_back' or nil
+          if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+          G.FUNCS.overlay_menu{
+            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name), menu),
+          }
+          self:update_focus()
+        end
+      end
+    end
+  end
+  
+  return poke_capture_focused_input(self, button, input_type, dt)
+end
