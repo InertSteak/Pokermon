@@ -1164,7 +1164,7 @@ return {
                 text = {
                     "Played {C:attention}Steel{} cards give {X:red,C:white}X#1#{} Mult",
                     "plus {X:red,C:white}X#2#{} Mult for each",
-                    "{X:metal,C:white}Metal{} Joker next to this Joker",
+                    "adjacent {X:metal,C:white}Metal{} Joker",
                     "{C:inactive}(Currently {X:red,C:white}X#3#{}{C:inactive} Mult){}",
                     "{C:inactive}(Evolves with a {C:attention}Thunder Stone{}{C:inactive})"
                 } 
@@ -1557,7 +1557,7 @@ return {
                 text = {
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-                    "{C:spectral}Cryptid{} and certain Jokers",
+                    "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
                     "are {C:attention}duplicated{}"
                 } 
             },
@@ -2347,9 +2347,10 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Each {C:green}Reroll{} {C:attention}randomizes{} the",
-                    "enhancements of the top",
-                    "{C:attention}2{} cards of your deck",
+                    "If this is the {C:attention}leftmost{}",
+                    "Joker, each {C:green}Reroll{} {C:attention}randomizes{}",
+                    "the enhancements of the",
+                    "top {C:attention}2{} cards of your deck",
                     "Each card with an {C:attention}edition{}",
                     "held in hand gives {X:mult,C:white} X#1# {} Mult",
                 } 
@@ -2990,6 +2991,15 @@ return {
                 "{C:attention}#2#{}",
               }
             },
+            poke_drain = {
+              name = "Drain",
+              text = {
+                "Remove sell value from",
+                "a Joker and add it to self",
+                "if Joker has greater than",
+                "{C:money}$1{} sell value"
+              }
+            },
             precise_energy_tooltip = {
                 name = "Precise Energy Scaling",
                 text = {
@@ -3306,7 +3316,8 @@ return {
             poke_none = "None",
             poke_dawn_info1 = "(Next hand played sets hand type)",
             poke_dawn_info2 = "(Hand type set!)",
-            poke_make_it_rain = "Make it Rain!"
+            poke_make_it_rain = "Make it Rain!",
+            poke_val_down = "Value Down!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

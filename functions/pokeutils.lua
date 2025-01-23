@@ -219,3 +219,23 @@ poke_create_base_copy = function(selected)
     create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE})
   end
 end
+
+poke_get_adjacent_jokers = function(card)
+  local jokers = {}
+  if #G.jokers.cards > 1 then
+    local pos = 0
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then
+        pos = i
+        break
+      end
+    end
+    if pos > 1 and G.jokers.cards[pos-1] then 
+      table.insert(jokers, G.jokers.cards[pos-1])
+    end
+    if pos < #G.jokers.cards and G.jokers.cards[pos+1] then 
+      table.insert(jokers, G.jokers.cards[pos+1])
+    end
+  end
+  return jokers
+end

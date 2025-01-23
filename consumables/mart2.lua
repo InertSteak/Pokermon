@@ -165,6 +165,7 @@ local thunderstone = {
             center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.SECONDARY_SET.Enhanced})
       _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
       _card:set_ability(G.P_CENTERS.m_gold, nil, true)
+      playing_card_joker_effects({_card})
     end
     
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then

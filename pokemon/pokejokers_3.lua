@@ -852,14 +852,10 @@ local magneton={
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == center then
-          pos = i
-          break
-        end
+      local adjacent_jokers = poke_get_adjacent_jokers(center)
+      for i = 1, #adjacent_jokers do
+        if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
       end
-      if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
-      if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
   end,
@@ -875,15 +871,10 @@ local magneton={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         local adjacent = 0
-        local pos = 0
-        for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] == card then
-            pos = i
-            break
-          end
+        local adjacent_jokers = poke_get_adjacent_jokers(card)
+        for i = 1, #adjacent_jokers do
+          if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
         end
-        if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
-        if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
         
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)}}, 

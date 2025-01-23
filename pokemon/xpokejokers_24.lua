@@ -55,7 +55,7 @@ local sylveon={
   atlas = "Pokedex6",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
+    if context.reroll_shop and G.jokers.cards[1] == card and not context.blueprint then
       local card1 = nil
       local card2 = nil
       local enhancement1 = nil
