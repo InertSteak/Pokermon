@@ -175,8 +175,155 @@ local beheeyem={
   end
 }
 -- Litwick 607
+local litwick={
+  name = "litwick",
+  pos = {x = 0, y = 0},
+  config = {extra = {money_minus = 1, sell_value_goal = 13}},
+  loc_txt = {
+    name = "Litwick",
+    text = {
+      "At end of round, {C:attention}Drain{} {C:money}$#1#{}",
+      "from adjacent Jokers",
+      "Adds this Joker's sell value to Mult",
+      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+      "{C:inactive}(Evolves at {C:money}$#2#{C:inactive} Sell Value)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    return {vars = {center.ability.extra.money_minus, center.ability.extra.sell_value_goal, center.sell_cost}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex5",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}}, 
+          colour = G.C.MULT,
+          mult_mod = card.sell_cost
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local adjacent = poke_get_adjacent_jokers(card)
+      for i = 1, #adjacent do 
+        poke_drain(card, adjacent[i], card.ability.extra.money_minus)
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, card.ability.extra.sell_value_goal)
+  end
+}
 -- Lampent 608
+local lampent={
+  name = "lampent",
+  pos = {x = 0, y = 0},
+  config = {extra = {money_minus = 1, sell_value_goal = 13}},
+  loc_txt = {
+    name = "Lampent",
+    text = {
+      "At end of round, {C:attention}Drain{} {C:money}$#1#{}",
+      "from all other Jokers",
+      "Adds {C:attention}double{} this Joker's sell value to Mult",
+      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+      "{C:inactive}(Evolves with a {C:attention}Dusk Stone{C:inactive})"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    return {vars = {center.ability.extra.money_minus, center.ability.extra.sell_value_goal, 2 * center.sell_cost}}
+  end,
+  rarity = 3,
+  cost = 8,
+  item_req = "duskstone",
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex5",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {2 * card.sell_cost}}, 
+          colour = G.C.MULT,
+          mult_mod = 2 * card.sell_cost
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local adjacent = poke_get_adjacent_jokers(card)
+      for i = 1, #G.jokers.cards do 
+        if G.jokers.cards[i] ~= card then
+          poke_drain(card, G.jokers.cards[i], card.ability.extra.money_minus)
+        end
+      end
+    end
+    return item_evo(self, card, context, "j_poke_chandelure")
+  end
+}
 -- Chandelure 609
+local chandelure={
+  name = "chandelure",
+  pos = {x = 0, y = 0},
+  config = {extra = {money = 1, Xmult_multi = 1.3}},
+  loc_txt = {
+    name = "Chandelure",
+    text = {
+      "Adds {C:attention}triple{} this Joker's sell value to Mult",
+      "Each Joker with {C:money}1${} sell value",
+      "gives {X:mult,C:white} X#1# {} Mult and earns {C:money}$#2#{}",
+      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money, 3 * center.sell_cost}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  item_req = "duskstone",
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex5",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {3 * card.sell_cost}}, 
+          colour = G.C.MULT,
+          mult_mod = 3 * card.sell_cost
+        }
+      end
+    end
+    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost == 1 then
+       ease_poke_dollars(context.other_joker, "chandelure", card.ability.extra.money)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_multi
+        }
+    end
+  end
+}
 -- Axew 610
 -- Fraxure 611
 -- Haxorus 612
@@ -199,5 +346,5 @@ local beheeyem={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem},
+        list = {elgyem, beheeyem, litwick, lampent, chandelure},
 }
