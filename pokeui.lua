@@ -577,7 +577,7 @@ local poke_capture_focused_input = Controller.capture_focused_input
 function Controller:capture_focused_input(button, input_type, dt)
   if self.focused then
     local clicked = self.focused.target
-    if input_type == 'press' and button == 'rightshoulder' then
+    if input_type == 'press' and button == 'rightstick' then
       if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center then
         if clicked.config.center.stage then
           local menu = G.SETTINGS.paused and 'pokedex_back' or nil
