@@ -328,7 +328,8 @@ local squirtle={
           chip_mod = card.ability.extra.chips
         }
       end
-    elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+    end
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
         if card.ability.extra.chips == 30 then
           local eval = function(card) return not card.REMOVED end
@@ -378,7 +379,8 @@ local wartortle={
           chip_mod = card.ability.extra.chips
         }
       end
-    elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+    end
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
         if card.ability.extra.chips == 68 then
           local eval = function(card) return not card.REMOVED end
