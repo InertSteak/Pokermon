@@ -38,7 +38,7 @@ return {
 				label = "发光",
 				name = "发光",
 				text = {
-					"店内的扩充包字段{C:attention}+1{}"
+					"店内的补充包数量{C:attention}+1{}"
 				}
 			}
 		},
@@ -152,6 +152,16 @@ return {
 
 		},
 		Item = {
+			c_poke_dawnstone = {
+				name = "觉醒之石",
+				text = {
+					"获得 {C:money}${} 等于{c:attention}两倍{}于",
+					"{C:attention}#1#{} {C:mult}倍率{}的钱",
+					"{C:inactive}#4#{}",
+					"{C:attention}进化牌{}",
+					"{C:inactive}(当前 {C:money}$#2#{C:inactive}/$40 最大)"
+				}
+			},
 			c_poke_dragonscale = {
 				name = "龙之鳞片",
 				text = {
@@ -168,6 +178,15 @@ return {
 					"所有手牌的{C:attention}加强效果{}",
 					"{C:attention}进化牌{}",
 					"{C:inactive}（包括无加强的牌）{}"
+				}
+			},
+			c_poke_duskstone = {
+				name = "暗之石",
+				text = {
+					"使用后再过 {C:attention}#2#{} 回合",
+					"赚 {C:money}$#1#{}",
+					"{C:attention}进化牌{}",
+					"{C:inactive}( 开始第 {C:attention}#3#{C:inactive})回合 赚 {C:money}${C:inactive}"
 				}
 			},
 			c_poke_firestone = {
@@ -259,6 +278,14 @@ return {
 					"{C:inactive}（必须有空位）"
 				}
 			},
+			c_poke_prismscale = {
+				name = "美丽鳞片",
+				text = {
+					"将{C:attention}#2#{}张随机持有的手牌",
+					"变为所选牌的{C:attention}花色{}",
+					"{C:attention}进化牌{}"
+				}
+			},
 			c_poke_shinystone = {
 				name = "光之石",
 				text = {
@@ -339,16 +366,16 @@ return {
 				name = "化石翼龙",
 				text = {
 					"{C:attention}原始的#1#{}",
-					"{C:attention}一张{}：{C:mult}+#2#{}倍数",
-					"{C:attention}两张{} #1#：{C:mult}+#3#{}倍数及{C:chips}+#4#{}筹码",
-					"{C:attention}三张{} #1#：{X:red,C:white}X#5#{}倍数",
+					"{C:attention}一张{}：{C:mult}+#2#{}倍率",
+					"{C:attention}两张{} #1#：{C:mult}+#3#{}倍率及{C:chips}+#4#{}筹码",
+					"{C:attention}三张{} #1#：{X:red,C:white}X#5#{}倍率",
 					"{C:attention}四张或以上{} #1#：这张牌的加成{C:attention}翻倍"
 				}
 			},
 			j_poke_alakazam = {
 				name = "胡地",
 				text = {
-					"{C:attention}+#3#{}消耗牌字段",
+					"{C:attention}+#3#{}消耗牌数量",
 					"如果打出的{C:attention}牌型{}",
 					"已经在此局出过时",
 					"有{C:green}#1#/#2#{}的几率产生一张{C:attention}愚者{}牌"
@@ -358,16 +385,16 @@ return {
 				name = "弃世猴",
 				text = {
 					"每张计分的{C:attention}2{}，{C:attention}3{}，{C:attention}5{}或{C:attention}7{}",
-					"给予{C:mult}+#1#{}倍数及{C:chips}+#2#{}筹码",
-					"加成会在每次出牌叠加，回合结束后重设",
-					"{C:inactive}（目前为{C:mult}+#3#{}{C:inactive}倍数{C:chips}+#4#{C:inactive}筹码）"
+					"给予{C:mult}+#1#{}倍率及{C:chips}+#2#{}筹码",
+					"加成会在每次出牌叠加，回合结束后重置",
+					"{C:inactive}（目前为{C:mult}+#3#{}{C:inactive}倍率{C:chips}+#4#{C:inactive}筹码）"
 				}
 			},
 			j_poke_arbok = {
 				name = "阿柏怪",
 				text = {
 					"如果打出的牌包含",
-					"{C:attention}顺子{}，{C:mult}+#1#{}倍数",
+					"{C:attention}顺子{}，{C:mult}+#1#{}倍率",
 					"如果也包含{C:attention}A{}",
 					"产生一张{C:tarot}塔罗牌{}"
 				}
@@ -376,7 +403,7 @@ return {
 				name = "风速狗",
 				text = {
 					"如果打出的牌包含{C:attention}同花{}",
-					"{X:red,C:white} X#1# {}倍数",
+					"{X:red,C:white} X#1# {}倍率",
 					"选择{C:attention}盲注{}后",
 					"产生一张{C:attention}恋人{}牌"
 				}
@@ -386,13 +413,22 @@ return {
 				text = {
 					"每回合中的{C:attention}第一次出牌{}时",
 					"新增{C:attention}银箔{}，随机的{C:attention}增强效果{}",
-					"及随机的{C:attention}封蜡章{}到未计分的牌"
+					"及随机的{C:attention}封蜡{}到未计分的牌"
 				}
 			},
 			j_poke_beedrill = {
 				name = "大针蜂",
 				text = {
 					"{C:chips}+#1#{}筹码"
+				}
+			},
+			j_poke_beheeyem = {
+				name = "大宇怪",
+				text = {
+					"当选择 {C:attention}盲注{} 之后",
+					"获得一张提高最高牌型等级 {C:attention}#1#{} {C:dark_edition}负片{}{C:planet}星球牌{}",
+					"打开 {C:attention}#2# 补充包{}后, 如果可以则创建一张",
+					"{C:attention}望远镜{} 或 {C:attention}天文台{}"
 				}
 			},
 			j_poke_beldum = {
@@ -409,7 +445,7 @@ return {
 				name = "美丽花",
 				text = {
 					"每张计分的{C:attention}奇数{}牌",
-					"会给予{C:mult}+#1#{}倍数或变成{C:attention}万能牌{}",
+					"会给予{C:mult}+#1#{}倍率或变成{C:attention}万能牌{}",
 					"如果已经是{C:attention}万能牌{}，新增{C:dark_edition}彩色{}版本"
 				}
 			},
@@ -432,10 +468,10 @@ return {
 				name = "火焰鸡",
 				text = {
 					"{C:mult}+#2#{}弃牌次数，{C:attention}多种性格{}",
-					"这回合中，每张弃掉的{C:attention}#6#，#7#或#8#{}会给予{C:mult}+#4#{}倍数及{X:red,C:white} X#1# {}倍数",
-					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍数翻倍",
+					"这回合中，每张弃掉的{C:attention}#6#，#7#或#8#{}会给予{C:mult}+#4#{}倍率及{X:red,C:white} X#1# {}倍率",
+					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍率翻倍",
 					"{C:inactive,s:0.8}（这包括小丑牌及能量牌）{}",
-					"{C:inactive}（目前为{X:red,C:white} X#3# {}{C:inactive}倍数）{}"
+					"{C:inactive}（目前为{X:red,C:white} X#3# {}{C:inactive}倍率）{}"
 				}
 			},
 			j_poke_blissey = {
@@ -451,7 +487,7 @@ return {
 				name = "逐电犬",
 				text = {
 					"如果打出的牌包含{C:attention}顺子{}",
-					"给予{X:red,C:white}X#1#{}倍数及获得{C:money}$#2#{}"
+					"给予{X:red,C:white}X#1#{}倍率及获得{C:money}$#2#{}"
 				}
 			},
 			j_poke_buizel = {
@@ -475,13 +511,13 @@ return {
 			j_poke_butterfree = {
 				name = "巴大蝶",
 				text = {
-					"{C:mult}+#1#{}倍数"
+					"{C:mult}+#1#{}倍率"
 				}
 			},
 			j_poke_caterpie = {
 				name = "绿毛虫",
 				text = {
-					"{C:mult}+#1#{}倍数",
+					"{C:mult}+#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -497,16 +533,16 @@ return {
 			j_poke_charizard = {
 				name = "喷火龙",
 				text = {
-					"{C:red}+#4#{}次弃牌, {C:mult}+#1#{}倍数",
-					"当剩下{C:attention}#3#{}次弃牌数时，倍数{X:mult,C:white} X#2# {}"
+					"{C:red}+#4#{}次弃牌, {C:mult}+#1#{}倍率",
+					"当剩下{C:attention}#3#{}次弃牌数时，倍率{X:mult,C:white} X#2# {}"
 				}
 			},
 			j_poke_charjabug = {
 				name = "虫电宝",
 				text = {
 					"每张你拥有的{X:lightning, C:black}电{}属性小丑牌",
-					"会给予{C:mult}+#1#{}倍数{C:inactive}（包括自身）{}",
-					"{C:inactive}（目前为{C:mult}#2#{C:inactive}倍数）",
+					"会给予{C:mult}+#1#{}倍率{C:inactive}（包括自身）{}",
+					"{C:inactive}（目前为{C:mult}#2#{C:inactive}倍率）",
 					"{C:inactive}（使用{} {C:attention}雷之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -515,9 +551,9 @@ return {
 				text = {
 					"{C:red}+#4#{}次弃牌",
 					"当剩下{C:attention}#3#{}次弃牌数时",
-					"每次出牌会给此牌{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为倍数{C:mult}+#1#{C:inactive}）",
-					"{C:inactive}（在{C:mult}+16{}{C:inactive}倍数时进化）"
+					"每次出牌会给此牌{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为倍率{C:mult}+#1#{C:inactive}）",
+					"{C:inactive}（在{C:mult}+16{}{C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_charmeleon = {
@@ -525,18 +561,18 @@ return {
 				text = {
 					"{C:red}+#4#{}次弃牌",
 					"当剩下{C:attention}#3#{}次弃牌数时",
-					"每次出牌会给此牌{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为倍数{C:mult}+#1#{C:inactive}）",
-					"{C:inactive}（在{C:mult}+36{}{C:inactive}倍数时进化）"
+					"每次出牌会给此牌{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为倍率{C:mult}+#1#{C:inactive}）",
+					"{C:inactive}（在{C:mult}+36{}{C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_clefable = {
 				name = "皮可西",
 				text = {
 					"每张计分的{C:clubs}#2#{}花色的牌",
-					"会在这个回合中给予此牌{C:mult}+#1#{}倍数",
+					"会在这个回合中给予此牌{C:mult}+#1#{}倍率",
 					"加成会依打出的{C:clubs}#2#{}花色牌的数量而增加",
-					"{C:inactive,s:0.8}（如果打出了五张梅花牌，每张牌会给予{C:mult,s:0.8}+5{}{C:inactive,s:0.8}倍数）{}",
+					"{C:inactive,s:0.8}（如果打出了五张梅花牌，每张牌会给予{C:mult,s:0.8}+5{}{C:inactive,s:0.8}倍率）{}",
 					"{C:inactive}(Currently {C:mult}#3#{}{C:inactive} Mult){}"
 				}
 			},
@@ -545,14 +581,14 @@ return {
 				text = {
 					"每张计分的",
 					"{C:clubs}#2#{}花色的牌",
-					"都给予{C:mult}+#1#{}倍数",
+					"都给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}月之石{}{C:inactive}牌进化）"
 				}
 			},
 			j_poke_cleffa = {
 				name = "皮宝宝",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"回合结束时",
 					"产生一张带有{C:dark_edition}负片{}的{C:attention}月亮{}牌",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
@@ -569,20 +605,20 @@ return {
 				name = "力壮鸡",
 				text = {
 					"{C:mult}+#3#{}弃牌次数，{C:attention}多种性格{}",
-					"这回合中，每张弃掉的{C:attention}#5#，#6#或#7#{}会给予{C:mult}+#1#{}倍数",
-					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍数翻倍",
+					"这回合中，每张弃掉的{C:attention}#5#，#6#或#7#{}会给予{C:mult}+#1#{}倍率",
+					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍率翻倍",
 					"{C:inactive,s:0.8}（这包括小丑牌及能量牌）{}",
-					"{C:inactive}（目前为{C:mult}#4#{}{C:inactive}倍数）{}",
-					"{C:inactive}（在给予{C:mult}#2#/150{}{C:inactive}倍数后进化）"
+					"{C:inactive}（目前为{C:mult}#4#{}{C:inactive}倍率）{}",
+					"{C:inactive}（在给予{C:mult}#2#/150{}{C:inactive}倍率后进化）"
 				}
 			},
 			j_poke_crobat = {
 				name = "叉字蝠",
 				text = {
 					"{C:attention}随机{}所有计分牌现有的强化效果",
-					"从{C:attention}倍数{}及{C:attention}万能{}牌获得{C:mult}+#2#{}倍数",
+					"从{C:attention}倍率{}及{C:attention}万能{}牌获得{C:mult}+#2#{}倍率",
 					"从{C:attention}奖励{}及{C:attention}石头{}牌获得{C:chips}+#4#{}筹码",
-					"从{C:attention}钢铁{}及{C:attention}玻璃{}牌获得{X:red,C:white}X#6#{}倍数",
+					"从{C:attention}钢铁{}及{C:attention}玻璃{}牌获得{X:red,C:white}X#6#{}倍率",
 					"从{C:attention}黄金{}及{C:attention}幸运{}牌获得{C:money}$#8#{}金钱",
 					"{C:inactive}（目前为{C:mult}+#1#{}，{C:chips}+#3#{}，{X:red,C:white}X#5#{}，{C:inactive}回合结束时，{}{C:money}$#7#{}）"
 				}
@@ -592,10 +628,10 @@ return {
 				text = {
 					"当你得到这张牌后",
 					"产生一张{C:attention}粗骨头{}牌",
-					"每个已占据的消耗牌字段",
-					"给予{C:mult}+#1#{}倍数",
+					"每个已占据的消耗牌数量",
+					"给予{C:mult}+#1#{}倍率",
 					"{C:inactive,s:0.75}（{C:attention,s:0.75}粗骨头{}{C:inactive,s:0.75}牌当作双倍）{}",
-					"{C:inactive}（目前为{C:mult}+#3#{C:inactive}倍数）",
+					"{C:inactive}（目前为{C:mult}+#3#{C:inactive}倍率）",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -621,7 +657,7 @@ return {
 				name = "白海狮",
 				text = {
 					"在{C:attention}第一次{}出牌中",
-					"新增随机的{C:attention}封蜡章{}到最左边的计分牌"
+					"新增随机的{C:attention}封蜡{}到最左边的计分牌"
 				}
 			},
 			j_poke_diglett = {
@@ -630,7 +666,7 @@ return {
 					"如果打出的牌包含{C:attention}三条{}",
 					"给予{C:chips}+#2#{}筹码",
 					"如果打出的牌包含{C:attention}2{}，{C:attention}3{}或{C:attention}4{}",
-					"给予{C:mult}+#3#{}倍数",
+					"给予{C:mult}+#3#{}倍率",
 					"{C:inactive}（在{C:attention}#1#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -647,7 +683,7 @@ return {
 				text = {
 					"如果计分的牌包含",
 					"至少{C:attention}3{}张人头牌或{C:attention}葫芦",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"如果包含两者，加成效果叠加"
 				}
 			},
@@ -656,44 +692,81 @@ return {
 				text = {
 					"如果计分的牌包含",
 					"至少{C:attention}2{}张人头牌或{C:attention}葫芦",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"如果包含两者，加成效果叠加",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
+				}
+			},
+			j_poke_dragapult = {
+				name = "多龙巴鲁托",
+				text = {
+					"每拥有的小丑售价达到 {C:money}${}{X:red,C:white} X#2# {}倍率",
+					"如果打出的牌型是 {C:attention}同花顺{}",
+					"并且你没有{C:attention}哈克龙{}",
+					"获得 2张{C:dark_edition}负片{}{C:attention}哈克龙{}  ",
+					"{C:inactive}(当前 {X:red,C:white} X#3# {C:inactive} 倍率){}"
 				}
 			},
 			j_poke_dragonair = {
 				name = "哈克龙",
 				text = {
 					"如果打出的牌不超过{C:attention}#3#{}张",
-					"这张牌会获得{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
-					"{C:inactive}（在拥有{C:mult}+30{}{C:inactive}倍数时进化）"
+					"这张牌会获得{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
+					"{C:inactive}（在拥有{C:mult}+30{}{C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_dragonite = {
 				name = "快龙",
 				text = {
-					"{C:mult}+#1#{}倍数",
+					"{C:mult}+#1#{}倍率",
 					"如果只打出一张牌",
 					"重新触发那张牌{C:attention}#2#{}次"
+				}
+			},
+			j_poke_drakloak = {
+				name = "多龙奇",
+				text = {
+					"每拥有的小丑售价达到 {C:money}${}{X:red,C:white} X#2# {}倍率",
+					"如果打出的牌型是 {C:attention}同花顺{}",
+					"每张小丑牌增加 {C:money}$#1#{} 售价",
+					"{C:inactive}(当前 {X:red,C:white} X#5# {C:inactive} 倍率){}",
+					"{C:inactive}(所有小丑牌售价到达 {C:money}$#2#{}{C:inactive}/#3# 时进化)"
 				}
 			},
 			j_poke_dratini = {
 				name = "迷你龙",
 				text = {
 					"如果打出的牌不超过{C:attention}#3#{}张",
-					"这张牌会获得{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
-					"{C:inactive}（在拥有{C:mult}+10{}{C:inactive}倍数时进化）"
+					"这张牌会获得{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
+					"{C:inactive}（在拥有{C:mult}+10{}{C:inactive}倍率时进化）"
+				}
+			},
+			j_poke_dreepy = {
+				name = "多龙梅西亚",
+				text = {
+					"售出时, 每张小丑牌的售价增加 {C:money}$#1#{}",
+					"将所有持有的手牌变为",
+					"{C:spades}#2#{}",
+					"{C:inactive}(打出同花顺时进化){}"
+				}
+			},
+			j_poke_dreepy_dart = {
+				name = "幽灵多龙梅西亚",
+				text = {
+					"售出时, 每张小丑牌的售价增加 {C:money}$#1#{}",
+					"将所有持有的手牌变为{}",
+					"{C:spades}#2#{}"
 				}
 			},
 			j_poke_drowzee = {
 				name = "催眠貘",
 				text = {
 					"在此局中，每一张已使用并不重复的",
-					"{C:planet}行星牌{}给予{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
-					"{C:inactive}（在{C:mult}+21{C:inactive}倍数时进化）"
+					"{C:planet}行星牌{}给予{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
+					"{C:inactive}（在{C:mult}+21{C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_dugtrio = {
@@ -702,7 +775,7 @@ return {
 					"如果打出的牌包含{C:attention}三条{}",
 					"给予{C:chips}+#2#{}筹码",
 					"如果打出的牌包含{C:attention}2{}，{C:attention}3{}或{C:attention}4{}",
-					"给予{X:red,C:white} X#1# {}倍数"
+					"给予{X:red,C:white} X#1# {}倍率"
 				}
 			},
 			j_poke_eevee = {
@@ -718,7 +791,7 @@ return {
 				name = "阿柏蛇",
 				text = {
 					"如果打出的牌包含",
-					"{C:attention}顺子{}，{C:mult}+#1#{}倍数",
+					"{C:attention}顺子{}，{C:mult}+#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -735,26 +808,34 @@ return {
 				text = {
 					"当回合结束时，每次{C:attention}卖出{}一张牌",
 					"会把此牌的{C:attention}出售价值{}提升{C:money}$#1#{}",
-					"此牌的出售价值每一元会给予{X:mult,C:white}X#2#{}倍数",
-					"{C:inactive}（目前为{X:mult,C:white}X#3#{}{C:inactive}倍数）"
+					"此牌的出售价值每一元会给予{X:mult,C:white}X#2#{}倍率",
+					"{C:inactive}（目前为{X:mult,C:white}X#3#{}{C:inactive}倍率）"
 				}
 			},
 			j_poke_electrode = {
 				name = "顽皮雷弹",
 				text = {
 					"如果这张牌是{C:attention}最左边{}的小丑牌",
-					"给予{C:mult}+#1#{}倍数及{C:money}$#2#{}",
+					"给予{C:mult}+#1#{}倍率及{C:money}$#2#{}",
 					"并减益这张小丑牌直到回合结束"
 				}
 			},
 			j_poke_elekid = {
 				name = "电击怪",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"当这个小丑牌进化时",
 					"产生一个{C:attention}优惠券{}标签",
-					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍数）",
+					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍率）",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
+				}
+			},
+			j_poke_elgyem = {
+				name = "小灰怪",
+				text = {
+					"当选择 {C:attention}盲注{} 之后",
+					"获得一张提高最高牌型等级 {C:attention}#1#{} {C:dark_edition}负片{}{C:planet}星球牌{}",
+					"{C:inactive,s:0.8}(当持有 {C:planet,s:0.8}#2#{C:inactive,s:0.8}/#3# 张不同类型的星球牌时进化){}"
 				}
 			},
 			j_poke_espeon = {
@@ -772,14 +853,14 @@ return {
 				name = "不变之石",
 				text = {
 					"宝可梦{C:attention}不能{}进化",
-					"每张{C:attention}基础{}宝可梦会给予{X:mult,C:white} X#1# {}倍数"
+					"每张{C:attention}基础{}宝可梦会给予{X:mult,C:white} X#1# {}倍率"
 				}
 			},
 			j_poke_exeggcute = {
 				name = "蛋蛋",
 				text = {
 					"每张计分的{C:hearts}#2#{}花色的牌",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}叶之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -788,7 +869,7 @@ return {
 				text = {
 					"每张计分的{C:hearts}#3#{}花色的牌",
 					"有{C:green}#4#/#5#{}的几率",
-					"给予{C:mult}+#1#{}倍数及{X:mult,C:white}X#2#{}倍数"
+					"给予{C:mult}+#1#{}倍率及{X:mult,C:white}X#2#{}倍率"
 				}
 			},
 			j_poke_farfetchd = {
@@ -796,7 +877,7 @@ return {
 				text = {
 					"当你得到这张牌后",
 					"产生一张{C:attention}大葱{}牌",
-					"有{C:green}#2#/#3#{}的几率给予{X:red,C:white}X#1#{}倍数",
+					"有{C:green}#2#/#3#{}的几率给予{X:red,C:white}X#1#{}倍率",
 					"每张在手的{C:attention}大葱{}牌加倍这个几率"
 				}
 			},
@@ -806,6 +887,14 @@ return {
 					"当有{C:attention}#1#{}张牌计分后",
 					"升级下一个打出的{C:attention}牌型{}",
 					"{C:inactive}（目前有{C:attention}#2#{}{C:inactive}/#1#）{C:inactive}#3#{}"
+				}
+			},
+			j_poke_feebas = {
+				name = "丑丑鱼",
+				text = {
+					"{C:mult}+#1#{} 倍率",
+					"附上 {C:attention}飞溅{}效果",
+					"{C:inactive}(使用 {C:attention}美丽鳞片{}进化{C:inactive})"
 				}
 			},
 			j_poke_fidough = {
@@ -822,7 +911,7 @@ return {
 				name = "火伊布",
 				text = {
 					"每{C:attention}三{}次的{C:green}重铩{}",
-					"会给此牌{X:red,C:white} X#2# {}倍数",
+					"会给此牌{X:red,C:white} X#2# {}倍率",
 					"{C:inactive}（目前有{C:attention}#3#{}{C:inactive}/3次重铩）",
 					"{C:inactive}（目前为{X:red,C:white} X#1# {}{C:inactive}筹码）"
 				}
@@ -838,9 +927,9 @@ return {
 				name = "大尾立",
 				text = {
 					"如果打出的牌型不是上一个的牌型",
-					"这张牌会获得{C:mult}+#2#{}倍数",
+					"这张牌会获得{C:mult}+#2#{}倍率",
 					"{C:inactive}（上一个牌型：{C:attention}#3#{}{C:inactive}）",
-					"{C:inactive}（目前为{C:mult}+#1#{} {C:inactive}倍数）"
+					"{C:inactive}（目前为{C:mult}+#1#{} {C:inactive}倍率）"
 				}
 			},
 			j_poke_gastly = {
@@ -871,6 +960,32 @@ return {
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
 				}
 			},
+			j_poke_gholdengo = {
+				name = "赛富豪",
+				text = {
+					"打出的 {C:attention}黄金牌{}  {C:red}花费{} {C:money}$#2#{}",
+					"计分和倍乘时这张牌的{X:red,C:white}X{} 倍率 {X:red,C:white}X#3#",
+					"这张牌不会被削弱",
+					"{C:inactive}(当前 {X:red,C:white}X#1#{C:inactive} 倍率)",
+					"{C:inactive}(回合结束后重置)"
+				}
+			},
+			j_poke_gimmighoul = {
+				name = "索财灵 (宝箱形态)",
+				text = {
+					"打出的 {C:attention}黄金牌{} ",
+					"计分时赚 {C:money}$#1#{} ",
+					"跳过{C:attention}补充包时{} ...?",
+					"{C:inactive}(在赚了或花费了 {C:money}$#2#{C:inactive}/$#3 钱后进化){}"
+				}
+			},
+			j_poke_gimmighoulr = {
+				name = "索财灵 (徒步形态)",
+				text = {
+					"赚一些{C:money}${}",
+					"{S:1.1,C:red,E:2}自毁{}"
+				}
+			},
 			j_poke_glaceon = {
 				name = "冰伊布",
 				text = {
@@ -885,7 +1000,7 @@ return {
 				name = "臭臭花",
 				text = {
 					"每张计分的{C:attention}奇数{}点的牌",
-					"都给予{C:mult}+#1#{}或{C:mult}+#2#{}倍数",
+					"都给予{C:mult}+#1#{}或{C:mult}+#2#{}倍率",
 					"{C:inactive}（使用{}{C:attention}叶之石{}{C:inactive}或{}{C:attention}日之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -893,9 +1008,9 @@ return {
 				name = "大嘴蝠",
 				text = {
 					"移除计分牌的加强效果",
-					"从{C:attention}倍数{}及{C:attention}万能{}牌获得{C:mult}+#2#{}倍数",
+					"从{C:attention}倍率{}及{C:attention}万能{}牌获得{C:mult}+#2#{}倍率",
 					"从{C:attention}奖励{}及{C:attention}石头{}牌获得{C:chips}+#4#{}筹码",
-					"从{C:attention}钢铁{}及{C:attention}玻璃{}牌获得{X:red,C:white}X#6#{}倍数",
+					"从{C:attention}钢铁{}及{C:attention}玻璃{}牌获得{X:red,C:white}X#6#{}倍率",
 					"从{C:attention}黄金{}及{C:attention}幸运{}牌获得{C:money}$#8#{}金钱",
 					"{C:inactive}（在移除{C:attention}#9#{}{C:inactive}/20张加强牌时进化）",
 					"{C:inactive}（目前为{C:mult}+#1#{}，{C:chips}+#3#{}，{X:red,C:white}X#5#{}，{C:inactive}回合结束时，{}{C:money}$#7#{}）"
@@ -936,7 +1051,7 @@ return {
 				name = "臭泥",
 				text = {
 					"如果你的牌组有多于{C:attention}#3#{}张牌",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"每回合结束时",
 					"增加一张随机的扑克牌到牌组",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
@@ -957,29 +1072,29 @@ return {
 				name = "卡蒂狗",
 				text = {
 					"如果打出的牌包含{C:attention}同花{}",
-					"{C:mult}+#1#{}倍数",
+					"{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}火之石{}{C:inactive}牌进化）"
 				}
 			},
 			j_poke_grubbin = {
 				name = "强颚鸡母虫",
 				text = {
-					"{C:mult}+#1#{}倍数",
+					"{C:mult}+#1#{}倍率",
 					"如果你有{X:lightning, C:black}电{}属性的小丑牌",
-					"此牌给予的倍数会增加{C:attention}三倍{}",
+					"此牌给予的倍率会增加{C:attention}三倍{}",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
 			j_poke_gyarados = {
 				name = "暴鲤龙",
 				text = {
-					"{X:red,C:white} X#1# {}倍数"
+					"{X:red,C:white} X#1# {}倍率"
 				}
 			},
 			j_poke_happiny = {
 				name = "小福蛋",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"如果这张牌是最右边的小丑牌",
 					"在{C:attention}最后一次{}出牌时，所有计分牌会变成{C:attention}幸运牌{}",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
@@ -999,50 +1114,50 @@ return {
 				name = "快拳郎",
 				text = {
 					"在你的牌组中，每张多于{C:attention}#2#{}张的牌",
-					"都给予{X:red,C:white}X#1#{}倍数",
-					"{C:inactive}（目前为{X:red,C:white}X#3#{C:inactive}倍数）"
+					"都给予{X:red,C:white}X#1#{}倍率",
+					"{C:inactive}（目前为{X:red,C:white}X#3#{C:inactive}倍率）"
 				}
 			},
 			j_poke_hitmonlee = {
 				name = "飞腿郎",
 				text = {
 					"在你的牌组中，每张少于{C:attention}#2#{}张的牌",
-					"都给予{X:red,C:white}X#1#{}倍数",
-					"{C:inactive}（目前为{X:red,C:white}X#3#{C:inactive}倍数）"
+					"都给予{X:red,C:white}X#1#{}倍率",
+					"{C:inactive}（目前为{X:red,C:white}X#3#{C:inactive}倍率）"
 				}
 			},
 			j_poke_hitmontop = {
 				name = "战舞郎",
 				text = {
-					"{X:red,C:white} X#1# {}倍数",
+					"{X:red,C:white} X#1# {}倍率",
 					"选择盲注时",
 					"如果你的牌组正好有{C:attention}#2#{}张牌",
-					"这张牌会获得{X:red,C:white} X#3# {}倍数"
+					"这张牌会获得{X:red,C:white} X#3# {}倍率"
 				}
 			},
 			j_poke_horsea = {
 				name = "墨海马",
 				text = {
 					"每张计分的{C:attention}6{}",
-					"会给此牌{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
-					"{C:inactive}（{C:mult}+12{} {C:inactive}倍数时进化）"
+					"会给此牌{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
+					"{C:inactive}（{C:mult}+12{} {C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_hypno = {
 				name = "引梦貘人",
 				text = {
 					"在此局中，每一张已使用并不重复的",
-					"{C:planet}行星牌{}给予{C:mult}+#2#{}倍数",
+					"{C:planet}行星牌{}给予{C:mult}+#2#{}倍率",
 					"当你得到这张牌后",
 					"产生一张{C:spectral}入迷{}牌",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）"
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）"
 				}
 			},
 			j_poke_igglybuff = {
 				name = "宝宝丁",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"回合结束时",
 					"产生一张带有{C:dark_edition}负片{}的{C:attention}世界{}牌",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
@@ -1071,7 +1186,7 @@ return {
 				text = {
 					"每张计分的",
 					"{C:spades}#2#{}花色的牌",
-					"都给予{C:mult}+#1#{}倍数",
+					"都给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}月之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -1130,7 +1245,7 @@ return {
 			j_poke_kangaskhan = {
 				name = "袋兽",
 				text = {
-					"{C:attention}+#1#{}消耗牌字段",
+					"{C:attention}+#1#{}消耗牌数量",
 					"{C:chips}-#2#{}出牌次数"
 				}
 			},
@@ -1138,10 +1253,10 @@ return {
 				name = "刺龙王",
 				text = {
 					"每张计分的{C:attention}6{}",
-					"会给此牌{C:mult}+#2#{}倍数",
+					"会给此牌{C:mult}+#2#{}倍率",
 					"手牌中的每张{C:attention}K{}",
-					"在{C:attention}出牌{}时会给此牌{X:red,C:white}X#4#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数，{X:red,C:white}X#3#{}倍数{C:inactive}）"
+					"在{C:attention}出牌{}时会给此牌{X:red,C:white}X#4#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率，{X:red,C:white}X#3#{}倍率{C:inactive}）"
 				}
 			},
 			j_poke_kingler = {
@@ -1189,15 +1304,15 @@ return {
 			j_poke_lickilicky = {
 				name = "大舌舔",
 				text = {
-					"头两张计分的{C:attention}J{}会给予{X:mult,C:white} X#1# {}倍数",
-					"之后每张计分的{C:attention}J{}会给予{X:mult,C:white} X#2# {}倍数"
+					"头两张计分的{C:attention}J{}会给予{X:mult,C:white} X#1# {}倍率",
+					"之后每张计分的{C:attention}J{}会给予{X:mult,C:white} X#2# {}倍率"
 				}
 			},
 			j_poke_lickitung = {
 				name = "大舌头",
 				text = {
 					"头两张的计分的{C:attention}J{}",
-					"给予{X:mult,C:white} X#1# {}倍数",
+					"给予{X:mult,C:white} X#1# {}倍率",
 					"{C:inactive}（在触发{C:attention}#2#{}{C:inactive}/20 次后进化）{}"
 				}
 			},
@@ -1206,7 +1321,7 @@ return {
 				text = {
 					"{C:chips}+#1#{}出牌次数",
 					"{C:mult}-#2#弃牌次数{}",
-					"{C:mult}+#3#{}倍数"
+					"{C:mult}+#3#{}倍率"
 				}
 			},
 			j_poke_machoke = {
@@ -1214,7 +1329,7 @@ return {
 				text = {
 					"{C:chips}+#1#{}出牌次数",
 					"{C:mult}-#2#弃牌次数{}",
-					"{C:mult}+#3#{}倍数",
+					"{C:mult}+#3#{}倍率",
 					"{C:inactive}（使用{}{C:attention}联系绳{}{C:inactive}牌进化）"
 				}
 			},
@@ -1223,16 +1338,16 @@ return {
 				text = {
 					"{C:chips}+#1#{}出牌次数",
 					"{C:mult}-#2#弃牌次数{}",
-					"{C:mult}+#4#{}倍数",
+					"{C:mult}+#4#{}倍率",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
 				}
 			},
 			j_poke_magby = {
 				name = "鸭嘴宝宝",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"{C:red}+#2#{}弃牌次数",
-					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍数）",
+					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍率）",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1247,8 +1362,8 @@ return {
 				name = "鸭嘴火兽",
 				text = {
 					"如果回合中的{C:attention}第一次{}弃牌只有{C:attention}一{}张牌",
-					"摧毁它并获得{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
+					"摧毁它并获得{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
 					"{C:inactive}（使用{}{C:attention}联系绳{}{C:inactive}牌进化）"
 				}
 			},
@@ -1256,27 +1371,27 @@ return {
 				name = "鸭嘴炎兽",
 				text = {
 					"如果回合中的{C:attention}第一次{}弃牌只有{C:attention}一{}张牌",
-					"摧毁它并获得{C:mult}+#2#{}倍数",
-					"每张弃掉的牌会给予{X:mult,C:white}X#4#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数，{X:mult,C:white}X#3#{}{C:inactive}倍数）"
+					"摧毁它并获得{C:mult}+#2#{}倍率",
+					"每张弃掉的牌会给予{X:mult,C:white}X#4#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率，{X:mult,C:white}X#3#{}{C:inactive}倍率）"
 				}
 			},
 			j_poke_magnemite = {
 				name = "小磁怪",
 				text = {
 					"每张计分的{C:attention}钢铁{}牌",
-					"给予{X:red,C:white}X#1#{}倍数",
+					"给予{X:red,C:white}X#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
 			j_poke_magneton = {
 				name = "三合一磁怪",
 				text = {
-					"每张计分的{C:attention}钢铁{}牌给予{X:red,C:white}X#1#{}倍数",
-					"给予{X:red,C:white}X#1#{}倍数",
+					"每张计分的{C:attention}钢铁{}牌给予{X:red,C:white}X#1#{}倍率",
+					"给予{X:red,C:white}X#1#{}倍率",
 					"每张在旁边的{X:metal,C:white}钢{}属性小丑牌",
-					"会对加成增加{X:red,C:white}X#2#{}倍数",
-					"{C:inactive}（目前为{X:red,C:white}X#3#{}{C:inactive}倍数）{}",
+					"会对加成增加{X:red,C:white}X#2#{}倍率",
+					"{C:inactive}（目前为{X:red,C:white}X#3#{}{C:inactive}倍率）{}",
 					"{C:inactive}（使用{C:attention}雷之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -1284,9 +1399,9 @@ return {
 				name = "自爆磁怪",
 				text = {
 					"每张计分的{C:attention}钢铁牌{}",
-					"会给予{X:red,C:white}X#1#{}倍数",
+					"会给予{X:red,C:white}X#1#{}倍率",
 					"每张在旁边的{X:metal,C:white}钢{}属性小丑牌",
-					"会给予{X:red,C:white}X#2#{}倍数"
+					"会给予{X:red,C:white}X#2#{}倍率"
 				}
 			},
 			j_poke_mankey = {
@@ -1294,18 +1409,38 @@ return {
 				text = {
 					"每张计分的{C:attention}2{}，",
 					"{C:attention}3{}或{C:attention}5{}给予",
-					"{C:mult}+#1#{}倍数及{C:chips}+#2#{}筹码",
+					"{C:mult}+#1#{}倍率及{C:chips}+#2#{}筹码",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
+				}
+			},
+			j_poke_mantine = {
+				name = "巨翅飞鱼",
+				text = {
+					"每当一张{C:attention}黄金牌{} 在手牌中",
+					"或打出一张计分的 {C:attention}黄金牌{}",
+					"增加 {C:chips}+#2#{} 筹码",
+					"{C:inactive}(当前{C:chips}+#1#{C:inactive} 筹码)"
+				}
+			},
+			j_poke_mantyke = {
+				name = "小球飞鱼",
+				text = {
+					"{C:attention}婴儿{}, {X:red,C:white}X#2#{} 倍率",
+					"回合结束时，牌组中一张随机的牌",
+					"变为 {C:attention}黄金牌{}",
+					"手牌中的{C:attention}黄金牌{}",
+					"{C:chips}+#1#{} 筹码",
+					"{C:inactive}(在{C:attention}#3#{C:inactive}个回合后进化)"
 				}
 			},
 			j_poke_marowak = {
 				name = "嘎啦嘎啦",
 				text = {
-					"{C:attention}+#2#{}消耗牌字段",
-					"每个已占据的消耗牌字段",
-					"给予{X:mult,C:white} X#1# {}倍数",
+					"{C:attention}+#2#{}消耗牌数量",
+					"每个已占据的消耗牌数量",
+					"给予{X:mult,C:white} X#1# {}倍率",
 					"{C:inactive,s:0.75}（{C:attention,s:0.75}粗骨头{}{C:inactive,s:0.75}牌当作双倍）{}",
-					"{C:inactive}（目前为{X:mult,C:white} X#3# {}{C:inactive}倍数）"
+					"{C:inactive}（目前为{X:mult,C:white} X#3# {}{C:inactive}倍率）"
 				}
 			},
 			j_poke_marshtomp = {
@@ -1332,7 +1467,7 @@ return {
 					"如果打出的牌型是{C:attention}四条{}",
 					"给予{C:chips}+#1#{}筹码",
 					"每张打出的牌会给予等同那张牌的",
-					"基本筹码的{C:attention}立方根{}的{X:mult,C:white}X{}倍数"
+					"基本筹码的{C:attention}立方根{}的{X:mult,C:white}X{}倍率"
 				}
 			},
 			j_poke_metang = {
@@ -1348,7 +1483,7 @@ return {
 			j_poke_metapod = {
 				name = "铁甲蛹",
 				text = {
-					"{C:mult}+#1#{}倍数",
+					"{C:mult}+#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1365,15 +1500,22 @@ return {
 				text = {
 					"离开商店后，{C:attention}复制及摧毁{}最左边的{C:attention}小丑牌{}",
 					"副本带有{C:dark_edition}彩色{}版本及{C:attention}+1{}{C:pink}能量{}",
-					"每张{C:dark_edition}彩色{}版本的小丑牌给予{X:mult,C:white} X#1# {}倍数",
+					"每张{C:dark_edition}彩色{}版本的小丑牌给予{X:mult,C:white} X#1# {}倍率",
 					"{C:inactive}（不能摧毁自身）"
+				}
+			},
+			j_poke_milotic = {
+				name = "美纳斯",
+				text = {
+					"如果所有打出的牌都是一样的{C:attention}花色{}",
+					"则重新触发"
 				}
 			},
 			j_poke_mimejr = {
 				name = "魔尼尼",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
-					"回合结束后，新增{C:attention}红色{}或{C:attention}蓝色{}封蜡章",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
+					"回合结束后，新增{C:attention}红色{}或{C:attention}蓝色{}封蜡",
 					"到牌组中的随机一张牌",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
@@ -1424,9 +1566,9 @@ return {
 				name = "臭臭泥",
 				text = {
 					"在你的牌组中",
-					"每张多于{C:attention}#3#{}张牌都获得{C:mult}+#1#{}倍数",
-					"如果你的牌组有多于{C:attention}#4#{}张牌，{X:mult,C:white} X#2# {}倍数",
-					"{C:inactive,s:0.8}（目前为{C:mult,s:0.8}+#5#{}{C:inactive,s:0.8}倍数）{}",
+					"每张多于{C:attention}#3#{}张牌都获得{C:mult}+#1#{}倍率",
+					"如果你的牌组有多于{C:attention}#4#{}张牌，{X:mult,C:white} X#2# {}倍率",
+					"{C:inactive,s:0.8}（目前为{C:mult,s:0.8}+#5#{}{C:inactive,s:0.8}倍率）{}",
 					"每回合结束时",
 					"增加两张随机的扑克牌到牌组",
 					"并从牌组中移除一张随机的扑克牌"
@@ -1435,10 +1577,10 @@ return {
 			j_poke_munchlax = {
 				name = "小卡比兽",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"回合结束后，产生一张随机的",
 					"{C:dark_edition}负片{}{C:item}物品牌{}",
-					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍数）",
+					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍率）",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1447,7 +1589,7 @@ return {
 				text = {
 					"{C:attention}+#2#{}手牌数量",
 					"手牌中，每张{C:attention}K{}",
-					"都给予{C:mult}+#1#{}倍数"
+					"都给予{C:mult}+#1#{}倍率"
 				}
 			},
 			j_poke_nidoqueen = {
@@ -1470,7 +1612,7 @@ return {
 				name = "尼多朗",
 				text = {
 					"手牌中，每张{C:attention}K{}",
-					"都给予{C:mult}+#1#{}倍数",
+					"都给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1486,7 +1628,7 @@ return {
 				name = "尼多力诺",
 				text = {
 					"手牌中，每张{C:attention}K{}",
-					"都给予{C:mult}+#1#{}倍数",
+					"都给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}月之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -1504,7 +1646,7 @@ return {
 				name = "走路草",
 				text = {
 					"每张计分的{C:attention}奇数{}点的牌",
-					"都给予{C:mult}+#1#{}或{C:mult}+#2#{}倍数",
+					"都给予{C:mult}+#1#{}或{C:mult}+#2#{}倍率",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1541,18 +1683,18 @@ return {
 				name = "派拉斯",
 				text = {
 					"如果打出的牌包含{C:attention}两对{}",
-					"此小丑牌获得{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍数）",
-					"{C:inactive}（在{C:mult}+8{}{C:inactive}倍数时进化)"
+					"此小丑牌获得{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍率）",
+					"{C:inactive}（在{C:mult}+8{}{C:inactive}倍率时进化)"
 				}
 			},
 			j_poke_parasect = {
 				name = "派拉斯特",
 				text = {
 					"如果打出的牌包含{C:attention}两对{}",
-					"此小丑牌获得{C:mult}+#2#{}倍数",
-					"否则{C:mult}-#3#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍数）"
+					"此小丑牌获得{C:mult}+#2#{}倍率",
+					"否则{C:mult}-#3#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍率）"
 				}
 			},
 			j_poke_persian = {
@@ -1568,7 +1710,7 @@ return {
 			j_poke_pichu = {
 				name = "皮丘",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#2# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#2# {}倍率",
 					"回合结束时",
 					"获得{C:money}$#1#{}",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
@@ -1614,23 +1756,23 @@ return {
 				text = {
 					"如果{C:attention}最左边{}打出的牌",
 					"和{C:attention}最右边{}打出的牌的{C:attention}点数{}相同",
-					"倍数{X:mult,C:white} X#1# {}"
+					"倍率{X:mult,C:white} X#1# {}"
 				}
 			},
 			j_poke_pokedex = {
 				name = "宝可梦图鉴",
 				text = {
 					"每个有{C:pink}属性{}的小丑牌",
-					"会给予{C:mult}+#2#{}倍数",
+					"会给予{C:mult}+#2#{}倍率",
 					"{C:attention}宝可梦{}小丑牌可能会重复出现",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）"
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）"
 				}
 			},
 			j_poke_politoed = {
 				name = "蚊香蛙皇",
 				text = {
 					"每张计分的{V:1}#2#{}花色的牌",
-					"会给予{C:mult}+#1#{}倍数",
+					"会给予{C:mult}+#1#{}倍率",
 					"那些牌会依{X:water,C:white}水属性{}",
 					"的小丑牌的数量而重新触发",
 					"{C:inactive,s:0.8}（{C:attention,s:0.8}#7#{}{C:inactive,s:0.8}次的重新触发数量会平均分配到每张的计分牌）{}",
@@ -1641,7 +1783,7 @@ return {
 				name = "蚊香蝌蚪",
 				text = {
 					"每张计分的{V:1}#3#{}花色的牌",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"花色在出牌后按次序地变更",
 					"{C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
@@ -1651,7 +1793,7 @@ return {
 				name = "蚊香君",
 				text = {
 					"每张计分的{V:1}#2#{}花色的牌",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"花色在出牌后按次序地变更",
 					"{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
 					"{C:inactive,s:0.8}（使用{}{C:attention,s:0.8}水之石{}{C:inactive,s:0.8}或{C:attention,s:0.8}王者之证{}{C:inactive,s:0.8}牌进化）"
@@ -1661,7 +1803,7 @@ return {
 				name = "蚊香泳士",
 				text = {
 					"每张计分的{V:1}#2#{}花色的牌",
-					"给予{C:mult}+#7#{}倍数及{X:mult,C:white} X#1# {}倍数",
+					"给予{C:mult}+#7#{}倍率及{X:mult,C:white} X#1# {}倍率",
 					"花色在出牌后按次序地变更",
 					"{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}"
 				}
@@ -1679,7 +1821,7 @@ return {
 				name = "多边兽",
 				text = {
 					"{C:pink}+1{}能量上限",
-					"每次打开{C:attention}扩充包{}时",
+					"每次打开{C:attention}补充包{}时",
 					"产生一张{C:pink}能量{}牌",
 					"{C:inactive}（使用{} {C:attention}升级资料{}{C:inactive}牌进化）"
 				}
@@ -1688,7 +1830,7 @@ return {
 				name = "多边兽Ⅱ",
 				text = {
 					"{C:pink}+2{}能量上限",
-					"每次打开{C:attention}扩充包{}时",
+					"每次打开{C:attention}补充包{}时",
 					"产生一张与最左边的小丑牌的{C:pink}属性{}",
 					"相同的{C:pink}能量{}牌",
 					"{C:inactive}（使用{}{C:attention}可疑修正档{}{C:inactive}牌进化）"
@@ -1698,8 +1840,8 @@ return {
 				name = "多边兽Ｚ",
 				text = {
 					"{C:pink}+3{}能量上限",
-					"每张在此{C:attention}比赛{}中使用的{C:pink}能量{}牌会给予{X:red,C:white} X#2# {}倍数",
-					"{C:inactive}（目前为{X:red,C:white} X#1# {}{C:inactive}倍数）"
+					"每张在此{C:attention}比赛{}中使用的{C:pink}能量{}牌会给予{X:red,C:white} X#2# {}倍率",
+					"{C:inactive}（目前为{X:red,C:white} X#1# {}{C:inactive}倍率）"
 				}
 			},
 			j_poke_primeape = {
@@ -1707,7 +1849,7 @@ return {
 				text = {
 					"每张计分的{C:attention}2{},",
 					"{C:attention}3{}或{C:attention}5{}给予",
-					"{C:mult}+#1#{}倍数及{C:chips}+#2#{}筹码",
+					"{C:mult}+#1#{}倍率及{C:chips}+#2#{}筹码",
 					"{C:inactive}（在触发{C:attention}#3#{}{C:inactive}/25 次后进化）{}"
 				}
 			},
@@ -1816,25 +1958,25 @@ return {
 					"这张牌会获得{C:attention}银箔{}，{C:attention}全像摄影{}或{C:attention}彩色{}",
 					"那些版本会在此牌{C:attention}叠加{}",
 					"{C:inactive,s:0.75}（会优先选择被摧毁的小丑牌如有的版本）{}",
-					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍数，{C:chips}+#2#{}{C:inactive}筹码，{X:red,C:white}X#3#{} {C:inactive}倍数)"
+					"{C:inactive}（目前为{C:mult}+#1#{}{C:inactive}倍率，{C:chips}+#2#{}{C:inactive}筹码，{X:red,C:white}X#3#{} {C:inactive}倍率)"
 				}
 			},
 			j_poke_scyther = {
 				name = "飞天螳螂",
 				text = {
-					"选择盲注后，摧毁右边的小丑牌并获得{C:mult}+#2#{}倍数",
+					"选择盲注后，摧毁右边的小丑牌并获得{C:mult}+#2#{}倍率",
 					"如果被摧毁的小丑牌是{C:red}稀有{}或以上",
 					"新增{C:attention}银箔{}，{C:attention}全像摄影{}或{C:attention}彩色{}版本",
 					"{C:inactive}（附上{C:metal}钢{}{C:inactive}贴纸后进化）{}",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive} 倍数）"
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive} 倍率）"
 				}
 			},
 			j_poke_seadra = {
 				name = "海刺龙",
 				text = {
 					"在{C:attention}头两次出牌{}中，每张计分的{C:attention}6{}",
-					"会给此牌{C:mult}+#2#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍数）",
+					"会给此牌{C:mult}+#2#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#1#{C:inactive}倍率）",
 					"{C:inactive}（附上{C:dragon}龙{}{C:inactive}贴纸后进化）{}"
 				}
 			},
@@ -1850,18 +1992,18 @@ return {
 				text = {
 					"在{C:attention}第一次{}出牌中",
 					"有{C:green}#1#/#2#{}的几率",
-					"新增随机的{C:attention}封蜡章{}到最左边的计分牌",
-					"{C:inactive,s:0.75}（在牌组中拥有至少{C:attention,s:0.75}#3#{}{C:inactive,s:0.75}{C:attention,s:0.75}个封蜡章{C:inactive,s:0.75}时进化）"
+					"新增随机的{C:attention}封蜡{}到最左边的计分牌",
+					"{C:inactive,s:0.75}（在牌组中拥有至少{C:attention,s:0.75}#3#{}{C:inactive,s:0.75}{C:attention,s:0.75}个封蜡{C:inactive,s:0.75}时进化）"
 				}
 			},
 			j_poke_sentret = {
 				name = "尾立",
 				text = {
 					"如果打出的牌型{C:attention}连续{}不是上一个的牌型",
-					"这张牌会获得{C:mult}+#2#{}倍数",
+					"这张牌会获得{C:mult}+#2#{}倍率",
 					"{C:inactive}（上一个牌型：{C:attention}#3#{}{C:inactive}）",
-					"{C:inactive}（目前为{C:mult}+#1#{} {C:inactive}倍数）",
-					"{C:inactive}（在{C:mult}+15{} {C:inactive}倍数时进化）"
+					"{C:inactive}（目前为{C:mult}+#1#{} {C:inactive}倍率）",
+					"{C:inactive}（在{C:mult}+15{} {C:inactive}倍率时进化）"
 				}
 			},
 			j_poke_shellder = {
@@ -1875,31 +2017,31 @@ return {
 			j_poke_slowbro = {
 				name = "呆壳兽",
 				text = {
-					"每次出牌获得{X:red,C:white} X#1# {}倍数",
-					"回合结束时重设",
-					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍数）"
+					"每次出牌获得{X:red,C:white} X#1# {}倍率",
+					"回合结束时重置",
+					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍率）"
 				}
 			},
 			j_poke_slowking = {
 				name = "呆呆王",
 				text = {
-					"每张计分的{C:attention}K{}会给予{X:red,C:white}X#1#{}倍数",
-					"每次出牌后增加{X:red,C:white}X#2#{}倍数",
-					"回合结束后重设"
+					"每张计分的{C:attention}K{}会给予{X:red,C:white}X#1#{}倍率",
+					"每次出牌后增加{X:red,C:white}X#2#{}倍率",
+					"回合结束后重置"
 				}
 			},
 			j_poke_slowpoke = {
 				name = "呆呆兽",
 				text = {
 					"每回合的{C:attention}最后一次出牌{}",
-					"可得到{X:red,C:white} X#1# {}倍数",
+					"可得到{X:red,C:white} X#1# {}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
 			j_poke_slowpoke2 = {
 				name = "呆呆兽",
 				text = {
-					"每回合的{C:attention}最后一次出牌{}可得到{X:red,C:white} X#1# {}倍数",
+					"每回合的{C:attention}最后一次出牌{}可得到{X:red,C:white} X#1# {}倍率",
 					"每回合结束后，有{C:green}#3#/#4#{}几率",
 					"产生一张{C:attention}王者之证{}牌{C:inactive,s:0.8}（必须有空位）{}",
 					"{C:inactive,s:0.8}（在{C:attention,s:0.8}#2#{}{C:inactive,s:0.8}个回合后或使用{C:attention,s:0.8}王者之证{}{C:inactive,s:0.8}牌进化）"
@@ -1908,10 +2050,10 @@ return {
 			j_poke_smoochum = {
 				name = "迷唇娃",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"当这个小丑牌进化时",
 					"产生一个{C:attention}标准{}标签",
-					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍数）",
+					"{C:inactive}（你没看错，这会{C:attention}减低{C:inactive}你的倍率）",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -1921,8 +2063,8 @@ return {
 					"当你得到这张牌后",
 					"产生一张{C:attention}吃剩的东西{}牌",
 					"回合结束时，每张{C:attention}吃剩的东西{}牌",
-					"会给此牌{X:red,C:white}X#1#{}倍数",
-					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍数）"
+					"会给此牌{X:red,C:white}X#1#{}倍率",
+					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍率）"
 				}
 			},
 			j_poke_spearow = {
@@ -1957,14 +2099,14 @@ return {
 				name = "宝石海星",
 				text = {
 					"每张计分的{C:diamonds}#2#{}花色的牌",
-					"给予{C:mult}+#1#{}倍数及{C:money}$#2#{}"
+					"给予{C:mult}+#1#{}倍率及{C:money}$#2#{}"
 				}
 			},
 			j_poke_staryu = {
 				name = "海星星",
 				text = {
 					"每张计分的{C:diamonds}#2#{}花色的牌",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（使用{}{C:attention}水之石{}{C:inactive}牌进化）"
 				}
 			},
@@ -1992,7 +2134,7 @@ return {
 					"每{C:attention}三{}次的{C:green}重铩{}",
 					"会产生一张{C:attention}星星{}牌",
 					"每张在手中的{C:diamonds}#2#{}花色的牌",
-					"会给予{X:mult,C:white} X#3# {}倍数",
+					"会给予{X:mult,C:white} X#3# {}倍率",
 					"{C:inactive}（必须有空位）",
 					"{C:inactive}（目前{C:attention}#1#{}{C:inactive}/3次重铩）"
 				}
@@ -2009,7 +2151,7 @@ return {
 				name = "蔓藤怪",
 				text = {
 					"每张计分的{C:attention}万能牌{}",
-					"给予{C:mult}+#1#{}倍数，{C:chips}+#2#{}筹码或{C:money}$#3#{}",
+					"给予{C:mult}+#1#{}倍率，{C:chips}+#2#{}筹码或{C:money}$#3#{}",
 					"有{C:green}#4#/#5#{}的几率给予{C:attention}以上三个的加成{}",
 					"{C:inactive}（在牌组有20%或以上是{C:attention}万能牌{C:inactive}时进化）"
 				}
@@ -2018,7 +2160,7 @@ return {
 				name = "巨蔓藤",
 				text = {
 					"每张计分的{C:attention}万能牌{}会给予",
-					"{C:mult}+#1#{}倍数，{C:chips}+#2#{}筹码或{C:money}$#3#{}",
+					"{C:mult}+#1#{}倍率，{C:chips}+#2#{}筹码或{C:money}$#3#{}",
 					"有{C:green}#4#/#5#{}的几率给予{C:attention}以上三个的加成{}",
 					"万能牌{C:attention}不能{}被减益"
 				}
@@ -2026,7 +2168,7 @@ return {
 			j_poke_tauros = {
 				name = "肯泰罗（首领）",
 				text = {
-					"每一张{C:attention}肯泰罗{}小丑牌给予{X:mult,C:white} X#1#{}倍数",
+					"每一张{C:attention}肯泰罗{}小丑牌给予{X:mult,C:white} X#1#{}倍率",
 					"每次在商店中重铩会有{C:green}#2#/#3#{}的几率",
 					"新增一张{C:attention}肯泰罗（牛群）{}到商店中"
 				}
@@ -2034,7 +2176,7 @@ return {
 			j_poke_taurosh = {
 				name = "肯泰罗（牛群）",
 				text = {
-					"{C:mult}+#1#{}倍数"
+					"{C:mult}+#1#{}倍率"
 				}
 			},
 			j_poke_tentacool = {
@@ -2042,7 +2184,7 @@ return {
 				text = {
 					"如果打出的牌只有{C:attention}10{}",
 					"每张计分的{C:attention}10{}",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -2050,14 +2192,14 @@ return {
 				name = "毒刺水母",
 				text = {
 					"每张计分的{C:attention}10{}",
-					"给予{C:mult}+#1#{}倍数",
+					"给予{C:mult}+#1#{}倍率",
 					"{C:attention}10牌不能{}被减益"
 				}
 			},
 			j_poke_tinkatink = {
 				name = "小锻匠",
 				text = {
-					"每张打出的牌给予{C:mult}+#1#{}倍数",
+					"每张打出的牌给予{C:mult}+#1#{}倍率",
 					"选择盲注后，减益{C:attention}#3#{}张在牌组里",
 					"不是{C:attention}钢铁牌{}的牌",
 					"{C:inactive}（在{C:attention}#2#{C:inactive}个回合后进化）"
@@ -2066,7 +2208,7 @@ return {
 			j_poke_tinkaton = {
 				name = "巨锻匠",
 				text = {
-					"每张打出的牌给予{C:mult}+#1#{}倍数",
+					"每张打出的牌给予{C:mult}+#1#{}倍率",
 					"选择盲注后，减益{C:attention}#3#{}张在牌组里",
 					"不是{C:attention}钢铁牌{}的牌",
 					"打出的{C:attention}钢铁牌{}会有{C:attention}玻璃牌{}的效果"
@@ -2075,7 +2217,7 @@ return {
 			j_poke_tinkatuff = {
 				name = "巧锻匠",
 				text = {
-					"每张打出的牌给予{C:mult}+#1#{}倍数",
+					"每张打出的牌给予{C:mult}+#1#{}倍率",
 					"选择盲注后，减益{C:attention}#3#{}张在牌组里",
 					"不是{C:attention}钢铁牌{}的牌",
 					"{C:inactive}（在{C:attention}#2#{C:inactive}个回合后进化）"
@@ -2085,11 +2227,11 @@ return {
 				name = "火稚鸡",
 				text = {
 					"{C:mult}+#3#{}弃牌次数，{C:attention}多种性格{}",
-					"这回合中，每张弃掉的{C:attention}#5#，#6#或#7#{}会给予{C:mult}+#1#{}倍数",
-					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍数翻倍",
+					"这回合中，每张弃掉的{C:attention}#5#，#6#或#7#{}会给予{C:mult}+#1#{}倍率",
+					"如果你有其他的{X:fire,C:white}火{}属性或{X:earth,C:white}斗{}属性的牌，给予的倍率翻倍",
 					"{C:inactive,s:0.8}（这包括小丑牌及能量牌）{}",
-					"{C:inactive}（目前为{C:mult}#4#{}{C:inactive}倍数）{}",
-					"{C:inactive}（在给予{C:mult}#2#/60{}{C:inactive}倍数后进化）"
+					"{C:inactive}（目前为{C:mult}#4#{}{C:inactive}倍率）{}",
+					"{C:inactive}（在给予{C:mult}#2#/60{}{C:inactive}倍率后进化）"
 				}
 			},
 			j_poke_treecko = {
@@ -2106,7 +2248,7 @@ return {
 			j_poke_tyrogue = {
 				name = "无畏小子",
 				text = {
-					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍数",
+					"{C:attention}婴儿{}，{X:red,C:white} X#1# {}倍率",
 					"在回合的{C:attention}第一次出牌或弃牌{}中",
 					"如果选择了{C:attention}五{}张牌，有随机一张牌",
 					"会复制如果是出牌，或摧毁如果是弃牌",
@@ -2169,24 +2311,24 @@ return {
 			j_poke_vikavolt = {
 				name = "锹农炮虫",
 				text = {
-					"{C:mult}+#3#{}倍数",
+					"{C:mult}+#3#{}倍率",
 					"每张其他你拥有的{X:lightning, C:black}雷{}属性小丑牌",
-					"会给予{X:red,C:white} X#1# {}倍数",
-					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍数）"
+					"会给予{X:red,C:white} X#1# {}倍率",
+					"{C:inactive}（目前为{X:red,C:white} X#2# {}{C:inactive}倍率）"
 				}
 			},
 			j_poke_vileplume = {
 				name = "霸王花",
 				text = {
 					"每张计分的{C:attention}奇数{}点的牌",
-					"都给予{C:mult}+#2#{}倍数或{X:mult,C:white} X#1# {}倍数"
+					"都给予{C:mult}+#2#{}倍率或{X:mult,C:white} X#1# {}倍率"
 				}
 			},
 			j_poke_voltorb = {
 				name = "霹雳电球",
 				text = {
 					"如果这张牌是{C:attention}最左边{}的小丑牌",
-					"给予{C:mult}+#1#{}倍数并减益这张小丑牌",
+					"给予{C:mult}+#1#{}倍率并减益这张小丑牌",
 					"直到回合结束",
 					"{C:inactive}（在{C:attention}#2#{}{C:inactive}个回合后进化）"
 				}
@@ -2238,7 +2380,7 @@ return {
 				name = "胖可丁",
 				text = {
 					"每张计分的{C:spades}#3#{}花色的牌",
-					"都给予{C:mult}+#1#{}倍数，{C:chips}+#2#{}筹码",
+					"都给予{C:mult}+#1#{}倍率，{C:chips}+#2#{}筹码",
 					"及卡牌给予的筹码"
 				}
 			},
@@ -2246,7 +2388,7 @@ return {
 				name = "来电汪",
 				text = {
 					"如果打出的牌包含{C:attention}顺子{}",
-					"给予{C:mult}+#1#{}倍数及获得{C:money}$#2#{}",
+					"给予{C:mult}+#1#{}倍率及获得{C:money}$#2#{}",
 					"{C:inactive}（在{C:attention}#3#{}{C:inactive}个回合后进化）"
 				}
 			},
@@ -2254,16 +2396,16 @@ return {
 				name = "闪电鸟",
 				text = {
 					"每持有的{C:money}$#2#{}",
-					"会给予{X:mult,C:white} X#1# {}倍数",
-					"{C:inactive}（目前为{X:red,C:white}X#3#{}{C:inactive}倍数）"
+					"会给予{X:mult,C:white} X#1# {}倍率",
+					"{C:inactive}（目前为{X:red,C:white}X#3#{}{C:inactive}倍率）"
 				}
 			},
 			j_poke_zubat = {
 				name = "超音蝠",
 				text = {
 					"每张在牌组中的加强牌",
-					"都给予{C:mult}+#1#{}倍数",
-					"{C:inactive}（目前为{C:mult}+#2#{}{C:inactive}倍数，{C:attention}#4#{}{C:inactive}加强牌）",
+					"都给予{C:mult}+#1#{}倍率",
+					"{C:inactive}（目前为{C:mult}+#2#{}{C:inactive}倍率，{C:attention}#4#{}{C:inactive}加强牌）",
 					"{C:inactive}（在拥有{C:mult}#3#{C:inactive}张加强牌时进化）"
 				}
 			}
@@ -2405,6 +2547,12 @@ return {
 					"{C:green}15%{} - {C:dark_edition}彩色{}{C:attention}礼物卡"
 				}
 			},
+			designed_by = {
+				name = "设计者",
+				text = {
+					"{C:dark_edition}#1#{}"
+				}
+			},
 			dragon_sticker = {
 				name = "属性",
 				text = {
@@ -2435,6 +2583,12 @@ return {
 				text = {
 					"对最左边及{C:attention}适合的{}",
 					"小丑牌进行进化"
+				}
+			},
+			endless = {
+				name = "无尽",
+				text = {
+					"使用时不消耗"
 				}
 			},
 			energy = {
@@ -2508,9 +2662,9 @@ return {
 				}
 			},
 			mult_progress = {
-				name = "获得的倍数进度",
+				name = "获得的倍率进度",
 				text = {
-					"对获得的{C:mult}倍数{}",
+					"对获得的{C:mult}倍率{}",
 					"的{C:attention}#1#%{}进度增加{C:mult}+1{}"
 				}
 			},
@@ -2592,10 +2746,24 @@ return {
 				}
 			},
 			poke_pink_seal_seal = {
-				name = "粉红封蜡章",
+				name = "粉红封蜡",
 				text = {
 					"如果此牌在{C:attention}第一次出牌{}时计分",
 					"产生一张{C:pink}能量{}牌"
+				}
+			},
+			poke_silver_seal = {
+				name = "白银封蜡",
+				text = {
+					"获得一张{C:item}物品牌{} ",
+					"如果在计分时任然在 {C:attention}手牌中{}会被弃置"
+				}
+			},
+			poke_top_cards = {
+				name = "头等卡",
+				text = {
+					"{C:attention}#1#{}",
+					"{C:attention}#2#{}"
 				}
 			},
 			precise_energy_tooltip = {
@@ -2603,10 +2771,10 @@ return {
 				text = {
 					"{s:0.8}使用{C:attention,s:0.8}小数{}{s:0.8}来显示所有的{C:pink,s:0.8}能量{}{s:0.8}加成的数值",
 					"{C:attention,s:0.8}禁用{}{s:0.8}这个选项会对加成造成以下影响",
-					"{C:attenion}1. {X:mult,C:white,s:0.8}乘成{}{s:0.8}倍数 - 使用小数",
-					"{C:attenion}2. {s:0.8}加成{C:mult,s:0.8}倍数{}{s:0.8}及{C:chips,s:0.8}筹码{}{s:0.8} - 上取整至整数",
-					"{C:attenion}3. {s:0.8}{C:mult,s:0.8}获得的倍数{}{s:0.8}及{C:chips,s:0.8}获得的筹码{}{s:0.8} - 小数单位会以",
-					"{s:0.8}百分比显示，用于套用加成到基本{C:mult,s:0.8}倍数{}{s:0.8}及{C:chips,s:0.8}筹码{}",
+					"{C:attenion}1. {X:mult,C:white,s:0.8}乘成{}{s:0.8}倍率 - 使用小数",
+					"{C:attenion}2. {s:0.8}加成{C:mult,s:0.8}倍率{}{s:0.8}及{C:chips,s:0.8}筹码{}{s:0.8} - 上取整至整数",
+					"{C:attenion}3. {s:0.8}{C:mult,s:0.8}获得的倍率{}{s:0.8}及{C:chips,s:0.8}获得的筹码{}{s:0.8} - 小数单位会以",
+					"{s:0.8}百分比显示，用于套用加成到基本{C:mult,s:0.8}倍率{}{s:0.8}及{C:chips,s:0.8}筹码{}",
 					"{C:attenion}4. {C:money,s:0.8}金钱{}{s:0.8} - 小数单位会以百分比显示",
 					"{s:0.8}用于有几率获得额外{C:money,s:0.8}金钱{}{s:0.8}的效果{}",
 					"{C:inactive,s:0.8}（非宝可梦小丑牌总是使用精准刻度）{}"
@@ -2638,6 +2806,13 @@ return {
 				text = {
 					"已{C:attention}进化{}两次的",
 					"宝可梦小丑牌"
+				}
+			},
+			typechanger = {
+				name = "类型转换器",
+				text = {
+					"将 {V:1}#1#{} 属性",
+					"应用到最左边或所选的小丑牌上."
 				}
 			},
 			undiscovered_energy = {
@@ -2709,8 +2884,15 @@ return {
 			c_poke_obituary = {
 				name = "讣告",
 				text = {
-					"新增{C:pink}粉红{}封蜡章",
+					"新增{C:pink}粉红{}封蜡",
 					"到选择的{C:attention}1{}张手牌中"
+				}
+			},
+			c_poke_revenant = {
+				name = "亡魂",
+				text = {
+					"新增 {C:item}白银{} 封蜡",
+					"到选择的 {C:attention}1{} 张手牌中"
 				}
 			},
 			c_poke_transformation = {
@@ -2814,7 +2996,8 @@ return {
 			k_item = "物品",
 			k_poke_pocket_pack = "宝可梦礼包",
 			k_poke_safari = "野生",
-			pinkseal_variable = "粉红封蜡章",
+			pinkseal_variable = "粉红封蜡",
+			poke_blazekick_ex = "烈焰踢!",
 			poke_credits_actualcredits = "制作员名单",
 			poke_credits_community_manager = "社群经理：",
 			poke_credits_designer = "设计辅助：",
@@ -2825,7 +3008,11 @@ return {
 			poke_credits_promotion_producer = "推广员：",
 			poke_credits_quality_assurance_main = "品质保证：",
 			poke_credits_thanks = "鸣谢于",
+			poke_darts_ex = "投镖!",
+			poke_dawn_info1 = "(下一手牌设置牌型)",
+			poke_dawn_info2 = "(牌型设置!)",
 			poke_destroyed_ex = "摧毁！",
+			poke_dig_ex = "Dig!",
 			poke_disguise_broken = "画皮已脱落！死亡没有防止！",
 			poke_disguise_intact = "画皮被触发！防止了死亡！",
 			poke_dragon_ex = "龙化！",
@@ -2838,9 +3025,11 @@ return {
 			poke_gift_ex = "礼物！",
 			poke_lick = "舔舔",
 			poke_lick_ex = "舔舔！",
+			poke_make_it_rain = "下雨吧!",
 			poke_metal_ex = "钢化！",
 			poke_mime_ex = "模仿！",
 			poke_nido_ex = "Nido!",
+			poke_none = "没有",
 			poke_petal_dance = "花瓣舞",
 			poke_petal_dance_ex = "花瓣舞！",
 			poke_pinsir_pin = "钉选！",
@@ -2885,8 +3074,9 @@ return {
 			k_poke_safari = "野生",
 			lightning_sticker = "属性贴纸",
 			metal_sticker = "属性贴纸",
-			poke_pink_seal_seal = "粉红封蜡章",
+			poke_pink_seal_seal = "粉红封蜡",
 			poke_shiny = "发光",
+			poke_silver_seal = "白银封蜡",
 			psychic_sticker = "属性贴纸",
 			water_sticker = "属性贴纸"
 		},
@@ -2895,7 +3085,7 @@ return {
 		},
 		v_text = {
 			ch_c_poke_add_joker_slots = {
-				"打败Boss盲注后，{C:attention}+1{}小丑牌字段{C:inactive}（最多5个）"
+				"打败Boss盲注后，{C:attention}+1{}小丑牌数量{C:inactive}（最多5个）"
 			},
 			ch_c_poke_nuzlocke = {
 				"每个赌注的第一个商店必定有{C:attention}丑角礼包"
