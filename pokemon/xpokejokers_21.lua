@@ -177,7 +177,7 @@ local beheeyem={
 -- Litwick 607
 local litwick={
   name = "litwick",
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
   loc_txt = {
     name = "Litwick",
@@ -224,7 +224,7 @@ local litwick={
 -- Lampent 608
 local lampent={
   name = "lampent",
-  pos = {x = 0, y = 0},
+  pos = {x = 1, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
   loc_txt = {
     name = "Lampent",
@@ -274,7 +274,7 @@ local lampent={
 -- Chandelure 609
 local chandelure={
   name = "chandelure",
-  pos = {x = 0, y = 0},
+  pos = {x = 2, y = 8},
   config = {extra = {money = 1, Xmult_multi = 1.3}},
   loc_txt = {
     name = "Chandelure",
