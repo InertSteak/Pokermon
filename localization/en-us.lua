@@ -38,6 +38,15 @@ return {
                     "and a {C:tarot,T:c_poke_pokeball}#2#{} card",
                 } 
             },
+            b_poke_telekineticdeck = {
+                name = "Telekinetic Deck",
+                text = {
+                    "Start run with the",
+                    "{C:tarot,T:v_crystal_ball}#1#{} voucher",
+                    "and {C:attention}2{} copies",
+                    "of {C:item,T:c_poke_twisted_spoon}#2#"
+                } 
+            },
             --Fun fact: this and luminious deck had their descriptions mixed up
             b_poke_obituarydeck = {
                 name = "Obituary Deck",
@@ -3272,6 +3281,7 @@ return {
             pokeball_variable = "Pokéball",
             goodrod_variable = "Good Rod",
             pinkseal_variable = "Pink Seal",
+            twisted_spoon_variable = "Twisted Spoon",
 
             --From Gastly Line
             poke_lick_ex = "Lick!",
