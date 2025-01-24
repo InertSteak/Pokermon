@@ -365,6 +365,12 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+--Custom sounds
+SMODS.Sound({
+    key = "e_shiny",
+    path = "e_shiny.ogg"
+}):register()
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)

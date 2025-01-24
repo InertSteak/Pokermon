@@ -65,7 +65,7 @@ local nidoranm={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and context.other_card:get_id() == 13 then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),
@@ -99,7 +99,7 @@ local nidorino={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and context.other_card:get_id() == 13 then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),
@@ -131,7 +131,7 @@ local nidoking={
   atlas = "Pokedex1", 
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 13 and not context.end_of_round then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and context.other_card:get_id() == 13 and not context.end_of_round then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),
@@ -173,8 +173,6 @@ local clefairy={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
           card = card
         }
@@ -210,8 +208,6 @@ local clefable={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult_mod * card.ability.extra.clubs_scored,
           card = card
         }
@@ -326,8 +322,6 @@ local jigglypuff={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
           card = card
         }
@@ -353,10 +347,7 @@ local wigglytuff={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        local total_chips = (context.other_card.base.nominal) + (context.other_card.ability.bonus) + (context.other_card.ability.perma_bonus or 0) 
-        if context.other_card.edition then
-          total_chips = total_chips + (context.other_card.edition.chips or 0)
-        end
+        local total_chips = poke_total_chips(context.other_card) 
         return {
           message = "Tuff!", 
           colour = G.C.MULT,
@@ -387,6 +378,12 @@ local zubat={
       card.ability.extra.zubat_tally = 0
       for k, v in pairs(G.playing_cards) do
         if v.config.center ~= G.P_CENTERS.c_base then card.ability.extra.zubat_tally = card.ability.extra.zubat_tally+1 end
+      end
+      
+      if card.ability.extra.zubat_tally >= 12 and not card.ability.extra.juiced then
+        card.ability.extra.juiced = true
+        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
       end
     end
   end,
@@ -514,8 +511,6 @@ local oddish={
             value = card.ability.extra.mult2
           end
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
-            colour = G.C.MULT,
             mult = value, 
             card = card
           }
@@ -555,8 +550,6 @@ local gloom={
             value = card.ability.extra.mult2
           end
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {value}}, 
-            colour = G.C.MULT,
             mult = value,
             card = card
           }
@@ -665,7 +658,7 @@ local parasect={
           return {
             message = localize{type='variable',key='a_mult_minus',vars={card.ability.extra.mult_mod2}},
             colour = G.C.RED,
-            card = self
+            card = card
           }
         end
       end
@@ -886,7 +879,7 @@ local psyduck={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
       if context.joker_main then
         local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
         return {
@@ -914,7 +907,7 @@ local golduck={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
       if context.before then
         local face = context.scoring_hand[1]
         face:set_ability(G.P_CENTERS.m_gold, nil, true)

@@ -48,13 +48,10 @@ local gastly={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          G.E_MANAGER:add_event(Event({
-              remove(self, card, context)
-            }))
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v ~= card then
+              if v.ability.set == 'Joker' and v ~= card and not v.gone then
                   table.insert(eligible_editionless_jokers, v)
               end
             end
@@ -65,12 +62,16 @@ local gastly={
             end
           end
           
+          remove(self, card, context)
+          
           return {
               message = localize("poke_lick_ex")
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_haunter")
+    if not card.gone then
+      return level_evo(self, card, context, "j_poke_haunter")
+    end
   end
 }
 local haunter={
@@ -96,13 +97,10 @@ local haunter={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
-          G.E_MANAGER:add_event(Event({
-              remove(self, card, context)
-            }))
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v ~= card then
+              if v.ability.set == 'Joker' and v ~= card and not v.gone then
                   table.insert(eligible_editionless_jokers, v)
               end
             end
@@ -113,12 +111,14 @@ local haunter={
             end
           end
           
+          remove(self, card, context)
+          
           return {
             message = localize("poke_lick_ex")
           }
       end
     end
-    if card and not card.REMOVED then
+    if not card.gone then
       return item_evo(self, card, context, "j_poke_gengar")
     end
   end
@@ -148,7 +148,7 @@ local gengar={
           if #G.jokers.cards > 0 then
             local eligible_jokers = {}
             for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v.ability.name ~= "gengar" then
+              if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
                   table.insert(eligible_jokers, v)
               end
             end
@@ -250,6 +250,12 @@ local drowzee={
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
       card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+      
+      if card.ability.extra.mult >= 28 and not card.ability.extra.juiced then
+        card.ability.extra.juiced = true
+        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
     end
   end
 }
@@ -364,7 +370,7 @@ local kingler={
           return {
               message = localize("poke_surf_ex"),
               colour = G.C.CHIPS,
-              card = self
+              card = card
           }
       end
     end
@@ -468,8 +474,6 @@ local exeggcute={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult ,
           card = card
         }
@@ -964,7 +968,7 @@ local kangaskhan={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if (not from_debuff) or card.ability.perishable then
       G.E_MANAGER:add_event(Event({func = function()
         G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
         return true end }))

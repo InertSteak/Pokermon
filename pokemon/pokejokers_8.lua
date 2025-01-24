@@ -109,7 +109,7 @@ local delibird={
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
     info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
-    info_queue[#info_queue+1] = {key = 'j_gift', set = 'Joker', specific_vars = {1}}
+    info_queue[#info_queue+1] = {key = 'j_gift', set = 'Joker', specific_vars = {1}, config = {}}
     return {vars = {}}
   end,
   rarity = 3,
@@ -264,7 +264,7 @@ local porygon2={
     return {vars = {}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   item_req = "dubious_disc",
   joblacklist = true,
   stage = "One",
@@ -314,15 +314,6 @@ local stantler={
   name = "stantler",
   pos = {x = 2, y = 8},
   config = {extra = {chips = 10}},
-  loc_txt = {
-    name = "Stantler",
-    text = {
-      "If played hand contains a {C:attention}Pair{}",
-      "gives {C:chips}+#1#{} Chips times the",
-      "first scoring card's {C:attention}base{} chips",
-      "Effect doubled on last hand of round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, }}
@@ -378,7 +369,7 @@ local tyrogue={
           Xmult_mod = card.ability.extra.Xmult_minus
         }
       end
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 5 then
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
         local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
         local copy = copy_card(target, nil, nil, G.playing_card)
         copy:add_to_deck()
@@ -402,7 +393,7 @@ local tyrogue={
       end
     end
     
-    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and #context.full_hand == 5 then
+    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
       if not card.ability.extra.destroyed_card then
         card.ability.extra.destroyed_card = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
       end
@@ -416,12 +407,9 @@ local tyrogue={
     end
     
     if context.first_hand_drawn and not context.blueprint then
+      card.ability.extra.destroyed_card = nil
       local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
-    end
-    
-    if not context.repetition and not context.individual and context.end_of_round then
-      card.ability.extra.destroyed_card = nil
     end
     
     local forced_key = nil

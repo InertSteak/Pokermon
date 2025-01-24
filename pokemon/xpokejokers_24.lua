@@ -11,11 +11,42 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 7, y = 3},
-  config = {extra = {Xmult_multi = 1.1, suit = "Diamonds", rerolls = 0}},
+  config = {extra = {Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_star
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.Xmult_multi}}
+    if G.STATE == G.STATES.SHOP and not G.SETTINGS.paused then
+      local card1 = nil
+      local card2 = nil
+      if G.deck and G.deck.cards and #G.deck.cards > 0 then
+        card1 = G.deck.cards[#G.deck.cards]
+        if #G.deck.cards > 1 then
+          card2 = G.deck.cards[#G.deck.cards - 1]
+        end
+      end
+      local effect1 = (card1 and card1.ability.effect ~= "Base") and card1.ability.effect or ''
+      local effect2 = (card2 and card2.ability.effect ~= "Base") and card2.ability.effect or ''
+      local rank1 = (card1 and card1.ability.effect ~= "Stone Card") and localize(card1.base.value or "2", 'ranks') or ''
+      local rank2 = (card2 and card2.ability.effect ~= "Stone Card") and localize(card2.base.value or "2", 'ranks') or ''
+      local suit1 = (card1 and card1.ability.effect ~= "Stone Card") and localize(card1.base.suit, 'suits_plural') or ''
+      local suit2 = (card2 and card2.ability.effect ~= "Stone Card") and localize(card2.base.suit, 'suits_plural') or ''
+      
+      local seal1 = card1 and card1.seal or ''
+      local seal2 = card2 and card2.seal or ''
+      if seal1 == "poke_pink_seal" then seal1 = "Pink" end
+      if seal1 == "poke_silver" then seal1 = "Silver" end
+      if seal2 == "poke_pink_seal" then seal2 = "Pink" end
+      if seal2 == "poke_silver" then seal2 = "Silver" end
+      if seal1 ~= '' then seal1 = seal1.." Seal" end
+      if seal2 ~= '' then seal2 = seal2.." Seal" end
+      
+      local edition1 = (card1 and card1.edition) and G.P_CENTERS[card1.edition.key].name or ''
+      local edition2 = (card2 and card2.edition) and G.P_CENTERS[card2.edition.key].name or ''
+      
+      local text1 = seal1..' '..edition1..' '..string.sub(effect1, 1, string.len(effect1) - 5)..' '..rank1..(rank1 ~= '' and ' of ' or '')..suit1
+      local text2 = seal2..' '..edition2..' '..string.sub(effect2, 1, string.len(effect2) - 5)..' '..rank2..(rank2 ~= '' and ' of ' or '')..suit2
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_top_cards', specific_vars = {text1 or localize('poke_none'), text2 or localize('poke_none')}}
+    end
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -24,25 +55,37 @@ local sylveon={
   atlas = "Pokedex6",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.TAROT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
+    if context.reroll_shop and G.jokers.cards[1] == card and not context.blueprint then
+      local card1 = nil
+      local card2 = nil
+      local enhancement1 = nil
+      local enhancement2 = nil
+      local enhancements = {}
+      for k, v in pairs(G.P_CENTERS) do
+        if v.set == "Enhanced" then
+          table.insert(enhancements, v)
         end
-      else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_star')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
-        card.ability.extra.rerolls = 0
       end
+      if #G.deck.cards > 0 then
+        card1 = G.deck.cards[#G.deck.cards]
+      end
+      if #G.deck.cards > 1 then
+        card2 = G.deck.cards[#G.deck.cards - 1]
+      end
+      if card1 then
+        enhancement1 = pseudorandom_element(enhancements, pseudoseed('sylveon1'))
+        card1:set_ability(enhancement1, nil, true)
+      end
+      if card2 then
+        enhancement2 = pseudorandom_element(enhancements, pseudoseed('sylveon2'))
+        card2:set_ability(enhancement2, nil, true)
+      end
+      
+      card_eval_status_text(card, 'extra', nil, nil, nil,
+        {message = ((enhancement1 and enhancement1.effect) and string.sub(enhancement1.effect, 1, string.len(enhancement1.effect) - 5) or '').." + "..((enhancement2 and enhancement2.effect) 
+                     and string.sub(enhancement2.effect, 1, string.len(enhancement2.effect) - 5) or '')})
     end
-    if context.individual and context.cardarea == G.hand and context.other_card:is_suit(card.ability.extra.suit) and not context.end_of_round then
+    if context.individual and context.cardarea == G.hand and context.other_card.edition and not context.end_of_round then
       if context.other_card.debuff then
           return {
               message = localize('k_debuffed'),

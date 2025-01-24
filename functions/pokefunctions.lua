@@ -74,11 +74,13 @@ family = {
     {"mudkip", "marshtomp", "swampert"},
     {"buizel", "floatzel"},
     {"elgyem", "beheeyem"},
+    {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
-    {"tinkatink", "tinkatuff", "tinkaton"}
+    {"tinkatink", "tinkatuff", "tinkaton"},
+    {"gimmighoul", "gholdengo"},
 }
 
 type_sticker_applied = function(card)
@@ -158,12 +160,13 @@ remove = function(self, card, context)
   G.E_MANAGER:add_event(Event({
       trigger = 'after', delay = 0.3, blockable = false,
       func = function()
-          G.jokers:remove_card(self)
+          G.jokers:remove_card(card)
           card:remove()
           card = nil
           return true
       end
   }))
+  card.gone = true
   return true
 end
 
@@ -339,7 +342,7 @@ end
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
-  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos then
+  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos and not card.gone then
     return true
   else
     return false
@@ -751,7 +754,7 @@ get_gen_allowed = function(atlas)
 end
 
 get_poke_allowed = function(key)
-  local banned_keys = {"taurosh", "dreepy_dart"}
+  local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
   local allowed = true
   
   for i=1, #banned_keys do
@@ -869,4 +872,33 @@ faint_baby_poke = function(self, card, context)
   end
 end
 
+poke_total_chips = function(card)
+  local total_chips = (card.base.nominal) + (card.ability.bonus) + (card.ability.perma_bonus or 0) 
+  if card.edition then
+    total_chips = total_chips + (card.edition.chips or 0)
+  end
+  return total_chips
+end
 
+poke_drain = function(card, target, amount)
+  local amt = amount
+  local amt_drained = 0
+  if target.sell_cost == 1 then return end
+  target.ability.extra_value = target.ability.extra_value or 0
+  if target.sell_cost < amt then
+    amt_drained = amt_drained + target.sell_cost - 1
+    target.ability.extra_value = target.ability.extra_value - amt_drained
+  else
+     target.ability.extra_value = target.ability.extra_value - amt
+     amt_drained = amt
+  end
+  
+  if amt_drained > 0 then
+    card.ability.extra_value = card.ability.extra_value or 0
+    card.ability.extra_value = card.ability.extra_value + amt_drained
+    target:set_cost()
+    card:set_cost()
+    card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+  end
+end

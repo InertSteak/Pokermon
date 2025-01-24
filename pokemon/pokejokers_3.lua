@@ -63,7 +63,7 @@ local poliwrath={
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two",
   ptype = "Water",
   atlas = "Pokedex1",
@@ -245,16 +245,16 @@ local machop={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
+      ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
+      ease_hands_played(-card.ability.extra.hands)
       ease_discard(card.ability.extra.discards)
     end
   end
@@ -290,20 +290,20 @@ local machoke={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
+      ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       if G.GAME.current_round.hands_left <= 2 then
         ease_hands_played(-G.GAME.current_round.hands_left + 1)
       elseif G.GAME.current_round.hands_left > 2 then
         ease_hands_played(-card.ability.extra.hands)
       end
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       ease_discard(card.ability.extra.discards)
     end
   end
@@ -336,20 +336,20 @@ local machamp={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
       G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
+      ease_hands_played(card.ability.extra.hands)
       ease_discard(-card.ability.extra.discards)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
+      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       if G.GAME.current_round.hands_left <= 4 then
         ease_hands_played(-G.GAME.current_round.hands_left + 1)
       elseif G.GAME.current_round.hands_left > 4 then
         ease_hands_played(-card.ability.extra.hands)
       end
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discards
       ease_discard(card.ability.extra.discards)
     end
   end
@@ -429,7 +429,7 @@ local victreebel={
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "Two", 
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -670,7 +670,7 @@ local rapidash={
   config = {extra = {chips = 0, chip_mod = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut'}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_shortcut', config={}}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   rarity = 3, 
@@ -784,7 +784,7 @@ local slowbro={
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 10, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -852,19 +852,15 @@ local magneton={
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == center then
-          pos = i
-          break
-        end
+      local adjacent_jokers = poke_get_adjacent_jokers(center)
+      for i = 1, #adjacent_jokers do
+        if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
       end
-      if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
-      if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   enhancement_gate = 'm_steel',
   stage = "One", 
   ptype = "Lightning",
@@ -875,15 +871,10 @@ local magneton={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         local adjacent = 0
-        local pos = 0
-        for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] == card then
-            pos = i
-            break
-          end
+        local adjacent_jokers = poke_get_adjacent_jokers(card)
+        for i = 1, #adjacent_jokers do
+          if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
         end
-        if G.jokers.cards[pos-1] and is_type(G.jokers.cards[pos-1], "Metal") then adjacent = adjacent + 1 end
-        if G.jokers.cards[pos+1] and is_type(G.jokers.cards[pos+1], "Metal") then adjacent = adjacent + 1 end
         
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)}}, 
@@ -897,15 +888,15 @@ local magneton={
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {Xmult = 3, odds = 4}},
+  config = {extra = {money = 4, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
-    return {vars = {center.ability.extra.Xmult, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
-  cost = 5, 
+  cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   joblacklist = true,
@@ -921,20 +912,10 @@ local farfetchd={
     end
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      local count = #find_joker('leek')
-      local chance
-      if count > 0 then
-        chance = G.GAME.probabilities.normal * 2 * count
-      else
-        chance = G.GAME.probabilities.normal
-      end
-      if context.joker_main and pseudorandom('farfet') < chance/card.ability.extra.odds then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+    if context.using_consumeable then
+      if (pseudorandom('farfet') < G.GAME.probabilities.normal/card.ability.extra.odds) or context.consumeable.ability.name == "leek" then
+        card:juice_up()
+        ease_poke_dollars(card, "farfet", card.ability.extra.money)
       end
     end
   end

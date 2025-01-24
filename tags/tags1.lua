@@ -13,7 +13,7 @@ local pocket_tag = {
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)
-		if context.type == "new_blind_choice" then
+		if context and context.type == "new_blind_choice" then
 			--Might want to change that colour to something else, G.C.SECONDARY_SET.Code won't work without cryptid XD
 			--I'll leave that up to you
       --Oops, meant to change that lol
@@ -56,7 +56,7 @@ local shiny_tag = {
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)
-    if context.type == "store_joker_modify" then
+    if context and context.type == "store_joker_modify" then
       local _applied = nil
       if not context.card.edition and not context.card.temp_edition and context.card.ability.set == 'Joker' then
         local lock = tag.ID

@@ -60,7 +60,7 @@ local charjabug={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult * (math.max(#find_pokemon_type("Lightning"), 1))}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult * #find_pokemon_type("Lightning")}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

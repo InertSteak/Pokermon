@@ -110,12 +110,37 @@ juice_flip_single = function(card, index)
   }))
 end
 
+poke_add_card = function(add_card, card, area)
+      if not area then area = G.hand end
+      add_card:add_to_deck()
+      G.deck.config.card_limit = G.deck.config.card_limit + 1
+      table.insert(G.playing_cards, add_card)
+      area:emplace(add_card)
+      add_card.states.visible = nil
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            add_card:start_materialize()
+            return true
+        end
+      })) 
+      playing_card_joker_effects({add_card})
+      return {
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          card = card,
+          playing_cards_created = {true}
+      }
+end
 poke_remove_card = function(target, card)
       if target.ability.name == 'Glass Card' then 
           target.shattered = true
       else 
           target.destroyed = true
       end 
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+        play_sound('tarot1')
+        card:juice_up(0.3, 0.5)
+        return true end }))
       G.E_MANAGER:add_event(Event({
           trigger = 'after',
           delay = 0.2,
@@ -147,3 +172,70 @@ poke_debug = function(message, verbose, depth)
     sendDebugMessage(message)
   end
 end 
+
+poke_vary_rank = function(card, decrease, seed)
+  local ranks = {'2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'}
+  local current_rank_index = nil
+  local new_rank_index = nil
+  for i = 1, #ranks do
+    if ranks[i] == card.base.value then
+      current_rank_index = i
+      break
+    end
+  end
+  if decrease then
+    if current_rank_index == 1 then 
+      new_rank_index = 13
+    else
+      new_rank_index = current_rank_index - 1
+    end
+  elseif seed then
+    new_rank_index = pseudorandom_element(ranks, pseudoseed(seed))
+  else
+    if current_rank_index == 13 then
+      new_rank_index = 1
+    else
+      new_rank_index = current_rank_index + 1
+    end
+  end
+  G.E_MANAGER:add_event(Event({
+      func = function()
+          SMODS.change_base(card, nil, seed and new_rank_index or ranks[new_rank_index])
+          return true
+      end
+  })) 
+end
+
+poke_create_base_copy = function(selected)
+  local suit = string.sub(selected.base.suit, 1, 1)
+  local rank = (selected.base.value == 'Ace' and 'A') or
+  (selected.base.value == 'King' and 'K') or
+  (selected.base.value == 'Queen' and 'Q') or
+  (selected.base.value == 'Jack' and 'J') or
+  (selected.base.value == '10' and 'T') or 
+  (selected.base.value)
+  
+  for j = 1, 2 do
+    create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE})
+  end
+end
+
+poke_get_adjacent_jokers = function(card)
+  local jokers = {}
+  if #G.jokers.cards > 1 then
+    local pos = 0
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then
+        pos = i
+        break
+      end
+    end
+    if pos > 1 and G.jokers.cards[pos-1] then 
+      table.insert(jokers, G.jokers.cards[pos-1])
+    end
+    if pos < #G.jokers.cards and G.jokers.cards[pos+1] then 
+      table.insert(jokers, G.jokers.cards[pos+1])
+    end
+  end
+  return jokers
+end

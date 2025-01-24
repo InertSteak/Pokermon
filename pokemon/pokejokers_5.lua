@@ -18,31 +18,7 @@ local starmie={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
-          dollars = earned,
-          card = card
-        }
-      end
-    end
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve == true then
-      return {
-        message = evolve (self, card, context, 'j_poke_starmie')
-      }
-    end
-    if context.individual and context.cardarea == G.hand and context.end_of_round then
-      if context.other_card.debuff then
-        return {
-          message = localize("k_debuffed"),
-          colour = G.C.RED,
-          card = card,
-        }
-      else
-        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
-        return {
-          message = localize('$')..earned,
-          colour = G.C.MONEY,
           dollars = earned,
           card = card
         }
@@ -154,7 +130,7 @@ local jynx={
             G.deck.config.card_limit = G.deck.config.card_limit + 1
             table.insert(G.playing_cards, copy)
             G.deck:emplace(copy)
-            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
             playing_card_joker_effects({true});
           end
         end
@@ -212,7 +188,7 @@ local magmar={
       juice_card_until(card, eval, true)
     end
     if context.discard and not context.blueprint then
-      if G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
+      if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
         card.ability.extra.remove_triggered = true
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
@@ -248,7 +224,7 @@ local pinsir={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
         if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[#G.hand.cards]:get_id() == context.full_hand[1]:get_id() then
           return {
@@ -293,11 +269,17 @@ local tauros={
       if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
         local new_card = SMODS.create_card(temp_card)
-        create_shop_card_ui(new_card, 'Joker', G.shop_jokers)
         new_card.states.visible = false
         G.shop_jokers:emplace(new_card)
         new_card:start_materialize()
         new_card:set_cost()
+        create_shop_card_ui(new_card)
+        
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          if Talisman.config_file.disable_anims then 
+            new_card.states.visible = true
+          end
+        end
       end
     end
   end
@@ -334,7 +316,7 @@ local magikarp={
   config = {extra = {rounds = 8, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash'}
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
     return {vars = {center.ability.extra.rounds, center.ability.extra.chips}}
   end,
   rarity = 1, 
@@ -720,9 +702,8 @@ local omanyte={
           end
         end
         if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2, true)
           return {
-            message = localize('$')..earned,
             dollars = earned,
             colour = G.C.MONEY
           }
@@ -787,9 +768,8 @@ local omastar={
           end
         end
         if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2, true)
           return {
-            message = localize('$')..earned,
             dollars = earned,
             colour = G.C.MONEY
           }
@@ -1054,7 +1034,7 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint and context.full_hand then
       for k, v in ipairs(context.scoring_hand) do
         v.poke_scored = true
       end
@@ -1172,7 +1152,7 @@ local dratini={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
       end
@@ -1203,7 +1183,7 @@ local dragonair={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
       end
@@ -1242,7 +1222,7 @@ local dragonite={
         }
       end
     end
-    if context.repetition and context.cardarea == G.play and context.scoring_hand and #context.full_hand == 1 then
+    if context.repetition and context.cardarea == G.play and context.scoring_hand and context.full_hand and #context.full_hand == 1 then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,

@@ -149,11 +149,11 @@ local politoed={
 local espeon={
   name = "espeon", 
   pos = {x = 4, y = 4},
-  config = {extra = {retriggers = 1, suit = "Hearts", rerolls = 0}},
+  config = {extra = {retriggers = 1, Xmult_multi = 1.2, rank = "Ace", id = 14, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_sun
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(center.ability.extra.rank or "2", 'ranks'),
+                    localize(center.ability.extra.suit, 'suits_singular'), colours = {G.C.SUITS[center.ability.extra.suit]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -163,31 +163,43 @@ local espeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.TAROT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_sun')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
-        card.ability.extra.rerolls = 0
-      end
+      local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
+                        {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
+      local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'..G.GAME.round))
+      card.ability.extra.rank = rank_id.rank
+      card.ability.extra.id = rank_id.id
+      
+      local suits = {'Spades','Hearts','Diamonds','Clubs'}
+      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
+      card:juice_up()
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize(card.ability.extra.rank or "2", 'ranks').."s and "..localize(card.ability.extra.suit, 'suits_plural')})
     end
-    if context.repetition and context.cardarea == G.play and not context.end_of_round and G.GAME.current_round.hands_played == 0 then
-      if context.other_card:is_suit(card.ability.extra.suit) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+        colour = G.C.XMULT,
+        x_mult = card.ability.extra.Xmult_multi,
+        card = card
+      }
+    end
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == card.ability.extra.id then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
+                  {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
+      local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'))
+      card.ability.extra.rank = rank_id.rank
+      card.ability.extra.id = rank_id.id
+      
+      local suits = {'Spades','Hearts','Diamonds','Clubs'}
+      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'))
     end
   end
 }
@@ -195,45 +207,92 @@ local espeon={
 local umbreon={
   name = "umbreon", 
   pos = {x = 5, y = 4},
-  config = {extra = {retriggers = 1, suit = "Clubs", rerolls = 0}},
+  config = {extra = {hand_played = "High Card", decrease_goal = 3, decreases = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_moon
-    return {vars = {center.ability.extra.rerolls, localize(center.ability.extra.suit, 'suits_singular')}}
+    info_queue[#info_queue+1] = {key = 'tag_orbital', set = 'Tag', specific_vars = {"Random Hand", 3}}
+    info_queue[#info_queue+1] = {key = 'tag_negative', set = 'Tag'}
+    return {vars = {center.ability.extra.hand_played or localize('poke_none'), center.ability.extra.decrease_goal, center.ability.extra.decreases}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   ptype = "Dark",
   atlas = "Pokedex2",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.TAROT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
+      --cycle hand_name
+      local hands = {"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Five of a Kind", "Flush House", "Flush Five"}
+      local visible_hands = {}
+      for i = 1, #hands do
+        if G.GAME.hands[hands[i]].visible then
+          table.insert(visible_hands, hands[i])
         end
-      else
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
+      end
+      
+      for j = 1, #visible_hands do
+        if visible_hands[j] == card.ability.extra.hand_played then
+          if j == #visible_hands then
+            card.ability.extra.hand_played = visible_hands[1]
+          else
+            card.ability.extra.hand_played = visible_hands[j+1]
+          end
+          break
         end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.TAROT})
-        card.ability.extra.rerolls = 0
+      end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.hand_played})
+    end
+    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == card.ability.extra.hand_played and not context.blueprint then
+      if context.before and G.GAME.hands[card.ability.extra.hand_played].level > 1 then
+        level_up_hand(card, card.ability.extra.hand_played, nil, -1)
+        if card.ability.extra.decreases < card.ability.extra.decrease_goal - 1 then
+          card.ability.extra.decreases = card.ability.extra.decreases + 1
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.decreases.."/"..card.ability.extra.decrease_goal})
+        else
+          if pseudorandom('umbreon') > .5 then
+            G.E_MANAGER:add_event(Event({
+              func = (function()
+                  add_tag(Tag('tag_negative'))
+                  play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+                  play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+                  return true
+              end)
+            }))
+          else
+            local tag = Tag('tag_orbital')
+            local _poker_hands = {}
+            for k, v in pairs(G.GAME.hands) do
+              if v.visible then
+                _poker_hands[#_poker_hands + 1] = k
+              end
+            end
+            tag.ability.orbital_hand = pseudorandom_element(_poker_hands, pseudoseed('umbreon'))
+            G.E_MANAGER:add_event(Event({
+              func = (function()
+                  add_tag(tag)
+                  play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+                  play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+                  return true
+              end)
+            }))
+          end
+          card.ability.extra.decreases = 0
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.decrease_goal.."/"..card.ability.extra.decrease_goal})
+        end
       end
     end
-    if context.repetition and context.cardarea == G.hand then
-      if context.other_card:is_suit(card.ability.extra.suit) and (next(context.card_effects[1]) or #context.card_effects > 1) and G.GAME.current_round.hands_left == 0 then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local hands = {"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Five of a Kind", "Flush House", "Flush Five"}
+      local visible_hands = {}
+      for i = 1, #hands do
+        if G.GAME.hands[hands[i]].visible then
+          table.insert(visible_hands, hands[i])
+        end
       end
+      card.ability.extra.hand_played = pseudorandom_element(visible_hands, pseudoseed('umbreon'))
     end
   end
 }
@@ -302,7 +361,7 @@ local steelix={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   stage = "One",
   ptype = "Metal",
   atlas = "Pokedex2",

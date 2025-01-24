@@ -93,8 +93,6 @@ local treecko={
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
                 dollars = earned,
                 card = card
               }
@@ -152,8 +150,6 @@ local grovyle={
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               card.ability.extra.money_earned = card.ability.extra.money_earned + earned
               return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
                 dollars = earned,
                 card = card
               }
@@ -193,7 +189,7 @@ local sceptile={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Grass",
   atlas = "Pokedex3",
@@ -207,8 +203,6 @@ local sceptile={
             local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod, true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
               dollars = earned,
               card = card
             }
@@ -395,7 +389,7 @@ local blaziken={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Fire",
   atlas = "Pokedex3",
@@ -485,8 +479,6 @@ local mudkip={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
@@ -543,8 +535,6 @@ local marshtomp={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
@@ -585,7 +575,7 @@ local swampert={
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
-  cost = 8,
+  cost = 10,
   stage = "Two",
   ptype = "Water",
   atlas = "Pokedex3",
@@ -602,8 +592,6 @@ local swampert={
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.chips_earned = card.ability.extra.chips_earned + chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-            colour = G.C.CHIPS,
             chips = chips,
             card = card
           }
