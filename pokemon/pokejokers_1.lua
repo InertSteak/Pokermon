@@ -296,12 +296,16 @@ local charizard={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
       ease_discard(card.ability.extra.d_size)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
       G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
       ease_discard(-card.ability.extra.d_size)
+    end
   end
   }
 local squirtle={
