@@ -1007,12 +1007,14 @@ local sandshrew={
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
-      return {
-        message = localize('k_copied_ex'),
-        colour = G.C.CHIPS,
-        card = card,
-        playing_cards_created = {true}
-      }
+      if card_to_copy then
+        return {
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          card = card,
+          playing_cards_created = {true}
+        }
+      end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -1081,12 +1083,14 @@ local sandslash={
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
-      return {
-        message = localize('k_copied_ex'),
-        colour = G.C.CHIPS,
-        card = card,
-        playing_cards_created = {true}
-      }
+      if card_to_copy then
+        return {
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          card = card,
+          playing_cards_created = {true}
+        }
+      end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
