@@ -990,7 +990,6 @@ local sandshrew={
         if v.shattered and card.ability.extra.glass_restored <= 0 then
           card_to_copy = v
           local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:set_ability(G.P_CENTERS.m_glass, nil, true)
           copy:add_to_deck()
           G.deck.config.card_limit = G.deck.config.card_limit + 1
           table.insert(G.playing_cards, copy)
@@ -1065,7 +1064,6 @@ local sandslash={
         if v.shattered and card.ability.extra.glass_restored <= 0 then
           card_to_copy = v
           local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:set_ability(G.P_CENTERS.m_glass, nil, true)
           copy:add_to_deck()
           G.deck.config.card_limit = G.deck.config.card_limit + 1
           table.insert(G.playing_cards, copy)
