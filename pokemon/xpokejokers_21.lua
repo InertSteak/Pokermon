@@ -291,7 +291,6 @@ local chandelure={
   end,
   rarity = "poke_safari",
   cost = 10,
-  item_req = "duskstone",
   stage = "Two",
   ptype = "Fire",
   atlas = "Pokedex5",
