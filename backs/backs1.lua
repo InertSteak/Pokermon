@@ -71,7 +71,7 @@ local telekineticdeck = {
   loc_vars = function(self, info_queue, center)
     return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
   end,
-	pos = { x = 0, y = 0 },
+	pos = { x = 3, y = 0 },
 	atlas = "pokedeck",
 } 
 
