@@ -300,7 +300,6 @@ local leftovers = {
   set = "Item",
   config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("snorlax_infoqueue")}}
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     return {vars = {self.config.extra.joker_highlighted, self.config.extra.money_mod}}
   end,
@@ -346,7 +345,6 @@ local leek = {
   config = {extra = {odds = 3, odds2 = 8, previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("farfetchd_infoqueue")}}
     local card = center or self
     if not card.edition or (card.edition and not card.edition.foil) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -417,7 +415,6 @@ local thickclub = {
   config = {max_highlighted = 1, bonus = 5, extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hitem', vars = {localize("cubone_marowak_infoqueue")}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,

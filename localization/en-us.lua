@@ -182,7 +182,7 @@ return {
                     "Permanently adds {C:chips}+#2#{} Chips",
                     "to {C:attention}#1#{} selected card and",
                     "enhances it to {C:attention}Stone{} if it",
-                    "already has permanent bonus Chips",
+                    "already has added Chips",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -602,7 +602,7 @@ return {
             j_poke_spearow = {
                 name = "Spearow",
                 text = {
-                    "After scoring {C:attention}#2#{} cards",
+                    "After playing {C:attention}#2#{} scoring cards",
                     "upgrade level of next played {C:attention}poker hand{}",
                     "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}/#2#) {C:inactive}#4#{}",
                     "{C:inactive}(Evolves after {C:attention}#1#{}{C:inactive} rounds)"
@@ -611,7 +611,7 @@ return {
             j_poke_fearow = {
                 name = "Fearow",
                 text = {
-                    "After scoring {C:attention}#1#{} cards",
+                    "After playing {C:attention}#1#{} scoring cards",
                     "upgrade level of next played {C:attention}poker hand{}",
                     "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#1#) {C:inactive}#3#{}",
                 } 
@@ -631,7 +631,7 @@ return {
                     "{C:mult}+#1#{} Mult if played hand",
                     "contains a {C:attention}Straight{}",
                     "Create a Tarot card if it",
-                    "also contains an {C:attention}Ace{}."
+                    "also contains an {C:attention}Ace{}"
                 } 
             },
             j_poke_pikachu = {
@@ -956,7 +956,7 @@ return {
                 name = "Arcanine",
                 text = {
                     "{X:red,C:white} X#1# {} Mult if played",
-                    "hand contains a {C:attention}Flush{}.",
+                    "hand contains a {C:attention}Flush{}",
                     "Create a {C:attention}Lovers{} card",
                     "when {C:attention}Blind{} is selected"
                 } 
@@ -965,7 +965,7 @@ return {
                 name = "Poliwag",
                 text = {
                     "Played cards with {V:1}#3#{} suit",
-                    "give {C:mult}+#1#{} Mult when scored,",
+                    "give {C:mult}+#1#{} Mult when scored",
                     "Suit changes in order after",
                     "hand is played",
                     "{C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
@@ -976,7 +976,7 @@ return {
                 name = "Poliwhirl",
                 text = {
                     "Played cards with {V:1}#2#{} suit ",
-                    "give {C:mult}+#1#{} Mult when scored,",
+                    "give {C:mult}+#1#{} Mult when scored",
                     "Suit changes in order after",
                     "hand is played",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
@@ -988,7 +988,7 @@ return {
                 text = {
                     "Played cards with {V:1}#2#{} suit",
                     "give {C:mult}+#7#{} Mult",
-                    "and {X:mult,C:white} X#1# {} Mult when scored,",
+                    "and {X:mult,C:white} X#1# {} Mult when scored",
                     "Suit changes in order after",
                     "hand is played",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}"
@@ -1319,7 +1319,7 @@ return {
                 text = {
                     "{C:attention}Holding Trance{}",
                     "{C:mult}+#2#{} Mult per unique",
-                    "{C:planet}Planet{} card used this run.",
+                    "{C:planet}Planet{} card used this run",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 } 
             },
@@ -1383,11 +1383,11 @@ return {
                 name = 'Cubone',      
                 text = {
                     "{C:attention}Holding Thick Club{}",
-                    "Gives {C:mult}+#1#{} Mult for each",
-                    "filled consumable slot",
+                    "Gives {C:mult}+#1#{} Mult for",
+                    "each {C:attention}held{} consumable",
                     "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{}{C:inactive,s:0.75} count as double){}",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-                    "{C:inactive}(Evolves after using consumables {C:attention}#4#{}{C:inactive}/#5# times)"
+                    "{C:inactive,s:0.75}(Evolves at {C:attention,s:0.75}#4#{}{C:inactive,s:0.75}/#5# consumables used)"
                 } 
             },
             j_poke_marowak = {
@@ -2862,7 +2862,7 @@ return {
                 name = "Type Changer",
                 text = {
                     "Applies a {V:1}#1#{} sticker",
-                    "to leftmost or selected Joker."
+                    "to leftmost or selected Joker"
                 }
             },
             basic = {
@@ -3033,7 +3033,7 @@ return {
               name = "Reusable",
               text = {
                 "Not consumed when used",
-                "{C:inactive}(Can't be created by {C:attention}Twisted Spoon{C:inactive})"
+                "{C:inactive,s:0.8}(Excluded by {C:attention,s:0.8}Twisted Spoon{C:inactive,s:0.8})"
               }
             },
             safaridesc = {
