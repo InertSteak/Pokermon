@@ -239,3 +239,41 @@ poke_get_adjacent_jokers = function(card)
   end
   return jokers
 end
+
+poke_next_highest_rank = function(id, rank)
+  local cards = {}
+  local high_id = id
+  local high_rank = rank
+  local sort_function = function(card1, card2) return card1:get_id() < card2:get_id() end
+  for k, v in pairs(G.playing_cards) do
+    if v:get_id() and v:get_id() > high_id then
+      table.insert(cards, v)
+    end
+  end
+  if #cards > 0 then
+    table.sort(cards, sort_function)
+    high_id = cards[1]:get_id()
+    high_rank = cards[1].base.value
+  else
+    high_id, high_rank = poke_lowest_rank(high_id, high_rank)
+  end
+  return high_id, high_rank
+end
+
+poke_lowest_rank = function(id, rank)
+  local cards = {}
+  local low_id = id
+  local low_rank = rank
+  local sort_function = function(card1, card2) return card1:get_id() < card2:get_id() end
+  for k, v in pairs(G.playing_cards) do
+    if v:get_id() and v:get_id() < low_id then
+      table.insert(cards, v)
+    end
+  end
+  if #cards > 0 then
+    table.sort(cards, sort_function)
+    low_id = cards[1]:get_id()
+    low_rank = cards[1].base.value
+  end
+  return low_id, low_rank
+end

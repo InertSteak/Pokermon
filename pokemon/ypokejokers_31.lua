@@ -52,29 +52,7 @@ local fidough={
         end
         if contains then
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          local next_highest_id = 14
-          local next_highest_rank = "Ace"
-          for k, v in pairs(G.playing_cards) do
-            if v:get_id() > card.ability.extra.id and v:get_id() < next_highest_id then
-              next_highest_id = v:get_id()
-              next_highest_rank = v.base.value
-            end
-          end
-          if card.ability.extra.id == next_highest_id then
-            local lowest_id = next_highest_id
-            local lowest_rank = next_highest_rank
-            for x, y in pairs(G.playing_cards) do
-              if y:get_id() < lowest_id then
-                lowest_id = y:get_id()
-                lowest_rank = y.base.value
-              end
-            end
-            card.ability.extra.id = lowest_id
-            card.ability.extra.rank = lowest_rank
-          else
-            card.ability.extra.id = next_highest_id
-            card.ability.extra.rank = next_highest_rank
-          end
+          card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
           return {
             message = localize('k_upgrade_ex'),
             colour = G.C.CHIPS,
@@ -94,18 +72,7 @@ local fidough={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local lowest_id = 14
-      local lowest_rank = "Ace"
-      if G.playing_cards then
-        for x, y in pairs(G.playing_cards) do
-          if y:get_id() < lowest_id then
-            lowest_id = y:get_id()
-            lowest_rank = y.base.value
-          end
-        end
-        card.ability.extra.id = lowest_id
-        card.ability.extra.rank = lowest_rank
-      end
+      card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
   end
 }
@@ -138,29 +105,7 @@ local dachsbun={
         end
         if contains then
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod + (#find_pokemon_type("Fire") * 2)
-          local next_highest_id = 14
-          local next_highest_rank = "Ace"
-          for k, v in pairs(G.playing_cards) do
-            if v:get_id() > card.ability.extra.id and v:get_id() < next_highest_id then
-              next_highest_id = v:get_id()
-              next_highest_rank = v.base.value
-            end
-          end
-          if card.ability.extra.id == next_highest_id then
-            local lowest_id = next_highest_id
-            local lowest_rank = next_highest_rank
-            for x, y in pairs(G.playing_cards) do
-              if y:get_id() < lowest_id then
-                lowest_id = y:get_id()
-                lowest_rank = y.base.value
-              end
-            end
-            card.ability.extra.id = lowest_id
-            card.ability.extra.rank = lowest_rank
-          else
-            card.ability.extra.id = next_highest_id
-            card.ability.extra.rank = next_highest_rank
-          end
+          card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
           return {
             message = localize('k_upgrade_ex'),
             colour = G.C.CHIPS,
@@ -179,18 +124,7 @@ local dachsbun={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local lowest_id = 14
-      local lowest_rank = "Ace"
-      if G.playing_cards then
-        for x, y in pairs(G.playing_cards) do
-          if y:get_id() < lowest_id then
-            lowest_id = y:get_id()
-            lowest_rank = y.base.value
-          end
-        end
-        card.ability.extra.id = lowest_id
-        card.ability.extra.rank = lowest_rank
-      end
+      card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
   end
 }
