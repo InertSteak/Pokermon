@@ -2381,7 +2381,7 @@ return {
                   "one of your {C:attention}#1#{} highest level",
                   "{}poker hands{} when {C:attention}Blind{} is selected",
                   "After opening {C:attention}#2# Boosters{}, create a",
-                  "{C:attention}Telescope{} or {C:attention}Observatory{} if applicable"
+                  "{C:attention}Telescope{} or {C:attention}Observatory{} if able"
                 }
             },
             j_poke_grubbin = {

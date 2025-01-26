@@ -138,7 +138,7 @@ local beheeyem={
       local added = false
       local telescope_in_shop = false
       local observatory_in_shop = false
-      if not (G.GAME.used_vouchers.v_telescope and G.GAME.used_vouchers.v_observatory) then
+      if not (G.GAME.used_vouchers.v_telescope and G.GAME.used_vouchers.v_observatory) and not (card.ability.extra.boosters_to_open == 1 and not (G.shop_vouchers and G.shop_vouchers.cards)) then
         card.ability.extra.boosters_to_open = card.ability.extra.boosters_to_open - 1
       end
       if card.ability.extra.boosters_to_open == 0 then
