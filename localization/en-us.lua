@@ -2722,7 +2722,22 @@ return {
             },
         },
         Tarot = {
-           
+            c_poke_pokeball = {
+                name = "Pokéball",
+                text = {
+                    "Create a random",
+                    "{C:attention}Basic Joker{} card",
+                    "{C:inactive}(Must have room)"
+                },
+            },
+            c_poke_greatball = {
+                name = "Greatball",
+                text = {
+                    "Create a random",
+                    "{C:attention}Stage 1 Joker{} card",
+                    "{C:inactive}(Must have room)"
+                },
+            },
         },
         Voucher = {
             v_poke_energysearch = {
