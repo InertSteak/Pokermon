@@ -334,21 +334,13 @@ local squirtle={
       end
     end
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        if card.ability.extra.chips == 30 then
-          local eval = function(card) return not card.REMOVED end
-          juice_card_until(card, eval, true)
-        end
-        if card.ability.extra.chips >= 32 then
-          return {
-            message = evolve (self, card, context, 'j_poke_wartortle')
-          }
-        else
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS
-          }
-        end
+      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
+      local evolved = scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, 32)
+      if evolved then
+        return evolved
+      else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -385,21 +377,13 @@ local wartortle={
       end
     end
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        if card.ability.extra.chips == 68 then
-          local eval = function(card) return not card.REMOVED end
-          juice_card_until(card, eval, true)
-        end
-        if card.ability.extra.chips >= 72 then
-          return {
-            message = evolve (self, card, context, 'j_poke_blastoise')
-          }
-        else
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS
-          }
-        end
+      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
+      local evolved = scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, 72)
+      if evolved then
+        return evolved
+      else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
