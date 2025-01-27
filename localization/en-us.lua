@@ -2175,6 +2175,23 @@ return {
                   "they all have the same {C:attention}suit{}",
                 }
             },
+            j_poke_snorunt = {
+                name = "Snorunt",
+                text = {
+                  "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips",
+                  "Go up to {C:mult}-$#3#{} in debt",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{}{C:inactive,s:0.8} rounds in debt)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{}){}"
+                }
+            },
+            j_poke_glalie = {
+                name = "Glalie",
+                text = {
+                  "{C:chips}+#2#{} Chips",
+                  "Go up to {C:mult}-$#3#{} in debt",
+                  "At end of round, sets money to {C:money}$0"
+                }
+            },
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
@@ -2352,6 +2369,16 @@ return {
                     "card used this {C:attention}run{}",
                     "{C:inactive}(Currently {X:red,C:white} X#1# {}{C:inactive} Mult)"
                 } 
+            },
+            j_poke_froslass = {
+                name = "Froslass",
+                text = {
+                  "{C:mult}+#1#{} Mult",
+                  "Go up to {C:mult}-$#3#{} in debt",
+                  "Create an {C:item}Item{} card if",
+                  "hand is played while in debt",
+                  "{C:inactive}(Must have room){}"
+                }
             },
             j_poke_sylveon = {
                 name = 'Sylveon',
@@ -3342,7 +3369,8 @@ return {
             poke_dawn_info1 = "(Next hand played sets hand type)",
             poke_dawn_info2 = "(Hand type set!)",
             poke_make_it_rain = "Make it Rain!",
-            poke_val_down = "Value Down!"
+            poke_val_down = "Value Down!",
+            poke_powder_ex = "Powder Snow!" 
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

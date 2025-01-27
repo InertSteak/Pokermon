@@ -1,5 +1,99 @@
 -- Snorunt 361
+local snorunt={
+  name = "snorunt",
+  pos = {x = 2, y = 11},
+  config = {extra = {mult = 2,chips = 20,debt = 15,rounds = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 4,
+  item_req = "dawnstone",
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize('poke_powder_ex'),
+          colour = G.C.CHIPS,
+          mult_mod = card.ability.extra.mult,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if G.GAME.dollars < 0 then
+      return level_evo(self, card, context, "j_poke_glalie")
+    end
+    return item_evo(self, card, context, "j_poke_froslass")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
+    end
+  end,
+}
 -- Glalie 362
+local glalie={
+  name = "glalie",
+  pos = {x = 3, y = 11},
+  config = {extra = {chips = 50,debt = 20}},
+  loc_txt = {
+    name = "Glalie",
+    text = {
+      "{C:chips}+#2#{} Chips",
+      "Go up to {C:mult}-$#3#{} in debt",
+      "At end of round, sets money to {C:money}$0"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card:juice_up()
+      ease_dollars(-G.GAME.dollars, true)
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
+    end
+  end,
+}
 -- Spheal 363
 -- Sealeo 364
 -- Walrein 365
@@ -154,5 +248,5 @@ local metagross={
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {beldum, metang, metagross},
+        list = {snorunt, glalie, beldum, metang, metagross},
 }

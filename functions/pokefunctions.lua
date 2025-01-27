@@ -66,6 +66,7 @@ family = {
     {"dratini","dragonair","dragonite"},
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"feebas", "milotic"},
+    {"snorunt", "glalie", "froslass"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
     {"mantyke", "mantine"},

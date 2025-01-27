@@ -516,8 +516,51 @@ local porygonz={
 -- Probopass 476
 -- Dusknoir 477
 -- Froslass 478
+local froslass={
+  name = "froslass",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 10, debt = 15}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if G.GAME.dollars < 0 and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
+          _card:add_to_deck()
+          G.consumeables:emplace(_card)
+        end
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
+    end
+  end,
+}
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, froslass},
 }
