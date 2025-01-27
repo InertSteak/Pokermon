@@ -71,7 +71,7 @@ local fidough={
     return scaling_evo(self, card, context, "j_poke_dachsbun", #find_pokemon_type("Fire"), 1)
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
+    if initial and G.playing_cards then
       card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
   end
@@ -123,7 +123,7 @@ local dachsbun={
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
+    if initial and G.playing_cards then
       card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
   end
