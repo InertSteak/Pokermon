@@ -2,10 +2,10 @@
 local snorunt={
   name = "snorunt",
   pos = {x = 2, y = 11},
-  config = {extra = {mult = 2,chips = 20,debt = 15,rounds = 4}},
+  config = {extra = {debt = 15,rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.debt, center.ability.extra.rounds}}
   end,
   rarity = 1,
   cost = 4,
@@ -17,16 +17,6 @@ local snorunt={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize('poke_powder_ex'),
-          colour = G.C.CHIPS,
-          mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-    end
     if G.GAME.dollars < 0 then
       return level_evo(self, card, context, "j_poke_glalie")
     end
@@ -47,18 +37,10 @@ local snorunt={
 local glalie={
   name = "glalie",
   pos = {x = 3, y = 11},
-  config = {extra = {chips = 50,debt = 20}},
-  loc_txt = {
-    name = "Glalie",
-    text = {
-      "{C:chips}+#2#{} Chips",
-      "Go up to {C:mult}-$#3#{} in debt",
-      "At end of round, sets money to {C:money}$0"
-    }
-  },
+  config = {extra = {debt = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.debt}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -69,15 +51,6 @@ local glalie={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-    end
     if context.end_of_round and not context.individual and not context.repetition then
       card:juice_up()
       ease_dollars(-G.GAME.dollars, true)

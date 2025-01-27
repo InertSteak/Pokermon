@@ -2178,17 +2178,15 @@ return {
             j_poke_snorunt = {
                 name = "Snorunt",
                 text = {
-                  "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips",
-                  "Go up to {C:mult}-$#3#{} in debt",
-                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{}{C:inactive,s:0.8} rounds in debt)",
-                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{}){}"
+                  "Go up to {C:mult}-$#1#{} in debt",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{}{C:inactive,s:0.8} rounds in debt)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})"
                 }
             },
             j_poke_glalie = {
                 name = "Glalie",
                 text = {
-                  "{C:chips}+#2#{} Chips",
-                  "Go up to {C:mult}-$#3#{} in debt",
+                  "Go up to {C:mult}-$#1#{} in debt",
                   "At end of round, sets money to {C:money}$0"
                 }
             },
@@ -2373,8 +2371,7 @@ return {
             j_poke_froslass = {
                 name = "Froslass",
                 text = {
-                  "{C:mult}+#1#{} Mult",
-                  "Go up to {C:mult}-$#3#{} in debt",
+                  "Go up to {C:mult}-$#1#{} in debt",
                   "Create an {C:item}Item{} card if",
                   "hand is played while in debt",
                   "{C:inactive}(Must have room){}"

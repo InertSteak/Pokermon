@@ -519,10 +519,10 @@ local porygonz={
 local froslass={
   name = "froslass",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 10, debt = 15}},
+  config = {extra = {debt = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.debt, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.debt}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -540,11 +540,6 @@ local froslass={
           _card:add_to_deck()
           G.consumeables:emplace(_card)
         end
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
       end
     end
   end,
