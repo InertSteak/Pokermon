@@ -549,7 +549,7 @@ local dragonscale = {
     for i = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local card_type = nil
-        if pseudorandom(pseudoseed('dragonscale')) > .50 then
+        if pseudorandom(pseudoseed('dragonscale')) > .50 or pokermon_config.jokers_only then
           card_type = "Item"
         else
           card_type = "Energy"
