@@ -756,7 +756,7 @@ local shinystone = {
   use = function(self, card, area, copier)
     local editionless = {}
     for i = 1, #G.hand.cards do
-      if not G.hand.cards[i].edition then
+      if not G.hand.cards[i].edition and not G.hand.cards[i].removed then
         table.insert(editionless, G.hand.cards[i])
       end
     end
