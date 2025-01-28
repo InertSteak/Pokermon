@@ -309,7 +309,7 @@ local chandelure={
         }
       end
     end
-    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost == 1 then
+    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost == 1 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
        ease_poke_dollars(context.other_joker, "chandelure", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()
