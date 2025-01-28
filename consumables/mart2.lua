@@ -298,6 +298,7 @@ local leftovers = {
   name = "leftovers",
   key = "leftovers",
   set = "Item",
+  helditem = true,
   config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
@@ -342,6 +343,7 @@ local leek = {
   name = "leek",
   key = "leek",
   set = "Item",
+  helditem = true,
   config = {extra = {odds = 3, odds2 = 8, previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
@@ -412,6 +414,7 @@ local thickclub = {
   name = "thickclub",
   key = "thickclub",
   set = "Item",
+  helditem = true,
   config = {max_highlighted = 1, bonus = 5, extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
@@ -826,7 +829,7 @@ local twisted_spoon = {
         }}
     }
    local loc_vars = {last_poke_item}
-   if not (not spoon_c or (spoon_c.name == 'twisted_spoon' or spoon_c.name == 'leftovers' or spoon_c.name == 'leek' or spoon_c.name == 'thickclub')) then
+   if not (not spoon_c or (spoon_c.name == 'twisted_spoon')) then
       info_queue[#info_queue+1] = spoon_c
    end
    

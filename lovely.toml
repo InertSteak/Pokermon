@@ -231,7 +231,7 @@ end
 '''
 position = "after"
 payload = '''
-if card.config.center.set == 'Item' or card.config.center.set == 'Energy' then 
+if (card.config.center.set == 'Item' or card.config.center.set == 'Energy') and not card.config.center.helditem then 
   G.E_MANAGER:add_event(Event({
     trigger = 'immediate',
     func = function()
