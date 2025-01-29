@@ -122,9 +122,11 @@ return {
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
-                    "Creates {C:attention}2 Gold{} cards",
+                  
+                    "Adds {C:attention}2 Gold{} cards",
                     "with the same rank as",
-                    "{C:attention}1{} selected card",
+                    "{C:attention}1{} selected card to deck",
+                    "and draws {C:attention}1{} to hand",
                     "{C:attention}Evolution Card{}",
                 },
             },
@@ -250,8 +252,9 @@ return {
                 name = "Shiny Stone",
                 text = {
                     "Add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
-                    "or {C:dark_edition}Polychrome{} edition to",
-                    "{C:attention}1{} random card in hand",
+                    "or {C:dark_edition}Polychrome{} effect to",
+                    "{C:attention}1{} selected card in hand and",
+                    "{C:attention}Drain{} {C:money}$#2#{} from each Joker",
                     "{C:attention}Evolution Card{}",
                 }
             },
@@ -261,7 +264,7 @@ return {
                     "Creates the last",
                     "{C:item}Item{} card or {C:pink}Energy{} card",
                     "used during this run",
-                    "{s:0.8,C:item}Twisted Spoon{s:0.8} excluded"
+                    "{s:0.8,C:item}Twisted Spoon and Reusables{s:0.8} excluded"
                 }
             },
             c_poke_prismscale = {
@@ -3046,6 +3049,14 @@ return {
                 "a Joker and add it to self",
                 "if Joker has greater than",
                 "{C:money}$1{} sell value"
+              }
+            },
+            poke_drain_item = {
+              name = "Drain",
+              text = {
+                "Remove sell value from",
+                "a Joker if Joker has",
+                "greater than {C:money}$1{} sell value",
               }
             },
             precise_energy_tooltip = {

@@ -159,10 +159,16 @@ local thunderstone = {
     (selected.base.value == 'Jack' and 'J') or
     (selected.base.value == '10' and 'T') or 
     (selected.base.value)
+    local area = nil
     for i = 1, 2 do
+      if i == 1 then
+        area = G.hand
+      else
+        area = G.deck
+      end
       local _card = create_playing_card({
             front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
-            center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+            center = G.P_CENTERS.c_base}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
       _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
       _card:set_ability(G.P_CENTERS.m_gold, nil, true)
       playing_card_joker_effects({_card})
@@ -415,7 +421,7 @@ local thickclub = {
   key = "thickclub",
   set = "Item",
   helditem = true,
-  config = {max_highlighted = 1, bonus = 5, extra = {previous_round = 0}},
+  config = {max_highlighted = 1, bonus = 10, extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -738,11 +744,14 @@ local shinystone = {
   name = "shinystone",
   key = "shinystone",
   set = "Item",
+  config = {max_highlighted = 1, drain_amt = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
+    return {vars = {self.config.max_highlighted, self.config.drain_amt}}
   end,
   pos = { x = 2, y = 4 },
   atlas = "Mart",
@@ -750,26 +759,18 @@ local shinystone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  can_use = function(self, card)
-    return G.hand and G.hand.cards and #G.hand.cards > 0
-  end,
   use = function(self, card, area, copier)
-    local editionless = {}
-    for i = 1, #G.hand.cards do
-      if not G.hand.cards[i].edition and not G.hand.cards[i].removed then
-        table.insert(editionless, G.hand.cards[i])
-      end
-    end
-    
-    if #editionless > 0 then
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           local over = false
           local edition = poll_edition('shiny', nil, true, true)
-          local shiny_card = pseudorandom_element(editionless, pseudoseed('shiny'))
+          local shiny_card = G.hand.highlighted[1]
           shiny_card:set_edition(edition, true)
           card:juice_up(0.3, 0.5)
       return true end }))
-    end
+
+      for i = 1, #G.jokers.cards do
+        poke_drain(nil, G.jokers.cards[i], self.config.drain_amt, true)
+      end
     
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return evo_item_use(self, card, area, copier)
