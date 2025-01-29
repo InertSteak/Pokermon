@@ -17,10 +17,12 @@ local snorunt={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if G.GAME.dollars < 0 then
+    local evolve = item_evo(self, card, context, "j_poke_froslass")
+    if evolve then
+      return evolve
+    elseif G.GAME.dollars < 0 then
       return level_evo(self, card, context, "j_poke_glalie")
     end
-    return item_evo(self, card, context, "j_poke_froslass")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
