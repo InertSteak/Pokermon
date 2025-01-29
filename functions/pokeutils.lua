@@ -246,7 +246,7 @@ poke_next_highest_rank = function(id, rank)
   local high_rank = rank
   local sort_function = function(card1, card2) return card1:get_id() < card2:get_id() end
   for k, v in pairs(G.playing_cards) do
-    if v:get_id() and v:get_id() > high_id then
+    if v:get_id() and v:get_id() > high_id and not SMODS.has_no_rank(v) then
       table.insert(cards, v)
     end
   end
@@ -266,7 +266,7 @@ poke_lowest_rank = function(id, rank)
   local low_rank = rank
   local sort_function = function(card1, card2) return card1:get_id() < card2:get_id() end
   for k, v in pairs(G.playing_cards) do
-    if v:get_id() and v:get_id() < low_id then
+    if v:get_id() and v:get_id() < low_id and not SMODS.has_no_rank(v) then
       table.insert(cards, v)
     end
   end
