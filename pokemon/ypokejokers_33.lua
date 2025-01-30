@@ -20,7 +20,7 @@
 local annihilape={
   name = "annihilape", 
   pos = {x = 3, y = 5}, 
-  config = {extra = {mult = 7, chips = 11}},
+  config = {extra = {mult = 5, chips = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult * (1 + G.GAME.current_round.hands_played), 

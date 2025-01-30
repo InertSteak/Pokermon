@@ -833,7 +833,7 @@ local meowth={
 		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -873,7 +873,7 @@ local psyduck={
     return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 6, 
+  cost = 5, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -948,7 +948,8 @@ local mankey={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card:get_id() == 2 or 
          context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 then
+         context.other_card:get_id() == 5 or
+         context.other_card:get_id() == 7 then
         return {
             chips = card.ability.extra.chips,
             mult = card.ability.extra.mult,
@@ -962,7 +963,7 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 7, chips = 11, primes_played = 0}},
+  config = {extra = {mult = 5, chips = 7, primes_played = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.primes_played}}
@@ -977,7 +978,8 @@ local primeape={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card:get_id() == 2 or 
          context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 then
+         context.other_card:get_id() == 5 or
+         context.other_card:get_id() == 7 then
         card.ability.extra.primes_played = card.ability.extra.primes_played + 1
         return {
             chips = card.ability.extra.chips,

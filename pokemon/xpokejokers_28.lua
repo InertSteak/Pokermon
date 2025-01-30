@@ -26,7 +26,7 @@
 local yamper={
   name = "yamper", 
   pos = {x = 11, y = 1}, 
-  config = {extra = {mult = 4, money = 4, rounds = 4}},
+  config = {extra = {mult = 3, money = 3, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, center.ability.extra.rounds}}

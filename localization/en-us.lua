@@ -929,8 +929,8 @@ return {
             j_poke_mankey = {
                 name = "Mankey",
                 text = {
-                    "Each played {C:attention}2{},",
-                    "{C:attention}3{}, or {C:attention}5{} gives",
+                    "Each played {C:attention}2{}, {C:attention}3{}",
+                    "{C:attention}5{}, or {C:attention}7{} gives",
                     "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
                     "when scored",
                     "{C:inactive}(Evolves after {C:attention}#3#{}{C:inactive} rounds)"
@@ -940,8 +940,8 @@ return {
             j_poke_primeape = {
                 name = "Primeape",
                 text = {
-                    "Each played {C:attention}2{},",
-                    "{C:attention}3{}, or {C:attention}5{} gives",
+                    "Each played {C:attention}2{}, {C:attention}3{}",
+                    "{C:attention}5{}, or {C:attention}7{} gives",
                     "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
                     "when scored",
                     "{C:inactive}(Evolves after triggering {C:attention}#3#{}{C:inactive}/25 times){}"
@@ -2427,7 +2427,7 @@ return {
                     "{C:mult}+#1#{} Mult",
                     "for each {X:lightning, C:black}Lightning{} Joker",
                     "you have {C:inactive}(includes self){}",
-                     "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)",
+                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                     "{C:inactive}(Evolves with a{} {C:attention}Thunder Stone{}{C:inactive} card)"
                 }  
             },
