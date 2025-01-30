@@ -135,7 +135,15 @@ local gholdengo={
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
       card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
       if card.ability.extra.future_dollars >= 0 then
-        card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          if to_big(card.ability.extra.Xmult) >= to_big(1e300) then
+            card.ability.extra.Xmult = to_number(to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi))
+          else
+            card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+          end
+        else
+          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+        end
         return {
           dollars = -card.ability.extra.money_minus,
           card = card
