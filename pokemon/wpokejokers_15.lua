@@ -63,12 +63,12 @@ local mimejr={
 local happiny={
   name = "happiny",
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2, odds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
-    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2,
   cost = 4,
@@ -80,17 +80,6 @@ local happiny={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and G.GAME.current_round.hands_left == 0 and G.jokers.cards[#G.jokers.cards] == card then
-        for k, v in ipairs(context.scoring_hand) do
-          v:set_ability(G.P_CENTERS.m_lucky, nil, true)
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  v:juice_up()
-                  return true
-              end
-          })) 
-        end
-      end
       if context.joker_main then
         faint_baby_poke(self, card, context)
         return {
@@ -98,6 +87,19 @@ local happiny={
           colour = G.C.XMULT,
           Xmult_mod = card.ability.extra.Xmult_minus
         }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local max = 1
+      if pseudorandom('happiny') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        max = max + 1
+      end
+      for i = 1, max do
+        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_magician')
+        local edition = {negative = true}
+        _card:set_edition(edition, true)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
       end
     end
     return level_evo(self, card, context, "j_poke_chansey")

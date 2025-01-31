@@ -1482,7 +1482,7 @@ return {
                     "Played {C:attention}Wild{} cards give",
                     "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
                     "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
-                    "{C:inactive}(Evolves when deck is >= 20% {C:attention}Wild{C:inactive} cards)"
+                    "{C:inactive}(Evolves at {C:attention}#6#{C:inactive}/#7# {C:attention}Wild Cards{C:inactive} scored)"
                 } 
             },
             j_poke_kangaskhan = {
@@ -1894,7 +1894,8 @@ return {
                     "Played cards with {C:attention}Odd{} rank",
                     "give {C:mult}+#1#{} Mult or become",
                     "{C:attention}Wild{} cards when scored",
-                    "If already {C:attention}Wild{}, adds {C:dark_edition}Polychrome"
+                    "If already {C:attention}Wild{}, adds {C:dark_edition}Foil{},",
+                    "{C:dark_edition}Holographic{} or {C:dark_edition}Polychrome{} effect"
                 } 
             },
             j_poke_politoed = {
@@ -2256,9 +2257,9 @@ return {
                 name = 'Happiny',
                 text = {
                     "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
-                    "Scored cards in your",
-                    "{C:attention}last hand{} become {C:attention}Lucky{}",
-                    "if this is the rightmost Joker",
+                    "Create a {C:attention}Magician{} card with",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:green}#3# in #4#{} chance to create {C:attention}2{}",
                     "{C:inactive}(Evolves after {C:attention}#2#{}{C:inactive} rounds)"
                 }
             },

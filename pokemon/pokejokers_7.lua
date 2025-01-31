@@ -9,6 +9,12 @@ local bellossom={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
+    if not center.edition or (center.edition and not center.edition.foil) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    end
+    if not center.edition or (center.edition and not center.edition.holo) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    end
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
 		return {vars = {center.ability.extra.mult}}
   end,
@@ -23,10 +29,10 @@ local bellossom={
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           local upgrade = pseudorandom(pseudoseed('bellossom'))
-          if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 then
+          if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
               if v.ability.name == 'Wild Card' and not v.edition then
-                local edition = {polychrome = true}
+                local edition = poll_edition('bellossom', nil, true, true)
                 v:set_edition(edition, true, true)
               end
               v:set_ability(G.P_CENTERS.m_wild, nil, true)
@@ -57,8 +63,6 @@ local bellossom={
           if context.other_card.bellossom_score then
             context.other_card.bellossom_score = nil
             return {
-              message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-              colour = G.C.MULT,
               mult = card.ability.extra.mult,
               card = card
             }

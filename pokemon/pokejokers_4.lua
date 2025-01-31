@@ -889,11 +889,12 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4}},
+  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0, wilds_goal = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,
+                    center.ability.extra.wilds_scored, center.ability.extra.wilds_goal}}
   end,
   rarity = 2, 
   cost = 6,
@@ -905,6 +906,7 @@ local tangela={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Wild Card' then
+        card.ability.extra.wilds_scored = card.ability.extra.wilds_scored + 1
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
@@ -941,7 +943,7 @@ local tangela={
           end
         end
     end
-    return deck_enhance_evo(self, card, context, "j_poke_tangrowth", "Wild", .20)
+    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, card.ability.extra.wilds_goal)
   end,
 }
 local kangaskhan={
