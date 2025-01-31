@@ -810,6 +810,8 @@ get_poke_target_card_ranks = function(seed, num, default, use_deck)
     local args = {array = random, amt = num}
     target_ranks = pseudorandom_multi(args)
   end
+  local sort_function = function(card1, card2) return card1.id < card2.id end
+  table.sort(target_ranks, sort_function)
   return target_ranks
 end
 
