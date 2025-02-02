@@ -292,7 +292,7 @@ local ninetales={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not from_debuff then
+    if not from_debuff then
       local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
       local edition = {negative = true}
       _card:set_edition(edition, true)
