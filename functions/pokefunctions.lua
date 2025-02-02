@@ -580,7 +580,7 @@ evo_item_use = function(self, card, area, copier)
         end
       end
     end
-    return true
+    return evolve
 end
 
 highlighted_evo_item = function(self, card, area, copier)
@@ -603,7 +603,18 @@ highlighted_evo_item = function(self, card, area, copier)
       local eval = function(choice) return not choice.REMOVED end
       juice_card_until(choice, eval, true)
     end
-    return true
+    return evolve
+end
+
+evo_item_use_total = function(self, card, area, copier)
+    local evolve = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      evolve = highlighted_evo_item(self, card, area, copier)
+    end
+    if not evolve then
+      evolve = evo_item_use(self, card, area, copier)
+    end
+    return evolve
 end
 
 evo_item_in_pool = function(self)

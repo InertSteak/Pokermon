@@ -50,11 +50,7 @@ local moonstone = {
       return true end }))
     end
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -85,11 +81,7 @@ local sunstone = {
     end
     juice_flip(card, true)
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -124,11 +116,7 @@ local waterstone = {
     end
     juice_flip(card, true)
     delay(0.5)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -174,11 +162,7 @@ local thunderstone = {
       playing_card_joker_effects({_card})
     end
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -211,11 +195,7 @@ local firestone = {
     local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
     poke_remove_card(target, card)
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -249,11 +229,7 @@ local leafstone = {
       end
     end
     juice_flip_hand(card, true)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -289,11 +265,7 @@ local linkcable = {
     juice_flip(card, true)
     delay(0.5)
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -603,11 +575,7 @@ local kingsrock = {
     }))
     delay(0.5)
     juice_flip(card, true)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -647,11 +615,7 @@ local upgrade = {
       G.hand.highlighted[i]:set_ability(enhancement, nil, true)
     end
     juice_flip(card, true)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return not next(find_joker("porygon2"))
@@ -691,11 +655,7 @@ local dubious_disc = {
       G.hand.cards[i]:set_ability(enhancement, nil, true)
     end
     juice_flip_hand(card, true)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return next(find_joker("porygon2"))
@@ -730,11 +690,7 @@ local icestone = {
       end
     end
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -772,11 +728,7 @@ local shinystone = {
         poke_drain(nil, G.jokers.cards[i], self.config.drain_amt, true)
       end
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true

@@ -31,11 +31,7 @@ local prismscale = {
     end
     juice_flip_table(card, cards_held, true, self.config.converted)
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -65,11 +61,7 @@ local duskstone = {
     if G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds then
       ease_dollars(card.ability.extra.money)
     end
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -153,11 +145,7 @@ local dawnstone = {
       end
     end
     
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return evo_item_use(self, card, area, copier)
-    else
-      return highlighted_evo_item(self, card, area, copier)
-    end
+    evo_item_use_total(self, card, area, copier)
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
