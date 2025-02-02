@@ -253,9 +253,6 @@ local torchic={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local mult = card.ability.extra.mult * card.ability.extra.cards_discarded 
-        if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
-          mult = mult * 2
-        end
         card.ability.extra.mult_earned = card.ability.extra.mult_earned + mult
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
@@ -267,7 +264,11 @@ local torchic={
     if context.discard and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-          card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + 1
+          local discard_plus = 1
+          if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
+            discard_plus = 2
+          end 
+          card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + discard_plus
           return {
             message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
             colour = G.C.RED,
@@ -326,9 +327,6 @@ local combusken={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local mult = card.ability.extra.mult * card.ability.extra.cards_discarded 
-        if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
-          mult = mult * 2
-        end
         card.ability.extra.mult_earned = card.ability.extra.mult_earned + mult
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
@@ -340,7 +338,11 @@ local combusken={
     if context.discard and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-          card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + 1
+          local discard_plus = 1
+          if find_other_poke_or_energy_type(card, "Fire") > 0 or find_other_poke_or_energy_type(card, "Fighting") > 0 then
+            discard_plus = 2
+          end 
+          card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + discard_plus
           return {
             message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
             colour = G.C.RED,

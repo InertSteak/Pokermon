@@ -2103,7 +2103,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} discards, {C:attention}Nature{}",
                     "{C:mult}+#1#{} Mult for each {C:attention}#5#, #6# or #7#{} discarded this round",
-                    "Double Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "Double gains if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}#4#{}{C:inactive} Mult){}",
                     "{C:inactive}(Evolves after scoring {C:mult}#2#/60{} {C:inactive}Mult)"
@@ -2114,7 +2114,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} discards, {C:attention}Nature{}",
                     "{C:mult}+#1#{} Mult for each {C:attention}#5#, #6# or #7#{} discarded this round",
-                    "Double Mult if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "Double gains if you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}#4#{}{C:inactive} Mult){}",
                     "{C:inactive}(Evolves after scoring {C:mult}#2#/150{} {C:inactive}Mult)"
