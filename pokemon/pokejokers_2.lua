@@ -1051,7 +1051,6 @@ local arcanine={
         _card:add_to_deck()
         G.consumeables:emplace(_card)
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-        return true
       end
     end
   end,
