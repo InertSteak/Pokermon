@@ -2383,12 +2383,11 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "If this is the {C:attention}leftmost{}",
-                    "Joker, each {C:green}Reroll{} {C:attention}randomizes{}",
-                    "the enhancements of the",
-                    "top {C:attention}2{} cards of your deck",
+                    "Create a {C:attention}Standard{}, {C:spectral}Ethereal{} or",
+                    "{C:pink}Pocket{} tag for every {C:attention}#3#{} {C:green}rerolls{}",
                     "Each card with an {C:attention}edition{}",
                     "held in hand gives {X:mult,C:white} X#1# {} Mult",
+                    "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#3# rerolls)"
                 } 
             },
             j_poke_elgyem = {
