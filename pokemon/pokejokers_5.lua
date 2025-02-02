@@ -268,18 +268,8 @@ local tauros={
     if context.reroll_shop and not context.blueprint then
       if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
-        local new_card = SMODS.create_card(temp_card)
-        new_card.states.visible = false
-        G.shop_jokers:emplace(new_card)
-        new_card:start_materialize()
-        new_card:set_cost()
-        create_shop_card_ui(new_card)
-        
-        if (SMODS.Mods["Talisman"] or {}).can_load then
-          if Talisman.config_file.disable_anims then 
-            new_card.states.visible = true
-          end
-        end
+        local add_card = SMODS.create_card(temp_card)
+        poke_add_shop_card(add_card, card)
       end
     end
   end
@@ -647,7 +637,7 @@ local porygon={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if not from_debuff or (card.ability.perishable and card.ability.perish_tally <= 0) then
       if not G.GAME.energy_plus then
         G.GAME.energy_plus = 0
       else

@@ -377,11 +377,10 @@ local leafeon={
 local glaceon={
   name = "glaceon", 
   pos = {x = 0, y = 6},
-  config = {extra = {rerolls = 1, odds = 4, rerolls_used = 0}},
+  config = {extra = {odds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.rerolls, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, 
-                    math.max(center.ability.extra.rerolls - center.ability.extra.rerolls_used, 0)}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -391,76 +390,14 @@ local glaceon={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      card.ability.extra.rerolls_used = card.ability.extra.rerolls_used + 1
-      if card.ability.extra.rerolls - card.ability.extra.rerolls_used > 0 then
-        if pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          G.E_MANAGER:add_event(Event({
-              blockable = false,
-              func = (function()
-                      card:juice_up()
-                      play_sound('glass'..math.random(1, 6), math.random()*0.2 + 0.9,0.5)
-                      play_sound('generic1', math.random()*0.2 + 0.9,0.5)
-                  return true end)
-          }))
-          G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls - math.max(card.ability.extra.rerolls - card.ability.extra.rerolls_used, 0)
-          if G.GAME.current_round.free_rerolls < 0 then G.GAME.current_round.free_rerolls = 0 end
-          card.ability.extra.rerolls_used = card.ability.extra.rerolls
-          calculate_reroll_cost(true)
-        end
+      if pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        local card_to_copy = pseudorandom_element(G.deck.cards, pseudoseed('deckglaceon'))
+        local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+        copy:set_ability(G.P_CENTERS.m_glass, nil, true)
+        poke_add_shop_card(copy, card)
       end
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls + card.ability.extra.rerolls
-      calculate_reroll_cost(true)
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls - card.ability.extra.rerolls
-      if G.GAME.current_round.free_rerolls < 0 then G.GAME.current_round.free_rerolls = 0 end
-      calculate_reroll_cost(true)
-    end
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN then
-      local glass_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.ability.name == 'Glass Card' then
-          glass_count = glass_count + 1
-        end
-      end
-
-      local rerolls = math.max(glass_count, 1)
-
-      if rerolls > card.ability.extra.rerolls then
-        G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls + (rerolls - card.ability.extra.rerolls)
-        calculate_reroll_cost(true)
-      elseif rerolls < card.ability.extra.rerolls then
-        G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls - (card.ability.extra.rerolls - rerolls)
-        if G.GAME.current_round.free_rerolls < 0 then G.GAME.current_round.free_rerolls = 0 end
-        calculate_reroll_cost(true)
-      end
-      card.ability.extra.rerolls = rerolls
-    end
-  end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      if G.playing_cards then
-        local glass_count = 0
-        for k, v in pairs(G.playing_cards) do
-          if v.ability.name == 'Glass Card' then
-            glass_count = glass_count + 1
-          end
-        end
-        
-        card.ability.extra.rerolls = math.max(glass_count, 1)
-      else
-        card.ability.extra.rerolls = 1
-      end
-    end
-  end
 }
 -- Gliscor 472
 -- Mamoswine 473
@@ -503,7 +440,7 @@ local porygonz={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if not from_debuff or (card.ability.perishable and card.ability.perish_tally <= 0) then
       if not G.GAME.energy_plus then
         G.GAME.energy_plus = 0
       else

@@ -283,20 +283,3 @@ payload = '''  if name == "Shortcut" then
   end'''
 match_indent = true
 
-# Glaceon functionality
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "G.GAME.current_round.free_rerolls = #chaos"
-position = "after"
-payload = '''
-local glaceon = SMODS.find_card('j_poke_glaceon')
-for k, v in pairs(glaceon) do
-  G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls + v.ability.extra.rerolls
-  v.ability.extra.rerolls_used = 0
-end
-'''
-match_indent = true
-
-# Bonus Mult functionality
-

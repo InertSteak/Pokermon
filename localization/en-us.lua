@@ -1654,7 +1654,7 @@ return {
                     "Earn {C:money}$#1#{} for",
                     "the first {C:attention}5{} {C:green}rerolls{}",
                     "{C:inactive}(Evolves with...a lot){}",
-                    "{C:inactive}Curently {C:attention}#2#{C:inactive}/#3#"
+                    "{C:inactive}Currently {C:attention}#2#{C:inactive}/#3#"
                 } 
             },
             j_poke_vaporeon = {
@@ -2124,9 +2124,9 @@ return {
                 name = "Blaziken",
                 text = {
                     "{C:mult}+#2#{} discards, {C:attention}Nature{}",
-                    "{C:mult}+#4#{} Mult, {X:red,C:white} X#1# {} Mult for each {C:attention}#6#, #7# or #8#{}",
-                    "discarded this round, double {X:red,C:white} X {} Mult if",
-                    "you have other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
+                    "For each {C:attention}#6#, #7# or #8#{} discarded this round",
+                    "gain {C:mult}+#4#{} Mult and {X:red,C:white} X#1# {} Mult for",
+                    "each {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} card you have",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}+#5#{}{C:inactive} Mult, {X:red,C:white} X#3# {}{C:inactive} Mult){}",
                 } 
@@ -2356,11 +2356,10 @@ return {
             j_poke_glaceon = {
                 name = 'Glaceon',
                 text = {
-                    "{C:attention}1{}{C:inactive,s:0.8} (Minimum){} free {C:green}Reroll{} per shop",
-                    "for every {C:attention}Glass Card{} in your full deck",
-                    "{C:green}#2#{} in {C:green}#3#{} chance per {C:green}Reroll{}",
-                    "to lose remaining free {C:green}Rerolls{}",
-                    "{C:inactive}(Currently {C:green}#4#{}{C:inactive}/#1# rerolls availible){}"
+                    "Each reroll in the shop has a",
+                    "{C:green}#1# in #2#{} chance to add",
+                    "a {C:attention}Glass{} copy of a random",
+                    "card in your deck to shop",
                 } 
             },
             j_poke_porygonz = {
@@ -3316,6 +3315,7 @@ return {
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
+            poke_plus_shop = "+1 Shop Card",
             poke_destroyed_ex = "Destroyed!",
             poke_evolve_success = "Evolved!",
             poke_evolve_level = "Level up!",

@@ -131,6 +131,23 @@ poke_add_card = function(add_card, card, area)
           playing_cards_created = {true}
       }
 end
+
+poke_add_shop_card = function(add_card, card)
+    add_card.states.visible = false
+    G.shop_jokers:emplace(add_card)
+    add_card:start_materialize()
+    add_card:set_cost()
+    create_shop_card_ui(add_card)
+    
+    if (SMODS.Mods["Talisman"] or {}).can_load then
+      if Talisman.config_file.disable_anims then 
+        add_card.states.visible = true
+      end
+    end
+    card:juice_up()
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
+end
+
 poke_remove_card = function(target, card)
       if target.ability.name == 'Glass Card' then 
           target.shattered = true

@@ -36,16 +36,7 @@ local gimmighoul={
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
         new_card:set_edition(edition, true)
-        new_card.states.visible = false
-        G.shop_jokers:emplace(new_card)
-        new_card:start_materialize()
-        new_card.cost = 0
-        create_shop_card_ui(new_card)
-        if (SMODS.Mods["Talisman"] or {}).can_load then
-          if Talisman.config_file.disable_anims then 
-            new_card.states.visible = true
-          end
-        end
+        poke_add_shop_card(new_card, card)
     end
     return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
   end,

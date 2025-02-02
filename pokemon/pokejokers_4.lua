@@ -970,7 +970,7 @@ local kangaskhan={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if (not from_debuff) or card.ability.perishable then
+    if (not from_debuff) or (card.ability.perishable and card.ability.perish_tally <= 0) then
       G.E_MANAGER:add_event(Event({func = function()
         G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
         return true end }))
