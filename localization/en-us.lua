@@ -2781,15 +2781,15 @@ return {
             v_poke_goodrod = {
                 name = "Good Rod",
                 text = {
-                    "{C:attention}Pocket{} packs have",
+                    "{C:attention}Booster{} packs have",
                     "{C:attention}1{} more card in them",
                 },
             },
             v_poke_superrod = {
                 name = "Super Rod",
                 text = {
-                    "{C:attention}Pocket{} packs have",
-                    "{C:attention}1{} more card in them",
+                    "You can {C:pink}Save{} cards",
+                    "from all {C:attention}consumable{} packs",
                 },
             },
         },

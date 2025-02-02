@@ -104,17 +104,13 @@ local superrod = { --+1 card choice in pocket packs
 		return { vars = {} }
 	end,
   redeem = function(self)
-    if not G.GAME.extra_pocket_picks then
-      G.GAME.extra_pocket_picks = 1
-    else
-      G.GAME.extra_pocket_picks = G.GAME.extra_pocket_picks + 1
+    if not G.GAME.poke_save_all then
+      G.GAME.poke_save_all = true
     end
   end,
   unredeem = function(self)
-    if not G.GAME.extra_pocket_picks then
-      G.GAME.extra_pocket_picks = 0
-    else
-      G.GAME.extra_pocket_picks = G.GAME.extra_pocket_picks - 1
+    if G.GAME.poke_save_all then
+      G.GAME.poke_save_all = false
     end
   end
 }

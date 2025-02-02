@@ -97,7 +97,7 @@ target = "card.lua"
 pattern = "local _size = self.ability.extra"
 position = "after"
 payload = '''
-if self.ability.name:find("Pocket") and G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
   _size = _size + G.GAME.extra_pocket_picks
 end
 '''
