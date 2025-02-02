@@ -89,7 +89,7 @@ local happiny={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger then
       local max = 1
       if pseudorandom('happiny') < G.GAME.probabilities.normal/card.ability.extra.odds then
         max = max + 1
