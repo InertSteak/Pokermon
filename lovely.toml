@@ -136,6 +136,15 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 '''
 match_indent = true
 
+#Drain functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)"
+position = "after"
+payload = "if self.sell_cost < 1 then self.sell_cost = 1 end"
+match_indent = true
+
 #Deck functionality
 [[patches]]
 [patches.pattern]
