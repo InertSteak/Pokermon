@@ -31,7 +31,7 @@ local gimmighoul={
         card = card
       }
     end
-    if context.skipping_booster then
+    if context.skipping_booster and G.shop_jokers and G.shop_jokers.cards then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_gimmighoulr"}
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
