@@ -718,7 +718,7 @@ local shinystone = {
   use = function(self, card, area, copier)
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           local over = false
-          local edition = poll_edition('shiny', nil, true, true)
+          local edition = poll_edition('aura', nil, true, true)
           local shiny_card = G.hand.highlighted[1]
           shiny_card:set_edition(edition, true)
           card:juice_up(0.3, 0.5)

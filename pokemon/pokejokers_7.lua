@@ -32,7 +32,7 @@ local bellossom={
           if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
               if v.ability.name == 'Wild Card' and not v.edition then
-                local edition = poll_edition('bellossom', nil, true, true)
+                local edition = poll_edition('aura', nil, true, true)
                 v:set_edition(edition, true, true)
               end
               v:set_ability(G.P_CENTERS.m_wild, nil, true)
