@@ -535,6 +535,7 @@ local megastone = {
   config = {extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 4, y = 5 },
   atlas = "Mart",
@@ -724,7 +725,7 @@ if pokermon_config.jokers_only then
 end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant}
+        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

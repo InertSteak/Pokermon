@@ -2179,12 +2179,10 @@ return {
                 name = 'Aron',
                 text = {
                     "Create a {C:attention}Chariot{} card",
-                    "when {C:attention}Small Blind{} is selected.",
+                    "when {C:attention}Small Blind{} is selected",
                     "When a Steel Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and",
-                    "destroy it after scoring.",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X2{}{C:inactive} Mult)"
+                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{} {C:inactive}Mult)",
                 }
             },
             j_poke_lairon = {
@@ -2193,10 +2191,8 @@ return {
                     "Create a {C:attention}Chariot{} card when",
                     "{C:attention}Small Blind{} or {C:attention}Big Blind{} is selected.",
                     "When a Steel Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and",
-                    "destroy it after scoring.",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X4{}{C:inactive} Mult)"
+                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{} {C:inactive}Mult)"
                 }
             },
             j_poke_aggron = {
@@ -2205,8 +2201,7 @@ return {
                     "Create a {C:attention}Chariot{} card",
                     "when {C:attention}Blind{} is selected.",
                     "When a Steel Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and",
-                    "destroy it after scoring.",
+                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)"
                 }
             },
@@ -2742,7 +2737,8 @@ return {
                 name = "Mega Stone",
                 text = {
                     "{C:attention}Reusable{}",
-                    "{C:attention}Mega Evolves{} for one round",
+                    "{C:attention}Mega Evolves{} a Pokemon", 
+                    "if able for {C:attention}1{} round",
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Useable once per round)",
                 },
