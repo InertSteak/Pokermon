@@ -37,7 +37,7 @@ family = {
     {"seel","dewgong"},
     {"grimer","muk"},
     {"shellder","cloyster"},
-    {"gastly","haunter","gengar"},
+    {"mega_gengar","gastly","haunter","gengar"},
     {"onix","steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
@@ -73,6 +73,7 @@ family = {
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
     {"mudkip", "marshtomp", "swampert"},
+    {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
@@ -768,6 +769,7 @@ end
 get_poke_allowed = function(key)
   local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
   local allowed = true
+  if string.sub(key,11) == "j_poke_mega" then return false end
   
   for i=1, #banned_keys do
     if "j_poke_"..banned_keys[i] == key then

@@ -528,6 +528,57 @@ local transformation = {
     end
   end
 }
+local megastone = {
+  name = "megastone",
+  key = "megastone",
+  set = "Spectral",
+  config = {extra = {previous_round = 0}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
+  end,
+  pos = { x = 4, y = 5 },
+  atlas = "Mart",
+  cost = 4,
+  hidden = true,
+  soul_set = "Item",
+  soul_rate = .01,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    if G.GAME.round <= card.ability.extra.previous_round then return false end
+    local mega_poke = false
+    for k, poke in pairs(G.jokers.cards) do
+      if poke.config.center.megas then
+        mega_poke = true
+      end
+    end
+    return mega_poke
+  end,
+  use = function(self, card, area, copier)
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.megas then
+      choice = G.jokers.highlighted[1]
+    else
+      for k, poke in pairs(G.jokers.cards) do
+        if poke.config.center.megas then
+          choice = poke
+          break
+        end
+      end
+    end
+    local mega = choice.config.center.megas[1]
+    if #choice.config.center.megas > 1 then
+      mega = choice:getMega()
+    end
+    local forced_key = "j_poke_" .. mega
+    local context = {}
+    card.ability.extra.previous_round = G.GAME.round
+    evolve(choice, choice, context, forced_key)
+  end,
+  keep_on_use = function(self, card)
+    return true
+  end
+}
 
 local obituary = {
   name = "obituary",
