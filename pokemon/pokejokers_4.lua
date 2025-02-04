@@ -194,7 +194,7 @@ local mega_gengar ={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {center.ability.extra.xmult, center.ability.extra.xmult * center.ability.extra.mega_gengar_tally}}
+    return {vars = {center.ability.extra.xmult, math.max(1,center.ability.extra.xmult * center.ability.extra.mega_gengar_tally)}}
   end,
   rarity = "poke_mega", 
   cost = 12, 

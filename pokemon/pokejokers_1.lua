@@ -446,7 +446,7 @@ local mega_charizard_y = {
   config = {extra = {Xmult = 2, Xmult_mod = 0, rounds = 1, d_size = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.d_size}}
+    return {vars = {center.ability.extra.Xmult, math.max(1,center.ability.extra.Xmult_mod), center.ability.extra.d_size}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
