@@ -2164,6 +2164,41 @@ return {
                     "{C:inactive}(Curently {C:chips}+#4#{}{C:inactive} total)"
                 } 
             },
+            j_poke_aron = {
+                name = 'Aron',
+                text = {
+                    "Create a {C:attention}Chariot{} card",
+                    "when {C:attention}Small Blind{} is selected.",
+                    "When a Steel Card is scored,",
+                    "gain {X:mult,C:white}X#2#{} Mult and",
+                    "destroy it after scoring.",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)",
+                    "{C:inactive}(Evolves at {X:mult,C:white}X2{}{C:inactive} Mult)"
+                }
+            },
+            j_poke_lairon = {
+                name = 'Lairon',
+                text = {
+                    "Create a {C:attention}Chariot{} card when",
+                    "{C:attention}Small Blind{} or {C:attention}Big Blind{} is selected.",
+                    "When a Steel Card is scored,",
+                    "gain {X:mult,C:white}X#2#{} Mult and",
+                    "destroy it after scoring.",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)",
+                    "{C:inactive}(Evolves at {X:mult,C:white}X4{}{C:inactive} Mult)"
+                }
+            },
+            j_poke_aggron = {
+                name = 'Aggron',
+                text = {
+                    "Create a {C:attention}Chariot{} card",
+                    "when {C:attention}Blind{} is selected.",
+                    "When a Steel Card is scored,",
+                    "gain {X:mult,C:white}X#2#{} Mult and",
+                    "destroy it after scoring.",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult)"
+                }
+            },
             j_poke_feebas = {
                 name = 'Feebas',
                 text = {
