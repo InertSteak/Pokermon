@@ -3165,7 +3165,7 @@ return {
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Espacio de Comodín al derrotar la Ciega del Jefe {C:inactive}(hasta 5)"},
-           ch_c_poke_nuzlocke = {"Primera tienda de cada Apuesta contiene un {C:attention}Pack de Bufón"}
+           ch_c_poke_nuzlocke = {"Primera Tienda de cada Apuesta contiene un {C:attention}Pack de Bufón"}
         },
     }
 }
