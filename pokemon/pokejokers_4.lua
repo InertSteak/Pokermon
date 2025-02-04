@@ -132,6 +132,7 @@ local gengar={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_megastone
     info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {20}}
     return {vars = {1, center.ability.extra.odds}}
   end,
@@ -178,6 +179,48 @@ local gengar={
                 play_sound('tarot2', 1, 0.4)
                 card:juice_up(0.3, 0.5)
         return true end }))
+      end
+    end
+  end,
+  megas = {"mega_gengar"}
+}
+local mega_gengar ={
+  name = "mega_gengar", 
+  pos = {x = 1, y = 1},
+  soul_pos = { x = 2, y = 1},
+  config = {extra = {xmult = 2, mega_gengar_tally = 0, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if not center.edition or (center.edition and not center.edition.negative) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    end
+    return {vars = {center.ability.extra.xmult, center.ability.extra.xmult * center.ability.extra.mega_gengar_tally}}
+  end,
+  rarity = "Legendary", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Psychic",
+  atlas = "Megas",
+  eternal_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local temp_xmult = card.ability.extra.xmult * card.ability.extra.mega_gengar_tally
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {temp_xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = temp_xmult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_gengar")
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      card.ability.extra.mega_gengar_tally = 0
+      for k, v in pairs(G.jokers.cards) do
+        if v.edition and v.edition.negative then card.ability.extra.mega_gengar_tally = card.ability.extra.mega_gengar_tally + 1 end
       end
     end
   end
@@ -1149,5 +1192,5 @@ local staryu={
 }
 
 return {name = "Pokemon Jokers 91-120", 
-        list = { cloyster, gastly, haunter, gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing,                 rhyhorn, rhydon, chansey, tangela, kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
+        list = { cloyster, gastly, haunter, gengar, mega_gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing,                 rhyhorn, rhydon, chansey, tangela, kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
 }

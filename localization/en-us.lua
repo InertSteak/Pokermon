@@ -1295,7 +1295,18 @@ return {
                     "Sometimes {C:attention}replaces{} the edition",
                     "of a random {C:attention}Joker{} with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{C:inactive,s:0.8}(Excludes Gengars){}"
+                    "{C:inactive,s:0.8}(Excludes Gengars){}",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
+                } 
+            },
+            j_poke_mega_gengar = {
+                name = 'Mega Gengar',      
+                text = {
+                    "Gives {X:mult,C:white}X#1#{} Mult for",
+                    "each {C:dark_edition}Negative{} {C:attention}Joker{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
+                    "{C:inactive}(Reverts to Gengar at{}",
+                    "{C:inactive}the end of the round){}"
                 } 
             },
             j_poke_onix = {
@@ -2725,6 +2736,15 @@ return {
                     "Evolves leftmost or selected Pokemon to",
                     "the highest {C:attention}stage{}",
                     "and gives {}+1{} {C:pink}Energy{}", 
+                },
+            },
+            c_poke_megastone = {
+                name = "Mega Stone",
+                text = {
+                    "{C:attention}Reusable{}",
+                    "{C:attention}Mega Evolves{} for one round",
+                    "{C:attention}Evolution Card{}",
+                    "{C:inactive}(Useable once per round)",
                 },
             },
             c_poke_obituary = {
