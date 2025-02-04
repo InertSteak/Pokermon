@@ -34,6 +34,16 @@ SMODS.Rarity{
         return weight
     end,
 }
+SMODS.Rarity{
+    key = "mega",
+    default_weight = 0,
+     -- color from bulbapedia (effect color around Mega Blaziken artwork: https://bulbapedia.bulbagarden.net/wiki/File:Blaziken_Mega_Evolution.png)
+    badge_colour = HEX("E8578E"),
+    pools = {["Joker"] = true},
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+}
 
 --Load helper function files
 local helper, load_error = SMODS.load_file("functions/pokeutils.lua")

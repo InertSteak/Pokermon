@@ -1,7 +1,7 @@
 family = {
-    {"bulbasaur","ivysaur","venusaur"},
-    {"charmander","charmeleon","charizard"},
-    {"squirtle","wartortle","blastoise"},
+    {"bulbasaur","ivysaur","venusaur","mega_venusaur"},
+    {"charmander","charmeleon","charizard","mega_charizard_x","mega_charizard_y",},
+    {"squirtle","wartortle","blastoise","mega_blastoise"},
     {"caterpie","metapod","butterfree"},
     {"weedle","kakuna","beedrill"},
     {"pidgey","pidgeotto","pidgeot"},
@@ -37,7 +37,11 @@ family = {
     {"seel","dewgong"},
     {"grimer","muk"},
     {"shellder","cloyster"},
+<<<<<<< HEAD
+    {"gastly","haunter","gengar","mega_gengar",},
+=======
     {"mega_gengar","gastly","haunter","gengar"},
+>>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
     {"onix","steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
@@ -64,6 +68,7 @@ family = {
     {"omanyte","omastar"},
     {"kabuto","kabutops"},
     {"dratini","dragonair","dragonite"},
+    {"mewtwo","mega_mewtwo_x","mega_mewtwo_y"},
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
@@ -135,6 +140,18 @@ is_type = function(card, target_type)
   else
     return false
   end
+end
+
+get_type = function(card)
+  if card.ability then
+    local sticker = type_sticker_applied(card)
+    if sticker then
+      return sticker
+    elseif type(card.ability.extra) == "table" and card.ability.extra.ptype then
+      return card.ability.extra.ptype
+    end
+  end
+  return nil
 end
 
 has_type = function(card)
@@ -476,14 +493,20 @@ get_highest_evo = function(card)
     name = card.name or "bulbasaur"
   end
   for k, v in ipairs(family) do
+    local max = #v
+    while max > 0 and string.sub(v[max],1,5) == "mega_" do
+      max = max - 1
+    end
     local evos = {}
     for x, y in ipairs(v) do
-      if found and y == v[#v] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-        table.insert(evos, y)
-      elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[#v]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-        table.insert(evos, y)
-      elseif not found and y == name then
-        found = true
+      if x <= max then
+        if found and y == v[max] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+          table.insert(evos, y)
+        elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[max]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+          table.insert(evos, y)
+        elseif not found and y == name then
+          found = true
+        end
       end
     end
     if #evos > 0 then
@@ -769,7 +792,11 @@ end
 get_poke_allowed = function(key)
   local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
   local allowed = true
+<<<<<<< HEAD
+  if string.sub(key,1,11) == "j_poke_mega" then return false end
+=======
   if string.sub(key,11) == "j_poke_mega" then return false end
+>>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
   
   for i=1, #banned_keys do
     if "j_poke_"..banned_keys[i] == key then

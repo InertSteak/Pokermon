@@ -196,7 +196,7 @@ local mega_gengar ={
     end
     return {vars = {center.ability.extra.xmult, center.ability.extra.xmult * center.ability.extra.mega_gengar_tally}}
   end,
-  rarity = "Legendary", 
+  rarity = "poke_mega", 
   cost = 12, 
   stage = "Mega", 
   ptype = "Psychic",

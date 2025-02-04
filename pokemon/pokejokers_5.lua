@@ -1231,6 +1231,7 @@ local mewtwo={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_megastone
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
@@ -1283,9 +1284,91 @@ local mewtwo={
           Xmult_mod = card.ability.extra.Xmult_mod
         }
     end
+  end,
+  megas = {"mega_mewtwo_x","mega_mewtwo_y"},
+  getMega = function(self, card)
+    local card_type = get_type(card)
+    if card_type == "Fighting" or card_type == "Metal" then
+      return "mega_mewtwo_x"
+    end
+    if card_type == "Psychic" or card_type == "Dragon" then
+      return "mega_mewtwo_y"
+    end
+    return pseudorandom_element(self.megas, pseudoseed('megastone_mewtwo'))
+  end
+}
+
+local mega_mewtwo_x = {
+  name = "mega_mewtwo_x",
+  pos = {x = 11, y = 1},
+  soul_pos = { x = 12, y = 1},
+  config = {extra = {Xmult_mod = 1.5, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return {vars = {center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Fighting",
+  atlas = "Megas",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if not self.debuff and not context.blueprint then
+      context.blueprint = 1
+      context.blueprint_card = self
+      for _,jkr in ipairs(G.jokers.cards) do
+        if jkr.edition and jkr.edition.polychrome then
+          local joker_ret = jkr:calculate_joker(context)
+          if joker_ret then
+            SMODS.trigger_effects({{jokers=joker_ret}}, jkr)
+          end
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_mewtwo")
+  end
+}
+
+local mega_mewtwo_y = {
+  name = "mega_mewtwo_y",
+  pos = {x = 13, y = 1},
+  soul_pos = { x = 14, y = 1},
+  config = {extra = {Xmult_mod = 3, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return {vars = {center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Psychic",
+  atlas = "Megas",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              context.other_joker:juice_up(0.5, 0.5)
+              return true
+          end
+        })) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_mod
+        }
+    end
+    return level_evo(self, card, context, "j_poke_mewtwo")
   end
 }
 
 return {name = "Pokemon Jokers 121-150", 
-        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, },
+        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }
