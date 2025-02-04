@@ -1876,7 +1876,7 @@ return {
             j_poke_mega_mewtwo_x = {
                 name = "Mega Mewtwo X",
                 text = {
-                    "Rerigger all {C:dark_edition}Polychrome{} {C:attention}Jokers{}",
+                    "Retrigger all {C:dark_edition}Polychrome{} {C:attention}Jokers{}",
                     "{C:inactive}(Reverts to Mewtwo at{}",
                     "{C:inactive}the end of the round){}"
                 } 
