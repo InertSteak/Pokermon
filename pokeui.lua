@@ -183,7 +183,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro",
+                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro, Lemmanade",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -210,7 +210,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive",
+                  text = "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive, Roxie",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -264,7 +264,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_",
+                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_, Kek",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
