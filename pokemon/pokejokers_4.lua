@@ -207,11 +207,13 @@ local mega_gengar ={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local temp_xmult = card.ability.extra.xmult * card.ability.extra.mega_gengar_tally
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {temp_xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = temp_xmult
-        }
+        if temp_xmult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {temp_xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = temp_xmult
+          }
+        end
       end
     end
     return level_evo(self, card, context, "j_poke_gengar")

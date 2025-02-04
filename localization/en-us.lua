@@ -1303,7 +1303,7 @@ return {
                 name = 'Mega Gengar',      
                 text = {
                     "Gives {X:mult,C:white}X#1#{} Mult for",
-                    "each {C:dark_edition}Negative{} {C:attention}Joker{}",
+                    "each {C:dark_edition}Negative{} {C:attention}Joker{} you have",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
                     "{C:inactive}(Reverts to Gengar at{}",
                     "{C:inactive}the end of the round){}"
