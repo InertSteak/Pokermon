@@ -535,10 +535,7 @@ local megastone = {
   config = {extra = {previous_round = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
-<<<<<<< HEAD
-=======
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
   end,
   pos = { x = 4, y = 5 },
   atlas = "Mart",
@@ -559,7 +556,6 @@ local megastone = {
     return mega_poke
   end,
   use = function(self, card, area, copier)
-<<<<<<< HEAD
     local target = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.megas then
       target = G.jokers.highlighted[1]
@@ -567,20 +563,10 @@ local megastone = {
       for k, poke in pairs(G.jokers.cards) do
         if poke.config.center.megas then
           target = poke
-=======
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.megas then
-      choice = G.jokers.highlighted[1]
-    else
-      for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas then
-          choice = poke
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
           break
         end
       end
     end
-<<<<<<< HEAD
     local mega = target.config.center.megas[1]
     if #target.config.center.megas > 1 then
       if target.config.center.getMega then
@@ -588,20 +574,11 @@ local megastone = {
       else
         mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
       end
-=======
-    local mega = choice.config.center.megas[1]
-    if #choice.config.center.megas > 1 then
-      mega = choice:getMega()
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
     end
     local forced_key = "j_poke_" .. mega
     local context = {}
     card.ability.extra.previous_round = G.GAME.round
-<<<<<<< HEAD
     evolve(target, target, context, forced_key)
-=======
-    evolve(choice, choice, context, forced_key)
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
   end,
   keep_on_use = function(self, card)
     return true
@@ -752,11 +729,7 @@ if pokermon_config.jokers_only then
 end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-<<<<<<< HEAD
-        fairy_energy, dragon_energy, earth_energy, transformation, megastone, obituary, nightmare, revenant}
-=======
         fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

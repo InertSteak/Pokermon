@@ -1344,11 +1344,7 @@ return {
                 name = 'Mega Gengar',      
                 text = {
                     "Gives {X:mult,C:white}X#1#{} Mult for",
-<<<<<<< HEAD
-                    "each {C:dark_edition}Negative{} {C:attention}Joker{}",
-=======
                     "each {C:dark_edition}Negative{} {C:attention}Joker{} you have",
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
                     "{C:inactive}(Reverts to Gengar at{}",
                     "{C:inactive}the end of the round){}"
@@ -2799,12 +2795,8 @@ return {
                 name = "Mega Stone",
                 text = {
                     "{C:attention}Reusable{}",
-<<<<<<< HEAD
-                    "{C:attention}Mega Evolves{} for one round",
-=======
                     "{C:attention}Mega Evolves{} a Pokemon", 
                     "if able for {C:attention}1{} round",
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Useable once per round)",
                 },

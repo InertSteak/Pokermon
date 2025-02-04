@@ -37,11 +37,7 @@ family = {
     {"seel","dewgong"},
     {"grimer","muk"},
     {"shellder","cloyster"},
-<<<<<<< HEAD
     {"gastly","haunter","gengar","mega_gengar",},
-=======
-    {"mega_gengar","gastly","haunter","gengar"},
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
     {"onix","steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
@@ -792,11 +788,7 @@ end
 get_poke_allowed = function(key)
   local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
   local allowed = true
-<<<<<<< HEAD
   if string.sub(key,1,11) == "j_poke_mega" then return false end
-=======
-  if string.sub(key,11) == "j_poke_mega" then return false end
->>>>>>> fd216b2f6c9478db7872980864bb8523810c90e0
   
   for i=1, #banned_keys do
     if "j_poke_"..banned_keys[i] == key then
