@@ -597,6 +597,15 @@ return {
                 name = "Beedrill",
                 text = {
                     "{C:chips}+#1#{} Chips",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)",
+                } 
+            },
+            j_poke_mega_beedrill = {
+                name = "Mega Beedrill",
+                text = {
+                    "{C:chips}+#1#{} Chips",
+                    "{C:inactive}(Reverts to Beedrill at{}",
+                    "{C:inactive}the end of the round){}"
                 } 
             },
             j_poke_pidgey = {

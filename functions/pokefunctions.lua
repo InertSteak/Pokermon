@@ -3,7 +3,7 @@ family = {
     {"charmander","charmeleon","charizard","mega_charizard_x","mega_charizard_y",},
     {"squirtle","wartortle","blastoise","mega_blastoise"},
     {"caterpie","metapod","butterfree"},
-    {"weedle","kakuna","beedrill"},
+    {"weedle","kakuna","beedrill","mega_beedrill"},
     {"pidgey","pidgeotto","pidgeot"},
     {"rattata","raticate"},
     {"spearow","fearow"},

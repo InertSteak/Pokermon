@@ -789,16 +789,11 @@ local beedrill={
   name = "beedrill", 
   pos = {x = 1, y = 1}, 
   config = {extra = {chips = 80}},
-  loc_txt = {      
-    name = 'Beedrill',      
-    text = {
-      "{C:chips}+#1#{} Chips",
-    } 
-  }, 
   rarity = 2,
   cost = 5,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_megastone
 		return {vars = {center.ability.extra.chips}}
   end,
   stage = "Two", 
@@ -815,6 +810,35 @@ local beedrill={
         }
       end
     end
+  end,
+  megas = {"mega_beedrill"}
+}
+local mega_beedrill = {
+  name = "mega_beedrill", 
+  pos = { x = 8, y = 0 },
+  soul_pos = { x = 9, y = 0 },
+  config = {extra = {chips = 1000, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.chips}}
+  end,
+  rarity = "poke_mega",
+  cost = 10,
+  stage = "Mega",
+  ptype = "Grass",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_beedrill")
   end
 }
 local pidgey={
@@ -1449,5 +1473,5 @@ return {name = "Pokemon Jokers 01-30",
             end
               
         end,
-        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, pidgey, pidgeotto, pidgeot,                 rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
+        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot,                 rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
 }
