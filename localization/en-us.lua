@@ -1304,7 +1304,7 @@ return {
                 text = {
                     "Created {C:attention}editioned{} Jokers",
                     "are always {C:dark_edition}Negative{}",
-                    "{C:inactive}(Reverts at end of round{}",
+                    "{C:inactive}(Reverts at end of round){}",
                 } 
             },
             j_poke_onix = {
