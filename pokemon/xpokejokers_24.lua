@@ -14,6 +14,7 @@ local sylveon={
   config = {extra = {Xmult_multi = 1.2, rerolls = 0, reroll_goal = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Ethereal', 'Pocket'}}
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rerolls, center.ability.extra.reroll_goal}}
   end,
   rarity = "poke_safari", 
@@ -23,7 +24,7 @@ local sylveon={
   atlas = "Pokedex6",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
+    if context.reroll_shop and not context.blueprint and not (G.HUD_tags and #G.HUD_tags >= 2) then
       if card.ability.extra.rerolls < card.ability.extra.reroll_goal - 1 then
         card.ability.extra.rerolls = card.ability.extra.rerolls + 1
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/"..card.ability.extra.reroll_goal, colour = G.C.MONEY})

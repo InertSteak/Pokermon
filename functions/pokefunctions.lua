@@ -187,6 +187,7 @@ end
 
 evolve = function(self, card, context, forced_key)
   if not pokermon_config.no_evos and not next(find_joker("everstone")) and not context.retrigger_joker then
+    local previous_position = nil
     local poketype_list = nil
     local previous_edition = nil
     local previous_perishable = nil
@@ -204,6 +205,13 @@ evolve = function(self, card, context, forced_key)
     local previous_id = nil
     local previous_cards_scored = nil
     local previous_upgrade = nil
+    
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then
+        previous_position = i
+        break
+      end
+    end
     
     if card.edition then
       previous_edition = card.edition
@@ -349,7 +357,7 @@ evolve = function(self, card, context, forced_key)
     end
     
     new_card:add_to_deck()
-    G.jokers:emplace(new_card)
+    G.jokers:emplace(new_card, previous_position)
     return localize("poke_evolve_success")
   end
 end

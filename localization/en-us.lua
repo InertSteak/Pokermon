@@ -2491,10 +2491,10 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Create a {C:attention}Standard{}, {C:spectral}Ethereal{} or",
-                    "{C:pink}Pocket{} tag for every {C:attention}#3#{} {C:green}rerolls{}",
-                    "Each card with an {C:attention}edition{}",
-                    "held in hand gives {X:mult,C:white} X#1# {} Mult",
+                    "Create a {C:attention}tag{} every {C:attention}#3#{} {C:green}rerolls{}",
+                    "if you have {C:attention}< 2{} tags",
+                    "Each {C:attention}editioned{} card {C:attention}held{}",
+                    "in hand gives {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#3# rerolls)"
                 } 
             },
@@ -3201,6 +3201,14 @@ return {
               text = {
                 "Not consumed when used",
                 "{C:inactive,s:0.8}(Excluded by {C:attention,s:0.8}Twisted Spoon{C:inactive,s:0.8})"
+              }
+            },
+            sylveon_tag_pool = {
+              name = "Tag Pool",
+              text = {
+                "{C:attention}#1#",
+                "{C:spectral}#2#",
+                "{C:pink}#3#",
               }
             },
             safaridesc = {
