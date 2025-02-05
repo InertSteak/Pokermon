@@ -1302,11 +1302,9 @@ return {
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "Gives {X:mult,C:white}X#1#{} Mult for",
-                    "each {C:dark_edition}Negative{} {C:attention}Joker{} you have",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts to Gengar at{}",
-                    "{C:inactive}the end of the round){}"
+                    "Created {C:attention}editioned{} Jokers",
+                    "are always {C:dark_edition}Negative{}",
+                    "{C:inactive}(Reverts at end of round{}",
                 } 
             },
             j_poke_onix = {
@@ -3342,6 +3340,7 @@ return {
             k_poke_pocket_pack = "Pocket Pack",
 
             k_poke_safari = "Safari",
+            k_poke_mega = "Mega",
 
             b_save = "SAVE",
             b_energy_cards = "Energy Cards",

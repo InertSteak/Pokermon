@@ -34,6 +34,16 @@ SMODS.Rarity{
         return weight
     end,
 }
+SMODS.Rarity{
+    key = "mega",
+    default_weight = 0,
+     -- color from bulbapedia (effect color around Mega Blaziken artwork: https://bulbapedia.bulbagarden.net/wiki/File:Blaziken_Mega_Evolution.png)
+    badge_colour = HEX("E8578E"),
+    pools = {["Joker"] = true},
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+}
 
 --Load helper function files
 local helper, load_error = SMODS.load_file("functions/pokeutils.lua")
@@ -386,6 +396,11 @@ end
 
 local set_edition = Card.set_edition
 function Card:set_edition(edition, immediate, silent)
+  if self.ability.set == 'Joker' and next(SMODS.find_card('j_poke_mega_gengar')) then
+    if type(edition) == "string" then
+      edition = "e_negative"
+    end
+  end
   if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and (self.ability.set ~= 'Joker' and self.ability.set ~= 'Edition') then return end
   return set_edition(self, edition, immediate, silent)
 end

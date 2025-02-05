@@ -194,9 +194,8 @@ local mega_gengar ={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    return {vars = {center.ability.extra.xmult, center.ability.extra.xmult * center.ability.extra.mega_gengar_tally}}
   end,
-  rarity = "Legendary", 
+  rarity = "poke_mega", 
   cost = 12, 
   stage = "Mega", 
   ptype = "Psychic",
@@ -204,28 +203,8 @@ local mega_gengar ={
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local temp_xmult = card.ability.extra.xmult * card.ability.extra.mega_gengar_tally
-        if temp_xmult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {temp_xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = temp_xmult
-          }
-        end
-      end
-    end
     return level_evo(self, card, context, "j_poke_gengar")
   end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN then
-      card.ability.extra.mega_gengar_tally = 0
-      for k, v in pairs(G.jokers.cards) do
-        if v.edition and v.edition.negative then card.ability.extra.mega_gengar_tally = card.ability.extra.mega_gengar_tally + 1 end
-      end
-    end
-  end
 }
 local onix={
   name = "onix", 
