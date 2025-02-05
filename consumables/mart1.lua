@@ -582,6 +582,15 @@ local megastone = {
   end,
   keep_on_use = function(self, card)
     return true
+  end,
+  in_pool = function(self)
+    local mega_poke = false
+    for k, poke in pairs(G.jokers.cards) do
+      if poke.config.center.megas then
+        mega_poke = true
+      end
+    end
+    return mega_poke
   end
 }
 
