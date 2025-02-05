@@ -2424,8 +2424,8 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "If you have {C:attention}< 2{} tags create",
-                    "a {C:attention}tag{} every {C:attention}#3#{} {C:green}rerolls{}",
+                    "Create a {C:attention}tag{} every {C:attention}#3#{} {C:green}rerolls{}",
+                    "if you have {C:attention}< 2{} tags",
                     "Each {C:attention}editioned{} card {C:attention}held{}",
                     "in hand gives {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#3# rerolls)"
