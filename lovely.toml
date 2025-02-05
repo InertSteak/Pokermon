@@ -292,3 +292,18 @@ payload = '''  if name == "Shortcut" then
   end'''
 match_indent = true
 
+#Joker emplace patch
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''self.cards[#self.cards+1] = card'''
+position = 'at'
+payload = '''  
+if type(location) == "number" then
+  table.insert(self.cards, location, card)
+else
+  self.cards[#self.cards+1] = card
+end
+'''
+match_indent = true
+
