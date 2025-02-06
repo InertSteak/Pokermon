@@ -556,25 +556,29 @@ local megastone = {
     return mega_poke
   end,
   use = function(self, card, area, copier)
-    local choice = nil
+    local target = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.megas then
-      choice = G.jokers.highlighted[1]
+      target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
         if poke.config.center.megas then
-          choice = poke
+          target = poke
           break
         end
       end
     end
-    local mega = choice.config.center.megas[1]
-    if #choice.config.center.megas > 1 then
-      mega = choice:getMega()
+    local mega = target.config.center.megas[1]
+    if #target.config.center.megas > 1 then
+      if target.config.center.getMega then
+        mega = target.config.center:getMega(target)
+      else
+        mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
+      end
     end
     local forced_key = "j_poke_" .. mega
     local context = {}
     card.ability.extra.previous_round = G.GAME.round
-    evolve(choice, choice, context, forced_key)
+    evolve(target, target, context, forced_key)
   end,
   keep_on_use = function(self, card)
     return true

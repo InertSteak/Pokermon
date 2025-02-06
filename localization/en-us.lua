@@ -435,9 +435,9 @@ return {
                 name = "Bulbasaur",
                 text = {
                     "{C:attention}+#4#{} hand size",
-                    "Earn {C:money}$#1#{} for each {C:attention}#3#{}",
-                    "held in hand, rank",
-                    "changes every round",
+                    "Earn {C:money}$#1#{} for each",
+                    "{C:attention}#4#{} held in hand,",
+                    "rank changes every round",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
                     "{C:inactive}(Evolves at {C:money}$16{}{C:inactive} earned)"
                 } 
@@ -446,9 +446,9 @@ return {
                 name = "Ivysaur",
                 text = {
                     "{C:attention}+#3#{} hand size",
-                    "Earn {C:money}$#1#{} or {C:money}$#5#{} for each {C:attention}#4#{}",
-                    "held in hand, rank",
-                    "changes every round",
+                    "Earn {C:money}$#1#{} or {C:money}$#5#{} for each",
+                    "{C:attention}#4#{} held in hand,",
+                    "rank changes every round",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
                     "{C:inactive}(Evolves at {C:money}$16{}{C:inactive} earned)"
                 } 
@@ -457,10 +457,19 @@ return {
                 name = "Venusaur",
                 text = {
                     "{C:attention}+#3#{} hand size",
-                    "Earn {C:money}$#1#{} for each {C:attention}#4#{}",
-                    "held in hand, rank",
-                    "changes every round",
+                    "Earn {C:money}$#1#{} for each {C:attention}#4#{} held in hand,",
+                    "rank changes every round",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)",
+                }
+            },
+            j_poke_mega_venusaur = {
+                name = "Mega Venusaur",
+                text = {
+                    "{C:attention}+#3#{} hand size",
+                    "Earn {C:money}$#1#{} for each card held in hand",
+                    "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
+                    "{C:inactive}(Reverts at end of round){}"
                 }
             },
             j_poke_charmander = {
@@ -488,6 +497,25 @@ return {
                 text = {
                     "{C:red}+#4#{} discard, {C:mult}+#1#{} Mult",
                     "{X:mult,C:white} X#2# {} Mult when {C:attention}#3#{} discards remaining",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
+                } 
+            },
+            j_poke_mega_charizard_x = {
+                name = "Mega Charizard X",
+                text = {
+                    "{C:red}+#3#{} discards",
+                    "{C:mult}+#1#{} Mult for each discard used",
+                    "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult){}",
+                    "{C:inactive}(Reverts at end of round){}"
+                } 
+            },
+            j_poke_mega_charizard_y = {
+                name = "Mega Charizard Y",
+                text = {
+                    "{C:red}+#3#{} discards",
+                    "{X:mult,C:white} X#1# {} Mult for each discard used",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {} {C:inactive}Mult){}",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_squirtle = {
@@ -514,8 +542,17 @@ return {
                 name = "Blastoise",
                 text = {
                     "{C:chips}+#3#{} hands, {C:chips}+#1#{} Chips",
+                    "{C:chips}+#2#{} Chips for each remaining hand",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
+                } 
+            },
+            j_poke_mega_blastoise = {
+                name = "Mega Blastoise",
+                text = {
+                    "{C:chips}+#3#{} hands",
                     "{C:chips}+#2#{} Chips for each",
                     "remaining hand",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_caterpie = {
@@ -556,6 +593,15 @@ return {
                 name = "Beedrill",
                 text = {
                     "{C:chips}+#1#{} Chips",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)",
+                } 
+            },
+            j_poke_mega_beedrill = {
+                name = "Mega Beedrill",
+                text = {
+                    "{C:chips}+#1#{} Chips for every poker hand level",
+                    "{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} Chips){}",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_pidgey = {
@@ -583,6 +629,14 @@ return {
                     "{C:planet}Celestial Packs{} in the",
                     "shop are {C:attention}free{}, using",
                     "{C:planet}Planet{} cards earns you {C:money}$#1#{}"
+                } 
+            },
+            j_poke_mega_pidgeot = {
+                name = "Mega Pidgeot",
+                text = {
+                    "{C:mult}+#1#{} Mult for every poker hand level",
+                    "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult){}",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_rattata = {
@@ -1825,8 +1879,23 @@ return {
                     "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
                     "leftmost {C:attention}Joker{} with {C:attention}+1{} {C:pink}Energy{}",
                     "then destroy leftmost {C:attention}Joker{}",
-                    "{C:dark_edition}Polychrome{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+                    "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Can't destroy self)",
+                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
+                } 
+            },
+            j_poke_mega_mewtwo_x = {
+                name = "Mega Mewtwo X",
+                text = {
+                    "Retrigger all {C:dark_edition}Polychrome{} {C:attention}Jokers{}",
+                    "{C:inactive}(Reverts at end of round){}"
+                } 
+            },
+            j_poke_mega_mewtwo_y = {
+                name = "Mega Mewtwo Y",
+                text = {
+                    "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_mew = {
@@ -3460,6 +3529,7 @@ return {
             earth_sticker = "Tera",
 
             k_poke_safari = "Safari",
+            k_poke_mega = "Mega",
         },
         v_dictionary = {
             
