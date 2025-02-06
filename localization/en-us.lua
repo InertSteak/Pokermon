@@ -1606,10 +1606,9 @@ return {
             j_poke_pinsir = {
                 name = 'Pinsir',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult if {C:attention}leftmost{}",
-                    "card of played hand is the",
-                    "same {C:attention}rank{} as {C:attention}rightmost{}",
-                    "card held in hand"
+                    "{X:mult,C:white} X#1# {} Mult if a {C:attention}played card{}",
+                    "has the {C:attention}same rank{} as",
+                    "a card {C:attention}held in hand{}"
                 } 
             },
             j_poke_tauros = {
