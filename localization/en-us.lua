@@ -1302,11 +1302,9 @@ return {
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "Gives {X:mult,C:white}X#1#{} Mult for",
-                    "each {C:dark_edition}Negative{} {C:attention}Joker{}",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts to Gengar at{}",
-                    "{C:inactive}the end of the round){}"
+                    "Created {C:attention}editioned{} Jokers",
+                    "are always {C:dark_edition}Negative{}",
+                    "{C:inactive}(Reverts at end of round){}",
                 } 
             },
             j_poke_onix = {
@@ -2423,10 +2421,10 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Create a {C:attention}Standard{}, {C:spectral}Ethereal{} or",
-                    "{C:pink}Pocket{} tag for every {C:attention}#3#{} {C:green}rerolls{}",
-                    "Each card with an {C:attention}edition{}",
-                    "held in hand gives {X:mult,C:white} X#1# {} Mult",
+                    "Create a {C:attention}tag{} every {C:attention}#3#{} {C:green}rerolls{}",
+                    "if you have {C:attention}< 2{} tags",
+                    "Each {C:attention}editioned{} card {C:attention}held{}",
+                    "in hand gives {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}/#3# rerolls)"
                 } 
             },
@@ -3135,6 +3133,14 @@ return {
                 "{C:inactive,s:0.8}(Excluded by {C:attention,s:0.8}Twisted Spoon{C:inactive,s:0.8})"
               }
             },
+            sylveon_tag_pool = {
+              name = "Tag Pool",
+              text = {
+                "{C:attention}#1#",
+                "{C:spectral}#2#",
+                "{C:pink}#3#",
+              }
+            },
             safaridesc = {
                 name = "Safari",
                 text = {
@@ -3333,6 +3339,7 @@ return {
             k_poke_pocket_pack = "Pocket Pack",
 
             k_poke_safari = "Safari",
+            k_poke_mega = "Mega",
 
             b_save = "SAVE",
             b_energy_cards = "Energy Cards",
