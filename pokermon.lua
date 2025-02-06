@@ -396,6 +396,11 @@ end
 
 local set_edition = Card.set_edition
 function Card:set_edition(edition, immediate, silent)
+  if self.ability.set == 'Joker' and next(SMODS.find_card('j_poke_mega_gengar')) then
+    if type(edition) == "string" then
+      edition = "e_negative"
+    end
+  end
   if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and (self.ability.set ~= 'Joker' and self.ability.set ~= 'Edition') then return end
   return set_edition(self, edition, immediate, silent)
 end

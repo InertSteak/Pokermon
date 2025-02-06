@@ -455,7 +455,7 @@ local porygonz={
 -- Froslass 478
 local froslass={
   name = "froslass",
-  pos = {x = 6, y = 11},
+  pos = {x = 7, y = 6},
   config = {extra = {debt = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
