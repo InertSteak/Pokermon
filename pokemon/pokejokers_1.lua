@@ -175,10 +175,10 @@ local mega_venusaur = {
   name = "mega_venusaur",
   pos = { x = 0, y = 0 },
   soul_pos = { x = 1, y = 0 },
-  config = { extra = { money_mod = 1, earned = 0, h_size = 5, rounds = 1 } },
+  config = { extra = { h_size = 5, rounds = 1 } },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return { vars = { center.ability.extra.money_mod, center.ability.extra.earned, center.ability.extra.h_size } }
+    return { vars = { center.ability.extra.h_size } }
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -187,30 +187,6 @@ local mega_venusaur = {
   atlas = "Megas",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand then
-      if not context.end_of_round and not context.before and not context.after then
-        if context.other_card.debuff then
-          return {
-            message = localize("k_debuffed"),
-            colour = G.C.RED,
-            card = card,
-          }
-        else
-          local earned = 0
-          if not context.blueprint then
-            card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-          end
-
-          earned = earned + card.ability.extra.money_mod
-          earned = ease_poke_dollars(card, "venu", earned)
-          return {
-            message = localize('$') .. earned,
-            colour = G.C.MONEY,
-            card = card
-          }
-        end
-      end
-    end
     return level_evo(self, card, context, "j_poke_venusaur")
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -391,10 +367,10 @@ local mega_charizard_x = {
   name = "mega_charizard_x", 
   pos = {x = 2, y = 0},
   soul_pos = { x = 3, y = 0},
-  config = {extra = {mult = 30, mult_mod = 0, rounds = 1, d_size = 3}},
+  config = {extra = {Xmult = 2, xmult_mod = 1, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_size}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.xmult_mod}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
@@ -404,62 +380,10 @@ local mega_charizard_x = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.mult_mod = 0
+      card.ability.extra.xmult_mod = 1
     end
     if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
-      if card.ability.extra.mult_mod > 0 then
-        return {
-          message = "Fire Blast!",
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult_mod
-        }
-      end
-    end
-    if context.pre_discard and not context.blueprint then
-      card.ability.extra.mult_mod = (G.GAME.current_round.discards_used + 1) * card.ability.extra.mult
-        return {
-          message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult_mod}},
-          colour = G.C.MULT,
-          card = card
-        }
-    end
-    return level_evo(self, card, context, "j_poke_charizard")
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      card.ability.extra.mult_mod = G.GAME.current_round.discards_used * card.ability.extra.mult
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
-  end
-}
-local mega_charizard_y = {
-  name = "mega_charizard_y", 
-  pos = {x = 4, y = 0},
-  soul_pos = { x = 5, y = 0},
-  config = {extra = {Xmult = 2, Xmult_mod = 0, rounds = 1, d_size = 2}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, math.max(1,center.ability.extra.Xmult_mod), center.ability.extra.d_size}}
-  end,
-  rarity = "poke_mega", 
-  cost = 12, 
-  stage = "Mega", 
-  ptype = "Fire",
-  atlas = "Megas",
-  blueprint_compat = true,
-  calculate = function(self, card, context)
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.Xmult_mod = 0
-    end
-    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
-      if card.ability.extra.Xmult_mod > 0 then
+      if card.ability.extra.xmult_mod > 1 then
         return {
           message = "Fire Blast!", 
           colour = G.C.XMULT,
@@ -468,7 +392,7 @@ local mega_charizard_y = {
       end
     end
     if context.pre_discard and not context.blueprint then
-      card.ability.extra.Xmult_mod = (G.GAME.current_round.discards_used + 1) * card.ability.extra.Xmult
+      card.ability.extra.Xmult_mod = 1 + (G.GAME.current_round.discards_used + 1) * card.ability.extra.Xmult
       return {
         message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult_mod}},
         colour = G.C.XMULT,
@@ -476,10 +400,28 @@ local mega_charizard_y = {
       }
     end
     return level_evo(self, card, context, "j_poke_charizard")
+  end
+}
+local mega_charizard_y = {
+  name = "mega_charizard_y", 
+  pos = {x = 4, y = 0},
+  soul_pos = { x = 5, y = 0},
+  config = {extra = {rounds = 1, d_size = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.d_size}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Fire",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    return level_evo(self, card, context, "j_poke_charizard")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      card.ability.extra.Xmult_mod = G.GAME.current_round.discards_used * card.ability.extra.Xmult
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
       ease_discard(card.ability.extra.d_size)
     end
@@ -618,10 +560,10 @@ local mega_blastoise = {
   name = "mega_blastoise",
   pos = {x = 6, y = 0},
   soul_pos = { x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 72, hands = 3, rounds = 1}},
+  config = {extra = {chip_mod = 128, hands = 3, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = "poke_mega",
   cost = 12,

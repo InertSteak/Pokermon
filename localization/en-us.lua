@@ -466,9 +466,7 @@ return {
             j_poke_mega_venusaur = {
                 name = "Mega Venusaur",
                 text = {
-                    "{C:attention}+#3#{} hand size",
-                    "Earn {C:money}$#1#{} for each card held in hand",
-                    "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
+                    "{C:attention}+#1#{} hand size",
                     "{C:inactive}(Reverts at end of round){}"
                 }
             },
@@ -503,18 +501,16 @@ return {
             j_poke_mega_charizard_x = {
                 name = "Mega Charizard X",
                 text = {
-                    "{C:red}+#3#{} discards",
-                    "{C:mult}+#1#{} Mult for each discard used",
-                    "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult){}",
+                    "Gives {X:mult,C:white} X#1# {} Mult for each",
+                    "discard used this round",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {} {C:inactive}Mult){}",
                     "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_mega_charizard_y = {
                 name = "Mega Charizard Y",
                 text = {
-                    "{C:red}+#3#{} discards",
-                    "{X:mult,C:white} X#1# {} Mult for each discard used",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {} {C:inactive}Mult){}",
+                    "{C:red}+#1#{} discards",
                     "{C:inactive}(Reverts at end of round){}"
                 } 
             },
@@ -549,8 +545,8 @@ return {
             j_poke_mega_blastoise = {
                 name = "Mega Blastoise",
                 text = {
-                    "{C:chips}+#3#{} hands",
-                    "{C:chips}+#2#{} Chips for each",
+                    "{C:chips}+#2#{} hands",
+                    "{C:chips}+#1#{} Chips for each",
                     "remaining hand",
                     "{C:inactive}(Reverts at end of round){}"
                 } 
