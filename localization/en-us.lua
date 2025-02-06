@@ -595,8 +595,7 @@ return {
             j_poke_mega_beedrill = {
                 name = "Mega Beedrill",
                 text = {
-                    "{C:chips}+#1#{} Chips for every poker hand level",
-                    "{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} Chips){}",
+                    "{C:chips}+#1#{} Chips",
                     "{C:inactive}(Reverts at end of round){}"
                 } 
             },
@@ -630,8 +629,8 @@ return {
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "{C:mult}+#1#{} Mult for every poker hand level",
-                    "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult){}",
+                    "{X:red,C:white}X#1#{} Mult for every poker hand level",
+                    "{C:inactive}(Currently {X:red,C:white}X#2#{}{C:inactive} Mult){}",
                     "{C:inactive}(Reverts at end of round){}"
                 } 
             },

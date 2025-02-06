@@ -1317,19 +1317,27 @@ local mega_mewtwo_x = {
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if not self.debuff and not context.blueprint then
+    local ret = level_evo(self, card, context, "j_poke_mewtwo")
+    if not self.debuff and (not context.blueprint or context.current_card_scoring ~= context.other_card) then
       context.blueprint = 1
       context.blueprint_card = self
+      context.current_card_scoring = context.other_card
       for _,jkr in ipairs(G.jokers.cards) do
         if jkr.edition and jkr.edition.polychrome then
           local joker_ret = jkr:calculate_joker(context)
           if joker_ret then
-            SMODS.trigger_effects({{jokers=joker_ret}}, jkr)
+            G.E_MANAGER:add_event(Event({
+              trigger = 'immediate',
+              func = function ()
+                card:juice_up(0.1)
+                return true
+              end}))
+            SMODS.trigger_effects({{jokers=joker_ret}}, context.other_card or jkr)
           end
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_mewtwo")
+    return ret
   end
 }
 

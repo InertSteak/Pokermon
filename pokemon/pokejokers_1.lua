@@ -158,14 +158,6 @@ local venusaur={
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.hand:change_size(-card.ability.extra.h_size)
-      if find_joker('mega_venusaur') then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            G.FUNCS.draw_from_deck_to_hand()
-            return true
-          end
-        }))
-      end
     end
   end,
   megas = { "mega_venusaur" },
@@ -191,7 +183,17 @@ local mega_venusaur = {
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
+      -- venusaur still exists, so 
+      G.hand:change_size(card.ability.extra.h_size-venusaur.config.extra.h_size)
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          if G.STATE == G.STATES.SELECTING_HAND then
+            G.FUNCS.draw_from_deck_to_hand()
+          end
+          G.hand:change_size(venusaur.config.extra.h_size)
+          return true
+        end
+      }))
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -539,7 +541,7 @@ local blastoise={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)}}, 
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
         }
@@ -560,7 +562,7 @@ local mega_blastoise = {
   name = "mega_blastoise",
   pos = {x = 6, y = 0},
   soul_pos = { x = 7, y = 0},
-  config = {extra = {chip_mod = 128, hands = 3, rounds = 1}},
+  config = {extra = {chips = 0, chip_mod = 128, hands = 3, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -582,6 +584,7 @@ local mega_blastoise = {
         }
       end
     end
+    return level_evo(self, card, context, "j_poke_blastoise")
   end,
   add_to_deck = function(self, card, from_debuff)
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -759,16 +762,10 @@ local mega_beedrill = {
   name = "mega_beedrill", 
   pos = { x = 8, y = 0 },
   soul_pos = { x = 9, y = 0 },
-  config = {extra = {chips = 40, rounds = 1}},
+  config = {extra = {chips = 1000, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local total_levels = 0
-    for _, hand in pairs(G.GAME.hands) do
-      if hand.visible then
-        total_levels = total_levels + hand.level
-      end
-    end
-		return {vars = {center.ability.extra.chips, center.ability.extra.chips*total_levels}}
+		return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -779,14 +776,8 @@ local mega_beedrill = {
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local total_levels = 0
-        for _, hand in pairs(G.GAME.hands) do
-          if hand.visible then
-            total_levels = total_levels + hand.level
-          end
-        end
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips*total_levels}}, 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
@@ -898,7 +889,7 @@ local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
   soul_pos = { x = 11, y = 0 },
-  config = {extra = {mult = 5, rounds = 1}},
+  config = {extra = {Xmult = 0.05, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local total_levels = 0
@@ -907,7 +898,7 @@ local mega_pidgeot = {
         total_levels = total_levels + hand.level
       end
     end
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult*total_levels}}
+		return {vars = {center.ability.extra.Xmult, 1 + center.ability.extra.Xmult*total_levels}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -925,9 +916,9 @@ local mega_pidgeot = {
           end
         end
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult*total_levels}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
+          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult*total_levels}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = 1 + card.ability.extra.Xmult*total_levels
         }
       end
     end
