@@ -1346,15 +1346,14 @@ return {
                     "of a random {C:attention}Joker{} with",
                     "{C:dark_edition}Negative{} at end of round",
                     "{C:inactive,s:0.8}(Excludes Gengars){}",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "Created {C:attention}editioned{} Jokers",
+                    "{C:attention}Editioned{} Jokers that appear",
+                    "in the {C:attention}Shop{} and {C:attention}Booster Packs{}",
                     "are always {C:dark_edition}Negative{}",
-                    "{C:inactive}(Reverts at end of round){}",
                 } 
             },
             j_poke_onix = {
@@ -3100,6 +3099,19 @@ return {
                     "Desired {C:attention}#1#{} are",
                     "set at random upon",
                     "Joker creation"
+                }
+            },
+            mega_evo = {
+                name = "Mega Evolution",
+                text = {
+                    "Reverts at end of round"
+                }
+            },
+            mega_poke = {
+                name = "Mega Evolution",
+                text = {
+                    "Can {C:attention}Mega Evolve{}",
+                    "with a {C:attention}Mega Stone{}"
                 }
             },
             playing_card_to_evolve = {
