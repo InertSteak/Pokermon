@@ -469,8 +469,7 @@ return {
                     "{C:attention}+#3#{} hand size",
                     "Earn {C:money}$#1#{} for each card held in hand",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
-                    "{C:inactive}(Reverts to Venusaur at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 }
             },
             j_poke_charmander = {
@@ -507,8 +506,7 @@ return {
                     "{C:red}+#3#{} discards",
                     "{C:mult}+#1#{} Mult for each discard used",
                     "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts to Charizard at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_mega_charizard_y = {
@@ -517,8 +515,7 @@ return {
                     "{C:red}+#3#{} discards",
                     "{X:mult,C:white} X#1# {} Mult for each discard used",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts to Charizard at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_squirtle = {
@@ -555,8 +552,7 @@ return {
                     "{C:chips}+#3#{} hands",
                     "{C:chips}+#2#{} Chips for each",
                     "remaining hand",
-                    "{C:inactive}(Reverts to Blastoise at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_caterpie = {
@@ -603,9 +599,9 @@ return {
             j_poke_mega_beedrill = {
                 name = "Mega Beedrill",
                 text = {
-                    "{C:chips}+#1#{} Chips",
-                    "{C:inactive}(Reverts to Beedrill at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:chips}+#1#{} Chips for every poker hand level",
+                    "{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} Chips){}",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_pidgey = {
@@ -633,6 +629,14 @@ return {
                     "{C:planet}Celestial Packs{} in the",
                     "shop are {C:attention}free{}, using",
                     "{C:planet}Planet{} cards earns you {C:money}$#1#{}"
+                } 
+            },
+            j_poke_mega_pidgeot = {
+                name = "Mega Pidgeot",
+                text = {
+                    "{C:mult}+#1#{} Mult for every poker hand level",
+                    "{C:inactive}(Currently {C:mult}+#2#{}{C:inactive} Mult){}",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_rattata = {
@@ -1355,8 +1359,7 @@ return {
                     "Gives {X:mult,C:white}X#1#{} Mult for",
                     "each {C:dark_edition}Negative{} {C:attention}Joker{} you have",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts to Gengar at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_onix = {
@@ -1886,16 +1889,14 @@ return {
                 name = "Mega Mewtwo X",
                 text = {
                     "Retrigger all {C:dark_edition}Polychrome{} {C:attention}Jokers{}",
-                    "{C:inactive}(Reverts to Mewtwo at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_mega_mewtwo_y = {
                 name = "Mega Mewtwo Y",
                 text = {
                     "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
-                    "{C:inactive}(Reverts to Mewtwo at{}",
-                    "{C:inactive}the end of the round){}"
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_mew = {

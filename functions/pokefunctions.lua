@@ -4,7 +4,7 @@ family = {
     {"squirtle","wartortle","blastoise","mega_blastoise"},
     {"caterpie","metapod","butterfree"},
     {"weedle","kakuna","beedrill","mega_beedrill"},
-    {"pidgey","pidgeotto","pidgeot"},
+    {"pidgey","pidgeotto","pidgeot","mega_pidgeot"},
     {"rattata","raticate"},
     {"spearow","fearow"},
     {"ekans","arbok"},

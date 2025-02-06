@@ -817,13 +817,19 @@ local mega_beedrill = {
   name = "mega_beedrill", 
   pos = { x = 8, y = 0 },
   soul_pos = { x = 9, y = 0 },
-  config = {extra = {chips = 1000, rounds = 1}},
+  config = {extra = {chips = 40, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips}}
+    local total_levels = 0
+    for _, hand in pairs(G.GAME.hands) do
+      if hand.visible then
+        total_levels = total_levels + hand.level
+      end
+    end
+		return {vars = {center.ability.extra.chips, center.ability.extra.chips*total_levels}}
   end,
   rarity = "poke_mega",
-  cost = 10,
+  cost = 12,
   stage = "Mega",
   ptype = "Grass",
   atlas = "Megas",
@@ -831,8 +837,14 @@ local mega_beedrill = {
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local total_levels = 0
+        for _, hand in pairs(G.GAME.hands) do
+          if hand.visible then
+            total_levels = total_levels + hand.level
+          end
+        end
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips*total_levels}}, 
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
@@ -937,6 +949,47 @@ local pidgeot={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
+  end,
+  megas = {"mega_pidgeot"}
+}
+local mega_pidgeot = {
+  name = "mega_pidgeot", 
+  pos = { x = 10, y = 0 },
+  soul_pos = { x = 11, y = 0 },
+  config = {extra = {mult = 5, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local total_levels = 0
+    for _, hand in pairs(G.GAME.hands) do
+      if hand.visible then
+        total_levels = total_levels + hand.level
+      end
+    end
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult*total_levels}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Colorless",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local total_levels = 0
+        for _, hand in pairs(G.GAME.hands) do
+          if hand.visible then
+            total_levels = total_levels + hand.level
+          end
+        end
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult*total_levels}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_pidgeot")
   end
 }
 local rattata={
@@ -1473,5 +1526,5 @@ return {name = "Pokemon Jokers 01-30",
             end
               
         end,
-        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot,                 rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
+        list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot, mega_pidgeot, rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
 }
