@@ -105,7 +105,7 @@ round_energy_value = function(value, field)
   if pokermon_config.precise_energy then 
     return value
   end
-  if field == "mult" or field == "mult2" or field == "chips" then
+  if field == "mult" or field == "mult2" or field == "chips" or field == "chips1" or field == "chips2" or field == "chips3" then
     rounded = math.ceil(value)
     frac = nil
   elseif field == "money" or field == "money2" or field == "mult_mod" or field == "mult_mod2" or field == "chip_mod" or field == "money_mod" then
