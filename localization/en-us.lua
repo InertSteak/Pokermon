@@ -588,8 +588,7 @@ return {
             j_poke_beedrill = {
                 name = "Beedrill",
                 text = {
-                    "{C:chips}+#1#{} Chips",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)",
+                    "{C:chips}+#1#{} Chips"
                 } 
             },
             j_poke_mega_beedrill = {
@@ -1074,6 +1073,15 @@ return {
                     "create a {C:attention}Fool{} or {C:item}Twisted Spoon{} card",
                     "if played {C:attention}poker hand{} has",
                     "already been played this round",
+                } 
+            },
+            j_poke_mega_alakazam = {
+                name = "Mega Alakazam",
+                text = {
+                    "{C:attention}+#3#{} consumable slot",
+                    "Every held {C:item}Twisted Spoon{} gives {X:mult,C:white}X#1#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_machop = {

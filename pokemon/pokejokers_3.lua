@@ -215,6 +215,49 @@ local alakazam={
       G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
       return true end }))
   end, 
+  megas = {"mega_alakazam"}
+}
+local mega_alakazam={
+  name = "mega_alakazam", 
+  pos = {x = 12, y = 0},
+  soul_pos = { x = 13, y = 0},
+  config = {extra = {Xmult_mod = 2, odds = 1, card_limit = 1, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
+    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+    local found_spoons = #find_joker('twisted_spoon')
+    return {vars = {center.ability.extra.Xmult_mod, 1 + center.ability.extra.Xmult_mod*found_spoons, center.ability.extra.card_limit}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Psychic",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+      local found_spoons = #find_joker('twisted_spoon')
+      if found_spoons > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * found_spoons)}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = 1 + (card.ability.extra.Xmult_mod * found_spoons)
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_alakazam")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
+      return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
+      return true end }))
+  end, 
 }
 local machop={
   name = "machop", 
@@ -1188,6 +1231,6 @@ local shellder={
 }
 
 return {name = "Pokemon Jokers 61-90", 
-        list = { poliwhirl, poliwrath, abra, kadabra, alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
+        list = { poliwhirl, poliwrath, abra, kadabra, alakazam, mega_alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
                  golem, ponyta, rapidash, slowpoke, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

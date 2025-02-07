@@ -25,7 +25,7 @@ family = {
     {"mankey","primeape", "annihilape"},
     {"growlithe","arcanine"},
     {"poliwag","poliwhirl","poliwrath", "politoed"},
-    {"abra","kadabra","alakazam"},
+    {"abra","kadabra","alakazam","mega_alakazam"},
     {"machop","machoke","machamp"},
     {"bellsprout","weepinbell","victreebel"},
     {"tentacool","tentacruel"},
