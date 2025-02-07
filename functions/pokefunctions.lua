@@ -31,7 +31,7 @@ family = {
     {"tentacool","tentacruel"},
     {"geodude","graveler","golem"},
     {"ponyta","rapidash"},
-    {"slowpoke", "slowbro", "slowking"},
+    {"slowpoke", "slowbro", "slowking", "mega_slowbro"},
     {"magnemite","magneton", "magnezone"},
     {"doduo","dodrio"},
     {"seel","dewgong"},

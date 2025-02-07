@@ -822,10 +822,15 @@ local slowpoke2={
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
-  config = {extra = {Xmult_mod = 0.4, Xmult = 1, oXmult = 1}},
+  config = {extra = {Xmult_mod = 0.4, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    local xmult_total = center.ability.extra.Xmult
+    if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.PLAY_TAROT then
+      xmult_total = xmult_total + G.GAME.current_round.hands_played * center.ability.extra.Xmult_mod
+    end
+    return {vars = {center.ability.extra.Xmult_mod, xmult_total}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -834,27 +839,67 @@ local slowbro={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.oXmult = card.ability.extra.Xmult
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        if not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        end
+        local xmult_total = card.ability.extra.Xmult + (1+G.GAME.current_round.hands_played) * card.ability.extra.Xmult_mod
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult_total}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = xmult_total
         }
       end
     elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.oXmult
       return {
         message = localize('k_reset'),
         colour = G.C.RED
       }
     end
+  end,
+  megas = {"mega_slowbro"}
+}
+local mega_slowbro={
+  name = "mega_slowbro", 
+  pos = {x = 14, y = 0},
+  soul_pos = { x = 0, y = 1},
+  config = {extra = {Xmult_mod = 1.5, Xmult = 1, cards_played = 0, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local new_mult = center.ability.extra.Xmult
+    if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.PLAY_TAROT then
+      new_mult = new_mult * math.pow(center.ability.extra.Xmult_mod, center.ability.extra.cards_played)
+    end
+    return {vars = {center.ability.extra.Xmult_mod, new_mult}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Water",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      card.ability.extra.cards_played = 0
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      card.ability.extra.cards_played = card.ability.extra.cards_played + 1
+      G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function ()
+          card:juice_up(0.1)
+          return true
+        end}))
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local new_mult = card.ability.extra.Xmult * math.pow(card.ability.extra.Xmult_mod, card.ability.extra.cards_played)
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {new_mult}}, 
+          colour = G.C.MULT,
+          mult_mod = new_mult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_slowbro")
   end
 }
 local magnemite={
@@ -1233,5 +1278,5 @@ local shellder={
 
 return {name = "Pokemon Jokers 61-90", 
         list = { poliwhirl, poliwrath, abra, kadabra, alakazam, mega_alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
-                 golem, ponyta, rapidash, slowpoke, slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
+                 golem, ponyta, rapidash, slowpoke, slowbro, mega_slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

@@ -1217,6 +1217,15 @@ return {
                     "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
                 } 
             },
+            j_poke_mega_slowbro = {
+                name = "Mega Slowbro",
+                text = {
+                    "Scored cards multiply",
+                    "this Joker's {C:mult}Mult{} by {X:red,C:white}X#1#",
+                    "{C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
+                    "{C:inactive}(Reverts at end of round){}"
+                } 
+            },
             j_poke_magnemite = {
                 name = "Magnemite",
                 text = {
