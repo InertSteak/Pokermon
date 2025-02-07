@@ -31,13 +31,16 @@ local mew ={
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
       else
         --create random consumable and apply negative
-        local sets = {"Tarot", "Spectral", "Item"}
-        local _card = create_card(sets[math.random(#sets)], G.consumeables, nil, nil, nil, nil, nil)
+        local sets = {{set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE}, {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, 
+                      {set = "Item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink}}
+        local creation = pseudorandom_element(sets, pseudoseed('mewcreate'))
+        
+        local _card = create_card(creation.set, G.consumeables, nil, nil, nil, nil, nil)
         local edition = {negative = true}
         _card:set_edition(edition, true)
         _card:add_to_deck()
         G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = creation.message, colour = creation.colour})
       end
     end
   end,
