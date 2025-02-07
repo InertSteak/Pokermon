@@ -460,7 +460,6 @@ return {
                     "Earn {C:money}$#1#{} for each {C:attention}#4#{} held in hand,",
                     "rank changes every round",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)",
                 }
             },
             j_poke_mega_venusaur = {
@@ -495,7 +494,6 @@ return {
                 text = {
                     "{C:red}+#4#{} discard, {C:mult}+#1#{} Mult",
                     "{X:mult,C:white} X#2# {} Mult when {C:attention}#3#{} discards remaining",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_mega_charizard_x = {
@@ -539,7 +537,6 @@ return {
                 text = {
                     "{C:chips}+#3#{} hands, {C:chips}+#1#{} Chips",
                     "{C:chips}+#2#{} Chips for each remaining hand",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_mega_blastoise = {
@@ -1883,7 +1880,6 @@ return {
                     "then destroy leftmost {C:attention}Joker{}",
                     "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Can't destroy self)",
-                    "{C:inactive}(Evolves with a{} {C:attention}Mega Stone{}{C:inactive} card)"
                 } 
             },
             j_poke_mega_mewtwo_x = {
