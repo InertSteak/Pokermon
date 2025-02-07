@@ -257,9 +257,9 @@ evolve = function(self, card, context, forced_key)
       previous_upgrade = card.ability.extra.upgrade
     end
     
-    G.E_MANAGER:add_event(Event({
-        remove(self, card, context)
-      }))
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
+      remove(self, card, context)
+    return true end }))
     
     if G.GAME.modifiers.apply_type then
       G.GAME.modifiers.apply_type = false
@@ -268,6 +268,8 @@ evolve = function(self, card, context, forced_key)
     
     local temp_card = {set = "Joker", area = G.jokers, key = forced_key, no_edition = true}
     local new_card = SMODS.create_card(temp_card)
+    
+    new_card.states.visible = false
     
     if reset_apply_type then
       G.GAME.modifiers.apply_type = true
@@ -343,8 +345,12 @@ evolve = function(self, card, context, forced_key)
       new_card.ability.extra.upgrade = previous_upgrade
     end
     
-    new_card:add_to_deck()
-    G.jokers:emplace(new_card, previous_position)
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
+        new_card:add_to_deck()
+        G.jokers:emplace(new_card, previous_position)
+        new_card.states.visible = true
+    return true end }))
+
     return localize("poke_evolve_success")
   end
 end
