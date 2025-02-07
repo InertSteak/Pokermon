@@ -1231,7 +1231,7 @@ local mewtwo={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_megastone
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
