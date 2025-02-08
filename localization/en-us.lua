@@ -436,7 +436,7 @@ return {
                 text = {
                     "{C:attention}+#4#{} hand size",
                     "Earn {C:money}$#1#{} for each",
-                    "{C:attention}#4#{} held in hand,",
+                    "{C:attention}#3#{} held in hand,",
                     "rank changes every round",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive} earned)",
                     "{C:inactive}(Evolves at {C:money}$16{}{C:inactive} earned)"
