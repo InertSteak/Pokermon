@@ -323,7 +323,7 @@ evolve = function(self, card, context, forced_key)
     
     if scaled_values then
       for l, v in pairs(scaled_values) do
-        if v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and v > new_card.ability.extra[l] then
+        if v and v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and new_card.ability.extra[l] and v > new_card.ability.extra[l] then
           new_card.ability.extra[l] = v
         end
       end
@@ -524,6 +524,38 @@ get_highest_evo = function(card)
     end
   end
   return false
+end
+
+get_previous_evo = function(card, full_key)
+  local name = nil
+  local found = nil
+  local prev = nil
+  local max = nil
+  if not card.name and card.ability.name then
+    name = card.ability.name
+  else
+    name = card.name or "bulbasaur"
+  end
+  for k, v in ipairs(family) do
+    for x, y in ipairs(v) do
+      if y == name then
+        found = true
+        max = #v
+        if x > 1 then
+          while max > 0 and string.sub(v[max],1,5) == "mega_" or v[max] == "slowking" do
+            max = max - 1
+          end
+          prev = v[max]
+        end
+        break
+      end
+    end
+    if found then break end
+  end
+  if full_key then
+    prev = 'j_poke_'..prev
+  end
+  return prev
 end
 
 get_family_keys = function(cardname)

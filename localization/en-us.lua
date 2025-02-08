@@ -466,7 +466,6 @@ return {
                 name = "Mega Venusaur",
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "{C:inactive}(Reverts at end of round){}"
                 }
             },
             j_poke_charmander = {
@@ -499,17 +498,13 @@ return {
             j_poke_mega_charizard_x = {
                 name = "Mega Charizard X",
                 text = {
-                    "Gives {X:mult,C:white} X#1# {} Mult for each",
-                    "discard used this round",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {} {C:inactive}Mult){}",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "{X:mult,C:white} X#1# {} Mult when {C:attention}#2#{} discards remaining",
                 } 
             },
             j_poke_mega_charizard_y = {
                 name = "Mega Charizard Y",
                 text = {
                     "{C:red}+#1#{} discards",
-                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_squirtle = {
@@ -543,9 +538,6 @@ return {
                 name = "Mega Blastoise",
                 text = {
                     "{C:chips}+#2#{} hands",
-                    "{C:chips}+#1#{} Chips for each",
-                    "remaining hand",
-                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_caterpie = {
@@ -592,7 +584,6 @@ return {
                 name = "Mega Beedrill",
                 text = {
                     "{C:chips}+#1#{} Chips",
-                    "{C:inactive}(Reverts at end of round){}"
                 } 
             },
             j_poke_pidgey = {
@@ -625,9 +616,8 @@ return {
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "{X:red,C:white}X#1#{} Mult for every poker hand level",
-                    "{C:inactive}(Currently {X:red,C:white}X#2#{}{C:inactive} Mult){}",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "{C:planet}Planet{} cards grant",
+                    "{C:attention}#1#{} additional levels",
                 } 
             },
             j_poke_rattata = {
@@ -1076,9 +1066,8 @@ return {
                 name = "Mega Alakazam",
                 text = {
                     "{C:attention}+#3#{} consumable slot",
-                    "Every held {C:item}Twisted Spoon{} gives {X:mult,C:white}X#1#{} Mult",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "Every held {C:attention}Consumable{} gives {X:mult,C:white}X#1#{} Mult",
+                    "{C:item}Twisted Spoons{} give {X:mult,C:white}X#2#{} Mult",
                 } 
             },
             j_poke_machop = {
@@ -1220,10 +1209,10 @@ return {
             j_poke_mega_slowbro = {
                 name = "Mega Slowbro",
                 text = {
-                    "Scored cards multiply",
-                    "this Joker's {C:mult}Mult{} by {X:red,C:white}X#1#",
-                    "{C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "Gains {X:red,C:white} X#1# {} Mult per",
+                    "hand played, resets when",
+                    "{C:attention}Boss Blind{} is defeated",
+                    "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)"
                 } 
             },
             j_poke_magnemite = {
@@ -1894,15 +1883,16 @@ return {
             j_poke_mega_mewtwo_x = {
                 name = "Mega Mewtwo X",
                 text = {
-                    "Retrigger all {C:dark_edition}Polychrome{} {C:attention}Jokers{}",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "All Jokers give {X:mult,C:white} X#1# {} Mult",
                 } 
             },
             j_poke_mega_mewtwo_y = {
                 name = "Mega Mewtwo Y",
                 text = {
-                    "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
-                    "{C:inactive}(Reverts at end of round){}"
+                    "Gives {C:attention}+2{} {C:pink}Energy{} to",
+                    "leftmost Joker at end of shop",
+                    "{C:pink}+1{} Energy Limit when",
+                    "{C:attention}Boss Blind{} is defeated"
                 } 
             },
             j_poke_mew = {
@@ -2813,6 +2803,7 @@ return {
                     "{C:attention}Reusable{}",
                     "{C:attention}Mega Evolves{} a Pokemon", 
                     "if able for {C:attention}1{} round",
+                    "Reverts evolution if sold",
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Useable once per round)",
                 },
@@ -3116,7 +3107,8 @@ return {
             mega_evo = {
                 name = "Mega Evolution",
                 text = {
-                    "Reverts at end of round"
+                    "Can {C:attention}devolve{}",
+                    "with a {C:attention}Mega Stone{}"
                 }
             },
             mega_poke = {
@@ -3124,6 +3116,14 @@ return {
                 text = {
                     "Can {C:attention}Mega Evolve{}",
                     "with a {C:attention}Mega Stone{}"
+                }
+            },
+            split_mega = {
+                name = "XY Mega",
+                text = {
+                  "{C:attention}Mega Evolves{} based on position",
+                  "Leftmost - {C:attention}#1#{}",
+                  "Rightmost - {C:attention}#2#{}"
                 }
             },
             playing_card_to_evolve = {
@@ -3525,7 +3525,8 @@ return {
             poke_dawn_info2 = "(Hand type set!)",
             poke_make_it_rain = "Make it Rain!",
             poke_val_down = "Value Down!",
-            poke_powder_ex = "Powder Snow!" 
+            poke_powder_ex = "Powder Snow!",
+            poke_future_sight = "Future Sight!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

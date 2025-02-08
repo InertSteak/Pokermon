@@ -1231,6 +1231,9 @@ local mewtwo={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
+    if next(SMODS.find_card('c_poke_megastone')) then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
+    end
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
@@ -1287,14 +1290,18 @@ local mewtwo={
   end,
   megas = {"mega_mewtwo_x","mega_mewtwo_y"},
   getMega = function(self, card)
-    local card_type = get_type(card)
-    if card_type == "Fighting" or card_type == "Metal" then
-      return "mega_mewtwo_x"
+    -- Leftmost = X, Rightmost = Y, Middle = Random
+    local mega = nil
+    for k, v in ipairs(G.jokers.cards) do
+      if card == v and k == 1 then
+        mega = self.megas[1]
+        break
+      elseif card == v and k == #G.jokers.cards then
+        mega = self.megas[2]
+      end
     end
-    if card_type == "Psychic" or card_type == "Dragon" then
-      return "mega_mewtwo_y"
-    end
-    return pseudorandom_element(self.megas, pseudoseed('megastone_mewtwo'))
+    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
+    return mega
   end
 }
 
@@ -1302,42 +1309,25 @@ local mega_mewtwo_x = {
   name = "mega_mewtwo_x",
   pos = {x = 11, y = 1},
   soul_pos = { x = 12, y = 1},
-  config = {extra = {Xmult_mod = 1.5, rounds = 1}},
+  config = {extra = {Xmult_multi = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.polychrome) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-    end
-    return {vars = {center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_mega",
   cost = 30,
   stage = "Mega",
   ptype = "Fighting",
   atlas = "Megas",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    local ret = level_evo(self, card, context, "j_poke_mewtwo")
-    if not self.debuff and (not context.blueprint or context.current_card_scoring ~= context.other_card) then
-      context.blueprint = 1
-      context.blueprint_card = self
-      context.current_card_scoring = context.other_card
-      for _,jkr in ipairs(G.jokers.cards) do
-        if jkr.edition and jkr.edition.polychrome then
-          local joker_ret = jkr:calculate_joker(context)
-          if joker_ret then
-            G.E_MANAGER:add_event(Event({
-              trigger = 'immediate',
-              func = function ()
-                card:juice_up(0.1)
-                return true
-              end}))
-            SMODS.trigger_effects({{jokers=joker_ret}}, context.other_card or jkr)
-          end
-        end
-      end
+    if context.other_joker then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_multi
+        }
     end
-    return ret
   end
 }
 
@@ -1348,9 +1338,6 @@ local mega_mewtwo_y = {
   config = {extra = {Xmult_mod = 3, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.polychrome) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-    end
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_mega",
@@ -1360,20 +1347,29 @@ local mega_mewtwo_y = {
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.other_joker and context.other_joker.edition and context.other_joker.edition.polychrome then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              context.other_joker:juice_up(0.5, 0.5)
-              return true
+    if context.ending_shop and not context.blueprint then
+      local leftmost = G.jokers.cards[1]
+      if leftmost ~= card then
+        local _card = G.jokers.cards[1]
+        if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, _card.ability.extra.ptype)
           end
-        })) 
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_mod
-        }
+        elseif type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, type_sticker_applied(_card))
+          end
+        end
+      end
     end
-    return level_evo(self, card, context, "j_poke_mewtwo")
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 1
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 1
+      end
+    end
   end
 }
 

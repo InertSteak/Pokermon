@@ -532,7 +532,7 @@ local megastone = {
   name = "megastone",
   key = "megastone",
   set = "Spectral",
-  config = {extra = {previous_round = 0}},
+  config = {extra = {previous_round = 0, used_on = nil}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -547,37 +547,52 @@ local megastone = {
   discovered = true,
   can_use = function(self, card)
     if G.GAME.round <= card.ability.extra.previous_round then return false end
-    local mega_poke = false
-    for k, poke in pairs(G.jokers.cards) do
-      if poke.config.center.megas then
-        mega_poke = true
-      end
-    end
-    return mega_poke
-  end,
-  use = function(self, card, area, copier)
     local target = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.megas then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas then
+        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
           target = poke
           break
         end
       end
     end
-    local mega = target.config.center.megas[1]
-    if #target.config.center.megas > 1 then
-      if target.config.center.getMega then
-        mega = target.config.center:getMega(target)
-      else
-        mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
+    if not target then return false end
+    if card.ability.extra.used_on and target.config.center.key ~= card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then return false end
+    return true
+  end,
+  use = function(self, card, area, copier)
+    local target = nil
+    local forced_key = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") then
+      target = G.jokers.highlighted[1]
+    else
+      for k, poke in pairs(G.jokers.cards) do
+        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+          target = poke
+          break
+        end
       end
     end
-    local forced_key = "j_poke_" .. mega
+    if target.config.center.megas then
+      local mega = target.config.center.megas[1]
+      if #target.config.center.megas > 1 then
+        if target.config.center.getMega then
+          mega = target.config.center:getMega(target)
+        else
+          mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
+        end
+      end
+      forced_key = "j_poke_" .. mega
+      card.ability.extra.used_on = forced_key
+    else
+      forced_key = get_previous_evo(target, true)
+      card.ability.extra.used_on = nil
+    end
     local context = {}
     card.ability.extra.previous_round = G.GAME.round
+     
     evolve(target, target, context, forced_key)
   end,
   keep_on_use = function(self, card)
@@ -591,6 +606,18 @@ local megastone = {
       end
     end
     return mega_poke
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then
+      for k, v in ipairs(G.jokers.cards) do
+        if v.config.center.key == card.ability.extra.used_on then
+          local context = {}
+          local forced_key = get_previous_evo(v, true)
+          evolve(v, v, context, forced_key)
+          break
+        end
+      end
+    end
   end
 }
 

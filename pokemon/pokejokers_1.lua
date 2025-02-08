@@ -167,7 +167,7 @@ local mega_venusaur = {
   name = "mega_venusaur",
   pos = { x = 0, y = 0 },
   soul_pos = { x = 1, y = 0 },
-  config = { extra = { h_size = 5, rounds = 1 } },
+  config = { extra = { h_size = 4, rounds = 1 } },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return { vars = { center.ability.extra.h_size } }
@@ -312,6 +312,9 @@ local charizard={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    if next(SMODS.find_card('c_poke_megastone')) then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Charizard X", "Mega Charizard Y"}}
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = "poke_safari", 
@@ -352,27 +355,28 @@ local charizard={
   end,
   megas = {"mega_charizard_x","mega_charizard_y"},
   getMega = function(self, card)
-    -- Only Fire and Dragon will be stated in the tooltip
-    --     Dark will be an "easter egg"
-    --     Metal is to allow an easy "return" to Y
-    local card_type = get_type(card)
-    if card_type == "Dragon" or card_type == "Dark" then
-      return "mega_charizard_x"
+    -- Leftmost = X, Rightmost = Y, Middle = Random
+    local mega = nil
+    for k, v in ipairs(G.jokers.cards) do
+      if card == v and k == 1 then
+        mega = self.megas[1]
+        break
+      elseif card == v and k == #G.jokers.cards then
+        mega = self.megas[2]
+      end
     end
-    if card_type == "Fire" or card_type == "Metal" then
-      return "mega_charizard_y"
-    end
-    return pseudorandom_element(self.megas, pseudoseed('megastone_charizard'))
+    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
+    return mega
   end
 }
 local mega_charizard_x = {
   name = "mega_charizard_x", 
   pos = {x = 2, y = 0},
   soul_pos = { x = 3, y = 0},
-  config = {extra = {Xmult = 2, xmult_mod = 1, rounds = 1}},
+  config = {extra = {Xmult = 5, d_remaining = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.xmult_mod}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.d_remaining}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
@@ -381,34 +385,22 @@ local mega_charizard_x = {
   atlas = "Megas",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.xmult_mod = 1
-    end
     if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
-      if card.ability.extra.xmult_mod > 1 then
+      if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
           message = "Fire Blast!", 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_mod
+          Xmult_mod = card.ability.extra.Xmult
         }
       end
     end
-    if context.pre_discard and not context.blueprint then
-      card.ability.extra.Xmult_mod = 1 + (G.GAME.current_round.discards_used + 1) * card.ability.extra.Xmult
-      return {
-        message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult_mod}},
-        colour = G.C.XMULT,
-        card = card
-      }
-    end
-    return level_evo(self, card, context, "j_poke_charizard")
   end
 }
 local mega_charizard_y = {
   name = "mega_charizard_y", 
   pos = {x = 4, y = 0},
   soul_pos = { x = 5, y = 0},
-  config = {extra = {rounds = 1, d_size = 4}},
+  config = {extra = {rounds = 1, d_size = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.d_size}}
@@ -419,9 +411,6 @@ local mega_charizard_y = {
   ptype = "Fire",
   atlas = "Megas",
   blueprint_compat = true,
-  calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_charizard")
-  end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -572,20 +561,7 @@ local mega_blastoise = {
   stage = "Mega",
   ptype = "Water",
   atlas = "Megas",
-  blueprint_compat = true,
-  calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local chips = card.ability.extra.chip_mod * G.GAME.current_round.hands_left
-        return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = chips
-        }
-      end
-    end
-    return level_evo(self, card, context, "j_poke_blastoise")
-  end,
+  blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
       ease_hands_played(card.ability.extra.hands)
@@ -762,7 +738,7 @@ local mega_beedrill = {
   name = "mega_beedrill", 
   pos = { x = 8, y = 0 },
   soul_pos = { x = 9, y = 0 },
-  config = {extra = {chips = 1000, rounds = 1}},
+  config = {extra = {chips = 800, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}
@@ -783,7 +759,6 @@ local mega_beedrill = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_beedrill")
   end
 }
 local pidgey={
@@ -890,7 +865,7 @@ local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
   soul_pos = { x = 11, y = 0 },
-  config = {extra = {Xmult = 0.05, rounds = 1}},
+  config = {extra = {plus_levels = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local total_levels = 0
@@ -899,31 +874,22 @@ local mega_pidgeot = {
         total_levels = total_levels + hand.level
       end
     end
-		return {vars = {center.ability.extra.Xmult, 1 + center.ability.extra.Xmult*total_levels}}
+		return {vars = {center.ability.extra.plus_levels}}
   end,
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",
   ptype = "Colorless",
   atlas = "Megas",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local total_levels = 0
-        for _, hand in pairs(G.GAME.hands) do
-          if hand.visible then
-            total_levels = total_levels + hand.level
-          end
-        end
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult*total_levels}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = 1 + card.ability.extra.Xmult*total_levels
-        }
-      end
+    if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
+      local text = context.consumeable.ability.hand_type
+      update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(text, 'poker_hands'),chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, 
+                        level = G.GAME.hands[text].level})
+      level_up_hand(card, text, nil, card.ability.extra.plus_levels)
+      update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
     end
-    return level_evo(self, card, context, "j_poke_pidgeot")
   end
 }
 local rattata={

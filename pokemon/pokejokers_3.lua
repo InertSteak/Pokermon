@@ -222,13 +222,11 @@ local mega_alakazam={
   name = "mega_alakazam", 
   pos = {x = 12, y = 0},
   soul_pos = { x = 13, y = 0},
-  config = {extra = {Xmult_mod = 2, odds = 1, card_limit = 1, rounds = 1}},
+  config = {extra = {Xmult_multi2 = 2, Xmult_multi = 1.5, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
-    local found_spoons = #find_joker('twisted_spoon')
-    return {vars = {center.ability.extra.Xmult_mod, 1 + center.ability.extra.Xmult_mod*found_spoons, center.ability.extra.card_limit}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.card_limit}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -237,17 +235,19 @@ local mega_alakazam={
   atlas = "Megas",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
-      local found_spoons = #find_joker('twisted_spoon')
-      if found_spoons > 0 then
+    if context.other_consumeable then
+        local Xmult = nil
+        if context.other_consumeable.ability.name == "twisted_spoon" then
+          Xmult = card.ability.extra.Xmult_multi2
+        else
+          Xmult = card.ability.extra.Xmult_multi
+        end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * found_spoons)}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.XMULT,
-          Xmult_mod = 1 + (card.ability.extra.Xmult_mod * found_spoons)
+          Xmult_mod = Xmult
         }
-      end
     end
-    return level_evo(self, card, context, "j_poke_alakazam")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.E_MANAGER:add_event(Event({func = function()
@@ -861,14 +861,11 @@ local mega_slowbro={
   name = "mega_slowbro", 
   pos = {x = 14, y = 0},
   soul_pos = { x = 0, y = 1},
-  config = {extra = {Xmult_mod = 1.5, Xmult = 1, cards_played = 0, rounds = 1}},
+  config = {extra = {Xmult_mod = 0.5, Xmult = 1, hands_played = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    local new_mult = center.ability.extra.Xmult
-    if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.PLAY_TAROT then
-      new_mult = new_mult * math.pow(center.ability.extra.Xmult_mod, center.ability.extra.cards_played)
-    end
-    return {vars = {center.ability.extra.Xmult_mod, new_mult}}
+    local xmult_total = center.ability.extra.Xmult
+    xmult_total = xmult_total + center.ability.extra.hands_played * center.ability.extra.Xmult_mod
+    return {vars = {center.ability.extra.Xmult_mod, xmult_total}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -877,30 +874,24 @@ local mega_slowbro={
   atlas = "Megas",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.cards_played = 0
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      card.ability.extra.cards_played = card.ability.extra.cards_played + 1
-      G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function ()
-          card:juice_up(0.1)
-          return true
-        end}))
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local new_mult = card.ability.extra.Xmult * math.pow(card.ability.extra.Xmult_mod, card.ability.extra.cards_played)
+        card.ability.extra.hands_played = card.ability.extra.hands_played + 1
+        local xmult_total = card.ability.extra.Xmult + (card.ability.extra.hands_played * card.ability.extra.Xmult_mod)
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {new_mult}}, 
-          colour = G.C.MULT,
-          mult_mod = new_mult
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult_total}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = xmult_total
         }
       end
+    elseif (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
+      card.ability.extra.hands_played = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
     end
-    return level_evo(self, card, context, "j_poke_slowbro")
-  end
+  end,
 }
 local magnemite={
   name = "magnemite", 
