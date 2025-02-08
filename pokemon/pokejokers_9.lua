@@ -53,13 +53,153 @@ local blissey={
   end
 }
 -- Raikou 243
+local raikou={
+  name = "raikou",
+  pos = {x = 1, y = 9}, 
+  soul_pos = {x = 2, y = 9},
+  config = {extra = {copies = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {1, center.ability.extra.copies}}
+  end,
+  rarity = 4,
+  cost = 20,
+  ptype = "Lightning",
+  stage = "Legendary",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function (self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.cardarea == G.jokers and context.before and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 then
+      local selected = context.full_hand[1]
+      for i = 1, 3 do
+        local copy = copy_card(selected, nil, nil, G.playing_card)
+        copy:set_ability(G.P_CENTERS.m_gold, nil, true)
+        copy:add_to_deck()
+        G.deck.config.card_limit = G.deck.config.card_limit + 1
+        table.insert(G.playing_cards, copy)
+        G.hand:emplace(copy)
+        copy.states.visible = nil
+
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                copy:start_materialize()
+                playing_card_joker_effects({copy})
+                return true
+            end
+        })) 
+      end
+    end
+  end
+}
 -- Entei 244
+local entei={
+  name = "entei",
+  pos = {x = 3, y = 9}, 
+  soul_pos = {x = 4, y = 9},
+  config = {extra = {Xmult = 1, Xmult_mod = 1, hand_size = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.hand_size, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = 4,
+  cost = 20,
+  ptype = "Fire",
+  stage = "Legendary",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function (self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.cardarea == G.jokers and context.before and #context.full_hand == card.ability.extra.hand_size and G.GAME.current_round.hands_played == 0 then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      local target = pseudorandom_element(context.full_hand, pseudoseed('entei'))
+      poke_remove_card(target, card)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end
+}
 -- Suicune 245
+local suicune={
+  name = "suicune",
+  pos = {x = 5, y = 9}, 
+  soul_pos = {x = 6, y = 9},
+  config = {extra = {chip_mod = 50}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chip_mod}}
+  end,
+  rarity = 4,
+  cost = 20,
+  ptype = "Water",
+  stage = "Legendary",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function (self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Bonus' then
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
+      return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card,
+          chips = card.ability.extra.chip_mod
+      }
+    end
+  end
+}
 -- Larvitar 246
 -- Pupitar 247
 -- Tyranitar 248
 -- Lugia 249
 -- Ho-oh 250
+local ho_oh={
+  name = "ho_oh",
+  pos = {x = 2, y = 10}, 
+  soul_pos = {x = 3, y = 10},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+  end,
+  rarity = 4,
+  cost = 20,
+  ptype = "Fire",
+  stage = "Legendary",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function (self, card, context)
+    if context.remove_playing_cards and context.removed then
+      for _, card in pairs(context.removed) do
+        local copy = copy_card(card, nil, nil, G.playing_card)
+        copy:set_edition({polychrome = true}, true)
+        copy:add_to_deck()
+        G.deck.config.card_limit = G.deck.config.card_limit + 1
+        table.insert(G.playing_cards, copy)
+        G.deck:emplace(copy)
+
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                playing_card_joker_effects({copy})
+                return true
+            end
+        })) 
+      end
+    end
+  end
+}
 -- Celebi 251
 -- Treecko 252
 local treecko={
@@ -629,5 +769,5 @@ local swampert={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {blissey, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {blissey, raikou, entei, suicune, ho_oh, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
 }

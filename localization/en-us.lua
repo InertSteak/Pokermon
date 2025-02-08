@@ -2073,6 +2073,39 @@ return {
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
                 } 
             },
+            j_poke_raikou = {
+                name = 'Raikou',
+                text = {
+                    "If the {C:attention}first hand{} of",
+                    "the round has only {C:attention}#1#{} card,",
+                    "create {C:attention}#2# Gold{} copies of it",
+                    "and draw them to your hand",
+                } 
+            },
+            j_poke_entei = {
+                name = 'Entei',
+                text = {
+                    "If the {C:attention}first hand{} of the",
+                    "round has exactly {C:attention}#1#{} cards,",
+                    "destroy one of them",
+                    "and gain {X:mult,C:white}X#3#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult)",
+                } 
+            },
+            j_poke_suicune = {
+                name = 'Suicune',
+                text = {
+                    "{C:attention}Bonus{} cards gain {C:chips}+#1#{} chips",
+                    "permanently when {C:attention}scored{}",
+                } 
+            },
+            j_poke_ho_oh = {
+                name = 'Ho-Oh',
+                text = {
+                    "When a card is {C:attention}destroyed{}",
+                    "add a {C:dark_edition}Polychrome{} copy of it to the deck",
+                } 
+            },
             j_poke_treecko = {
                 name = "Treecko",
                 text = {
