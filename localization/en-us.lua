@@ -2802,8 +2802,8 @@ return {
                 text = {
                     "{C:attention}Reusable{}",
                     "{C:attention}Mega Evolves{} a Pokemon", 
-                    "if able for {C:attention}1{} round",
-                    "Reverts evolution if sold",
+                    "or {C:attention}devolves{} a Mega",
+                    "Devolves Mega if sold",
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Useable once per round)",
                 },
