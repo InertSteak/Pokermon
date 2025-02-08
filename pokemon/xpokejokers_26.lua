@@ -28,8 +28,8 @@
 -- Mimikyu 778
 local mimikyu={
   name = "mimikyu",
-  pos = {x = 8, y = 12},
-  broke_pos = {x = 9, y = 12},
+  pos = {x = 2, y = 5},
+  broke_pos = {x = 3, y = 5},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
