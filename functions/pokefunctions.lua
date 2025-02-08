@@ -73,6 +73,7 @@ family = {
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
     {"mudkip", "marshtomp", "swampert"},
+    {"lotad","lombre","ludicolo"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
     {"elgyem", "beheeyem"},

@@ -359,6 +359,174 @@ energy_increase = function(card, etype)
   end
 end
 
+can_decrease_energy = function(card)
+  local curr_energy_count = nil
+  local curr_c_energy_count = nil
+  if card.ability.extra and type(card.ability.extra) == "table" then
+    curr_energy_count = card.ability.extra.energy_count or 0
+    curr_c_energy_count = card.ability.extra.c_energy_count or 0
+  else
+    curr_energy_count = card.ability.energy_count or 0
+    curr_c_energy_count = card.ability.c_energy_count or 0
+  end
+  return curr_energy_count + curr_c_energy_count > 0
+end
+
+un_energize = function(card)
+  local rounded = nil
+  local frac = nil
+  if type(card.ability.extra) == "table" then
+    for l, data in pairs(card.ability.extra) do
+      if type(data) == "number" then
+        for m, name in ipairs(energy_whitelist) do
+          if l == name then
+            local subtraction = energy_values[name]
+            local previous_mod = nil
+            local updated_mod = nil
+            if l == "mult_mod" or l == "chip_mod" then previous_mod = card.ability.extra[l] end
+            if (card.ability.extra.c_energy_count or 0) > 0 then
+              card.ability.extra[l] = data - (card.config.center.config.extra[l] * subtraction/2) * (card.ability.extra.escale or 1)
+            else
+              card.ability.extra[l] = data - (card.config.center.config.extra[l] * subtraction) * (card.ability.extra.escale or 1)
+            end
+            updated_mod = card.ability.extra[l]
+            rounded, frac = round_energy_value(card.ability.extra[l], l)
+            card.ability.extra[l] = rounded
+            if frac then
+              if l == "mult_mod" or l == "chip_mod" then
+                set_frac(card, frac, l, rounded > 0, updated_mod/previous_mod)
+              else
+                set_frac(card, frac, l, rounded > 0)
+              end
+              frac = nil
+            end
+          end
+        end
+      end
+    end
+    if (card.ability.extra.c_energy_count or 0) > 0 then
+      card.ability.extra.c_energy_count = card.ability.extra.c_energy_count - 1
+    else
+      card.ability.extra.energy_count = card.ability.extra.energy_count - 1
+    end
+  elseif type(card.ability.extra) == "number" then
+    local mults = {"Joker" , "Jolly Joker", "Zany Joker", "Mad Joker", "Crazy Joker", "Droll Joker", "Half Joker", "Mystic Summit", "Gros Michel", "Popcorn"}
+    local mult_mods = {"Greedy Joker", "Lusty Joker", "Wrathful Joker", "Gluttonous Joker", "Fibonacci", "Abstract Joker", "Even Steven", "Ride the Bus", "Green Joker", "Red Card", "Erosion",
+                       "Fortune Teller", "Pokedex", "Flash Card", "Spare Trousers", "Smiley Face", "Onyx Agate", "Shoot the Moon", "Bootstraps"}
+    local chipss = {"Sly Joker", "Wily Joker", "Clever Joker", "Devious Joker", "Crafty Joker", "Stuntman"}
+    local chip_mods = {"Banner", "Scary Face", "Odd Todd", "Runner", "Blue Joker", "Hiker", "Square Joker", "Stone Joker", "Bull", "Castle", "Arrowhead", "Wee Joker"}
+    local Xmults = {"Loyalty Card", "Blackboard", "Cavendish", "Card Sharp", "Ramen", "Acrobat", "Flower Pot", "Seeing Double", "The Duo", "The Trio", "The Family", "The Order", "The Tribe", 
+                    "Driver's License"}
+    local Xmult_mods = {"Joker Stencil", "Steel Joker", "Constellation", "Madness", "Vampire", "Hologram", "Baron", "Obelisk", "Photograph", "Lucky Cat", "Baseball Card", "Everstone", "Ancient Joker",
+                        "Campfire", "Throwback", "Bloodstone", "Glass Joker", "The Idol", "Hit the Road", "Canio", "Triboulet", "Yorick"}
+    local monies = {"Delayed Gratification", "Egg", "Cloud 9", "Rocket", "Gift Card", "Reserved Parking", "Mail-In Rebate", "To the Moon", "Golden Joker", "Trading Card", "Golden Ticket", "Rough Gem",
+                    "Satellite", "Matador"}
+    
+    local scoring_values = {mult = mults, mult_mod = mult_mods, chips = chipss, chip_mod = chip_mods, Xmult = Xmults, Xmult_mod = Xmult_mods, money = monies}
+    for k, v in pairs(scoring_values) do
+      for x, y in pairs(v) do
+        if card.ability.name == y then
+          local decrease = energy_values[k]
+          if (card.ability.c_energy_count or 0) > 0 then
+            decrease = decrease/2
+          end
+          card.ability.extra = card.ability.extra - (card.config.center.config.extra * decrease)
+        end
+      end
+    end
+    if (card.ability.c_energy_count or 0) > 0 then
+      card.ability.c_energy_count = card.ability.c_energy_count - 1
+    else
+      card.ability.energy_count = card.ability.energy_count - 1
+    end
+  else
+    local decrease = nil
+    if (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) then
+      decrease = energy_values.mult
+    elseif (card.ability.t_chips and card.ability.t_chips > 0) then
+      decrease = energy_values.chips
+    end
+    if decrease then
+      if (card.ability.c_energy_count or 0) > 0 then
+        decrease = decrease/2
+      end
+      if (card.ability.mult and card.ability.mult > 0) then
+        card.ability.mult = card.ability.mult - (card.config.center.config.mult * decrease)
+      end
+      if (card.ability.t_mult and card.ability.t_mult > 0) then
+        card.ability.t_mult = card.ability.t_mult - (card.config.center.config.t_mult * decrease)
+      end
+      if (card.ability.t_chips and card.ability.t_chips > 0) then
+        card.ability.t_chips = card.ability.t_chips - (card.config.center.config.t_chips * decrease)
+      end
+    end
+    if (card.ability.c_energy_count or 0) > 0 then
+      card.ability.c_energy_count = card.ability.c_energy_count - 1
+    else
+      card.ability.energy_count = card.ability.energy_count - 1
+    end
+  end
+  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_drained_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+end
+
+reset_energy = function(card)
+  if type(card.ability.extra) == "table" then
+    for l, data in pairs(card.ability.extra) do
+      if type(data) == "number" then
+        for m, name in ipairs(energy_whitelist) do
+          if l == name then
+            card.ability.extra[l] = card.config.center.config.extra[l]
+          end
+        end
+      end
+    end
+    card.ability.extra.c_energy_count = 0
+    card.ability.extra.energy_count = 0
+  elseif type(card.ability.extra) == "number" then
+    local mults = {"Joker" , "Jolly Joker", "Zany Joker", "Mad Joker", "Crazy Joker", "Droll Joker", "Half Joker", "Mystic Summit", "Gros Michel", "Popcorn"}
+    local mult_mods = {"Greedy Joker", "Lusty Joker", "Wrathful Joker", "Gluttonous Joker", "Fibonacci", "Abstract Joker", "Even Steven", "Ride the Bus", "Green Joker", "Red Card", "Erosion",
+                       "Fortune Teller", "Pokedex", "Flash Card", "Spare Trousers", "Smiley Face", "Onyx Agate", "Shoot the Moon", "Bootstraps"}
+    local chipss = {"Sly Joker", "Wily Joker", "Clever Joker", "Devious Joker", "Crafty Joker", "Stuntman"}
+    local chip_mods = {"Banner", "Scary Face", "Odd Todd", "Runner", "Blue Joker", "Hiker", "Square Joker", "Stone Joker", "Bull", "Castle", "Arrowhead", "Wee Joker"}
+    local Xmults = {"Loyalty Card", "Blackboard", "Cavendish", "Card Sharp", "Ramen", "Acrobat", "Flower Pot", "Seeing Double", "The Duo", "The Trio", "The Family", "The Order", "The Tribe", 
+                    "Driver's License"}
+    local Xmult_mods = {"Joker Stencil", "Steel Joker", "Constellation", "Madness", "Vampire", "Hologram", "Baron", "Obelisk", "Photograph", "Lucky Cat", "Baseball Card", "Everstone", "Ancient Joker",
+                        "Campfire", "Throwback", "Bloodstone", "Glass Joker", "The Idol", "Hit the Road", "Canio", "Triboulet", "Yorick"}
+    local monies = {"Delayed Gratification", "Egg", "Cloud 9", "Rocket", "Gift Card", "Reserved Parking", "Mail-In Rebate", "To the Moon", "Golden Joker", "Trading Card", "Golden Ticket", "Rough Gem",
+                    "Satellite", "Matador"}
+    
+    local scoring_values = {mult = mults, mult_mod = mult_mods, chips = chipss, chip_mod = chip_mods, Xmult = Xmults, Xmult_mod = Xmult_mods, money = monies}
+    for k, v in pairs(scoring_values) do
+      for x, y in pairs(v) do
+        if card.ability.name == y then
+          card.ability.extra = card.config.center.config.extra
+        end
+      end
+    end
+    card.ability.c_energy_count = 0
+    card.ability.energy_count = 0
+  else
+    if (card.ability.mult and card.ability.mult > 0) then
+      card.ability.mult = card.config.center.config.mul
+    end
+    if (card.ability.t_mult and card.ability.t_mult > 0) then
+      card.ability.t_mult = card.config.center.config.t_mult
+    end
+    if (card.ability.t_chips and card.ability.t_chips > 0) then
+      card.ability.t_chips = card.config.center.config.t_chips
+    end
+    card.ability.c_energy_count = 0
+    card.ability.energy_count = 0
+  end
+  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_drained_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+end
+
+energy_decrease = function(card)  
+  if can_decrease_energy(card) then
+    un_energize(card)
+  end
+end
+
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then

@@ -2172,6 +2172,35 @@ return {
                     "{C:inactive}(Curently {C:chips}+#4#{}{C:inactive} total)"
                 } 
             },
+            j_poke_lotad = {
+                name = "Lotad",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "{C:attention}Drain{} 1 {C:pink}Energy{} from a {X:water,C:white}Water{} Joker",
+                    "Gain {C:mult}+#1#{} mult per {C:pink}Energy{} consumed",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#2#{}{C:inactive,s:0.8} Mult)",
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                }
+            },
+            j_poke_lombre = {
+                name = "Lombre",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "{C:attention}Drain{} all {C:pink}Energy{} from adjacent {X:water,C:white}Water{} Jokers",
+                    "Gives {C:mult}+#1#{} mult per {C:pink}Energy{} consumed",
+                    "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Leaf Stone{}{C:inactive,s:0.8} card)",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                }
+            },
+            j_poke_ludicolo = {
+                name = "Ludicolo",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "give 1 {C:pink}Energy{} to adjacent Jokers",
+                    "Gains {X:mult,C:white}X#1#{} Mult per {C:pink}Energy{} given",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult)",
+                }
+            },
             j_poke_aron = {
                 name = 'Aron',
                 text = {
@@ -3392,6 +3421,7 @@ return {
             poke_metal_ex = "Metal!",
             poke_dragon_ex = "Dragon!",
             poke_energized_ex = "Energized!",
+            poke_drained_ex = "Drained!",
             poke_unlimited_energy = "Infinity",
 
             --Some infoqueue/variable stuff

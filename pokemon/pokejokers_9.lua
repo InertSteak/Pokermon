@@ -628,6 +628,55 @@ local swampert={
 -- Cascoon 268
 -- Dustox 269
 -- Lotad 270
+local lotad={
+  name = "lotad",
+  pos = {x = 8, y = 1},
+  config = {extra = {mult_mod = 3, evo_goal = 12, targets = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local curr_mult = center.ability.extra.mult_mod * center.ability.extra.targets
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.evo_goal, curr_mult}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local water_poke = find_pokemon_type("Water")
+      local to_drain = {}
+      for i,jkr in pairs(water_poke) do
+        if can_decrease_energy(jkr) then
+          table.insert(to_drain, jkr)
+        end
+      end
+      if #to_drain > 0 then
+        G.E_MANAGER:add_event(Event({
+          trigger = 'immediate',
+          func = function ()
+            card:juice_up(0.1)
+            return true
+          end}))
+        un_energize(pseudorandom_element(to_drain, pseudoseed('lotad')))
+        card.ability.extra.targets = card.ability.extra.targets + 1
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main and card.ability.extra.targets > 0 then
+      local curr_mult = card.ability.extra.mult_mod * card.ability.extra.targets
+      return {
+        message = localize{type = 'variable', key = 'a_mult', vars = {curr_mult}}, 
+        colour = G.C.MULT,
+        mult_mod = curr_mult
+      }
+    end
+    local curr_mult = card.ability.extra.mult_mod * card.ability.extra.targets
+    return scaling_evo(self, card, context, "j_poke_lombre", curr_mult, card.ability.extra.evo_goal)
+  end,
+}
 return {name = "Pokemon Jokers 240-270", 
-        list = {blissey, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {blissey, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, lotad},
 }
