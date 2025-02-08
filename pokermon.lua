@@ -406,3 +406,15 @@ function Card:set_edition(edition, immediate, silent)
   if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and (self.ability.set ~= 'Joker' and self.ability.set ~= 'Edition') then return end
   return set_edition(self, edition, immediate, silent)
 end
+
+--Add music tracks
+SMODS.Sound({
+	key = "music_miror_b_ludicolo",
+	path = "music_miror_b_ludicolo.ogg",
+	sync = false,
+	pitch = 1,
+	select_music_track = function()
+    -- return priority for tracks (ludicolo has effectively infinite priority)
+		return next(find_joker("ludicolo")) and not pokermon_config.mute_music and 1.57e308
+	end,
+})

@@ -9,7 +9,7 @@ local restart_toggles_right = {
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
-                          {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
+                          {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"},{ref_value = "mute_music", label = "poke_settings_mute_music"}}
  
 local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
                         {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"}, title = "Test", text = {"First Line", "Second Line"}}

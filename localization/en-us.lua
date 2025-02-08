@@ -3399,6 +3399,7 @@ return {
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
+            poke_settings_mute_music = "Disable Cards playing Music",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
