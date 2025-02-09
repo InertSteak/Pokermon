@@ -2714,8 +2714,8 @@ return {
                 text = {
                     "{C:mult}+#2#{} Mult for each",
                     "Joker with a {C:pink}Type{} you have",
-                    "{C:attention}Pokemon{} may appear",
-                    "multiple times",
+                    "{C:attention}Pokemon{} from the same", 
+                    "evolutionary line may appear",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                 } 
             },
