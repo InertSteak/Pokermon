@@ -44,6 +44,15 @@ SMODS.Rarity{
         return weight
     end,
 }
+SMODS.Rarity{
+    key = "egg",
+    default_weight = 0,
+    badge_colour = G.C.DARK_EDITION,
+    pools = {["Joker"] = true},
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+}
 
 --Load helper function files
 local helper, load_error = SMODS.load_file("functions/pokeutils.lua")

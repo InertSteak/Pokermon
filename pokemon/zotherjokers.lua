@@ -169,7 +169,7 @@ local mystery_egg = {
     type_tooltip(self, info_queue, center)
     return {vars = {}}
   end,
-  rarity = 1,
+  rarity = "poke_egg",
   cost = 0,
   stage = "Other",
   atlas = "others",
@@ -177,25 +177,30 @@ local mystery_egg = {
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-      card.ability.extra.rounds = card.ability.extra.rounds - 1
-      card:juice_up(0.1)
-      if card.ability.extra.rounds == 0 then
-        G.E_MANAGER:add_event(Event({trigger = 'immediate',
-          func = function()
-            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key})
-            _card:add_to_deck()
-            G.jokers:emplace(_card)
-          return true; end})) 
-      end
-    elseif true then
       local adjacent = 0
       local adjacent_jokers = poke_get_adjacent_jokers(center)
       for i = 1, #adjacent_jokers do
         if is_type(adjacent_jokers[1], "Fire") then adjacent = adjacent + 1 end
       end
-      local shake_chance = 0.1 * adjacent
-      if pseudorandom(pseudoseed('egg')) < shake_chance then
-        card:juice_up()
+      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
+      card:juice_up(0.1)
+      if card.ability.extra.rounds <= 0 then
+        G.E_MANAGER:add_event(Event({trigger = 'immediate',
+          func = function()
+            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key})
+            -- give it two chances to get an edition (to make it wortwhile)
+            if not _card.edition then
+              _card:set_edition(poll_edition('edi'..G.GAME.round_resets.ante))
+            end
+            _card:add_to_deck()
+            G.jokers:emplace(_card)
+            return true
+          end}))
+        remove(self, card, context)
+        return {
+            message = "CRACK!"
+        }
       end
     end
   end,
@@ -209,6 +214,14 @@ local mystery_egg = {
     elseif chance <= 0.70 then
       pokerarity = 2
     end
+
+    -- common hatches in 1.5 turns
+    -- uncommon hatches in 2 turns
+    -- rare hatches in 2.5 turns
+    -- Legendary hatches in 3 turns
+
+    -- fire drops turn count by 1/4 per fire adjacent (0.5 max per round)
+    card.ability.extra.rounds = 1 + pokerarity/2
 
     local poke_keys = {}
     for k, v in pairs(G.P_CENTERS) do
