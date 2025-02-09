@@ -291,7 +291,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Xilande, Mus, Lemmanade",
+                  text = "Xilande, Mus, Lemmanade, PrincessRoxie, Catzzadilla",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE

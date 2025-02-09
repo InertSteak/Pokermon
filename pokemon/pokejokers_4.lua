@@ -203,9 +203,6 @@ local mega_gengar ={
   atlas = "Megas",
   eternal_compat = false,
   blueprint_compat = false,
-  calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_gengar")
-  end,
 }
 local onix={
   name = "onix", 

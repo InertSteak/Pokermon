@@ -1231,6 +1231,10 @@ local mewtwo={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
+    if next(SMODS.find_card('c_poke_megastone')) then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
+    end
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
@@ -1283,9 +1287,92 @@ local mewtwo={
           Xmult_mod = card.ability.extra.Xmult_mod
         }
     end
+  end,
+  megas = {"mega_mewtwo_x","mega_mewtwo_y"},
+  getMega = function(self, card)
+    -- Leftmost = X, Rightmost = Y, Middle = Random
+    local mega = nil
+    for k, v in ipairs(G.jokers.cards) do
+      if card == v and k == 1 then
+        mega = self.megas[1]
+        break
+      elseif card == v and k == #G.jokers.cards then
+        mega = self.megas[2]
+      end
+    end
+    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
+    return mega
+  end
+}
+
+local mega_mewtwo_x = {
+  name = "mega_mewtwo_x",
+  pos = {x = 11, y = 1},
+  soul_pos = { x = 12, y = 1},
+  config = {extra = {Xmult_multi = 2.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Fighting",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.other_joker then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_multi
+        }
+    end
+  end
+}
+
+local mega_mewtwo_y = {
+  name = "mega_mewtwo_y",
+  pos = {x = 13, y = 1},
+  soul_pos = { x = 14, y = 1},
+  config = {extra = {Xmult_mod = 3, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Psychic",
+  atlas = "Megas",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.ending_shop and not context.blueprint then
+      local leftmost = G.jokers.cards[1]
+      if leftmost ~= card then
+        local _card = G.jokers.cards[1]
+        if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, _card.ability.extra.ptype)
+          end
+        elseif type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, type_sticker_applied(_card))
+          end
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 1
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 1
+      end
+    end
   end
 }
 
 return {name = "Pokemon Jokers 121-150", 
-        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, },
+        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }
