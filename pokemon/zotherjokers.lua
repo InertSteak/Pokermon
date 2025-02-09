@@ -169,7 +169,7 @@ local mystery_egg = {
     type_tooltip(self, info_queue, center)
     return {vars = {}}
   end,
-  rarity = "poke_egg",
+  rarity = 1,
   cost = 0,
   stage = "Other",
   atlas = "others",
@@ -226,8 +226,11 @@ local mystery_egg = {
     local poke_keys = {}
     for k, v in pairs(G.P_CENTERS) do
       if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and pokemon_in_pool(v) and not (v.stage and v.stage == "Other") then
-        if v.stage and (v.stage == "Basic" or v.stage == "Legendary" or v.stage == "Baby") and not (pokerarity and v.rarity ~= pokerarity) then
-          table.insert(poke_keys, v.key)
+        if v.stage and (v.stage == "Basic" or v.stage == "Legendary" or v.stage == "Baby")  then
+          print(v.key.. " - "..v.rarity)
+          if not (pokerarity and v.rarity ~= pokerarity) then
+            table.insert(poke_keys, v.key)
+          end
         end
       end
     end

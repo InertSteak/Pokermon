@@ -3436,7 +3436,6 @@ return {
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
-            k_poke_egg = "? ? ? ?",
 
             b_save = "SAVE",
             b_energy_cards = "Energy Cards",
