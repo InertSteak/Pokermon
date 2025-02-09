@@ -161,6 +161,72 @@ local jelly_donut={
   end
 }
 
+local mystery_egg = {
+  name = "mystery_egg",
+  pos = {x = 4, y = 0},
+  config = {extra = {key = nil, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 1,
+  cost = 0,
+  stage = "Other",
+  atlas = "others",
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
+      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      card:juice_up(0.1)
+      if card.ability.extra.rounds == 0 then
+        G.E_MANAGER:add_event(Event({trigger = 'immediate',
+          func = function()
+            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key})
+            _card:add_to_deck()
+            G.jokers:emplace(_card)
+          return true; end})) 
+      end
+    elseif true then
+      local adjacent = 0
+      local adjacent_jokers = poke_get_adjacent_jokers(center)
+      for i = 1, #adjacent_jokers do
+        if is_type(adjacent_jokers[1], "Fire") then adjacent = adjacent + 1 end
+      end
+      local shake_chance = 0.1 * adjacent
+      if pseudorandom(pseudoseed('egg')) < shake_chance then
+        card:juice_up()
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    local chance = pseudorandom(pseudoseed('egg'))
+    local pokerarity = 1
+    if chance <= 0.01 then
+      pokerarity = 4
+    elseif chance <= 0.11 then
+      pokerarity = 3
+    elseif chance <= 0.70 then
+      pokerarity = 2
+    end
+
+    local poke_keys = {}
+    for k, v in pairs(G.P_CENTERS) do
+      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and pokemon_in_pool(v) and not (v.stage and v.stage == "Other") then
+        if v.stage and (v.stage == "Basic" or v.stage == "Legendary" or v.stage == "Baby") and not (pokerarity and v.rarity ~= pokerarity) then
+          table.insert(poke_keys, v.key)
+        end
+      end
+    end
+
+    local poke_key = "j_poke_rhyhorn"
+    if #poke_keys > 0 then
+      poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
+    end
+    card.ability.extra.key = poke_key
+  end,
+}
+
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut}
+        list = {pokedex, everstone, tall_grass, jelly_donut, mystery_egg}
 }

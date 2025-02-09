@@ -2678,6 +2678,12 @@ return {
                   "{C:inactive}({C:attention}#1#{}{C:inactive} rounds remaining){}"
                 }
             },
+            j_poke_mystery_egg = {
+                name = "Mystery Egg",
+                text = {
+                  "{C:dark_edition}Anything could be inside...{}",
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
