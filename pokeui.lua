@@ -5,7 +5,7 @@ local restart_toggles_left = {
                 }
                 
 local restart_toggles_right = { 
-  {ref_value = "pokemon_num", label = "poke_settings_pokedex_number"}, {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
+  {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},

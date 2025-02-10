@@ -59,6 +59,10 @@ local gastly={
               local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
               local edition = {negative = true}
               eligible_card:set_edition(edition, true)
+            else
+              local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+              local edition = {negative = true}
+              eligible_card:set_edition(edition, true)
             end
           end
           
@@ -106,6 +110,10 @@ local haunter={
             end
             if #eligible_editionless_jokers > 0 then
               local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
+              local edition = {negative = true}
+              eligible_card:set_edition(edition, true)
+            else
+              local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
               local edition = {negative = true}
               eligible_card:set_edition(edition, true)
             end

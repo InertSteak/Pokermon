@@ -1145,11 +1145,17 @@ local raichu={
   atlas = "Pokedex1", 
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
-    if G.GAME.dollars >= card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative) then
+    local turn_neg = nil
+    if (SMODS.Mods["Talisman"] or {}).can_load then
+      turn_neg = to_big(G.GAME.dollars) >= to_big(card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1))) and not (card.edition and card.edition.negative)
+    else
+      turn_neg = G.GAME.dollars >= card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative)
+    end
+    if turn_neg then
       local edition = {negative = true}
       card:set_edition(edition, true)
     end
-    return ease_poke_dollars(card, "pikachu", math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money), true)
+    return ease_poke_dollars(card, "raichu", math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money), true)
 	end,
 }
 local sandshrew={
