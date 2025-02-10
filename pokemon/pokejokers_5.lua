@@ -226,12 +226,20 @@ local pinsir={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
-        if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[#G.hand.cards]:get_id() == context.full_hand[1]:get_id() then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
+        if G.hand and G.hand.cards then
+          local found_ranks = {}
+          for _,played_card in pairs(context.scoring_hand) do
+            found_ranks[played_card:get_id()] = true
+          end
+          for _,hand_card in pairs(G.hand.cards) do
+            if found_ranks[hand_card:get_id()] then
+              return {
+                message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+                colour = G.C.XMULT,
+                Xmult_mod = card.ability.extra.Xmult
+              }
+            end
+          end
         end
       end
     end
