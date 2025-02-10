@@ -228,7 +228,7 @@ local pinsir={
       if context.joker_main then
         if G.hand and G.hand.cards then
           local found_ranks = {}
-          for _,played_card in pairs(context.full_hand) do
+          for _,played_card in pairs(context.scoring_hand) do
             found_ranks[played_card:get_id()] = true
           end
           for _,hand_card in pairs(G.hand.cards) do

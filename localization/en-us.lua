@@ -1604,7 +1604,8 @@ return {
             j_poke_pinsir = {
                 name = 'Pinsir',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult if a {C:attention}played card{}",
+                    "{X:mult,C:white} X#1# {} Mult if a card",
+                    "scored in played hand",
                     "has the {C:attention}same rank{} as",
                     "a card {C:attention}held in hand{}"
                 } 
