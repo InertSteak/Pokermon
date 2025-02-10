@@ -178,22 +178,19 @@ local mega_venusaur = {
   ptype = "Grass",
   atlas = "Megas",
   blueprint_compat = true,
-  calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_venusaur")
-  end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      -- venusaur still exists, so 
-      G.hand:change_size(card.ability.extra.h_size-venusaur.config.extra.h_size)
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          if G.STATE == G.STATES.SELECTING_HAND then
-            G.FUNCS.draw_from_deck_to_hand()
+      local previous_card_limit = G.hand.config.card_limit
+      G.hand:change_size(card.ability.extra.h_size)
+      local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
+      delay(0.3)
+      for i=1, hand_space do --draw cards from deck
+          if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+          else
+              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
           end
-          G.hand:change_size(venusaur.config.extra.h_size)
-          return true
-        end
-      }))
+      end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
