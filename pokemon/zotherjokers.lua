@@ -161,6 +161,44 @@ local jelly_donut={
   end
 }
 
+function is_egg_helper(card)
+  local name = ''
+  if not card.name and card.ability.name then
+    name = card.ability.name
+  end
+  if name == "rolycoly" or name == "carkol" or name == "coalossal" then
+    --print("STEAM ENGINE")
+    return true
+  elseif name == "slugma" or name == "magcargo" or name == "camerupt" then
+    --print("MAGMA ARMOR")
+    return true
+  elseif name == "magby" or name == "magmar" or name == "magmortar" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "litwick" or name == "lampent" or name == "chandelure" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "larvesta" or name == "volcarona" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "fletchinder" or name == "talonflame" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "sizzlipede" or name == "centiskorch" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "moltres" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "heatran" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "charcadet" then
+    --print("FLAME BODY")
+    return true
+  end
+end
+
 local mystery_egg = {
   name = "mystery_egg",
   pos = {x = 4, y = 0},
@@ -170,22 +208,27 @@ local mystery_egg = {
     return {vars = {}}
   end,
   rarity = 1,
-  cost = 0,
+  cost = 1,
   stage = "Other",
   atlas = "others",
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
+    if context.first_hand_drawn then
       local adjacent = 0
-      local adjacent_jokers = poke_get_adjacent_jokers(center)
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[1], "Fire") then adjacent = adjacent + 1 end
+        if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
       end
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
-      card:juice_up(0.1)
       if card.ability.extra.rounds <= 0 then
+        local eval = function(card) return not card.REMOVED end
+        juice_card_until(card, eval, true)
+      end
+    elseif context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
+      if card.ability.extra.rounds <= 0 then
+        card.ability.extra.rounds = 99
         G.E_MANAGER:add_event(Event({trigger = 'immediate',
           func = function()
             local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key})
@@ -194,10 +237,16 @@ local mystery_egg = {
               _card:set_edition(poll_edition('edi'..G.GAME.round_resets.ante))
             end
             _card:add_to_deck()
-            G.jokers:emplace(_card)
+            local loc = 1
+            for i,jkr in ipairs(G.jokers.cards) do
+              if jkr == card then
+                loc = i
+              end
+            end
+            remove(self, card, context)
+            G.jokers:emplace(_card, loc)
             return true
           end}))
-        remove(self, card, context)
         return {
             message = "CRACK!"
         }
@@ -206,40 +255,35 @@ local mystery_egg = {
   end,
   add_to_deck = function(self, card, from_debuff)
     local chance = pseudorandom(pseudoseed('egg'))
-    local pokerarity = 1
+    local pokerarity = 1 -- not legendary
     if chance <= 0.01 then
+      -- yes legendary
       pokerarity = 4
-    elseif chance <= 0.11 then
-      pokerarity = 3
-    elseif chance <= 0.70 then
-      pokerarity = 2
     end
-
-    -- common hatches in 1.5 turns
-    -- uncommon hatches in 2 turns
-    -- rare hatches in 2.5 turns
-    -- Legendary hatches in 3 turns
-
-    -- fire drops turn count by 1/4 per fire adjacent (0.5 max per round)
-    card.ability.extra.rounds = 1 + pokerarity/2
 
     local poke_keys = {}
     for k, v in pairs(G.P_CENTERS) do
-      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and pokemon_in_pool(v) and not (v.stage and v.stage == "Other") then
-        if v.stage and (v.stage == "Basic" or v.stage == "Legendary" or v.stage == "Baby")  then
-          print(v.key.. " - "..v.rarity)
-          if not (pokerarity and v.rarity ~= pokerarity) then
-            table.insert(poke_keys, v.key)
-          end
+      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
+        if ((v.stage == "Baby" or v.stage == "Basic") and pokerarity ~= 4) or (v.stage == "Legendary" and pokerarity == 4) then
+          table.insert(poke_keys, {key = v.key, rarity = v.rarity})
         end
       end
     end
 
-    local poke_key = "j_poke_rhyhorn"
+    local poke_key = {key = "j_poke_rhyhorn", rarity = 2}
     if #poke_keys > 0 then
       poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
     end
-    card.ability.extra.key = poke_key
+    -- common hatches in 2 turns
+    -- uncommon hatches in 2.5 turns
+    -- rare hatches in 3 turns
+    -- Legendary hatches in 3.5 turns
+
+    -- w/o fire = 2/3/3/4
+    -- w/1 fire = 2/2/3/3
+    -- w/2 fire = 2/2/2/3
+    card.ability.extra.rounds = 1.5 + poke_key.rarity / 2
+    card.ability.extra.key = poke_key.key
   end,
 }
 
