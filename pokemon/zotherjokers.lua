@@ -231,11 +231,8 @@ local mystery_egg = {
         card.ability.extra.rounds = 99
         G.E_MANAGER:add_event(Event({trigger = 'immediate',
           func = function()
-            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key})
-            -- give it two chances to get an edition (to make it wortwhile)
-            if not _card.edition then
-              _card:set_edition(poll_edition('edi'..G.GAME.round_resets.ante))
-            end
+            -- if edition is nil, it'll try again for an edition
+            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key, edition = card.edition})
             _card:add_to_deck()
             local loc = 1
             for i,jkr in ipairs(G.jokers.cards) do
