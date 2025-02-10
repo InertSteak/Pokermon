@@ -422,6 +422,9 @@ ease_poke_dollars = function(card, seed, amt, calc_only)
       end
     end
   end
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    earned = to_number(earned)
+  end
   if not calc_only then ease_dollars(earned) end
   return earned
 end

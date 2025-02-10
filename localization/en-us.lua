@@ -1655,10 +1655,10 @@ return {
             j_poke_pinsir = {
                 name = 'Pinsir',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult if {C:attention}leftmost{}",
-                    "card of played hand is the",
-                    "same {C:attention}rank{} as {C:attention}rightmost{}",
-                    "card held in hand"
+                    "{X:mult,C:white} X#1# {} Mult if a card",
+                    "scored in played hand",
+                    "has the {C:attention}same rank{} as",
+                    "a card {C:attention}held in hand{}"
                 } 
             },
             j_poke_tauros = {
@@ -2714,8 +2714,8 @@ return {
                 text = {
                     "{C:mult}+#2#{} Mult for each",
                     "Joker with a {C:pink}Type{} you have",
-                    "{C:attention}Pokemon{} may appear",
-                    "multiple times",
+                    "{C:attention}Pokemon{} from the same", 
+                    "evolutionary line may appear",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                 } 
             },

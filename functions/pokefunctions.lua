@@ -899,7 +899,7 @@ add_target_cards_to_vars = function(vars, targets)
   end
 end
 
-find_other_poke_or_energy_type = function(card, poke_type)
+find_other_poke_or_energy_type = function(card, poke_type, count_self)
   local energy = nil
   local type_count = 0
   if string.lower(poke_type) == "dark" then
@@ -908,7 +908,7 @@ find_other_poke_or_energy_type = function(card, poke_type)
     energy = string.lower(poke_type).."_energy"
   end
   type_count = #find_pokemon_type(poke_type)
-  if is_type(card, poke_type) then
+  if is_type(card, poke_type) and not count_self then
     type_count = type_count - 1
   end
   
