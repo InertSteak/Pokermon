@@ -3398,57 +3398,65 @@ return {
             p_poke_pokepack_normal_1 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_2 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_jumbo_1 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_mega_1 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_3 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_4 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_jumbo_2 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_mega_2 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
         },
