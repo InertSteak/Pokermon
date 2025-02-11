@@ -9,7 +9,7 @@ local pocket_tag = {
 	min_ante = 2,
   discovered = true,
 	loc_vars = function(self, info_queue)
-		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_mega_1", specific_vars = { 2, 5 } }
+		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_mega_1", specific_vars = { 2, 5, 1} }
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)

@@ -4,7 +4,7 @@ local create_energy = function(self, card)
     local energy_types = {}
     for l, v in pairs(G.jokers.cards) do
       local match = matching_energy(v)
-      if match then
+      if match and not next(SMODS.find_card(match)) then
         table.insert(energy_types, match)
       end
     end
@@ -17,15 +17,22 @@ local create_energy = function(self, card)
 end
 
 local create_item = function(self, card)
+  local item_key = nil
   local evo_item_chance = pseudorandom(pseudoseed('match'))
   if evo_item_chance > .92 then
     local evo_item_keys = {}
     for k, v in pairs(G.jokers.cards) do
       if v.config.center.item_req then
         if type(v.config.center.item_req) == "table" then
-          table.insert(evo_item_keys, "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match')))
+          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
+          if not next(SMODS.find_card(item_key)) then
+            table.insert(evo_item_keys, item_key)
+          end
         else
-          table.insert(evo_item_keys, "c_poke_"..v.config.center.item_req)
+          item_key = "c_poke_"..v.config.center.item_req
+          if not next(SMODS.find_card(item_key)) then
+            table.insert(evo_item_keys, item_key)
+          end
         end
       end
     end
