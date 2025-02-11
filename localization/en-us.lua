@@ -2748,7 +2748,13 @@ return {
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
                 text = {
-                  "{C:dark_edition}Anything could be inside...{}",
+                    "This Egg needs more time to hatch.",
+                    "Keep it secret. Keep it safe.",
+                    "It looks cold and lonely.",
+                    "Follow that egg!",
+                    "Is it supposed to glow?",
+                    "I wonder what's inside?",
+                    "It moves around inside sometimes.",
                 }
             },
         },

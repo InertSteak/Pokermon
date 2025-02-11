@@ -203,10 +203,6 @@ local mystery_egg = {
   name = "mystery_egg",
   pos = {x = 4, y = 0},
   config = {extra = {key = nil, rounds = 3}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {}}
-  end,
   rarity = 1,
   cost = 1,
   stage = "Other",
@@ -281,6 +277,18 @@ local mystery_egg = {
     -- w/2 fire = 2/2/2/3
     card.ability.extra.rounds = 1.5 + poke_key.rarity / 2
     card.ability.extra.key = poke_key.key
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+    local egg_messages = localize({ type = "raw_descriptions", set = _c.set, key = _c.key })
+    local main_start = {
+      {n=G.UIT.O, config={object = DynaText({string = egg_messages,
+      colours = {G.C.DARK_EDITION},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 2.5, scale = 0.32, min_cycle_time = 0})}},
+    }
+    desc_nodes[#desc_nodes+1] = main_start
   end,
 }
 
