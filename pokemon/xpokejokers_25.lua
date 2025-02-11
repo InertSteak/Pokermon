@@ -130,7 +130,7 @@ local oricorio = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-		return {vars = {card.ability.extra.Xmult, card.ability.extra.suit_string, card.ability.extra.suit}}
+		return {vars = {card.ability.extra.Xmult, localize(card.ability.extra.suit_string, 'suits_plural'), colours = {G.C.SUITS[card.ability.extra.suit_string]}}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

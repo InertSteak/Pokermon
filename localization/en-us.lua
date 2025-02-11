@@ -2584,7 +2584,7 @@ return {
                 name = 'Oricorio',
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{}",
-                    "contains a {C:attention}Flush{} with {C:attention}#2#{}",
+                    "contains a {C:attention}Flush{} with {V:1}#2#{}",
                     "Changes form if {C:attention}played hand{}",
                     "contains a {C:attention}different Flush{}",
                 }
