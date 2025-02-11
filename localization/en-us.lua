@@ -2584,9 +2584,9 @@ return {
                 name = 'Oricorio',
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{}",
-                    "contains a {C:attention}Flush{} with only {C:attention}#2#{}",
+                    "contains a {C:attention}Flush{} with {C:attention}#2#{}",
                     "Changes form if {C:attention}played hand{}",
-                    "contains a {C:attention}Flush{} of a {C:attention}different suit{}",
+                    "contains a {C:attention}different Flush{}",
                 }
             },
             j_poke_mimikyu = {

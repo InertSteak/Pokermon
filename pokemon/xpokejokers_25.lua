@@ -116,11 +116,12 @@ local vikavolt={
 }
 -- Crabrawler 739
 -- Crabominable 740
+local oricorio_suit_table = {Hearts = {suit = 0, type = "Fire"}, Clubs = {suit = 1, type = "Lightning"}, Diamonds = {suit = 2, type = "Psychic"}, Spades = {suit = 3, type = "Psychic"}}
 -- Oricorio 741
 local oricorio = {
   name = "oricorio",
   pos = {x = 5, y = 1}, 
-  config = {extra = {Xmult = 3, suit_string = "Hearts", suit = 0}},
+  config = {extra = {Xmult = 4, suit_string = "Hearts", suit = 0}},
   rarity = 3,
   cost = 10,
   stage = "Basic",
@@ -132,12 +133,33 @@ local oricorio = {
 		return {vars = {card.ability.extra.Xmult, card.ability.extra.suit_string, card.ability.extra.suit}}
   end,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card:juice_up(0.1)
-      card.ability.extra.suit_string = "Clubs"
-      card.ability.extra.suit = 1
-      card.ability.extra.ptype = "Lightning"
-      update_pokemon_form_sprites(card)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['Flush']) then
+        local other_suit = nil
+        for _, played_card in pairs(context.scoring_hand) do
+          if card.ability.extra.suit_string ~= played_card.base.suit and played_card.config.center_key ~= "m_wild" then
+            other_suit = played_card.base.suit
+          end
+        end
+        if not other_suit then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        else
+          
+          card.ability.extra.suit_string = other_suit
+          local new_form = oricorio_suit_table[other_suit]
+          card.ability.extra.suit = new_form.suit
+          card.ability.extra.ptype = new_form.type
+    			G.E_MANAGER:add_event(Event({ func = function()
+            update_pokemon_form_sprites(card)
+            card:juice_up(0.1)
+            return true
+          end }))
+        end
+      end
     end
   end
 }

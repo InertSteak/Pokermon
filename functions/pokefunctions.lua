@@ -991,7 +991,6 @@ end
 
 update_pokemon_form_sprites = function(card)
   -- filter out any playing cards, consumables, and non-pokermon jokers
-  print(string.sub(card.config.center_key,1,7),string.sub(card.config.center_key,7) == "j_poke_")
   if string.sub(card.config.center_key,1,7) == "j_poke_" then
     -- Oricorio (Hearts, Clubs, Diamonds, Spades) == (5,6,7,8)
     if card.config.center_key == "j_poke_oricorio" then
