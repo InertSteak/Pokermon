@@ -2755,6 +2755,7 @@ return {
                     "Is it supposed to glow?",
                     "I wonder what's inside?",
                     "It moves around inside sometimes.",
+                    "It's a secret to everybody.",
                 }
             },
         },
