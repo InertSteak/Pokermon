@@ -314,7 +314,9 @@ target = "functions/common_events.lua"
 pattern = "local edition = poll_edition('edi'..(key_append or '')..G.GAME.round_resets.ante)"
 position = "after"
 payload = '''
-if edition and ((area == G.shop_jokers) or (area == G.pack_cards)) and next(SMODS.find_card('j_poke_mega_gengar')) then
+if edition and ((area == G.shop_jokers) or (area == G.pack_cards)) and next(SMODS.find_card('j_poke_mega_gengar')) and edition == "e_polychrome" then
+  sendDebugMessage(edition)
+  sendDebugMessage(inspect(edition))
   edition = {negative = true}
 end
 '''

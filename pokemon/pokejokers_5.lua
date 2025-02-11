@@ -226,14 +226,47 @@ local pinsir={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
       if context.joker_main then
-        if G.hand and G.hand.cards and #G.hand.cards > 0 and G.hand.cards[#G.hand.cards]:get_id() == context.full_hand[1]:get_id() then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
+        if G.hand and G.hand.cards then
+          local found_ranks = {}
+          for _,played_card in pairs(context.scoring_hand) do
+            found_ranks[played_card:get_id()] = true
+          end
+          for _,hand_card in pairs(G.hand.cards) do
+            if found_ranks[hand_card:get_id()] then
+              return {
+                message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+                colour = G.C.XMULT,
+                Xmult_mod = card.ability.extra.Xmult
+              }
+            end
+          end
         end
       end
+    end
+  end,
+  megas = {"mega_pinsir"}
+}
+local mega_pinsir={
+  name = "mega_pinsir", 
+  pos = {x = 5, y = 1},
+  soul_pos = {x = 6, y = 1},
+  config = {extra = {Xmult_multi = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Grass",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.c_base then
+        return {
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
     end
   end
 }
@@ -351,6 +384,53 @@ local gyarados={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
+    end
+  end,
+  megas = {"mega_gyarados"}
+}
+local mega_gyarados={
+  name = "mega_gyarados", 
+  pos = {x = 7, y = 1},
+  soul_pos = { x = 8, y = 1 },
+  config = {extra = {Xmult = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Water",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.setting_blind and not self.getting_sliced then
+      if not context.blueprint and context.blind.boss and not self.getting_sliced then
+          G.E_MANAGER:add_event(Event({func = function()
+              G.E_MANAGER:add_event(Event({func = function()
+                  G.GAME.blind:disable()
+                  play_sound('timpani')
+                  delay(0.4)
+                  return true end }))
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+          return true end }))
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+      G.GAME.blind:disable()
+      play_sound('timpani')
+      card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
     end
   end
 }
@@ -960,6 +1040,49 @@ local aerodactyl={
       end
     end
   end,
+  megas = {"mega_aerodactyl"}
+}
+local mega_aerodactyl={
+  name = "mega_aerodactyl", 
+  pos = {x = 9, y = 1},
+  soul_pos = { x = 10, y = 1 },
+  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 2}},
+  loc_vars = function(self, info_queue, center)
+     type_tooltip(self, info_queue, center)
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, 
+                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega",
+  ptype = "Earth",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 14 then
+      if pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      end
+      return { 
+        x_mult = card.ability.extra.Xmult_multi * card.ability.extra.aces,
+        card = card
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local aces = 0
+        for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
+        end
+        card.ability.extra.aces = aces
+      end
+      if context.after then
+        card.ability.extra.aces = 0
+      end
+    end
+    if context.destroying_card and pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return not context.blueprint and context.destroying_card:get_id() == 14
+    end
+  end,
 }
 local snorlax={
   name = "snorlax", 
@@ -1088,7 +1211,13 @@ local zapdos={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = 1 + card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
-        if Xmult > 1 then
+        local can_score = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          can_score = to_big(Xmult) > to_big(1)
+        else
+          can_score = Xmult > 1
+        end
+        if can_score then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
             colour = G.C.MULT,
@@ -1231,6 +1360,10 @@ local mewtwo={
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
+    if next(SMODS.find_card('c_poke_megastone')) then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
+    end
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = 4, 
@@ -1283,9 +1416,92 @@ local mewtwo={
           Xmult_mod = card.ability.extra.Xmult_mod
         }
     end
+  end,
+  megas = {"mega_mewtwo_x","mega_mewtwo_y"},
+  getMega = function(self, card)
+    -- Leftmost = X, Rightmost = Y, Middle = Random
+    local mega = nil
+    for k, v in ipairs(G.jokers.cards) do
+      if card == v and k == 1 then
+        mega = self.megas[1]
+        break
+      elseif card == v and k == #G.jokers.cards then
+        mega = self.megas[2]
+      end
+    end
+    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
+    return mega
+  end
+}
+
+local mega_mewtwo_x = {
+  name = "mega_mewtwo_x",
+  pos = {x = 11, y = 1},
+  soul_pos = { x = 12, y = 1},
+  config = {extra = {Xmult_multi = 2.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Fighting",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.other_joker then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_multi
+        }
+    end
+  end
+}
+
+local mega_mewtwo_y = {
+  name = "mega_mewtwo_y",
+  pos = {x = 13, y = 1},
+  soul_pos = { x = 14, y = 1},
+  config = {extra = {Xmult_mod = 3, rounds = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_mega",
+  cost = 30,
+  stage = "Mega",
+  ptype = "Psychic",
+  atlas = "Megas",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.ending_shop and not context.blueprint then
+      local leftmost = G.jokers.cards[1]
+      if leftmost ~= card then
+        local _card = G.jokers.cards[1]
+        if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, _card.ability.extra.ptype)
+          end
+        elseif type_sticker_applied(_card) then
+          for i = 1, 2 do
+            energy_increase(_card, type_sticker_applied(_card))
+          end
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
+      if not G.GAME.energy_plus then
+        G.GAME.energy_plus = 1
+      else
+        G.GAME.energy_plus = G.GAME.energy_plus + 1
+      end
+    end
   end
 }
 
 return {name = "Pokemon Jokers 121-150", 
-        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, },
+        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, mega_pinsir, tauros, taurosh, magikarp, gyarados, mega_gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon,                 omanyte, omastar, kabuto, kabutops, aerodactyl, mega_aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }
