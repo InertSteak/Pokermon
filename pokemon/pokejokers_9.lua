@@ -61,6 +61,24 @@ local blissey={
 -- Lugia 249
 -- Ho-oh 250
 -- Celebi 251
+local celebi = {
+  name = "celebi", 
+  pos = {x = 4, y = 10},
+  soul_pos = { x = 5, y = 10},
+  config = {extra = {skips_needed = 4, reward = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.skips_needed, card.ability.extra.reward}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
 -- Treecko 252
 local treecko={
   name = "treecko",
@@ -629,5 +647,5 @@ local swampert={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {blissey, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
 }

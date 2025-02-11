@@ -2175,6 +2175,13 @@ return {
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/{C:attention}#1#{}{C:inactive})"
                 } 
             },
+            j_poke_celebi = {
+                name = "Celebi",
+                text = {
+                    "Decrease {C:attention}Ante{} by #2# for",
+                    "every #1# {C:attention}Blinds{} skipped",
+                } 
+            },
             j_poke_treecko = {
                 name = "Treecko",
                 text = {
