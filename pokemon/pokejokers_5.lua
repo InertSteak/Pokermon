@@ -253,6 +253,7 @@ local mega_pinsir={
   config = {extra = {Xmult_multi = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_mega", 
@@ -367,6 +368,7 @@ local gyarados={
   config = {extra = {Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
@@ -982,6 +984,7 @@ local aerodactyl={
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
+     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
