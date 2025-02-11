@@ -148,11 +148,7 @@ local oricorio = {
             Xmult_mod = card.ability.extra.Xmult
           }
         else
-          
-          card.ability.extra.suit_string = other_suit
-          local new_form = oricorio_suit_table[other_suit]
-          card.ability.extra.suit = new_form.suit
-          card.ability.extra.ptype = new_form.type
+          self.update_form(card,other_suit)
     			G.E_MANAGER:add_event(Event({ func = function()
             update_pokemon_form_sprites(card)
             card:juice_up(0.1)
@@ -161,6 +157,12 @@ local oricorio = {
         end
       end
     end
+  end,
+  update_form = function(self, form)
+    self.ability.extra.suit_string = form
+    local new_form = oricorio_suit_table[form]
+    self.ability.extra.suit = new_form.suit
+    self.ability.extra.ptype = new_form.type
   end
 }
 -- Cutiefly 742
