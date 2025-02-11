@@ -1353,9 +1353,9 @@ return {
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "{C:attention}Editioned{} Jokers that appear",
+                    "{C:dark_edition}Polychrome{} Jokers that would appear",
                     "in the {C:attention}Shop{} and {C:attention}Booster Packs{}",
-                    "are always {C:dark_edition}Negative{}",
+                    "are {C:dark_edition}Negative{} instead",
                 } 
             },
             j_poke_onix = {
@@ -1552,6 +1552,16 @@ return {
                     "{C:chips}-#2#{} hands",
                 } 
             },
+            j_poke_mega_kangaskhan = {
+                name = 'Mega Kangaskhan',      
+                text = {
+                    "Retrigger all cards played",
+                    "Create a {C:attention}Double Tag{} at",
+                    "end of round if at least",
+                    "{C:attention}#1# Consumables{} used this round",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive} Consumables used){}"
+                } 
+            },
             j_poke_horsea = {
                 name = 'Horsea',      
                 text = {
@@ -1661,6 +1671,13 @@ return {
                     "a card {C:attention}held in hand{}"
                 } 
             },
+            j_poke_mega_pinsir = {
+                name = 'Mega Pinsir',
+                text = {
+                    "Played {C:attention}unenhanced{} cards",
+                    "give {X:mult,C:white} X#1# {} Mult when scored",
+                } 
+            },
             j_poke_tauros = {
                 name = 'Tauros (Leader)',
                 text = {
@@ -1688,6 +1705,14 @@ return {
                 name = 'Gyarados',
                 text = {
                     "{X:red,C:white} X#1# {} Mult",
+                } 
+            },
+            j_poke_mega_gyarados = {
+                name = 'Mega Gyarados',
+                text = {
+                    "{X:red,C:white} X#1# {} Mult",
+                    "Disables effect of",
+                    "every {C:attention}Boss Blind{}"
                 } 
             },
             j_poke_lapras = {
@@ -1804,6 +1829,16 @@ return {
                     "{X:attention,C:white}Two{} : {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
                     "{X:attention,C:white}Three{} : {X:red,C:white}X#5#{} Mult",
                     "{X:attention,C:white}Four+{} : This Joker scores {C:attention}double{} its scoring values"
+                } 
+            },
+            j_poke_mega_aerodactyl = {
+                name = 'Mega Aerodactyl',
+                text = {
+                    "Played {C:attention}#1#s{} give",
+                    "{X:mult,C:white} X#2# {} Mult for each {C:attention}#1#{} in",
+                    "played hand when scored",
+                    "{C:green}#3# in #4#{} chance for each",
+                    "played {C:attention}#1#{} to be destroyed",
                 } 
             },
             j_poke_snorlax = {
@@ -2803,8 +2838,7 @@ return {
                     "{C:attention}Reusable{}",
                     "{C:attention}Mega Evolves{} a Pokemon", 
                     "or {C:attention}devolves{} a Mega",
-                    "Devolves Mega if sold",
-                    "{C:attention}Evolution Card{}",
+                    "{C:attention}Devolves{} Mega if sold",
                     "{C:inactive}(Useable once per round)",
                 },
             },
@@ -3104,11 +3138,12 @@ return {
                     "Joker creation"
                 }
             },
-            mega_evo = {
-                name = "Mega Evolution",
+            mega_rule = {
+                name = "Restriction",
                 text = {
-                    "Can {C:attention}devolve{}",
-                    "with a {C:attention}Mega Stone{}"
+                    "Only 1 Joker can",
+                    "{C:attention}Mega Evolve{} per",
+                    "{C:attention}Mega Stone{} you have"
                 }
             },
             mega_poke = {
@@ -3118,6 +3153,12 @@ return {
                     "with a {C:attention}Mega Stone{}"
                 }
             },
+            mega_used_on = {
+                name = "Used On",
+                text = {
+                    "{C:attention}#1#{}",
+                }
+            }, 
             split_mega = {
                 name = "XY Mega",
                 text = {

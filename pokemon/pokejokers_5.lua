@@ -243,6 +243,31 @@ local pinsir={
         end
       end
     end
+  end,
+  megas = {"mega_pinsir"}
+}
+local mega_pinsir={
+  name = "mega_pinsir", 
+  pos = {x = 5, y = 1},
+  soul_pos = {x = 6, y = 1},
+  config = {extra = {Xmult_multi = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Grass",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.c_base then
+        return {
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
+    end
   end
 }
 local tauros={
@@ -359,6 +384,53 @@ local gyarados={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
+    end
+  end,
+  megas = {"mega_gyarados"}
+}
+local mega_gyarados={
+  name = "mega_gyarados", 
+  pos = {x = 7, y = 1},
+  soul_pos = { x = 8, y = 1 },
+  config = {extra = {Xmult = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Water",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.setting_blind and not self.getting_sliced then
+      if not context.blueprint and context.blind.boss and not self.getting_sliced then
+          G.E_MANAGER:add_event(Event({func = function()
+              G.E_MANAGER:add_event(Event({func = function()
+                  G.GAME.blind:disable()
+                  play_sound('timpani')
+                  delay(0.4)
+                  return true end }))
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+          return true end }))
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+      G.GAME.blind:disable()
+      play_sound('timpani')
+      card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
     end
   end
 }
@@ -968,6 +1040,49 @@ local aerodactyl={
       end
     end
   end,
+  megas = {"mega_aerodactyl"}
+}
+local mega_aerodactyl={
+  name = "mega_aerodactyl", 
+  pos = {x = 9, y = 1},
+  soul_pos = { x = 10, y = 1 },
+  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 2}},
+  loc_vars = function(self, info_queue, center)
+     type_tooltip(self, info_queue, center)
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, 
+                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega",
+  ptype = "Earth",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 14 then
+      if pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      end
+      return { 
+        x_mult = card.ability.extra.Xmult_multi * card.ability.extra.aces,
+        card = card
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local aces = 0
+        for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
+        end
+        card.ability.extra.aces = aces
+      end
+      if context.after then
+        card.ability.extra.aces = 0
+      end
+    end
+    if context.destroying_card and pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return not context.blueprint and context.destroying_card:get_id() == 14
+    end
+  end,
 }
 local snorlax={
   name = "snorlax", 
@@ -1096,7 +1211,13 @@ local zapdos={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = 1 + card.ability.extra.Xmult*math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0))/card.ability.extra.money_threshold)
-        if Xmult > 1 then
+        local can_score = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          can_score = to_big(Xmult) > to_big(1)
+        else
+          can_score = Xmult > 1
+        end
+        if can_score then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
             colour = G.C.MULT,
@@ -1382,5 +1503,5 @@ local mega_mewtwo_y = {
 }
 
 return {name = "Pokemon Jokers 121-150", 
-        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, tauros, taurosh, magikarp, gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon, omanyte, omastar, kabuto, kabutops,                 aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
+        list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, mega_pinsir, tauros, taurosh, magikarp, gyarados, mega_gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon,                 omanyte, omastar, kabuto, kabutops, aerodactyl, mega_aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }

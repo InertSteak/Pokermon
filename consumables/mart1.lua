@@ -535,7 +535,10 @@ local megastone = {
   config = {extra = {previous_round = 0, used_on = nil}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
-    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
+    if center.ability.extra.used_on then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = center.ability.extra.used_on})}}
+    end
   end,
   pos = { x = 4, y = 5 },
   atlas = "Mart",

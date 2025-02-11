@@ -202,7 +202,6 @@ local mega_gengar ={
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_evo'}
   end,
   rarity = "poke_mega", 
   cost = 12, 
@@ -1008,6 +1007,52 @@ local kangaskhan={
       ease_hands_played(card.ability.extra.hands)
     end
   end, 
+  megas = {"mega_kangaskhan"}
+}
+local mega_kangaskhan={
+  name = "mega_kangaskhan", 
+  pos = {x = 3, y = 1},
+  soul_pos = {x = 4, y = 1},
+  config = {extra = {consumeables_used = 0, consumeable_target = 2, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.consumeable_target, center.ability.extra.consumeables_used}}
+  end,
+  rarity = "poke_mega", 
+  cost = 12, 
+  stage = "Mega", 
+  ptype = "Colorless",
+  atlas = "Megas",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+    end
+    if context.using_consumeable then
+      card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1
+      if card.ability.extra.consumeables_used >= 2 then
+        local eval = function(card) return (card.ability.extra.consumeables_used >= 2) and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if card.ability.extra.consumeables_used >= 2 then
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_double'))
+              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+              return true
+          end)
+        }))
+      end
+      card.ability.extra.consumeables_used = 0
+    end
+  end,
 }
 local horsea={
   name = "horsea", 
@@ -1179,5 +1224,5 @@ local staryu={
 }
 
 return {name = "Pokemon Jokers 91-120", 
-        list = { cloyster, gastly, haunter, gengar, mega_gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing,                 rhyhorn, rhydon, chansey, tangela, kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
+        list = { cloyster, gastly, haunter, gengar, mega_gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing,                 rhyhorn, rhydon, chansey, tangela, kangaskhan, mega_kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
 }
