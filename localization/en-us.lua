@@ -2478,6 +2478,15 @@ return {
                      "{C:inactive}(Currently {X:red,C:white} X#2# {}{C:inactive} Mult)",
                 }  
             },
+            j_poke_oricorio = {
+                name = 'Oricorio',
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{}",
+                    "contains a {C:attention}Flush{} with only {C:attention}#2#{}",
+                    "Changes form if {C:attention}played hand{}",
+                    "contains a {C:attention}Flush{} of a {C:attention}different suit{}",
+                }
+            },
             j_poke_mimikyu = {
                 name = "Mimikyu",
                 text = {

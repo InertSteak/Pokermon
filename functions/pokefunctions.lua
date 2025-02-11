@@ -934,3 +934,15 @@ poke_drain = function(card, target, amount, one_way)
     end    
   end
 end
+
+update_pokemon_form_sprites = function(card)
+  -- filter out any playing cards, consumables, and non-pokermon jokers
+  print(string.sub(card.config.center_key,1,7),string.sub(card.config.center_key,7) == "j_poke_")
+  if string.sub(card.config.center_key,1,7) == "j_poke_" then
+    -- Oricorio (Hearts, Clubs, Diamonds, Spades) == (5,6,7,8)
+    if card.config.center_key == "j_poke_oricorio" then
+      local form = (type(card.ability.extra) == "table" and card.ability.extra.suit or 0)
+      card.children.center:set_sprite_pos({x = 5 + form, y = 1})
+    end
+  end
+end

@@ -117,6 +117,30 @@ local vikavolt={
 -- Crabrawler 739
 -- Crabominable 740
 -- Oricorio 741
+local oricorio = {
+  name = "oricorio",
+  pos = {x = 5, y = 1}, 
+  config = {extra = {Xmult = 3, suit_string = "Hearts", suit = 0}},
+  rarity = 3,
+  cost = 10,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex7",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+		return {vars = {card.ability.extra.Xmult, card.ability.extra.suit_string, card.ability.extra.suit}}
+  end,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      card:juice_up(0.1)
+      card.ability.extra.suit_string = "Clubs"
+      card.ability.extra.suit = 1
+      card.ability.extra.ptype = "Lightning"
+      update_pokemon_form_sprites(card)
+    end
+  end
+}
 -- Cutiefly 742
 -- Ribombee 743
 -- Rockruff 744
@@ -127,5 +151,5 @@ local vikavolt={
 -- Mudbray 749
 -- Mudsdale 750
 return {name = "Pokemon Jokers 721-750", 
-        list = {grubbin, charjabug, vikavolt},
+        list = {grubbin, charjabug, vikavolt, oricorio},
 }
