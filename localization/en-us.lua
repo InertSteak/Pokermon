@@ -2870,8 +2870,9 @@ return {
             tag_poke_pocket_tag = {
                 name = "Pocket Tag",
                 text = {
-                    "Gives a free",
-                    "{C:pink}Mega Pocket Pack",
+                    "Gives a free {C:pink}Mega Pocket Pack",
+                    "{C:green}25%{} chance pack contains",
+                    "a {C:attention}Mega Stone{} on {C:attention}Ante 5+{}"
                 }, 
             },
             tag_poke_shiny_tag = {

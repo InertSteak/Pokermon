@@ -10,6 +10,8 @@ local pocket_tag = {
   discovered = true,
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_mega_1", specific_vars = { 2, 5, 1} }
+    info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_megastone
+    info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {25}}
 		return { vars = {} }
 	end,
 	apply = function(self, tag, context)
