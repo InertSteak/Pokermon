@@ -79,6 +79,7 @@ family = {
     {"mudkip", "marshtomp", "swampert"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
+    {"snivy", "servine", "serperior"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},

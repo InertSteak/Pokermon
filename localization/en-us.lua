@@ -2520,6 +2520,29 @@ return {
                   "{C:inactive}(Must have room){}"
                 }
             },
+            j_poke_snivy = {
+                name = "Snivy",
+                text = {
+                    "{C:attention}+#1#{} hand size for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}4{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_servine = {
+                name = "Servine",
+                text = {
+                    "{C:attention}+#1#{} hand size for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used or hands played",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}10{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_serperior = {
+                name = "Serperior",
+                text = {
+                    "{C:attention}+#1#{} hand size for each",
+                    "discard used or hand played",
+                }
+            },
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {

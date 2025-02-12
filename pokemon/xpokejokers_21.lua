@@ -5,7 +5,7 @@
 -- Elgyem 605
 local elgyem={
   name = "elgyem",
-  pos = {x = 12, y = 7},
+  pos = {x = 13, y = 7},
   config = {extra = {top_planets = 5,  current_planet_count = 0, target_planet_count = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -82,7 +82,7 @@ local elgyem={
 -- Beheeyem 606
 local beheeyem={
   name = "beheeyem",
-  pos = {x = 13, y = 7},
+  pos = {x = 0, y = 8},
   config = {extra = {top_planets = 3, boosters_to_open = 9}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -179,7 +179,7 @@ local beheeyem={
 -- Litwick 607
 local litwick={
   name = "litwick",
-  pos = {x = 0, y = 8},
+  pos = {x = 1, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
   loc_txt = {
     name = "Litwick",
@@ -226,7 +226,7 @@ local litwick={
 -- Lampent 608
 local lampent={
   name = "lampent",
-  pos = {x = 1, y = 8},
+  pos = {x = 2, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
   loc_txt = {
     name = "Lampent",
@@ -276,7 +276,7 @@ local lampent={
 -- Chandelure 609
 local chandelure={
   name = "chandelure",
-  pos = {x = 2, y = 8},
+  pos = {x = 3, y = 8},
   config = {extra = {money = 1, Xmult_multi = 1.3}},
   loc_txt = {
     name = "Chandelure",
