@@ -2585,8 +2585,8 @@ return {
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{}",
                     "contains a {C:attention}Flush{} with {V:1}#2#{}",
-                    "Changes form if {C:attention}played hand{}",
-                    "contains a {C:attention}different Flush{}",
+                    "{C:inactive,s:0.8}(Changes form if {}{C:attention,s:0.8}played hand{}",
+                    "{C:inactive,s:0.8}contains a {C:attention,s:0.8}different Flush{}{C:attention,s:0.8})",
                 }
             },
             j_poke_mimikyu = {
