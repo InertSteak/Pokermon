@@ -3518,6 +3518,7 @@ return {
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
             poke_credits_localization = "Localization: ",
+            poke_credits_sound = "Audio Engineer: ",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
