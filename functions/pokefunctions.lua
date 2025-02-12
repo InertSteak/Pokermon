@@ -80,6 +80,8 @@ family = {
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
     {"snivy", "servine", "serperior"},
+    {"tepig", "pignite", "emboar"},
+    {"oshawott", "dewott", "samurott"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},
