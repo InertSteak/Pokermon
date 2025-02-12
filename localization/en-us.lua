@@ -2780,6 +2780,20 @@ return {
                   "{C:inactive}({C:attention}#1#{}{C:inactive} rounds remaining){}"
                 }
             },
+            j_poke_mystery_egg = {
+                name = "Mystery Egg",
+                text = {
+                    "This Egg needs more time to hatch.",
+                    "Keep it secret. Keep it safe.",
+                    "It looks cold and lonely.",
+                    "Follow that egg!",
+                    "Is it supposed to glow?",
+                    "I wonder what's inside?",
+                    "It moves around inside sometimes.",
+                    "It's a secret to everybody.",
+                    "Not to be put on a sandwich.",
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
