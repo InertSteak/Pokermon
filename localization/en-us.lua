@@ -3360,8 +3360,8 @@ return {
               name = "Tag Pool",
               text = {
                 "{C:attention}#1#",
-                "{C:spectral}#2#",
-                "{C:pink}#3#",
+                "{C:tarot}#2#",
+                "{C:attention}#3#",
               }
             },
             safaridesc = {
