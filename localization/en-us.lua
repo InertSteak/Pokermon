@@ -3252,6 +3252,15 @@ return {
                     "{C:inactive,s:0.8}(Non-Pokemon Jokers will always use precise scaling){}"
                 }
             },
+            discovery_tooltip = {
+              name = "Discovery",
+              text = {
+                "Pokermon mod objects are undiscovered",
+                "by default. Turning off this config option",
+                "will discover all mod objects",
+                "{C:red}Discovering all objects can't be undone{}"
+              }
+            }, 
             designed_by = {
               name = "Designed By",
               text = {
@@ -3498,6 +3507,7 @@ return {
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
+            poke_settings_pokemon_discovery = "! Discovery?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

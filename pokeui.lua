@@ -6,6 +6,7 @@ local restart_toggles_left = {
                 
 local restart_toggles_right = { 
   {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
+  {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}}
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
@@ -24,6 +25,9 @@ local create_menu_toggles = function (parent, toggles)
             NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
           end,
     })
+    if v.tooltip then
+      parent.nodes[#parent.nodes].config.detailed_tooltip = v.tooltip
+    end
   end
 end
 

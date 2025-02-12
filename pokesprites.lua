@@ -229,11 +229,33 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "unergy",
+    path = "unergy.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "unitem",
+    path = "unitem.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",
     path = "e_shiny.ogg"
 }):register()
+
+SMODS.Sound({
+	key = "pocklet_music_high",
+	path = "pocklet_music_high.ogg",
+	select_music_track = function()
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")
+	end,
+})
 
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
