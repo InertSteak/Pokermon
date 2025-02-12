@@ -65,10 +65,10 @@ local celebi = {
   name = "celebi", 
   pos = {x = 4, y = 10},
   soul_pos = { x = 5, y = 10},
-  config = {extra = {skips_needed = 4, reward = 1}},
+  config = {extra = {skips_needed = 4, reward = 1, skip_count = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.skips_needed, card.ability.extra.reward}}
+    return {vars = {card.ability.extra.skips_needed, card.ability.extra.reward, card.ability.extra.skip_count}}
   end,
   rarity = 4,
   cost = 20,
@@ -77,6 +77,16 @@ local celebi = {
   atlas = "Pokedex2",
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.skip_blind then
+      card:juice_up(0.1)
+      card.ability.extra.skip_count = card.ability.extra.skip_count - 1
+      if card.ability.extra.skip_count <= 0 then
+        card.ability.extra.skip_count = card.ability.extra.skip_count + card.ability.extra.skips_needed
+          ease_ante(-card.ability.extra.reward)
+          G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+          G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
+      end
+    end
   end,
 }
 -- Treecko 252
