@@ -2806,6 +2806,15 @@ return {
                     "with random {C:pink}Type{} stickers",
                 },
             },
+            sleeve_poke_telekineticsleeve = {
+                name = "Telekinetic Sleeve",
+                text = {
+                    "Start run with the",
+                    "{C:tarot,T:v_crystal_ball}#1#{} voucher",
+                    "and {C:attention}2{} copies",
+                    "of {C:item,T:c_poke_twisted_spoon}#2#"
+                } 
+            },
         },
         Spectral = {
             c_poke_ultraball = {
