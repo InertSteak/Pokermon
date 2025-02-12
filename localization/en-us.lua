@@ -2179,7 +2179,7 @@ return {
                 name = "Celebi",
                 text = {
                     "Decrease {C:attention}Ante{} by {C:attention}#2#{} for",
-                    "every {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{} skipped",
+                    "every {C:attention}#1# Blinds{} {C:inactive}[#3#]{} skipped",
                 } 
             },
             j_poke_treecko = {
