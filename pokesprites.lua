@@ -253,7 +253,6 @@ SMODS.Sound({
 	key = "pocklet_music_high",
 	path = "pocklet_music_high.ogg",
   volume = 3,
-  pitch = .8,
 	select_music_track = function()
 		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")
 	end,
