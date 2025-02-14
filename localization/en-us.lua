@@ -2583,10 +2583,10 @@ return {
             j_poke_oricorio = {
                 name = 'Oricorio',
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{}",
-                    "contains a {C:attention}Flush{} with {V:1}#2#{}",
-                    "{C:inactive,s:0.8}(Changes form if {}{C:attention,s:0.8}played hand{}",
-                    "{C:inactive,s:0.8}contains a {C:attention,s:0.8}different Flush{}{C:attention,s:0.8})",
+                    "{X:mult,C:white}X#1#{} Mult if {C:attention}played hand{} contains",
+                    "a {V:1}#2#{} {C:attention}Flush{} without {C:attention}Wild{} cards",
+                    "{C:inactive,s:0.8}(Changes form if {C:attention,s:0.8}played hand{C:inactive,s:0.8} contains",
+                    "{C:inactive,s:0.8}a {C:attention,s:0.8}different Flush{C:inactive,s:0.8} without {C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)",
                 }
             },
             j_poke_mimikyu = {

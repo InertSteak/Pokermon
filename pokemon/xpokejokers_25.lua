@@ -130,30 +130,36 @@ local oricorio = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-		return {vars = {card.ability.extra.Xmult, localize(card.ability.extra.suit_string, 'suits_plural'), colours = {G.C.SUITS[card.ability.extra.suit_string]}}}
+		return {vars = {card.ability.extra.Xmult, localize(card.ability.extra.suit_string, 'suits_singular'), colours = {G.C.SUITS[card.ability.extra.suit_string]}}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Flush']) then
         local other_suit = nil
+        local wilds = false
         for _, played_card in pairs(context.scoring_hand) do
-          if card.ability.extra.suit_string ~= played_card.base.suit and played_card.config.center_key ~= "m_wild" then
+          if played_card.config.center_key == "m_wild" then
+            wilds = true
+            break
+          elseif card.ability.extra.suit_string ~= played_card.base.suit then
             other_suit = played_card.base.suit
           end
         end
-        if not other_suit then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
-        else
-          self.update_form(card,other_suit)
-    			G.E_MANAGER:add_event(Event({ func = function()
-            update_pokemon_form_sprites(card)
-            card:juice_up(0.1)
-            return true
-          end }))
+        if not wilds then
+          if not other_suit then
+            return {
+              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+              colour = G.C.XMULT,
+              Xmult_mod = card.ability.extra.Xmult
+            }
+          else
+            self.update_form(card,other_suit)
+            G.E_MANAGER:add_event(Event({ func = function()
+              update_pokemon_form_sprites(card)
+              card:juice_up(0.1)
+              return true
+            end }))
+          end
         end
       end
     end
