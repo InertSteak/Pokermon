@@ -969,6 +969,7 @@ local spearow={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.upgrade then
         card.ability.extra.upgrade = false
+        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
         return {
           card = card,
           level_up = true,
@@ -977,8 +978,7 @@ local spearow={
       end
       if context.joker_main and not context.blueprint then
         card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
-          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
           card.ability.extra.upgrade = true
           local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
@@ -1009,6 +1009,7 @@ local fearow={
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.upgrade then
+        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
         card.ability.extra.upgrade = false
         return {
           card = card,
@@ -1018,8 +1019,7 @@ local fearow={
       end
       if context.joker_main and not context.blueprint then
         card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
-          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
           card.ability.extra.upgrade = true
           local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
@@ -1165,7 +1165,7 @@ local sandshrew={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
 		return {vars = {center.ability.extra.rounds, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
+                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 1, 
   cost = 5,
@@ -1241,7 +1241,7 @@ local sandslash={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
 		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
+                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 2,
   cost = 6, 
