@@ -120,7 +120,7 @@ local jynx={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.playing_card_added and not self.getting_sliced then
+    if context.playing_card_added and not card.getting_sliced then
       if context.cards and type(context.cards) == "table" and #context.cards > 0 then
         for k, v in ipairs(context.cards) do
           if type(v) == "table" then
@@ -415,8 +415,8 @@ local mega_gyarados={
         }
       end
     end
-    if context.setting_blind and not self.getting_sliced then
-      if not context.blueprint and context.blind.boss and not self.getting_sliced then
+    if context.setting_blind and not card.getting_sliced then
+      if not context.blueprint and context.blind.boss and not card.getting_sliced then
           G.E_MANAGER:add_event(Event({func = function()
               G.E_MANAGER:add_event(Event({func = function()
                   G.GAME.blind:disable()
@@ -432,7 +432,7 @@ local mega_gyarados={
     if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
       G.GAME.blind:disable()
       play_sound('timpani')
-      card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
     end
   end
 }

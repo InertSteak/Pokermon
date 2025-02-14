@@ -182,14 +182,16 @@ local mega_venusaur = {
     if not from_debuff then
       local previous_card_limit = G.hand.config.card_limit
       G.hand:change_size(card.ability.extra.h_size)
-      local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
-      delay(0.3)
-      for i=1, hand_space do --draw cards from deck
-          if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
-              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-          else
-              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-          end
+      if G.hand and G.hand.cards and #G.hand.cards > 0 then
+        local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
+        delay(0.3)
+        for i=1, hand_space do --draw cards from deck
+            if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+                draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+            else
+                draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+            end
+        end
       end
     end
   end,
