@@ -51,6 +51,7 @@ family = {
     {"staryu","starmie"},
     {"scyther", "scizor"},
     {"mimejr", "mrmime"},
+    {"tauros", "taurosh"},
     {"kangaskhan", "mega_kangaskhan"},
     {"elekid", "electabuzz", "electivire"},
     {"magby", "magmar", "magmortar"},
@@ -82,11 +83,11 @@ family = {
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},
-    {"dreepy", "drakloak", "dragapult"},
+    {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
-    {"gimmighoul", "gholdengo"},
+    {"gimmighoul", "gholdengo", "gimmighoulr"},
 }
 
 type_sticker_applied = function(card)
@@ -499,6 +500,16 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
+is_aux_poke = function(name)
+  local aux = {"taurosh", "dreepy_dart", "gimmighoulr"}
+  for i = 1, #aux do
+    if name == aux[i] then
+      return true
+    end
+  end
+  return false
+end
+
 get_highest_evo = function(card)
   local name = nil
   local found = nil
@@ -510,6 +521,9 @@ get_highest_evo = function(card)
   for k, v in ipairs(family) do
     local max = #v
     while max > 0 and string.sub(v[max],1,5) == "mega_" do
+      max = max - 1
+    end
+    while max > 0 and is_aux_poke(v[max]) do
       max = max - 1
     end
     local evos = {}
