@@ -86,7 +86,7 @@ family = {
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
-    {"gimmighoul", "gholdengo"},
+    {"gimmighoul", "gholdengo", "gimmighoulr"},
     {{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
 }
 
