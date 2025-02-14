@@ -18,7 +18,7 @@ local aron = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced and context.blind == G.P_BLINDS.bl_small then
+    if context.setting_blind and not card.getting_sliced and context.blind == G.P_BLINDS.bl_small then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()
@@ -67,7 +67,7 @@ local lairon = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced and not context.blind.boss then
+    if context.setting_blind and not card.getting_sliced and not context.blind.boss then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()
@@ -116,7 +116,7 @@ local aggron = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced then
+    if context.setting_blind and not card.getting_sliced then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()

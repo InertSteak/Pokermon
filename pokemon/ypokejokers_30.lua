@@ -139,11 +139,9 @@ local dragapult={
         if next(context.poker_hands['Straight Flush']) and not next(find_joker('dreepy_dart')) then
           for i = 1, 2 do
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-              play_sound('timpani')
+              play_sound('negative', 1.5, 0.4)
               local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_dreepy_dart", no_edition = true}
               local new_card = SMODS.create_card(temp_card)
-              local edition = {negative = true}
-              new_card:set_edition(edition, true)
               new_card:add_to_deck()
               G.jokers:emplace(new_card)
               return true end }))
@@ -206,6 +204,12 @@ local dreepy_dart={
       end
     end
   end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local edition = {negative = true}
+      card:set_edition(edition, true, true)
+    end
+  end
 }
 -- Zacian 888
 -- Zamazenta 889
