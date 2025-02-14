@@ -472,7 +472,13 @@ local froslass={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        if G.GAME.dollars < 0 and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local in_debt = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          in_debt = to_big(G.GAME.dollars) < to_big(0)
+        else
+          in_debt = G.GAME.dollars < 0
+        end
+        if in_debt and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
           _card:add_to_deck()
           G.consumeables:emplace(_card)

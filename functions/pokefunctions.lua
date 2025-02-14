@@ -51,6 +51,7 @@ family = {
     {"staryu","starmie"},
     {"scyther", "scizor"},
     {"mimejr", "mrmime"},
+    {"tauros", "taurosh"},
     {"kangaskhan", "mega_kangaskhan"},
     {"elekid", "electabuzz", "electivire"},
     {"magby", "magmar", "magmortar"},
@@ -82,7 +83,7 @@ family = {
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},
-    {"dreepy", "drakloak", "dragapult"},
+    {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
@@ -225,6 +226,8 @@ evolve = function(self, card, context, forced_key)
     end
     
     if card.ability.perishable then
+      --If perishable, we don't want to perish before evolving so increment the tally
+      card.ability.perish_tally = card.ability.perish_tally + 1
       previous_perishable = card.ability.perishable
     end
       
@@ -498,6 +501,16 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
+is_aux_poke = function(name)
+  local aux = {"taurosh", "dreepy_dart", "gimmighoulr"}
+  for i = 1, #aux do
+    if name == aux[i] then
+      return true
+    end
+  end
+  return false
+end
+
 get_highest_evo = function(card)
   local name = nil
   local found = nil
@@ -514,6 +527,9 @@ get_highest_evo = function(card)
       if max > 0 then
         max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
       end
+    end
+    while max > 0 and is_aux_poke(v[max]) do
+      max = max - 1
     end
     local evos = {}
     for x, y in ipairs(v) do

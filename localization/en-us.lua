@@ -2815,6 +2815,15 @@ return {
                     "with random {C:pink}Type{} stickers",
                 },
             },
+            sleeve_poke_telekineticsleeve = {
+                name = "Telekinetic Sleeve",
+                text = {
+                    "Start run with the",
+                    "{C:tarot,T:v_crystal_ball}#1#{} voucher",
+                    "and {C:attention}2{} copies",
+                    "of {C:item,T:c_poke_twisted_spoon}#2#"
+                } 
+            },
         },
         Spectral = {
             c_poke_ultraball = {
@@ -2879,8 +2888,9 @@ return {
             tag_poke_pocket_tag = {
                 name = "Pocket Tag",
                 text = {
-                    "Gives a free",
-                    "{C:pink}Mega Pocket Pack",
+                    "Gives a free {C:pink}Mega Pocket Pack",
+                    "{C:green}25%{} chance pack contains",
+                    "a {C:attention}Mega Stone{} on {C:attention}Ante 5+{}"
                 }, 
             },
             tag_poke_shiny_tag = {
@@ -3260,6 +3270,15 @@ return {
                     "{C:inactive,s:0.8}(Non-Pokemon Jokers will always use precise scaling){}"
                 }
             },
+            discovery_tooltip = {
+              name = "Discovery",
+              text = {
+                "Pokermon mod objects are undiscovered",
+                "by default. Turning off this config option",
+                "will discover all mod objects",
+                "{C:red}Discovering all objects can't be undone{}"
+              }
+            }, 
             designed_by = {
               name = "Designed By",
               text = {
@@ -3277,8 +3296,8 @@ return {
               name = "Tag Pool",
               text = {
                 "{C:attention}#1#",
-                "{C:spectral}#2#",
-                "{C:pink}#3#",
+                "{C:tarot}#2#",
+                "{C:attention}#3#",
               }
             },
             safaridesc = {
@@ -3407,57 +3426,65 @@ return {
             p_poke_pokepack_normal_1 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_2 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_jumbo_1 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_mega_1 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_3 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_normal_4 = {
                 name = "Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_jumbo_2 = {
                 name = "Jumbo Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
             p_poke_pokepack_mega_2 = {
                 name = "Mega Pocket Pack",
                 text = {
-                    "Choose {C:attention}#1#{} of up to",
-                    "{C:attention}#2#{} {C:pink}Energy{} or {C:item}Item{} Cards{}",
+                    "Choose {C:attention}#1#{} from among",
+                    "{C:attention}#2#{} {C:item}Item{} Cards and",
+                    "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
         },
@@ -3498,6 +3525,7 @@ return {
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
+            poke_settings_pokemon_discovery = "! Discovery?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",
@@ -3508,6 +3536,7 @@ return {
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
             poke_credits_localization = "Localization: ",
+            poke_credits_sound = "Audio Engineer: ",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",

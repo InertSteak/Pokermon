@@ -20,6 +20,7 @@ local gimmighoul={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex9",
+  enhancement_gate = 'm_gold',
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

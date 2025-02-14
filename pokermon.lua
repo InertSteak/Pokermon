@@ -5,16 +5,16 @@ pokermon = {}
 -- -Jevonn
 SMODS.UndiscoveredSprite({
 	key = "Energy",
-	atlas = "Mart",
-	path = "Mart.png",
+	atlas = "unergy",
+	path = "unergy.png",
 	pos = { x = 0, y = 0 },
 	px = 71,
 	py = 95,
 }):register()
 SMODS.UndiscoveredSprite({
 	key = "Item",
-	atlas = "Mart",
-	path = "Mart.png",
+	atlas = "unitem",
+	path = "unitem.png",
 	pos = { x = 0, y = 0 },
 	px = 71,
 	py = 95,
@@ -134,6 +134,7 @@ for _, file in ipairs(pfiles) do
           if pokermon_config.jokers_only and item.rarity == "poke_safari" then
             item.rarity = 3
           end
+          item.discovered = not pokermon_config.pokemon_discovery 
           SMODS.Joker(item)
         end
       end
@@ -155,6 +156,7 @@ for _, file in ipairs(pconsumable_types) do
     
     for i, item in ipairs(curr_type.list) do
       if (not pokermon_config.jokers_only) or (not pokermon_config.no_evos and item.key == "Item") then
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.ConsumableType(item)
       end
     end
@@ -175,6 +177,7 @@ for _, file in ipairs(pconsumables) do
     
     for i, item in ipairs(curr_consumable.list) do
       if ((not pokermon_config.jokers_only and not item.pokeball) or (item.pokeball and pokermon_config.pokeballs)) or (item.evo_item and not pokermon_config.no_evos) then
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Consumable(item)
       end
     end
@@ -195,6 +198,7 @@ if not pokermon_config.jokers_only then
       if curr_booster.init then curr_booster:init() end
       
       for i, item in ipairs(curr_booster.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Booster(item)
       end
     end
@@ -215,6 +219,7 @@ if not pokermon_config.jokers_only then
       if curr_seal.init then curr_seal:init() end
       
       for i, item in ipairs(curr_seal.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Seal(item)
       end
     end
@@ -235,6 +240,7 @@ if not pokermon_config.jokers_only then
       if curr_sticker.init then curr_sticker:init() end
       
       for i, item in ipairs(curr_sticker.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Sticker(item)
       end
     end
@@ -255,6 +261,7 @@ if not pokermon_config.jokers_only then
       if curr_edition.init then curr_edition:init() end
       
       for i, item in ipairs(curr_edition.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Edition(item)
       end
     end
@@ -275,6 +282,7 @@ if not pokermon_config.jokers_only then
       if curr_voucher.init then curr_voucher:init() end
       
       for i, item in ipairs(curr_voucher.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Voucher(item)
       end
     end
@@ -295,6 +303,7 @@ if not pokermon_config.jokers_only then
       if curr_blind.init then curr_blind:init() end
       
       for i, item in ipairs(curr_blind.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Blind(item)
       end
     end
@@ -315,6 +324,7 @@ if not pokermon_config.jokers_only then
       if curr_tag.init then curr_tag:init() end
       
       for i, item in ipairs(curr_tag.list) do
+        item.discovered = not pokermon_config.pokemon_discovery
         SMODS.Tag(item)
       end
     end

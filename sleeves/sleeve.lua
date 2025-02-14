@@ -60,10 +60,22 @@ end
 	apply = function(self)
 	  G.GAME.modifiers.apply_type = true
 	end
+}
+
+-- Pokemon Sleeve
+	local telekineticsleeve = {
+		key = 'telekineticsleeve',
+		name = 'Telekinetic Sleeve',
+		prefix_config = {},
+		atlas = "pokesleeves",
+		pos = { x = 3, y = 0 },
+		config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
+		loc_vars = function(self, info_queue, center)
+			return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
+		end,
 	}
 
-
-local slist = {pokemonsleeve, obituarysleeve, luminoussleeve}
+local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve}
 
 return {Name = "Sleeve",
 				init = init,

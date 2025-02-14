@@ -248,7 +248,13 @@ local umbreon={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.hand_played})
     end
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == card.ability.extra.hand_played and not context.blueprint then
-      if context.before and G.GAME.hands[card.ability.extra.hand_played].level > 1 then
+      local can_level = nil
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        can_level = to_big(G.GAME.hands[card.ability.extra.hand_played].level) > to_big(1)
+      else
+        can_level = G.GAME.hands[card.ability.extra.hand_played].level > 1
+      end
+      if context.before and can_level then
         level_up_hand(card, card.ability.extra.hand_played, nil, -1)
         if card.ability.extra.decreases < card.ability.extra.decrease_goal - 1 then
           card.ability.extra.decreases = card.ability.extra.decreases + 1

@@ -981,6 +981,7 @@ local kangaskhan={
   config = {extra = {card_limit = 2, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
 		return {vars = {center.ability.extra.card_limit, center.ability.extra.hands}}
   end,
   rarity = 2, 
