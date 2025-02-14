@@ -19,19 +19,35 @@ end
 local create_item = function(self, card)
   local item_key = nil
   local evo_item_chance = pseudorandom(pseudoseed('match'))
-  if evo_item_chance > .92 then
+  if evo_item_chance > .02 then
     local evo_item_keys = {}
     for k, v in pairs(G.jokers.cards) do
       if v.config.center.item_req then
         if type(v.config.center.item_req) == "table" then
           item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
           if not next(SMODS.find_card(item_key)) then
-            table.insert(evo_item_keys, item_key)
+            local already_created = nil
+            for k, v in pairs(self.config.c_keys) do
+              if v == item_key then
+                already_created = true
+              end
+            end
+            if not already_created then
+              table.insert(evo_item_keys, item_key)
+            end
           end
         else
           item_key = "c_poke_"..v.config.center.item_req
           if not next(SMODS.find_card(item_key)) then
-            table.insert(evo_item_keys, item_key)
+            local already_created = nil
+            for k, v in pairs(self.config.c_keys) do
+              if v == item_key then
+                already_created = true
+              end
+            end
+            if not already_created then
+              table.insert(evo_item_keys, item_key)
+            end
           end
         end
       end
@@ -66,7 +82,7 @@ local pack1 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 0, y = 0 },
-	config = { extra = 4, choose = 1},
+	config = { extra = 4, choose = 1, c_keys = {}},
 	cost = 4,
 	order = 1,
 	weight = 1,
@@ -74,7 +90,10 @@ local pack1 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -88,7 +107,7 @@ local pack2 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 1, y = 0 },
-	config = { extra = 4, choose = 1 },
+	config = { extra = 4, choose = 1, c_keys = {} },
 	cost = 4,
 	order = 2,
 	weight = 1,
@@ -96,7 +115,10 @@ local pack2 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -110,7 +132,7 @@ local pack3 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 2, y = 0 },
-	config = { extra = 6, choose = 1 },
+	config = { extra = 6, choose = 1, c_keys = {} },
 	cost = 6,
 	order = 3,
 	weight = 1,
@@ -118,7 +140,10 @@ local pack3 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -132,7 +157,7 @@ local pack4 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 3, y = 0 },
-	config = { extra = 6, choose = 2 },
+	config = { extra = 6, choose = 2, c_keys = {} },
 	cost = 8,
 	order = 4,
 	weight = 0.25,
@@ -140,7 +165,10 @@ local pack4 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -154,7 +182,7 @@ local pack5 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 0, y = 1 },
-	config = { extra = 4, choose = 1},
+	config = { extra = 4, choose = 1, c_keys = {}},
 	cost = 4,
 	order = 1,
 	weight = 1,
@@ -162,7 +190,10 @@ local pack5 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -176,7 +207,7 @@ local pack6 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 1, y = 1 },
-	config = { extra = 4, choose = 1 },
+	config = { extra = 4, choose = 1, c_keys = {} },
 	cost = 4,
 	order = 2,
 	weight = 1,
@@ -184,7 +215,10 @@ local pack6 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -198,7 +232,7 @@ local pack7 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 2, y = 1 },
-	config = { extra = 6, choose = 1 },
+	config = { extra = 6, choose = 1, c_keys = {} },
 	cost = 6,
 	order = 3,
 	weight = 1,
@@ -206,7 +240,10 @@ local pack7 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
@@ -220,7 +257,7 @@ local pack8 = {
 	kind = "Energy",
 	atlas = "pokepack",
 	pos = { x = 3, y = 1 },
-	config = { extra = 6, choose = 2 },
+	config = { extra = 6, choose = 2, c_keys = {} },
 	cost = 8,
 	order = 4,
 	weight = 0.25,
@@ -228,7 +265,10 @@ local pack8 = {
   unlocked = true,
   discovered = true,
 	create_card = function(self, card, i)
-    return create_pocket_card(self, card, i)
+    local created_card = create_pocket_card(self, card, i)
+    self.config.c_keys[#self.config.c_keys + 1] = created_card.config.center_key
+    if i == self.config.extra + (G.GAME.extra_pocket_picks or 0) then self.config.c_keys = {} end
+    return created_card
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
