@@ -1822,7 +1822,7 @@ return {
                 name = 'Dratini',
                 text = {
                     "Gains {C:mult}+#2#{} Mult",
-                    "if played hand contains",
+                    "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+10{C:inactive,s:0.8} Mult)"
@@ -1832,7 +1832,7 @@ return {
                 name = 'Dragonair',
                 text = {
                     "Gains {C:mult}+#2#{} Mult",
-                    "if played hand contains",
+                    "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+30{C:inactive,s:0.8} Mult)"
@@ -2063,8 +2063,8 @@ return {
                 name = 'Tyrogue',
                 text = {
                     "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
-                    "If {C:attention}first hand or discard{} of round has",
-                    "exactly {C:attention}5{} cards, a random card is",
+                    "If {C:attention}first hand or discard{} of round",
+                    "has exactly {C:attention}5{} cards, a random card is",
                     "copied {C:inactive}(if played){} or destroyed {C:inactive}(if discarded){}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }  
