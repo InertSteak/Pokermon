@@ -96,7 +96,7 @@ local scizor={
 local swinub = {
   name = "swinub",
   pos = {x = 8, y = 6},
-  config = {extra = {odds = 5, chips = 50, mult = 10}},
+  config = {extra = {odds = 5, chips = 50, mult = 5, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
@@ -113,8 +113,8 @@ local swinub = {
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
       if pseudorandom('swinub') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
         return {
-          message = "Swine!",
           colour = G.C.PURPLE,
           chips = card.ability.extra.chips,
           mult = card.ability.extra.mult,
@@ -122,13 +122,12 @@ local swinub = {
         }
       else
         local ret = {
-          message = "Swine!",
           card = card
         }
         local chance = pseudorandom('swinub2')
         if chance < 1/2 then
           ret.colour = G.C.CHIPS
-          ret.chip = card.ability.extra.chips
+          ret.chips = card.ability.extra.chips
         else
           ret.colour = G.C.MULT
           ret.mult = card.ability.extra.mult
@@ -136,17 +135,18 @@ local swinub = {
         return ret
       end
     end
+    return level_evo(self, card, context, "j_poke_piloswine")
   end,
 }
 -- Piloswine 221
 local piloswine = {
   name = "piloswine",
   pos = {x = 9, y = 6},
-  config = {extra = {odds = 4, chips = 75, mult = 15, Xmult = 1.05}},
+  config = {extra = {odds = 4, chips = 100, mult = 10, Xmult = 1.2, stones_scored = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
-    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult}}
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult, card.ability.extra.stones_scored}}
   end,
   rarity = 3,
   cost = 7,
@@ -158,9 +158,10 @@ local piloswine = {
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      card.ability.extra.stones_scored = card.ability.extra.stones_scored + 1
       if pseudorandom('piloswine') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
         return {
-          message = "Swine!",
           colour = G.C.PURPLE,
           chips = card.ability.extra.chips,
           mult = card.ability.extra.mult,
@@ -169,13 +170,12 @@ local piloswine = {
         }
       else
         local ret = {
-          message = "Swine!",
           card = card
         }
         local chance = pseudorandom('piloswine2')
         if chance < 1/3 then
           ret.colour = G.C.CHIPS
-          ret.chip = card.ability.extra.chips
+          ret.chips = card.ability.extra.chips
         elseif chance < 2/3 then
           ret.colour = G.C.MULT
           ret.mult = card.ability.extra.mult
@@ -186,6 +186,7 @@ local piloswine = {
         return ret
       end
     end
+    return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.stones_scored, 15)
   end,
 }
 -- Corsola 222

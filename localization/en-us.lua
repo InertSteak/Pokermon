@@ -2075,6 +2075,7 @@ return {
                     "Played {C:attention}Stone{} cards give",
                     "{C:chips}+#3#{} Chips or {C:mult}+#4#{} Mult",
                     "{C:green}#1# in #2#{} chance for both",
+                    "{C:inactive,s:0.8}(Evolves after 4 Rounds)",
                 }
             },
             j_poke_piloswine = {
@@ -2083,6 +2084,7 @@ return {
                     "Played {C:attention}Stone{} cards give",
                     "{C:chips}+#3#{} Chips, {C:mult}+#4#{} Mult, or {X:mult,C:white}X#5#{} Mult",
                     "{C:green}#1# in #2#{} chance for all three",
+                    "{C:inactive,s:0.8}(Evolves after #6#/15 {C:attention,s:0.8}Stone{C:inactive,s:0.8} cards are scored)",
                 }
             },
             j_poke_delibird = {

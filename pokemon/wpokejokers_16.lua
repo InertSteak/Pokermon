@@ -404,7 +404,7 @@ local glaceon={
 local mamoswine = {
   name = "mamoswine",
   pos = {x = 2, y = 6},
-  config = {extra = {odds = 4, chips = 75, mult = 15, Xmult = 1.1, card = G.P_CARDS.H_A, already_rerolled = false}},
+  config = {extra = {odds = 3, chips = 100, mult = 10, Xmult = 1.2, card = G.P_CARDS.H_A, already_rerolled = false}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
@@ -427,8 +427,8 @@ local mamoswine = {
     end
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
       if pseudorandom('mamoswine') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Swine!"})
         return {
-          message = "Swine!",
           colour = G.C.PURPLE,
           chips = card.ability.extra.chips,
           mult = card.ability.extra.mult,
@@ -437,13 +437,12 @@ local mamoswine = {
         }
       else
         local ret = {
-          message = "Swine!",
           card = card
         }
         local chance = pseudorandom('mamoswine2')
         if chance < 1/3 then
           ret.colour = G.C.CHIPS
-          ret.chip = card.ability.extra.chips
+          ret.chips = card.ability.extra.chips
         elseif chance < 2/3 then
           ret.colour = G.C.MULT
           ret.mult = card.ability.extra.mult
@@ -469,8 +468,9 @@ local mamoswine = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and #find_joker('mamoswine') == 0 then
-        card.ability.extra.card = pseudorandom_element(G.P_CARDS, pseudoseed('mamoswine'..G.GAME.round))
-        mamo_center.card = card.ability.extra.card
+      local mamo_center = G.P_CENTERS.j_poke_mamoswine.config.extra
+      card.ability.extra.card = pseudorandom_element(G.P_CARDS, pseudoseed('mamoswine'..G.GAME.round))
+      mamo_center.card = card.ability.extra.card
     end
   end
 }

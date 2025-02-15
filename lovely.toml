@@ -173,6 +173,7 @@ end
 position = "after"
 payload = '''
 if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
+if next(find_joker("mamoswine")) and self.ability.name == "Stone Card" then should_debuff = false end
 if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
 '''
 match_indent = true
