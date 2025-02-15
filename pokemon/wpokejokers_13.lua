@@ -20,8 +20,16 @@ local snorunt={
     local evolve = item_evo(self, card, context, "j_poke_froslass")
     if evolve then
       return evolve
-    elseif G.GAME.dollars < 0 then
-      return level_evo(self, card, context, "j_poke_glalie")
+    else
+      local in_debt = nil
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        in_debt = to_big(G.GAME.dollars) < to_big(0)
+      else
+        in_debt = G.GAME.dollars < 0
+      end
+      if in_debt then
+        return level_evo(self, card, context, "j_poke_glalie")
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -55,7 +63,13 @@ local glalie={
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
       card:juice_up()
-      ease_dollars(-G.GAME.dollars, true)
+      local back_to_zero = 0
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        back_to_zero = to_number(-G.GAME.dollars)
+      else
+        back_to_zero = -G.GAME.dollars
+      end
+      ease_dollars(back_to_zero, true)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
