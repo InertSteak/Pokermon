@@ -1261,13 +1261,12 @@ return {
             j_poke_muk = {
                 name = 'Muk',      
                 text = {
-                    "{C:mult}+#1#{} Mult for every card above {C:attention}#3#{}",
-                    "in your full deck",
+                    "{C:mult}+#1#{} Mult per card over {C:attention}#3#{} in your deck",
                     "{X:mult,C:white} X#2# {} Mult if deck size > {C:attention}#4#{}",
-                    "{br:4}text needs to be here to work",
-                    "Add two random playing cards to deck and",
-                    "remove one random card at end of round",
                     "{C:inactive}(Currently {C:mult}+#5#{} {C:inactive}Mult){}",
+                    "{br:4}text needs to be here to work",
+                    "Add 2 random playing cards to deck and",
+                    "remove 1 random card at end of round",
                 } 
             },
             j_poke_shellder = {
@@ -1781,6 +1780,7 @@ return {
                 text = {
                     "Played {C:attention}#1#s{} give {X:mult,C:white} X#2# {} Mult for each",
                     "{C:attention}#1#{} in played hand when scored",
+                    "{br:3.5}text needs to be here to work",
                     "{C:green}#3# in #4#{} chance for each",
                     "played {C:attention}#1#{} to be destroyed",
                 } 
@@ -1842,8 +1842,9 @@ return {
                 name = 'Dragonite',
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "If played hand has",
-                    "only {C:attention}1{} card and",
+                    "{br:1.6}text needs to be here to work",
+                    "If played hand",
+                    "has only {C:attention}1{} card,",
                     "retrigger it {C:attention}#2#{} times"
                 } 
             },
@@ -1969,8 +1970,8 @@ return {
                 text = {
                     "{C:attention}Retrigger{} each played {C:attention}#3#{}",
                     "{br:3}text needs to be here to work",
-                    "Each played {V:1}#4#{} card gives",
-                    "{X:red,C:white}X#2#{} Mult when scored",
+                    "Each scored {V:1}#4#{} card",
+                    "gives {X:red,C:white}X#2#{} Mult",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}Rank{C:inactive,s:0.8}/{C:attention,s:0.8}Suit{C:inactive,s:0.8} are {C:attention,s:0.8}randomized{C:inactive,s:0.8} on each {C:green,s:0.8}Reroll{C:inactive,s:0.8})"
                 } 
             },
@@ -2062,9 +2063,9 @@ return {
                 name = 'Tyrogue',
                 text = {
                     "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
-                    "If {C:attention}first hand or discard{} of round",
-                    "is exactly {C:attention}5{} cards, a random card is",
-                    "copied if played or destroyed if discarded",
+                    "If {C:attention}first hand or discard{} of round has",
+                    "exactly {C:attention}5{} cards, a random card is",
+                    "copied {C:inactive}(if played){} or destroyed {C:inactive}(if discarded){}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }  
             },
@@ -2528,8 +2529,8 @@ return {
                 name = 'Grubbin',
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "This Joker gives {C:attention}triple{}",
-                    "if you have a {X:lightning, C:black}Lightning{} Joker",
+                    "{C:attention}Tripled{} if you have",
+                    "a {X:lightning, C:black}Lightning{} Joker",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }  
             },
@@ -2723,6 +2724,7 @@ return {
                 text = {
                     "{C:mult}+#2#{} Mult for each Joker",
                     "you have that has a {C:pink}Type{}",
+                    "{br:3}text needs to be here to work",
                     "{C:attention}Pokemon{} from the same", 
                     "evolutionary line may appear",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
@@ -2732,6 +2734,7 @@ return {
                 name = 'Everstone',
                 text = {
                     "Pokemon {C:attention}can't{} evolve",
+                    "{br:3.5}text needs to be here to work",
                     "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
                 } 
             },
