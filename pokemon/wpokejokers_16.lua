@@ -414,7 +414,7 @@ local mamoswine = {
                     colours = {G.C.SUITS[card.ability.extra.card.suit]}}}
   end,
   rarity = "poke_safari",
-  cost = 7,
+  cost = 10,
   stage = "Two",
   ptype = "Earth",
   atlas = "Pokedex4",
