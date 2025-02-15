@@ -91,7 +91,75 @@ local scizor={
 -- Teddiursa 216
 -- Ursaring 217
 -- Slugma 218
+local slugma={
+  name = "slugma",
+  pos = {x = 6, y = 6},
+  config = {extra = {triggers = 0, evo_triggers = 5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {vars = {card.ability.extra.evo_triggers, card.ability.extra.triggers}}
+  end,
+  rarity = 1,
+  cost = 3,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      local adjacent = 0
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      for i = 1, #adjacent_jokers do
+        if is_type(adjacent_jokers[i], "Water") then adjacent = adjacent + 1 end
+      end
+      while adjacent > 0 do
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+        local _card = create_playing_card({front = pseudorandom_element(G.P_CARDS, pseudoseed('slugma')), center = G.P_CENTERS.m_stone}, G.hand, nil, nil, {G.C.RED})
+        playing_card_joker_effects({_card})
+        adjacent = adjacent - 1
+        if adjacent == 0 then
+          card:juice_up()
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.triggers, card.ability.extra.evo_triggers)
+  end
+}
 -- Magcargo 219
+local magcargo={
+  name = "magcargo",
+  pos = {x = 7, y = 6},
+  config = {extra = {mult = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {vars = {card.ability.extra.mult}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      local total = #find_pokemon_type("Fire")
+      if total > 0 then
+        context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + total
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT,
+          card = card,
+        }
+      end
+    end
+  end
+}
 -- Swinub 220
 -- Piloswine 221
 -- Corsola 222
@@ -583,5 +651,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, slugma, magcargo, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

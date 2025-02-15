@@ -325,3 +325,54 @@ end
 match_indent = true
 
 
+# Bonus Mult & Perma_Mult
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if specific_vars.bonus_chips then"
+position = "before"
+payload = '''
+if specific_vars.bonus_mult then
+    localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}"
+position = "after"
+payload = '''
+if specific_vars and specific_vars.bonus_mult then
+    localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "bonus_chips = (self.ability.bonus + (self.ability.perma_bonus or 0)) > 0 and (self.ability.bonus + (self.ability.perma_bonus or 0)) or nil,"
+position = "after"
+payload = "bonus_mult = self.ability.perma_mult,"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "return self.ability.mult"
+position = "at"
+payload = "return self.ability.mult + (self.ability.perma_mult or 0)"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''else
+    return 0'''
+position = "at"
+payload = '''else
+    return (self.ability.perma_mult or 0)'''
+match_indent = true
+
