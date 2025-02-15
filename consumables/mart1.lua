@@ -536,7 +536,7 @@ local megastone = {
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
-    if center.ability.extra.used_on then
+    if center and center.ability.extra.used_on then
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = center.ability.extra.used_on})}}
     end
   end,
