@@ -375,18 +375,3 @@ payload = '''
     end
 '''
 match_indent = true
-
-# Mamoswine Stone Card Ranks Pt 3 (get_straight)
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "local rank = hand[i].base.value"
-position = "after"
-payload = '''
-local mamoswines = find_joker('mamoswine')
-if #mamoswines > 0 and hand[i].ability.effect == 'Stone Card' then
-    rank = mamoswines[1].ability.extra.card.value
-    print('get_straight == ', rank)
-end
-'''
-match_indent = true

@@ -1005,3 +1005,21 @@ poke_drain = function(card, target, amount, one_way)
     end    
   end
 end
+
+_prev_straight_func = get_straight
+poke_get_straight = function(hand)
+  local prev_values = {}
+  local mamoswines = find_joker('mamoswine')
+  for i,card in ipairs(hand) do
+    prev_values[i] = card.base.value
+    if #mamoswines > 0 and card.ability.effect == 'Stone Card' then
+        card.base.value = mamoswines[1].ability.extra.card.value
+    end
+  end
+  local ret = {_prev_straight_func(hand)}
+  for i,card in ipairs(hand) do
+    card.base.value = prev_values[i]
+  end
+  return unpack(ret)
+end
+get_straight = poke_get_straight
