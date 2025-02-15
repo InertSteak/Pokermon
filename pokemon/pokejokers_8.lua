@@ -96,10 +96,11 @@ local scizor={
 local swinub = {
   name = "swinub",
   pos = {x = 8, y = 6},
-  config = {extra = {}},
+  config = {extra = {chance = 5, chips = 50, mult = 10}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    local curr_chance = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_chance, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.mult}}
   end,
   rarity = 2,
   cost = 5,
@@ -116,10 +117,11 @@ local swinub = {
 local piloswine = {
   name = "piloswine",
   pos = {x = 9, y = 6},
-  config = {extra = {}},
+  config = {extra = {chance = 4, chips = 50, mult = 10, Xmult = 1.05}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    local curr_chance = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_chance, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult}}
   end,
   rarity = 3,
   cost = 7,

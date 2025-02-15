@@ -404,10 +404,14 @@ local glaceon={
 local mamoswine = {
   name = "mamoswine",
   pos = {x = 2, y = 6},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {}}
+  config = {extra = {chance = 4, chips = 50, mult = 10, Xmult = 1.05, card = G.P_CARDS.H_A, already_rerolled = false}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local curr_chance = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    
+    return {vars = {curr_chance, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult,
+                    localize(card.ability.extra.card.value or '2', 'ranks'), localize(card.ability.extra.card.suit, 'suits_plural'), 
+                    colours = {G.C.SUITS[card.ability.extra.card.suit]}}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -418,7 +422,30 @@ local mamoswine = {
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      G.P_CENTERS.j_poke_mamoswine.config.extra.already_rerolled = false
+    end
+
+    if context.end_of_round and not context.individual and not context.repetition then
+      local mamo_center = G.P_CENTERS.j_poke_mamoswine.config.extra
+      -- probably not needed, but prevent duplicate rerolls from mamoswine
+      if mamo_center.already_rerolled then
+        card.ability.extra.card = mamo_center.card
+      else
+        card.ability.extra.card = pseudorandom_element(G.P_CARDS, pseudoseed('mamoswine'..G.GAME.round))
+        mamo_center.card = card.ability.extra.card
+        mamo_center.already_rerolled = true
+
+        --card:juice_up()
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reroll')})
+      end
+    end
   end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      -- reroll first guy
+    end
+  end
 }
 -- Porygon-Z 474
 local porygonz={

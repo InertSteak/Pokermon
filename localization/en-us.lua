@@ -2072,17 +2072,17 @@ return {
             j_poke_swinub = {
                 name = "Swinub",
                 text = {
-                    "Played {C:attention}Stone{} card give",
-                    "{C:chips}+50{} Chips or {C:mult}+10{} Mult",
-                    "{C:green}1 in 5{} chance for both",
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips or {C:mult}+#4#{} Mult",
+                    "{C:green}#1# in #2#{} chance for both",
                 }
             },
             j_poke_piloswine = {
                 name = "Piloswine",
                 text = {
-                    "Played {C:attention}Stone{} card give",
-                    "{C:chips}+75{} Chips, {C:mult}+15{} Mult, or {X:mult,C:white}X1.05{} Mult",
-                    "{C:green}1 in 4{} chance for all three",
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips, {C:mult}+#4#{} Mult, or {X:mult,C:white}X#5#{} Mult",
+                    "{C:green}#1# in #2#{} chance for all three",
                 }
             },
             j_poke_delibird = {
@@ -2521,11 +2521,11 @@ return {
             j_poke_mamoswine = {
                 name = "Mamoswine",
                 text = {
-                    "Played {C:attention}Stone{} card give",
-                    "{C:chips}+75{} Chips, {C:mult}+15{} Mult, or {X:mult,C:white}X1.1{} Mult",
-                    "{C:green}1 in 3{} chance for all three",
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips, {C:mult}+#4#{} Mult, or {X:mult,C:white}X#5#{} Mult",
+                    "{C:green}#1# in #2#{} chance for all three",
                     "{C:attention}Stone{} cards can't be {C:attention}debuffed{}",
-                    "{C:attention}Stone{} cards count as RANK of SUIT",
+                    "and count as {C:light_black}#6# of {V:1}#7#{}",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}Rank/Suit{C:inactive,s:0.8} changes each round)",
                 }
             },

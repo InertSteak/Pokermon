@@ -325,3 +325,68 @@ end
 match_indent = true
 
 
+# Mamoswine Stone Card Suit (get_flush)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if SMODS.has_no_suit(self) then"
+position = "before"
+payload = '''
+local mamoswines = find_joker('mamoswine')
+if #mamoswines > 0 and SMODS.has_enhancement(self, 'm_stone') then
+    local mamoswine_card = mamoswines[1].ability.extra.card
+    if mamoswine_card.suit == suit then
+        return true
+    elseif next(find_joker('Smeared Joker')) and (mamoswine_card.suit == 'Hearts' or mamoswine_card.suit == 'Diamonds') == (suit == 'Hearts' or suit == 'Diamonds') then
+        return true
+    end
+end
+'''
+match_indent = true
+
+# Mamoswine Stone Card Ranks Pt 1 (get_nominal)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then"
+position = "after"
+payload = '''
+    local mamoswines = find_joker('mamoswine')
+    if #mamoswines > 0 and self.ability.effect == 'Stone Card' then
+        local mamoswine_card = mamoswines[1].ability.extra.card
+        local smod_rank = SMODS.Ranks[mamoswine_card.value]
+        local smod_suit = SMODS.Suits[mamoswine_card.suit]
+        return 10*smod_rank.nominal*rank_mult + smod_suit.suit_nominal*mult + (self.base.suit_nominal_original or 0)*0.0001*mult + 10*(smod_rank.face_nominal or 0)*rank_mult + 0.000001*self.unique_val
+    end
+'''
+match_indent = true
+
+# Mamoswine Stone Card Ranks Pt 2 (get_id)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "function Card:get_id()"
+position = "after"
+payload = '''
+    local mamoswines = find_joker('mamoswine')
+    if #mamoswines > 0 and self.ability.effect == 'Stone Card' then
+        local mamoswine_card = mamoswines[1].ability.extra.card
+        return SMODS.Ranks[mamoswine_card.value].id
+    end
+'''
+match_indent = true
+
+# Mamoswine Stone Card Ranks Pt 3 (get_straight)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "local rank = hand[i].base.value"
+position = "after"
+payload = '''
+local mamoswines = find_joker('mamoswine')
+if #mamoswines > 0 and hand[i].ability.effect == 'Stone Card' then
+    rank = mamoswines[1].ability.extra.card.value
+    print('get_straight == ', rank)
+end
+'''
+match_indent = true
