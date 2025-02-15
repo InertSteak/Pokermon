@@ -73,14 +73,10 @@ local glalie={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
 }
 -- Spheal 363
