@@ -2069,6 +2069,22 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_swinub = {
+                name = "Swinub",
+                text = {
+                    "Played {C:attention}Stone{} card give",
+                    "{C:chips}+50{} Chips or {C:mult}+10{} Mult",
+                    "{C:green}1 in 5{} chance for both",
+                }
+            },
+            j_poke_piloswine = {
+                name = "Piloswine",
+                text = {
+                    "Played {C:attention}Stone{} card give",
+                    "{C:chips}+75{} Chips, {C:mult}+15{} Mult, or {X:mult,C:white}X1.05{} Mult",
+                    "{C:green}1 in 4{} chance for all three",
+                }
+            },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -2501,6 +2517,17 @@ return {
                     "a {C:attention}Glass{} copy of a random",
                     "card in your deck to shop",
                 } 
+            },
+            j_poke_mamoswine = {
+                name = "Mamoswine",
+                text = {
+                    "Played {C:attention}Stone{} card give",
+                    "{C:chips}+75{} Chips, {C:mult}+15{} Mult, or {X:mult,C:white}X1.1{} Mult",
+                    "{C:green}1 in 3{} chance for all three",
+                    "{C:attention}Stone{} cards can't be {C:attention}debuffed{}",
+                    "{C:attention}Stone{} cards count as RANK of SUIT",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}Rank/Suit{C:inactive,s:0.8} changes each round)",
+                }
             },
             j_poke_porygonz = {
                 name = 'Porygon-Z',

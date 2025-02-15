@@ -93,7 +93,45 @@ local scizor={
 -- Slugma 218
 -- Magcargo 219
 -- Swinub 220
+local swinub = {
+  name = "swinub",
+  pos = {x = 8, y = 6},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+  end,
+}
 -- Piloswine 221
+local piloswine = {
+  name = "piloswine",
+  pos = {x = 9, y = 6},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+  end,
+}
 -- Corsola 222
 -- Remoraid 223
 -- Octillery 224
@@ -583,5 +621,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, swinub, piloswine, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

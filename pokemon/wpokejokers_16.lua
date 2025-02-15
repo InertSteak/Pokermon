@@ -401,6 +401,25 @@ local glaceon={
 }
 -- Gliscor 472
 -- Mamoswine 473
+local mamoswine = {
+  name = "mamoswine",
+  pos = {x = 2, y = 6},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+  end,
+}
 -- Porygon-Z 474
 local porygonz={
   name = "porygonz", 
@@ -500,5 +519,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, mamoswine, porygonz, froslass},
 }
