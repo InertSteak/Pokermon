@@ -19,7 +19,7 @@ end
 local create_item = function(self, card)
   local item_key = nil
   local evo_item_chance = pseudorandom(pseudoseed('match'))
-  if evo_item_chance > .02 then
+  if evo_item_chance > .92 then
     local evo_item_keys = {}
     for k, v in pairs(G.jokers.cards) do
       if v.config.center.item_req then
