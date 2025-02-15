@@ -10,7 +10,7 @@ local lombre={
   end,
   rarity = 3,
   cost = 8,
-  item_req = "leafstone",
+  item_req = "waterstone",
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex3",

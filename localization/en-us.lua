@@ -2188,7 +2188,7 @@ return {
                     "When {C:attention}Blind{} is selected,",
                     "{C:attention}Drain{} all {C:pink}Energy{} from adjacent {X:water,C:white}Water{} Jokers",
                     "Gives {C:mult}+#1#{} mult per {C:pink}Energy{} consumed",
-                    "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Leaf Stone{}{C:inactive,s:0.8} card)",
+                    "{C:inactive,s:0.8}(Evolves with a{} {C:attention,s:0.8}Water Stone{}{C:inactive,s:0.8} card)",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
             },
