@@ -96,11 +96,11 @@ local scizor={
 local swinub = {
   name = "swinub",
   pos = {x = 8, y = 6},
-  config = {extra = {chance = 5, chips = 50, mult = 10}},
+  config = {extra = {odds = 5, chips = 50, mult = 10}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local curr_chance = ''..(G.GAME and G.GAME.probabilities.normal or 1)
-    return {vars = {curr_chance, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.mult}}
+    local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult}}
   end,
   rarity = 2,
   cost = 5,
@@ -111,17 +111,42 @@ local swinub = {
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      if pseudorandom('swinub') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        return {
+          message = "Swine!",
+          colour = G.C.PURPLE,
+          chips = card.ability.extra.chips,
+          mult = card.ability.extra.mult,
+          card = card
+        }
+      else
+        local ret = {
+          message = "Swine!",
+          card = card
+        }
+        local chance = pseudorandom('swinub2')
+        if chance < 1/2 then
+          ret.colour = G.C.CHIPS
+          ret.chip = card.ability.extra.chips
+        else
+          ret.colour = G.C.MULT
+          ret.mult = card.ability.extra.mult
+        end
+        return ret
+      end
+    end
   end,
 }
 -- Piloswine 221
 local piloswine = {
   name = "piloswine",
   pos = {x = 9, y = 6},
-  config = {extra = {chance = 4, chips = 50, mult = 10, Xmult = 1.05}},
+  config = {extra = {odds = 4, chips = 75, mult = 15, Xmult = 1.05}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local curr_chance = ''..(G.GAME and G.GAME.probabilities.normal or 1)
-    return {vars = {curr_chance, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult}}
+    local curr_odds = ''..(G.GAME and G.GAME.probabilities.normal or 1)
+    return {vars = {curr_odds, card.ability.extra.odds, card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.Xmult}}
   end,
   rarity = 3,
   cost = 7,
@@ -132,6 +157,35 @@ local piloswine = {
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+      if pseudorandom('piloswine') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        return {
+          message = "Swine!",
+          colour = G.C.PURPLE,
+          chips = card.ability.extra.chips,
+          mult = card.ability.extra.mult,
+          Xmult = card.ability.extra.Xmult,
+          card = card
+        }
+      else
+        local ret = {
+          message = "Swine!",
+          card = card
+        }
+        local chance = pseudorandom('piloswine2')
+        if chance < 1/3 then
+          ret.colour = G.C.CHIPS
+          ret.chip = card.ability.extra.chips
+        elseif chance < 2/3 then
+          ret.colour = G.C.MULT
+          ret.mult = card.ability.extra.mult
+        else
+          ret.colour = G.C.XMULT
+          ret.Xmult = card.ability.extra.Xmult
+        end
+        return ret
+      end
+    end
   end,
 }
 -- Corsola 222
