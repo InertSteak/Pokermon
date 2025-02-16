@@ -2780,6 +2780,12 @@ return {
                   "{C:inactive}({C:attention}#1#{}{C:inactive} rounds remaining){}"
                 }
             },
+            j_poke_professor_jimbo = {
+                name = "Professor Jimbo",
+                text = {
+                  "Sell this to get a {C:attention}Starter Pack{}!"
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?

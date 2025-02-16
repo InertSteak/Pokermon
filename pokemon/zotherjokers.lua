@@ -161,6 +161,55 @@ local jelly_donut={
   end
 }
 
+local professor_jimbo={
+  name = "professor_jimbo",
+  pos = {x = 4, y = 0},
+  config = {extra = {sold = nil}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 2,
+  cost = 8,
+  joblacklist = true,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = false,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.selling_self and not context.blueprint then
+      card.ability.extra.sold = true
+      local starters = {'bulbasaur','charmander','squirtle',
+                        'chikorita','cyndaquil','totodile',
+                        'treecko','torchic','mudkip',
+                        'turtwig','chimchar','piplup',
+                        'snivy','tepig','oshawott',
+                        'chespin','fennekin','froakie',
+                        'rowlet','litten','popplio',
+                        'grookey','scorbunny','sobble',
+                        'sprigatito','fuecoco','quaxly',}
+      local found_starters = {}
+      for _,name in pairs(starters) do
+        if G.P_CENTERS["j_poke_"..name] then
+          table.insert(found_starters, "j_poke_"..name)
+        end
+      end
+      local to_create = pseudorandom_element(found_starters, pseudoseed('professor_jimbo'))
+      local new_starter = SMODS.create_card({set = "Joker", area = G.jokers, key = to_create, no_edition = true})
+      local pokedex = SMODS.create_card({set = "Joker", area = G.jokers, key = 'j_poke_pokedex', no_edition = true})
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
+          new_starter:add_to_deck()
+          pokedex:add_to_deck()
+          G.jokers:emplace(new_starter)
+          G.jokers:emplace(pokedex)
+          new_starter.states.visible = true
+          pokedex.states.visible = true
+      return true end }))
+    end
+  end,
+}
+
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut}
+        list = {pokedex, everstone, tall_grass, jelly_donut, professor_jimbo}
 }
