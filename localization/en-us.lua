@@ -1265,8 +1265,8 @@ return {
                     "{X:mult,C:white} X#2# {} Mult if deck size > {C:attention}#4#{}",
                     "{C:inactive}(Currently {C:mult}+#5#{} {C:inactive}Mult){}",
                     "{br:4}text needs to be here to work",
-                    "Remove 1 random card from deck then",
-                    "add 2 random cards at end of round",
+                    "At end of round, remove 1 random card",
+                    "from deck then add 2 random cards",
                 } 
             },
             j_poke_shellder = {
