@@ -2301,6 +2301,7 @@ return {
                 name = 'Metagross',
                 text = {
                     "{C:chips}+#1#{} Chips",
+                    "{br:3}text needs to be here to work",
                     "If played hand is a {C:attention}Four of a Kind{}",
                     "each played card gives {X:mult,C:white}X{} Mult",
                     "equal to the {C:attention}cube root{} ",
