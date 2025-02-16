@@ -170,7 +170,7 @@ local professor_jimbo={
     return {vars = {}}
   end,
   rarity = 2,
-  cost = 8,
+  cost = 10,
   joblacklist = true,
   stage = "Other",
   atlas = "others",
