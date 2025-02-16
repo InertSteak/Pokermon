@@ -48,6 +48,7 @@ local gastly={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -65,12 +66,13 @@ local gastly={
               eligible_card:set_edition(edition, true)
             end
           end
+        return true end }))
           
-          remove(self, card, context)
-          
-          return {
-              message = localize("poke_lick_ex")
-          }
+        remove(self, card, context)
+        
+        return {
+            message = localize("poke_lick_ex")
+        }
       end
     end
     if not card.gone then
@@ -101,6 +103,7 @@ local haunter={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
           if #G.jokers.cards > 0 then
             local eligible_editionless_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -118,12 +121,13 @@ local haunter={
               eligible_card:set_edition(edition, true)
             end
           end
+        return true end }))
           
-          remove(self, card, context)
-          
-          return {
-            message = localize("poke_lick_ex")
-          }
+        remove(self, card, context)
+        
+        return {
+          message = localize("poke_lick_ex")
+        }
       end
     end
     if not card.gone then
@@ -154,6 +158,7 @@ local gengar={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gengar') < 1/card.ability.extra.odds then
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
           if #G.jokers.cards > 0 then
             local eligible_jokers = {}
             for k, v in pairs(G.jokers.cards) do
@@ -170,6 +175,7 @@ local gengar={
               }
             end
           end
+        return true end }))
       else
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             attention_text({
