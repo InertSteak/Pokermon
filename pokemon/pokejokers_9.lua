@@ -270,7 +270,7 @@ local torchic={
           end 
           card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + discard_plus
           return {
-            message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
+            message = localize{type='variable',key='a_mult',vars={discard_plus}},
             colour = G.C.RED,
             delay = 0.45, 
             card = card
