@@ -78,7 +78,7 @@ local gimmighoul={
 }
 local gimmighoulr={
   name = "gimmighoulr",
-  pos = {x = 1, y = 6},
+  pos = {x = 11, y = 6},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
