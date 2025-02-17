@@ -1004,3 +1004,46 @@ poke_drain = function(card, target, amount, one_way)
     end    
   end
 end
+
+fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  local _c = card and card.config.center or self
+  if not full_UI_table.name then
+    full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+  end
+  -- get descriptions
+  local vars = self:loc_vars(info_queue, card).vars
+  local count = #desc_nodes + 1
+  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = vars}
+  -- set count to the first line with a colon
+  while count <= #desc_nodes and not(desc_nodes[count][2] and desc_nodes[count][2].config.text and string.find(desc_nodes[count][2].config.text,":")) do
+    count = count + 1
+  end
+
+  local evolution_node = nil
+  local to_replace = {}
+  while #desc_nodes >= count do
+    local new_node = {n=G.UIT.R, config={align = "tl", scale = 1.0, colour = G.C.UI.TEXT_LIGHT}, nodes = {}}
+    local nodes = desc_nodes[count]
+    table.remove(desc_nodes, count)
+
+    if nodes[1] and nodes[1].config.text and string.find(nodes[1].config.text,"%(Evolves") then
+      evolution_node = nodes
+    else
+      if not (nodes[2] and nodes[2].config.text and string.find(nodes[2].config.text,":")) then
+        local last_nodes = to_replace[#to_replace].nodes
+        table.insert(nodes, 1, {n=G.UIT.C, config={align = "m", colour = G.C.WHITE, r = 0.05, padding = 0.03, res = 0.15, maxh = 0.2}, nodes={
+          {n=G.UIT.T, config={text = "99 ", colour = G.C.WHITE, scale = last_nodes[1].nodes[1].config.scale}},
+        }})
+        local text_extract = string.match(last_nodes[2].config.text,"%s*:%s*")
+        table.insert(nodes, 2, {n=G.UIT.T, config={text = text_extract, colour = G.C.WHITE, scale = last_nodes[2].config.scale, maxh = 0.2}})
+      end
+      new_node.nodes = nodes
+      table.insert(to_replace, new_node)
+    end
+  end
+
+  desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config = {align = "tl", scale = 1.0, colour = G.C.UI.TEXT_LIGHT, padding = 0.05}, nodes = to_replace}}
+  if evolution_node then
+    desc_nodes[#desc_nodes+1] = evolution_node
+  end
+end

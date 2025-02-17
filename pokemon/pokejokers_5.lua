@@ -784,6 +784,7 @@ local omanyte={
     end
     return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, card.ability.extra.third_goal)
   end,
+  generate_ui = fossil_generate_ui,
 }
 local omastar={
   name = "omastar", 
@@ -849,6 +850,7 @@ local omastar={
       end
     end
   end,
+  generate_ui = fossil_generate_ui,
 }
 local kabuto={
   name = "kabuto", 
@@ -909,6 +911,7 @@ local kabuto={
     end
     return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, card.ability.extra.third_goal)
   end,
+  generate_ui = fossil_generate_ui,
 }
 local kabutops={
   name = "kabutops", 
@@ -976,6 +979,7 @@ local kabutops={
       end
     end
   end,
+  generate_ui = fossil_generate_ui,
 }
 local aerodactyl={
   name = "aerodactyl", 
@@ -1043,6 +1047,7 @@ local aerodactyl={
       end
     end
   end,
+  generate_ui = fossil_generate_ui,
   megas = {"mega_aerodactyl"}
 }
 local mega_aerodactyl={
