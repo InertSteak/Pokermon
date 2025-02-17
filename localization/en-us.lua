@@ -2069,6 +2069,24 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_swinub = {
+                name = "Swinub",
+                text = {
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips or {C:mult}+#4#{} Mult",
+                    "{C:green}#1# in #2#{} chance for both",
+                    "{C:inactive,s:0.8}(Evolves after 4 Rounds)",
+                }
+            },
+            j_poke_piloswine = {
+                name = "Piloswine",
+                text = {
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips, {C:mult}+#4#{} Mult, or {X:mult,C:white}X#5#{} Mult",
+                    "{C:green}#1# in #2#{} chance for all three",
+                    "{C:inactive,s:0.8}(Evolves after #6#/15 {C:attention,s:0.8}Stone{C:inactive,s:0.8} cards are scored)",
+                }
+            },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -2501,6 +2519,17 @@ return {
                     "a {C:attention}Glass{} copy of a random",
                     "card in your deck to shop",
                 } 
+            },
+            j_poke_mamoswine = {
+                name = "Mamoswine",
+                text = {
+                    "Played {C:attention}Stone{} cards give",
+                    "{C:chips}+#3#{} Chips, {C:mult}+#4#{} Mult, or {X:mult,C:white}X#5#{} Mult",
+                    "{C:green}#1# in #2#{} chance for all three",
+                    "{C:attention}Stone{} cards can't be {C:attention}debuffed{}",
+                    "and count as {C:light_black}#6# of {V:1}#7#{}",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}Rank/Suit{C:inactive,s:0.8} changes each round)",
+                }
             },
             j_poke_porygonz = {
                 name = 'Porygon-Z',
