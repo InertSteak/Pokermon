@@ -658,6 +658,7 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult if played hand",
                     "contains a {C:attention}Straight{}",
+                    "{br:2}text needs to be here to work",
                     "Create a {C:attention}Tarot{} card if",
                     "it also contains an {C:attention}Ace{}"
                 } 
@@ -666,7 +667,7 @@ return {
                 name = "Pikachu",
                 text = {
                     "Earn {C:money}$#1#{} for each Joker card",
-                    "at end of round",
+                    "you have at end of round",
                     "{C:inactive,s:0.8}(Max of {C:money,s:0.8}$10{C:inactive,s:0.8})",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone {C:inactive,s:0.8}card)"
                 }
@@ -678,7 +679,7 @@ return {
                     "if you have at least {C:money}$#2#{}",
                     "{C:inactive,s:0.8}(Increases per Raichu you have){}",
                     "Earn {C:money}$#1#{} for each Joker card",
-                    "at end of round",
+                    "you have at end of round",
                     "{C:inactive,s:0.8}(Max of {C:money,s:0.8}$#3#{C:inactive,s:0.8})"
                 } 
             },
@@ -688,8 +689,8 @@ return {
                     "{C:chips}+#2#{} Chips for each {C:attention}Glass{} card",
                     "in your full deck",
                     "{br:3}text needs to be here to work",
-                    "{V:1}Add a copy to hand of the first",
-                    "{C:attention,V:1}Glass{V:1} card shattered each round",
+                    "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
+                    "shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
@@ -700,8 +701,8 @@ return {
                     "{C:chips}+#1#{} Chips for each {C:attention}Glass{} card",
                     "in your full deck",
                     "{br:3}text needs to be here to work",
-                    "{V:1}Add a copy to hand of the first",
-                    "{C:attention,V:1}Glass{V:1} card shattered each round",
+                    "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
+                    "shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                 } 
             },
@@ -893,6 +894,7 @@ return {
                 text = {
                     "{C:chips}+#2#{} Chips if played hand",
                     "contains a {C:attention}Three of a kind{}",
+                    "{br:2}text needs to be here to work",
                     "{C:mult}+#3#{} Mult if played hand",
                     "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
@@ -903,6 +905,7 @@ return {
                 text = {
                     "{C:chips}+#2#{} Chips if played hand",
                     "contains a {C:attention}Three of a kind{}",
+                    "{br:2}text needs to be here to work",
                     "{X:red,C:white} X#1# {} Mult if played hand",
                     "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                 } 
@@ -982,7 +985,7 @@ return {
                 text = {
                     "Played {V:1}#3#{} cards give {C:mult}+#1#{} Mult",
                     "when scored",
-                    "Suit cycles after scoring",
+                    "Suit changes in order after scoring",
                     "{C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
@@ -992,7 +995,7 @@ return {
                 text = {
                     "Played {V:1}#2#{} cards give {C:mult}+#1#{} Mult",
                     "when scored",
-                    "Suit cycles after scoring",
+                    "Suit changes in order after scoring",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8} or {C:attention,s:0.8}King's Rock{C:inactive,s:0.8} card)"
                 } 
@@ -1002,7 +1005,7 @@ return {
                 text = {
                     "Played {V:1}#2#{} cards give {C:mult}+#7#{} Mult",
                     "and {X:mult,C:white}X#1#{} Mult when scored",
-                    "Suit cycles after scoring",
+                    "Suit changes in order after scoring",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#)"
                 } 
             },
@@ -1219,6 +1222,7 @@ return {
                     "{C:mult}+#1#{} Mult if scoring hand",
                     "contains at least {C:attention}2{} face cards",
                     "{C:mult}+#1#{} Mult if scoring hand",
+                    "{br:2}text needs to be here to work",
                     "contains a {C:attention}Full House{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
@@ -1228,6 +1232,7 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult if scoring hand",
                     "contains at least {C:attention}3{} face cards",
+                    "{br:2}text needs to be here to work",
                     "{C:mult}+#1#{} Mult if scoring hand",
                     "contains a {C:attention}Full House{}",
                 } 
@@ -1843,9 +1848,9 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult",
                     "{br:1.6}text needs to be here to work",
-                    "If played hand",
-                    "has only {C:attention}1{} card,",
-                    "retrigger it {C:attention}#2#{} times"
+                    "Retrigger played card {C:attention}#2#{} times",
+                    "if played hand is",
+                    "exactly {C:attention}1{} card"
                 } 
             },
             j_poke_mewtwo = {
@@ -2027,7 +2032,7 @@ return {
                 name = "Mantine",
                 text = {
                   "Gains {C:chips}+#2#{} Chips when a {C:attention}Gold{} card",
-                  "is scored or held in hand",
+                  "is scored or {C:attention}held{} in hand",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
@@ -2209,7 +2214,7 @@ return {
                     "Played {C:attention}#6#s, #7#s or #8#s{} give {C:chips}+#1#{} Chips",
                     "and {C:chips}+#5#{} Chips per other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} card",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Curently {C:chips}+#4#{C:inactive} total)"
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} total)"
                 } 
             },
             j_poke_aron = {
@@ -2351,7 +2356,6 @@ return {
                     "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
                     "Create a random {C:item}Item{} card with",
                     "{C:dark_edition}Negative{} at end of round",
-                    "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -2361,6 +2365,7 @@ return {
                   "{C:attention}Baby{}, {X:red,C:white}X#2#{} Mult",
                   "At end of round, a random",
                   "card in {C:attention}deck{} becomes {C:attention}Gold{}",
+                  "{br:2}text needs to be here to work",
                   "{C:attention}Gold{} cards {C:attention}held{} in hand",
                   "give {C:chips}+#1#{} Chips",
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
