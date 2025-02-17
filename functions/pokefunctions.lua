@@ -74,6 +74,7 @@ family = {
     {"snorunt", "glalie", "froslass"},
     {"beldum", "metang", "metagross"},
     {"sentret", "furret"},
+    {"slugma","magcargo"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},

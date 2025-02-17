@@ -2069,6 +2069,23 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_slugma = {
+                name = 'Slugma',
+                text = {
+                    "At start of round",
+                    "add a {C:attention}Stone{} card to hand",
+                    "for each adjacent {X:water,C:white}Water{C:attention} Joker",
+                    "{C:inactive,s:0.8}(Evolves after creating #2#/{C:attention,s:0.8}#1# Stone{C:inactive,s:0.8} cards)"
+                } 
+            },
+            j_poke_magcargo = {
+                name = 'Magcargo',
+                text = {
+                    "{C:attention}Stone{} cards gain {C:mult}+#1#{} Mult",
+                    "permanently when scored",
+                    "for each {X:fire,C:white}Fire{C:attention} Joker{} you have",
+                } 
+            },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -3476,6 +3493,11 @@ return {
                     "Choose {C:attention}#1#{} from among",
                     "{C:attention}#2#{} {C:item}Item{} Cards and",
                     "{C:attention}#3#{} {C:pink}Energy{} Card",
+                },
+            },
+            card_extra_mult={
+                text={
+                    "{C:mult}+#1#{} extra Mult",
                 },
             },
         },
