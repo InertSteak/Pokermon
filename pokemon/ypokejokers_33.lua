@@ -19,7 +19,7 @@
 -- Annihilape 979
 local annihilape={
   name = "annihilape", 
-  pos = {x = 3, y = 5}, 
+  pos = {x = 2, y = 6}, 
   config = {extra = {mult = 5, chips = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
