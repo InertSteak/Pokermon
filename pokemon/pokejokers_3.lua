@@ -934,7 +934,7 @@ local magneton={
     if G.STAGE == G.STAGES.RUN then
       local adjacent_jokers = poke_get_adjacent_jokers(center)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
+        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
@@ -953,7 +953,7 @@ local magneton={
         local adjacent = 0
         local adjacent_jokers = poke_get_adjacent_jokers(card)
         for i = 1, #adjacent_jokers do
-          if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
+          if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
         end
         
         return {
