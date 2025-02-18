@@ -42,8 +42,6 @@ local poliwhirl={
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
             mult = card.ability.extra.mult
           }
         end
@@ -533,8 +531,6 @@ local tentacool={
       end
       if allten then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
           card = card
         }
@@ -560,8 +556,6 @@ local tentacruel={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
       return {
-        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-        colour = G.C.MULT,
         mult = card.ability.extra.mult,
         card = card
       }

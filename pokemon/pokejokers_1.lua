@@ -1074,32 +1074,39 @@ local arbok={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
+        local aces = 0
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local aces = 0
           for i = 1, #context.scoring_hand do
               if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
           end
-          if aces >= 1 then
-            local card_type = 'Tarot'
-            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-            G.E_MANAGER:add_event(Event({
+        end
+        if aces > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
+              G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
-                func = (function()
-                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                        card:add_to_deck()
-                        G.consumeables:emplace(card)
-                        G.GAME.consumeable_buffer = 0
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-                    return true
-                end)}))
-          end
+                func = function()
+                  local card_type = 'Tarot'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end},
+            mult_mod = card.ability.extra.mult
+          }
+        else
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
         end
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
       end
     end
   end,
