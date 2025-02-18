@@ -1221,8 +1221,8 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult if scoring hand",
                     "contains at least {C:attention}2{} face cards",
-                    "{C:mult}+#1#{} Mult if scoring hand",
                     "{br:2}text needs to be here to work",
+                    "{C:mult}+#1#{} Mult if scoring hand",
                     "contains a {C:attention}Full House{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
