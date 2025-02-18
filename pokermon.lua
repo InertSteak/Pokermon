@@ -1,3 +1,19 @@
+if not SMODS or not SMODS.calculation_keys then
+  -- SMODS isn't updated to a high enough version to check
+  error("SMODS OUT OF DATE - update Steamodded")
+end
+
+local found = false
+for k,v in pairs(SMODS.calculation_keys) do
+  if v == 'xchips' then
+    found = true
+    break
+  end
+end
+if not found then
+  error("SMODS OUT OF DATE - update Steamodded")
+end
+
 pokermon = {}
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
