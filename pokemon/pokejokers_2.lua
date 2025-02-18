@@ -275,18 +275,33 @@ local ninetales={
           local _card = nil
           local text = nil
           local text_colour = nil
+          local set = nil
           if pseudorandom('ninetails') > .50 then
-            _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+            set = 'Tarot'
             text = 'k_plus_tarot'
             text_colour = G.C.PURPLE
           else
-            _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
+            set = 'Planet'
             text = 'k_plus_planet'
             text_colour = G.C.SECONDARY_SET.Planet
           end
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(text), colour = text_colour})
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize(text), colour = text_colour, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  _card = create_card(set, G.consumeables, nil, nil, nil, nil, nil)
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end},
+            card = card
+          }
         end
       end 
     end
