@@ -2041,7 +2041,7 @@ return {
                 text = {
                     "Gains {C:mult}+#2#{} Mult for each scored {C:attention}6{}",
                     "If a {C:attention}King{} is held in hand, {C:attention}instead{}",
-                    "gain {X:red,C:white}X#4#{} Mult for each scored {C:attention}6{}",
+                    "gains {X:red,C:white}X#4#{} Mult for each scored {C:attention}6{}",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
             },
