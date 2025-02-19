@@ -2531,6 +2531,12 @@ return {
                     "in hand gives {X:mult,C:white} X#1# {} Mult",
                 } 
             },
+            j_poke_diancie = {
+                name = 'Diancie',
+                text = {
+                    "{X:red,C:white} X#1# {} Mult",
+                } 
+            },
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
