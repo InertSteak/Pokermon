@@ -2534,7 +2534,9 @@ return {
             j_poke_diancie = {
                 name = 'Diancie',
                 text = {
-                    "{X:red,C:white} X#1# {} Mult",
+                    "{C:diamonds}#2#{} cards retrigger and ",
+                    "give {X:red,C:white} X1.2 {} Mult"
+
                 } 
             },
             j_poke_grubbin = {

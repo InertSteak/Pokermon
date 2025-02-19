@@ -86,7 +86,7 @@ local diancie = {
 	name = "diancie", 
 	pos = {x = 4, y = 10},	
 	soul_pos = { x = 5, y = 10},
-  config = {extra = {suit = "Diamonds", Xmult_multi = 2, retriggers = 1}},
+  config = {extra = {suit = "Diamonds", Xmult_multi = 1.2, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -98,19 +98,12 @@ local diancie = {
 	atlas = "Pokedex2",
 	blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.play then
+    if context.repetition and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
           card = card
       }
-    end
-    if context.setting_blind then
-      for _, v in ipairs(G.playing_cards) do
-        if not v:is_suit(card.ability.extra.suit) and not v.debuff then --DEBUFF ALL NON DIAMONDS--
-          SMODS.debuff_card(v, true, card)
-        end
-      end
     end
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
