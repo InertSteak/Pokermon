@@ -2521,6 +2521,79 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
                 }
             },
+            j_poke_snivy = {
+                name = "Snivy",
+                text = {
+                    "{C:attention}+#1#{} hand size for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}4{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_servine = {
+                name = "Servine",
+                text = {
+                    "{C:attention}+#1#{} hand size for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used and/or hands played",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}10{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_serperior = {
+                name = "Serperior",
+                text = {
+                    "{C:attention}+#1#{} hand size for each",
+                    "discard used or hand played",
+                }
+            },
+            j_poke_tepig = {
+                name = "Tepig",
+                text = {
+                    "{C:red}+#1#{} discard for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}4{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_pignite = {
+                name = "Pignite",
+                text = {
+                    "{C:red}+#1#{} discard for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used and/or hands played",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}10{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_emboar = {
+                name = "Emboar",
+                text = {
+                    "{C:red}+#1#{} discard for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used and/or hands played",
+                    "Gain {X:mult,C:white}X#4#{} per discard remaining",
+                    "{C:inactive,s:0.8}(Currently {X:mult,C:white,s:0.8}X#5#{}{C:inactive,s:0.8} Mult){}",
+                }
+            },
+            j_poke_oshawott = {
+                name = "Oshawott",
+                text = {
+                    "{C:blue}+#1#{} hand for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}4{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_dewott = {
+                name = "Dewott",
+                text = {
+                    "{C:blue}+#1#{} hand for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used and/or hands played",
+                    "{C:inactive,s:0.8}(Evolves after triggering #4#/{C:attention,s:0.8}10{}{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_samurott = {
+                name = "Samurott",
+                text = {
+                    "{C:blue}+#1#{} hand for every {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "discards used and/or hands played",
+                    "Gain {X:chips,C:white}X#4#{} Chips per hand remaining",
+                    "{C:inactive,s:0.8}(Currently {X:chips,C:white,s:0.8}X#5#{}{C:inactive,s:0.8} Chips){}",
+                }
+            },
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
