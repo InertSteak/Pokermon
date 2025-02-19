@@ -2041,8 +2041,8 @@ return {
                 text = {
                     "Gains {C:mult}+#2#{} Mult for each scored {C:attention}6{}",
                     "If a {C:attention}King{} is held in hand,",
-                    "gains {X:red,C:white}X#4#{} Mult {C:attention}instead{}",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{} Mult{C:inactive})",
+                    "gains {X:red,C:white}X#4#{} Mult {C:attention}instead{} for each scored {C:attention}6{}",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
             },
             j_poke_porygon2 = {
