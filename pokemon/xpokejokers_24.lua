@@ -84,18 +84,19 @@ local sylveon={
 -- Diancie 719
 local diancie = {
 	name = "diancie", 
-	pos = {x = 4, y = 10},	
-	soul_pos = { x = 5, y = 10},
-  config = {extra = {suit = "Diamonds", Xmult_multi = 1.2, retriggers = 1}},
+	pos = {x = 5, y = 12},	
+	soul_pos = {x = 6, y = 12},
+  config = {extra = {suit = "Diamonds", Xmult_multi = 1.2, retriggers = 1, money = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.money}}
   end,
 	rarity = 4,
 	cost = 20,
 	stage = "Legendary",
-	ptype = "Fairy",
-	atlas = "Pokedex2",
+	ptype = "Earth",
+	atlas = "Pokedex6",
 	blueprint_compat = false,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
@@ -107,6 +108,45 @@ local diancie = {
     end
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        message = "+$1",
+        ease_poke_dollars(card, "diancie", card.ability.extra.money)
+        return {
+          colour = G.C.XMULT,
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
+      end
+    end
+  end,
+  megas = {"mega_diancie"},
+}
+local mega_diancie = {
+	name = "mega_diancie", 
+	pos = {x = 8, y = 6},	
+	soul_pos = { x = 9, y = 6},
+  config = {extra = {suit = "Diamonds", Xmult_multi = 2, retriggers = 1, money = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.money}}
+  end,
+	rarity = "poke_mega",
+	cost = 30,
+	stage = "Mega",
+	ptype = "Earth",
+	atlas = "Megas",
+	blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.repetition and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+      return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+      }
+    end
+    if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        message = "+$2",
+        ease_poke_dollars(card, "diancie", card.ability.extra.money)
         return {
           colour = G.C.XMULT,
           x_mult = card.ability.extra.Xmult_multi,
@@ -118,5 +158,5 @@ local diancie = {
 }
 -- Hoopa 720
 return {name = "Pokemon Jokers 691-720", 
-        list = {sylveon, diancie},
+        list = {sylveon, diancie, mega_diancie},
 }

@@ -2534,8 +2534,18 @@ return {
             j_poke_diancie = {
                 name = 'Diancie',
                 text = {
-                    "{C:diamonds}#2#{} cards retrigger and ",
-                    "give {X:red,C:white} X1.2 {} Mult"
+                    "Played cards with {C:diamonds}#2#{} suit",
+                    "retrigger, give {X:red,C:white} X1.2 {} Mult,",
+                    "and earn {C:money}$1{} when scored."
+
+                } 
+            },
+            j_poke_mega_diancie = {
+                name = 'Mega Diancie',
+                text = {
+                    "Played cards with {C:diamonds}#2#{} suit",
+                    "retrigger, give {X:red,C:white} X2 {} Mult,",
+                    "and earn {C:money}$2{} when scored."
 
                 } 
             },
