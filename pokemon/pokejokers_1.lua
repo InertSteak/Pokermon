@@ -1081,6 +1081,7 @@ local arbok={
           end
         end
         if aces > 0 then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
