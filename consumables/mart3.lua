@@ -13,25 +13,38 @@ local prismscale = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
-    local selected_suit = G.hand.highlighted[1].base.suit
-    
-    local cards_held = {}
-    for k, v in ipairs(G.hand.cards) do
-      if v ~= G.hand.highlighted[1] then
-        table.insert(cards_held, v)
+    if #G.hand.highlighted == 1 then
+      local selected_suit = G.hand.highlighted[1].base.suit
+      
+      local cards_held = {}
+      for k, v in ipairs(G.hand.cards) do
+        if v ~= G.hand.highlighted[1] then
+          table.insert(cards_held, v)
+        end
       end
+      
+      pseudoshuffle(cards_held, pseudoseed('prism'))
+      
+      juice_flip_table(card, cards_held, false, self.config.converted)
+      for i = 1, math.min(#cards_held, self.config.converted) do
+        G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
+      end
+      juice_flip_table(card, cards_held, true, self.config.converted)
+      
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    
-    pseudoshuffle(cards_held, pseudoseed('prism'))
-    
-    juice_flip_table(card, cards_held, false, self.config.converted)
-    for i = 1, math.min(#cards_held, self.config.converted) do
-      G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
-    end
-    juice_flip_table(card, cards_held, true, self.config.converted)
-    
-    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -120,32 +133,39 @@ local dawnstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
     return card.ability.extra.hand_played
   end,
   use = function(self, card, area, copier)
-    local money = 0
-    local hand_played = card.ability.extra.hand_played
-    local money_limit = card.ability.extra.money_limit
-    
-    if hand_played then
-      local mult = nil
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        mult = to_big(G.GAME.hands[hand_played].mult)
-        money = mult * 2
-        if to_big(money) > to_big(money_limit) then
-          ease_dollars(money_limit) 
-        else
-          ease_dollars(to_number(money))
+    if card.ability.extra.hand_played then
+      local money = 0
+      local hand_played = card.ability.extra.hand_played
+      local money_limit = card.ability.extra.money_limit
+      
+      if hand_played then
+        local mult = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          mult = to_big(G.GAME.hands[hand_played].mult)
+          money = mult * 2
+          if to_big(money) > to_big(money_limit) then
+            ease_dollars(money_limit) 
+          else
+            ease_dollars(to_number(money))
+          end
+        elseif not (SMODS.Mods["Talisman"] or {}).can_load then
+          mult = G.GAME.hands[hand_played].mult
+          money = mult * 2
+          money = math.min(money, money_limit)
+          ease_dollars(money)
         end
-      elseif not (SMODS.Mods["Talisman"] or {}).can_load then
-        mult = G.GAME.hands[hand_played].mult
-        money = mult * 2
-        money = math.min(money, money_limit)
-        ease_dollars(money)
       end
+      
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    
-    evo_item_use_total(self, card, area, copier)
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
