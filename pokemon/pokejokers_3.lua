@@ -42,8 +42,6 @@ local poliwhirl={
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
             mult = card.ability.extra.mult
           }
         end
@@ -533,8 +531,6 @@ local tentacool={
       end
       if allten then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
           mult = card.ability.extra.mult,
           card = card
         }
@@ -560,8 +556,6 @@ local tentacruel={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
       return {
-        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-        colour = G.C.MULT,
         mult = card.ability.extra.mult,
         card = card
       }
@@ -934,7 +928,7 @@ local magneton={
     if G.STAGE == G.STAGES.RUN then
       local adjacent_jokers = poke_get_adjacent_jokers(center)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
+        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (adjacent * center.ability.extra.Xmult_multi2)}}
@@ -953,7 +947,7 @@ local magneton={
         local adjacent = 0
         local adjacent_jokers = poke_get_adjacent_jokers(card)
         for i = 1, #adjacent_jokers do
-          if is_type(adjacent_jokers[1], "Metal") then adjacent = adjacent + 1 end
+          if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
         end
         
         return {

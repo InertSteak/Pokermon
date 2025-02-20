@@ -1038,12 +1038,12 @@ local mega_kangaskhan={
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
     end
     if context.using_consumeable then
       card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1
