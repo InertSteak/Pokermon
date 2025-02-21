@@ -181,16 +181,6 @@ local litwick={
   name = "litwick",
   pos = {x = 0, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
-  loc_txt = {
-    name = "Litwick",
-    text = {
-      "At end of round, {C:attention}Drain{} {C:money}$#1#{}",
-      "from adjacent Jokers",
-      "Adds this Joker's sell value to Mult",
-      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
-      "{C:inactive}(Evolves at {C:money}$#2#{C:inactive} Sell Value)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
@@ -228,16 +218,6 @@ local lampent={
   name = "lampent",
   pos = {x = 1, y = 8},
   config = {extra = {money_minus = 1, sell_value_goal = 13}},
-  loc_txt = {
-    name = "Lampent",
-    text = {
-      "At end of round, {C:attention}Drain{} {C:money}$#1#{}",
-      "from all other Jokers",
-      "Adds {C:attention}double{} this Joker's sell value to Mult",
-      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
-      "{C:inactive}(Evolves with a {C:attention}Dusk Stone{C:inactive})"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
@@ -278,15 +258,6 @@ local chandelure={
   name = "chandelure",
   pos = {x = 2, y = 8},
   config = {extra = {money = 1, Xmult_multi = 1.3}},
-  loc_txt = {
-    name = "Chandelure",
-    text = {
-      "Adds {C:attention}triple{} this Joker's sell value to Mult",
-      "Each Joker with {C:money}1${} sell value",
-      "gives {X:mult,C:white} X#1# {} Mult and earns {C:money}$#2#{}",
-      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money, 3 * center.sell_cost}}

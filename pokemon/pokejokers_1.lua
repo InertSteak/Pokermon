@@ -971,6 +971,7 @@ local spearow={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.upgrade then
         card.ability.extra.upgrade = false
+        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
         return {
           card = card,
           level_up = true,
@@ -979,8 +980,7 @@ local spearow={
       end
       if context.joker_main and not context.blueprint then
         card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
-          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
           card.ability.extra.upgrade = true
           local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
@@ -1011,6 +1011,7 @@ local fearow={
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.upgrade then
+        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
         card.ability.extra.upgrade = false
         return {
           card = card,
@@ -1020,8 +1021,7 @@ local fearow={
       end
       if context.joker_main and not context.blueprint then
         card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
-          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
           card.ability.extra.upgrade = true
           local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
@@ -1074,32 +1074,40 @@ local arbok={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
+        local aces = 0
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local aces = 0
           for i = 1, #context.scoring_hand do
               if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
           end
-          if aces >= 1 then
-            local card_type = 'Tarot'
-            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-            G.E_MANAGER:add_event(Event({
+        end
+        if aces > 0 then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
+              G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
-                func = (function()
-                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                        card:add_to_deck()
-                        G.consumeables:emplace(card)
-                        G.GAME.consumeable_buffer = 0
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-                    return true
-                end)}))
-          end
+                func = function()
+                  local card_type = 'Tarot'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end},
+            mult_mod = card.ability.extra.mult
+          }
+        else
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
         end
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
       end
     end
   end,
@@ -1167,7 +1175,7 @@ local sandshrew={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
 		return {vars = {center.ability.extra.rounds, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
+                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 1, 
   cost = 5,
@@ -1243,7 +1251,7 @@ local sandslash={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
 		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    center.ability.extra.glass_restored == 0 and "("..localize('k_active_ex')..")" or ''}}
+                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 2,
   cost = 6, 

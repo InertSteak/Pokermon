@@ -48,29 +48,33 @@ local gastly={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          if #G.jokers.cards > 0 then
-            local eligible_editionless_jokers = {}
-            for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v ~= card and not v.gone then
-                  table.insert(eligible_editionless_jokers, v)
+        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+            if #G.jokers.cards > 0 then
+              local eligible_editionless_jokers = {}
+              for k, v in pairs(G.jokers.cards) do
+                if v.ability.set == 'Joker' and v ~= card and not v.gone then
+                    table.insert(eligible_editionless_jokers, v)
+                end
+              end
+              if #eligible_editionless_jokers > 0 then
+                local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
+                local edition = {negative = true}
+                eligible_card:set_edition(edition, true)
+              else
+                local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+                local edition = {negative = true}
+                eligible_card:set_edition(edition, true)
               end
             end
-            if #eligible_editionless_jokers > 0 then
-              local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
-              local edition = {negative = true}
-              eligible_card:set_edition(edition, true)
-            else
-              local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
-              local edition = {negative = true}
-              eligible_card:set_edition(edition, true)
-            end
-          end
+          return true end }))
+        return true end }))
           
-          remove(self, card, context)
-          
-          return {
-              message = localize("poke_lick_ex")
-          }
+        remove(self, card, context)
+        
+        return {
+            message = localize("poke_lick_ex")
+        }
       end
     end
     if not card.gone then
@@ -101,29 +105,33 @@ local haunter={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
-          if #G.jokers.cards > 0 then
-            local eligible_editionless_jokers = {}
-            for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v ~= card and not v.gone then
-                  table.insert(eligible_editionless_jokers, v)
+        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+            if #G.jokers.cards > 0 then
+              local eligible_editionless_jokers = {}
+              for k, v in pairs(G.jokers.cards) do
+                if v.ability.set == 'Joker' and v ~= card and not v.gone then
+                    table.insert(eligible_editionless_jokers, v)
+                end
+              end
+              if #eligible_editionless_jokers > 0 then
+                local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
+                local edition = {negative = true}
+                eligible_card:set_edition(edition, true)
+              else
+                local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+                local edition = {negative = true}
+                eligible_card:set_edition(edition, true)
               end
             end
-            if #eligible_editionless_jokers > 0 then
-              local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
-              local edition = {negative = true}
-              eligible_card:set_edition(edition, true)
-            else
-              local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
-              local edition = {negative = true}
-              eligible_card:set_edition(edition, true)
-            end
-          end
+          return true end }))
+        return true end }))
           
-          remove(self, card, context)
-          
-          return {
-            message = localize("poke_lick_ex")
-          }
+        remove(self, card, context)
+        
+        return {
+          message = localize("poke_lick_ex")
+        }
       end
     end
     if not card.gone then
@@ -154,22 +162,26 @@ local gengar={
   calculate = function(self, card, context)
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       if pseudorandom('gengar') < 1/card.ability.extra.odds then
-          if #G.jokers.cards > 0 then
-            local eligible_jokers = {}
-            for k, v in pairs(G.jokers.cards) do
-              if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
-                  table.insert(eligible_jokers, v)
+        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+            if #G.jokers.cards > 0 then
+              local eligible_jokers = {}
+              for k, v in pairs(G.jokers.cards) do
+                if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
+                    table.insert(eligible_jokers, v)
+                end
+              end
+              if #eligible_jokers > 0 then
+                local eligible_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
+                local edition = {negative = true}
+                eligible_card:set_edition(edition, true)
+                return {
+                  message = localize("poke_lick_ex")
+                }
               end
             end
-            if #eligible_jokers > 0 then
-              local eligible_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
-              local edition = {negative = true}
-              eligible_card:set_edition(edition, true)
-              return {
-                message = localize("poke_lick_ex")
-              }
-            end
-          end
+          return true end }))
+        return true end }))
       else
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             attention_text({
@@ -1026,12 +1038,12 @@ local mega_kangaskhan={
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
     end
     if context.using_consumeable then
       card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1

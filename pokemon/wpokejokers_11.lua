@@ -54,7 +54,7 @@ local aron = {
 local lairon = {
   name = "lairon",
   pos = { x = 3, y = 5 },
-  config = { extra = { Xmult = 2, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
   rarity = 3,
   cost = 8,
   stage = "One",
@@ -103,7 +103,7 @@ local lairon = {
 local aggron = {
   name = "aggron",
   pos = { x = 4, y = 5 },
-  config = { extra = { Xmult = 4, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
   rarity = "poke_safari",
   cost = 12,
   stage = "Two",
