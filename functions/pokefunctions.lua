@@ -82,6 +82,7 @@ family = {
     {"buizel", "floatzel"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
+    {"diancie", "mega_diancie"},
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"yamper","boltund"},

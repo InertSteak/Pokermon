@@ -2531,6 +2531,24 @@ return {
                     "in hand gives {X:mult,C:white} X#1# {} Mult",
                 } 
             },
+            j_poke_diancie = {
+                name = 'Diancie',
+                text = {
+                    "Played cards with {C:diamonds}#2#{} suit",
+                    "retrigger, give {X:red,C:white} X1.2 {} Mult,",
+                    "and earn {C:money}$1{} when scored."
+
+                } 
+            },
+            j_poke_mega_diancie = {
+                name = 'Mega Diancie',
+                text = {
+                    "Played cards with {C:diamonds}#2#{} suit",
+                    "retrigger, give {X:red,C:white} X2 {} Mult,",
+                    "and earn {C:money}$2{} when scored."
+
+                } 
+            },
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
