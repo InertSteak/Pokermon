@@ -20,37 +20,49 @@ local moonstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    if pseudorandom('moonstone') < G.GAME.probabilities.normal/self.config.odds then
-      local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-
-      level_up_hand(card, text)
-      if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-         or G.STATE == G.STATES.STANDARD_PACK then
-        update_hand_text({nopulse = true, delay = 0.3}, {mult = 0, chips = 0, level = '', handname = ''})
-      else
-        update_hand_text({nopulse = nil, delay = 0.3}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
-      end
-    else
-      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-          attention_text({
-              text = localize('k_nope_ex'),
-              scale = 1.3, 
-              hold = 1.4,
-              major = card,
-              backdrop_colour = G.C.SECONDARY_SET.Tarot,
-              align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
-              offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
-              silent = true
-              })
-              G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
-                  play_sound('tarot2', 0.76, 0.4);return true end}))
-              play_sound('tarot2', 1, 0.4)
-              card:juice_up(0.3, 0.5)
-      return true end }))
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if #G.hand.highlighted >= self.config.min_highlighted then
+      if pseudorandom('moonstone') < G.GAME.probabilities.normal/self.config.odds then
+        local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+
+        level_up_hand(card, text)
+        if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+          or G.STATE == G.STATES.STANDARD_PACK then
+          update_hand_text({nopulse = true, delay = 0.3}, {mult = 0, chips = 0, level = '', handname = ''})
+        else
+          update_hand_text({nopulse = nil, delay = 0.3}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
+        end
+      else
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            attention_text({
+                text = localize('k_nope_ex'),
+                scale = 1.3, 
+                hold = 1.4,
+                major = card,
+                backdrop_colour = G.C.SECONDARY_SET.Tarot,
+                align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
+                offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
+                silent = true
+                })
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
+                    play_sound('tarot2', 0.76, 0.4);return true end}))
+                play_sound('tarot2', 1, 0.4)
+                card:juice_up(0.3, 0.5)
+        return true end }))
+      end
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -61,7 +73,7 @@ local sunstone = {
   name = "sunstone",
   key = "sunstone",
   set = "Item",
-  config = {max_highlighted = 2,},
+  config = {max_highlighted = 2, min_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -73,15 +85,28 @@ local sunstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    juice_flip(card)
-    for i = 1, #G.hand.highlighted do
-      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
-      poke_vary_rank(G.hand.highlighted[i], nil, "sunstone")
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    juice_flip(card, true)
-    
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
+      juice_flip(card)
+      for i = 1, #G.hand.highlighted do
+        G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
+        poke_vary_rank(G.hand.highlighted[i], nil, "sunstone")
+      end
+      juice_flip(card, true)
+
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -104,19 +129,32 @@ local waterstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    local conv_card = G.hand.highlighted[1]
-    juice_flip(card)
-    if conv_card.ability.name == 'Bonus' then
-      local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
-      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
-      conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
-    else
-      conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    juice_flip(card, true)
-    delay(0.5)
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      local conv_card = G.hand.highlighted[1]
+      juice_flip(card)
+      if conv_card.ability.name == 'Bonus' then
+        local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
+        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
+        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
+      else
+        conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+      end
+      juice_flip(card, true)
+      delay(0.5)
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -138,31 +176,44 @@ local thunderstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    local suits = {'S','H','D','C'}
-    local selected = G.hand.highlighted[1]
-    local rank = (selected.base.value == 'Ace' and 'A') or
-    (selected.base.value == 'King' and 'K') or
-    (selected.base.value == 'Queen' and 'Q') or
-    (selected.base.value == 'Jack' and 'J') or
-    (selected.base.value == '10' and 'T') or 
-    (selected.base.value)
-    local area = nil
-    for i = 1, 2 do
-      if i == 1 then
-        area = G.hand
-      else
-        area = G.deck
-      end
-      local _card = create_playing_card({
-            front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
-            center = G.P_CENTERS.c_base}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
-      _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
-      _card:set_ability(G.P_CENTERS.m_gold, nil, true)
-      playing_card_joker_effects({_card})
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      local suits = {'S','H','D','C'}
+      local selected = G.hand.highlighted[1]
+      local rank = (selected.base.value == 'Ace' and 'A') or
+      (selected.base.value == 'King' and 'K') or
+      (selected.base.value == 'Queen' and 'Q') or
+      (selected.base.value == 'Jack' and 'J') or
+      (selected.base.value == '10' and 'T') or 
+      (selected.base.value)
+      local area = nil
+      for i = 1, 2 do
+        if i == 1 then
+          area = G.hand
+        else
+          area = G.deck
+        end
+        local _card = create_playing_card({
+              front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
+              center = G.P_CENTERS.c_base}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+        _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
+        _card:set_ability(G.P_CENTERS.m_gold, nil, true)
+        playing_card_joker_effects({_card})
+      end
+      
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -185,17 +236,30 @@ local firestone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    juice_flip(card)
-    for i = 1, #G.hand.highlighted do
-      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_mult, nil, true)
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    juice_flip(card, true)
-    
-    local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
-    poke_remove_card(target, card)
-    
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 4 then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 4 then
+      juice_flip(card)
+      for i = 1, #G.hand.highlighted do
+        G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_mult, nil, true)
+      end
+      juice_flip(card, true)
+      
+      local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
+      poke_remove_card(target, card)
+      
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -219,17 +283,24 @@ local leafstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    juice_flip_hand(card)
-    for i = 1, #G.hand.cards do
-      if pseudorandom('leafstone') < G.GAME.probabilities.normal/self.config.odds then
-        G.hand.cards[i]:set_ability(G.P_CENTERS.m_lucky, nil, true)
+    if G.hand.cards and #G.hand.cards > 0 then
+      juice_flip_hand(card)
+      for i = 1, #G.hand.cards do
+        if pseudorandom('leafstone') < G.GAME.probabilities.normal/self.config.odds then
+          G.hand.cards[i]:set_ability(G.P_CENTERS.m_lucky, nil, true)
+        end
       end
+      juice_flip_hand(card, true)
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    juice_flip_hand(card, true)
-    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -251,21 +322,34 @@ local linkcable = {
   evo_item = true,
   unlocked = true,
   discovered = true,
-  use = function(self, card, area, copier)
-    local rightmost = G.hand.highlighted[1]
-    for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
-    juice_flip(card)
-    for i=1, #G.hand.highlighted do
-      if G.hand.highlighted[i] ~= rightmost then
-        poke_vary_rank(G.hand.highlighted[i])
-      else
-        poke_vary_rank(G.hand.highlighted[i], true)
-      end
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
     end
-    juice_flip(card, true)
-    delay(0.5)
-    
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 2 then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 2 then
+      local rightmost = G.hand.highlighted[1]
+      for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
+      juice_flip(card)
+      for i=1, #G.hand.highlighted do
+        if G.hand.highlighted[i] ~= rightmost then
+          poke_vary_rank(G.hand.highlighted[i])
+        else
+          poke_vary_rank(G.hand.highlighted[i], true)
+        end
+      end
+      juice_flip(card, true)
+      delay(0.5)
+      
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -563,19 +647,32 @@ local kingsrock = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
-    local conv_card = G.hand.highlighted[1]
-    juice_flip(card)
-    G.E_MANAGER:add_event(Event({
-        trigger = 'after',
-        delay = 0.2,
-        func = function()
-            SMODS.change_base(conv_card, nil, "King"); return true
-        end
-    }))
-    delay(0.5)
-    juice_flip(card, true)
-    evo_item_use_total(self, card, area, copier)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      local conv_card = G.hand.highlighted[1]
+      juice_flip(card)
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.2,
+          func = function()
+              SMODS.change_base(conv_card, nil, "King"); return true
+          end
+      }))
+      delay(0.5)
+      juice_flip(card, true)
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true
@@ -586,7 +683,7 @@ local upgrade = {
   name = "upgrade",
   key = "upgrade",
   set = "Item",
-  config = {max_highlighted = 2},
+  config = {max_highlighted = 2, min_highlighted = 1,},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
@@ -598,24 +695,37 @@ local upgrade = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
-    local enhancement_type = pseudorandom(pseudoseed('upgrade'))
-    local enhancement = nil
-    if enhancement_type > .875 then enhancement = G.P_CENTERS.m_bonus
-    elseif enhancement_type > .75 then enhancement = G.P_CENTERS.m_mult
-    elseif enhancement_type > .625 then enhancement = G.P_CENTERS.m_wild
-    elseif enhancement_type > .50 then enhancement = G.P_CENTERS.m_glass
-    elseif enhancement_type > .375 then enhancement = G.P_CENTERS.m_steel
-    elseif enhancement_type > .25 then enhancement = G.P_CENTERS.m_stone
-    elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
-    else enhancement = G.P_CENTERS.m_lucky
+    if #G.hand.highlighted >= self.config.min_highlighted then
+      local enhancement_type = pseudorandom(pseudoseed('upgrade'))
+      local enhancement = nil
+      if enhancement_type > .875 then enhancement = G.P_CENTERS.m_bonus
+      elseif enhancement_type > .75 then enhancement = G.P_CENTERS.m_mult
+      elseif enhancement_type > .625 then enhancement = G.P_CENTERS.m_wild
+      elseif enhancement_type > .50 then enhancement = G.P_CENTERS.m_glass
+      elseif enhancement_type > .375 then enhancement = G.P_CENTERS.m_steel
+      elseif enhancement_type > .25 then enhancement = G.P_CENTERS.m_stone
+      elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
+      else enhancement = G.P_CENTERS.m_lucky
+      end
+      juice_flip(card)
+      for i = 1, #G.hand.highlighted do
+        G.hand.highlighted[i]:set_ability(enhancement, nil, true)
+      end
+      juice_flip(card, true)
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    juice_flip(card)
-    for i = 1, #G.hand.highlighted do
-      G.hand.highlighted[i]:set_ability(enhancement, nil, true)
-    end
-    juice_flip(card, true)
-    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return not next(find_joker("porygon2"))
@@ -636,26 +746,33 @@ local dubious_disc = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    juice_flip_hand(card)
-    for i = 1, #G.hand.cards do
-      local enhancement_type = pseudorandom(pseudoseed('dubious'))
-      local enhancement = nil
-      if enhancement_type > .89 then enhancement = G.P_CENTERS.m_bonus
-      elseif enhancement_type > .78 then enhancement = G.P_CENTERS.m_mult
-      elseif enhancement_type > .67 then enhancement = G.P_CENTERS.m_wild
-      elseif enhancement_type > .56 then enhancement = G.P_CENTERS.m_glass
-      elseif enhancement_type > .45 then enhancement = G.P_CENTERS.m_steel
-      elseif enhancement_type > .34 then enhancement = G.P_CENTERS.m_stone
-      elseif enhancement_type > .23 then enhancement = G.P_CENTERS.m_gold
-      elseif enhancement_type > .12 then enhancement = G.P_CENTERS.m_lucky
-      else enhancement = G.P_CENTERS.c_base end
-      G.hand.cards[i]:set_ability(enhancement, nil, true)
+    if G.hand.cards and #G.hand.cards > 0 then
+      juice_flip_hand(card)
+      for i = 1, #G.hand.cards do
+        local enhancement_type = pseudorandom(pseudoseed('dubious'))
+        local enhancement = nil
+        if enhancement_type > .89 then enhancement = G.P_CENTERS.m_bonus
+        elseif enhancement_type > .78 then enhancement = G.P_CENTERS.m_mult
+        elseif enhancement_type > .67 then enhancement = G.P_CENTERS.m_wild
+        elseif enhancement_type > .56 then enhancement = G.P_CENTERS.m_glass
+        elseif enhancement_type > .45 then enhancement = G.P_CENTERS.m_steel
+        elseif enhancement_type > .34 then enhancement = G.P_CENTERS.m_stone
+        elseif enhancement_type > .23 then enhancement = G.P_CENTERS.m_gold
+        elseif enhancement_type > .12 then enhancement = G.P_CENTERS.m_lucky
+        else enhancement = G.P_CENTERS.c_base end
+        G.hand.cards[i]:set_ability(enhancement, nil, true)
+      end
+      juice_flip_hand(card, true)
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    juice_flip_hand(card, true)
-    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return next(find_joker("porygon2"))
@@ -666,7 +783,7 @@ local icestone = {
   name = "icestone",
   key = "icestone",
   set = "Item",
-  config = {max_highlighted = 2, odds = 4},
+  config = {max_highlighted = 2, min_highlighted = 1, odds = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -678,19 +795,32 @@ local icestone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
-    juice_flip(card)
-    for i = 1, #G.hand.highlighted do
-      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_glass, nil, true)
-    end
-    juice_flip(card, true)
-    for i = 1, #G.hand.highlighted do
-      if pseudorandom(pseudoseed('icestone')) <  G.GAME.probabilities.normal/self.config.odds then
-        poke_remove_card(G.hand.highlighted[i], card)
+    if #G.hand.highlighted >= self.config.min_highlighted then
+      juice_flip(card)
+      for i = 1, #G.hand.highlighted do
+        G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_glass, nil, true)
       end
+      juice_flip(card, true)
+      for i = 1, #G.hand.highlighted do
+        if pseudorandom(pseudoseed('icestone')) <  G.GAME.probabilities.normal/self.config.odds then
+          poke_remove_card(G.hand.highlighted[i], card)
+        end
+      end
+
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
-    
-    evo_item_use_total(self, card, area, copier)
   end,
   in_pool = function(self)
     return true
@@ -715,7 +845,17 @@ local shinystone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
+    if #G.hand.highlighted == 1 then
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           local over = false
           local edition = poll_edition('aura', nil, true, true)
@@ -727,8 +867,11 @@ local shinystone = {
       for i = 1, #G.jokers.cards do
         poke_drain(nil, G.jokers.cards[i], self.config.drain_amt, true)
       end
-    
-    evo_item_use_total(self, card, area, copier)
+
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
   end,
   in_pool = function(self)
     return true

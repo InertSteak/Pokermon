@@ -691,6 +691,19 @@ highlighted_evo_item = function(self, card, area, copier)
     return evolve
 end
 
+function is_evo_item_for(self, card)
+  if not card.ability or type(card.ability.extra) ~= "table" or card.ability.extra.evolve then return false end
+
+  if type(card.ability.extra.item_req) == "table" then
+    for _, item in pairs(card.ability.extra.item_req) do
+      if item == self.name then
+        return true
+      end
+    end
+  end
+  return card.ability.extra.item_req == self.name
+end
+
 evo_item_use_total = function(self, card, area, copier)
     local evolve = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
