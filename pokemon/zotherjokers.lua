@@ -42,6 +42,7 @@ local everstone={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
 		return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 3, 

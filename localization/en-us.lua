@@ -2741,7 +2741,7 @@ return {
                 text = {
                     "Pokemon {C:attention}can't{} evolve",
                     "{br:3.5}text needs to be here to work",
-                    "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
+                    "{C:attention}Basic{} and {C:attention}Baby{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
                 } 
             },
             j_poke_tall_grass = {
@@ -3050,7 +3050,8 @@ return {
                 name = "Basic",
                 text = {
                     "A Pokemon Joker",
-                    "that hasn't {C:attention}Evolved{}"
+                    "that hasn't {C:attention}Evolved{}",
+                    "{C:inactive}(Ignoring {C:attention}Baby{C:inactive} Pokemon)"
                 }
             },
             stage1 = {
