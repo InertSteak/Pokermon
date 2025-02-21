@@ -116,7 +116,61 @@ local vikavolt={
 }
 -- Crabrawler 739
 -- Crabominable 740
+local oricorio_suit_table = {Hearts = {suit = 0, type = "Fire"}, Clubs = {suit = 1, type = "Lightning"}, Diamonds = {suit = 2, type = "Psychic"}, Spades = {suit = 3, type = "Psychic"}}
 -- Oricorio 741
+local oricorio = {
+  name = "oricorio",
+  pos = {x = 5, y = 1}, 
+  config = {extra = {Xmult = 4, suit_string = "Hearts", suit = 0}},
+  rarity = 3,
+  cost = 10,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex7",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+		return {vars = {card.ability.extra.Xmult, localize(card.ability.extra.suit_string, 'suits_singular'), colours = {G.C.SUITS[card.ability.extra.suit_string]}}}
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['Flush']) then
+        local other_suit = nil
+        local wilds = false
+        for _, played_card in pairs(context.scoring_hand) do
+          if played_card.config.center_key == "m_wild" then
+            wilds = true
+            break
+          elseif card.ability.extra.suit_string ~= played_card.base.suit then
+            other_suit = played_card.base.suit
+          end
+        end
+        if not wilds then
+          if not other_suit then
+            return {
+              message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+              colour = G.C.XMULT,
+              Xmult_mod = card.ability.extra.Xmult
+            }
+          else
+            self.update_form(card,other_suit)
+            G.E_MANAGER:add_event(Event({ func = function()
+              update_pokemon_form_sprites(card)
+              card:juice_up(0.1)
+              return true
+            end }))
+          end
+        end
+      end
+    end
+  end,
+  update_form = function(self, form)
+    self.ability.extra.suit_string = form
+    local new_form = oricorio_suit_table[form]
+    self.ability.extra.suit = new_form.suit
+    self.ability.extra.ptype = new_form.type
+  end
+}
 -- Cutiefly 742
 -- Ribombee 743
 -- Rockruff 744
@@ -127,5 +181,5 @@ local vikavolt={
 -- Mudbray 749
 -- Mudsdale 750
 return {name = "Pokemon Jokers 721-750", 
-        list = {grubbin, charjabug, vikavolt},
+        list = {grubbin, charjabug, vikavolt, oricorio},
 }
