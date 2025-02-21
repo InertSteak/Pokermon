@@ -1,3 +1,10 @@
+if SMODS.current_mod then
+  local loaded, config = pcall(require, "pokermon.setup")
+  if not loaded then
+      error("Pokermon did not load correctly. Please make sure the Pokermon folder isn't nested within the Mods folder and that you have everything installed properly.")
+  end
+end
+
 pokermon = {}
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them

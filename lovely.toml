@@ -3,6 +3,13 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
+#Nested check
+[[patches]]
+[patches.module]
+source = "setup.lua"
+before = "main.lua"
+name = "pokermon.setup"
+
 # Localization color
 [[patches]]
 [patches.pattern]
