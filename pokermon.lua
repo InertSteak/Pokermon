@@ -95,6 +95,13 @@ else
   helper()
 end
 
+local helper, load_error = SMODS.load_file("functions/pokeanimations.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  helper()
+end
+
 --Load Sprites file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then

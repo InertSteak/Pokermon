@@ -88,6 +88,7 @@ family = {
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},
+  --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
 }
 
 type_sticker_applied = function(card)
@@ -520,20 +521,25 @@ get_highest_evo = function(card)
   end
   for k, v in ipairs(family) do
     local max = #v
-    while max > 0 and string.sub(v[max],1,5) == "mega_" do
+    local max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+    while max > 0 and string.sub(max_evo_name,1,5) == "mega_" do
       max = max - 1
+      if max > 0 then
+        max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+      end
     end
     while max > 0 and is_aux_poke(v[max]) do
       max = max - 1
     end
     local evos = {}
     for x, y in ipairs(v) do
+      local cur_evo_name = (type(y) == "table" and y.key) or y
       if x <= max then
-        if found and y == v[max] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, y)
-        elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[max]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, y)
-        elseif not found and y == name then
+        if found and cur_evo_name == max_evo_name and G.P_CENTERS["j_poke_"..cur_evo_name].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+          table.insert(evos, cur_evo_name)
+        elseif found and G.P_CENTERS["j_poke_"..cur_evo_name].stage == G.P_CENTERS["j_poke_"..max_evo_name].stage and G.P_CENTERS["j_poke_"..cur_evo_name].stage ~= G.P_CENTERS["j_poke_"..name].stage then
+          table.insert(evos, cur_evo_name)
+        elseif not found and cur_evo_name == name then
           found = true
         end
       end
@@ -563,14 +569,20 @@ get_previous_evo = function(card, full_key)
   end
   for k, v in ipairs(family) do
     for x, y in ipairs(v) do
-      if y == name then
+      local cur_name = (type(y) == "table" and y.key) or y
+      if cur_name == name then
         found = true
         max = #v
+        local max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+
         if x > 1 then
-          while max > 0 and string.sub(v[max],1,5) == "mega_" or v[max] == "slowking" do
+          while max > 0 and string.sub(max_evo_name,1,5) == "mega_" or max_evo_name == "slowking" do
             max = max - 1
+            if max > 0 then
+              max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+            end
           end
-          prev = v[max]
+          prev = max_evo_name
         end
         break
       end
@@ -588,12 +600,23 @@ get_family_keys = function(cardname)
   local line = nil
   for k, v in pairs(family) do
     for x, y in pairs(v) do
-      if y == cardname then line = v; break end
+      if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
     end
   end
   if line then
     for i = 1, #line do
-      table.insert(keys, 'j_poke_'..line[i])
+      if type(line[i]) == "table" then
+        local new_table = {}
+        new_table.key = 'j_poke_'..line[i].key
+        for k, v in pairs(line[i]) do
+          if k ~= 'key' then
+            new_table[k] = v
+          end
+        end
+        table.insert(keys, new_table)
+      else
+        table.insert(keys, 'j_poke_'..line[i])
+      end
     end
   else
     table.insert(keys, 'j_poke_'..cardname)
@@ -615,9 +638,10 @@ pokemon_in_pool = function (self)
   local in_family
   for k, v in ipairs(family) do
     for l, p in ipairs(v) do
-      if p ~= name and next(find_joker(p)) then
+      local cur_name = (type(p) == "table" and p.key) or p
+      if cur_name ~= name and next(find_joker(cur_name)) then
         found_other = true 
-      elseif p == name then
+      elseif cur_name == name then
         in_family = true
       end
     end
@@ -1058,5 +1082,16 @@ fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars,
   desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config = {align = "tl", scale = 1.0, colour = G.C.UI.TEXT_LIGHT, padding = 0.05}, nodes = to_replace}}
   if evolution_node then
     desc_nodes[#desc_nodes+1] = evolution_node
+  end
+end
+
+update_pokemon_form_sprites = function(card)
+  -- filter out any playing cards, consumables, and non-pokermon jokers
+  if string.sub(card.config.center_key,1,7) == "j_poke_" then
+    -- Oricorio (Hearts, Clubs, Diamonds, Spades) == (5,6,7,8)
+    if card.config.center_key == "j_poke_oricorio" then
+      local form = (type(card.ability.extra) == "table" and card.ability.extra.suit or 0)
+      card.children.center:set_sprite_pos({x = 5 + form, y = 1})
+    end
   end
 end
