@@ -1,3 +1,31 @@
+check_for_needed_config = function()
+  --[[
+  if not SMODS or not SMODS.calculation_keys then
+    -- SMODS isn't updated to a high enough version to check
+    error("SMODS OUT OF DATE - update Steamodded")
+  end
+
+  local found = false
+  for k,v in pairs(SMODS.calculation_keys) do
+    if v == 'xchips' then
+      found = true
+      break
+    end
+  end
+  if not found then
+    error("SMODS OUT OF DATE - update Steamodded")
+  end
+  --]]
+  local ignore = loc_colour('poke_safari')
+  if not G.ARGS.LOC_COLOURS.poke_safari then
+    error("POKERMON - INCORRECT FILE STRUCTURE")
+  end
+end
+
+
+check_for_needed_config()
+
+
 pokermon = {}
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
