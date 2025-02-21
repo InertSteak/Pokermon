@@ -174,6 +174,7 @@ local dreepy_dart={
   name = "dreepy_dart",
   pos = {x = 1, y = 11},
   config = {extra = {money = 1, suit = "Spades"}},
+  no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}

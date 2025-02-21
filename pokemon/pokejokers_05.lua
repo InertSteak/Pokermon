@@ -312,6 +312,7 @@ local taurosh={
   name = "taurosh",
   pos = {x = 11, y = 9},
   config = {extra = {mult = 6}},
+  no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}

@@ -80,6 +80,7 @@ local gimmighoulr={
   name = "gimmighoulr",
   pos = {x = 11, y = 6},
   config = {extra = {}},
+  no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -89,9 +90,9 @@ local gimmighoulr={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex9",
-  perishable_compat = true,
+  perishable_compat = false,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   add_to_deck = function(self, card, from_debuff)
     local amount_earned = nil
     local money_chance = pseudorandom('gimmir')
