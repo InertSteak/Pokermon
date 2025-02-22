@@ -227,11 +227,157 @@ local metagross={
 -- Groudon 383
 -- Rayquaza 384
 -- Jirachi 385
+local jirachi = {
+  name = "jirachi", 
+  pos = {x = 4, y = 14},
+  soul_pos = {x = 5, y = 14},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    -- if everything works correctly, it should create the tag and instantly use it
+    if context.ending_shop and not context.blueprint then
+      add_tag(Tag('tag_poke_jirachi_tag'))
+    end
+  end,
+}
+local jirachi_banker = {
+  name = "jirachi_banker", 
+  pos = {x = 0, y = 0},
+  soul_pos = {x = 1, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
+
+local jirachi_booster = {
+  name = "jirachi_booster", 
+  pos = { x = 2, y = 0 },
+  soul_pos = { x = 3, y = 0 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
+
+local jirachi_power = {
+  name = "jirachi_power", 
+  pos = { x = 4, y = 0 },
+  soul_pos = { x = 5, y = 0 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
+
+local jirachi_negging = {
+  name = "jirachi_negging", 
+  pos = { x = 0, y = 1 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
+
+local jirachi_copy = {
+  name = "jirachi_copy", 
+  pos = { x = 2, y = 1 },
+  soul_pos = { x = 3, y = 1 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
+local jirachi_fixer = {
+  name = "jirachi_fixer", 
+  pos = { x = 4, y = 1 },
+  soul_pos = { x = 5, y = 1 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+  end,
+}
 -- Deoxys 386
 -- Turtwig 387
 -- Grotle 388
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, beldum, metang, metagross},
+        list = {snorunt, glalie, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_negging, jirachi_copy, jirachi_fixer},
 }

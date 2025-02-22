@@ -2313,6 +2313,59 @@ return {
                     "of that card's total chips",
                 } 
             },
+            j_poke_jirachi = {
+                name = 'Jirachi',
+                text = {
+                    "At the end of the shop,",
+                    "{C:dark_edition}make a wish!",
+                }
+            },
+            j_poke_jirachi_banker = {
+                name = 'Jirachi',
+                text = {
+                    "Double end of round payout",
+                }
+            },
+            j_poke_jirachi_booster = {
+                name = 'Jirachi',
+                text = {
+                    "+1 Booster Pack",
+                    "Tarot, Spectral, Pocket,",
+                    "and Planet packs have +2 options",
+                }
+            },
+            j_poke_jirachi_power = {
+                name = 'Jirachi',
+                text = {
+                    "Retrigger Steel cards held in hand",
+                    "Every 3 [3] hands, played cards",
+                    "give X3 mult when scored",
+                }
+            },
+            j_poke_jirachi_negging = {
+                name = 'Jirachi',
+                text = {
+                    "+2 Joker slots",
+                    "Negative Jokers appear 2X more often",
+                }
+            },
+            j_poke_jirachi_copy = {
+                name = 'Jirachi',
+                text = {
+                    "Copies ability of Joker to the right",
+                    "as if it had 3 extra energy (exceeds cap)",
+                }
+            },
+            j_poke_jirachi_fixer = {
+                name = 'Jirachi',
+                text = {
+                    "If first hand has exactly 1 card,",
+                    "add 1 copy of it to hand",
+                    "If first discard has exactly 1 card,",
+                    "destroy it and destroy a card",
+                    "in your deck with the same rank",
+                }
+            },
             j_poke_buizel = {
                 name = 'Buizel',
                 text = {
@@ -2852,6 +2905,48 @@ return {
                 text = {
                     "Adds a {C:item}Silver{} seal",
                     "to {C:attention}1{} selected card",
+                }
+            },
+            c_poke_fake_banker = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for Money!",
+                }
+            },
+            c_poke_fake_booster = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for Options!",
+                }
+            },
+            c_poke_fake_power = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for Power!",
+                }
+            },
+            c_poke_fake_negging = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for Friends!",
+                }
+            },
+            c_poke_fake_copy = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for a Helping Hand!",
+                }
+            },
+            c_poke_fake_fixer = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish for a better Deck!",
+                }
+            },
+            c_poke_fake_masterball = {
+                name = 'Jirachi',
+                text = {
+                    "{C:dark_edition}Wish to summon a Legendary Pokermon!",
                 }
             },
         },
@@ -3459,6 +3554,12 @@ return {
                     "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
+            p_poke_pokepack_wish_pack = {
+                name = "Wish Pack",
+                text = {
+                    "{C:dark_edition}Make a Wish!{}",
+                },
+            },
         },
     },
     misc = {
@@ -3476,6 +3577,7 @@ return {
             k_energy = "Energy",
             k_item = "Item",
             k_poke_pocket_pack = "Pocket Pack",
+            k_poke_wish_pack = "Wish Pack",
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",

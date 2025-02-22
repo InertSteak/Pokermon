@@ -276,7 +276,37 @@ local pack8 = {
 	group_key = "k_poke_pocket_pack",
 }
 
+local wish_pack = {
+	name = "Wish Pack",
+	key = "pokepack_wish_pack",
+	kind = "Spectral",
+	atlas = "pokepack",
+	pos = { x = 4, y = 0 },
+	config = { extra = 7, choose = 1 },
+	cost = 999,
+	order = 4,
+	weight = 0.25,
+  draw_hand = false,
+  unlocked = true,
+  discovered = true,
+  no_collection = false,
+	create_card = function(self, card, i)
+
+    -- force pack_choices to 1
+    G.GAME.pack_choices = 1
+
+    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_negging', 
+                           'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
+    local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%7], no_edition = true, skip_materialize = true}
+    return SMODS.create_card(temp_card)
+	end,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
+	end,
+	group_key = "k_poke_wish_pack",
+}
+
 
 return {name = "Pocket Packs",
-        list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8}
+        list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack}
 }
