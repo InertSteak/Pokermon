@@ -294,3 +294,12 @@ poke_lowest_rank = function(id, rank)
   end
   return low_id, low_rank
 end
+
+poke_captured_dissolve = Card.start_dissolve
+poke_new_dissolve = function(self, dissolve_colours, silent, dissolve_time_fac, no_juice)
+  if self.ability and self.ability.name == "professor_jimbo" then
+    play_sound('poke_prof_scream', 1, (G.SETTINGS.SOUND.volume/100.0) * (G.SETTINGS.SOUND.game_sounds_volume/50.0))
+  end
+  return poke_captured_dissolve(self, dissolve_colours, silent, dissolve_time_fac, no_juice)
+end
+Card.start_dissolve = poke_new_dissolve

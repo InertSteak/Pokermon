@@ -264,6 +264,11 @@ SMODS.Sound({
 	end,
 })
 
+SMODS.Sound({
+    key = "prof_scream",
+    path = "prof_scream.ogg"
+}):register()
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)
