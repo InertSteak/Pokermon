@@ -90,6 +90,7 @@ local gimmighoulr={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex9",
+  aux_poke = true,
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = false,
