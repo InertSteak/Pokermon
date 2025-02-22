@@ -226,8 +226,6 @@ evolve = function(self, card, context, forced_key)
     end
     
     if card.ability.perishable then
-      --If perishable, we don't want to perish before evolving so increment the tally
-      card.ability.perish_tally = card.ability.perish_tally + 1
       previous_perishable = card.ability.perishable
     end
       
