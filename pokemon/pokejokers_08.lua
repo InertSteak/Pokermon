@@ -109,7 +109,7 @@ local delibird={
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
     info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
-    info_queue[#info_queue+1] = {key = 'j_gift', set = 'Joker', specific_vars = {1}, config = {}}
+    info_queue[#info_queue+1] = G.P_CENTERS.j_gift
     return {vars = {}}
   end,
   rarity = 3,
