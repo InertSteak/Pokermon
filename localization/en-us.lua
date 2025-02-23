@@ -2355,7 +2355,7 @@ return {
                 name = 'Jirachi',
                 text = {
                     "Copies ability of {C:attention}Joker{} to the right",
-                    "as if it had {C:attention}3{} extra Energy (exceeds cap)",
+                    "as if it had {C:attention}#1#{} extra Energy",
                 }
             },
             j_poke_jirachi_fixer = {

@@ -320,7 +320,7 @@ local jirachi_copy = {
   config = {extra = {energy_buff = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    return {vars = {card.ability.extra.energy_buff}}
   end,
   rarity = 4,
   cost = 20,
@@ -371,6 +371,36 @@ local jirachi_copy = {
         return other_joker_ret
       end
     end
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or card
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+
+    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
+    card.ability.blueprint_compat_check = nil
+    local main_end = (card.area and card.area == G.jokers) and {
+      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
+          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
+        }}
+      }}
+    } or nil
+   local loc_vars = {card.ability.extra.energy_buff}
+
+   localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+   desc_nodes[#desc_nodes+1] = main_end
+  end,
+  update = function(self, card, dt)
+    local other_joker = nil
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then
+        other_joker = G.jokers.cards[i+1]
+        break
+      end
+    end
+    card.ability.blueprint_compat = ( other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
   end,
 }
 
