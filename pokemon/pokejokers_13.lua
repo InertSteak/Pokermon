@@ -340,17 +340,11 @@ local jirachi_copy = {
 
       local fake_card = {config = other_joker.config}
       fake_card.ability = {}
-      local keys = {'name','colorless_sticker','mult','t_mult','t_chips'}
-      for _,k in pairs(keys) do
-        fake_card.ability[k] = other_joker.ability[k]
-      end
-      local keys2 = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "money2", "money_mod", "mult_mod", "mult_mod2", "s_mult", "chip_mod", "Xmult_mod", 
-      "Xmult_multi",  "Xmult_multi2", "ptype", "energy_count", "c_energy_count", "escale"}
+      setmetatable(fake_card.ability, {__index = other_joker.ability})
+      
       if type(other_joker.ability.extra) == "table" then
         fake_card.ability.extra = {}
-        for _,k in pairs(keys2) do
-          fake_card.ability.extra[k] = other_joker.ability.extra[k]
-        end
+        setmetatable(fake_card.ability.extra, {__index = other_joker.ability.extra})
       else
         fake_card.ability.extra = other_joker.ability.extra
       end
@@ -361,8 +355,9 @@ local jirachi_copy = {
 
       local true_ability = other_joker.ability
       other_joker.ability = fake_card.ability
-      local other_joker_ret = other_joker:calculate_joker(context)
+      local other_joker_ret = Card.calculate_joker(other_joker, context)
       other_joker.ability = true_ability
+
 
       context.blueprint = nil
       local eff_card = context.blueprint_card or card
