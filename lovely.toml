@@ -385,5 +385,5 @@ match_indent = true
 target = "card.lua"
 pattern = "if self.ability.perish_tally == 1 then"
 position = "at"
-payload = "if self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds <= 1) then"
+payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
 match_indent = true
