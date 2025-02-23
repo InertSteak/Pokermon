@@ -150,6 +150,7 @@ local grass_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -179,6 +180,7 @@ local fire_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -208,6 +210,7 @@ local water_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -237,6 +240,7 @@ local lightning_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -266,6 +270,7 @@ local psychic_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -295,6 +300,7 @@ local fighting_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -324,6 +330,7 @@ local colorless_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -353,6 +360,7 @@ local darkness_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -382,6 +390,7 @@ local metal_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -411,6 +420,7 @@ local fairy_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -440,6 +450,7 @@ local dragon_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else
@@ -469,6 +480,7 @@ local earth_energy = {
     end
   end,
   use = function(self, card, area, copier)
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
       return energy_use(self, card, area, copier)
     else

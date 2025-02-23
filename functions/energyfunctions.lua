@@ -320,11 +320,6 @@ end
 energy_use = function(self, card, area, copier)
   local applied = false
   local viable = false
-  if G.GAME.energies_used then
-    G.GAME.energies_used = G.GAME.energies_used  + 1
-  else
-    G.GAME.energies_used = 1
-  end
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
       if type(v.ability.extra) == "table" then
