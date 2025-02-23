@@ -285,11 +285,11 @@ local wish_pack = {
 	config = { extra = 7, choose = 1 },
 	cost = 999,
 	order = 4,
-	weight = 0.25,
+	weight = 0,
   draw_hand = false,
   unlocked = true,
   discovered = true,
-  no_collection = false,
+  no_collection = true,
 	create_card = function(self, card, i)
 
     -- force pack_choices to 1
@@ -303,6 +303,9 @@ local wish_pack = {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.center.config.choose, card.ability.extra - 1, 1 } }
 	end,
+  in_pool = function(self)
+    return false
+  end,
 	group_key = "k_poke_wish_pack",
 }
 
