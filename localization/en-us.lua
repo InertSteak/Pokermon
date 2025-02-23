@@ -642,7 +642,7 @@ return {
                 name = "Fearow",
                 text = {
                     "After playing {C:attention}#1#{} {C:inactive}[#2#]{} scoring cards",
-                    "upgrade level of next played {C:attention}poker hand{}",
+                    "upgrade level of next played {C:attention}poker hand{}{C:inactive}#3#{}",
                 }
             },
             j_poke_ekans = {

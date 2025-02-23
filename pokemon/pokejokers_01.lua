@@ -1011,7 +1011,9 @@ local fearow={
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.upgrade then
-        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
+          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
+        end
         card.ability.extra.upgrade = false
         return {
           card = card,

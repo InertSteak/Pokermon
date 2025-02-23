@@ -63,7 +63,7 @@ local tinkatink={
     return level_evo(self, card, context, "j_poke_tinkatuff")
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
         SMODS.debuff_card(v,'reset', card)
       end
@@ -109,7 +109,7 @@ local tinkatuff={
     return level_evo(self, card, context, "j_poke_tinkaton")
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
         SMODS.debuff_card(v,'reset', card)
       end
@@ -183,7 +183,7 @@ local tinkaton={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
+    if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
         SMODS.debuff_card(v,'reset', card)
       end
