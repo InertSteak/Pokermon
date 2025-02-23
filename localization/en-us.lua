@@ -2935,19 +2935,19 @@ return {
                 }
             },
             c_poke_fake_copy = {
-                name = 'Blueprint Wish',
+                name = 'Copy Wish',
                 text = {
                     "{C:dark_edition}Wish for a Helping Hand!",
                 }
             },
             c_poke_fake_fixer = {
-                name = 'Deck Fixing Wish',
+                name = 'Purify Wish',
                 text = {
                     "{C:dark_edition}Wish for a better Deck!",
                 }
             },
             c_poke_fake_masterball = {
-                name = 'Second Attempt',
+                name = 'Summon Wish',
                 text = {
                     "{C:dark_edition}Wish to summon a Legendary Pokermon!",
                 }
