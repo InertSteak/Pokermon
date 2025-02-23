@@ -119,6 +119,15 @@ end
 '''
 match_indent = true
 
+# Resize Booster Pack UI for new options
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
+position = "after"
+payload = "G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks"
+match_indent = true
+
 #Shiny shader
 [[patches]]
 [patches.pattern]
