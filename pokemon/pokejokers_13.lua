@@ -268,7 +268,7 @@ local jirachi_banker = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
       return {
@@ -330,7 +330,7 @@ local jirachi_copy = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     local other_joker = nil
     for i = 1, #G.jokers.cards do
@@ -495,10 +495,10 @@ local jirachi_fixer = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
+      if context.after and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
         local copy = copy_card(context.full_hand[1], nil, nil, G.playing_card)
         copy:add_to_deck()
         G.deck.config.card_limit = G.deck.config.card_limit + 1
@@ -520,7 +520,7 @@ local jirachi_fixer = {
         }
       end
     end
-    if context.discard and not context.blueprint and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card then
+    if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card then
       local possible_removals = {}
       for k,v in ipairs(G.deck.cards) do
         if v:get_id() == context.other_card:get_id() then
