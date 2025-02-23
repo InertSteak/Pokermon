@@ -232,8 +232,8 @@ local jirachi = {
   pos = {x = 4, y = 14},
   soul_pos = {x = 5, y = 14},
   config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -250,13 +250,14 @@ local jirachi = {
     end
   end,
 }
+
 local jirachi_banker = {
   name = "jirachi_banker", 
   pos = {x = 0, y = 0},
   soul_pos = {x = 1, y = 0},
   config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -275,9 +276,41 @@ local jirachi_booster = {
   name = "jirachi_booster", 
   pos = { x = 2, y = 0 },
   soul_pos = { x = 3, y = 0 },
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {bonus_packs = 1, bonus_choices = 2}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.GAME.modifiers.poke_booster_packs = (G.GAME.modifiers.poke_booster_packs or 2) + card.ability.extra.bonus_packs
+      G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if not G.GAME.modifiers.poke_booster_packs then print("poke_booster_packs WASN'T LOADED") end
+      G.GAME.modifiers.poke_booster_packs = (G.GAME.modifiers.poke_booster_packs or 2) - card.ability.extra.bonus_packs
+      G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
+    end
+  end,
+}
+
+local jirachi_copy = {
+  name = "jirachi_copy", 
+  pos = { x = 2, y = 1 },
+  soul_pos = { x = 3, y = 1 },
+  config = {extra = {energy_buff = 3}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -289,6 +322,80 @@ local jirachi_booster = {
   perishable_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
+    local other_joker = nil
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i+1] end
+    end
+    if other_joker and other_joker ~= card and not context.no_blueprint then
+      context.blueprint = (context.blueprint or 0) + 1
+      context.blueprint_card = context.blueprint_card or card
+      if context.blueprint > #G.jokers.cards + 1 then return end
+
+      local fake_card = {config = other_joker.config}
+      fake_card.ability = {}
+      local keys = {'name','colorless_sticker','mult','t_mult','t_chips'}
+      for _,k in pairs(keys) do
+        fake_card.ability[k] = other_joker.ability[k]
+      end
+      local keys2 = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "money2", "money_mod", "mult_mod", "mult_mod2", "s_mult", "chip_mod", "Xmult_mod", 
+      "Xmult_multi",  "Xmult_multi2", "ptype", "energy_count", "c_energy_count", "escale"}
+      if type(other_joker.ability.extra) == "table" then
+        fake_card.ability.extra = {}
+        for _,k in pairs(keys2) do
+          fake_card.ability.extra[k] = other_joker.ability.extra[k]
+        end
+      else
+        fake_card.ability.extra = other_joker.ability.extra
+      end
+
+      for i = 1, card.ability.extra.energy_buff do
+        energize(fake_card, nil, nil, true)
+      end
+
+      local true_ability = other_joker.ability
+      other_joker.ability = fake_card.ability
+      local other_joker_ret = other_joker:calculate_joker(context)
+      other_joker.ability = true_ability
+
+      context.blueprint = nil
+      local eff_card = context.blueprint_card or card
+      context.blueprint_card = nil
+      if other_joker_ret then 
+        other_joker_ret.card = eff_card
+        other_joker_ret.colour = G.C.BLUE
+        return other_joker_ret
+      end
+    end
+  end,
+}
+
+local jirachi_negging = {
+  name = "jirachi_negging", 
+  pos = { x = 0, y = 1 },
+  config = {extra = {slots = 2, chance = 2}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = "jirachi",
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
+      G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) * card.ability.extra.chance
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.slots
+      G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) / card.ability.extra.chance
+    end
   end,
 }
 
@@ -297,8 +404,8 @@ local jirachi_power = {
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
   config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -313,53 +420,13 @@ local jirachi_power = {
   end,
 }
 
-local jirachi_negging = {
-  name = "jirachi_negging", 
-  pos = { x = 0, y = 1 },
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {}}
-  end,
-  rarity = 4,
-  cost = 20,
-  stage = "Legendary",
-  ptype = "Metal",
-  atlas = "jirachi",
-  aux_poke = true,
-  perishable_compat = false,
-  blueprint_compat = false,
-  calculate = function(self, card, context)
-  end,
-}
-
-local jirachi_copy = {
-  name = "jirachi_copy", 
-  pos = { x = 2, y = 1 },
-  soul_pos = { x = 3, y = 1 },
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {}}
-  end,
-  rarity = 4,
-  cost = 20,
-  stage = "Legendary",
-  ptype = "Metal",
-  atlas = "jirachi",
-  aux_poke = true,
-  perishable_compat = false,
-  blueprint_compat = false,
-  calculate = function(self, card, context)
-  end,
-}
 local jirachi_fixer = {
   name = "jirachi_fixer", 
   pos = { x = 4, y = 1 },
   soul_pos = { x = 5, y = 1 },
   config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 4,
@@ -371,8 +438,52 @@ local jirachi_fixer = {
   perishable_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
+        local copy = copy_card(context.full_hand[1], nil, nil, G.playing_card)
+        copy:add_to_deck()
+        G.deck.config.card_limit = G.deck.config.card_limit + 1
+        table.insert(G.playing_cards, copy)
+        G.hand:emplace(copy)
+        copy.states.visible = nil
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              copy:start_materialize()
+              return true
+          end
+        })) 
+        playing_card_joker_effects({copy})
+        return {
+            message = localize('k_copied_ex'),
+            colour = G.C.CHIPS,
+            card = card,
+            playing_cards_created = {true}
+        }
+      end
+    end
+    if context.discard and not context.blueprint and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card then
+      local possible_removals = {}
+      for k,v in ipairs(G.deck.cards) do
+        if v:get_id() == context.other_card:get_id() then
+          table.insert(possible_removals, v)
+        end
+      end
+      local to_remove = pseudorandom_element(possible_removals, pseudoseed('jirachi_fixer'))
+      poke_remove_card(to_remove, card)
+      return {
+        delay = 0.45,
+        remove = true,
+        card = card
+      }
+    end
+
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return (G.GAME.current_round.hands_played == 0 or G.GAME.current_round.discards_used == 0) and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
   end,
 }
+
 -- Deoxys 386
 -- Turtwig 387
 -- Grotle 388

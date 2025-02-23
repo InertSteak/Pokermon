@@ -426,3 +426,17 @@ function Card:set_edition(edition, immediate, silent)
   if (edition and edition == "e_poke_shiny" and not pokermon_config.shiny_playing_cards) and (self.ability.set ~= 'Joker' and self.ability.set ~= 'Edition') then return end
   return set_edition(self, edition, immediate, silent)
 end
+
+
+--Add Jirachi's Negative rate increase
+
+local previous_neg_get_weight = G.P_CENTERS.e_negative.get_weight
+G.P_CENTERS.e_negative.get_weight = function(self)
+  return previous_neg_get_weight(self) + ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
+end
+
+-- polychrome steals negative's chances with the Hone / Glow Up voucher, so we're gonna steal it back (won't decrease past base weight)
+local previous_poly_get_weight = G.P_CENTERS.e_polychrome.get_weight
+G.P_CENTERS.e_polychrome.get_weight = function(self)
+  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
+end

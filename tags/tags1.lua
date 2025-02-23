@@ -180,6 +180,13 @@ local jirachi_tag = {
 						card.from_tag = true
 						G.FUNCS.use_card({config = {ref_table = card}})
 						card:start_materialize()
+						
+						for _,jirachi in pairs(G.jokers.cards) do
+							if (jirachi.name or jirachi.ability.name) == "jirachi" then
+								jirachi:juice_up(0.1)
+								break
+							end
+						end
 						return true
 					end
 				}))

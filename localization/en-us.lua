@@ -2330,8 +2330,7 @@ return {
                 name = 'Jirachi',
                 text = {
                     "+1 Booster Pack",
-                    "Tarot, Spectral, Pocket,",
-                    "and Planet packs have +2 options",
+                    "Booster Packs have 2 more options",
                 }
             },
             j_poke_jirachi_power = {

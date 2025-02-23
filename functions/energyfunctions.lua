@@ -161,14 +161,12 @@ set_frac = function(card, frac, field, increased, ratio)
   end
 end
 
-energize = function(card, etype, evolving)
+energize = function(card, etype, evolving, silent)
   local rounded = nil
   local frac = nil
   local frac_added = nil
-  if G.GAME.energies_used then
-    G.GAME.energies_used = G.GAME.energies_used  + 1
-  else
-    G.GAME.energies_used = 1
+  if not silent then
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
   end
   if type(card.ability.extra) == "table" then
     for l, data in pairs(card.ability.extra) do
@@ -268,7 +266,9 @@ energize = function(card, etype, evolving)
       end
     end
   end
-  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+  if not silent then
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+  end
 end
 
 can_increase_energy = function(card)
