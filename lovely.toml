@@ -125,7 +125,11 @@ match_indent = true
 target = "card.lua"
 pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
 position = "after"
-payload = "G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks"
+payload = '''
+if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks
+end
+'''
 match_indent = true
 
 #Shiny shader
