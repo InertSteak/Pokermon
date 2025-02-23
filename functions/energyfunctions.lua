@@ -14,13 +14,9 @@ highlighted_energy_can_use = function(self, card)
   if energy_matches(choice, self.etype, true) then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy or ((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-        for l, data in pairs(choice.ability.extra) do
-          if type(data) == "number" then
-            for m, name in ipairs(energy_whitelist) do
-              if l == name then
-                return true
-              end
-            end
+        for _, name in ipairs(energy_whitelist) do
+          if type(choice.ability.extra[name]) == "number" then
+            return true
           end
         end
       end
@@ -44,13 +40,9 @@ highlighted_energy_use = function(self, card, area, copier)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-        for l, data in pairs(choice.ability.extra) do
-          if type(data) == "number" then
-            for m, name in ipairs(energy_whitelist) do
-              if l == name then
-                viable = true
-              end
-            end
+        for _, name in ipairs(energy_whitelist) do
+          if type(choice.ability.extra[name]) == "number" then
+            viable = true
           end
         end
       end
@@ -166,52 +158,49 @@ energize = function(card, etype, evolving, silent)
   local frac = nil
   local frac_added = nil
   if type(card.ability.extra) == "table" then
-    for l, data in pairs(card.ability.extra) do
+    for _, name in ipairs(energy_whitelist) do
+      local data = card.ability.extra[name]
       if type(data) == "number" then
-        for m, name in ipairs(energy_whitelist) do
-          if l == name then
-            local addition = energy_values[name]
-            local previous_mod = nil
-            local updated_mod = nil
-            if l == "mult_mod" or l == "chip_mod" then previous_mod = card.ability.extra[l] end
-            if evolving then
-              if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
-                addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
-              else
-                addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
-              end
-              card.ability.extra[l] =  data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
-              updated_mod = card.ability.extra[l]
-              rounded, frac = round_energy_value(card.ability.extra[l], l)
-              card.ability.extra[l] = rounded
-              if frac then
-                if l == "mult_mod" or l == "chip_mod" then
-                  set_frac(card, frac, l, rounded > 0, updated_mod/previous_mod)
-                else
-                  set_frac(card, frac, l, rounded > 0)
-                end
-                frac = nil
-                frac_added = true
-              end
+        local addition = energy_values[name]
+        local previous_mod = nil
+        local updated_mod = nil
+        if name == "mult_mod" or name == "chip_mod" then previous_mod = card.ability.extra[name] end
+        if evolving then
+          if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
+            addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
+          else
+            addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
+          end
+          card.ability.extra[name] =  data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
+          updated_mod = card.ability.extra[name]
+          rounded, frac = round_energy_value(card.ability.extra[name], name)
+          card.ability.extra[name] = rounded
+          if frac then
+            if name == "mult_mod" or name == "chip_mod" then
+              set_frac(card, frac, name, rounded > 0, updated_mod/previous_mod)
             else
-              if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
-                card.ability.extra[l] = data + (card.config.center.config.extra[l] * addition/2) * (card.ability.extra.escale or 1)
-              else
-                card.ability.extra[l] = data + (card.config.center.config.extra[l] * addition) * (card.ability.extra.escale or 1)
-              end
-              updated_mod = card.ability.extra[l]
-              rounded, frac = round_energy_value(card.ability.extra[l], l)
-              card.ability.extra[l] = rounded
-              if frac then
-                if l == "mult_mod" or l == "chip_mod" then
-                  set_frac(card, frac, l, rounded > 0, updated_mod/previous_mod)
-                else
-                  set_frac(card, frac, l, rounded > 0)
-                end
-                frac = nil
-                frac_added = true
-              end
+              set_frac(card, frac, name, rounded > 0)
             end
+            frac = nil
+            frac_added = true
+          end
+        else
+          if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+            card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition/2) * (card.ability.extra.escale or 1)
+          else
+            card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
+          end
+          updated_mod = card.ability.extra[name]
+          rounded, frac = round_energy_value(card.ability.extra[name], name)
+          card.ability.extra[name] = rounded
+          if frac then
+            if name == "mult_mod" or name == "chip_mod" then
+              set_frac(card, frac, name, rounded > 0, updated_mod/previous_mod)
+            else
+              set_frac(card, frac, name, rounded > 0)
+            end
+            frac = nil
+            frac_added = true
           end
         end
       end
@@ -331,13 +320,9 @@ energy_use = function(self, card, area, copier)
     if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
       if type(v.ability.extra) == "table" then
         if can_increase_energy(v) then
-          for l, data in pairs(v.ability.extra) do
-            if type(data) == "number" then
-              for m, name in ipairs(energy_whitelist) do
-                if l == name then
-                  viable = true
-                end
-              end
+          for _, name in ipairs(energy_whitelist) do
+            if type(v.ability.extra[name]) == "number" then
+              viable = true
             end
           end
         end
@@ -366,13 +351,10 @@ energy_can_use = function(self, card)
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
         if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-          for l, data in pairs(v.ability.extra) do
+          for _, name in ipairs(energy_whitelist) do
+            local data = v.ability.extra[name]
             if type(data) == "number" then
-              for m, name in ipairs(energy_whitelist) do
-                if l == name then
-                  return true
-                end
-              end
+              return true
             end
           end
         end
