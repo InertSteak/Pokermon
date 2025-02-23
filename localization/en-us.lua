@@ -2323,46 +2323,50 @@ return {
             j_poke_jirachi_banker = {
                 name = 'Jirachi',
                 text = {
-                    "Double end of round payout",
+                    "Retrigger {C:attention}Gold Cards{} held in hand",
+                    "{br:3}text needs to be here to work",
+                    "{C:attention}Double{} end of round payout",
                 }
             },
             j_poke_jirachi_booster = {
                 name = 'Jirachi',
                 text = {
-                    "+1 Booster Pack",
-                    "Booster Packs have 2 more options",
+                    "+1 {C:attention}Booster Pack",
+                    "{C:attention}Booster Packs{} have {C:attention}2{} more options",
                 }
             },
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Retrigger Steel cards held in hand",
-                    "Every 3 [3] hands, played cards",
-                    "give X3 mult when scored",
+                    "Retrigger {C:attention}Steel Cards{} held in hand",
+                    "{br:3}text needs to be here to work",
+                    "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
+                    "give {X:mult,C:white}X#1#{} Mult when scored",
                 }
             },
             j_poke_jirachi_negging = {
                 name = 'Jirachi',
                 text = {
-                    "+2 Joker slots",
-                    "Negative Jokers appear 2X more often",
+                    "{C:blue}+2{} Joker slots",
+                    "{C:dark_edition}Negative{} cards appear {C:attention}2X{} more often",
                 }
             },
             j_poke_jirachi_copy = {
                 name = 'Jirachi',
                 text = {
-                    "Copies ability of Joker to the right",
-                    "as if it had 3 extra energy (exceeds cap)",
+                    "Copies ability of {C:attention}Joker{} to the right",
+                    "as if it had {C:attention}3{} extra Energy (exceeds cap)",
                 }
             },
             j_poke_jirachi_fixer = {
                 name = 'Jirachi',
                 text = {
-                    "If first hand has exactly 1 card,",
-                    "add 1 copy of it to hand",
-                    "If first discard has exactly 1 card,",
-                    "destroy it and destroy a card",
-                    "in your deck with the same rank",
+                    "If {C:attention}first hand{} has exactly {C:attention}1{} card,",
+                    "add {C:attention}1 copy of it to hand",
+                    "{br:3}text needs to be here to work",
+                    "If {C:attention}first discard{} has exactly {C:attention}1{} card,",
+                    "{C:attention}destroy{} it and a card in your deck",
+                    "with the {C:attention}same rank",
                 }
             },
             j_poke_buizel = {
@@ -2907,43 +2911,43 @@ return {
                 }
             },
             c_poke_fake_banker = {
-                name = 'Jirachi',
+                name = 'Money Wish',
                 text = {
                     "{C:dark_edition}Wish for Money!",
                 }
             },
             c_poke_fake_booster = {
-                name = 'Jirachi',
+                name = 'Booster Wish',
                 text = {
                     "{C:dark_edition}Wish for Options!",
                 }
             },
             c_poke_fake_power = {
-                name = 'Jirachi',
+                name = 'Power Wish',
                 text = {
                     "{C:dark_edition}Wish for Power!",
                 }
             },
             c_poke_fake_negging = {
-                name = 'Jirachi',
+                name = 'Negative Wish',
                 text = {
                     "{C:dark_edition}Wish for Friends!",
                 }
             },
             c_poke_fake_copy = {
-                name = 'Jirachi',
+                name = 'Blueprint Wish',
                 text = {
                     "{C:dark_edition}Wish for a Helping Hand!",
                 }
             },
             c_poke_fake_fixer = {
-                name = 'Jirachi',
+                name = 'Deck Fixing Wish',
                 text = {
                     "{C:dark_edition}Wish for a better Deck!",
                 }
             },
             c_poke_fake_masterball = {
-                name = 'Jirachi',
+                name = 'Second Attempt',
                 text = {
                     "{C:dark_edition}Wish to summon a Legendary Pokermon!",
                 }

@@ -379,3 +379,18 @@ position = "after"
 payload = "if type(update_pokemon_form_sprites) == 'function' then update_pokemon_form_sprites(self) end"
 match_indent = true
 
+
+# Jirachi Double Payout
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if total_cashout_rows > 7 then"
+position = "before"
+payload = '''
+local jirachis = find_joker('jirachi_banker')
+for i = 1, #jirachis do
+  add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars, card = jirachis[i]})
+  dollars = dollars + dollars
+end
+'''
+match_indent = true

@@ -255,7 +255,7 @@ local jirachi_banker = {
   name = "jirachi_banker", 
   pos = {x = 0, y = 0},
   soul_pos = {x = 1, y = 0},
-  config = {extra = {}},
+  config = {extra = {retriggers = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {}}
@@ -269,6 +269,13 @@ local jirachi_banker = {
   perishable_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
   end,
 }
 
@@ -403,10 +410,10 @@ local jirachi_power = {
   name = "jirachi_power", 
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
-  config = {extra = {}},
+  config = {extra = {Xmult = 3, every = 3, loyalty_remaining = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.every, card.ability.extra.loyalty_remaining, }}
   end,
   rarity = 4,
   cost = 20,
@@ -415,8 +422,29 @@ local jirachi_power = {
   atlas = "jirachi",
   aux_poke = true,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
+    card.ability.extra.loyalty_remaining = (card.ability.hands_played_at_create - G.GAME.hands_played - 1)%(card.ability.extra.every)
+    if not context.blueprint and card.ability.extra.loyalty_remaining == 0 then
+      local eval = function(card) return (card.ability.extra.loyalty_remaining == 0) end
+      juice_card_until(card, eval, true)
+    end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
+       and context.other_card.ability.name == 'Steel Card' then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if card.ability.extra.loyalty_remaining == 0 then
+        return {
+          x_mult = card.ability.extra.Xmult,
+          card = card
+        }
+      end
+    end
   end,
 }
 
