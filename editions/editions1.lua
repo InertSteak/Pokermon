@@ -41,7 +41,7 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "poke_others"
         end
-        if string.sub(card.config.center.atlas,1,6) == "j_poke_" then
+        if card.config.center.atlas and string.sub(card.config.center.atlas,1,6) == "j_poke_" then
           local temp_atlas = card.config.center.atlas
           card.config.center.atlas = card.config.center.atlas.."_shiny"
           card:set_sprites(card.config.center)
