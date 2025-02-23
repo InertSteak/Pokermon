@@ -562,12 +562,24 @@ local mega_blastoise = {
   atlas = "Megas",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
       G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
       ease_hands_played(card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      local hands_to_remove = nil
+      if G.GAME.current_round.hands_left > card.ability.extra.hands then
+        hands_to_remove = card.ability.extra.hands
+      else
+        hands_to_remove = G.GAME.current_round.hands_left - 1
+      end
       G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
+      if hands_to_remove > 0 then
+        ease_hands_played(-hands_to_remove)
+      end
+    end
   end
 }
 local caterpie={
