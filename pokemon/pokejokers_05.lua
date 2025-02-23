@@ -1251,15 +1251,15 @@ local moltres={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.pre_discard and G.GAME.current_round.discards_used <= 2 and not context.hook then
+    if context.pre_discard and G.GAME.current_round.discards_used <= 0 and not context.hook then
       local text,disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
       card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
       update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(text, 'poker_hands'),chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, level=                       G.GAME.hands[text].level})
-      level_up_hand(context.blueprint_card or card, text, nil, 1)
+      level_up_hand(context.blueprint_card or card, text, nil, 3)
       update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
     end
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.discards_used < 3 and not G.RESET_JIGGLES end
+      local eval = function() return G.GAME.current_round.discards_used <= 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
   end

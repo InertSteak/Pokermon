@@ -180,8 +180,6 @@ local espeon={
     end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
         x_mult = card.ability.extra.Xmult_multi,
         card = card
       }
@@ -318,7 +316,7 @@ local slowking={
   end,
   rarity = "poke_safari",
   cost = 10,
-  stage = "Two",
+  stage = "One",
   ptype = "Water",
   atlas = "Pokedex2",
   perishable_compat = true,

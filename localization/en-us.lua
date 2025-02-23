@@ -1818,9 +1818,9 @@ return {
             j_poke_moltres = {
                 name = 'Moltres',
                 text = {
-                    "Upgrade level of the",
-                    "first {C:attention}3 discarded{}",
-                    "poker hands each round"
+                    "Upgrade the first {C:attention}discarded{}",
+                    "poker hand each round",
+                    "by {C:attention}3{} levels"
                 } 
             },
             j_poke_dratini = {
