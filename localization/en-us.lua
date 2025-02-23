@@ -2331,7 +2331,7 @@ return {
             j_poke_jirachi_booster = {
                 name = 'Jirachi',
                 text = {
-                    "+1 {C:attention}Booster Pack",
+                    "+1 {C:attention}Booster Pack slot",
                     "{C:attention}Booster Packs{} have {C:attention}2{} more options",
                 }
             },
