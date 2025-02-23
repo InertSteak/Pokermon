@@ -41,6 +41,11 @@ highlighted_energy_use = function(self, card, area, copier)
   local viable = false
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
+  if G.GAME.energies_used then
+    G.GAME.energies_used = G.GAME.energies_used  + 1
+  else
+    G.GAME.energies_used = 1
+  end
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
