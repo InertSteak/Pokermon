@@ -30,6 +30,7 @@ local moonstone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       if pseudorandom('moonstone') < G.GAME.probabilities.normal/self.config.odds then
         local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
@@ -95,6 +96,7 @@ local sunstone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -139,6 +141,7 @@ local waterstone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
@@ -186,6 +189,7 @@ local thunderstone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local suits = {'S','H','D','C'}
       local selected = G.hand.highlighted[1]
@@ -246,6 +250,7 @@ local firestone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 4 then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -289,6 +294,7 @@ local leafstone = {
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
@@ -332,6 +338,7 @@ local linkcable = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 2 then
       local rightmost = G.hand.highlighted[1]
       for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
@@ -531,6 +538,7 @@ local teraorb = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
@@ -563,6 +571,7 @@ local metalcoat = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
@@ -601,6 +610,7 @@ local dragonscale = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
@@ -657,6 +667,7 @@ local kingsrock = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
@@ -705,6 +716,7 @@ local upgrade = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       local enhancement_type = pseudorandom(pseudoseed('upgrade'))
       local enhancement = nil
@@ -752,6 +764,7 @@ local dubious_disc = {
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
@@ -805,6 +818,7 @@ local icestone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -855,6 +869,7 @@ local shinystone = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if #G.hand.highlighted == 1 then
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           local over = false
@@ -894,6 +909,7 @@ local twisted_spoon = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     local used_item = copier or card
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then

@@ -46,6 +46,7 @@ highlighted_energy_use = function(self, card, area, copier)
   else
     G.GAME.energies_used = 1
   end
+  set_spoon_item(card)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
@@ -330,6 +331,7 @@ energy_use = function(self, card, area, copier)
   else
     G.GAME.energies_used = 1
   end
+  set_spoon_item(card)
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
       if type(v.ability.extra) == "table" then

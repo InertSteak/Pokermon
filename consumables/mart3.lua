@@ -23,6 +23,7 @@ local prismscale = {
     return false
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if #G.hand.highlighted == 1 then
       local selected_suit = G.hand.highlighted[1].base.suit
       
@@ -71,6 +72,7 @@ local duskstone = {
     return true
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds then
       ease_dollars(card.ability.extra.money)
     end
@@ -139,6 +141,7 @@ local dawnstone = {
     return card.ability.extra.hand_played
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     if card.ability.extra.hand_played then
       local money = 0
       local hand_played = card.ability.extra.hand_played

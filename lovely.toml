@@ -235,47 +235,6 @@ end
 '''
 match_indent = true
 
-# Twisted Spoon
-[[patches]]
-[patches.pattern]
-target = "functions/misc_functions.lua"
-pattern = '''
-if card.config.center.set == 'Tarot' or card.config.center.set == 'Planet' then 
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-          G.GAME.last_tarot_planet = card.config.center_key
-            return true
-        end
-      }))
-        return true
-    end
-  }))
-end
-'''
-position = "after"
-payload = '''
-if (card.config.center.set == 'Item' or card.config.center.set == 'Energy') and not card.config.center.helditem then 
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-          G.GAME.last_poke_item = card.config.center_key
-            return true
-        end
-      }))
-        return true
-    end
-  }))
-end
-'''
-match_indent = true
-
 # Description functionality, a little hacky but it works
 [[patches]]
 [patches.pattern]
