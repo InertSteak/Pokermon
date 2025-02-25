@@ -896,9 +896,9 @@ local psyduck={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
       if context.joker_main then
-        ease_poke_dollars(card, "psyduck", card.ability.extra.money)
+        local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
         return {
-          message = '$'..card.ability.extra.money,
+          message = '$'..earned,
           colour = G.C.MONEY
         }
       end
@@ -938,9 +938,9 @@ local golduck={
         }
       end
       if context.joker_main then
-        ease_poke_dollars(card, "golduck", card.ability.extra.money)
+        local earned = ease_poke_dollars(card, "golduck", card.ability.extra.money)
         return {
-          message = '$'..card.ability.extra.money,
+          message = '$'..earned,
           colour = G.C.MONEY
         }
       end

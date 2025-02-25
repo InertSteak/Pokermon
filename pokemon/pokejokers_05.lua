@@ -771,9 +771,9 @@ local omanyte={
           end
         end
         if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2, true)
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
           return {
-            dollars = earned,
+            message = '$'..earned,
             colour = G.C.MONEY
           }
         end
@@ -838,9 +838,9 @@ local omastar={
           end
         end
         if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2, true)
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
           return {
-            dollars = earned,
+            message = '$'..earned,
             colour = G.C.MONEY
           }
         end
