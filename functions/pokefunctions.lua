@@ -593,9 +593,10 @@ get_previous_evo = function(card, full_key)
   return prev
 end
 
-get_family_keys = function(cardname)
+get_family_keys = function(cardname, custom_prefix)
   local keys = {}
   local line = nil
+  custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
   for k, v in pairs(family) do
     for x, y in pairs(v) do
       if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
@@ -605,7 +606,7 @@ get_family_keys = function(cardname)
     for i = 1, #line do
       if type(line[i]) == "table" then
         local new_table = {}
-        new_table.key = 'j_poke_'..line[i].key
+        new_table.key = custom_prefix..line[i].key
         for k, v in pairs(line[i]) do
           if k ~= 'key' then
             new_table[k] = v
@@ -613,11 +614,11 @@ get_family_keys = function(cardname)
         end
         table.insert(keys, new_table)
       else
-        table.insert(keys, 'j_poke_'..line[i])
+        table.insert(keys, custom_prefix..line[i])
       end
     end
   else
-    table.insert(keys, 'j_poke_'..cardname)
+    table.insert(keys, custom_prefix..cardname)
   end
   return keys
 end
