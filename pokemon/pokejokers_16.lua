@@ -431,21 +431,17 @@ local porygonz={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 3
-      else
-        G.GAME.energy_plus = G.GAME.energy_plus + 3
-      end
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 3
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus + 3
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff or (card.ability.perishable and card.ability.perish_tally <= 0) then
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 0
-      else
-        G.GAME.energy_plus = G.GAME.energy_plus - 3
-      end
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 0
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
   end
 }

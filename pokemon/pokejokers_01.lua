@@ -40,14 +40,10 @@ local bulbasaur={
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end
 }
 
@@ -98,9 +94,7 @@ local ivysaur={
     return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
@@ -151,14 +145,10 @@ local venusaur={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end,
   megas = { "mega_venusaur" },
 }
@@ -179,26 +169,22 @@ local mega_venusaur = {
   atlas = "Megas",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local previous_card_limit = G.hand.config.card_limit
-      G.hand:change_size(card.ability.extra.h_size)
-      if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
-        delay(0.3)
-        for i=1, hand_space do --draw cards from deck
-            if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
-                draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-            else
-                draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-            end
-        end
+    local previous_card_limit = G.hand.config.card_limit
+    G.hand:change_size(card.ability.extra.h_size)
+    if G.hand and G.hand.cards and #G.hand.cards > 0 then
+      local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
+      delay(0.3)
+      for i=1, hand_space do --draw cards from deck
+          if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+          else
+              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+          end
       end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end
 }
 
@@ -248,10 +234,8 @@ local charmander={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end
 }
 
@@ -291,10 +275,8 @@ local charmeleon={
     return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, 36)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
       ease_discard(card.ability.extra.d_size)
-    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
@@ -341,16 +323,12 @@ local charizard={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end,
   megas = {"mega_charizard_x","mega_charizard_y"},
   getMega = function(self, card)
@@ -411,16 +389,12 @@ local mega_charizard_y = {
   atlas = "Megas",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end
 }
 local squirtle={
@@ -562,23 +536,19 @@ local mega_blastoise = {
   atlas = "Megas",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local hands_to_remove = nil
-      if G.GAME.current_round.hands_left > card.ability.extra.hands then
-        hands_to_remove = card.ability.extra.hands
-      else
-        hands_to_remove = G.GAME.current_round.hands_left - 1
-      end
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      if hands_to_remove > 0 then
-        ease_hands_played(-hands_to_remove)
-      end
+    local hands_to_remove = nil
+    if G.GAME.current_round.hands_left > card.ability.extra.hands then
+      hands_to_remove = card.ability.extra.hands
+    else
+      hands_to_remove = G.GAME.current_round.hands_left - 1
+    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    if hands_to_remove > 0 then
+      ease_hands_played(-hands_to_remove)
     end
   end
 }

@@ -103,14 +103,10 @@ local treecko={
     return scaling_evo(self, card, context, "j_poke_grovyle", card.ability.extra.money_earned, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -160,9 +156,7 @@ local grovyle={
     return scaling_evo(self, card, context, "j_poke_sceptile", card.ability.extra.money_earned, 32)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
@@ -214,14 +208,10 @@ local sceptile={
     return ease_poke_dollars(card, "sceptile", math.min(14, find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money_mod), true) 
 	end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(card.ability.extra.h_size)
-    end
+    G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -286,16 +276,12 @@ local torchic={
     return scaling_evo(self, card, context, "j_poke_combusken", card.ability.extra.mult_earned, 60)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -360,16 +346,12 @@ local combusken={
     return scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.mult_earned, 150)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
       G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
       ease_discard(card.ability.extra.d_size)
-    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -433,16 +415,12 @@ local blaziken={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -489,16 +467,12 @@ local mudkip={
     return scaling_evo(self, card, context, "j_poke_marshtomp", card.ability.extra.chips_earned, 400)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    ease_hands_played(-card.ability.extra.hands)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -545,16 +519,12 @@ local marshtomp={
     return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.chips_earned, 960)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    ease_hands_played(-card.ability.extra.hands)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -601,16 +571,12 @@ local swampert={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
-    end
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    ease_hands_played(-card.ability.extra.hands)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
