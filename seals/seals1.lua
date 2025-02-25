@@ -107,6 +107,11 @@ local silver = {
       delay(0.3)
     end
 	end,
+  draw = function(self, card, layer)
+    G.shared_seals[card.seal].role.draw_major = card
+    G.shared_seals[card.seal]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+    G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
+  end
 }
 
 return {name = "Pokemon Consumables",
