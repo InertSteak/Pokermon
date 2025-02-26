@@ -58,27 +58,28 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "Joker"
         end
+        
+        --support for custom additions
+        if card.config.center.atlas and card.config.center.poke_custom_prefix then
+          local custom_atlas = card.config.center.atlas
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = 'shiny_'..custom_atlas, discovered = true, unlocked = true}, true)
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = custom_atlas
+        end
+        
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
           if card.area == G.pack_cards or card.area == G.shop_jokers then
             card.config.shiny_on_add = true
           else
-            if G.GAME.modifiers.poke_booster_packs then
-              G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
-            else
-              G.GAME.modifiers.poke_booster_packs = 3
-            end
+            SMODS.change_booster_limit(1)
           end
         elseif not card.area then
           card.config.shiny_on_add = true
         end
     end,
     on_remove = function(card)
-      if G.GAME.modifiers.poke_booster_packs then
-        G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
-      else
-        G.GAME.modifiers.poke_booster_packs = 0
-      end
+      SMODS.change_booster_limit(-1)
     end,
     on_load = function(card)
         for i = 1, 9 do
@@ -105,7 +106,15 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "Joker"
         end
-    end
+        
+        --support for custom additions
+        if card.config.center.atlas and card.config.center.poke_custom_prefix then
+          local custom_atlas = card.config.center.atlas
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = 'shiny_'..custom_atlas, discovered = true, unlocked = true}, true)
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = custom_atlas
+        end
+    end,
 })
 
 return {

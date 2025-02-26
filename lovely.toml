@@ -64,16 +64,8 @@ payload = '''
   sendDebugMessage(tostring(G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name))
   G.localization.misc.dictionary.ph_mr_bones = G.localization.misc.dictionary.ph_mr_bones_numbutils:gsub("Mr. Bones", G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name)
   '''
-
+  
 # Extra Booster Functionality
-[[patches]]
-[patches.pattern]
-target = "game.lua"
-pattern = "for i = 1, 2 do"
-position = "at"
-payload = "for i = 1, (G.GAME.modifiers.cry_booster_packs or G.GAME.modifiers.poke_booster_packs) or 2 do"
-match_indent = true
-
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -81,11 +73,19 @@ pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
 if self.config.shiny_on_add then
-  if G.GAME.modifiers.poke_booster_packs then
-    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
-  else
-    G.GAME.modifiers.poke_booster_packs = 3
-  end
+  SMODS.change_booster_limit(1)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.removed = true"
+position = "after"
+payload = '''
+if self.edition and self.edition.poke_shiny then
+  SMODS.change_booster_limit(-1)
 end
 '''
 match_indent = true
