@@ -73,6 +73,7 @@ family = {
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
     {"beldum", "metang", "metagross"},
+    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
@@ -499,16 +500,6 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
-is_aux_poke = function(name)
-  local aux = {"taurosh", "dreepy_dart", "gimmighoulr"}
-  for i = 1, #aux do
-    if name == aux[i] then
-      return true
-    end
-  end
-  return false
-end
-
 get_highest_evo = function(card)
   local name = nil
   local found = nil
@@ -517,42 +508,47 @@ get_highest_evo = function(card)
   else
     name = card.name or "bulbasaur"
   end
-  for k, v in ipairs(family) do
-    local max = #v
-    local max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
-    while max > 0 and string.sub(max_evo_name,1,5) == "mega_" do
-      max = max - 1
-      if max > 0 then
-        max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+
+  -- find the pokermon's family list
+  local found_family = nil
+  for _, v in ipairs(family) do
+    for _, y in ipairs(v) do
+      if ((type(y) == "table" and y.key) or y) == name then
+        found_family = v
       end
-    end
-    while max > 0 and is_aux_poke(v[max]) do
-      max = max - 1
-    end
-    local evos = {}
-    for x, y in ipairs(v) do
-      local cur_evo_name = (type(y) == "table" and y.key) or y
-      if x <= max then
-        if found and cur_evo_name == max_evo_name and G.P_CENTERS["j_poke_"..cur_evo_name].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, cur_evo_name)
-        elseif found and G.P_CENTERS["j_poke_"..cur_evo_name].stage == G.P_CENTERS["j_poke_"..max_evo_name].stage and G.P_CENTERS["j_poke_"..cur_evo_name].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, cur_evo_name)
-        elseif not found and cur_evo_name == name then
-          found = true
-        end
-      end
-    end
-    if #evos > 0 then
-      if #evos == 1 then
-        return evos[1]
-      else
-        return pseudorandom_element(evos, pseudoseed('highest'))
-      end
-    else
-      found = false
     end
   end
-  return false
+  -- if pokermon isn't in a family, return false
+  if not found_family then return false end
+
+  -- Check for max evo in family list, ignoring megas and aux pokermons
+  local max = #found_family
+  local max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS["j_poke_"..max_evo_name].aux_poke) do
+    max = max - 1
+    max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+  end
+  local max_stage = G.P_CENTERS["j_poke_"..max_evo_name].stage
+  -- if already at the max stage, return false
+  if G.P_CENTERS["j_poke_"..name].stage == max_stage then return false end
+
+  local evos = {max_evo_name}
+  max = max - 1
+
+  while max > 0 do
+    local evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+    if max_stage == G.P_CENTERS["j_poke_"..evo_name].stage then
+      table.insert(evos, evo_name)
+      max = max - 1
+    else
+      break
+    end
+  end
+
+  if #evos == 1 then
+    return evos[1]
+  end
+  return pseudorandom_element(evos, pseudoseed('highest'))
 end
 
 get_previous_evo = function(card, full_key)
@@ -849,11 +845,11 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
+get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
   local poke_keys = {}
   local pokearea = area or G.jokers
   local poke_key
-  local create_args = {set = "Joker", area = pokearea, key = ''}
+  exclude_keys = exclude_keys or {}
   
   if pokerarity then
     if string.lower(pokerarity) == "common" then pokerarity = 1 end
@@ -862,8 +858,8 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   end
   
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) 
-       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) then
+    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas)
+       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and not exclude_keys[v.key] then
       table.insert(poke_keys, v.key)
     end
   end
@@ -873,7 +869,13 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   else
     poke_key = "j_poke_caterpie"
   end
-  create_args.key = poke_key
+
+  return poke_key
+end
+
+create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
+  local create_args = {set = "Joker", area = pokearea, key = ''}
+  create_args.key = get_random_poke_key(pseed, stage, pokerarity, area, poketype)
 
   return SMODS.create_card(create_args)
 end
@@ -884,20 +886,6 @@ get_gen_allowed = function(atlas)
     gen_allowed = false
   end
   return gen_allowed
-end
-
-get_poke_allowed = function(key)
-  local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
-  local allowed = true
-  if string.sub(key,1,11) == "j_poke_mega" then return false end
-  
-  for i=1, #banned_keys do
-    if "j_poke_"..banned_keys[i] == key then
-      return false
-    end
-  end
-  
-  return true
 end
 
 get_poke_target_card_ranks = function(seed, num, default, use_deck)

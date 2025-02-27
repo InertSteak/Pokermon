@@ -146,6 +146,70 @@ local safari_tag = {
 	end,
 }
 
+local jirachi_tag = {
+	object_type = "Tag",
+	atlas = "poketag",
+	name = "jirachi_tag",
+	order = 999,
+	pos = { x = 4, y = 0 },
+	config = { type = "new_blind_choice" },
+	key = "jirachi_tag",
+  discovered = true,
+	no_collection = true,
+	loc_vars = function(self, info_queue)
+		return { vars = {} }
+	end,
+	apply = function(self, tag, context)
+		if context and context.type == "new_blind_choice" then
+			-- check if your jirachi still exists
+			local found = false
+			for _,jirachi in pairs(G.jokers.cards) do
+				if (jirachi.name or jirachi.ability.name) == "jirachi" then
+					found = true
+					break
+				end
+			end
+			if found then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						local key = 'p_poke_pokepack_wish_pack'
+						local card = Card(G.play.T.x + G.play.T.w/2 - G.CARD_W*1.27/2,
+						G.play.T.y + G.play.T.h/2-G.CARD_H*1.27/2, G.CARD_W*1.27, G.CARD_H*1.27, G.P_CARDS.empty, G.P_CENTERS[key], {bypass_discovery_center = true, bypass_discovery_ui = true})
+						card.cost = 0
+						card.from_tag = true
+						G.FUNCS.use_card({config = {ref_table = card}})
+						card:start_materialize()
+						
+						for _,jirachi in pairs(G.jokers.cards) do
+							if (jirachi.name or jirachi.ability.name) == "jirachi" then
+								jirachi:juice_up(0.1)
+								break
+							end
+						end
+						return true
+					end
+				}))
+
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					delay = 0.7,
+					func = function()
+						tag:remove()
+						return true
+					end
+				}))
+			else
+				tag:remove()
+			end
+			return true
+		end
+	end,
+  in_pool = function(self)
+    --hiding this with the in_pool_function instead
+    return false
+  end
+}
+
 return {name = "Tags",
-        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag}
+        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag, jirachi_tag}
 }

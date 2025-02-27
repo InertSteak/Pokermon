@@ -2320,6 +2320,57 @@ return {
                     "of that card's total chips",
                 } 
             },
+            j_poke_jirachi = {
+                name = 'Jirachi',
+                text = {
+                    "At the end of the shop,",
+                    "{C:dark_edition}make a wish!",
+                }
+            },
+            j_poke_jirachi_banker = {
+                name = 'Jirachi',
+                text = {
+                    "{C:attention}Double{} end of round payout",
+                }
+            },
+            j_poke_jirachi_booster = {
+                name = 'Jirachi',
+                text = {
+                    "+1 {C:attention}Booster Pack slot",
+                    "{C:attention}Booster Packs{} have {C:attention}1{} more card in them",
+                }
+            },
+            j_poke_jirachi_power = {
+                name = 'Jirachi',
+                text = {
+                    "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
+                    "give {X:mult,C:white}X#1#{} Mult when scored",
+                }
+            },
+            j_poke_jirachi_negging = {
+                name = 'Jirachi',
+                text = {
+                    "{C:blue}+2{} Joker slots",
+                    "{C:dark_edition}Negative{} cards appear {C:attention}2X{} more often",
+                }
+            },
+            j_poke_jirachi_copy = {
+                name = 'Jirachi',
+                text = {
+                    "Copies ability of {C:attention}Joker{} to the right",
+                    "as if it had {C:attention}#1#{} extra {C:pink}Energy",
+                }
+            },
+            j_poke_jirachi_fixer = {
+                name = 'Jirachi',
+                text = {
+                    "If {C:attention}first hand{} has exactly {C:attention}1{} card,",
+                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{} to it",
+                    "{br:3}text needs to be here to work",
+                    "If {C:attention}first discard{} has exactly {C:attention}1{} card,",
+                    "{C:attention}destroy{} it",
+                }
+            },
             j_poke_buizel = {
                 name = 'Buizel',
                 text = {
@@ -2859,6 +2910,48 @@ return {
                 text = {
                     "Adds a {C:item}Silver{} seal",
                     "to {C:attention}1{} selected card",
+                }
+            },
+            c_poke_fake_banker = {
+                name = 'Money Wish',
+                text = {
+                    "{C:dark_edition}Wish for Money!",
+                }
+            },
+            c_poke_fake_booster = {
+                name = 'Booster Wish',
+                text = {
+                    "{C:dark_edition}Wish for Options!",
+                }
+            },
+            c_poke_fake_power = {
+                name = 'Power Wish',
+                text = {
+                    "{C:dark_edition}Wish for Power!",
+                }
+            },
+            c_poke_fake_negging = {
+                name = 'Negative Wish',
+                text = {
+                    "{C:dark_edition}Wish for Friends!",
+                }
+            },
+            c_poke_fake_copy = {
+                name = 'Copy Wish',
+                text = {
+                    "{C:dark_edition}Wish for a Helping Hand!",
+                }
+            },
+            c_poke_fake_fixer = {
+                name = 'Purify Wish',
+                text = {
+                    "{C:dark_edition}Wish for a better Deck!",
+                }
+            },
+            c_poke_fake_masterball = {
+                name = 'Summon Wish',
+                text = {
+                    "{C:dark_edition}Wish to summon a Legendary Pokermon!",
                 }
             },
         },
@@ -3466,6 +3559,12 @@ return {
                     "{C:attention}#3#{} {C:pink}Energy{} Card",
                 },
             },
+            p_poke_pokepack_wish_pack = {
+                name = "Wish Pack",
+                text = {
+                    "{C:dark_edition}Make a Wish!{}",
+                },
+            },
         },
     },
     misc = {
@@ -3483,6 +3582,7 @@ return {
             k_energy = "Energy",
             k_item = "Item",
             k_poke_pocket_pack = "Pocket Pack",
+            k_poke_wish_pack = "Wish Pack",
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",

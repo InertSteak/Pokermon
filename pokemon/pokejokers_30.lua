@@ -185,6 +185,7 @@ local dreepy_dart={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  aux_poke = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,

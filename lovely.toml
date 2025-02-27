@@ -119,6 +119,19 @@ end
 '''
 match_indent = true
 
+# Resize Booster Pack UI for new options
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
+position = "after"
+payload = '''
+if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks
+end
+'''
+match_indent = true
+
 #Shiny shader
 [[patches]]
 [patches.pattern]
@@ -338,6 +351,7 @@ position = "after"
 payload = "if type(update_pokemon_form_sprites) == 'function' then update_pokemon_form_sprites(self) end"
 match_indent = true
 
+
 #Make sure evolve before debuff
 [[patches]]
 [patches.pattern]
@@ -345,4 +359,20 @@ target = "card.lua"
 pattern = "if self.ability.perish_tally == 1 then"
 position = "at"
 payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
+match_indent = true
+
+
+# Jirachi Double Payout
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if total_cashout_rows > 7 then"
+position = "before"
+payload = '''
+local jirachis = find_joker('jirachi_banker')
+for i = 1, #jirachis do
+  add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars, card = jirachis[i]})
+  dollars = dollars + dollars
+end
+'''
 match_indent = true

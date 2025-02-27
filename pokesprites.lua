@@ -250,6 +250,20 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "jirachi",
+    path = "jirachi.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "jirachi_shiny",
+    path = "jirachi_shiny.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",
