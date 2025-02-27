@@ -269,6 +269,10 @@ local jirachi_banker = {
   no_collection = true,
   perishable_compat = false,
   blueprint_compat = true,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_booster = {
@@ -301,6 +305,10 @@ local jirachi_booster = {
       G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_copy = {
@@ -394,6 +402,10 @@ local jirachi_copy = {
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_negging = {
@@ -425,6 +437,10 @@ local jirachi_negging = {
       G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) / card.ability.extra.chance
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_power = {
@@ -460,6 +476,10 @@ local jirachi_power = {
       end
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_fixer = {
@@ -502,6 +522,10 @@ local jirachi_fixer = {
       juice_card_until(card, eval, true)
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 -- Deoxys 386
