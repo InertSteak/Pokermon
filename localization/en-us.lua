@@ -3605,6 +3605,7 @@ return {
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
+            poke_settings_pokemon_altart = "Alt Art?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

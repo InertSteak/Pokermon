@@ -57,6 +57,11 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "poke_jirachi"
         end
+        if card.config.center.atlas == "poke_altjirachi" then
+          card.config.center.atlas = "poke_shinyaltjirachi"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_altjirachi"
+        end
         if card.children.center.atlas.name == "Joker" then
           SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
           card.config.center.shiny = true

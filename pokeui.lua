@@ -6,7 +6,8 @@ local restart_toggles_left = {
                 
 local restart_toggles_right = { 
   {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
-  {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}}
+  {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}},
+  {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"}
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
