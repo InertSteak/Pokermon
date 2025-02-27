@@ -2120,6 +2120,13 @@ return {
                     "your deck and draw it to {C:attention}Hand",
                 } 
             },
+            j_poke_celebi = {
+                name = "Celebi",
+                text = {
+                    "{C:attention}-#2#{} Ante after skipping {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{}",
+                    "{C:inactive}(Required skips increase each time)"
+                } 
+            },
             j_poke_treecko = {
                 name = "Treecko",
                 text = {

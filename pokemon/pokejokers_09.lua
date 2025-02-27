@@ -61,6 +61,52 @@ local blissey={
 -- Lugia 249
 -- Ho-oh 250
 -- Celebi 251
+local celebi = {
+  name = "celebi", 
+  pos = {x = 4, y = 10},
+  soul_pos = { x = 5, y = 10},
+  config = {extra = {reward = 1, skip_count = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {G.GAME.celebi_skips, card.ability.extra.reward, G.GAME.celebi_skips - card.ability.extra.skip_count}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.skip_blind then
+      card:juice_up(0.1)
+      card.ability.extra.skip_count = card.ability.extra.skip_count + 1
+      if card.ability.extra.skip_count >= G.GAME.celebi_skips then
+        ease_ante(-card.ability.extra.reward)
+        G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+        G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
+        G.E_MANAGER:add_event(Event({
+          trigger = 'immediate',
+          func = function()
+            if not G.GAME.celebi_triggered then
+              G.GAME.celebi_skips = G.GAME.celebi_skips + 1
+              G.GAME.celebi_triggered = true
+            end
+            card.ability.extra.skip_count = 0
+            return true
+          end
+        }))
+      else
+        G.GAME.celebi_triggered = false
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    G.GAME.celebi_skips = G.GAME.celebi_skips or 2
+    G.GAME.celebi_triggered = false
+  end
+}
 -- Treecko 252
 local treecko={
   name = "treecko",
@@ -595,5 +641,5 @@ local swampert={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {blissey, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
 }
