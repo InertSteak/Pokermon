@@ -154,9 +154,8 @@ local jirachi_tag = {
 	pos = { x = 4, y = 0 },
 	config = { type = "new_blind_choice" },
 	key = "jirachi_tag",
-	min_ante = 999, -- easiest way to hide it, XD
-  	discovered = true,
-	no_collection = false,
+  discovered = true,
+	no_collection = true,
 	loc_vars = function(self, info_queue)
 		return { vars = {} }
 	end,
@@ -205,6 +204,10 @@ local jirachi_tag = {
 			return true
 		end
 	end,
+  in_pool = function(self)
+    --hiding this with the in_pool_function instead
+    return false
+  end
 }
 
 return {name = "Tags",

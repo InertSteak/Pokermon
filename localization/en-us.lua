@@ -2323,8 +2323,6 @@ return {
             j_poke_jirachi_banker = {
                 name = 'Jirachi',
                 text = {
-                    "Retrigger {C:attention}Gold Cards{} held in hand",
-                    "{br:3}text needs to be here to work",
                     "{C:attention}Double{} end of round payout",
                 }
             },
@@ -2332,14 +2330,12 @@ return {
                 name = 'Jirachi',
                 text = {
                     "+1 {C:attention}Booster Pack slot",
-                    "{C:attention}Booster Packs{} have {C:attention}2{} more options",
+                    "{C:attention}Booster Packs{} have {C:attention}1{} more card in them",
                 }
             },
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Retrigger {C:attention}Steel Cards{} held in hand",
-                    "{br:3}text needs to be here to work",
                     "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
                     "give {X:mult,C:white}X#1#{} Mult when scored",
                 }
@@ -2355,18 +2351,17 @@ return {
                 name = 'Jirachi',
                 text = {
                     "Copies ability of {C:attention}Joker{} to the right",
-                    "as if it had {C:attention}#1#{} extra Energy",
+                    "as if it had {C:attention}#1#{} extra {C:pink}Energy",
                 }
             },
             j_poke_jirachi_fixer = {
                 name = 'Jirachi',
                 text = {
                     "If {C:attention}first hand{} has exactly {C:attention}1{} card,",
-                    "add {C:attention}1 copy of it to hand",
+                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{} to it",
                     "{br:3}text needs to be here to work",
                     "If {C:attention}first discard{} has exactly {C:attention}1{} card,",
-                    "{C:attention}destroy{} it and a card in your deck",
-                    "with the {C:attention}same rank",
+                    "{C:attention}destroy{} it",
                 }
             },
             j_poke_buizel = {

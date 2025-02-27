@@ -282,7 +282,7 @@ local wish_pack = {
 	kind = "Spectral",
 	atlas = "pokepack",
 	pos = { x = 4, y = 0 },
-	config = { extra = 7, choose = 1 },
+	config = { extra = 6, choose = 1 },
 	cost = 999,
 	order = 4,
 	weight = 0,
@@ -295,9 +295,8 @@ local wish_pack = {
     -- force pack_choices to 1
     G.GAME.pack_choices = 1
 
-    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_negging', 
-                           'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
-    local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%7], no_edition = true, skip_materialize = true}
+    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
+    local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%6], no_edition = true, skip_materialize = true}
     return SMODS.create_card(temp_card)
 	end,
 	loc_vars = function(self, info_queue, card)

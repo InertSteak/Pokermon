@@ -73,7 +73,7 @@ family = {
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
     {"beldum", "metang", "metagross"},
-    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_negging", "jirachi_copy", "jirachi_fixer"},
+    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},

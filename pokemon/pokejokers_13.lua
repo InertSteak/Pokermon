@@ -269,22 +269,13 @@ local jirachi_banker = {
   no_collection = true,
   perishable_compat = false,
   blueprint_compat = true,
-  calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
-    end
-  end,
 }
 
 local jirachi_booster = {
   name = "jirachi_booster", 
   pos = { x = 2, y = 0 },
   soul_pos = { x = 3, y = 0 },
-  config = {extra = {bonus_packs = 1, bonus_choices = 2}},
+  config = {extra = {bonus_packs = 1, bonus_choices = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {}}
@@ -300,14 +291,13 @@ local jirachi_booster = {
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      G.GAME.modifiers.poke_booster_packs = (G.GAME.modifiers.poke_booster_packs or 2) + card.ability.extra.bonus_packs
+      SMODS.change_booster_limit(card.ability.extra.bonus_packs)
       G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff then
-      if not G.GAME.modifiers.poke_booster_packs then print("poke_booster_packs WASN'T LOADED") end
-      G.GAME.modifiers.poke_booster_packs = (G.GAME.modifiers.poke_booster_packs or 2) - card.ability.extra.bonus_packs
+      SMODS.change_booster_limit(-card.ability.extra.bonus_packs)
       G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
     end
   end,
@@ -317,7 +307,7 @@ local jirachi_copy = {
   name = "jirachi_copy", 
   pos = { x = 2, y = 1 },
   soul_pos = { x = 3, y = 1 },
-  config = {extra = {energy_buff = 3}},
+  config = {extra = {energy_buff = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.energy_buff}}
@@ -393,14 +383,16 @@ local jirachi_copy = {
    desc_nodes[#desc_nodes+1] = main_end
   end,
   update = function(self, card, dt)
-    local other_joker = nil
-    for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i] == card then
-        other_joker = G.jokers.cards[i+1]
-        break
+    if G.STAGE == G.STAGES.RUN then
+      local other_joker = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then
+          other_joker = G.jokers.cards[i+1]
+          break
+        end
       end
+      card.ability.blueprint_compat = ( other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
     end
-    card.ability.blueprint_compat = ( other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
   end,
 }
 
@@ -439,10 +431,10 @@ local jirachi_power = {
   name = "jirachi_power", 
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
-  config = {extra = {Xmult = 3, every = 3, loyalty_remaining = 3}},
+  config = {extra = {Xmult_multi = 2.4, every = 3, loyalty_remaining = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult, card.ability.extra.every, card.ability.extra.loyalty_remaining, }}
+    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every, card.ability.extra.loyalty_remaining, }}
   end,
   rarity = 4,
   cost = 20,
@@ -459,18 +451,10 @@ local jirachi_power = {
       local eval = function(card) return (card.ability.extra.loyalty_remaining == 0) end
       juice_card_until(card, eval, true)
     end
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-       and context.other_card.ability.name == 'Steel Card' then
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       if card.ability.extra.loyalty_remaining == 0 then
         return {
-          x_mult = card.ability.extra.Xmult,
+          x_mult = card.ability.extra.Xmult_multi,
           card = card
         }
       end
@@ -498,37 +482,14 @@ local jirachi_fixer = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
-        local copy = copy_card(context.full_hand[1], nil, nil, G.playing_card)
-        copy:add_to_deck()
-        G.deck.config.card_limit = G.deck.config.card_limit + 1
-        table.insert(G.playing_cards, copy)
-        G.hand:emplace(copy)
-        copy.states.visible = nil
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              copy:start_materialize()
-              return true
-          end
-        })) 
-        playing_card_joker_effects({copy})
-        return {
-            message = localize('k_copied_ex'),
-            colour = G.C.CHIPS,
-            card = card,
-            playing_cards_created = {true}
-        }
+      if context.before and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
+        if not context.scoring_hand[1].edition then
+          local edition = poll_edition('aura', nil, true, true)
+          context.scoring_hand[1]:set_edition(edition, true, true)
+        end
       end
     end
     if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card then
-      local possible_removals = {}
-      for k,v in ipairs(G.deck.cards) do
-        if v:get_id() == context.other_card:get_id() then
-          table.insert(possible_removals, v)
-        end
-      end
-      local to_remove = pseudorandom_element(possible_removals, pseudoseed('jirachi_fixer'))
-      poke_remove_card(to_remove, card)
       return {
         delay = 0.45,
         remove = true,
@@ -549,5 +510,5 @@ local jirachi_fixer = {
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_negging, jirachi_copy, jirachi_fixer},
+        list = {snorunt, glalie, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_copy, jirachi_fixer},
 }
