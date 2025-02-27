@@ -61,10 +61,12 @@ local shiny = ({
         
         --support for custom additions
         if card.config.center.atlas and card.config.center.poke_custom_prefix then
-          local custom_atlas = card.config.center.atlas
-          SMODS.Joker:take_ownership(card.config.center_key, {atlas = 'shiny_'..custom_atlas, discovered = true, unlocked = true}, true)
+          local prev_atlas = card.config.center.atlas
+          local prelength = string.len(card.config.center.poke_custom_prefix) + 1 
+          local noprefix_atlas = string.sub(prev_atlas, prelength)
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = card.config.center.poke_custom_prefix..'_shiny'..noprefix_atlas, discovered = true, unlocked = true}, true)
           card:set_sprites(card.config.center)
-          card.config.center.atlas = custom_atlas
+          card.config.center.atlas = prev_atlas
         end
         
         --we don't want to do this in the collection screen
@@ -112,7 +114,7 @@ local shiny = ({
           local prev_atlas = card.config.center.atlas
           local prelength = string.len(card.config.center.poke_custom_prefix) + 1 
           local noprefix_atlas = string.sub(prev_atlas, prelength)
-          SMODS.Joker:take_ownership(card.config.center_key, {atlas = 'shiny'..noprefix_atlas, discovered = true, unlocked = true}, true)
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = card.config.center.poke_custom_prefix..'_shiny'..noprefix_atlas, discovered = true, unlocked = true}, true)
           card:set_sprites(card.config.center)
           card.config.center.atlas = prev_atlas
         end
