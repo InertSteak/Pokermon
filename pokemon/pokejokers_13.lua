@@ -462,10 +462,19 @@ local jirachi_power = {
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    card.ability.extra.loyalty_remaining = (card.ability.hands_played_at_create - G.GAME.hands_played - 1)%(card.ability.extra.every)
-    if not context.blueprint and card.ability.extra.loyalty_remaining == 0 then
-      local eval = function(card) return (card.ability.extra.loyalty_remaining == 0) end
-      juice_card_until(card, eval, true)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        if card.ability.extra.loyalty_remaining > 0 then
+          card.ability.extra.loyalty_remaining = card.ability.extra.loyalty_remaining - 1
+        end
+        if card.ability.extra.loyalty_remaining == 1 then
+          local eval = function(card) return (card.ability.extra.loyalty_remaining == 1) and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+      end
+      if context.after and card.ability.extra.loyalty_remaining == 0 then
+        card.ability.extra.loyalty_remaining = card.ability.extra.every
+      end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       if card.ability.extra.loyalty_remaining == 0 then
