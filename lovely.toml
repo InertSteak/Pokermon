@@ -342,16 +342,6 @@ elseif part.control.br then
 match_indent = true
 
 
-# Pokemon Form functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "self:set_sprites(self.config.center, self.config.card)"
-position = "after"
-payload = "if type(update_pokemon_form_sprites) == 'function' then update_pokemon_form_sprites(self) end"
-match_indent = true
-
-
 #Make sure evolve before debuff
 [[patches]]
 [patches.pattern]

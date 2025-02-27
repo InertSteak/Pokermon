@@ -578,9 +578,9 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
   for i = 1, #keys do
     local key = (type(keys[i]) == "table" and keys[i].key) or keys[i]
     local card = Card(G.your_collection[1].T.x + G.your_collection[1].T.w/2, G.your_collection[1].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-    if type(keys[i]) == "table" and G.P_CENTERS[key].update_form then
-      G.P_CENTERS[key].update_form(card,keys[i].form)
-      update_pokemon_form_sprites(card)
+    if type(keys[i]) == "table" then
+      card.ability.extra.form = keys[i].form
+      G.P_CENTERS[key]:set_sprites(card)
     end
     G.your_collection[1]:emplace(card)
   end
