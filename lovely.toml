@@ -376,3 +376,18 @@ for i = 1, #jirachis do
 end
 '''
 match_indent = true
+
+#Probopass face
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (id > 0 and rank and rank.face) or next(find_joker("Pareidolia")) then
+    return true
+end
+'''
+position = "after"
+payload = '''
+if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
+'''
+match_indent = true

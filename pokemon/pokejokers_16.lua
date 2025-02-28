@@ -447,6 +447,32 @@ local porygonz={
 }
 -- Gallade 475
 -- Probopass 476
+local probopass={
+  name = "probopass",
+  pos = {x = 5, y = 6},
+  config = {extra = {Xmult_multi = 1.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
+      return {
+          x_mult = card.ability.extra.Xmult_multi,
+          colour = G.C.XMULT,
+          card = card
+      }
+    end
+  end
+}
 -- Dusknoir 477
 -- Froslass 478
 local froslass={
@@ -496,5 +522,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, probopass, froslass},
 }

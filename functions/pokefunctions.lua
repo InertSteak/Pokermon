@@ -72,6 +72,7 @@ family = {
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
+    {"nosepass", "probopass"},
     {"beldum", "metang", "metagross"},
     {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},

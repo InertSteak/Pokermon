@@ -105,7 +105,51 @@ local breloom={
 -- Hariyama 297
 -- Azurill 298
 -- Nosepass 299
+local nosepass={
+  name = "nosepass",
+  pos = {x = 7, y = 4},
+  config = {extra = {Xmult_multi = 2.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = 2,
+  cost = 6,
+  item_req = "thunderstone",
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if not card.ability.extra.first then
+        for i = 1, #context.scoring_hand do
+          if context.scoring_hand[i]:is_face() then
+            card.ability.extra.first = context.scoring_hand[i];
+            break
+          end
+        end
+      end
+      if context.other_card == card.ability.extra.first then
+        context.other_card:set_ability(G.P_CENTERS.m_stone, nil, true)
+        return {
+            x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.XMULT,
+            card = card
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.after then
+        card.ability.extra.first = nil
+      end
+    end
+    return item_evo(self, card, context, "j_poke_probopass")
+  end
+}
 -- Skitty 300
 return {name = "Pokemon Jokers 271-300", 
-        list = {shroomish, breloom},
+        list = {shroomish, breloom, nosepass},
 }

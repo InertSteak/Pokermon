@@ -2239,6 +2239,15 @@ return {
                   "{C:chips}+#1#{} hands, {C:mult}+#2#{} discards, or {C:attention}+#3#{} hand size",
                 }
             }, 
+            j_poke_nosepass = {
+                name = 'Nosepass',      
+                text = {
+                    "First played {C:attention}face{} card",
+                    "becomes a {C:attention}Stone{} card and",
+                    "gives {X:mult,C:white} X#1# {} Mult when scored",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
+                } 
+            },
             j_poke_aron = {
                 name = 'Aron',
                 text = {
@@ -2530,6 +2539,15 @@ return {
                     "{X:red,C:white} X#2# {} Mult per {C:pink}Energy{}",
                     "card used this {C:attention}run{}",
                     "{C:inactive}(Currently {X:red,C:white} X#1# {C:inactive} Mult)"
+                } 
+            },
+            j_poke_probopass = {
+                name = 'Probopass',      
+                text = {
+                    "{C:attention}Stone{} cards are considered face cards",
+                    "{br:2}text needs to be here to work",
+                    "Played {C:attention}Stone{} cards",
+                    "give {X:mult,C:white} X#1# {} Mult when scored"
                 } 
             },
             j_poke_froslass = {
