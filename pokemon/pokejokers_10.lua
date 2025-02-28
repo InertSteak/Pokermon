@@ -38,7 +38,7 @@ local shroomish={
         ease_discard(card.ability.extra.d_size)
       else
         G.hand:change_size(card.ability.extra.h_size)
-        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + 1
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
       end
       card:juice_up()
     end
@@ -86,7 +86,7 @@ local breloom={
         ease_discard(card.ability.extra.d_size)
       else
         G.hand:change_size(card.ability.extra.h_size)
-        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + 1
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
       end
       card:juice_up()
     end
