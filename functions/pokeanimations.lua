@@ -69,13 +69,15 @@ NotAura_update_frame = function(dt, k, obj, jkr)
    end
 end
 
-local upd = Game.update
-function Game:update(dt)
-   upd(self, dt)
-   for k, v in pairs(AnimatedPokemon) do
-      NotAura_update_frame(dt, k, G.P_CENTERS[k])
-   end
-   for _, v in pairs(AnimatedSingles) do
-      NotAura_update_frame(dt, v.config.center_key, v.config.center, v)
-   end
+if pokermon_config.poke_enable_animations then
+  local upd = Game.update
+  function Game:update(dt)
+     upd(self, dt)
+     for k, v in pairs(AnimatedPokemon) do
+        NotAura_update_frame(dt, k, G.P_CENTERS[k])
+     end
+     for _, v in pairs(AnimatedSingles) do
+        NotAura_update_frame(dt, v.config.center_key, v.config.center, v)
+     end
+  end
 end
