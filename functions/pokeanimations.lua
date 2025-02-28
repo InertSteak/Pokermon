@@ -71,7 +71,7 @@ end
 
 local upd = Game.update
 function Game:update(dt)
-   upd(self, dt)
+   upd(dt)
    for k, v in pairs(AnimatedPokemon) do
       NotAura_update_frame(dt, k, G.P_CENTERS[k])
    end
