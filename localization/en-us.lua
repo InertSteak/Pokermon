@@ -2224,6 +2224,21 @@ return {
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} total)"
                 } 
             },
+            j_poke_shroomish = {
+                name = "Shroomish",
+                text = {
+                  "When {C:attention}Blind{} is selected, gain",
+                  "{C:chips}+#1#{} hand, {C:mult}+#2#{} discard, or {C:attention}+#3#{} hand size",
+                  "{C:inactive,s:0.8}(Evolves after defeating the {C:attention,s:0.8}Ante #4#{C:inactive,s:0.8} Boss Blind){}"
+                }
+            }, 
+            j_poke_breloom = {
+                name = "Breloom",
+                text = {
+                  "When {C:attention}Blind{} is selected, gain",
+                  "{C:chips}+#1#{} hands, {C:mult}+#2#{} discards, or {C:attention}+#3#{} hand size",
+                }
+            }, 
             j_poke_aron = {
                 name = 'Aron',
                 text = {
