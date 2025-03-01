@@ -151,7 +151,20 @@ for _, file in ipairs(pfiles) do
           if pokermon_config.jokers_only and item.rarity == "poke_safari" then
             item.rarity = 3
           end
-          item.discovered = not pokermon_config.pokemon_discovery 
+          item.discovered = not pokermon_config.pokemon_discovery
+          local prev_load = item.load
+          item.load = function(self, card, card_table, other_card)
+            card_table.ability.extra.juiced = nil
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                self.calculate(self, card, {poke_load = true})
+                return true
+              end
+            }))
+            if prev_load then
+              prev_load(self, card, card_table, other_card)
+            end
+          end
           SMODS.Joker(item)
         end
       end
