@@ -205,9 +205,7 @@ local grovyle={
     G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -392,8 +390,8 @@ local combusken={
     return scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.mult_earned, 150)
   end,
   add_to_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
@@ -518,7 +516,10 @@ local mudkip={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    ease_hands_played(-card.ability.extra.hands)
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -570,7 +571,10 @@ local marshtomp={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    ease_hands_played(-card.ability.extra.hands)
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -622,7 +626,10 @@ local swampert={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    ease_hands_played(-card.ability.extra.hands)
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then

@@ -97,9 +97,7 @@ local ivysaur={
     G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.hand:change_size(-card.ability.extra.h_size)
-    end
+    G.hand:change_size(-card.ability.extra.h_size)
   end
 }
 
@@ -169,17 +167,16 @@ local mega_venusaur = {
   atlas = "Megas",
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    local previous_card_limit = G.hand.config.card_limit
     G.hand:change_size(card.ability.extra.h_size)
-    if G.hand and G.hand.cards and #G.hand.cards > 0 then
+    if not from_debuff and G.hand and G.hand.cards and #G.hand.cards > 0 then
       local hand_space = math.min(#G.deck.cards, card.ability.extra.h_size - 1)
       delay(0.3)
       for i=1, hand_space do --draw cards from deck
-          if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
-              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-          else
-              draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-          end
+        if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+            draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+        else
+            draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+        end
       end
     end
   end,
@@ -228,10 +225,8 @@ local charmander={
     return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, 16)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
@@ -275,14 +270,12 @@ local charmeleon={
     return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, 36)
   end,
   add_to_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
-      ease_discard(card.ability.extra.d_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
-      ease_discard(-card.ability.extra.d_size)
-    end
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
   end
 }
 
@@ -433,13 +426,16 @@ local squirtle={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
-  end, 
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
 }
 local wartortle={
   name = "wartortle", 
@@ -476,13 +472,16 @@ local wartortle={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
-  end, 
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
 }
 local blastoise={
   name = "blastoise", 
@@ -511,12 +510,15 @@ local blastoise={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-      ease_hands_played(card.ability.extra.hands)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-      G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-      ease_hands_played(-card.ability.extra.hands)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
   end,
   megas = {"mega_blastoise"}
 }
@@ -540,17 +542,12 @@ local mega_blastoise = {
     ease_hands_played(card.ability.extra.hands)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    local hands_to_remove = nil
-    if G.GAME.current_round.hands_left > card.ability.extra.hands then
-      hands_to_remove = card.ability.extra.hands
-    else
-      hands_to_remove = G.GAME.current_round.hands_left - 1
-    end
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    if hands_to_remove > 0 then
-      ease_hands_played(-hands_to_remove)
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
     end
-  end
+  end,
 }
 local caterpie={
   name = "caterpie", 

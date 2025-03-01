@@ -33,14 +33,10 @@ local snorunt={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
 }
 -- Glalie 362
@@ -294,16 +290,12 @@ local jirachi_booster = {
   perishable_compat = false,
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      SMODS.change_booster_limit(card.ability.extra.bonus_packs)
-      G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
-    end
+    SMODS.change_booster_limit(card.ability.extra.bonus_packs)
+    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      SMODS.change_booster_limit(-card.ability.extra.bonus_packs)
-      G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
-    end
+    SMODS.change_booster_limit(-card.ability.extra.bonus_packs)
+    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
   end,
   custom_pool_func = true,
   in_pool = function(self)
@@ -426,16 +418,12 @@ local jirachi_negging = {
   perishable_compat = false,
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
-      G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) * card.ability.extra.chance
-    end
+    G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
+    G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) * card.ability.extra.chance
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.slots
-      G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) / card.ability.extra.chance
-    end
+    G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.slots
+    G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) / card.ability.extra.chance
   end,
   custom_pool_func = true,
   in_pool = function(self)
