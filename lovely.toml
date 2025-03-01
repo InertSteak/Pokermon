@@ -81,18 +81,6 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "self.removed = true"
-position = "after"
-payload = '''
-if self.set == 'Joker' and self.edition and self.edition.poke_shiny then
-  SMODS.change_booster_limit(-1)
-end
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
 pattern = "self.added_to_deck = false"
 position = "after"
 payload = '''
