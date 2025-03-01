@@ -208,10 +208,6 @@ local charmander={
       if context.before and not context.blueprint then
         if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            if card.ability.extra.mult == 16 then
-              local eval = function(card) return not card.REMOVED end
-              juice_card_until(card, eval, true)
-            end
             return {
               message = localize('k_upgrade_ex'),
               colour = G.C.MULT

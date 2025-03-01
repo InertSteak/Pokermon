@@ -291,12 +291,6 @@ local drowzee={
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
       card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
-      
-      if card.ability.extra.mult >= 28 and not card.ability.extra.juiced then
-        card.ability.extra.juiced = true
-        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
     end
   end
 }

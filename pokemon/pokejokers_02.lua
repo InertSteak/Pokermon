@@ -394,12 +394,6 @@ local zubat={
       for k, v in pairs(G.playing_cards) do
         if v.config.center ~= G.P_CENTERS.c_base then card.ability.extra.zubat_tally = card.ability.extra.zubat_tally+1 end
       end
-      
-      if card.ability.extra.zubat_tally >= 12 and not card.ability.extra.juiced then
-        card.ability.extra.juiced = true
-        local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
     end
   end,
   calculate = function(self, card, context)
