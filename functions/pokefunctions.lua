@@ -83,6 +83,7 @@ family = {
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
+    {"vanillite", "vanillish", "vanilluxe"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"grubbin", "charjabug", "vikavolt"},
@@ -1011,6 +1012,28 @@ faint_baby_poke = function(self, card, context)
       end
     end
   end
+end
+
+volatile_active = function(self, card, direction)
+  local active = true
+  local self_pos = 0
+  local normal_pos = 0
+  for i = 1, #G.jokers.cards do
+    local volatile = G.jokers.cards[i].config.center.volatile
+    if G.jokers.cards[i] == card then
+      self_pos = i
+    end
+    if not volatile then
+      normal_pos = i
+    end
+  end
+  if direction == 'left' and normal_pos < self_pos then 
+    active = false
+  end
+  if direction == 'right' and normal_pos > self_pos then
+    active = false
+  end
+  return active
 end
 
 poke_total_chips = function(card)

@@ -1376,18 +1376,23 @@ return {
             j_poke_voltorb = {
                 name = 'Voltorb',      
                 text = {
-                    "If this is the {C:attention}leftmost{} Joker,",
-                    "gain {C:mult}+#1#{} Mult, then debuff this",
-                    "Joker until end of round",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                    "{C:attention}Volatile Right{}",
+                    "{X:mult,C:white} X#1# {} Mult",
+                    "{br:2}text needs to be here to work",
+                    "Debuffs self until end of round",
+                    "when it triggers",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
                 } 
             },
             j_poke_electrode = {
                 name = 'Electrode',      
                 text = {
-                    "If this is the {C:attention}leftmost{} Joker,",
-                    "gain {C:mult}+#1#{} Mult and {C:money}$#2#{}, then debuff",
-                    "this Joker until end of round",
+                    "{C:attention}Volatile Right{}",
+                    "{X:mult,C:white} X#1# {} Mult",
+                    "Earn {C:money}$#2#{} when hand is played",
+                    "{br:2}text needs to be here to work",
+                    "Debuffs self until end of round",
+                    "when it triggers",
                 } 
             },
             j_poke_exeggcute = {
@@ -2560,6 +2565,34 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_vanillite = {
+                name = "Vanillite",
+                text = {
+                  "{C:attention}Volatile Left",
+                  "{C:chips}+#1#{} Chips",
+                  "{C:chips}-#3#{} Chips for every hand played",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
+                }
+            },
+            j_poke_vanillish = {
+                name = "Vanillish",
+                text = {
+                  "{C:attention}Volatile Left",
+                  "{C:chips}+#1#{} Chips",
+                  "{C:chips}-#3#{} Chips for every hand played",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
+                }
+            },
+            j_poke_vanilluxe = {
+                name = "Vanilluxe",
+                text = {
+                  "{C:chips}+#1#{} Chips",
+                  "{C:chips}-#2#{} Chips for every hand played",
+                  "{br:2}text needs to be here to work",
+                  "When fully melted",
+                  "create {C:attention}#3# Double Tags{} "
+                }
+            },
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {
@@ -3359,6 +3392,22 @@ return {
                 "Remove sell value from",
                 "a Joker if Joker has",
                 "greater than {C:money}$1{} sell value",
+              }
+            },
+            poke_volatile_left = {
+              name = "Volatile Left",
+              text = {
+                "This Joker only triggers",
+                "in the {C:attention}leftmost{} position",
+                "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
+              }
+            },
+            poke_volatile_right = {
+              name = "Volatile Right",
+              text = {
+                "This Joker only triggers",
+                "in the {C:attention}rightmost{} position",
+                "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
               }
             },
             precise_energy_tooltip = {
