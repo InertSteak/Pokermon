@@ -1017,7 +1017,9 @@ local kangaskhan={
       G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
       return true end }))
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
   end, 
   megas = {"mega_kangaskhan"}
 }

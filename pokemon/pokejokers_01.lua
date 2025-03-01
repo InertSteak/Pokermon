@@ -427,7 +427,9 @@ local squirtle={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
@@ -473,7 +475,9 @@ local wartortle={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
@@ -511,7 +515,9 @@ local blastoise={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
@@ -539,7 +545,9 @@ local mega_blastoise = {
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    ease_hands_played(card.ability.extra.hands)
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
