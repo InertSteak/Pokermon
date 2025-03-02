@@ -1997,7 +1997,7 @@ return {
                 name = 'Jumpluff',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "First two {C:attention}discarded cards{} becomes {C:dark_edition}Wild{}",
+                    "First two {C:attention}discarded cards{} become {C:dark_edition}Wild{}",
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                 }
             },
