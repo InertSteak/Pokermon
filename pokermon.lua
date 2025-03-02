@@ -457,10 +457,10 @@ G.P_CENTERS.e_polychrome.get_weight = function(self)
 end
 
 --To remove the booster slot from shinies
-local removed = Card.remove_from_deck
-function Card:remove_from_deck(debuff)
-  if not debuff and self.edition and self.edition.poke_shiny then
+local removed = Card.remove
+function Card:remove()
+  if self.edition and self.edition.poke_shiny and self.area and (self.area == G.jokers or self.area == G.hand or self.area == G.play) then
     SMODS.change_booster_limit(-1)
   end
-  return removed(self, debuff)
+  return removed(self)
 end
