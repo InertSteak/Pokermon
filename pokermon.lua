@@ -155,12 +155,14 @@ for _, file in ipairs(pfiles) do
           local prev_load = item.load
           item.load = function(self, card, card_table, other_card)
             card_table.ability.extra.juiced = nil
-            G.E_MANAGER:add_event(Event({
-              func = function()
-                self.calculate(self, card, {poke_load = true})
-                return true
-              end
-            }))
+            if type(self.calculate) == "function" then
+              G.E_MANAGER:add_event(Event({
+                func = function()
+                  self.calculate(self, card, {poke_load = true})
+                  return true
+                end
+              }))
+            end
             if prev_load then
               prev_load(self, card, card_table, other_card)
             end
