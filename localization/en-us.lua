@@ -2890,15 +2890,15 @@ return {
                 name = "Rival",
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} blind requirement",
-                    "{S:1.1,C:red,E:2}self destruct{} and gives {C:money}$#2#",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
                 }
             },
             j_poke_bitter_rival = {
                 name = "Bitter Rival",
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} blind requirement",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
                     "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
                 }
             },
@@ -2906,7 +2906,7 @@ return {
                 name = "Champion",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} blind requirement",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
                     "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
                 }
             },
