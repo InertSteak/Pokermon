@@ -354,10 +354,10 @@ poke_convert_cards_to = function(cards, t)
   end
   if not t.seal then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
+      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
-  delay(0.5)
+  delay(0.3)
   if cards == G.hand.highlighted then
     poke_conversion_event_helper(function() G.hand:unhighlight_all() end)
   end
