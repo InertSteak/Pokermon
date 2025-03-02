@@ -88,7 +88,7 @@ local vanillish={
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, center.ability.extra.chips_minus}}
   end,
   rarity = 2, 
-  cost = 3, 
+  cost = 6, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex5",
@@ -155,8 +155,8 @@ local vanilluxe={
     return {vars = {center.ability.extra.chips, center.ability.extra.chips_minus, center.ability.extra.tags}}
   end,
   rarity = 3, 
-  cost = 3, 
-  stage = "One", 
+  cost = 7, 
+  stage = "Two", 
   ptype = "Water",
   atlas = "Pokedex5",
   blueprint_compat = false,
