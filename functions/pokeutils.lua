@@ -324,7 +324,7 @@ end
 
 local poke_id_to_rank = {'A','2','3','4','5','6','7','8','9','T','J','K','Q','A'}
 poke_convert_cards_to = function(cards, t)
-  if cards:is(Card) then cards = {cards} end
+  if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal then
     for i = 1, #cards do
       poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)

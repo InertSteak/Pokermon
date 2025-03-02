@@ -3764,6 +3764,10 @@ return {
             poke_tangela_bonus = "All!",
             --Golbat And Crobat thingy
             poke_screech_ex = "Skree!",
+            --Hoppip Line
+            poke_hop_ex = "Hop!",
+            poke_skip_ex = "Skip!",
+            poke_jump_ex = "Jump!",
             --From Bellossom
             poke_petal_dance_ex = "Petal!",
             poke_petal_dance = "Petal",
