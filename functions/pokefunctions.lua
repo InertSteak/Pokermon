@@ -1016,6 +1016,7 @@ end
 
 volatile_active = function(self, card, direction)
   local active = true
+  local first_pos = nil
   local self_pos = 0
   local normal_pos = 0
   for i = 1, #G.jokers.cards do
@@ -1025,9 +1026,10 @@ volatile_active = function(self, card, direction)
     end
     if not volatile then
       normal_pos = i
+      if not first_pos then first_pos = i end
     end
   end
-  if direction == 'left' and normal_pos < self_pos then 
+  if direction == 'left' and first_pos and first_pos < self_pos then 
     active = false
   end
   if direction == 'right' and normal_pos > self_pos then
