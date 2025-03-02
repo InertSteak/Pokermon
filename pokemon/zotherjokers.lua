@@ -162,6 +162,96 @@ local jelly_donut={
   end
 }
 
+local rival = {
+  name = "rival",
+  pos = {x = 3, y = 1},
+  config = {extra = {mult = 10, Xmult = 3, form = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local mult = card.ability.extra.mult
+    local money = 5
+    local alt_key = nil
+    if card.ability.extra.form == 1 then
+      alt_key = "j_poke_bitter_rival"
+      mult = card.ability.extra.mult * 2
+      money = 10
+    elseif card.ability.extra.form > 1 then
+      alt_key = "j_poke_champion"
+      mult = card.ability.extra.Xmult
+      money = 25
+    end
+
+    local percent = (2 ^ card.ability.extra.form) + 1
+
+    return {vars = {mult, money, percent}, key = alt_key}
+  end,
+  rarity = 1,
+  cost = 6,
+  joblacklist = true,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if card.ability.extra.form > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        else
+          local mult = card.ability.extra.mult * (card.ability.extra.form == 0 and 1 or 2)
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {mult}},
+            colour = G.C.MULT,
+            mult_mod = mult
+          }
+        end
+      end
+    end
+    if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
+      if G.GAME.chips/G.GAME.blind.chips >= (2 ^ card.ability.extra.form) + 1 then
+        G.GAME.rival_losses = G.GAME.rival_losses + 1
+
+        local money = 5
+        if card.ability.extra.form == 1 then
+          money = 10
+        elseif card.ability.extra.form > 1 then
+          money = 25
+        end
+        ease_poke_dollars(card, 'rival', money)
+
+        
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            remove(self, card, context)
+            return true
+          end
+        }))
+
+        return {
+            message = localize("poke_smell_ya")
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    G.GAME.rival_losses = G.GAME.rival_losses or 0
+    card.ability.extra.form = G.GAME.rival_losses
+    self:set_sprites(card)
+  end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.form > 1 then
+      card.children.center:set_sprite_pos({x = 4, y = 1})
+    else
+      card.children.center:set_sprite_pos({x = 3, y = 1})
+    end
+  end
+}
+
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut}
+        list = {pokedex, everstone, tall_grass, jelly_donut, rival}
 }
