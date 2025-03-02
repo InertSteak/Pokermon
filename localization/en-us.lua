@@ -1975,6 +1975,32 @@ return {
                     "{s:0.8}Suit cycles after scoring {C:inactive,s:0.8}(#3#, #4#, #5#, #6#)",
                 } 
             },
+            j_poke_hoppip = {
+                name = 'Hoppip',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "First {C:attention}discarded card{} becomes {C:dark_edition}Wild{}",
+                    "{S:1.1,C:red,E:2}self destructs{} on discard",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_skiploom = {
+                name = 'Skiploom',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "First {C:attention}discarded card{} becomes {C:dark_edition}Wild{}",
+                    "{S:1.1,C:red,E:2}self destructs{} on discard",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_jumpluff = {
+                name = 'Jumpluff',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "First two {C:attention}discarded cards{} becomes {C:dark_edition}Wild{}",
+                    "{S:1.1,C:red,E:2}self destructs{} on discard",
+                }
+            },
             j_poke_espeon = {
                 name = 'Espeon',
                 text = {
