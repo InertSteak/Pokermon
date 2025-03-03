@@ -212,8 +212,16 @@ local rival = {
         end
       end
     end
-    if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
-      if G.GAME.chips/G.GAME.blind.chips >= (2 ^ card.ability.extra.form) + 1 then
+
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      local beaten = false
+      if not G.GAME.chips or not G.GAME.blind.chips or not card.ability.extra.form then return end
+      if (SMODS.Mods["Talisman"] or {}).can_load and to_big(G.GAME.chips)/G.GAME.blind.chips >= to_big((2 ^ card.ability.extra.form) + 1) then
+        beaten = true
+      elseif not (SMODS.Mods["Talisman"] or {}).can_load and G.GAME.chips/G.GAME.blind.chips >= (2 ^ card.ability.extra.form) + 1 then
+        beaten = true
+      end
+      if beaten then
         G.GAME.rival_losses = G.GAME.rival_losses + 1
 
         local money = 5
