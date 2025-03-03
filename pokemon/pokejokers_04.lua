@@ -259,7 +259,7 @@ local onix={
 local drowzee={
   name = "drowzee", 
   pos = {x = 4, y = 7}, 
-  config = {extra = {Xmult_mod = 0.1, planets_used = 0}, evo_rqmt = 7},
+  config = {extra = {Xmult_mod = 0.2, planets_used = 0}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
@@ -297,7 +297,7 @@ local drowzee={
 local hypno={
   name = "hypno", 
   pos = {x = 5, y = 7},  
-  config = {extra = {Xmult_mod = 0.2, planets_used = 0}},
+  config = {extra = {Xmult_mod = 0.25, planets_used = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Trance"}}
