@@ -2912,6 +2912,30 @@ return {
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }
             },
+            j_poke_rival = {
+                name = "Rival",
+                text = {
+                    "{C:mult}+#1#{} Mult",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                }
+            },
+            j_poke_bitter_rival = {
+                name = "Bitter Rival",
+                text = {
+                    "{C:mult}+#1#{} Mult",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                }
+            },
+            j_poke_champion = {
+                name = "Champion",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult",
+                    "If score is {C:attention}>#3#X{} Blind Requirement",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
@@ -3797,7 +3821,8 @@ return {
             poke_make_it_rain = "Make it Rain!",
             poke_val_down = "Value Down!",
             poke_powder_ex = "Powder Snow!",
-            poke_future_sight = "Future Sight!"
+            poke_future_sight = "Future Sight!",
+            poke_smell_ya = "Smell Ya Later!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
