@@ -2878,8 +2878,7 @@ return {
             j_poke_pokedex = {
                 name = 'Pokedex',
                 text = {
-                    "{C:mult}+#2#{} Mult for each Joker",
-                    "you have that has a {C:pink}Type{}",
+                    "{C:mult}+#2#{} Mult for each unique {C:attention}Joker{} seen",
                     "{br:3}text needs to be here to work",
                     "{C:attention}Pokemon{} from the same", 
                     "evolutionary line may appear",
@@ -3797,7 +3796,8 @@ return {
             poke_make_it_rain = "Make it Rain!",
             poke_val_down = "Value Down!",
             poke_powder_ex = "Powder Snow!",
-            poke_future_sight = "Future Sight!"
+            poke_future_sight = "Future Sight!",
+            poke_pokedex_entry = "New Entry!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
