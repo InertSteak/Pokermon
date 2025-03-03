@@ -648,7 +648,7 @@ return {
             j_poke_ekans = {
                 name = "Ekans",
                 text = {
-                    "{C:mult}+#1#{} Mult if played hand",
+                    "{C:chips}+#1#{} Chips if played hand",
                     "contains a {C:attention}Straight{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
                 } 
@@ -656,7 +656,7 @@ return {
             j_poke_arbok = {
                 name = "Arbok",
                 text = {
-                    "{C:mult}+#1#{} Mult if played hand",
+                    "{C:chips}+#1#{} Chips if played hand",
                     "contains a {C:attention}Straight{}",
                     "{br:2}text needs to be here to work",
                     "Create a {C:attention}Tarot{} card if",
@@ -973,11 +973,9 @@ return {
             j_poke_arcanine = {
                 name = "Arcanine",
                 text = {
-                    "{X:red,C:white} X#1# {} Mult if played hand",
-                    "contains a {C:attention}Flush{}",
-                    "{br:2}text needs to be here to work",
-                    "Create a {C:attention}Lovers{} card",
-                    "when {C:attention}Blind{} is selected"
+                    "{X:red,C:white} X#1# {} Mult if played hand contains a {C:attention}Flush{}",
+                    "Played unenhanced cards in that {C:attention}Flush{}",
+                    "become {C:attention}Mult{} cards when scored"
                 } 
             },
             j_poke_poliwag = {
@@ -1367,8 +1365,8 @@ return {
             j_poke_kingler = {
                 name = 'Kingler',      
                 text = {
-                    "All played {C:attention}face{} cards become",
-                    "{C:attention}Bonus{} cards and give",
+                    "All played unenhanced {C:attention}face{} cards",
+                    "become {C:attention}Bonus{} cards and give",
                     "{C:chips}+#1#{} Chips when scored",
                 } 
             },
@@ -1530,8 +1528,9 @@ return {
             j_poke_horsea = {
                 name = 'Horsea',      
                 text = {
-                    "Gains {C:mult}+#2#{} Mult for",
-                    "each scored {C:attention}6{}",
+                    "Gains {C:mult}+#2#{} Mult",
+                    "for each {C:attention}6{}",
+                    "in scoring hand",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+12{C:inactive,s:0.8} Mult)"
                 } 
@@ -2669,6 +2668,23 @@ return {
                     "Adds {C:attention}triple{} this Joker's sell value to Mult",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
                 }
+            },
+            j_poke_litleo = {
+                name = "Litleo",
+                text = {
+                    "{C:chips}+#1#{} Chips if played hand",
+                    "contains a {C:attention}Flush{}",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                } 
+            },
+            j_poke_pyroar = {
+                name = "Pyroar",
+                text = {
+                    "{C:chips}+#1#{} Chips if played hand contains a {C:attention}Flush{}",
+                    "{br:2}text needs to be here to work",
+                    "Create a {C:pink}Energy{} card if it",
+                    "also contains an {C:attention}King{} or {C:attention}Queen{}"
+                } 
             },
             j_poke_sylveon = {
                 name = 'Sylveon',
