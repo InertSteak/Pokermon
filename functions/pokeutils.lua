@@ -362,3 +362,12 @@ poke_convert_cards_to = function(cards, t)
     poke_conversion_event_helper(function() G.hand:unhighlight_all() end)
   end
 end
+
+local game_init_object = Game.init_game_object
+function Game:init_game_object()
+  local game = game_init_object(self)
+  print(game.joker_rate)
+  game.joker_rate = game.joker_rate + 8
+  print(game.joker_rate)
+  return game
+end
