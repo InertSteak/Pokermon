@@ -94,6 +94,7 @@ family = {
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
+    {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
 }
 
 type_sticker_applied = function(card)
