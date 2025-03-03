@@ -1341,20 +1341,19 @@ return {
             j_poke_drowzee = {
                 name = 'Drowzee',      
                 text = {
-                    "{C:mult}+#2#{} Mult per",
-                    "unique {C:planet}Planet{} card",
-                    "used this run",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+28{C:inactive,s:0.8} Mult)"
+                    "{X:mult,C:white}X#2#{} Mult per unique",
+                    "{C:planet}Planet{} card used this run",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after playing #3#/{C:planet,s:0.8}#4#{C:inactive,s:0.8} unique planet cards)"
                 } 
             },
             j_poke_hypno = {
                 name = 'Hypno',      
                 text = {
                     "{C:attention}Holding Trance{}",
-                    "{C:mult}+#2#{} Mult per unique",
+                    "{X:mult,C:white}X#2#{} Mult per unique",
                     "{C:planet}Planet{} card used this run",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
                 } 
             },
             j_poke_krabby = {

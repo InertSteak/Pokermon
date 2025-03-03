@@ -259,10 +259,11 @@ local onix={
 local drowzee={
   name = "drowzee", 
   pos = {x = 4, y = 7}, 
-  config = {extra = {mult = 0, mult_mod = 4}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  config = {extra = {Xmult_mod = 0.2, planets_used = 0}, evo_rqmt = 7},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+    return {vars = {Xmult, card.ability.extra.Xmult_mod, card.ability.extra.planets_used, self.config.evo_rqmt}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -272,17 +273,16 @@ local drowzee={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
+      if context.joker_main and card.ability.extra.planets_used > 0 then
+        local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.MULT,
+          Xmult_mod = Xmult
+        }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 28)
+    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.planets_used, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -290,20 +290,21 @@ local drowzee={
       for k, v in pairs(G.GAME.consumeable_usage) do
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
-      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+      card.ability.extra.planets_used = planets_used
     end
-  end
+  end,
 }
 local hypno={
   name = "hypno", 
   pos = {x = 5, y = 7},  
-  config = {extra = {mult = 0, mult_mod = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {Xmult_mod = 0.25, planets_used = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Trance"}}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_trance'}
     info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+    local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+    return {vars = {Xmult, card.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -313,14 +314,13 @@ local hypno={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
+      if context.joker_main and card.ability.extra.planets_used > 0 then
+        local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.MULT,
+          Xmult_mod = Xmult
+        }
       end
     end
   end,
@@ -330,7 +330,7 @@ local hypno={
       for k, v in pairs(G.GAME.consumeable_usage) do
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
-      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+      card.ability.extra.planets_used = planets_used
     end
   end,
   add_to_deck = function(self, card, from_debuff)
