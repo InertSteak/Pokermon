@@ -45,7 +45,7 @@ local pyroar={
   end,
   rarity = 2,
   cost = 5,
-  stage = "Basic",
+  stage = "One",
   ptype = "Fire",
   atlas = "Pokedex6",
   perishable_compat = true,
