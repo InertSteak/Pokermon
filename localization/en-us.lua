@@ -2845,6 +2845,27 @@ return {
                   "Played {C:attention}Steel{} cards behave like {C:attention}Glass{} cards"
                 }
             },
+            j_poke_wiglett = {
+                name = "Wiglett",
+                text = {
+                    "{C:mult}+#3#{} Mult if played hand",
+                    "contains a {C:attention}Three of a kind{}",
+                    "{br:2}text needs to be here to work",
+                    "{C:chips}+#2#{} Chips if played hand",
+                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_wugtrio = {
+                name = "Wugtrio",
+                text = {
+                    "{X:red,C:white} X#1# {} Mult if played hand",
+                    "contains a {C:attention}Three of a kind{}",
+                    "{br:2}text needs to be here to work",
+                    "{C:chips}+#2#{} Chips if played hand",
+                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                } 
+            },
             j_poke_annihilape = {
                 name = 'Annihilape',
                 text = {

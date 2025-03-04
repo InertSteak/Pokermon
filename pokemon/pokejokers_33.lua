@@ -1,4 +1,57 @@
 -- Wugtrio 961
+local wugtrio={
+  name = "wugtrio", 
+  pos = {x = 4, y = 4},
+  config = {extra = {chips = 120, Xmult = 1.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.Xmult, center.ability.extra.chips}}
+  end,
+  rarity = 2, 
+  cost = 6, 
+  stage = "One", 
+  atlas = "Pokedex9",
+  ptype = "Water",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local score_chips = false
+        local score_mult = false
+        if next(context.poker_hands['Three of a Kind']) then score_mult = true end
+        for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 5 or v:get_id() == 6 or v:get_id() == 7 then
+            score_chips = true
+            break
+          end
+        end
+        if score_mult and score_chips then
+          return {
+            message = localize('poke_dig_ex'), 
+            colour = G.C.MULT,
+            chip_mod = card.ability.extra.chips,
+            Xmult_mod = card.ability.extra.Xmult,
+            card = card
+          }
+        elseif score_chips then
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips,
+            card = card
+          }
+        elseif score_mult then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.MULT,
+            Xmult_mod = card.ability.extra.Xmult,
+            card = card
+          }
+        end
+      end
+    end
+  end
+}
 -- Bombirdier 962
 -- Finizen 963
 -- Palafin 964
@@ -59,5 +112,5 @@ local annihilape={
 -- Sandy Shocks 989
 -- Iron Treads 990
 return {name = "Pokemon Jokers 961-990", 
-        list = {annihilape},
+        list = {wugtrio, annihilape},
 }
