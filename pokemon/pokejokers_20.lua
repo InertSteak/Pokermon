@@ -26,6 +26,7 @@ local vanillite={
   atlas = "Pokedex5",
   volatile = true,
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
       card.ability.extra.level_up = true
@@ -94,6 +95,7 @@ local vanillish={
   atlas = "Pokedex5",
   volatile = true,
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
       card.ability.extra.level_up = true
@@ -160,6 +162,7 @@ local vanilluxe={
   ptype = "Water",
   atlas = "Pokedex5",
   blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main then
