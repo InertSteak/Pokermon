@@ -144,7 +144,7 @@ local politoed={
 local hoppip={
   name = "hoppip",
   pos = {x = 5, y = 3},
-  config = {extra = {h_size = 2, rounds = 5}},
+  config = {extra = {h_size = 1, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -160,7 +160,7 @@ local hoppip={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand[1]
+      local target = {context.full_hand[1],context.full_hand[2]}
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -185,7 +185,7 @@ local hoppip={
 local skiploom={
   name = "skiploom",
   pos = {x = 6, y = 3},
-  config = {extra = {h_size = 3, rounds = 5}},
+  config = {extra = {h_size = 2, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -201,7 +201,7 @@ local skiploom={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand[1]
+      local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -226,7 +226,7 @@ local skiploom={
 local jumpluff={
   name = "jumpluff",
   pos = {x = 7, y = 3},
-  config = {extra = {h_size = 4}},
+  config = {extra = {h_size = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -242,7 +242,7 @@ local jumpluff={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = {context.full_hand[1],context.full_hand[2]}
+      local target = context.full_hand
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()

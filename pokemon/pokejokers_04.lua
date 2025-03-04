@@ -461,7 +461,7 @@ local voltorb={
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
-  config = {extra = {Xmult = 3, money = 5}},
+  config = {extra = {Xmult = 2.5, money = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_right'}

@@ -13,7 +13,7 @@
 local vanillite={
   name = "vanillite", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {chips = 80, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
+  config = {extra = {chips = 60, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_left'}
@@ -81,7 +81,7 @@ local vanillite={
 local vanillish={
   name = "vanillish", 
   pos = {x = 5, y = 6}, 
-  config = {extra = {chips = 120, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
+  config = {extra = {chips = 100, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_left'}
@@ -149,7 +149,7 @@ local vanillish={
 local vanilluxe={
   name = "vanilluxe", 
   pos = {x = 6, y = 6}, 
-  config = {extra = {chips = 200, chips_minus = 5, tags = 4}},
+  config = {extra = {chips = 140, chips_minus = 10, tags = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chips_minus, center.ability.extra.tags}}
