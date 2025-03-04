@@ -1048,20 +1048,16 @@ local arcanine={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and next(context.poker_hands['Flush']) then
+        local target = context.scoring_hand
+        poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)
+      end
       if context.joker_main and next(context.poker_hands['Flush']) then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.MULT,
           Xmult_mod = card.ability.extra.Xmult
         }
-      end
-    end
-    if context.setting_blind then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
       end
     end
   end,

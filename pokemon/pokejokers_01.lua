@@ -1018,10 +1018,10 @@ local fearow={
 local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
-  config = {extra = {mult = 8, rounds = 4}},
+  config = {extra = {chips = 80, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -1033,9 +1033,9 @@ local ekans={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
         }
       end
     end
@@ -1045,10 +1045,10 @@ local ekans={
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
-  config = {extra = {mult = 15, rounds = 4}},
+  config = {extra = {chips = 110, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult}}
+    return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1068,8 +1068,8 @@ local arbok={
         if aces > 0 then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
             extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
@@ -1084,13 +1084,13 @@ local arbok={
                 end
               }))
             end},
-            mult_mod = card.ability.extra.mult
+            chip_mod = card.ability.extra.chips
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips
           }
         end
       end
@@ -1188,7 +1188,7 @@ local sandshrew={
                   return true
               end
           }))
-          playing_card_joker_effects({true})
+          playing_card_joker_effects({copy})
           
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
@@ -1264,7 +1264,7 @@ local sandslash={
                   return true
               end
           }))
-          playing_card_joker_effects({true})
+          playing_card_joker_effects({copy})
           
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end

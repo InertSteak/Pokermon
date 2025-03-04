@@ -390,7 +390,7 @@ local kingler={
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       local faces = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v:is_face() then 
+          if v:is_face() and v.config.center == G.P_CENTERS.c_base then 
               faces[#faces+1] = v
               v:set_ability(G.P_CENTERS.m_bonus, nil, true)
               G.E_MANAGER:add_event(Event({

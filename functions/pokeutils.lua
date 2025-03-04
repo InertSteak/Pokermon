@@ -311,21 +311,25 @@ set_spoon_item = function(card)
   }))
 end
 
-poke_conversion_event_helper = function(func, delay)
-  G.E_MANAGER:add_event(Event({
-    trigger = 'after',
-    delay = delay or 0.1,
-    func = function()
-      func()
-      return true
-    end
-  }))
+poke_conversion_event_helper = function(func, delay, immediate)
+  if immediate then
+    func()
+  else
+    G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = delay or 0.1,
+      func = function()
+        func()
+        return true
+      end
+    }))
+  end
 end
 
 local poke_id_to_rank = {'A','2','3','4','5','6','7','8','9','T','J','K','Q','A'}
-poke_convert_cards_to = function(cards, t)
+poke_convert_cards_to = function(cards, t, noflip, immediate)
   if cards and cards.is and cards:is(Card) then cards = {cards} end
-  if not t.seal then
+  if not t.seal and not noflip then
     for i = 1, #cards do
       poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
     end
@@ -333,31 +337,42 @@ poke_convert_cards_to = function(cards, t)
   end
   for i = 1, #cards do
     if t.mod_conv then
-      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end)
+      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
     elseif t.suit_conv then
-      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end)
+      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
     elseif t.seal then
-      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end)
+      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
     elseif t.random then
       poke_conversion_event_helper(function()
         local suit_prefix = string.sub(cards[i].base.suit, 1, 1) .. '_'
         local rank_suffix = poke_id_to_rank[math.floor(pseudorandom(t.seed) * 13) + 2]
         cards[i]:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-      end)
+      end, nil, immediate)
     elseif t.up or t.down then
       poke_conversion_event_helper(function()
         local suit_prefix = string.sub(cards[i].base.suit, 1, 1) .. '_'
         local rank_suffix = poke_id_to_rank[cards[i].base.id + (t.up and 1 or -1)]
         cards[i]:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-      end)
+      end, nil, immediate)
+    elseif t.bonus_chips then
+      local bonus_add = function()
+        cards[i].ability.perma_bonus = cards[i].ability.perma_bonus or 0
+        cards[i].ability.perma_bonus = cards[i].ability.perma_bonus + t.bonus_chips
+      end
+      poke_conversion_event_helper(bonus_add, nil, immediate)
     end
   end
-  if not t.seal then
+  if not t.seal and not noflip then
     for i = 1, #cards do
       poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
-  delay(0.3)
+  if not noflip then delay(0.3) end
+  if noflip then
+    for i = 1, #cards do
+      poke_conversion_event_helper(function() cards[i]:juice_up(0.3, 0.3) end, 0.2)
+    end
+  end
   if cards == G.hand.highlighted then
     poke_conversion_event_helper(function() G.hand:unhighlight_all() end)
   end

@@ -101,6 +101,12 @@ local gimmighoulr={
     ease_poke_dollars(card, "gimmir", amount_earned)
     remove(self, card, {})
   end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local edition = {negative = true}
+      card:set_edition(edition, true, true)
+    end
+  end
 }
 -- Gholdengo 1000
 local gholdengo={
