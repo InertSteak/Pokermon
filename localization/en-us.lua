@@ -2870,7 +2870,7 @@ return {
                   "Played {C:attention}Gold{} cards earn {C:money}$#1#{} when scored",
                   "{br:3}text needs to be here to work",
                   "Skip a {C:attention}Booster Pack{} for...?",
-                  "{C:inactive,s:0.8}(Evolves after earning or spending {C:money,s:0.8}$#2#{C:inactive,s:0.8})"
+                  "{C:inactive,s:0.8}(Evolves after earning or spending {C:money,s:0.8}$#2#{C:inactive,s:0.8}/$#3#)"
                 }
             },
             j_poke_gimmighoulr = {
