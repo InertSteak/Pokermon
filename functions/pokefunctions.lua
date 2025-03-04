@@ -199,7 +199,7 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  if not pokermon_config.no_evos and not next(find_joker("everstone")) and not context.retrigger_joker then
+  if not next(find_joker("everstone")) and not context.retrigger_joker then
     local previous_position = nil
     local poketype_list = nil
     local previous_edition = nil
@@ -384,7 +384,7 @@ end
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
-  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos and not card.gone then
+  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
     return false

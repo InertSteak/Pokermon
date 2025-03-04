@@ -1,20 +1,19 @@
 --Config UI
 local restart_toggles_left = { 
-                 {ref_value = "jokers_only", label = "poke_settings_jokers_only"}, {ref_value = "no_evos", label = "poke_settings_no_evolutions"}, 
-                 {ref_value = "pokeballs", label = "poke_settings_pokeballs"}
+                 {ref_value = "pokeballs", label = "poke_settings_pokeballs"},
+                 {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"}
                 }
                 
 local restart_toggles_right = { 
   {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
   {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}},
-  {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"}
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
                           {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
  
 local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
-                        {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"}, title = "Test", text = {"First Line", "Second Line"}}
+                        {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"},}
  
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do

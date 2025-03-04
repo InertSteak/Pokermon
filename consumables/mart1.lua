@@ -767,15 +767,6 @@ local emergy = {
 	end,
 }
 
-if pokermon_config.jokers_only then
-  pokeball.set = "Tarot"
-  pokeball.pos.y = 2
-  greatball.set = "Tarot"
-  greatball.pos.y = 2
-  ultraball.pos.y = 2
-  masterball.pos.y = 2
-end
-
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
         fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}
 
