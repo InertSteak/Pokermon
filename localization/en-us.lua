@@ -437,8 +437,7 @@ return {
                     "Earn {C:money}$#1#{} for each",
                     "{C:attention}#3#{} held in hand",
                     "{C:inactive,s:0.8}(Rank changes every round){}",
-                    "{C:inactive,s:0.8}(Evolves at $#2#{C:inactive,s:0.8}/{C:money,s:0.8}$16{C:inactive,s:0.8} earned)",
-                    --"{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
                 } 
             },
             j_poke_ivysaur = {
@@ -448,8 +447,7 @@ return {
                     "Earn {C:money}$#1#{} or {C:money}$#5#{} for each",
                     "{C:attention}#4#{} held in hand",
                     "{C:inactive,s:0.8}(Rank changes every round){}",
-                    "{C:inactive,s:0.8}(Evolves at $#2#{C:inactive,s:0.8}/{C:money,s:0.8}$16{C:inactive,s:0.8} earned)",
-                    --"{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
                 } 
             },
             j_poke_venusaur = {
@@ -956,8 +954,7 @@ return {
                 text = {
                     "Each played {C:attention}2{}, {C:attention}3{}, {C:attention}5{}, or {C:attention}7{} gives",
                     "{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips when scored",
-                    "{C:inactive,s:0.8}(Evolves after triggering #3#/{C:attention,s:0.8}25{C:inactive,s:0.8} times)"
-                    --"{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)"
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_growlithe = {
@@ -1154,8 +1151,7 @@ return {
                 name = "Slowpoke",
                 text = {
                     "{X:red,C:white} X#1# {} Mult on {C:attention}final hand{} of round",
-                    "{C:inactive,s:0.8}(Evolves after triggering #2#/{C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
-                    --"{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}King's Rock{C:inactive,s:0.8})"
                 } 
             },
@@ -1240,8 +1236,7 @@ return {
                     "{C:green}#1# in #2#{} chance to add a random {C:attention}seal{}",
                     "to the leftmost scoring card",
                     "on {C:attention}first hand{} of round",
-                    "{C:inactive,s:0.75}(Evolves when your deck has at least {C:attention,s:0.75}#3#{C:inactive,s:0.75} {C:attention,s:0.75}seals{C:inactive,s:0.75})",
-                    --"{C:inactive,s:0.8}(Evolves when your deck has {C:attention,s:0.8}#2#{C:inactive,s:0.8} / #3# seals)",
+                    "{C:inactive,s:0.8}(Evolves when your deck has {C:attention,s:0.8}#4#{C:inactive,s:0.8} / #3# {C:attention,s:0.8}seals{C:inactive,s:0.8})",
                 } 
             },
             j_poke_dewgong = {
@@ -1342,8 +1337,7 @@ return {
                     "{X:mult,C:white}X#2#{} Mult per unique",
                     "{C:planet}Planet{} card used this run",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after playing #3#/{C:planet,s:0.8}#4#{C:inactive,s:0.8} unique planet cards)",
-                    --"{C:inactive,s:0.8}(Evolves after playing {C:planet,s:0.8}#4#{C:inactive,s:0.8} unique planet cards)",
+                    "{C:inactive,s:0.8}(Evolves after playing {C:planet,s:0.8}#4#{C:inactive,s:0.8} unique planet cards)",
                 } 
             },
             j_poke_hypno = {
@@ -1415,9 +1409,9 @@ return {
                     "{C:attention}Holding Thick Club{}",
                     "Gives {C:mult}+#1#{} Mult for",
                     "each {C:attention}held{} consumable",
-                    "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{C:inactive,s:0.75} count as double){}",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}Thick Clubs{C:inactive,s:0.8} count as double){}",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-                    "{C:inactive,s:0.75}(Evolves at {C:attention,s:0.75}#4#{C:inactive,s:0.75}/#5# consumables used)"
+                    "{C:inactive,s:0.8}(Evolves after using {C:attention,s:0.8}#4#{C:inactive,s:0.8} consumables)",
                 } 
             },
             j_poke_marowak = {
@@ -1426,7 +1420,7 @@ return {
                     "{C:attention}+#2#{} consumable slots",
                     "Gives {X:mult,C:white} X#1# {} Mult for",
                     "each {C:attention}held{} consumable",
-                    "{C:inactive,s:0.75}({C:attention,s:0.75}Thick Clubs{C:inactive,s:0.75} count as double){}",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}Thick Clubs{C:inactive,s:0.8} count as double){}",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
                 } 
             },
@@ -1451,7 +1445,7 @@ return {
                 text = {
                     "First and second played {C:attention}Jacks{}",
                     "give {X:mult,C:white} X#1# {} Mult when scored",
-                    "{C:inactive,s:0.8}(Evolves after triggering #2#/{C:attention,s:0.8}20{C:inactive,s:0.8} times)"
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 } 
             },
             j_poke_koffing = {
@@ -1487,7 +1481,7 @@ return {
                     "gains {C:chips}+#1#{} Chips when scored",
                     "{br:4}text needs to be here to work",
                     "Retrigger {C:attention}first{} scored {C:attention}Stone{} card",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
             },
             j_poke_chansey = {
@@ -1496,7 +1490,7 @@ return {
                     "The first {C:attention}#1#{C:inactive} [#2#]{} times a {C:attention}Lucky{} card triggers",
                     "each round, add a permanent copy to",
                     "your deck and draw it to {C:attention}Hand",
-                    "{C:inactive,s:0.8}(Evolves when deck is >= 25% {C:attention,s:0.8}Lucky{C:inactive,s:0.8} cards)"
+                    "{C:inactive,s:0.8}(Evolves when deck is >= 25% [#3#/#4#] {C:attention,s:0.8}Lucky{C:inactive,s:0.8} cards)"
                 } 
             },
             j_poke_tangela = {
@@ -1505,7 +1499,7 @@ return {
                     "Played {C:attention}Wild{} cards give",
                     "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
                     "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
-                    "{C:inactive,s:0.8}(Evolves at #6#/{C:attention,s:0.8}#7# Wild Cards{C:inactive,s:0.8} scored)"
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#7# Wild Cards{C:inactive,s:0.8})"
                 } 
             },
             j_poke_kangaskhan = {
@@ -1532,8 +1526,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "for each {C:attention}6{}",
                     "in scoring hand",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+12{C:inactive,s:0.8} Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +12 Mult)",
                 } 
             },
             j_poke_seadra = {
@@ -1565,7 +1558,7 @@ return {
                 text = {
                     "Played {C:diamonds}#2#{} cards give",
                     "{C:mult}+#1#{} Mult when scored",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
                 } 
             },
             j_poke_starmie = {
@@ -1607,7 +1600,7 @@ return {
                 text = {
                     "Gains {C:money}$#1#{} of {C:attention}sell value{} at end of",
                     "round and when a card is {C:attention}sold{}",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
             },
             j_poke_magmar = {
@@ -1616,7 +1609,7 @@ return {
                     "If {C:attention}first discard{} of round has only",
                     "{C:attention}1{} card, destroy it and gain {C:mult}+#2#{} Mult",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
             },
             j_poke_pinsir = {
@@ -1727,7 +1720,7 @@ return {
                     "{C:pink}+1{} Energy Limit",
                     "Create an {C:pink}Energy{} card when",
                     "any {C:attention}Booster Pack{} is opened",
-                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Upgrade{C:inactive,s:0.8} card)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Upgrade{C:inactive,s:0.8})",
                 } 
             },
             j_poke_omanyte = {
@@ -1738,7 +1731,7 @@ return {
                     "{X:attention,C:white}2+{} : Earn {C:money}$#3#{}",
                     "{X:attention,C:white}3+{} : Create a random {C:attention}Tarot{} card",
                     "{C:inactive,s:0.8}(Must have room)",
-                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#4#{C:inactive,s:0.8}/#5# times)"
+                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_omastar = {
@@ -1759,7 +1752,7 @@ return {
                     "{X:attention,C:white}1+{} : {C:chips}+#2#{} Chips",
                     "{X:attention,C:white}2+{} : {}Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
                     "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips",
-                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#5#{C:inactive,s:0.8}/#6# times)"
+                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#5#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_kabutops = {
@@ -1833,8 +1826,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+10{C:inactive,s:0.8} Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +10 Mult)",
                 } 
             },
             j_poke_dragonair = {
@@ -1843,8 +1835,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+30{C:inactive,s:0.8} Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +30 Mult)",
                 } 
             },
             j_poke_dragonite = {
@@ -1902,8 +1893,7 @@ return {
                     "{C:attention}consecutive{} hand played that",
                     "isn't the last played hand",
                     "{C:inactive}(Last hand: {C:attention}#3#{C:inactive})",
-                    "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+15{C:inactive,s:0.8} Mult)"
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +15 Mult)",
                 }
             },
             j_poke_furret = {
@@ -2046,7 +2036,7 @@ return {
                     "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
                     "if it wasn't {C:attention}Common{}",
                     "Those editions {C:attention}stack{} on this Joker",
-                    "{C:inactive,s:0.75}(Matches destroyed Joker's edition if able){}",
+                    "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
@@ -2082,7 +2072,7 @@ return {
                     "When any {C:attention}Booster Pack{} is opened",
                     "create an {C:pink}Energy{} card of",
                     "the same {C:pink}Type{} of leftmost Joker",
-                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Dubious Disc{C:inactive,s:0.8} card)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Dubious Disc{C:inactive,s:0.8})",
                 } 
             },
             j_poke_stantler = {
@@ -2165,7 +2155,7 @@ return {
                     "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after earning $#2#/{C:money,s:0.8}$16{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
                 } 
             },
             j_poke_grovyle = {
@@ -2176,7 +2166,7 @@ return {
                     "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
                     "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after earning $#2#/{C:money,s:0.8}$32{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
                 } 
             },
             j_poke_sceptile = {
@@ -2199,7 +2189,7 @@ return {
                     "Doubled with other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after scoring #2#/{C:mult,s:0.8}60{C:inactive,s:0.8} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:mult,s:0.8}#2#{C:inactive,s:0.8} Mult)",
                 } 
             },
             j_poke_combusken = {
@@ -2210,7 +2200,7 @@ return {
                     "Doubled with other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
                     "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after scoring #2#/{C:mult,s:0.8}150{C:inactive,s:0.8} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:mult,s:0.8}#2#{C:inactive,s:0.8} Mult)",
                 } 
             },
             j_poke_blaziken = {
@@ -2231,7 +2221,7 @@ return {
                     "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
                     "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Evolves after gaining #2#/{C:chips}400{C:inactive} Chips)"
+                    "{C:inactive}(Evolves after gaining {C:chips}#2#{C:inactive} Chips)"
                 } 
             },
             j_poke_marshtomp = {
@@ -2241,7 +2231,7 @@ return {
                     "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
                     "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Evolves after gaining #2#/{C:chips}960{C:inactive} Chips)"
+                    "{C:inactive}(Evolves after gaining {C:chips}#2#{C:inactive} Chips)"
                 } 
             },
             j_poke_swampert = {
@@ -2286,7 +2276,7 @@ return {
                     "{br:3}text needs to be here to work",
                     "When a Steel Card is scored,",
                     "gain {X:mult,C:white}X#2#{} Mult then destroy it",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{} {C:inactive}Mult)",
+                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
             },
             j_poke_lairon = {
@@ -2297,7 +2287,7 @@ return {
                     "{br:3}text needs to be here to work",
                     "When a Steel Card is scored,",
                     "gain {X:mult,C:white}X#2#{} Mult then destroy it",
-                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{} {C:inactive}Mult)"
+                    "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
             j_poke_aggron = {
@@ -2349,8 +2339,7 @@ return {
                     "If played hand contains at least",
                     "one scoring {C:attention}Ace{}, gain {C:chips}+#2#{} Chips",
                     "{C:attention}Double{} gains if hand is a {C:attention}Four of a Kind{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+64{C:inactive,s:0.8} Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +64 Chips)",
                 } 
             },
             j_poke_metang = {
@@ -2359,8 +2348,7 @@ return {
                     "If played hand contains at least",
                     "two scoring {C:attention}Aces{}, gain {C:chips}+#2#{} Chips",
                     "{C:attention}Quadruple{} gains if hand is a {C:attention}Four of a Kind{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-                    "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+256{C:inactive,s:0.8} Chips)"
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +256 Chips)",
                 } 
             },
             j_poke_metagross = {
@@ -2712,7 +2700,7 @@ return {
                     "{C:mult}+#1#{} Mult for each",
                     "{X:lightning, C:black}Lightning{} Joker you have",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
                 }  
             },
             j_poke_vikavolt = {
@@ -2861,7 +2849,7 @@ return {
                   "Played {C:attention}Gold{} cards earn {C:money}$#1#{} when scored",
                   "{br:3}text needs to be here to work",
                   "Skip a {C:attention}Booster Pack{} for...?",
-                  "{C:inactive,s:0.8}(Evolves when $#2#/{C:money,s:0.8}$#3#{C:inactive,s:0.8} total is earned or spent)"
+                  "{C:inactive,s:0.8}(Evolves after earning or spending {C:money,s:0.8}$#2#{C:inactive,s:0.8})"
                 }
             },
             j_poke_gimmighoulr = {
