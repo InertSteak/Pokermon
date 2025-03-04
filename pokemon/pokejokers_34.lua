@@ -10,11 +10,10 @@
 local gimmighoul={
   name = "gimmighoul",
   pos = {x = 12, y = 6},
-  config = {extra = {money = 3, money_seen = 0, previous_money = 0}, evo_rqmt = 999},
+  config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local money_left = math.max(0, self.config.evo_rqmt - center.ability.extra.money_seen)
-    return {vars = {center.ability.extra.money, money_left}}
+    return {vars = {center.ability.extra.money, center.ability.extra.money_seen, center.ability.extra.money_goal}}
   end,
   rarity = 3,
   cost = 7,
@@ -41,7 +40,7 @@ local gimmighoul={
         poke_add_shop_card(new_card, card)
         new_card.cost = 0
     end
-    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, self.config.evo_rqmt)
+    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.STAGE == G.STAGES.RUN then
@@ -57,7 +56,7 @@ local gimmighoul={
           card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
           card.ability.extra.previous_money = G.GAME.dollars
         end
-        if to_big(card.ability.extra.money_seen) >= to_big(self.config.evo_rqmt) and not card.ability.extra.juiced then
+        if to_big(card.ability.extra.money_seen) >= to_big(card.ability.extra.money_goal) and not card.ability.extra.juiced then
           card.ability.extra.juiced = true
           local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
@@ -68,7 +67,7 @@ local gimmighoul={
           card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
           card.ability.extra.previous_money = G.GAME.dollars
         end
-        if card.ability.extra.money_seen >= self.config.evo_rqmt and not card.ability.extra.juiced then
+        if card.ability.extra.money_seen >= card.ability.extra.money_goal and not card.ability.extra.juiced then
           card.ability.extra.juiced = true
           local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
