@@ -1052,7 +1052,12 @@ local arcanine={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and next(context.poker_hands['Flush']) then
-        local target = context.scoring_hand
+        local target = {}
+        for k, v in pairs(context.scoring_hand) do
+          if v.config.center == G.P_CENTERS.c_base then
+            target[#target + 1] = v
+          end
+        end
         poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)
       end
       if context.joker_main and next(context.poker_hands['Flush']) then
