@@ -57,7 +57,7 @@ local mew ={
 -- Sentret 161
 local sentret={
   name = "sentret",
-  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}},
+  config = {extra = {mult = 0, mult_mod = 1, last_hand = 'None'}, evo_rqmt = 15},
   pos = {x = 9, y = 0}, 
   rarity = 1, 
   cost = 5, 
@@ -95,7 +95,7 @@ local sentret={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, 15)
+    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
 -- Furret 162

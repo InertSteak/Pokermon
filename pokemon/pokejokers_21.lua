@@ -6,12 +6,12 @@
 local elgyem={
   name = "elgyem",
   pos = {x = 13, y = 7},
-  config = {extra = {top_planets = 5,  current_planet_count = 0, target_planet_count = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {top_planets = 5,  current_planet_count = 0}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
-    return {vars = {center.ability.extra.top_planets, center.ability.extra.current_planet_count, center.ability.extra.target_planet_count}}
+    return {vars = {card.ability.extra.top_planets, card.ability.extra.current_planet_count, self.config.evo_rqmt}}
   end,
   rarity = 3,
   cost = 7,
@@ -57,7 +57,7 @@ local elgyem={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
     end
-    return scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, card.ability.extra.target_planet_count)
+    return scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -180,11 +180,11 @@ local beheeyem={
 local litwick={
   name = "litwick",
   pos = {x = 1, y = 8},
-  config = {extra = {money_minus = 1, sell_value_goal = 13}},
+  config = {extra = {money_minus = 1}, evo_rqmt = 13},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
-    return {vars = {center.ability.extra.money_minus, center.ability.extra.sell_value_goal, center.sell_cost}}
+    return {vars = {center.ability.extra.money_minus, self.config.evo_rqmt, center.sell_cost}}
   end,
   rarity = 2,
   cost = 6,
@@ -210,18 +210,18 @@ local litwick={
         poke_drain(card, adjacent[i], card.ability.extra.money_minus)
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, card.ability.extra.sell_value_goal)
+    return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
   end
 }
 -- Lampent 608
 local lampent={
   name = "lampent",
   pos = {x = 2, y = 8},
-  config = {extra = {money_minus = 1, sell_value_goal = 13}},
+  config = {extra = {money_minus = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
-    return {vars = {center.ability.extra.money_minus, center.ability.extra.sell_value_goal, 2 * center.sell_cost}}
+    return {vars = {center.ability.extra.money_minus, 2 * center.sell_cost}}
   end,
   rarity = 3,
   cost = 8,
@@ -236,7 +236,7 @@ local lampent={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {2 * card.sell_cost}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {2 * card.sell_cost}},
           colour = G.C.MULT,
           mult_mod = 2 * card.sell_cost
         }

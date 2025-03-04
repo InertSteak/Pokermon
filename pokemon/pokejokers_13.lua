@@ -90,7 +90,7 @@ local glalie={
 local beldum={
   name = "beldum", 
   pos = {x = 5, y = 12},
-  config = {extra = {chips = 0, chip_mod = 8, size = 4}},
+  config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 64},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -126,14 +126,14 @@ local beldum={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, 64)
+    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
 -- Metang 375
 local metang={
   name = "metang", 
   pos = {x = 6, y = 12},
-  config = {extra = {chips = 0, chip_mod = 8, size = 4}},
+  config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 256},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -169,7 +169,7 @@ local metang={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, 256)
+    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
 -- Metagross 376

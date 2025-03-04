@@ -822,7 +822,7 @@ return {
                     "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards",
                     "Then remove scoring card {C:dark_edition}Enhancements",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive}, {C:mult}+#1#{C:inactive}, {X:red,C:white}X#5#{C:inactive}, {C:money}$#7#{C:inactive} end of round)",
-                    "{C:inactive,s:0.8}(Evolves at {C:attention,s:0.8}#9#{C:inactive,s:0.8} / 20 Enhancements eaten)",
+                    "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#9#{C:inactive,s:0.8} Enhancements)",
                 } 
             },
             j_poke_oddish = {
@@ -1151,7 +1151,7 @@ return {
                 name = "Slowpoke",
                 text = {
                     "{X:red,C:white} X#1# {} Mult on {C:attention}final hand{} of round",
-                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}King's Rock{C:inactive,s:0.8})"
                 } 
             },
@@ -1337,7 +1337,7 @@ return {
                     "{X:mult,C:white}X#2#{} Mult per unique",
                     "{C:planet}Planet{} card used this run",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after playing {C:planet,s:0.8}#4#{C:inactive,s:0.8} unique planet cards)",
+                    "{C:inactive,s:0.8}(Evolves after playing {C:planet,s:0.8}#3#{C:inactive,s:0.8} unique planet cards)",
                 } 
             },
             j_poke_hypno = {
@@ -1410,8 +1410,8 @@ return {
                     "Gives {C:mult}+#1#{} Mult for",
                     "each {C:attention}held{} consumable",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}Thick Clubs{C:inactive,s:0.8} count as double){}",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after using {C:attention,s:0.8}#4#{C:inactive,s:0.8} consumables)",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after using {C:attention,s:0.8}#3#{C:inactive,s:0.8} consumables)",
                 } 
             },
             j_poke_marowak = {
@@ -1490,7 +1490,7 @@ return {
                     "The first {C:attention}#1#{C:inactive} [#2#]{} times a {C:attention}Lucky{} card triggers",
                     "each round, add a permanent copy to",
                     "your deck and draw it to {C:attention}Hand",
-                    "{C:inactive,s:0.8}(Evolves when deck is >= 25% [#3#/#4#] {C:attention,s:0.8}Lucky{C:inactive,s:0.8} cards)"
+                    "{C:inactive,s:0.8}(Evolves when deck is >= 25% #3#{C:attention,s:0.8}Lucky{C:inactive,s:0.8} cards)"
                 } 
             },
             j_poke_tangela = {
@@ -1499,7 +1499,7 @@ return {
                     "Played {C:attention}Wild{} cards give",
                     "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
                     "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
-                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#7# Wild Cards{C:inactive,s:0.8})"
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#6# Wild Cards{C:inactive,s:0.8})"
                 } 
             },
             j_poke_kangaskhan = {
@@ -2221,7 +2221,7 @@ return {
                     "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
                     "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Evolves after gaining {C:chips}#2#{C:inactive} Chips)"
+                    "{C:inactive,s:0.8}(Evolves after gaining {C:chips,s:0.8}#2#{C:inactive,s:0.8} Chips)"
                 } 
             },
             j_poke_marshtomp = {
@@ -2231,7 +2231,7 @@ return {
                     "Played {C:attention}#4#s, #5#s or #6#s{} give {C:chips}+#1#{} Chips",
                     "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Evolves after gaining {C:chips}#2#{C:inactive} Chips)"
+                    "{C:inactive,s:0.8}(Evolves after gaining {C:chips,s:0.8}#2#{C:inactive,s:0.8} Chips)"
                 } 
             },
             j_poke_swampert = {
@@ -2644,7 +2644,7 @@ return {
                 "Jokers at end of round",
                 "{br:3.5}text needs to be here to work",
                 "Adds {C:attention}double{} this Joker's sell value to Mult",
-                "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+                "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})"
               }
             },

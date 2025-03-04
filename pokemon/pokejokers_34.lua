@@ -10,10 +10,11 @@
 local gimmighoul={
   name = "gimmighoul",
   pos = {x = 12, y = 6},
-  config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
+  config = {extra = {money = 3, money_seen = 0, previous_money = 0}, evo_rqmt = 999},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.money_seen, center.ability.extra.money_goal}}
+    local money_left = math.max(0, self.config.evo_rqmt - center.ability.extra.money_seen)
+    return {vars = {center.ability.extra.money, money_left}}
   end,
   rarity = 3,
   cost = 7,
@@ -40,7 +41,7 @@ local gimmighoul={
         poke_add_shop_card(new_card, card)
         new_card.cost = 0
     end
-    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
+    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, self.config.evo_rqmt)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.STAGE == G.STAGES.RUN then
@@ -50,20 +51,28 @@ local gimmighoul={
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
       if not card.ability.extra.previous_money then card.ability.extra.previous_money = 0 end
-      local money_diff, actual_money_diff, zero = 0, 0, 0
-      local dollars = G.GAME.dollars
-      local prev_money = card.ability.extra.previous_money
       if (SMODS.Mods["Talisman"] or {}).can_load then
-        dollars = to_number(G.GAME.dollars)
-        prev_money = to_number(card.ability.extra.previous_money)
-        actual_money_diff = to_big(math.abs(dollars - prev_money))
-        zero = to_big(0)
-      end
-      money_diff = math.abs(dollars - prev_money)
-
-      if actual_money_diff > zero then
-        card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
-        card.ability.extra.previous_money = dollars
+        local money_diff = math.abs(to_number(G.GAME.dollars) - to_number(card.ability.extra.previous_money))
+        if to_big(money_diff) > to_big(0) then
+          card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
+          card.ability.extra.previous_money = G.GAME.dollars
+        end
+        if to_big(card.ability.extra.money_seen) >= to_big(self.config.evo_rqmt) and not card.ability.extra.juiced then
+          card.ability.extra.juiced = true
+          local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+      else
+        local money_diff = math.abs(G.GAME.dollars - card.ability.extra.previous_money)
+        if money_diff > 0 then
+          card.ability.extra.money_seen = card.ability.extra.money_seen + money_diff
+          card.ability.extra.previous_money = G.GAME.dollars
+        end
+        if card.ability.extra.money_seen >= self.config.evo_rqmt and not card.ability.extra.juiced then
+          card.ability.extra.juiced = true
+          local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
       end
     end
   end

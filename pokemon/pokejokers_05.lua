@@ -729,11 +729,12 @@ local porygon={
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
-  config = {extra = {rank = "3", money = 1, money2 = 2, third_goal = 5, third_times = 0}},
-  loc_vars = function(self, info_queue, center)
-     type_tooltip(self, info_queue, center)
-     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, center.ability.extra.money2, center.ability.extra.third_times, center.ability.extra.third_goal}}
+  config = {extra = {rank = "3", money = 1, money2 = 2, third_goal = 5, third_times = 0}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, card)
+     type_tooltip(self, info_queue, card)
+     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
+     local third_left = math.max(0, self.config.evo_rqmt - card.ability.extra.third_times)
+     return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.money, card.ability.extra.money2, third_left}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -780,7 +781,7 @@ local omanyte={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, card.ability.extra.third_goal)
+    return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
 }
@@ -853,12 +854,12 @@ local omastar={
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 20, chips2 = 2, chips3 = 60, third_goal = 5, third_times = 0}},
-  loc_vars = function(self, info_queue, center)
-   type_tooltip(self, info_queue, center)
-   info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3,
-                            center.ability.extra.third_times, center.ability.extra.third_goal}}
+  config = {extra = {rank = "2", chips1 = 20, chips2 = 2, chips3 = 60, third_times = 0}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, card)
+   type_tooltip(self, info_queue, card)
+   info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
+   local third_left = math.max(0, self.config.evo_rqmt - card.ability.extra.third_times)
+   return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.chips1, card.ability.extra.chips2, card.ability.extra.chips3, third_left}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -907,7 +908,7 @@ local kabuto={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, card.ability.extra.third_goal)
+    return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
 }
@@ -1264,7 +1265,7 @@ local moltres={
 local dratini={
   name = "dratini", 
   pos = {x = 7, y = 11},
-  config = {extra = {mult = 0, mult_mod = 1, size = 3}},
+  config = {extra = {mult = 0, mult_mod = 1, size = 3}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
@@ -1289,13 +1290,13 @@ local dratini={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, 10)
+    return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
-  config = {extra = {mult = 0, mult_mod = 1, size = 2}},
+  config = {extra = {mult = 0, mult_mod = 1, size = 2}, evo_rqmt = 30},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
@@ -1320,7 +1321,7 @@ local dragonair={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, 30)
+    return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
 local dragonite={
