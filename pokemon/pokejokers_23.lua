@@ -7,7 +7,7 @@
 -- Litleo 667
 local litleo={
   name = "litleo",
-  pos = {x = 0, y = 0},
+  pos = {x = 3, y = 1},
   config = {extra = {chips = 70,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -37,7 +37,7 @@ local litleo={
 -- Pyroar 668
 local pyroar={
   name = "pyroar",
-  pos = {x = 0, y = 0},
+  pos = {x = 4, y = 1},
   config = {extra = {chips = 90}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
