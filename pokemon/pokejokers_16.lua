@@ -9,7 +9,7 @@
 local mantyke={
   name = "mantyke",
   pos = {x = 1, y = 5},
-  config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2, chip_total = 0,}},
+  config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
@@ -28,14 +28,6 @@ local mantyke={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         faint_baby_poke(self, card, context)
-        local chip_temp_total = card.ability.extra.chip_total
-        card.ability.extra.chip_total = 0
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus,
-          chip_mod = chip_temp_total
-        }
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
@@ -47,10 +39,8 @@ local mantyke={
             card = card,
           }
         else
-          card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
+            h_chips = card.ability.extra.chips,
             card = card,
           }
         end

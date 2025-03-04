@@ -1309,7 +1309,7 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 35, chip_total = 0, rounds = 4}},
+  config = {extra = {chips = 35, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -1324,29 +1324,17 @@ local nidoranf={
     if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 12 then
       if not context.end_of_round and not context.before and not context.after then
         if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
+          return {
+            message = localize("k_debuffed"),
+            colour = G.C.RED,
+            card = card,
+          }
         else
-            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
-            return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
-              card = card,
-            }
+          return {
+            h_chips = card.ability.extra.chips,
+            card = card,
+          }
         end
-      end
-    end
-    if context.joker_main then
-      local chip_temp_total = card.ability.extra.chip_total
-      card.ability.extra.chip_total = 0
-      if chip_temp_total > 0 then
-        return {
-          message = localize('poke_nido_ex'),
-          chip_mod = chip_temp_total
-        }
       end
     end
     return level_evo(self, card, context, "j_poke_nidorina")
@@ -1355,7 +1343,7 @@ local nidoranf={
 local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},
-  config = {extra = {chips = 70, chip_total = 0}},
+  config = {extra = {chips = 70}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
@@ -1378,23 +1366,11 @@ local nidorina={
             card = card,
           }
         else
-            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
             return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
+              h_chips = card.ability.extra.chips,
               card = card,
             }
         end
-      end
-    end
-    if context.joker_main then
-      local chip_temp_total = card.ability.extra.chip_total
-      card.ability.extra.chip_total = 0
-      if chip_temp_total > 0 then
-        return {
-          message = localize('poke_nido_ex'),
-          chip_mod = chip_temp_total
-        }
       end
     end
     return item_evo(self, card, context, "j_poke_nidoqueen")

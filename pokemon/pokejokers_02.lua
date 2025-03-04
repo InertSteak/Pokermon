@@ -2,7 +2,7 @@
 local nidoqueen={
   name = "nidoqueen", 
   pos = {x = 4, y = 2}, 
-  config = {extra = {chips = 85, chip_total = 0, h_size = 1}},
+  config = {extra = {chips = 85, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
@@ -20,26 +20,14 @@ local nidoqueen={
           return {
             message = localize("k_debuffed"),
             colour = G.C.RED,
-            card = card,
+            card = context.other_card,
           }
         else
-            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
-            return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
-              card = card,
-            }
+          return {
+            h_chips = card.ability.extra.chips,
+            card = card,
+          }
         end
-      end
-    end
-    if context.joker_main then
-      local chip_temp_total = card.ability.extra.chip_total
-      card.ability.extra.chip_total = 0
-      if chip_temp_total > 0 then
-        return {
-          message = localize('poke_nido_ex'),
-          chip_mod = chip_temp_total
-        }
       end
     end
   end,
