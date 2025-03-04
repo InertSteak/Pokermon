@@ -62,11 +62,11 @@ local dreepy={
 local drakloak={
   name = "drakloak",
   pos = {x = 2, y = 11},
-  config = {extra = {money = 1, total_sell_value = 0, sell_value_goal = 40, Xmult = .01}},
+  config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
-    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, center.ability.extra.sell_value_goal, center.ability.extra.Xmult, 
+    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
@@ -98,7 +98,7 @@ local drakloak={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, card.ability.extra.sell_value_goal)
+    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then

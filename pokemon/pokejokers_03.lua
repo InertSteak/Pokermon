@@ -662,7 +662,7 @@ local golem={
 local ponyta={
   name = "ponyta", 
   pos = {x = 11, y = 5},
-  config = {extra = {chips = 0, chip_mod = 10}},
+  config = {extra = {chips = 0, chip_mod = 10}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -692,7 +692,7 @@ local ponyta={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, 60)
+    return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
 local rapidash={
@@ -734,10 +734,11 @@ local rapidash={
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, last_goal = 4, last_counter = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.last_counter, center.ability.extra.last_goal}}
+  config = {extra = {Xmult = 2, last_counter = 0}, evo_rqmt = 4},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.last_counter)
+    return {vars = {card.ability.extra.Xmult, triggers_left}}
   end,
   rarity = 2, 
   cost = 6,
@@ -761,7 +762,7 @@ local slowpoke={
     end
     local evo = item_evo(self, card, context, "j_poke_slowking")
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, card.ability.extra.last_goal)
+      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
     end
     return evo
   end
@@ -1076,9 +1077,17 @@ local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
   config = {extra = {odds = 3, seal_goal = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.seal_goal}}
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local seal_count = 0
+    if G.playing_cards then
+      for k, v in pairs(G.playing_cards) do
+        if v.seal then
+          seal_count = seal_count + 1
+        end
+      end
+    end
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.seal_goal, seal_count}}
   end,
   rarity = 2, 
   cost = 7, 

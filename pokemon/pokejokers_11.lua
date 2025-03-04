@@ -5,7 +5,7 @@
 local aron = {
   name = "aron",
   pos = { x = 2, y = 5 },
-  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 }, evo_rqmt = 2 },
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -47,14 +47,14 @@ local aron = {
     elseif context.destroying_card then
       return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
     end
-    return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, 2)
+    return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
 }
 -- Lairon 305
 local lairon = {
   name = "lairon",
   pos = { x = 3, y = 5 },
-  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 }, evo_rqmt = 4 },
   rarity = 3,
   cost = 8,
   stage = "One",
@@ -96,7 +96,7 @@ local lairon = {
     elseif context.destroying_card then
       return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
     end
-    return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, 4)
+    return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
 }
 -- Aggron 306

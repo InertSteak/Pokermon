@@ -377,10 +377,10 @@ local wigglytuff={
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
-  config = {extra = {mult_mod = 2, zubat_tally = 0}},
+  config = {extra = {mult_mod = 2, zubat_tally = 0}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.zubat_tally, 12, center.ability.extra.zubat_tally}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.zubat_tally, self.config.evo_rqmt, center.ability.extra.zubat_tally}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -406,16 +406,18 @@ local zubat={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.zubat_tally, 12)
+    return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.zubat_tally, self.config.evo_rqmt)
   end
 }
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 1, chips = 0, chip_mod = 10, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod, center.ability.extra.eaten}}
+  config = {extra = {mult = 0, mult_mod = 1, chips = 0, chip_mod = 10, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local eating_left = math.max(0, self.config.evo_rqmt - card.ability.extra.eaten)
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.Xmult, card.ability.extra.Xmult_mod,
+                    card.ability.extra.money, card.ability.extra.money_mod, eating_left}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -484,7 +486,7 @@ local golbat={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, 20)
+    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
@@ -606,7 +608,7 @@ local vileplume={
 local paras={
   name = "paras", 
   pos = {x = 6, y = 3}, 
-  config = {extra = {mult = 0, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -635,7 +637,7 @@ local paras={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, 8)
+    return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
   end
 }
 local parasect={
@@ -974,10 +976,11 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 5, chips = 7, primes_played = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.primes_played}}
+  config = {extra = {mult = 5, chips = 7, primes_played = 0}, evo_rqmt = 25},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local primes_left = math.max(0, self.config.evo_rqmt - card.ability.extra.primes_played)
+    return {vars = {card.ability.extra.mult, card.ability.extra.chips, primes_left}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -999,7 +1002,7 @@ local primeape={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, 25)
+    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
   end
 }
 local growlithe={

@@ -263,7 +263,8 @@ local drowzee={
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
-    return {vars = {Xmult, card.ability.extra.Xmult_mod, card.ability.extra.planets_used, self.config.evo_rqmt}}
+    local planets_left = math.max(0, self.config.evo_rqmt - card.ability.extra.planets_used)
+    return {vars = {Xmult, card.ability.extra.Xmult_mod, planets_left}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -555,13 +556,13 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 6, consumables_used = 0, consumable_goal = 28}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 6, consumables_used = 0}, evo_rqmt = 28},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub')),
-                    center.ability.extra.consumables_used, center.ability.extra.consumable_goal}}
+    local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * (G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub'), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -594,7 +595,7 @@ local cubone={
     if context.using_consumeable then
       card.ability.extra.consumables_used = card.ability.extra.consumables_used + 1
     end
-    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, card.ability.extra.consumable_goal)
+    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
 }
 local marowak={
@@ -702,10 +703,11 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.jacks_played}}
+  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local jacks_left = math.max(0, self.config.evo_rqmt - card.ability.extra.jacks_played)
+    return {vars = {card.ability.extra.Xmult_multi, jacks_left}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -736,7 +738,7 @@ local lickitung={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, 20)
+    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
   end
 }
 local koffing={
@@ -884,7 +886,15 @@ local chansey={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
-		return {vars = {center.ability.extra.limit, center.ability.extra.triggers}}
+    local deck_data = ''
+    if G.playing_cards then
+      local enhance_count = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.ability.name == "Lucky Card" then enhance_count = enhance_count  + 1 end
+      end
+      deck_data = '['..tostring(enhance_count)..'/'..tostring(#G.playing_cards)..'] '
+    end
+		return {vars = {center.ability.extra.limit, center.ability.extra.triggers, deck_data}}
   end,
   rarity = 3, 
   cost = 8,
@@ -928,12 +938,13 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0, wilds_goal = 15}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,
-                    center.ability.extra.wilds_scored, center.ability.extra.wilds_goal}}
+    local wild_left = math.max(0, self.config.evo_rqmt - card.ability.extra.wilds_scored)
+    return {vars = {card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.money_mod,
+                    ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, wild_left}}
   end,
   rarity = 2, 
   cost = 6,
@@ -982,7 +993,7 @@ local tangela={
           end
         end
     end
-    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, card.ability.extra.wilds_goal)
+    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
 }
 local kangaskhan={
@@ -1069,7 +1080,7 @@ local mega_kangaskhan={
 local horsea={
   name = "horsea", 
   pos = {x = 11, y = 8},
-  config = {extra = {mult = 0, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -1106,7 +1117,7 @@ local horsea={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, 12)
+    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
 local seadra={

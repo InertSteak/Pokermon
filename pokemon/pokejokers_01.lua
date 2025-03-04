@@ -1,10 +1,11 @@
 local bulbasaur={ 
   name = "bulbasaur",
   pos = {x = 0, y = 0},
-  config = {extra = {money_mod = 1, earned = 0, h_size = 1}},
+  config = {extra = {money_mod = 1, earned = 0, h_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
+    local money_left = math.max(0, self.config.evo_rqmt - center.ability.extra.earned)
+		return {vars = {center.ability.extra.money_mod, money_left, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'),
                     center.ability.extra.h_size}}
   end,
   rarity = 2, 
@@ -37,7 +38,7 @@ local bulbasaur={
           end
         end
     end
-    return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, 16)
+    return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -50,10 +51,11 @@ local bulbasaur={
 local ivysaur={
   name = "ivysaur", 
   pos = {x = 1, y = 0}, 
-  config = {extra = {money_mod = 1, earned = 0, h_size = 1}},
+  config = {extra = {money_mod = 1, earned = 0, h_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money_mod + 1}}
+    local money_left = math.max(0, self.config.evo_rqmt - center.ability.extra.earned)
+		return {vars = {center.ability.extra.money_mod, money_left, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks'), center.ability.extra.money_mod + 1}}
   end,
   rarity = "poke_safari", 
   cost = 9, 
@@ -91,7 +93,7 @@ local ivysaur={
           end
         end
     end
-    return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, 16)
+    return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -188,7 +190,7 @@ local mega_venusaur = {
 local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
-  config = {extra = {mult = 0, mult_mod = 1, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 0, mult_mod = 1, d_remaining = 0, d_size = 1}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -218,7 +220,7 @@ local charmander={
           }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, 16)
+    return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -233,7 +235,7 @@ local charmander={
 local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
-  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}},
+  config = {extra = {mult = 0, mult_mod = 2, d_remaining = 0, d_size = 1}, evo_rqmt = 36},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.d_remaining, center.ability.extra.d_size}}
@@ -263,7 +265,7 @@ local charmeleon={
           }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, 36)
+    return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -389,7 +391,7 @@ local mega_charizard_y = {
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 2, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 2, hands = 1}, evo_rqmt = 32},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -413,7 +415,7 @@ local squirtle={
     end
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-      local evolved = scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, 32)
+      local evolved = scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
       if evolved then
         return evolved
       else
@@ -438,7 +440,7 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 4, hands = 1}},
+  config = {extra = {chips = 0, chip_mod = 4, hands = 1}, evo_rqmt = 72},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -461,7 +463,7 @@ local wartortle={
     end
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-      local evolved = scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, 72)
+      local evolved = scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
       if evolved then
         return evolved
       else
