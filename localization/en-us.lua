@@ -1905,6 +1905,21 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
                 }  
             },
+            j_poke_hoothoot = {
+                name = 'Hoothoot',
+                text = {
+                    "{C:purple}Scry #1#",
+                    "{C:chips}+#2#{} Chips",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_noctowl = {
+                name = 'Noctowl',
+                text = {
+                    "{C:purple}Scry #1#",
+                    "{C:chips}+#2#{} Chips",
+                }
+            },
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {
