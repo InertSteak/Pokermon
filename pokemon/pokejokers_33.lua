@@ -103,6 +103,65 @@ local annihilape={
 -- Clodsire 980
 -- Farigiraf 981
 -- Dudunsparce 982
+local dudunsparce={
+  name = "dudunsparce",
+  pos = {x = 5, y = 6},
+  config = {extra = {card_slots = 1, pack_slots = 1, voucher_slots = 1, form = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local alt_key = nil
+    if center.ability.extra.form == 1 then
+      alt_key = "j_poke_dudunsparce2"
+      info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Coupon Tag"}}
+    end
+    return {vars = {center.ability.extra.card_slots, center.ability.extra.pack_slots, center.ability.extra.voucher_slots}, key = alt_key}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      if pseudorandom('dudunsparce') < (1/6) then
+        card.ability.extra.form = 1
+        self:set_sprites(card)
+      end
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.form == 1 then
+      card.children.center:set_sprite_pos({x = 6, y = 6})
+    else
+      card.children.center:set_sprite_pos({x = 5, y = 6})
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    change_shop_size(card.ability.extra.card_slots)
+    SMODS.change_booster_limit(card.ability.extra.pack_slots)
+    SMODS.change_voucher_limit(card.ability.extra.voucher_slots)
+    if card.ability.extra.form == 1 then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            add_tag(Tag('tag_coupon'))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_wowthree')})
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    change_shop_size(-card.ability.extra.card_slots)
+    SMODS.change_booster_limit(-card.ability.extra.card_slots)
+    SMODS.change_voucher_limit(-card.ability.extra.card_slots)
+  end,
+}
 -- Kingambit 983
 -- Great Tusk 984
 -- Scream Tail 985
@@ -112,5 +171,5 @@ local annihilape={
 -- Sandy Shocks 989
 -- Iron Treads 990
 return {name = "Pokemon Jokers 961-990", 
-        list = {wugtrio, annihilape},
+        list = {wugtrio, annihilape, dudunsparce},
 }

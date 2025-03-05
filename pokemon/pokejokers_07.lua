@@ -477,6 +477,35 @@ local slowking={
 -- Pineco 204
 -- Forretress 205
 -- Dunsparce 206
+local dunsparce={
+  name = "dunsparce",
+  pos = {x = 4, y = 5},
+  config = {extra = {rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds, }}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.reroll_shop then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
+    end
+    return level_evo(self, card, context, "j_poke_dudunsparce")
+  end
+}
 -- Gligar 207
 -- Steelix 208
 local steelix={
@@ -519,5 +548,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, steelix},
+        list = {bellossom, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
 }

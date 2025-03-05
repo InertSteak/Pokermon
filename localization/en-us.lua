@@ -2019,6 +2019,14 @@ return {
                     "{C:inactive,s:0.8}(Resets at end of round)",
                 }
             },
+            j_poke_dunsparce = {
+                name = 'Dunsparce',
+                text = {
+                  "{C:inactive}Does nothing...?",
+                  "{S:1.1,C:red,E:2}self destructs{} on {C:green}Reroll{}",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
             j_poke_steelix = {
                 name = 'Steelix',
                 text = {
@@ -2863,6 +2871,23 @@ return {
                     "for each hand played this round",
                     "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult {C:chips}+#4#{C:inactive} Chips)",
                 } 
+            },
+            j_poke_dudunsparce = {
+                name = 'Dudunsparce',
+                text = {
+                  "{C:attention}#+1#{} card slot availible in shop",
+                  "{C:attention}#+1#{} Booster Pack slot availible in shop",
+                  "{C:attention}#+1#{} Voucher slot availible in shop",
+                }
+            },
+            j_poke_dudunsparce2 = {
+                name = 'Dudunsparce',
+                text = {
+                  "{C:attention}Holding Coupon Tag{}",
+                  "{C:attention}#+1#{} card slot availible in shop",
+                  "{C:attention}#+1#{} Booster Pack slot availible in shop",
+                  "{C:attention}#+1#{} Voucher slot availible in shop",
+                }
             },
             j_poke_gimmighoul = {
                 name = "Gimmighoul (Chest)",
@@ -3848,6 +3873,7 @@ return {
             poke_powder_ex = "Powder Snow!",
             poke_future_sight = "Future Sight!",
             poke_smell_ya = "Smell Ya Later!",
+            poke_wowthree = "Wow! Three!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
