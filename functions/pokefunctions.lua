@@ -1013,7 +1013,7 @@ faint_baby_poke = function(self, card, context)
         G.E_MANAGER:add_event(Event({
           func = function()
             card.ability.fainted = G.GAME.round
-            card.set_debuff()
+            card:set_debuff()
             return true
           end
         })) 
