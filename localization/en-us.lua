@@ -2875,18 +2875,18 @@ return {
             j_poke_dudunsparce = {
                 name = 'Dudunsparce',
                 text = {
-                  "{C:attention}#+1#{} card slot availible in shop",
-                  "{C:attention}#+1#{} Booster Pack slot availible in shop",
-                  "{C:attention}#+1#{} Voucher slot availible in shop",
+                  "{C:attention}+#1#{} card slot available in shop",
+                  "{C:attention}+#1#{} Booster Pack slot available in shop",
+                  "{C:attention}+#1#{} Voucher slot available in shop",
                 }
             },
             j_poke_dudunsparce2 = {
                 name = 'Dudunsparce',
                 text = {
                   "{C:attention}Holding Coupon Tag{}",
-                  "{C:attention}#+1#{} card slot availible in shop",
-                  "{C:attention}#+1#{} Booster Pack slot availible in shop",
-                  "{C:attention}#+1#{} Voucher slot availible in shop",
+                  "{C:attention}+#1#{} card slot available in shop",
+                  "{C:attention}+#1#{} Booster Pack slot available in shop",
+                  "{C:attention}+#1#{} Voucher slot available in shop",
                 }
             },
             j_poke_gimmighoul = {
