@@ -1012,8 +1012,9 @@ faint_baby_poke = function(self, card, context)
       if not alive then
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
-              return true
+            card.ability.fainted = G.GAME.round
+            card.set_debuff()
+            return true
           end
         })) 
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_faint_ex'), colour = G.C.MULT})
