@@ -253,6 +253,8 @@ local rival = {
   end,
   set_sprites = function(self, card, front)
     if card.ability and card.ability.extra and card.ability.extra.form > 1 then
+      card.children.center:set_sprite_pos({x = 5, y = 1})
+    else if card.ability and card.ability.extra and card.ability.extra.form = 1 then
       card.children.center:set_sprite_pos({x = 4, y = 1})
     else
       card.children.center:set_sprite_pos({x = 3, y = 1})
