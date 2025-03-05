@@ -426,7 +426,8 @@ local voltorb={
       if context.joker_main and volatile_active(self, card, 'right') then
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
               return true
           end
         })) 
@@ -462,8 +463,9 @@ local electrode={
         ease_poke_dollars(card, "electrode", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
-              return true
+            card.ability.fainted = G.GAME.round
+            card:set_debuff()
+            return true
           end
         })) 
         
