@@ -77,6 +77,7 @@ family = {
     {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
@@ -306,6 +307,7 @@ evolve = function(self, card, context, forced_key)
         local edition = {poke_shiny = true}
          new_card:set_edition(edition, true)
          new_card.config.shiny_on_add = true
+         SMODS.change_booster_limit(-1)
       else
         new_card:set_edition(previous_edition, true)
       end
