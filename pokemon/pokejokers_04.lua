@@ -876,7 +876,7 @@ local chansey={
       for k, v in pairs(G.playing_cards) do
         if v.ability.name == "Lucky Card" then enhance_count = enhance_count  + 1 end
       end
-      deck_data = '['..tostring(enhance_count)..'/'..tostring(#G.playing_cards)..'] '
+      deck_data = '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] '
     end
 		return {vars = {center.ability.extra.limit, center.ability.extra.triggers, deck_data}}
   end,
