@@ -1028,7 +1028,7 @@ local arcanine={
   config = {extra = {Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_lovers
+    info_queue[#info_queue+1] = G.P_CENTERS.m_mult
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
