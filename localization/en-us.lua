@@ -1005,16 +1005,16 @@ return {
             j_poke_abra = {
                 name = "Abra",
                 text = {
-                    "{C:green}#1# in #2#{} chance to create a {C:attention}Fool{}",
-                    "card if played {C:attention}poker hand{} has",
-                    "already been played this round",
+                    "{C:green}#1# in #2#{} chance to create an {C:item}Item",
+                    "or {C:tarot}Tarot{} card if played {C:attention}poker hand{}",
+                    "has already been played this round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 } 
             },
             j_poke_kadabra = {
                 name = "Kadabra",
                 text = {
-                    "{C:green}#1# in #2#{} chance to create a {C:attention}Fool{} or",
+                    "{C:green}#1# in #2#{} chance to create a {C:tarot}Tarot{} or",
                     "{C:item}Twisted Spoon{} card if played {C:attention}poker hand{}",
                     "has already been played this round",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
@@ -1770,11 +1770,12 @@ return {
                 name = 'Aerodactyl',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{X:attention,C:white}1+{} : {C:mult}+#2#{} Mult",
-                    "{X:attention,C:white}2+{} : {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
-                    "{X:attention,C:white}3+{} : {X:red,C:white}X#5#{} Mult",
-                    "{X:attention,C:white}4+{} : {}This Joker scores {C:attention}double{}",
-                    "its scoring values",
+                    "{X:attention,C:white}1+{} : {X:red,C:white}X#2#{} Mult",
+                    "{X:attention,C:white}2+{} : Gains {X:red,C:white}X#3#{} Mult",
+                    "{X:attention,C:white}3+{} : The first scoring unenhanced {C:attention}#1#{}",
+                    "becomes a {C:attention}Glass{} card",
+                    "{X:attention,C:white}4+{} : {C:attention}Double{} this Joker's {X:red,C:white}X{} Mult",
+                    "{C:inactive}(Resets at end of round){}",
                 } 
             },
             j_poke_mega_aerodactyl = {

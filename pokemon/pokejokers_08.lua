@@ -542,13 +542,13 @@ local elekid ={
 local magby={
   name = "magby",
   pos = {x = 8, y = 8},
-  config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.75, d_size = 2, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.d_size, center.ability.extra.rounds, }}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 4,
   stage = "Baby",
   ptype = "Fire",

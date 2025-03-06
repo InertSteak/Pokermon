@@ -101,13 +101,12 @@ local poliwrath={
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
-  config = {extra = {odds = 5, rounds = 5}},
+  config = {extra = {odds = 2, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 6, 
   stage = "Basic", 
   ptype = "Psychic",
@@ -118,10 +117,22 @@ local abra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local set = nil
+            local message = nil
+            local colour = nil
+            if pseudorandom('abraitem') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.pink
+            else
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
+            end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
           end
         end
       end
@@ -132,10 +143,9 @@ local abra={
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
-  config = {extra = {odds = 4}},
+  config = {extra = {odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -152,15 +162,24 @@ local kadabra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = nil
-            if pseudorandom(pseudoseed('spoon')) > .50 then
-              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            local set = nil
+            local message = nil
+            local colour = nil
+            local conname = nil
+            if pseudorandom('kadabraitem') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.pink
+              conname = "c_poke_twisted_spoon"
             else
-              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
             end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, conname)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
           end
         end
       end
@@ -171,7 +190,7 @@ local kadabra={
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
-  config = {extra = {odds = 3, card_limit = 1}},
+  config = {extra = {odds = 2, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
@@ -189,17 +208,25 @@ local alakazam={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = nil
-            if pseudorandom(pseudoseed('spoon')) > .50 then
-              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            local set = nil
+            local message = nil
+            local colour = nil
+            local conname = nil
+            if pseudorandom('alakazam') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.pink
+              conname = "c_poke_twisted_spoon"
             else
-              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
+              conname = "c_fool"
             end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, conname)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-          end
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
         end
       end
     end

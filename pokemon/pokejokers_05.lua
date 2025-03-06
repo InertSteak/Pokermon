@@ -794,7 +794,7 @@ local omastar={
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, center.ability.extra.money2}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Water",
@@ -921,7 +921,7 @@ local kabutops={
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips1, center.ability.extra.chips2, center.ability.extra.chips3, center.ability.extra.retriggers}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One",
   ptype = "Earth",
@@ -983,12 +983,13 @@ local kabutops={
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", mult = 4, mult2 = 6, chips = 50, Xmult = 1.5}},
+  config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult_original = 2}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.chips, center.ability.extra.Xmult}}
+     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = 3, 
   cost = 6, 
@@ -997,6 +998,38 @@ local aerodactyl={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      card.ability.extra.Xmult_original = card.ability.extra.Xmult
+    end
+    if context.before then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
+        local fourth_level = nil
+        local mult = 0
+        local ret_values = {}
+        local aces = 0
+        for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
+        end
+        first_level = aces > 0
+        second_level = aces > 1
+        third_level = aces > 2
+        fourth_level = aces > 3
+        
+        if third_level and not context.blueprint then
+          local target = nil
+          for k, v in pairs(context.scoring_hand) do
+            if v:get_id() == 14 and v.config.center == G.P_CENTERS.c_base then
+              target = v
+              break
+            end
+          end
+          if target then
+            poke_convert_cards_to(target, {mod_conv = 'm_glass'}, true, true)
+          end
+        end
+    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local first_level = nil
@@ -1013,37 +1046,30 @@ local aerodactyl={
         second_level = aces > 1
         third_level = aces > 2
         fourth_level = aces > 3
+                
+        if second_level and not context.blueprint then
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        end
+        
+        if fourth_level and not context.blueprint then
+          card.ability.extra.Xmult = card.ability.extra.Xmult * 2
+        end
         
         if first_level then
-          mult = mult + card.ability.extra.mult
-          ret_values.mult_mod = mult
-          ret_values.message = localize{type = 'variable', key = 'a_mult', vars = {mult}}
-          ret_values.colour = G.C.MULT
-        end
-        
-        if second_level then
-          mult = mult + card.ability.extra.mult2
-          ret_values.mult_mod = mult
-          ret_values.chip_mod = card.ability.extra.chips
-          ret_values.message = "Wing Attack!"
-        end
-        
-        if third_level then
-          ret_values.Xmult_mod = card.ability.extra.Xmult
-          ret_values.colour = G.C.XMULT
-        end
-        
-        if fourth_level then
-          ret_values.mult_mod = ret_values.mult_mod * 2
-          ret_values.chip_mod = ret_values.chip_mod * 2
-          ret_values.Xmult_mod = ret_values.Xmult_mod * 2
-        end
-        
-        if ret_values.mult_mod then
-          ret_values['card'] = card
-          return ret_values
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
         end
       end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult_original
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
     end
   end,
   generate_ui = fossil_generate_ui,
@@ -1053,7 +1079,7 @@ local mega_aerodactyl={
   name = "mega_aerodactyl", 
   pos = {x = 9, y = 1},
   soul_pos = { x = 10, y = 1 },
-  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 2}},
+  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 4}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, 
