@@ -146,7 +146,7 @@ local hoothoot={
 		return {vars = {card.ability.extra.scry, card.ability.extra.rounds}}
   end,
   rarity = 1,
-  cost = 5,
+  cost = 4,
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex2",
@@ -183,7 +183,7 @@ local noctowl={
 		return {vars = {card.ability.extra.scry}}
   end,
   rarity = 2,
-  cost = 8,
+  cost = 7,
   stage = "One",
   ptype = "Colorless",
   atlas = "Pokedex2",
