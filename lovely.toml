@@ -306,7 +306,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = 'functions/misc_functions.lua'
-pattern = "elseif part.control.X then"
+pattern = "elseif part.control.X or part.control.B then"
 position = "before"
 payload = '''
 elseif part.control.br then
