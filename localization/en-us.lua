@@ -1908,7 +1908,7 @@ return {
             j_poke_hoothoot = {
                 name = 'Hoothoot',
                 text = {
-                    "{C:purple}Foresight #1#",
+                    "{C:purple}+#1# Foresight ",
                     "{C:attention}Foreseen{} cards score their chips",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
@@ -1916,7 +1916,7 @@ return {
             j_poke_noctowl = {
                 name = 'Noctowl',
                 text = {
-                    "{C:purple}Foresight #1#",
+                    "{C:purple}+#1# Foresight",
                     "{C:attention}Foreseen{} cards score their chips",
                 }
             },
