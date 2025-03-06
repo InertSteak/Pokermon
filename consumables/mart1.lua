@@ -547,7 +547,7 @@ local megastone = {
   cost = 4,
   hidden = true,
   soul_set = "Item",
-  soul_rate = .01,
+  soul_rate = .005,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -759,7 +759,12 @@ local emergy = {
   end,
   in_pool = function(self)
     --another Cryptid Function, This checks for M jokers   -Jevonn
-		local mcheck = get_m_jokers()
+    local mcheck = 0
+    if get_m_jokers then
+      mcheck = get_m_jokers()
+    elseif Cryptid and Cryptid.get_m_jokers then
+      mcheck = Cryptid.get_m_jokers()
+    end
 		if (mcheck + #find_joker('Jolly Joker')) > 0 then
 			return true
 		end
