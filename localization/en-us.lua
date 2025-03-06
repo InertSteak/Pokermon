@@ -1909,7 +1909,8 @@ return {
                 name = 'Hoothoot',
                 text = {
                     "{C:purple}+#1# Foresight ",
-                    "{C:attention}Foreseen{} cards score their chips",
+                    "Each {C:attention}Foreseen{} card",
+                    "gives their total chips",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -1917,7 +1918,8 @@ return {
                 name = 'Noctowl',
                 text = {
                     "{C:purple}+#1# Foresight",
-                    "{C:attention}Foreseen{} cards score their chips",
+                    "Each {C:attention}Foreseen{} card",
+                    "gives their total chips",
                 }
             },
             j_poke_crobat = {
