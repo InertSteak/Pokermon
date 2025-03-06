@@ -139,25 +139,27 @@ local furret={
 local hoothoot={
   name = "hoothoot",
   pos = {x = 1, y = 1},
-  config = {extra = {scry = 3, chips = 30, rounds = 4}},
+  config = {extra = {scry = 3, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
-		return {vars = {card.ability.extra.scry, card.ability.extra.chips, card.ability.extra.rounds}}
+		return {vars = {card.ability.extra.scry, card.ability.extra.rounds}}
   end,
-  rarity = 2,
+  rarity = 1,
   cost = 5,
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view then
+        local chips = context.other_card:get_chip_bonus()
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          chip_mod = chips,
+          card = context.other_card,
         }
       end
     end
@@ -174,25 +176,27 @@ local hoothoot={
 local noctowl={
   name = "noctowl",
   pos = {x = 2, y = 1},
-  config = {extra = {scry = 5, chips = 50}},
+  config = {extra = {scry = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
-		return {vars = {card.ability.extra.scry, card.ability.extra.chips}}
+		return {vars = {card.ability.extra.scry}}
   end,
-  rarity = 3,
+  rarity = 2,
   cost = 8,
   stage = "One",
   ptype = "Colorless",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view then
+        local chips = context.other_card:get_chip_bonus()
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          chip_mod = chips,
+          card = context.other_card,
         }
       end
     end

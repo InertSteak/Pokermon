@@ -418,3 +418,27 @@ payload = '''
 '''
 match_indent = true
 
+# Scry Functionality 5
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
+position = "after"
+payload = "t[#t+1] = G.scry_view"
+match_indent = true
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local config = {}"
+position = "before"
+payload = '''
+if card.area == G.scry_view then
+    y_off = -0.05*G.CARD_H
+    card_aligned = 'tm'
+end
+'''
+match_indent = true
+
+
