@@ -136,7 +136,78 @@ local furret={
   end,
 }
 -- Hoothoot 163
+local hoothoot={
+  name = "hoothoot",
+  pos = {x = 1, y = 1},
+  config = {extra = {scry = 3, rounds = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+		return {vars = {card.ability.extra.scry, card.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view then
+        local chips = context.other_card:get_chip_bonus()
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+          colour = G.C.CHIPS,
+          chip_mod = chips,
+          card = context.other_card,
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_noctowl")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Noctowl 164
+local noctowl={
+  name = "noctowl",
+  pos = {x = 2, y = 1},
+  config = {extra = {scry = 5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+		return {vars = {card.ability.extra.scry}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view then
+        local chips = context.other_card:get_chip_bonus()
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+          colour = G.C.CHIPS,
+          chip_mod = chips,
+          card = context.other_card,
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Ledyba 165
 -- Ledian 166
 -- Spinarak 167
@@ -355,5 +426,5 @@ local igglybuff={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, crobat, pichu, cleffa, igglybuff},
+        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff},
 }

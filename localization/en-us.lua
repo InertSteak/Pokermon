@@ -1905,6 +1905,23 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
                 }  
             },
+            j_poke_hoothoot = {
+                name = 'Hoothoot',
+                text = {
+                    "{C:purple}+#1# Foresight ",
+                    "Each {C:attention}Foreseen{} card",
+                    "gives their total chips",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_noctowl = {
+                name = 'Noctowl',
+                text = {
+                    "{C:purple}+#1# Foresight",
+                    "Each {C:attention}Foreseen{} card",
+                    "gives their total chips",
+                }
+            },
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {
@@ -3393,6 +3410,13 @@ return {
                     "Desired {C:attention}#1#{} are",
                     "set at random upon",
                     "Joker creation"
+                }
+            },
+            scry_cards = {
+                name = "Foresight",
+                text = {
+                    "View top cards",
+                    "of your deck"
                 }
             },
             mega_rule = {
