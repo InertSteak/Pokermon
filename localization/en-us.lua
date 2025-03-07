@@ -2362,18 +2362,20 @@ return {
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
-                    "If played hand contains at least",
-                    "one scoring {C:attention}Ace{}, gain {C:chips}+#2#{} Chips",
-                    "{C:attention}Double{} gains if hand is a {C:attention}Four of a Kind{}",
+                    "Gains {C:chips}+#2#{} Chips if played hand",
+                    "is a {C:attention}Four of a Kind{}",
+                    "Gains {C:chips}+#2#{} Chips if played hand",
+                    "contains a scoring {C:attention}Ace",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +64 Chips)",
                 } 
             },
             j_poke_metang = {
                 name = 'Metang',
                 text = {
-                    "If played hand contains at least",
-                    "two scoring {C:attention}Aces{}, gain {C:chips}+#2#{} Chips",
-                    "{C:attention}Quadruple{} gains if hand is a {C:attention}Four of a Kind{}",
+                    "Gains {C:chips}+#2#{} Chips if played hand",
+                    "is a {C:attention}Four of a Kind{}",
+                    "Gains {C:chips}+#2#{} Chips if played hand",
+                    "contains {C:attention}2+{} scoring {C:attention}Aces",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +256 Chips)",
                 } 
             },

@@ -492,7 +492,7 @@ local dunsparce={
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.reroll_shop then
       G.E_MANAGER:add_event(Event({
