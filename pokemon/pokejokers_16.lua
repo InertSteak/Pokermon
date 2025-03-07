@@ -328,6 +328,50 @@ local magmortar={
   end
 }
 -- Togekiss 468
+local togekiss={
+  name = "togekiss",
+  pos = {x = 11, y = 5},
+  config = {extra = {Xmult1 = 1.5, Xmult2 = 4.5}},
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Fairy",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local xmult = 10 * (card.ability.extra.Xmult1 + pseudorandom('togekiss') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
+        xmult = math.floor(xmult + 0.5) / 10
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = xmult
+        }
+      end
+    end
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+
+    type_tooltip(_c, info_queue, card)
+
+    local r_mults = {}
+    for i = card.ability.extra.Xmult1 * 10, card.ability.extra.Xmult2 * 10 do
+      r_mults[#r_mults+1] = string.format("%.1f", i/10)
+    end
+
+    desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
+      {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
+      {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
+    }}, {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
+  end,
+}
 -- Yanmega 469
 -- Leafeon 470
 local leafeon={
@@ -508,5 +552,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, probopass, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
 }

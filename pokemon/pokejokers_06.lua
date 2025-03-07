@@ -419,12 +419,108 @@ local igglybuff={
   end,
 }
 -- Togepi 175
+local togepi={
+  name = "togepi",
+  pos = {x = 3, y = 2},
+  config = {extra = {Xmult1 = 0.5, Xmult2 = 1.5, rounds = 2,}},
+  rarity = 1,
+  cost = 4,
+  stage = "Baby",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context)
+        local xmult = 10 * (card.ability.extra.Xmult1 + pseudorandom('togepi') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
+        xmult = math.floor(xmult + 0.5) / 10
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = xmult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_togetic")
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    type_tooltip(_c, info_queue, card)
+
+    local r_mults = {}
+    for i = card.ability.extra.Xmult1 * 10, card.ability.extra.Xmult2 * 10 do
+      r_mults[#r_mults+1] = string.format("%.1f", i/10)
+    end
+
+    desc_nodes[#desc_nodes+1] = {{n=G.UIT.T, config={text = 'Baby', colour = G.C.FILTER, scale = 0.32}},{n=G.UIT.T, config={text = ', ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
+      {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
+      {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
+    }},
+    {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
+  end,
+}
 -- Togetic 176
+local togetic={
+  name = "togetic",
+  pos = {x = 4, y = 2},
+  config = {extra = {Xmult1 = 1.5, Xmult2 = 3}},
+  rarity = 1,
+  cost = 6,
+  stage = "One",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  item_req = "shinystone",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local xmult = 10 * (card.ability.extra.Xmult1 + pseudorandom('togetic') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
+        xmult = math.floor(xmult + 0.5) / 10
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = xmult
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_togekiss")
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+
+    type_tooltip(_c, info_queue, card)
+
+    local r_mults = {}
+    for i = card.ability.extra.Xmult1 * 10, card.ability.extra.Xmult2 * 10 do
+      r_mults[#r_mults+1] = string.format("%.1f", i/10)
+    end
+
+    desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
+      {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
+      {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
+    }}, {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {}}
+  end,
+}
 -- Natu 177
 -- Xatu 178
 -- Mareep 179
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff},
+        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff, togepi, togetic},
 }

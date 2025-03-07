@@ -77,6 +77,7 @@ family = {
     {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"hoothoot", "noctowl"},
+    {"togepi", "togetic", "togekiss"},
     {"hoppip", "skiploom", "jumpluff"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
