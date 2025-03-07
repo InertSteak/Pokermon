@@ -206,6 +206,7 @@ evolve = function(self, card, context, forced_key)
     local poketype_list = nil
     local previous_edition = nil
     local previous_perishable = nil
+    local previous_perish_tally = nil
     local previous_eternal = nil
     local previous_rental = nil
     local previous_energy_count = nil
@@ -220,6 +221,8 @@ evolve = function(self, card, context, forced_key)
     local previous_id = nil
     local previous_cards_scored = nil
     local previous_upgrade = nil
+    local previous_mega = nil
+    local previous_debuff = nil
     
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
@@ -237,6 +240,7 @@ evolve = function(self, card, context, forced_key)
     
     if card.ability.perishable then
       previous_perishable = card.ability.perishable
+      previous_perish_tally = card.ability.perish_tally
     end
       
     if card.ability.eternal then
@@ -285,6 +289,14 @@ evolve = function(self, card, context, forced_key)
       previous_upgrade = card.ability.extra.upgrade
     end
     
+    if card.config.center.rarity == "poke_mega" then
+      previous_mega = true
+    end
+    
+    if card.debuff then
+      previous_debuff = true
+    end
+    
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
       remove(self, card, context)
     return true end }))
@@ -316,7 +328,12 @@ evolve = function(self, card, context, forced_key)
     
     if previous_perishable then
        new_card.ability.perishable = previous_perishable
-       new_card.ability.perish_tally = G.GAME.perishable_rounds
+       if previous_mega or card.ability.extra.devolved or card.ability.perish_tally <= 0 then
+        new_card.ability.extra.devolved = true
+        new_card.ability.perish_tally = previous_perish_tally
+       else
+         new_card.ability.perish_tally = G.GAME.perishable_rounds
+       end
     end
 
     if previous_eternal then
@@ -372,6 +389,10 @@ evolve = function(self, card, context, forced_key)
       end
       new_card.ability.extra.cards_scored = previous_cards_scored
       new_card.ability.extra.upgrade = previous_upgrade
+    end
+    
+    if previous_debuff then
+      new_card.debuff = true
     end
     
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
