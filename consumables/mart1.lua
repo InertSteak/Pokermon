@@ -558,11 +558,13 @@ local megastone = {
     if #G.jokers.cards == 0 then return false end
     if G.GAME.round <= card.ability.extra.previous_round then return false end
     local target = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") 
+       and not G.jokers.highlighted[1].ability.perishable then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not poke.ability.perishable then
+          sendDebugMessage(inspect(poke.ability))
           target = poke
           break
         end

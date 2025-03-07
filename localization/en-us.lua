@@ -3070,8 +3070,8 @@ return {
                 name = "Mega Stone",
                 text = {
                     "{C:attention}Reusable{}",
-                    "{C:attention}Mega Evolves{} a Pokemon", 
-                    "or {C:attention}devolves{} a Mega",
+                    "{C:attention}Mega Evolves{} a non-{C:attention}Perishable{}", 
+                    "Pokemon or {C:attention}devolves{} a Mega",
                     "{C:attention}Devolves{} Mega if sold",
                     "{C:inactive}(Useable once per round)",
                 },
