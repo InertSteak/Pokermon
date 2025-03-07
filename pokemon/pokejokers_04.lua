@@ -543,7 +543,7 @@ local cubone={
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
-    return {vars = {card.ability.extra.mult, card.ability.extra.mult * (G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub'), consumables_left}}
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * ((G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub')), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
