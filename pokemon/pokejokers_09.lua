@@ -23,15 +23,15 @@ local blissey={
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit then
       G.playing_card = (G.playing_card and G.playing_card + 1) or 1
       local card_to_copy = context.other_card
-      local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-      copy:add_to_deck()
-      G.deck.config.card_limit = G.deck.config.card_limit + 1
-      table.insert(G.playing_cards, copy)
-      G.hand:emplace(copy)
-      copy.states.visible = nil
 
       G.E_MANAGER:add_event(Event({
           func = function()
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.hand:emplace(copy)
+              copy.states.visible = nil
               copy:start_materialize()
               local edition = {polychrome = true}
               copy:set_edition(edition, true)

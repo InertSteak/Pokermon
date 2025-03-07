@@ -313,7 +313,13 @@ end
 
 poke_conversion_event_helper = function(func, delay, immediate)
   if immediate then
-    func()
+    G.E_MANAGER:add_event(Event({
+      trigger = 'immediate',
+      func = function()
+        func()
+        return true
+      end
+    }))
   else
     G.E_MANAGER:add_event(Event({
       trigger = 'after',

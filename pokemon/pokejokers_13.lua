@@ -204,9 +204,6 @@ local metagross={
       local Xmult = (total_chips)^(1/3)
       if Xmult > 0 then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
-          colour = G.C.XMULT,
-          mult = card.ability.extra.mult_mod, 
           x_mult = Xmult,
           card = card
         }
