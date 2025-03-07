@@ -472,8 +472,8 @@ local togepi={
 local togetic={
   name = "togetic",
   pos = {x = 4, y = 2},
-  config = {extra = {Xmult1 = 1.5, Xmult2 = 3}},
-  rarity = 1,
+  config = {extra = {Xmult1 = 1.0, Xmult2 = 2.5}},
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Fairy",

@@ -331,7 +331,7 @@ local magmortar={
 local togekiss={
   name = "togekiss",
   pos = {x = 11, y = 5},
-  config = {extra = {Xmult1 = 1.5, Xmult2 = 4.5}},
+  config = {extra = {Xmult1 = 1.0, Xmult2 = 4.0}},
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
