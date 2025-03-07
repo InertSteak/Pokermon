@@ -1728,7 +1728,7 @@ return {
                 text = {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
-                    "{X:attention,C:white}2+{} : Each played {C:attention}#1#{} earns {C:money}$#2#{} when scored",
+                    "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
                     "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
                     "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)"
@@ -1739,7 +1739,7 @@ return {
                 text = {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
-                    "{X:attention,C:white}2+{} : Each played {C:attention}#1#{} earns {C:money}$#2#{} when scored",
+                    "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
                     "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
                     "{X:attention,C:white}4+{} : Create a {C:attention}tag{} once per round{C:inactive}#3#{}",

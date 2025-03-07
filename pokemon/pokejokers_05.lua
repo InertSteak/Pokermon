@@ -744,22 +744,6 @@ local omanyte={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local threes = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
-        end
-        first_level = threes > 0
-        second_level = threes > 1
-        third_level = threes > 2
-        
-        if second_level then
-          card.ability.extra.earn = true
-        end
-      end
       if context.joker_main then
         local first_level = nil
         local second_level = nil
@@ -780,6 +764,7 @@ local omanyte={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
           end
         end
+        
         if third_level then
           card.ability.extra.third_times = card.ability.extra.third_times + 1
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -789,17 +774,15 @@ local omanyte={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
           end
         end
+        
+        if second_level then
+          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
+          return {
+            dollars = earned, 
+            card = card
+          }
+        end
       end
-      if context.after and card.ability.extra.earn then
-        card.ability.extra.earn = nil
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.earn and context.other_card:get_id() == 3 then
-      local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
-      return {
-        dollars = earned,
-        card = card
-      }
     end
     return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
@@ -808,7 +791,7 @@ local omanyte={
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
-  config = {extra = {rank = "3", money = 3, tag_created = false}},
+  config = {extra = {rank = "3", money = 4, tag_created = false}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -823,24 +806,6 @@ local omastar={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local fourth_level = nil
-        local threes = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
-        end
-        first_level = threes > 0
-        second_level = threes > 1
-        third_level = threes > 2
-        fourth_level = threes > 3
-        
-        if second_level then
-          card.ability.extra.earn = true
-        end
-      end
       if context.joker_main then
         local first_level = nil
         local second_level = nil
@@ -895,17 +860,14 @@ local omastar={
             end)
           }))
         end
+        if second_level then
+          local earned = ease_poke_dollars(card, "omastar", card.ability.extra.money, true)
+          return {
+            dollars = earned, 
+            card = card
+          }
+        end
       end
-      if context.after and card.ability.extra.earn then
-        card.ability.extra.earn = nil
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.earn and context.other_card:get_id() == 3 then
-      local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
-      return {
-        dollars = earned,
-        card = card
-      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.tag_created = nil
