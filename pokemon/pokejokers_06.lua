@@ -46,14 +46,409 @@ local mew ={
   end,
 }
 -- Chikorita 152
+local chikorita = {
+  name = "chikorita",
+  pos = {x = 0, y = 0},
+  config = {extra = {money = 1, earned = 0, h_size = 1, d_size = 1}, evo_rqmt = 16},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.h_size, card.ability.extra.d_size, card.ability.extra.money, card.ability.extra.earned, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.individual and context.cardarea == G.hand then
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+      G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+      card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+      return {
+          dollars = card.ability.extra.money,
+          card = context.other_card or card,
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_bayleef", card.ability.extra.earned, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+  end
+}
 -- Bayleef 153
+local bayleef = {
+  name = "bayleef",
+  pos = {x = 1, y = 0},
+  config = {extra = {money = 2, earned = 0, h_size = 1, d_size = 1}, evo_rqmt = 32},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.h_size, card.ability.extra.d_size, card.ability.extra.money, card.ability.extra.earned, self.config.evo_rqmt}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.individual and context.cardarea == G.hand then
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+      G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+      card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money
+      return {
+          dollars = card.ability.extra.money,
+          card = context.other_card or card,
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_meganium", card.ability.extra.earned, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+  end
+}
 -- Meganium 154
+local meganium = {
+  name = "meganium",
+  pos = {x = 2, y = 0},
+  config = {extra = {money = 3, h_size = 1, d_size = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.h_size, card.ability.extra.d_size, card.ability.extra.money}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.individual and context.cardarea == G.hand then
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+      G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+      return {
+          dollars = card.ability.extra.money,
+          card = context.other_card or card,
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+  end
+}
 -- Cyndaquil 155
+local cyndaquil = {
+  name = "cyndaquil",
+  pos = {x = 3, y = 0},
+  config = {extra = {mult = 0, mult_mod = 2, hands = 1, d_size = 1}, evo_rqmt = 16},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.d_size, card.ability.extra.hands, card.ability.extra.mult_mod, card.ability.extra.mult, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}},
+          colour = G.C.CHIPS,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint and G.GAME.current_round.discards_left > 0 then
+      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * G.GAME.current_round.discards_left)
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+    return scaling_evo(self, card, context, "j_poke_quilava", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+  end,
+}
 -- Quilava 156
+local quilava = {
+  name = "quilava",
+  pos = {x = 4, y = 0},
+  config = {extra = {mult = 0, mult_mod = 3, hands = 1, d_size = 1}, evo_rqmt = 32},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.d_size, card.ability.extra.hands, card.ability.extra.mult_mod, card.ability.extra.mult, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 8,
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}},
+          colour = G.C.CHIPS,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint and G.GAME.current_round.discards_left > 0 then
+      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * G.GAME.current_round.discards_left)
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+    return scaling_evo(self, card, context, "j_poke_typhlosion", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+  end,
+}
 -- Typhlosion 157
+local typhlosion = {
+  name = "typhlosion",
+  pos = {x = 5, y = 0},
+  config = {extra = {mult = 0, mult_mod = 4, hands = 1, d_size = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.d_size, card.ability.extra.hands, card.ability.extra.mult_mod, card.ability.extra.mult}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}},
+          colour = G.C.CHIPS,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint and G.GAME.current_round.discards_left > 0 then
+      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * G.GAME.current_round.discards_left)
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+  end,
+}
 -- Totodile 158
+local totodile = {
+  name = "totodile",
+  pos = {x = 6, y = 0},
+  config = {extra = {chips = 0, chip_mod = 1, hands = 1, h_size = 1}, evo_rqmt = 32},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.hands, card.ability.extra.h_size, card.ability.extra.chip_mod, card.ability.extra.chips, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      elseif context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_croconaw", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+    G.hand:change_size(-card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+    G.hand:change_size(card.ability.extra.h_size)
+  end
+}
 -- Croconaw 159
+local croconaw = {
+  name = "croconaw",
+  pos = {x = 7, y = 0},
+  config = {extra = {chips = 0, chip_mod = 2, hands = 1, h_size = 1}, evo_rqmt = 72},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.hands, card.ability.extra.h_size, card.ability.extra.chip_mod, card.ability.extra.chips, self.config.evo_rqmt}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      elseif context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_feraligatr", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+    G.hand:change_size(-card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+    G.hand:change_size(card.ability.extra.h_size)
+  end
+}
 -- Feraligatr 160
+local feraligatr = {
+  name = "feraligatr",
+  pos = {x = 8, y = 0},
+  config = {extra = {chips = 0, chip_mod = 3, hands = 1, h_size = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.hands, card.ability.extra.h_size, card.ability.extra.chip_mod, card.ability.extra.chips}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      elseif context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+    G.hand:change_size(-card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+    G.hand:change_size(card.ability.extra.h_size)
+  end
+}
 -- Sentret 161
 local sentret={
   name = "sentret",
