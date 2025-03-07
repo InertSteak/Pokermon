@@ -201,7 +201,7 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  if not next(find_joker("everstone")) and not context.retrigger_joker then
+  if not context.retrigger_joker then
     local previous_position = nil
     local poketype_list = nil
     local previous_edition = nil
