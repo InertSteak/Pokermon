@@ -123,7 +123,7 @@ local abra={
             if pseudorandom('abraitem') < .50 then
               set = "Item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.pink
+              colour = G.ARGS.LOC_COLOURS.item
             else
               set = "Tarot"
               message = "k_plus_tarot"
@@ -169,7 +169,7 @@ local kadabra={
             if pseudorandom('kadabraitem') < .50 then
               set = "Item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.pink
+              colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"
             else
               set = "Tarot"
@@ -215,7 +215,7 @@ local alakazam={
             if pseudorandom('alakazam') < .50 then
               set = "Item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.pink
+              colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"
             else
               set = "Tarot"

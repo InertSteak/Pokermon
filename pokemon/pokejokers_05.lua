@@ -729,12 +729,12 @@ local porygon={
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
-  config = {extra = {rank = "3", money = 1, money2 = 2, third_goal = 5, third_times = 0}, evo_rqmt = 5},
+  config = {extra = {rank = "3", money = 2, third_goal = 5, third_times = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
      type_tooltip(self, info_queue, card)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
      local third_left = math.max(0, self.config.evo_rqmt - card.ability.extra.third_times)
-     return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.money, card.ability.extra.money2, third_left}}
+     return {vars = {localize(card.ability.extra.rank, 'ranks'), card.ability.extra.money, third_left}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -744,6 +744,22 @@ local omanyte={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
+        local threes = 0
+        for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
+        end
+        first_level = threes > 0
+        second_level = threes > 1
+        third_level = threes > 2
+        
+        if second_level then
+          card.ability.extra.earn = true
+        end
+      end
       if context.joker_main then
         local first_level = nil
         local second_level = nil
@@ -756,15 +772,7 @@ local omanyte={
         second_level = threes > 1
         third_level = threes > 2
         
-        if first_level and not context.blueprint then
-          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
-          card:set_cost()
-          G.E_MANAGER:add_event(Event({
-            func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
-            end}))
-        end
-        if third_level then
-          card.ability.extra.third_times = card.ability.extra.third_times + 1
+        if first_level then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
@@ -772,14 +780,26 @@ local omanyte={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
           end
         end
-        if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
-          return {
-            message = '$'..earned,
-            colour = G.C.MONEY
-          }
+        if third_level then
+          card.ability.extra.third_times = card.ability.extra.third_times + 1
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+          end
         end
       end
+      if context.after and card.ability.extra.earn then
+        card.ability.extra.earn = nil
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.earn and context.other_card:get_id() == 3 then
+      local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
     end
     return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
@@ -788,11 +808,12 @@ local omanyte={
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
-  config = {extra = {rank = "3", money = 2, money2 = 3}},
+  config = {extra = {rank = "3", money = 3, tag_created = false}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, center.ability.extra.money2}}
+   info_queue[#info_queue+1] = {set = 'Other', key = 'omastar_tag_pool', vars = {'Handy', 'Garbage', 'Investment', 'Economy', 'D6'}}
+   return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.money, not center.ability.extra.tag_created and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -802,6 +823,24 @@ local omastar={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local first_level = nil
+        local second_level = nil
+        local third_level = nil
+        local fourth_level = nil
+        local threes = 0
+        for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
+        end
+        first_level = threes > 0
+        second_level = threes > 1
+        third_level = threes > 2
+        fourth_level = threes > 3
+        
+        if second_level then
+          card.ability.extra.earn = true
+        end
+      end
       if context.joker_main then
         local first_level = nil
         local second_level = nil
@@ -816,14 +855,7 @@ local omastar={
         third_level = threes > 2
         fourth_level = threes > 3
         
-        if first_level and not context.blueprint then
-          card.ability.extra_value = card.ability.extra_value + card.ability.extra.money
-          card:set_cost()
-          G.E_MANAGER:add_event(Event({
-            func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
-            end}))
-        end
-        if third_level then
+        if first_level then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
@@ -831,22 +863,52 @@ local omastar={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
           end
         end
-        if fourth_level then
+        if third_level then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
           end
         end
-        if second_level then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money2)
-          return {
-            message = '$'..earned,
-            colour = G.C.MONEY
-          }
+        if fourth_level and not card.ability.extra.tag_created then
+          card.ability.extra.tag_created = true
+          local tag = ''
+          local tag_choice = pseudorandom('sylveon')
+          if tag_choice < 1/5 then
+            tag = 'tag_handy'
+          elseif tag_choice < 2/5 then
+            tag = 'tag_garbage'
+          elseif tag_choice < 3/5 then
+            tag = 'tag_investment'
+          elseif tag_choice < 4/5 then
+            tag = 'tag_economy'
+          else
+            tag = 'tag_d_six'
+          end
+          G.E_MANAGER:add_event(Event({
+            func = (function()
+                add_tag(Tag(tag))
+                play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+                return true
+            end)
+          }))
         end
       end
+      if context.after and card.ability.extra.earn then
+        card.ability.extra.earn = nil
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.earn and context.other_card:get_id() == 3 then
+      local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.tag_created = nil
     end
   end,
   generate_ui = fossil_generate_ui,

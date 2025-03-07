@@ -1727,22 +1727,22 @@ return {
                 name = 'Omanyte',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{X:attention,C:white}1+{} : Gain {C:money}$#2#{} of sell value",
-                    "{X:attention,C:white}2+{} : Earn {C:money}$#3#{}",
-                    "{X:attention,C:white}3+{} : Create a random {C:attention}Tarot{} card",
+                    "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
+                    "{X:attention,C:white}2+{} : Each played {C:attention}#1#{} earns {C:money}$#2#{} when scored",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
-                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)"
+                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_omastar = {
                 name = 'Omastar',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{X:attention,C:white}1+{} : {}Gain {C:money}$#2#{} of sell value",
-                    "{X:attention,C:white}2+{} : {}Earn {C:money}$#3#{}",
-                    "{X:attention,C:white}3+{} : {}Create a random {C:attention}Tarot{} card",
-                    "{X:attention,C:white}4+{} : {}Create a random {C:item}Item{} card",
+                    "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
+                    "{X:attention,C:white}2+{} : Each played {C:attention}#1#{} earns {C:money}$#2#{} when scored",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
+                    "{X:attention,C:white}4+{} : Create a {C:attention}tag{} once per round{C:inactive}#3#{}",
                 } 
             },
             j_poke_kabuto = {
@@ -3577,6 +3577,16 @@ return {
                 "{C:attention}#1#",
                 "{C:tarot}#2#",
                 "{C:attention}#3#",
+              }
+            },
+            omastar_tag_pool = {
+              name = "Tag Pool",
+              text = {
+                "{C:money}#1#",
+                "{C:money}#2#",
+                "{C:money}#3#",
+                "{C:money}#4#",
+                "{C:money}#5#",
               }
             },
             safaridesc = {
