@@ -821,5 +821,5 @@ local igglybuff={
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff},
+        list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff},
 }
