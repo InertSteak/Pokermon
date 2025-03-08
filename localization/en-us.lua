@@ -1800,9 +1800,9 @@ return {
             j_poke_articuno = {
                 name = 'Articuno',
                 text = {
-                    "Add {C:attention}Foil{}, a random {C:attention}enhancement{}, and",
-                    "a random {C:attention}seal{} to unscored cards",
-                    "on {C:attention}first hand{} of round"
+                    "Add {C:attention}Foil{} and a {C:attention}seal{}",
+                    "to leftmost scoring card",
+                    "in played hand"
                 } 
             },
             j_poke_zapdos = {
@@ -2060,7 +2060,7 @@ return {
                     "When Blind is selected, destroy Joker",
                     "to the right and gain {C:mult}+#4#{} Mult",
                     "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
-                    "if it wasn't {C:attention}Common{}",
+                    "if it was {C:red}Rare{} or higher",
                     "Those editions {C:attention}stack{} on this Joker",
                     "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"

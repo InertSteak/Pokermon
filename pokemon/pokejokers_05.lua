@@ -1204,47 +1204,10 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint and context.full_hand then
-      for k, v in ipairs(context.scoring_hand) do
-        v.poke_scored = true
-      end
-      for k, v in ipairs(context.full_hand) do
-        if not v.poke_scored then
-          if not v.seal then
-            local args = {guaranteed = true}
-            local seal_type = SMODS.poll_seal(args)
-            v:set_seal(seal_type, true)
-          end
-          if v.ability.name == "Default Base" then
-            local enhancement_type = pseudorandom(pseudoseed('articuno'))
-            if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
-            elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
-            elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
-            elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
-            elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
-            elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
-            elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
-            else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
-            end
-          end
-          if not v.edition then
-            v:set_edition("e_foil", true)
-          end
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  v:juice_up()
-                  return true
-              end
-          })) 
-        end
-      end
-      for k, v in ipairs(context.scoring_hand)do
-        v.poke_scored = nil
-      end
-    end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
+    if context.before and context.cardarea == G.jokers and not context.blueprint and context.scoring_hand then
+      local target = context.scoring_hand[1]
+      local args = {edition = "e_foil", seal = SMODS.poll_seal({guaranteed = true})}
+      poke_convert_cards_to(target, args, true, true)
     end
   end
 }
