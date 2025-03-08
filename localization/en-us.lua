@@ -807,10 +807,10 @@ return {
             j_poke_zubat = {
                 name = "Zubat",
                 text = {
-                    "{C:mult}+#1#{} Mult for each Enhanced",
-                    "card in your full deck",
-                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves at {C:attention,s:0.8}#4#{C:inactive,s:0.8} / #3# Enhancements)",
+                    "Gains {C:mult}+#2#{} Mult for each Enhanced",
+                    "card in scoring hand",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
                 }
             },
             j_poke_golbat = {
@@ -2065,6 +2065,18 @@ return {
                     "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
+            },
+            j_poke_corsola = {
+              name = 'Corsola',
+              text = {
+                "{C:mult}+#1#{} Mult for each {C:attention}Enhanced{}",
+                "card in your full deck",
+                "{br:2}text needs to be here to work",
+                "Create a {C:attention}Basic{} {X:water,C:white}Water{} Joker if scoring",
+                "hand contains {C:attention}5 Enhanced{} cards",
+                "{C:inactive,s:0.8}(Must have room)",
+                "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+              }
             },
             j_poke_delibird = {
                 name = "Delibird",

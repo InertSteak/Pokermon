@@ -95,6 +95,62 @@ local scizor={
 -- Swinub 220
 -- Piloswine 221
 -- Corsola 222
+local corsola={
+  name = "corsola", 
+  pos = {x = 0, y = 7},
+  config = {extra = {mult_mod = 3, corsola_tally = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.corsola_tally}}
+  end,
+  rarity = 3, 
+  cost = 7, 
+  stage = "Basic", 
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      card.ability.extra.corsola_tally = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.config.center ~= G.P_CENTERS.c_base then card.ability.extra.corsola_tally = card.ability.extra.corsola_tally+1 end
+      end
+    end
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local enhanced = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.config.center ~= G.P_CENTERS.c_base then
+           enhanced = enhanced + 1
+          end
+        end
+        
+        if enhanced == 5 then
+          if #G.jokers.cards < G.jokers.config.card_limit then
+            G.E_MANAGER:add_event(Event({
+              trigger = 'after',
+              delay = 0.2,
+              func = function() 
+                play_sound('timpani')
+                local _card = create_random_poke_joker('corsola', "Basic", nil, nil, "Water")
+                _card:add_to_deck()
+                G.jokers:emplace(_card)
+            return true end }))
+          end
+        end
+      
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.corsola_tally}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult_mod * card.ability.extra.corsola_tally 
+        }
+      end
+    end
+  end
+}
 -- Remoraid 223
 -- Octillery 224
 -- Delibird 225
@@ -579,5 +635,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, corsola, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }
