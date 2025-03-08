@@ -45,7 +45,7 @@ local zoroark = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if card.area ~= G.jokers and not poke_is_in_collection(card) then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 'poke_safari')
+      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
       local _o = G.P_CENTERS[card.ability.extra.hidden_key]
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
@@ -56,7 +56,7 @@ local zoroark = {
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
-    card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 'poke_safari')
+    card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
     local _o = G.P_CENTERS[card.ability.extra.hidden_key]
     if card.area ~= G.jokers and not poke_is_in_collection(card) then
       local temp_ability = card.ability
