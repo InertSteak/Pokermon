@@ -129,15 +129,17 @@ local corsola={
         end
         
         if enhanced == 5 then
-          G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.2,
-            func = function() 
-              play_sound('timpani')
-              local _card = create_random_poke_joker('corsola', "Basic", nil, nil, "Water")
-              _card:add_to_deck()
-              G.jokers:emplace(_card)
-          return true end }))
+          if #G.jokers.cards < G.jokers.config.card_limit then
+            G.E_MANAGER:add_event(Event({
+              trigger = 'after',
+              delay = 0.2,
+              func = function() 
+                play_sound('timpani')
+                local _card = create_random_poke_joker('corsola', "Basic", nil, nil, "Water")
+                _card:add_to_deck()
+                G.jokers:emplace(_card)
+            return true end }))
+          end
         end
       
         return {
