@@ -134,7 +134,7 @@ local zorua = {
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.blueprint_compat = ( other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
+      card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff then
         card.children.center.atlas = other_joker.children.center.atlas
         card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
