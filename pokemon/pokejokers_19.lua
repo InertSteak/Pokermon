@@ -68,6 +68,7 @@ local zorua = {
         message = localize('poke_reveal_ex')
       }
     end
+    return level_evo(self, card, context, "j_poke_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
     local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
