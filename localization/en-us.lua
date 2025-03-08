@@ -2623,6 +2623,13 @@ return {
                 text = {
                     "Copies ability of rightmost Joker",
                     "Illusion breaks after first hand",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_zoroark = {
+                name = "Zoroark",
+                text = {
+                    "Copies ability of rightmost Joker",
                 }
             },
             j_poke_vanillite = {

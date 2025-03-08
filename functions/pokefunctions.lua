@@ -1105,14 +1105,13 @@ poke_drain = function(card, target, amount, one_way)
 end
 
 fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-  local _c = card and card.config.center or self
   if not full_UI_table.name then
-    full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+    full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
   end
   -- get descriptions
   local vars = self:loc_vars(info_queue, card).vars
   local count = #desc_nodes + 1
-  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = vars}
+  localize{type = 'descriptions', key = self.key, set = self.set, nodes = desc_nodes, vars = vars}
   -- set count to the first line with a colon
   while count <= #desc_nodes and not(desc_nodes[count][2] and desc_nodes[count][2].config.text and string.find(desc_nodes[count][2].config.text,":")) do
     count = count + 1

@@ -31,9 +31,9 @@
 local zorua = {
   name = "zorua", 
   pos = { x = 6, y = 5 },
-  config = {extra = {hidden_key = 'j_poke_caterpie'}},
+  config = {extra = {hidden_key = nil, rounds = 5}},
   rarity = 2,
-  cost = 8,
+  cost = 10,
   stage = "Basic",
   ptype = "Dark",
   atlas = "Pokedex5",
@@ -79,21 +79,32 @@ local zorua = {
     end
     badges[#badges + 1] = create_badge(card_type, card_type_colour, nil, 1.2)
   end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.hidden_key then
+      self:set_ability(card)
+    end
+  end,
   set_ability = function(self, card, initial, delay_sprites)
-    if card.area and card.area ~= G.jokers and not poke_is_in_collection(card) then
-      card.ability.extra.hidden_key = get_random_poke_key('zorua', nil, 1)
+    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
       local _o = G.P_CENTERS[card.ability.extra.hidden_key]
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
+    else
+      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.center:set_sprite_pos(self.pos)
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
     card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
     local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-    if card.area and card.area ~= G.jokers and not poke_is_in_collection(card) then
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
+    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+      local temp_ability = card.ability
+      card.ability = _o.config
+      _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      card.ability = temp_ability
+      if full_UI_table.name then
         local textDyna = full_UI_table.name[1].nodes[1].config.object
         textDyna.string = textDyna.string .. localize("poke_illusion")
         textDyna.config.string = {textDyna.string}
@@ -102,17 +113,6 @@ local zorua = {
       end
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
-      local loc_table = {type = 'descriptions', key = _o.key, set = _o.set, nodes = desc_nodes}
-      if type(_o.loc_vars) == "function" then
-        local temp_ability = card.ability
-        card.ability = _o.config
-        local temp_loc = _o:loc_vars(info_queue, card)
-        for k, v in pairs(temp_loc) do
-          loc_table[k] = v
-        end
-        card.ability = temp_ability
-      end
-      localize(loc_table)
     else
       if not full_UI_table.name then
         full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
@@ -126,7 +126,7 @@ local zorua = {
           }}
         }}
       } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {}}
+      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
       desc_nodes[#desc_nodes+1] = main_end
     end
   end,
