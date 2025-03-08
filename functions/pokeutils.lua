@@ -390,3 +390,14 @@ function Game:init_game_object()
   game.joker_rate = game.joker_rate + 8
   return game
 end
+
+poke_is_in_collection = function(card)
+  if G.your_collection then
+    for k, v in pairs(G.your_collection) do
+      if card.area == v then
+        return true
+      end
+    end
+  end
+  return false
+end
