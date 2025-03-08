@@ -20,7 +20,7 @@ cards_dont_match = function(card1, card2)
    if type(card1.edition) ~= type(card2.edition) then return true end
    if card1.edition and card1.edition.type ~= card2.edition.type then return true end
    if card1.seal ~= card2.seal then return true end
-   if card1.debuffed ~= card2.debuffed then return true end
+   if card1.debuff ~= card2.debuff then return true end
    if card1.pinned ~= card2.pinned then return true end
    return false
 end
