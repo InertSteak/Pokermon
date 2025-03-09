@@ -56,11 +56,13 @@ local duskstone = {
   name = "duskstone",
   key = "duskstone",
   set = "Item",
-  config = {extra = {money = 20, rounds = 3, round_on_add = 1}},
+  config = {extra = {money = 4, max = 28, rounds = 3, round_on_add = 1}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    return {vars = {center and center.ability.extra.money or self.config.extra.money, center and center.ability.extra.rounds or self.config.extra.rounds, 
-                    center and (center.ability.extra.round_on_add + center.ability.extra.rounds) or (self.config.extra.round_on_add + self.config.extra.rounds),}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
+    local card_info = center and center.ability.extra or self.config.extra
+    local jokers = (G.jokers and G.jokers.cards) and #G.jokers.cards or 0
+    return {vars = {card_info.money, card_info.rounds, card_info.round_on_add + card_info.rounds, math.min(card_info.max, card_info.money * jokers), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
   atlas = "Mart",
@@ -73,9 +75,13 @@ local duskstone = {
   end,
   use = function(self, card, area, copier)
     set_spoon_item(card)
-    if G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds then
-      ease_dollars(card.ability.extra.money)
+    if not (G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds) then
+      for i = 1, #G.jokers.cards do
+        poke_drain(card, G.jokers.cards[i], 1, true)
+      end
     end
+    local money = math.min(card.ability.extra.max, card.ability.extra.money * #G.jokers.cards)
+    ease_dollars(money)
     evo_item_use_total(self, card, area, copier)
   end,
   set_ability = function(self, card, initial, delay_sprites)

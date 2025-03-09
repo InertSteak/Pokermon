@@ -3,7 +3,7 @@
 local scizor={
   name = "scizor", 
   pos = {x = 0, y = 6},
-  config = {extra = {mult = 0, chips = 0, Xmult = 1, mult_mod = 4}},
+  config = {extra = {mult = 0, scizor_chips = 0, scizor_Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -21,7 +21,7 @@ local scizor={
     if center.edition and center.edition.polychrome then
      eXmult = center.edition.x_mult or 1
     end
-    return {vars = {center.ability.extra.mult + emult, center.ability.extra.chips + echips, center.ability.extra.Xmult * eXmult, center.ability.extra.mult_mod}}
+    return {vars = {center.ability.extra.mult + emult, center.ability.extra.scizor_chips + echips, center.ability.extra.scizor_Xmult * eXmult, center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -39,16 +39,16 @@ local scizor={
       if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
           local sliced_card = G.jokers.cards[my_pos+1]
           sliced_card.getting_sliced = true
-          if (sliced_card.config.center.rarity ~= 1) then
+          if (sliced_card.config.center.rarity ~= 1 and sliced_card.config.center.rarity ~=2) then
             if card.edition then
               if card.edition.chips then
-                card.ability.extra.chips = card.ability.extra.chips + card.edition.chips
+                card.ability.extra.scizor_chips = card.ability.extra.scizor_chips + card.edition.chips
               end
               if card.edition.mult then
                 card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
               end
               if card.edition.x_mult then
-                card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
+                card.ability.extra.scizor_Xmult = card.ability.extra.scizor_Xmult * card.edition.x_mult
               end
             end
             local edition = nil
@@ -78,8 +78,8 @@ local scizor={
           message = localize("poke_x_scissor_ex"),
           colour = G.ARGS.LOC_COLOURS.metal,
           mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.chips,
-          Xmult_mod = card.ability.extra.Xmult
+          chip_mod = card.ability.extra.scizor_chips,
+          Xmult_mod = card.ability.extra.scizor_Xmult
         }
       end
     end
