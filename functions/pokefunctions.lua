@@ -1146,3 +1146,25 @@ fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars,
     desc_nodes[#desc_nodes+1] = evolution_node
   end
 end
+
+poke_get_family_list = function(name)
+  for _, v in ipairs(family) do
+    for _, y in ipairs(v) do
+      if ((type(y) == "table" and y.key) or y) == name then
+        return v
+      end
+    end
+  end
+  return {}
+end
+
+poke_family_present = function(center)
+  local family_list = poke_get_family_list(center.name)
+  for _, fam in pairs(family_list) do
+    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
+      print("PREVENT "..tostring(center.name).." because of "..((type(fam) == "table" and fam.key) or fam))
+      return true
+    end
+  end
+  return false
+end

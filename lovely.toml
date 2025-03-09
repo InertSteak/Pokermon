@@ -28,6 +28,7 @@ position = "after"
 payload = '''
 if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
+if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
 match_indent = true
 
