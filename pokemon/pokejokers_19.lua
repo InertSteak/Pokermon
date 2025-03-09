@@ -33,11 +33,12 @@ local zorua = {
   pos = { x = 6, y = 5 },
   config = {extra = {hidden_key = nil, rounds = 5}},
   rarity = 2,
-  cost = 10,
+  cost = 8,
   stage = "Basic",
   ptype = "Dark",
   atlas = "Pokedex5",
   blueprint_compat = true,
+  rental_compat = false,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
     if other_joker and other_joker ~= card and not context.no_blueprint then
