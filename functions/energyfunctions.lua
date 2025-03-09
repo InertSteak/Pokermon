@@ -1,7 +1,5 @@
-energy_whitelist = {"mult", "mult1", "mult2", "chips", "chips1", "chips2", "chips3", "Xmult", "money", "money2", "money_mod", "mult_mod", "mult_mod2", "s_mult", "chip_mod", "Xmult_mod", 
-                    "Xmult_multi",  "Xmult_multi2"}
 energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, money = .3, money2 = .3, money_mod = .1, mult_mod = .2, mult_mod2 = .2, s_mult = .4, chip_mod = .2, 
+  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, Xmult1 = .2, Xmult2 = .2, money = .3, money2 = .3, money_mod = .1, mult_mod = .2, mult_mod2 = .2, s_mult = .4, chip_mod = .2, 
   Xmult_mod = .2, Xmult_multi = .05, Xmult_multi2 = .05
 }
 
@@ -14,7 +12,7 @@ highlighted_energy_can_use = function(self, card)
   if energy_matches(choice, self.etype, true) then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy or ((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-        for _, name in ipairs(energy_whitelist) do
+        for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             return true
           end
@@ -46,7 +44,7 @@ highlighted_energy_use = function(self, card, area, copier)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
       if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-        for _, name in ipairs(energy_whitelist) do
+        for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             viable = true
           end
@@ -164,7 +162,7 @@ energize = function(card, etype, evolving, silent)
   local frac = nil
   local frac_added = nil
   if type(card.ability.extra) == "table" then
-    for _, name in ipairs(energy_whitelist) do
+    for name, _ in pairs(energy_values) do
       local data = card.ability.extra[name]
       if type(data) == "number" then
         local addition = energy_values[name]
@@ -327,7 +325,7 @@ energy_use = function(self, card, area, copier)
     if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
       if type(v.ability.extra) == "table" then
         if can_increase_energy(v) then
-          for _, name in ipairs(energy_whitelist) do
+          for name, _ in pairs(energy_values) do
             if type(v.ability.extra[name]) == "number" then
               viable = true
             end
@@ -358,7 +356,7 @@ energy_can_use = function(self, card)
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
         if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
-          for _, name in ipairs(energy_whitelist) do
+          for name, _ in pairs(energy_values) do
             local data = v.ability.extra[name]
             if type(data) == "number" then
               return true
