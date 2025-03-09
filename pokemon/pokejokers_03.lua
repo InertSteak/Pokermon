@@ -440,8 +440,6 @@ local bellsprout={
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
             chips = card.ability.extra.chips,
             card = card
           }
@@ -474,8 +472,6 @@ local weepinbell={
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
             chips = card.ability.extra.chips,
             card = card
           }
