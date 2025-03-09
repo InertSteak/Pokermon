@@ -1961,6 +1961,20 @@ return {
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
+            j_poke_natu = {
+                name = 'Natu',
+                text = {
+                    "{C:planet}Planet{} cards give an extra level",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_xatu = {
+                name = 'Xatu',
+                text = {
+                    "{C:planet}Planet{} cards give {C:attention}#1#{} extra levels",
+                    "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
+                }
+            },
             j_poke_bellossom = {
                 name = 'Bellossom',
                 text = {

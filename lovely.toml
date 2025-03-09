@@ -94,31 +94,36 @@ end
 '''
 match_indent = true
 
-# Voucher functionality
+# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "local _size = self.ability.extra"
+pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
 position = "after"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  _size = _size + G.GAME.extra_pocket_picks
+if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
+  self.ability.extra = #G.P_CENTER_POOLS.Planet
+elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  print(self.ability.extra)
+  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
 match_indent = true
 
-# Resize Booster Pack UI for new options
+# Xatu Make All Planets Appear
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
-position = "after"
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
+position = "at"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks
-end
+if next(find_joker("xatu")) then
+    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+elseif G.GAME.used_vouchers.v_telescope and i == 1 then
 '''
 match_indent = true
+overwrite = true
 
 #Shiny shader
 [[patches]]
