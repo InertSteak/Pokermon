@@ -253,7 +253,7 @@ return {
                     "Add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
                     "or {C:dark_edition}Polychrome{} effect to",
                     "{C:attention}1{} selected card in hand and",
-                    "{C:attention}Drain{} {C:money}$#2#{} from each Joker",
+                    "remove card {C:attention}Enhancement{}",
                     "{C:attention}Evolution Card{}",
                 }
             },
@@ -278,11 +278,11 @@ return {
             c_poke_duskstone = {
                 name = "Dusk Stone",
                 text = {
-                    "Earn {C:money}$#1#{}",
-                    "if used {C:attention}#2#{} rounds",
-                    "after you get this",
+                    "Earn {C:money}$#1#{} for each Joker you have",
+                    "{C:attention}Drain {C:money}$1{} from each Joker you have",
+                    "No {C:attention}Drain{} after {C:attention}#2#{} Rounds {C:inactive}(Round #3#)",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Earns {C:money}${C:inactive} starting Round {C:attention}#3#{C:inactive})"
+                    "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
                 }
             },
             c_poke_dawnstone = {

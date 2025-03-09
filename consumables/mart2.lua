@@ -844,7 +844,7 @@ local shinystone = {
   name = "shinystone",
   key = "shinystone",
   set = "Item",
-  config = {max_highlighted = 1, drain_amt = 2},
+  config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
@@ -876,12 +876,9 @@ local shinystone = {
           local edition = poll_edition('aura', nil, true, true)
           local shiny_card = G.hand.highlighted[1]
           shiny_card:set_edition(edition, true)
+          shiny_card:set_ability(G.P_CENTERS.c_base, nil, true)
           card:juice_up(0.3, 0.5)
       return true end }))
-
-      for i = 1, #G.jokers.cards do
-        poke_drain(nil, G.jokers.cards[i], self.config.drain_amt, true)
-      end
 
       evo_item_use_total(self, card, area, copier)
     else
