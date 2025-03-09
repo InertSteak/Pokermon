@@ -469,3 +469,20 @@ end
 match_indent = true
 
 
+#Zorua Rental Incompatibility
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+self.ability.rental = _rental
+self:set_cost()
+'''
+position = "at"
+payload = '''
+if self.config.center.rental_compat and not self.ability.rental then 
+    self.ability.rental = _rental
+    self:set_cost()
+end
+'''
+match_indent = true
+overwrite = true
