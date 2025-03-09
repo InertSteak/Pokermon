@@ -1162,7 +1162,6 @@ poke_family_present = function(center)
   local family_list = poke_get_family_list(center.name)
   for _, fam in pairs(family_list) do
     if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
-      print("PREVENT "..tostring(center.name).." because of "..((type(fam) == "table" and fam.key) or fam))
       return true
     end
   end
