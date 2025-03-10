@@ -152,7 +152,7 @@ local gholdengo={
         if to_big(card.ability.extra.future_dollars) >= to_big(0) then
           card.ability.extra.Xmult = to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi)
           return {
-            dollars = -to_big(card.ability.extra.money_minus),
+            dollars = -card.ability.extra.money_minus,
             card = card
           }
         end
