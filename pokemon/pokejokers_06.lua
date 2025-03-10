@@ -429,7 +429,7 @@ local natu = {
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds}}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 4,
   stage = "Basic",
   ptype = "Psychic",
@@ -479,7 +479,7 @@ local xatu = {
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.level_amt}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 7,
   stage = "One",
   ptype = "Psychic",
