@@ -496,8 +496,6 @@ local thickclub = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-       or G.STATE == G.STATES.STANDARD_PACK then return false end
     if card.area == G.shop_jokers then return false end
     if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
     return G.GAME.round > card.ability.extra.previous_round
