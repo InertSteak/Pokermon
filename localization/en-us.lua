@@ -582,33 +582,36 @@ return {
             j_poke_pidgey = {
                 name = "Pidgey",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop cost {C:money}$2{} less",
+                    "{C:mult}+#2#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeotto = {
                 name = "Pidgeotto",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop cost {C:money}$3{} less",
+                    "{C:mult}+#2#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeot = {
                 name = "Pidgeot",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop are {C:attention}free{}",
+                    "Create a {C:planet}Planet{} card when {C:attention}Blind{} is selected",
                     "{br:2}text needs to be here to work",
-                    "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
+                    "{C:mult}+#1#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                 } 
             },
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "{C:planet}Planet{} cards grant",
-                    "{C:attention}#1#{} additional levels",
+                    "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
+                    "{br:2}text needs to be here to work",
+                    "Each played card gives {X:mult,C:white}X{} Mult",
+                    "equal to {C:attention}discards lost{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 } 
             },
             j_poke_rattata = {
@@ -2622,6 +2625,31 @@ return {
                   "hand is played while in debt",
                   "{C:inactive,s:0.8}(Must have room)",
                 }
+            },
+            j_poke_gothita = {
+                name = "Gothita",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop cost {C:money}$2{} less",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_gothorita = {
+                name = "Gothorita",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop cost {C:money}$3{} less",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_gothitelle = {
+                name = "Gothitelle",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop are {C:attention}free{}",
+                    "{br:2}text needs to be here to work",
+                    "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
+                } 
             },
             j_poke_vanillite = {
                 name = "Vanillite",

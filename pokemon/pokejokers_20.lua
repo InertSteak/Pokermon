@@ -2,8 +2,106 @@
 -- Minccino 572
 -- Cinccino 573
 -- Gothita 574
+local gothita={
+  name = "gothita", 
+  pos = {x = 10, y = 5},
+  config = {extra = {rounds = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.rounds}}
+  end,
+  rarity = 1, 
+  cost = 5, 
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    return level_evo(self, card, context, "j_poke_gothorita")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+      G.E_MANAGER:add_event(Event({func = function()
+        for k, v in pairs(G.I.CARD) do
+            if v.set_cost then v:set_cost() end
+        end
+        return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end
+}
 -- Gothorita 575
+local gothorita={
+  name = "gothorita", 
+  pos = {x = 11, y = 5},
+  config = {extra = {rounds = 4}},
+  blueprint_compat = false,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.rounds}}
+  end,
+  rarity = 2, 
+  cost = 8, 
+  stage = "One", 
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  calculate = function(self, card, context)
+    return level_evo(self, card, context, "j_poke_gothitelle")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+      G.E_MANAGER:add_event(Event({func = function()
+        for k, v in pairs(G.I.CARD) do
+            if v.set_cost then v:set_cost() end
+        end
+        return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end
+}
 -- Gothitelle 576
+local gothitelle={
+  name = "gothitelle", 
+  pos = {x = 12, y = 5},
+  config = {extra = {money = 2}}, 
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.money}}
+  end,
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
+  atlas = "Pokedex5",
+  ptype = "Psychic",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
+      ease_poke_dollars(card, "pidgeot", card.ability.extra.money)
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+      G.E_MANAGER:add_event(Event({func = function()
+        for k, v in pairs(G.I.CARD) do
+            if v.set_cost then v:set_cost() end
+        end
+        return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end,
+}
 -- Solosis 577
 -- Duosion 578
 -- Reuniclus 579
@@ -237,5 +335,5 @@ local vanilluxe={
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {vanillite, vanillish, vanilluxe},
+        list = {gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe},
 }
