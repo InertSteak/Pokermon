@@ -129,7 +129,6 @@ local corsola={
         end
         
         if enhanced == 5 then
-          sendDebugMessage(#G.jokers.cards + G.GAME.joker_buffer)
           if (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
             G.GAME.joker_buffer = G.GAME.joker_buffer + 1
             G.E_MANAGER:add_event(Event({
