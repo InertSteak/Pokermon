@@ -1177,15 +1177,15 @@ local sandshrew={
       for k, v in ipairs(context.removed) do
         if v.shattered and card.ability.extra.glass_restored <= 0 then
           card_to_copy = v
-          local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.hand:emplace(copy)
-          copy.states.visible = nil
 
           G.E_MANAGER:add_event(Event({
               func = function()
+                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  copy:add_to_deck()
+                  G.deck.config.card_limit = G.deck.config.card_limit + 1
+                  table.insert(G.playing_cards, copy)
+                  G.hand:emplace(copy)
+                  copy.states.visible = nil
                   copy:start_materialize()
                   return true
               end
@@ -1233,12 +1233,13 @@ local sandshrew={
 local sandslash={
   name = "sandslash", 
   pos = {x = 1, y = 2},
-  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0}},
+  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0, glass_limit = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
-		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, center.ability.extra.glass_limit, 
+                    center.ability.extra.glass_limit - center.ability.extra.glass_restored, 
+                    colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 2,
   cost = 6, 
@@ -1248,27 +1249,26 @@ local sandslash={
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 then
+    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        if v.shattered and card.ability.extra.glass_restored <= 0 then
+        card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
+        if v.shattered and card.ability.extra.glass_restored <= card.ability.extra.glass_limit then
           card_to_copy = v
-          local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.hand:emplace(copy)
-          copy.states.visible = nil
 
           G.E_MANAGER:add_event(Event({
               func = function()
+                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  copy:add_to_deck()
+                  G.deck.config.card_limit = G.deck.config.card_limit + 1
+                  table.insert(G.playing_cards, copy)
+                  G.hand:emplace(copy)
+                  copy.states.visible = nil
                   copy:start_materialize()
                   return true
               end
           }))
           playing_card_joker_effects({copy})
-          
-          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       if card_to_copy then

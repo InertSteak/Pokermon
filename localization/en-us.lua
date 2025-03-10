@@ -686,7 +686,7 @@ return {
                     "in your full deck",
                     "{br:3}text needs to be here to work",
                     "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
-                    "shattered each round to hand",
+                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
@@ -697,8 +697,8 @@ return {
                     "{C:chips}+#1#{} Chips for each {C:attention}Glass{} card",
                     "in your full deck",
                     "{br:3}text needs to be here to work",
-                    "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
-                    "shattered each round to hand",
+                    "{V:1}Add a copy of the first {C:attention,V:1}#3#{} {C:inactive}[#4#]{} {C:attention,V:1}Glass{V:1} cards",
+                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                 } 
             },
@@ -1080,7 +1080,7 @@ return {
                 } 
             },
             j_poke_victreebel = {
-                name = "Victreebell",
+                name = "Victreebel",
                 text = {
                     "Played cards with {C:attention}Even{} rank",
                     "give {C:chips}+#1#{} Chips when scored",
@@ -1092,7 +1092,6 @@ return {
                 text = {
                     "Each played {C:attention}10{} gives",
                     "{C:mult}+#1#{} Mult when scored",
-                    "if hand only contains {C:attention}10{}s",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
             },
@@ -1259,12 +1258,11 @@ return {
             j_poke_muk = {
                 name = 'Muk',      
                 text = {
-                    "{C:mult}+#1#{} Mult per card over {C:attention}#3#{} in your deck",
-                    "{X:mult,C:white} X#2# {} Mult if deck size > {C:attention}#4#{}",
-                    "{C:inactive}(Currently {C:mult}+#5#{} {C:inactive}Mult){}",
+                    "{C:mult}+#1#{} Mult per card over {C:attention}#2#{} in your deck",
                     "{br:4}text needs to be here to work",
                     "At end of round, remove 1 random card",
                     "from deck then add 2 random cards",
+                    "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult){}"
                 } 
             },
             j_poke_shellder = {
@@ -1589,6 +1587,9 @@ return {
             j_poke_jynx = {
                 name = 'Jynx',      
                 text = {
+                    "When {C:attention}Blind{} is selected, gain {C:attention}+#1#{} hand size",
+                    "if deck size is {C:attention}#2#{} or greater",
+                    "{br:4}text needs to be here to work",
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
                     "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
@@ -1598,8 +1599,12 @@ return {
             j_poke_electabuzz = {
                 name = 'Electabuzz',      
                 text = {
-                    "Gains {C:money}$#1#{} of {C:attention}sell value{} at end of",
-                    "round and when a card is {C:attention}sold{}",
+                    "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
+                    "is sold and at end of round",
+                    "{br:3.5}text needs to be here to work",
+                    "Earn {C:attention}#2#%{} of this Joker's sell value",
+                    "at end of round {C:inactive}(rounded up){}",
+                    "{C:inactive}(Currently earns {C:money}$#3#{C:inactive}/$#4# Max)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
             },
@@ -2376,8 +2381,8 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips if played hand",
                     "is a {C:attention}Four of a Kind{}",
-                    "Gains {C:chips}+#2#{} Chips if played hand",
-                    "contains a scoring {C:attention}Ace",
+                    "Gains {C:chips}+#2#{} Chips if scoring hand",
+                    "contains an {C:attention}Ace",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +64 Chips)",
                 } 
             },
@@ -2386,8 +2391,8 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips if played hand",
                     "is a {C:attention}Four of a Kind{}",
-                    "Gains {C:chips}+#2#{} Chips if played hand",
-                    "contains {C:attention}2+{} scoring {C:attention}Aces",
+                    "Gains {C:chips}+#2#{} Chips if scoring hand",
+                    "contains {C:attention}2+{} {C:attention}Aces",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +256 Chips)",
                 } 
             },

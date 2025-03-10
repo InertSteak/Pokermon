@@ -525,7 +525,7 @@ local victreebel={
 local tentacool={
   name = "tentacool", 
   pos = {x = 6, y = 5},
-  config = {extra = {mult = 8, rounds = 5}},
+  config = {extra = {mult = 7, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -538,19 +538,10 @@ local tentacool={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      local allten = true
-      for k, v in pairs(context.scoring_hand) do
-        if v:get_id() ~= 10 then
-          allten = false
-          break
-        end
-      end
-      if allten then
-        return {
-          mult = card.ability.extra.mult,
-          card = card
-        }
-      end
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
     end
     return level_evo(self, card, context, "j_poke_tentacruel")
   end
@@ -563,8 +554,8 @@ local tentacruel={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -1197,14 +1188,14 @@ local grimer={
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
-  config = {extra = {mult = 2, Xmult = 1.5}},
+  config = {extra = {mult = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12, 
+    return {vars = {center.ability.extra.mult, G.GAME.starting_deck_size, 
                     (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.mult}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
   stage = "One", 
   ptype = "Dark",
   atlas = "Pokedex1",
@@ -1212,17 +1203,11 @@ local muk={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.playing_cards > G.GAME.starting_deck_size then
-        local Xmult
-        if #G.playing_cards > G.GAME.starting_deck_size + 12 then
-          Xmult = card.ability.extra.Xmult
-        else
-          Xmult = 1
-        end
         return {
-          message = "Sludge!", 
-          colour = G.C.XMULT,
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
           mult_mod = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size),
-          Xmult_mod = Xmult
+          card = card
         }
       end
     end
