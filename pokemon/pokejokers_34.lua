@@ -147,27 +147,24 @@ local gholdengo={
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
-      card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
-      local future = nil
       if (SMODS.Mods["Talisman"] or {}).can_load then
-        future = to_big(card.ability.extra.future_dollars) >= to_big(0)
-      else
-        future = card.ability.extra.future_dollars >= 0
-      end
-      if future then
-        if (SMODS.Mods["Talisman"] or {}).can_load then
-          if to_big(card.ability.extra.Xmult) >= to_big(1e300) then
-            card.ability.extra.Xmult = to_number(to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi))
-          else
-            card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
-          end
-        else
-          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+        card.ability.extra.future_dollars = to_big(card.ability.extra.future_dollars) - to_big(card.ability.extra.money_minus)
+        if to_big(card.ability.extra.future_dollars) >= to_big(0) then
+          card.ability.extra.Xmult = to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi)
+          return {
+            dollars = -card.ability.extra.money_minus,
+            card = card
+          }
         end
-        return {
-          dollars = -card.ability.extra.money_minus,
-          card = card
-        }
+      else
+        card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
+        if card.ability.extra.future_dollars >= 0 then
+          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+          return {
+            dollars = -card.ability.extra.money_minus,
+            card = card
+          }
+        end
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
