@@ -2652,6 +2652,7 @@ return {
                 name = "Zoroark",
                 text = {
                     "Copies ability of rightmost {C:attention}Joker{}",
+                }
             },
             j_poke_gothita = {
                 name = "Gothita",
