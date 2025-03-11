@@ -105,9 +105,7 @@ local zorua = {
       local temp_ability = card.ability
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      if not full_UI_table.name or not full_UI_table.name[1].nodes or not full_UI_table.name[1].nodes[1].config then
-        full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
-      end
+      full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
       card.ability = temp_ability
       local textDyna = full_UI_table.name[1].nodes[1].config.object
       textDyna.string = textDyna.string .. localize("poke_illusion")
