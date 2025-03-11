@@ -39,7 +39,9 @@ local blissey={
               return true
           end
       })) 
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      if not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
       return {
           message = localize('k_copied_ex'),
           colour = G.C.CHIPS,

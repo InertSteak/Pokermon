@@ -123,7 +123,7 @@ local dudunsparce={
   ptype = "Colorless",
   atlas = "Pokedex9",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then

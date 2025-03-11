@@ -900,7 +900,9 @@ local chansey={
               return true
           end
       })) 
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      if not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
       playing_card_joker_effects({copy})
       return {
           message = localize('k_copied_ex'),
