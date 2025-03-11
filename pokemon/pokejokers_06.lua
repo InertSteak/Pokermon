@@ -154,7 +154,7 @@ local hoothoot={
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
       if context.individual and context.cardarea == G.scry_view then
-        local chips = context.other_card:get_chip_bonus()
+        local chips = context.other_card:get_chip_bonus() + (context.other_card.edition and context.other_card.edition.chips or 0)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           colour = G.C.CHIPS,
@@ -191,7 +191,7 @@ local noctowl={
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
       if context.individual and context.cardarea == G.scry_view then
-        local chips = context.other_card:get_chip_bonus()
+        local chips = context.other_card:get_chip_bonus() + (context.other_card.edition and context.other_card.edition.chips or 0)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           colour = G.C.CHIPS,
