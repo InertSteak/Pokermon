@@ -2640,6 +2640,19 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_zorua = {
+                name = "Zorua",
+                text = {
+                    "Copies ability of rightmost {C:attention}Joker{}",
+                    "Illusion breaks after first hand",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_zoroark = {
+                name = "Zoroark",
+                text = {
+                    "Copies ability of rightmost {C:attention}Joker{}",
+            },
             j_poke_gothita = {
                 name = "Gothita",
                 text = {
@@ -3955,6 +3968,7 @@ return {
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
             poke_faint_ex = "Fainted!",
+            poke_reveal_ex = "Revealed!",
             poke_nido_ex = "Nido!",
             poke_disguise_intact = "Disguise Intact! Death Prevented!",
             poke_disguise_broken = "Disguise Broken! Death Not Prevented!",
@@ -3969,7 +3983,8 @@ return {
             poke_powder_ex = "Powder Snow!",
             poke_future_sight = "Future Sight!",
             poke_smell_ya = "Smell Ya Later!",
-            poke_wowthree = "Wow! Three!"
+            poke_wowthree = "Wow! Three!",
+            poke_illusion = "...?",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
