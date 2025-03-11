@@ -109,11 +109,13 @@ local scyther={
 local jynx={
   name = "jynx", 
   pos = {x = 6, y = 9}, 
+  config = {extra = {h_size = 2, deck_size = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid
+    return {vars = {center.ability.extra.h_size, G.GAME.starting_deck_size + center.ability.extra.deck_size}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 5, 
   stage = "Basic",
   ptype = "Psychic",
@@ -136,26 +138,34 @@ local jynx={
         end
       end
     end
-  end
+    if context.setting_blind then
+      if ((G.playing_cards and #G.playing_cards or 0) >= (G.GAME.starting_deck_size + card.ability.extra.deck_size)) then
+        G.hand:change_size(card.ability.extra.h_size)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
+        card:juice_up()
+      end
+    end
+  end,
 }
 local electabuzz={
   name = "electabuzz", 
   pos = {x = 7, y = 9}, 
-  config = {extra = {money_mod = 2}},
+  config = {extra = {money_mod = 2, percent = 25, max = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
-    return {vars = {center.ability.extra.money_mod}}
+    return {vars = {center.ability.extra.money_mod, center.ability.extra.percent, math.min(center.ability.extra.max, math.ceil(center.sell_cost * center.ability.extra.percent/100)), 
+                    center.ability.extra.max}}
   end,
-  rarity = 2, 
-  cost = 7, 
+  rarity = 3, 
+  cost = 8, 
   item_req = "linkcable",
   stage = "Basic",
   ptype = "Lightning",
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
+    if ((context.selling_card and not context.selling_self) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
       card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
       card:set_cost()
       G.E_MANAGER:add_event(Event({
@@ -163,18 +173,22 @@ local electabuzz={
         end}))
     end
     return item_evo(self, card, context, "j_poke_electivire")
-  end
+  end,
+  calc_dollar_bonus = function(self, card)
+    local earned = math.min(card.ability.extra.max, math.ceil(card.sell_cost * card.ability.extra.percent/100))
+    return ease_poke_dollars(card, "electabuzz", earned, true)
+	end
 }
 local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
-  config = {extra = {mult = 0, mult_mod = 2}},
+  config = {extra = {mult = 0, mult_mod = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 7, 
   item_req = "linkcable",
   stage = "Basic", 
@@ -1204,47 +1218,10 @@ local articuno={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint and context.full_hand then
-      for k, v in ipairs(context.scoring_hand) do
-        v.poke_scored = true
-      end
-      for k, v in ipairs(context.full_hand) do
-        if not v.poke_scored then
-          if not v.seal then
-            local args = {guaranteed = true}
-            local seal_type = SMODS.poll_seal(args)
-            v:set_seal(seal_type, true)
-          end
-          if v.ability.name == "Default Base" then
-            local enhancement_type = pseudorandom(pseudoseed('articuno'))
-            if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
-            elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
-            elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
-            elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
-            elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
-            elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
-            elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
-            else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
-            end
-          end
-          if not v.edition then
-            v:set_edition("e_foil", true)
-          end
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  v:juice_up()
-                  return true
-              end
-          })) 
-        end
-      end
-      for k, v in ipairs(context.scoring_hand)do
-        v.poke_scored = nil
-      end
-    end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
+    if context.before and context.cardarea == G.jokers and not context.blueprint and context.scoring_hand then
+      local target = context.scoring_hand[1]
+      local args = {edition = "e_foil", seal = SMODS.poll_seal({guaranteed = true})}
+      poke_convert_cards_to(target, args, true, true)
     end
   end
 }

@@ -87,7 +87,7 @@ local drakloak={
               v:set_cost()
             end
           end
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.MONEY})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
         end
         
         return {

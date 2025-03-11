@@ -253,7 +253,7 @@ return {
                     "Add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
                     "or {C:dark_edition}Polychrome{} effect to",
                     "{C:attention}1{} selected card in hand and",
-                    "{C:attention}Drain{} {C:money}$#2#{} from each Joker",
+                    "remove card {C:attention}Enhancement{}",
                     "{C:attention}Evolution Card{}",
                 }
             },
@@ -278,11 +278,11 @@ return {
             c_poke_duskstone = {
                 name = "Dusk Stone",
                 text = {
-                    "Earn {C:money}$#1#{}",
-                    "if used {C:attention}#2#{} rounds",
-                    "after you get this",
+                    "Earn {C:money}$#1#{} for each Joker you have",
+                    "{C:attention}Drain {C:money}$1{} from each Joker you have",
+                    "No {C:attention}Drain{} after {C:attention}#2#{} Rounds {C:inactive}(Round #3#)",
                     "{C:attention}Evolution Card{}",
-                    "{C:inactive}(Earns {C:money}${C:inactive} starting Round {C:attention}#3#{C:inactive})"
+                    "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
                 }
             },
             c_poke_dawnstone = {
@@ -582,33 +582,36 @@ return {
             j_poke_pidgey = {
                 name = "Pidgey",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop cost {C:money}$2{} less",
+                    "{C:mult}+#2#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeotto = {
                 name = "Pidgeotto",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop cost {C:money}$3{} less",
+                    "{C:mult}+#2#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeot = {
                 name = "Pidgeot",
                 text = {
-                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
-                    "in the shop are {C:attention}free{}",
+                    "Create a {C:planet}Planet{} card when {C:attention}Blind{} is selected",
                     "{br:2}text needs to be here to work",
-                    "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
+                    "{C:mult}+#1#{} Mult if scoring hand contains",
+                    "multiple ranks and multiple suits",
                 } 
             },
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "{C:planet}Planet{} cards grant",
-                    "{C:attention}#1#{} additional levels",
+                    "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
+                    "{br:2}text needs to be here to work",
+                    "Each played card gives {X:mult,C:white}X{} Mult",
+                    "equal to {C:attention}discards lost{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 } 
             },
             j_poke_rattata = {
@@ -686,7 +689,7 @@ return {
                     "in your full deck",
                     "{br:3}text needs to be here to work",
                     "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
-                    "shattered each round to hand",
+                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
@@ -697,8 +700,8 @@ return {
                     "{C:chips}+#1#{} Chips for each {C:attention}Glass{} card",
                     "in your full deck",
                     "{br:3}text needs to be here to work",
-                    "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
-                    "shattered each round to hand",
+                    "{V:1}Add a copy of the first {C:attention,V:1}#3#{} {C:inactive}[#4#]{} {C:attention,V:1}Glass{V:1} cards",
+                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                 } 
             },
@@ -1080,7 +1083,7 @@ return {
                 } 
             },
             j_poke_victreebel = {
-                name = "Victreebell",
+                name = "Victreebel",
                 text = {
                     "Played cards with {C:attention}Even{} rank",
                     "give {C:chips}+#1#{} Chips when scored",
@@ -1092,7 +1095,6 @@ return {
                 text = {
                     "Each played {C:attention}10{} gives",
                     "{C:mult}+#1#{} Mult when scored",
-                    "if hand only contains {C:attention}10{}s",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
             },
@@ -1259,12 +1261,11 @@ return {
             j_poke_muk = {
                 name = 'Muk',      
                 text = {
-                    "{C:mult}+#1#{} Mult per card over {C:attention}#3#{} in your deck",
-                    "{X:mult,C:white} X#2# {} Mult if deck size > {C:attention}#4#{}",
-                    "{C:inactive}(Currently {C:mult}+#5#{} {C:inactive}Mult){}",
+                    "{C:mult}+#1#{} Mult per card over {C:attention}#2#{} in your deck",
                     "{br:4}text needs to be here to work",
                     "At end of round, remove 1 random card",
                     "from deck then add 2 random cards",
+                    "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult){}"
                 } 
             },
             j_poke_shellder = {
@@ -1589,6 +1590,9 @@ return {
             j_poke_jynx = {
                 name = 'Jynx',      
                 text = {
+                    "When {C:attention}Blind{} is selected, gain {C:attention}+#1#{} hand size",
+                    "if deck size is {C:attention}#2#{} or greater",
+                    "{br:4}text needs to be here to work",
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
                     "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
@@ -1598,8 +1602,12 @@ return {
             j_poke_electabuzz = {
                 name = 'Electabuzz',      
                 text = {
-                    "Gains {C:money}$#1#{} of {C:attention}sell value{} at end of",
-                    "round and when a card is {C:attention}sold{}",
+                    "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
+                    "is sold and at end of round",
+                    "{br:3.5}text needs to be here to work",
+                    "Earn {C:attention}#2#%{} of this Joker's sell value",
+                    "at end of round {C:inactive}(rounded up){}",
+                    "{C:inactive}(Currently earns {C:money}$#3#{C:inactive}/$#4# Max)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
             },
@@ -1800,9 +1808,9 @@ return {
             j_poke_articuno = {
                 name = 'Articuno',
                 text = {
-                    "Add {C:attention}Foil{}, a random {C:attention}enhancement{}, and",
-                    "a random {C:attention}seal{} to unscored cards",
-                    "on {C:attention}first hand{} of round"
+                    "Add {C:attention}Foil{} and a {C:attention}seal{}",
+                    "to leftmost scoring card",
+                    "in played hand"
                 } 
             },
             j_poke_zapdos = {
@@ -1961,6 +1969,20 @@ return {
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
+            j_poke_natu = {
+                name = 'Natu',
+                text = {
+                    "{C:planet}Planet{} cards give an extra level",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_xatu = {
+                name = 'Xatu',
+                text = {
+                    "{C:planet}Planet{} cards give {C:attention}#1#{} extra levels",
+                    "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
+                }
+            },
             j_poke_bellossom = {
                 name = 'Bellossom',
                 text = {
@@ -2060,7 +2082,7 @@ return {
                     "When Blind is selected, destroy Joker",
                     "to the right and gain {C:mult}+#4#{} Mult",
                     "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
-                    "if it wasn't {C:attention}Common{}",
+                    "if it was {C:red}Rare{} or higher",
                     "Those editions {C:attention}stack{} on this Joker",
                     "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
@@ -2376,8 +2398,8 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips if played hand",
                     "is a {C:attention}Four of a Kind{}",
-                    "Gains {C:chips}+#2#{} Chips if played hand",
-                    "contains a scoring {C:attention}Ace",
+                    "Gains {C:chips}+#2#{} Chips if scoring hand",
+                    "contains an {C:attention}Ace",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +64 Chips)",
                 } 
             },
@@ -2386,8 +2408,8 @@ return {
                 text = {
                     "Gains {C:chips}+#2#{} Chips if played hand",
                     "is a {C:attention}Four of a Kind{}",
-                    "Gains {C:chips}+#2#{} Chips if played hand",
-                    "contains {C:attention}2+{} scoring {C:attention}Aces",
+                    "Gains {C:chips}+#2#{} Chips if scoring hand",
+                    "contains {C:attention}2+{} {C:attention}Aces",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +256 Chips)",
                 } 
             },
@@ -2630,7 +2652,31 @@ return {
                 name = "Zoroark",
                 text = {
                     "Copies ability of rightmost {C:attention}Joker{}",
-                }
+            },
+            j_poke_gothita = {
+                name = "Gothita",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop cost {C:money}$2{} less",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_gothorita = {
+                name = "Gothorita",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop cost {C:money}$3{} less",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_gothitelle = {
+                name = "Gothitelle",
+                text = {
+                    "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
+                    "in the shop are {C:attention}free{}",
+                    "{br:2}text needs to be here to work",
+                    "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
+                } 
             },
             j_poke_vanillite = {
                 name = "Vanillite",

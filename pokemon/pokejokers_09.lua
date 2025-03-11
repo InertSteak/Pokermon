@@ -103,7 +103,7 @@ local celebi = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    G.GAME.celebi_skips = G.GAME.celebi_skips or 2
+    G.GAME.celebi_skips = G.GAME.celebi_skips or 1
     G.GAME.celebi_triggered = false
   end
 }

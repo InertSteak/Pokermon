@@ -77,6 +77,7 @@ family = {
     {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"hoothoot", "noctowl"},
+    {"natu", "xatu"},
     {"hoppip", "skiploom", "jumpluff"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
@@ -86,6 +87,7 @@ family = {
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
+    {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
@@ -1145,4 +1147,25 @@ fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars,
   if evolution_node then
     desc_nodes[#desc_nodes+1] = evolution_node
   end
+end
+
+poke_get_family_list = function(name)
+  for _, v in ipairs(family) do
+    for _, y in ipairs(v) do
+      if ((type(y) == "table" and y.key) or y) == name then
+        return v
+      end
+    end
+  end
+  return {}
+end
+
+poke_family_present = function(center)
+  local family_list = poke_get_family_list(center.name)
+  for _, fam in pairs(family_list) do
+    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
+      return true
+    end
+  end
+  return false
 end

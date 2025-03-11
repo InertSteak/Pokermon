@@ -421,10 +421,107 @@ local igglybuff={
 -- Togepi 175
 -- Togetic 176
 -- Natu 177
+local natu = {
+  name = "natu",
+  pos = {x = 5, y = 2},
+  config = {levels = {}, extra = {level_amt = 1, rounds = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.using_consumeable and context.consumeable and context.consumeable.ability then
+      if context.consumeable.ability.set == 'Planet' then
+        for hand, data in pairs(G.GAME.hands) do
+          if self.config.levels[hand] ~= data.level then
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'), chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
+            level_up_hand(card, hand, nil, card.ability.extra.level_amt)
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+          end
+        end
+      end
+    end
+    for hand, data in pairs(G.GAME.hands) do
+      if self.config.levels[hand] ~= data.level then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            for hand, data in pairs(G.GAME.hands) do
+              self.config.levels[hand] = data.level
+            end
+            return true
+          end
+        }))
+        break
+      end
+    end
+    return level_evo(self, card, context, "j_poke_xatu")
+  end,
+  set_sprites = function(self, card, front)
+    for hand, data in pairs(G.GAME.hands) do
+      self.config.levels[hand] = data.level
+    end
+  end,
+}
 -- Xatu 178
+local xatu = {
+  name = "xatu",
+  pos = {x = 6, y = 2},
+  config = {levels = {}, extra = {level_amt = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.level_amt}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.using_consumeable and context.consumeable and context.consumeable.ability then
+      if context.consumeable.ability.set == 'Planet' then
+        for hand, data in pairs(G.GAME.hands) do
+          if self.config.levels[hand] ~= data.level then
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'), chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
+            level_up_hand(card, hand, nil, card.ability.extra.level_amt)
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+          end
+        end
+      end
+    end
+    for hand, data in pairs(G.GAME.hands) do
+      if self.config.levels[hand] ~= data.level then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            for hand, data in pairs(G.GAME.hands) do
+              self.config.levels[hand] = data.level
+            end
+            return true
+          end
+        }))
+        break
+      end
+    end
+  end,
+  set_sprites = function(self, card, front)
+    for hand, data in pairs(G.GAME.hands) do
+      self.config.levels[hand] = data.level
+    end
+  end,
+}
 -- Mareep 179
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff},
+        list = { mew, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff, natu, xatu},
 }
