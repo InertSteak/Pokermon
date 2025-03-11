@@ -1,32 +1,44 @@
 determine_type = function()
-  local poketype
-  local pokemon
-  local possible = {}
-  for l,v in pairs(G.jokers.cards) do
-    if (v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype) or type_sticker_applied(v) then
-      table.insert(possible, v)
-    end
-  end
-  pokemon = pseudorandom_element(possible, pseudoseed('chart'))
-  if pokemon and type_sticker_applied(pokemon) then
-    local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
-    for x, y in pairs(ptype_list) do
-      if pokemon.ability[string.lower(y).."_sticker"] then
-        return y
-      end
-    end
-  elseif pokemon then
-    return pokemon.ability.extra.ptype
-  else
-    return "Colorless"
-  end
+local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+pseudoshuffle(ptype_list, pseudoseed('chart'))
+local count = 1
+
+local increase = pseudorandom('increasetypes')
+
+if increase > .66 then
+  count = count + 2
+elseif increase > .33 then
+  count = count + 1
 end
 
-goose_disable = function(card, btype)
-  if (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype == btype) then
-    return true
-  elseif btype and card.ability[string.lower(btype).."_sticker"] then
-    return true
+local ptypes = {}
+for i = 1, count do
+  ptypes[#ptypes+1] = ptype_list[i]
+end
+
+return ptypes
+end
+
+goose_disable = function(disabled, card, btypes)
+  if disabled then return false end
+  if (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) then
+    local match = false
+    for k, v in pairs(btypes) do
+      if v == card.ability.extra.ptype then
+        match = true
+        break
+      end
+    end
+    return match
+  elseif btypes then
+    local match = false
+    for k, v in pairs(btypes) do
+      if card.ability[string.lower(v).."_sticker"] then
+        match = true
+        break
+      end
+    end
+    return match
   end
   return false
 end
@@ -41,17 +53,17 @@ local cgoose={
   atlas = "pokeboss",
   discovered = true,
   debuff = {},
-  config = {},
+  config = {disabled = false},
   set_blind = function(self)
-    self.config.ptype = determine_type()
+    self.config.ptypes = determine_type()
   end,
   recalc_debuff = function(self, card, from_blind)
-    return goose_disable(card, self.config.ptype)
+    --return goose_disable(self.config.disabled, card, self.config.ptypes)
   end,
   press_play = function(self)
     G.GAME.blind.triggered = true
     G.GAME.blind.prepped = true
-    self.config.ptype = determine_type()
+    self.config.ptypes = determine_type()
   end,
   drawn_to_hand = function(self)
     if G.GAME.blind.prepped then
@@ -59,13 +71,16 @@ local cgoose={
         y:set_debuff(false)
       end
       for l,v in pairs(G.jokers.cards) do
-        if goose_disable(v, self.config.ptype) then
+        if goose_disable(self.config.disabled, v, self.config.ptypes) then
           v:set_debuff(true)
 					v:juice_up()
 					G.GAME.blind:wiggle()
         end
       end
     end
+  end,
+  disable = function(self)
+    self.config.disabled = true
   end
 }
 

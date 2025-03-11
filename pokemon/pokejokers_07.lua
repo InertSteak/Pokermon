@@ -141,8 +141,127 @@ local politoed={
   end,
 }
 -- Hoppip 187
+local hoppip={
+  name = "hoppip",
+  pos = {x = 5, y = 3},
+  config = {extra = {h_size = 1, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
+      local target = {context.full_hand[1],context.full_hand[2]}
+      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      return {
+        message = localize("poke_hop_ex"),
+      }
+    end
+    return level_evo(self, card, context, "j_poke_skiploom")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
+}
 -- Skiploom 188
+local skiploom={
+  name = "skiploom",
+  pos = {x = 6, y = 3},
+  config = {extra = {h_size = 2, rounds = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
+      local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
+      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      return {
+        message = localize("poke_skip_ex"),
+      }
+    end
+    return level_evo(self, card, context, "j_poke_jumpluff")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
+}
 -- Jumpluff 189
+local jumpluff={
+  name = "jumpluff",
+  pos = {x = 7, y = 3},
+  config = {extra = {h_size = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    return {vars = {center.ability.extra.h_size}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "Two",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
+      local target = context.full_hand
+      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      return {
+        message = localize("poke_jump_ex"),
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
+}
 -- Aipom 190
 -- Sunkern 191
 -- Sunflora 192
@@ -180,8 +299,6 @@ local espeon={
     end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
       return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-        colour = G.C.XMULT,
         x_mult = card.ability.extra.Xmult_multi,
         card = card
       }
@@ -248,7 +365,13 @@ local umbreon={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.hand_played})
     end
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == card.ability.extra.hand_played and not context.blueprint then
-      if context.before and G.GAME.hands[card.ability.extra.hand_played].level > 1 then
+      local can_level = nil
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        can_level = to_big(G.GAME.hands[card.ability.extra.hand_played].level) > to_big(1)
+      else
+        can_level = G.GAME.hands[card.ability.extra.hand_played].level > 1
+      end
+      if context.before and can_level then
         level_up_hand(card, card.ability.extra.hand_played, nil, -1)
         if card.ability.extra.decreases < card.ability.extra.decrease_goal - 1 then
           card.ability.extra.decreases = card.ability.extra.decreases + 1
@@ -312,7 +435,7 @@ local slowking={
   end,
   rarity = "poke_safari",
   cost = 10,
-  stage = "Two",
+  stage = "One",
   ptype = "Water",
   atlas = "Pokedex2",
   perishable_compat = true,
@@ -354,6 +477,35 @@ local slowking={
 -- Pineco 204
 -- Forretress 205
 -- Dunsparce 206
+local dunsparce={
+  name = "dunsparce",
+  pos = {x = 4, y = 5},
+  config = {extra = {rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds, }}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.reroll_shop then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
+    end
+    return level_evo(self, card, context, "j_poke_dudunsparce")
+  end
+}
 -- Gligar 207
 -- Steelix 208
 local steelix={
@@ -396,5 +548,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, politoed, espeon, umbreon, slowking, steelix},
+        list = {bellossom, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
 }

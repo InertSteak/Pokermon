@@ -62,11 +62,11 @@ local dreepy={
 local drakloak={
   name = "drakloak",
   pos = {x = 2, y = 11},
-  config = {extra = {money = 1, total_sell_value = 0, sell_value_goal = 40, Xmult = .01}},
+  config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
-    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, center.ability.extra.sell_value_goal, center.ability.extra.Xmult, 
+    return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
@@ -87,7 +87,7 @@ local drakloak={
               v:set_cost()
             end
           end
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.MONEY})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
         end
         
         return {
@@ -98,7 +98,7 @@ local drakloak={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, card.ability.extra.sell_value_goal)
+    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -139,11 +139,9 @@ local dragapult={
         if next(context.poker_hands['Straight Flush']) and not next(find_joker('dreepy_dart')) then
           for i = 1, 2 do
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-              play_sound('timpani')
+              play_sound('negative', 1.5, 0.4)
               local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_dreepy_dart", no_edition = true}
               local new_card = SMODS.create_card(temp_card)
-              local edition = {negative = true}
-              new_card:set_edition(edition, true)
               new_card:add_to_deck()
               G.jokers:emplace(new_card)
               return true end }))
@@ -176,6 +174,7 @@ local dreepy_dart={
   name = "dreepy_dart",
   pos = {x = 1, y = 11},
   config = {extra = {money = 1, suit = "Spades"}},
+  no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
@@ -186,6 +185,7 @@ local dreepy_dart={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  aux_poke = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
@@ -206,6 +206,12 @@ local dreepy_dart={
       end
     end
   end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local edition = {negative = true}
+      card:set_edition(edition, true, true)
+    end
+  end
 }
 -- Zacian 888
 -- Zamazenta 889

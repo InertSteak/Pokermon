@@ -17,7 +17,7 @@ local shiny = ({
     config = {},
     in_shop = true,
     weight = 2,
-    extra_cost = 6,
+    extra_cost = 5,
     apply_to_float = true,
     sound = {
       sound = "poke_e_shiny",
@@ -41,33 +41,57 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "poke_others"
         end
+        if card.config.center.atlas and string.sub(card.config.center.atlas,1,6) == "j_poke_" then
+          local temp_atlas = card.config.center.atlas
+          card.config.center.atlas = card.config.center.atlas.."_shiny"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = temp_atlas
+        end
+        if card.config.center.atlas == "poke_Megas" then
+          card.config.center.atlas = "poke_ShinyMegas"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_Megas"
+        end
+        if card.config.center.atlas == "poke_jirachi" then
+          card.config.center.atlas = "poke_jirachi_shiny"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_jirachi"
+        end
+        if card.config.center.atlas == "poke_altjirachi" then
+          card.config.center.atlas = "poke_shinyaltjirachi"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_altjirachi"
+        end
         if card.children.center.atlas.name == "Joker" then
           SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
           card.config.center.shiny = true
           card:set_sprites(card.config.center)
           card.config.center.atlas = "Joker"
         end
+        
+        --support for custom additions
+        if card.config.center.atlas and card.config.center.poke_custom_prefix then
+          local prev_atlas = card.config.center.atlas
+          local prelength = string.len(card.config.center.poke_custom_prefix) + 1 
+          local noprefix_atlas = string.sub(prev_atlas, prelength)
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = card.config.center.poke_custom_prefix..'_shiny'..noprefix_atlas, discovered = true, unlocked = true}, true)
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = prev_atlas
+        end
+        
         --we don't want to do this in the collection screen
         if card.area and card.area.config and not card.area.config.collection then
           if card.area == G.pack_cards or card.area == G.shop_jokers then
             card.config.shiny_on_add = true
           else
-            if G.GAME.modifiers.poke_booster_packs then
-              G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
-            else
-              G.GAME.modifiers.poke_booster_packs = 3
-            end
+            SMODS.change_booster_limit(1)
           end
         elseif not card.area then
           card.config.shiny_on_add = true
         end
     end,
     on_remove = function(card)
-      if G.GAME.modifiers.poke_booster_packs then
-        G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
-      else
-        G.GAME.modifiers.poke_booster_packs = 0
-      end
+      SMODS.change_booster_limit(-1)
     end,
     on_load = function(card)
         for i = 1, 9 do
@@ -83,13 +107,28 @@ local shiny = ({
           card:set_sprites(card.config.center)
           card.config.center.atlas = "poke_others"
         end
+        if card.config.center.atlas == "poke_Megas" then
+          card.config.center.atlas = "poke_ShinyMegas"
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = "poke_Megas"
+        end
         if card.children.center.atlas.name == "Joker" then
           SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
           card.config.center.shiny = true
           card:set_sprites(card.config.center)
           card.config.center.atlas = "Joker"
         end
-    end
+        
+        --support for custom additions
+        if card.config.center.atlas and card.config.center.poke_custom_prefix then
+          local prev_atlas = card.config.center.atlas
+          local prelength = string.len(card.config.center.poke_custom_prefix) + 1 
+          local noprefix_atlas = string.sub(prev_atlas, prelength)
+          SMODS.Joker:take_ownership(card.config.center_key, {atlas = card.config.center.poke_custom_prefix..'_shiny'..noprefix_atlas, discovered = true, unlocked = true}, true)
+          card:set_sprites(card.config.center)
+          card.config.center.atlas = prev_atlas
+        end
+    end,
 })
 
 return {

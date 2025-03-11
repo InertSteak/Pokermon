@@ -5,7 +5,7 @@
 local aron = {
   name = "aron",
   pos = { x = 2, y = 5 },
-  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 }, evo_rqmt = 2 },
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -18,7 +18,7 @@ local aron = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced and context.blind == G.P_BLINDS.bl_small then
+    if context.setting_blind and not card.getting_sliced and context.blind == G.P_BLINDS.bl_small then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()
@@ -47,14 +47,14 @@ local aron = {
     elseif context.destroying_card then
       return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
     end
-    return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, 2)
+    return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
 }
 -- Lairon 305
 local lairon = {
   name = "lairon",
   pos = { x = 3, y = 5 },
-  config = { extra = { Xmult = 2, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 }, evo_rqmt = 4 },
   rarity = 3,
   cost = 8,
   stage = "One",
@@ -67,7 +67,7 @@ local lairon = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced and not context.blind.boss then
+    if context.setting_blind and not card.getting_sliced and not context.blind.boss then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()
@@ -96,14 +96,14 @@ local lairon = {
     elseif context.destroying_card then
       return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
     end
-    return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, 4)
+    return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
 }
 -- Aggron 306
 local aggron = {
   name = "aggron",
   pos = { x = 4, y = 5 },
-  config = { extra = { Xmult = 4, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
   rarity = "poke_safari",
   cost = 12,
   stage = "Two",
@@ -116,7 +116,7 @@ local aggron = {
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not self.getting_sliced then
+    if context.setting_blind and not card.getting_sliced then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
         _card:add_to_deck()

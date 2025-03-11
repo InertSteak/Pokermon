@@ -51,12 +51,16 @@ family = {
     {"staryu","starmie"},
     {"scyther", "scizor"},
     {"mimejr", "mrmime"},
+    {"tauros", "taurosh"},
+    {"kangaskhan", "mega_kangaskhan"},
     {"elekid", "electabuzz", "electivire"},
     {"magby", "magmar", "magmortar"},
     {"tangela", "tangrowth"},
     {"smoochum", "jynx"},
-    {"magikarp","gyarados"},
+    {"pinsir", "mega_pinsir"},
+    {"magikarp","gyarados", "mega_gyarados"},
     {"munchlax", "snorlax"},
+    {"aerodactyl", "mega_aerodactyl"},
     {"happiny", "chansey", "blissey"},
     {"lickitung", "lickilicky"},
     {"porygon", "porygon2", "porygonz"},
@@ -68,22 +72,36 @@ family = {
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
+    {"nosepass", "probopass"},
     {"beldum", "metang", "metagross"},
+    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
+    {"hoothoot", "noctowl"},
+    {"natu", "xatu"},
+    {"hoppip", "skiploom", "jumpluff"},
+    {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
     {"mudkip", "marshtomp", "swampert"},
+    {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
+    {"gothita", "gothorita", "gothitelle"},
+    {"vanillite", "vanillish", "vanilluxe"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
+    {"zorua", "zoroark"},
+    {"litleo", "pyroar"},
     {"grubbin", "charjabug", "vikavolt"},
-    {"dreepy", "drakloak", "dragapult"},
+    {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
-    {"gimmighoul", "gholdengo"},
+    {"wiglett", "wugtrio"},
+    {"gimmighoul", "gholdengo", "gimmighoulr"},
+  --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
+    {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
 }
 
 type_sticker_applied = function(card)
@@ -186,11 +204,12 @@ remove = function(self, card, context)
 end
 
 evolve = function(self, card, context, forced_key)
-  if not pokermon_config.no_evos and not next(find_joker("everstone")) and not context.retrigger_joker then
+  if not context.retrigger_joker then
     local previous_position = nil
     local poketype_list = nil
     local previous_edition = nil
     local previous_perishable = nil
+    local previous_perish_tally = nil
     local previous_eternal = nil
     local previous_rental = nil
     local previous_energy_count = nil
@@ -205,6 +224,8 @@ evolve = function(self, card, context, forced_key)
     local previous_id = nil
     local previous_cards_scored = nil
     local previous_upgrade = nil
+    local previous_mega = nil
+    local previous_debuff = nil
     
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
@@ -222,6 +243,7 @@ evolve = function(self, card, context, forced_key)
     
     if card.ability.perishable then
       previous_perishable = card.ability.perishable
+      previous_perish_tally = card.ability.perish_tally
     end
       
     if card.ability.eternal then
@@ -270,6 +292,14 @@ evolve = function(self, card, context, forced_key)
       previous_upgrade = card.ability.extra.upgrade
     end
     
+    if card.config.center.rarity == "poke_mega" then
+      previous_mega = true
+    end
+    
+    if card.debuff then
+      previous_debuff = true
+    end
+    
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
       remove(self, card, context)
     return true end }))
@@ -293,6 +323,7 @@ evolve = function(self, card, context, forced_key)
         local edition = {poke_shiny = true}
          new_card:set_edition(edition, true)
          new_card.config.shiny_on_add = true
+         SMODS.change_booster_limit(-1)
       else
         new_card:set_edition(previous_edition, true)
       end
@@ -300,7 +331,12 @@ evolve = function(self, card, context, forced_key)
     
     if previous_perishable then
        new_card.ability.perishable = previous_perishable
-       new_card.ability.perish_tally = G.GAME.perishable_rounds
+       if previous_mega or card.ability.extra.devolved or card.ability.perish_tally <= 0 then
+        new_card.ability.extra.devolved = true
+        new_card.ability.perish_tally = previous_perish_tally
+       else
+         new_card.ability.perish_tally = G.GAME.perishable_rounds
+       end
     end
 
     if previous_eternal then
@@ -358,6 +394,10 @@ evolve = function(self, card, context, forced_key)
       new_card.ability.extra.upgrade = previous_upgrade
     end
     
+    if previous_debuff then
+      new_card.debuff = true
+    end
+    
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
         new_card:add_to_deck()
         G.jokers:emplace(new_card, previous_position)
@@ -371,7 +411,7 @@ end
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
-  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not pokermon_config.no_evos and not card.gone then
+  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
     return false
@@ -379,13 +419,10 @@ can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
 end
 
 level_evo = function(self, card, context, forced_key)
-    if can_evolve(self, card, context, forced_key) and card.ability.extra.rounds then
+    if not card.ability.extra.rounds then return end
+    if can_evolve(self, card, context, forced_key) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
-      end
-      if card.ability.extra.rounds == 1 then
-        local eval = function(card) return not card.REMOVED end
-        juice_card_until(card, eval, true)
       end
       if card.ability.extra.rounds <= 0 then
         return {
@@ -394,11 +431,16 @@ level_evo = function(self, card, context, forced_key)
       elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
-    elseif can_evolve(self, card, context, forced_key, nil, true) and card.ability.extra.rounds then
+    elseif can_evolve(self, card, context, forced_key, nil, true) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
+    end
+    if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
+      card.ability.extra.juiced = true
+      local eval = function(card) return card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
+      juice_card_until(card, eval, true)
     end
 end
 
@@ -412,19 +454,34 @@ item_evo = function(self, card, context, forced_key)
           message = evolve (self, card, context, forced_key)
         }
       end
+
+      if can_evolve(self, card, context, forced_key, true) then
+        if not card.ability.extra.juiced then
+          card.ability.extra.juiced = true
+          local eval = function(card) return card.ability.extra.evolve and not card.REMOVED and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+      end
+      
     end
 end
 
 scaling_evo = function (self, card, context, forced_key, current, target)
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    current = to_big(current)
+    target = to_big(target)
+  end
   if can_evolve(self, card, context, forced_key) and current >= target then
     return {
       message = evolve (self, card, context, forced_key)
     }
   end
-  if can_evolve(self, card, context, forced_key, true) and current >= target and not card.ability.extra.juiced then
-    card.ability.extra.juiced = true
-    local eval = function(card) return current >= target and not card.REMOVED and not G.RESET_JIGGLES end
-    juice_card_until(card, eval, true)
+  if can_evolve(self, card, context, forced_key, true) and current >= target then
+    if not card.ability.extra.juiced then
+      card.ability.extra.juiced = true
+      local eval = function(card) return current >= target and not card.REMOVED and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
   end
 end
 
@@ -433,10 +490,12 @@ type_evo = function (self, card, context, forced_key, type_req)
     return {
       message = evolve (self, card, context, forced_key)
     }
-  elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] and not card.ability.extra.juiced then
-    card.ability.extra.juiced = true
-    local eval = function(card) return not card.REMOVED end
-    juice_card_until(card, eval, true)
+  elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
+    if not card.ability.extra.juiced then
+      card.ability.extra.juiced = true
+      local eval = function(card) return card.ability[type_req.."_sticker"] and not card.REMOVED and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
   end
 end
 
@@ -502,34 +561,47 @@ get_highest_evo = function(card)
   else
     name = card.name or "bulbasaur"
   end
-  for k, v in ipairs(family) do
-    local max = #v
-    while max > 0 and string.sub(v[max],1,5) == "mega_" do
-      max = max - 1
-    end
-    local evos = {}
-    for x, y in ipairs(v) do
-      if x <= max then
-        if found and y == v[max] and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, y)
-        elseif found and G.P_CENTERS["j_poke_"..y].stage == G.P_CENTERS["j_poke_"..v[max]].stage and G.P_CENTERS["j_poke_"..y].stage ~= G.P_CENTERS["j_poke_"..name].stage then
-          table.insert(evos, y)
-        elseif not found and y == name then
-          found = true
-        end
+
+  -- find the pokermon's family list
+  local found_family = nil
+  for _, v in ipairs(family) do
+    for _, y in ipairs(v) do
+      if ((type(y) == "table" and y.key) or y) == name then
+        found_family = v
       end
-    end
-    if #evos > 0 then
-      if #evos == 1 then
-        return evos[1]
-      else
-        return pseudorandom_element(evos, pseudoseed('highest'))
-      end
-    else
-      found = false
     end
   end
-  return false
+  -- if pokermon isn't in a family, return false
+  if not found_family then return false end
+
+  -- Check for max evo in family list, ignoring megas and aux pokermons
+  local max = #found_family
+  local max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS["j_poke_"..max_evo_name].aux_poke) do
+    max = max - 1
+    max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+  end
+  local max_stage = G.P_CENTERS["j_poke_"..max_evo_name].stage
+  -- if already at the max stage, return false
+  if G.P_CENTERS["j_poke_"..name].stage == max_stage then return false end
+
+  local evos = {max_evo_name}
+  max = max - 1
+
+  while max > 0 do
+    local evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
+    if max_stage == G.P_CENTERS["j_poke_"..evo_name].stage then
+      table.insert(evos, evo_name)
+      max = max - 1
+    else
+      break
+    end
+  end
+
+  if #evos == 1 then
+    return evos[1]
+  end
+  return pseudorandom_element(evos, pseudoseed('highest'))
 end
 
 get_previous_evo = function(card, full_key)
@@ -544,14 +616,20 @@ get_previous_evo = function(card, full_key)
   end
   for k, v in ipairs(family) do
     for x, y in ipairs(v) do
-      if y == name then
+      local cur_name = (type(y) == "table" and y.key) or y
+      if cur_name == name then
         found = true
         max = #v
+        local max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+
         if x > 1 then
-          while max > 0 and string.sub(v[max],1,5) == "mega_" or v[max] == "slowking" do
+          while max > 0 and string.sub(max_evo_name,1,5) == "mega_" or max_evo_name == "slowking" do
             max = max - 1
+            if max > 0 then
+              max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
+            end
           end
-          prev = v[max]
+          prev = max_evo_name
         end
         break
       end
@@ -564,20 +642,32 @@ get_previous_evo = function(card, full_key)
   return prev
 end
 
-get_family_keys = function(cardname)
+get_family_keys = function(cardname, custom_prefix)
   local keys = {}
   local line = nil
+  custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
   for k, v in pairs(family) do
     for x, y in pairs(v) do
-      if y == cardname then line = v; break end
+      if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
     end
   end
   if line then
     for i = 1, #line do
-      table.insert(keys, 'j_poke_'..line[i])
+      if type(line[i]) == "table" then
+        local new_table = {}
+        new_table.key = custom_prefix..line[i].key
+        for k, v in pairs(line[i]) do
+          if k ~= 'key' then
+            new_table[k] = v
+          end
+        end
+        table.insert(keys, new_table)
+      else
+        table.insert(keys, custom_prefix..line[i])
+      end
     end
   else
-    table.insert(keys, 'j_poke_'..cardname)
+    table.insert(keys, custom_prefix..cardname)
   end
   return keys
 end
@@ -596,9 +686,10 @@ pokemon_in_pool = function (self)
   local in_family
   for k, v in ipairs(family) do
     for l, p in ipairs(v) do
-      if p ~= name and next(find_joker(p)) then
+      local cur_name = (type(p) == "table" and p.key) or p
+      if cur_name ~= name and next(find_joker(cur_name)) then
         found_other = true 
-      elseif p == name then
+      elseif cur_name == name then
         in_family = true
       end
     end
@@ -670,6 +761,19 @@ highlighted_evo_item = function(self, card, area, copier)
       juice_card_until(choice, eval, true)
     end
     return evolve
+end
+
+function is_evo_item_for(self, card)
+  if not card.ability or type(card.ability.extra) ~= "table" or card.ability.extra.evolve then return false end
+
+  if type(card.ability.extra.item_req) == "table" then
+    for _, item in pairs(card.ability.extra.item_req) do
+      if item == self.name then
+        return true
+      end
+    end
+  end
+  return card.ability.extra.item_req == self.name
 end
 
 evo_item_use_total = function(self, card, area, copier)
@@ -794,11 +898,11 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
+get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
   local poke_keys = {}
   local pokearea = area or G.jokers
   local poke_key
-  local create_args = {set = "Joker", area = pokearea, key = ''}
+  exclude_keys = exclude_keys or {}
   
   if pokerarity then
     if string.lower(pokerarity) == "common" then pokerarity = 1 end
@@ -807,8 +911,8 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   end
   
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) 
-       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) then
+    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas)
+       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and not exclude_keys[v.key] then
       table.insert(poke_keys, v.key)
     end
   end
@@ -818,7 +922,13 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   else
     poke_key = "j_poke_caterpie"
   end
-  create_args.key = poke_key
+
+  return poke_key
+end
+
+create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
+  local create_args = {set = "Joker", area = pokearea, key = ''}
+  create_args.key = get_random_poke_key(pseed, stage, pokerarity, area, poketype)
 
   return SMODS.create_card(create_args)
 end
@@ -829,20 +939,6 @@ get_gen_allowed = function(atlas)
     gen_allowed = false
   end
   return gen_allowed
-end
-
-get_poke_allowed = function(key)
-  local banned_keys = {"taurosh", "dreepy_dart", "gimmighoulr"}
-  local allowed = true
-  if string.sub(key,1,11) == "j_poke_mega" then return false end
-  
-  for i=1, #banned_keys do
-    if "j_poke_"..banned_keys[i] == key then
-      return false
-    end
-  end
-  
-  return true
 end
 
 get_poke_target_card_ranks = function(seed, num, default, use_deck)
@@ -943,14 +1039,39 @@ faint_baby_poke = function(self, card, context)
       if not alive then
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
-              return true
+            card.ability.fainted = G.GAME.round
+            card:set_debuff()
+            return true
           end
         })) 
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_faint_ex'), colour = G.C.MULT})
       end
     end
   end
+end
+
+volatile_active = function(self, card, direction)
+  local active = true
+  local first_pos = nil
+  local self_pos = 0
+  local normal_pos = 0
+  for i = 1, #G.jokers.cards do
+    local volatile = G.jokers.cards[i].config.center.volatile
+    if G.jokers.cards[i] == card then
+      self_pos = i
+    end
+    if not volatile then
+      normal_pos = i
+      if not first_pos then first_pos = i end
+    end
+  end
+  if direction == 'left' and first_pos and first_pos < self_pos then 
+    active = false
+  end
+  if direction == 'right' and normal_pos > self_pos then
+    active = false
+  end
+  return active
 end
 
 poke_total_chips = function(card)
@@ -984,4 +1105,67 @@ poke_drain = function(card, target, amount, one_way)
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
     end    
   end
+end
+
+fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  if not full_UI_table.name then
+    full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
+  end
+  -- get descriptions
+  local vars = self:loc_vars(info_queue, card).vars
+  local count = #desc_nodes + 1
+  localize{type = 'descriptions', key = self.key, set = self.set, nodes = desc_nodes, vars = vars}
+  -- set count to the first line with a colon
+  while count <= #desc_nodes and not(desc_nodes[count][2] and desc_nodes[count][2].config.text and string.find(desc_nodes[count][2].config.text,":")) do
+    count = count + 1
+  end
+
+  local evolution_node = nil
+  local to_replace = {}
+  while #desc_nodes >= count do
+    local new_node = {n=G.UIT.R, config={align = "tl", scale = 1.0, colour = G.C.UI.TEXT_LIGHT}, nodes = {}}
+    local nodes = desc_nodes[count]
+    table.remove(desc_nodes, count)
+
+    if nodes[1] and nodes[1].config.text and string.find(nodes[1].config.text,"%(Evolves") then
+      evolution_node = nodes
+    else
+      if not (nodes[2] and nodes[2].config.text and string.find(nodes[2].config.text,":")) then
+        local last_nodes = to_replace[#to_replace].nodes
+        table.insert(nodes, 1, {n=G.UIT.C, config={align = "m", colour = G.C.WHITE, r = 0.05, padding = 0.03, res = 0.15, maxh = 0.2}, nodes={
+          {n=G.UIT.T, config={text = "99 ", colour = G.C.WHITE, scale = last_nodes[1].nodes[1].config.scale}},
+        }})
+        local text_extract = string.match(last_nodes[2].config.text,"%s*:%s*")
+        table.insert(nodes, 2, {n=G.UIT.T, config={text = text_extract, colour = G.C.WHITE, scale = last_nodes[2].config.scale, maxh = 0.2}})
+      end
+      new_node.nodes = nodes
+      table.insert(to_replace, new_node)
+    end
+  end
+
+  desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config = {align = "tl", scale = 1.0, colour = G.C.UI.TEXT_LIGHT, padding = 0.05}, nodes = to_replace}}
+  if evolution_node then
+    desc_nodes[#desc_nodes+1] = evolution_node
+  end
+end
+
+poke_get_family_list = function(name)
+  for _, v in ipairs(family) do
+    for _, y in ipairs(v) do
+      if ((type(y) == "table" and y.key) or y) == name then
+        return v
+      end
+    end
+  end
+  return {}
+end
+
+poke_family_present = function(center)
+  local family_list = poke_get_family_list(center.name)
+  for _, fam in pairs(family_list) do
+    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
+      return true
+    end
+  end
+  return false
 end

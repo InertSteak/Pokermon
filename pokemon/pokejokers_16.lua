@@ -9,7 +9,7 @@
 local mantyke={
   name = "mantyke",
   pos = {x = 1, y = 5},
-  config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2, chip_total = 0,}},
+  config = {extra = {chips = 20, Xmult_minus = 0.75, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
@@ -28,14 +28,6 @@ local mantyke={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         faint_baby_poke(self, card, context)
-        local chip_temp_total = card.ability.extra.chip_total
-        card.ability.extra.chip_total = 0
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus,
-          chip_mod = chip_temp_total
-        }
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
@@ -47,10 +39,8 @@ local mantyke={
             card = card,
           }
         else
-          card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
+            h_chips = card.ability.extra.chips,
             card = card,
           }
         end
@@ -431,26 +421,48 @@ local porygonz={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 3
-      else
-        G.GAME.energy_plus = G.GAME.energy_plus + 3
-      end
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 3
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus + 3
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff or (card.ability.perishable and card.ability.perish_tally <= 0) then
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 0
-      else
-        G.GAME.energy_plus = G.GAME.energy_plus - 3
-      end
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 0
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
   end
 }
 -- Gallade 475
 -- Probopass 476
+local probopass={
+  name = "probopass",
+  pos = {x = 5, y = 6},
+  config = {extra = {Xmult_multi = 1.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
+      return {
+          x_mult = card.ability.extra.Xmult_multi,
+          colour = G.C.XMULT,
+          card = card
+      }
+    end
+  end
+}
 -- Dusknoir 477
 -- Froslass 478
 local froslass={
@@ -472,7 +484,13 @@ local froslass={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        if G.GAME.dollars < 0 and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local in_debt = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          in_debt = to_big(G.GAME.dollars) < to_big(0)
+        else
+          in_debt = G.GAME.dollars < 0
+        end
+        if in_debt and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
           _card:add_to_deck()
           G.consumeables:emplace(_card)
@@ -481,18 +499,14 @@ local froslass={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
-    end
+    G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
 }
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, probopass, froslass},
 }

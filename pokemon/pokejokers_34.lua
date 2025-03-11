@@ -9,7 +9,7 @@
 -- Gimmighoul 999
 local gimmighoul={
   name = "gimmighoul",
-  pos = {x = 1, y = 12},
+  pos = {x = 12, y = 6},
   config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -20,6 +20,7 @@ local gimmighoul={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex9",
+  enhancement_gate = 'm_gold',
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -77,8 +78,9 @@ local gimmighoul={
 }
 local gimmighoulr={
   name = "gimmighoulr",
-  pos = {x = 0, y = 12},
+  pos = {x = 11, y = 6},
   config = {extra = {}},
+  no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -88,9 +90,10 @@ local gimmighoulr={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex9",
-  perishable_compat = true,
+  aux_poke = true,
+  perishable_compat = false,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   add_to_deck = function(self, card, from_debuff)
     local amount_earned = nil
     local money_chance = pseudorandom('gimmir')
@@ -106,11 +109,17 @@ local gimmighoulr={
     ease_poke_dollars(card, "gimmir", amount_earned)
     remove(self, card, {})
   end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local edition = {negative = true}
+      card:set_edition(edition, true, true)
+    end
+  end
 }
 -- Gholdengo 1000
 local gholdengo={
   name = "gholdengo",
-  pos = {x = 2, y = 12},
+  pos = {x = 13, y = 6},
   config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5, future_dollars = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -138,21 +147,24 @@ local gholdengo={
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
-      card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
-      if card.ability.extra.future_dollars >= 0 then
-        if (SMODS.Mods["Talisman"] or {}).can_load then
-          if to_big(card.ability.extra.Xmult) >= to_big(1e300) then
-            card.ability.extra.Xmult = to_number(to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi))
-          else
-            card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
-          end
-        else
-          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        card.ability.extra.future_dollars = to_big(card.ability.extra.future_dollars) - to_big(card.ability.extra.money_minus)
+        if to_big(card.ability.extra.future_dollars) >= to_big(0) then
+          card.ability.extra.Xmult = to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi)
+          return {
+            dollars = -card.ability.extra.money_minus,
+            card = card
+          }
         end
-        return {
-          dollars = -card.ability.extra.money_minus,
-          card = card
-        }
+      else
+        card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
+        if card.ability.extra.future_dollars >= 0 then
+          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+          return {
+            dollars = -card.ability.extra.money_minus,
+            card = card
+          }
+        end
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then

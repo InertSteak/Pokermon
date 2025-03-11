@@ -10,11 +10,11 @@
 -- Sylveon 700
 local sylveon={
   name = "sylveon", 
-  pos = {x = 7, y = 3},
+  pos = {x = 8, y = 3},
   config = {extra = {Xmult_multi = 1.2, rerolls = 0, reroll_goal = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Ethereal', 'Pocket'}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Charm', 'Juggle'}}
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rerolls, center.ability.extra.reroll_goal}}
   end,
   rarity = "poke_safari", 
@@ -38,9 +38,9 @@ local sylveon={
         if tag_choice < 1/3 then
           tag = 'tag_standard'
         elseif tag_choice < 2/3 then
-          tag = 'tag_ethereal'
+          tag = 'tag_charm'
         else
-          tag = 'tag_poke_pocket_tag'
+          tag = 'tag_juggle'
         end
         add_tag(Tag(tag))
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.reroll_goal.."/"..card.ability.extra.reroll_goal, colour = G.C.MONEY})

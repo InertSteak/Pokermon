@@ -3,6 +3,13 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
+#Nested check
+[[patches]]
+[patches.module]
+source = "setup.lua"
+before = "main.lua"
+name = "pokermon.setup"
+
 # Localization color
 [[patches]]
 [patches.pattern]
@@ -21,6 +28,7 @@ position = "after"
 payload = '''
 if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
+if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
 match_indent = true
 
@@ -30,7 +38,16 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if next(find_joker('Splash')) then"
 position = "at"
-payload = "if next(find_joker('Splash')) or next(find_joker('magikarp')) or next(find_joker('feebas')) then"
+payload = "if next(find_joker('Splash')) or next(SMODS.find_card('j_poke_magikarp')) or next(SMODS.find_card('j_poke_feebas')) then"
+match_indent = true
+
+# Magikarp functionality better calc
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash'))"
+position = "at"
+payload = "local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash')) or next(SMODS.find_card('j_poke_magikarp')) or next(SMODS.find_card('j_poke_feebas'))"
 match_indent = true
 
 # Mimikyu Localization Functionality
@@ -48,16 +65,8 @@ payload = '''
   sendDebugMessage(tostring(G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name))
   G.localization.misc.dictionary.ph_mr_bones = G.localization.misc.dictionary.ph_mr_bones_numbutils:gsub("Mr. Bones", G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name)
   '''
-
+  
 # Extra Booster Functionality
-[[patches]]
-[patches.pattern]
-target = "game.lua"
-pattern = "for i = 1, 2 do"
-position = "at"
-payload = "for i = 1, (G.GAME.modifiers.cry_booster_packs or G.GAME.modifiers.poke_booster_packs) or 2 do"
-match_indent = true
-
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -65,11 +74,7 @@ pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
 if self.config.shiny_on_add then
-  if G.GAME.modifiers.poke_booster_packs then
-    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs + 1
-  else
-    G.GAME.modifiers.poke_booster_packs = 3
-  end
+  SMODS.change_booster_limit(1)
 end
 '''
 match_indent = true
@@ -90,18 +95,36 @@ end
 '''
 match_indent = true
 
-# Voucher functionality
+# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "local _size = self.ability.extra"
+pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
 position = "after"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  _size = _size + G.GAME.extra_pocket_picks
+if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
+  self.ability.extra = #G.P_CENTER_POOLS.Planet
+elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  print(self.ability.extra)
+  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
 match_indent = true
+
+# Xatu Make All Planets Appear
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
+position = "at"
+payload = '''
+if next(find_joker("xatu")) then
+    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+elseif G.GAME.used_vouchers.v_telescope and i == 1 then
+'''
+match_indent = true
+overwrite = true
 
 #Shiny shader
 [[patches]]
@@ -121,7 +144,7 @@ end
 '''
 match_indent = true
 
-#Pidgey functionality
+#Gothita line functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -130,9 +153,9 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 '''
 position = "after"
 payload = '''
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('pidgey')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('pidgeotto')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeot') > 0 then self.cost = 0 end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothitelle') > 0 then self.cost = 0 end
 '''
 match_indent = true
 
@@ -206,54 +229,15 @@ payload = '''
 if pokermon_config.pokemon_splash then
   local pokemon = {}
   for k, v in pairs(G.P_CENTERS) do
-    if v.set == 'Joker' and v.stage then
+    if v.set == 'Joker' and v.stage and v.discovered then
       table.insert(pokemon, v)
     end
   end
-  local chosen = math.random(#pokemon)
-  local chosencard = pokemon[chosen]
-  SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, chosencard)
-end
-'''
-match_indent = true
-
-# Twisted Spoon
-[[patches]]
-[patches.pattern]
-target = "functions/misc_functions.lua"
-pattern = '''
-if card.config.center.set == 'Tarot' or card.config.center.set == 'Planet' then 
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-          G.GAME.last_tarot_planet = card.config.center_key
-            return true
-        end
-      }))
-        return true
-    end
-  }))
-end
-'''
-position = "after"
-payload = '''
-if (card.config.center.set == 'Item' or card.config.center.set == 'Energy') and not card.config.center.helditem then 
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-          G.GAME.last_poke_item = card.config.center_key
-            return true
-        end
-      }))
-        return true
-    end
-  }))
+  if #pokemon > 0 then
+    local chosen = math.random(#pokemon)
+    local chosencard = pokemon[chosen]
+    SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, chosencard)
+  end
 end
 '''
 match_indent = true
@@ -314,10 +298,197 @@ target = "functions/common_events.lua"
 pattern = "local edition = poll_edition('edi'..(key_append or '')..G.GAME.round_resets.ante)"
 position = "after"
 payload = '''
-if edition and ((area == G.shop_jokers) or (area == G.pack_cards)) and next(SMODS.find_card('j_poke_mega_gengar')) then
+if edition and ((area == G.shop_jokers) or (area == G.pack_cards)) and next(SMODS.find_card('j_poke_mega_gengar')) and edition == "e_polychrome" then
+  sendDebugMessage(edition)
+  sendDebugMessage(inspect(edition))
   edition = {negative = true}
 end
 '''
 match_indent = true
 
 
+
+# Card Effect Divider
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = "elseif part.control.X or part.control.B then"
+position = "before"
+payload = '''
+elseif part.control.br then
+  local height = 0.05
+  local gaps = 0.2
+  local mid = 0.15
+  local sides = (tonumber(part.control.br) - gaps*2 - mid) / 2
+  -- spacing
+  args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minh = height}, nodes={}}}
+  if sides < gaps then
+    args.nodes[#args.nodes+1] = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = tonumber(part.control.br), minh = height}}}
+  else
+    local temp_nodes = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TEXT_INACTIVE, minw = mid, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}}}
+    args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
+  end
+'''
+match_indent = true
+
+# For previous versions
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = "elseif part.control.X then"
+position = "before"
+payload = '''
+elseif part.control.br then
+  local height = 0.05
+  local gaps = 0.2
+  local mid = 0.15
+  local sides = (tonumber(part.control.br) - gaps*2 - mid) / 2
+  -- spacing
+  args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minh = height}, nodes={}}}
+  if sides < gaps then
+    args.nodes[#args.nodes+1] = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = tonumber(part.control.br), minh = height}}}
+  else
+    local temp_nodes = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TEXT_INACTIVE, minw = mid, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}}}
+    args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
+  end
+'''
+match_indent = true
+
+
+#Make sure evolve before debuff
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.perish_tally == 1 then"
+position = "at"
+payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
+match_indent = true
+
+
+# Jirachi Double Payout
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if total_cashout_rows > 7 then"
+position = "before"
+payload = '''
+local jirachis = find_joker('jirachi_banker')
+for i = 1, #jirachis do
+  add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars, card = jirachis[i]})
+  dollars = dollars + dollars
+end
+'''
+match_indent = true
+
+#Probopass face
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (id > 0 and rank and rank.face) or next(find_joker("Pareidolia")) then
+    return true
+end
+'''
+position = "after"
+payload = '''
+if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
+'''
+match_indent = true
+
+
+# Scry Functionality 1
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if #G.hand.cards < 1 and #G.deck.cards < 1 and #G.play.cards < 1 then"
+position = "before"
+payload = '''
+if not self.scry_view and type(create_scry_cardarea) == "function" then
+  self.scry_view = create_scry_cardarea()
+elseif self.scry_view then
+  update_scry_cardarea(self.scry_view)
+end
+'''
+match_indent = true
+
+# Scry Functionality 2
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+position = "at"
+payload = "if self.config.type == 'hand' or self.config.type == 'scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+match_indent = true
+overwrite = true
+
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+position = "at"
+payload = "if self.config.type == 'scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+match_indent = true
+overwrite = true
+
+# Scry Functionality 4
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:update_round_eval(dt)"
+position = "after"
+payload = '''
+    if G.scry_view then G.scry_view.states.visible = false end
+'''
+match_indent = true
+
+# Scry Functionality 5
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
+position = "after"
+payload = "t[#t+1] = G.scry_view"
+match_indent = true
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local config = {}"
+position = "before"
+payload = '''
+if card.area == G.scry_view then
+    y_off = -0.05*G.CARD_H
+    card_aligned = 'tm'
+end
+'''
+match_indent = true
+
+
+#Zorua Rental Incompatibility
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+self.ability.rental = _rental
+self:set_cost()
+'''
+position = "at"
+payload = '''
+if self.config.center.rental_compat ~= false and not self.ability.rental then 
+    self.ability.rental = _rental
+    self:set_cost()
+end
+'''
+match_indent = true
+overwrite = true

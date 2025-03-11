@@ -172,6 +172,13 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "ShinyMegas",
+    path = "ShinyMegas.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "others",
     path = "others.png",
     px = 71,
@@ -229,11 +236,54 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "unergy",
+    path = "unergy.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "unitem",
+    path = "unitem.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "jirachi",
+    path = "jirachi.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "altjirachi",
+    path = "altjirachi.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "shinyaltjirachi",
+    path = "shinyaltjirachi.png",
+    px = 71,
+    py = 95
+}):register()
+
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",
     path = "e_shiny.ogg"
 }):register()
+
+SMODS.Sound({
+	key = "pocket_music_high",
+	path = "pocket_music_high.ogg",
+	select_music_track = function()
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")
+	end,
+})
 
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour

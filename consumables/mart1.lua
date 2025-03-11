@@ -19,6 +19,7 @@ local pokeball = {
     end
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
         local _card = create_random_poke_joker("pokeball", "Basic")
@@ -53,6 +54,7 @@ local greatball = {
     end
   end,
   use = function(self, card, area, copier)
+    set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
         local _card = create_random_poke_joker("greatball", "One")
@@ -535,14 +537,17 @@ local megastone = {
   config = {extra = {previous_round = 0, used_on = nil}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
-    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
+    if center and center.ability.extra.used_on then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = center.ability.extra.used_on})}}
+    end
   end,
   pos = { x = 4, y = 5 },
   atlas = "Mart",
   cost = 4,
   hidden = true,
   soul_set = "Item",
-  soul_rate = .01,
+  soul_rate = .005,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -557,7 +562,7 @@ local megastone = {
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") then
           target = poke
           break
         end
@@ -754,22 +759,18 @@ local emergy = {
   end,
   in_pool = function(self)
     --another Cryptid Function, This checks for M jokers   -Jevonn
-		local mcheck = get_m_jokers()
+    local mcheck = 0
+    if get_m_jokers then
+      mcheck = get_m_jokers()
+    elseif Cryptid and Cryptid.get_m_jokers then
+      mcheck = Cryptid.get_m_jokers()
+    end
 		if (mcheck + #find_joker('Jolly Joker')) > 0 then
 			return true
 		end
 		return false
 	end,
 }
-
-if pokermon_config.jokers_only then
-  pokeball.set = "Tarot"
-  pokeball.pos.y = 2
-  greatball.set = "Tarot"
-  greatball.pos.y = 2
-  ultraball.pos.y = 2
-  masterball.pos.y = 2
-end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
         fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}
