@@ -202,7 +202,7 @@ end
 
 local mystery_egg = {
   name = "mystery_egg",
-  pos = {x = 4, y = 0},
+  pos = {x = 5, y = 0},
   config = {extra = {key = nil, rounds = 3}},
   rarity = 1,
   cost = 1,
@@ -211,7 +211,7 @@ local mystery_egg = {
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
+    if context.first_hand_drawn and not context.blueprint then
       local adjacent = 0
       local adjacent_jokers = poke_get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
@@ -230,6 +230,9 @@ local mystery_egg = {
           func = function()
             -- if edition is nil, it'll try again for an edition
             local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key, edition = card.edition})
+            if pseudorandom('egg') < 0.1 then -- 10% for +1 energy
+              energy_increase(_card, 'Trans')
+            end
             _card:add_to_deck()
             local loc = 1
             for i,jkr in ipairs(G.jokers.cards) do
@@ -248,17 +251,12 @@ local mystery_egg = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    local chance = pseudorandom(pseudoseed('egg'))
-    local pokerarity = 1 -- not legendary
-    if chance <= 0.01 then
-      -- yes legendary
-      pokerarity = 4
-    end
+    if from_debuff then return end
 
     local poke_keys = {}
     for k, v in pairs(G.P_CENTERS) do
-      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and get_poke_allowed(v.key) and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
-        if ((v.stage == "Baby" or v.stage == "Basic") and pokerarity ~= 4) or (v.stage == "Legendary" and pokerarity == 4) then
+      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
+        if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
           table.insert(poke_keys, {key = v.key, rarity = v.rarity})
         end
       end
@@ -271,11 +269,10 @@ local mystery_egg = {
     -- common hatches in 2 turns
     -- uncommon hatches in 2.5 turns
     -- rare hatches in 3 turns
-    -- Legendary hatches in 3.5 turns
 
-    -- w/o fire = 2/3/3/4
-    -- w/1 fire = 2/2/3/3
-    -- w/2 fire = 2/2/2/3
+    -- w/o fire = 2/3/3
+    -- w/1 fire = 2/2/3
+    -- w/2 fire = 2/2/2
     card.ability.extra.rounds = 1.5 + poke_key.rarity / 2
     card.ability.extra.key = poke_key.key
   end,
@@ -285,6 +282,8 @@ local mystery_egg = {
 			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
 		end
     local egg_messages = localize({ type = "raw_descriptions", set = _c.set, key = _c.key })
+    local first_message = table.remove(egg_messages, math.random(#egg_messages))
+    table.insert(egg_messages, 1, first_message)
     local main_start = {
       {n=G.UIT.O, config={object = DynaText({string = egg_messages,
       colours = {G.C.DARK_EDITION},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 2.5, scale = 0.32, min_cycle_time = 0})}},
@@ -394,5 +393,5 @@ local rival = {
 }
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, egg, rival}
+        list = {pokedex, everstone, tall_grass, jelly_donut, mystery_egg, rival}
 }
