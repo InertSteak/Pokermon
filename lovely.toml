@@ -73,7 +73,7 @@ target = "card.lua"
 pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
-if self.config.shiny_on_add then
+if self.config.shiny_on_add and not self.debuff then
   SMODS.change_booster_limit(1)
 end
 '''
