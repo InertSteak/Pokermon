@@ -225,7 +225,6 @@ evolve = function(self, card, context, forced_key)
     local previous_cards_scored = nil
     local previous_upgrade = nil
     local previous_mega = nil
-    local previous_debuff = nil
     
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
@@ -294,10 +293,6 @@ evolve = function(self, card, context, forced_key)
     
     if card.config.center.rarity == "poke_mega" then
       previous_mega = true
-    end
-    
-    if card.debuff then
-      previous_debuff = true
     end
     
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
@@ -392,10 +387,6 @@ evolve = function(self, card, context, forced_key)
       end
       new_card.ability.extra.cards_scored = previous_cards_scored
       new_card.ability.extra.upgrade = previous_upgrade
-    end
-    
-    if previous_debuff then
-      new_card.debuff = true
     end
     
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
