@@ -403,3 +403,11 @@ poke_is_in_collection = function(card)
   end
   return false
 end
+
+tdmsg = function(tablename)
+  if tablename and type(tablename) == "table" then
+    sendDebugMessage(inspect(tablename))
+  else
+    sendDebugMessage("Not a table, Function: tdmsg")
+  end
+end
