@@ -74,6 +74,46 @@ local bellossom={
 -- Marill 183
 -- Azumarill 184
 -- Sudowoodo 185
+local sudowoodo={
+  name = "sudowoodo",
+  pos = {x = 3, y = 3},
+  config = {extra = {mult = 5, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {G.ARGS.LOC_COLOURS.grass}}}
+    return {vars = {center.ability.extra.mult, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
+      return {
+        mult = card.ability.extra.mult, 
+        card = card
+      }
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
+      if (not is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0  then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial and not G.SETTINGS.paused then
+      apply_type_sticker(card, "Grass")
+    end
+  end
+}
 -- Politoed 186
 local politoed={
   name = "politoed", 
@@ -548,5 +588,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
 }

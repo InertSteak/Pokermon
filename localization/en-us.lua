@@ -1983,6 +1983,17 @@ return {
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
+            j_poke_sudowoodo = {
+                name = "Sudowoodo",
+                text = {
+                  "{C:attention}Type Changer Pokemon{}",
+                  "Played {C:attention}face{} cards give {C:mult}+#1#{} Mult when scored",
+                  "{br:2}text needs to be here to work",
+                  "Retrigger all played {C:attention}face{} cards if",
+                  "this Joker isn't {X:grass,C:white}Grass{} or",
+                  "you have a {X:water,C:white}Water{} Joker"
+                }
+            },
             j_poke_bellossom = {
                 name = 'Bellossom',
                 text = {
@@ -2491,6 +2502,15 @@ return {
                     "each {C:attention}unscored{} card",
                     "in played hand",
                 }  
+            },
+            j_poke_bonsly = {
+                name = "Bonsly",
+                text = {
+                  "{C:attention}Baby{}, {X:red,C:white}X#1#{} Mult",
+                  "At end of round, add a random",
+                  "{C:attention}Enhanced face card{} to your deck",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
             },
             j_poke_mimejr = {
                 name = 'Mime Jr.',
@@ -3403,6 +3423,13 @@ return {
                 text = {
                     "Applies a {V:1}#1#{} sticker",
                     "to leftmost or selected Joker"
+                }
+            },
+            typechangerpoke = {
+                name = "Type Changer Pokemon",
+                text = {
+                    "Applies a {V:1}#1#{} sticker",
+                    "to self"
                 }
             },
             basic = {

@@ -78,6 +78,7 @@ family = {
     {"sentret", "furret"},
     {"hoothoot", "noctowl"},
     {"natu", "xatu"},
+    {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
@@ -1152,6 +1153,7 @@ poke_get_family_list = function(name)
 end
 
 poke_family_present = function(center)
+  if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
   local family_list = poke_get_family_list(center.name)
   for _, fam in pairs(family_list) do
     if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
