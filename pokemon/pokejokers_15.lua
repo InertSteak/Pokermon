@@ -37,12 +37,18 @@ local bonsly={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         faint_baby_poke(self, card, context)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
       local rank = pseudorandom_element({'J', 'Q', 'K'}, pseudoseed('familiar_create'))
       local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('familiar_create'))
-      create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[SMODS.poll_enhancement({guaranteed = true})]}, G.deck, nil, nil, {G.C.PURPLE})
+      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
+      create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE})
     end
     return level_evo(self, card, context, "j_poke_sudowoodo")
   end
