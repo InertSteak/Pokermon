@@ -208,6 +208,7 @@ local alakazam={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local set = nil
             local message = nil
             local colour = nil
@@ -227,6 +228,7 @@ local alakazam={
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
+          end
         end
       end
     end
