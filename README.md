@@ -12,14 +12,7 @@ There is also an option to only play with Pokemon Jokers if you want to focus on
 
 **Prerequisites:**
 
-**IMPORTANT**: You must download the latest version of steamodded and NOT use the release version which is very old. The mod will run into errors otherwise.
-
-![image](https://github.com/user-attachments/assets/75680130-d49b-4a48-b808-d664cc9affc6)
-
-The upper right of the title screen has the steamodded version. The current minimum version is **1.0.0~ALPHA-1303a-STEAMODDED**.
-
-
-Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.7.1 if you can, some things may be broken on earlier versions) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use latest) must be installed.
+Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.7.1 if you can, some things may be broken on earlier versions) and [Steamodded](https://github.com/Steamopollys/Steamodded) (use latest release) must be installed.
 
 **Installation:**
 
@@ -37,4 +30,4 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.7.1 if 
 
 **Card Images:**
 
-If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you here in this readme file and via tooltip on the Joker itself. Be sure to check in the discord before you work on art assets, we've got templates for the Pokemon Jokers.
+If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you with the rest of the wonderful folks that have contributed to this mod. Be sure to check in the discord before you work on art assets, we've got templates for the Pokemon Jokers.
