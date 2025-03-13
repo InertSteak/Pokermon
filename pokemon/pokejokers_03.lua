@@ -1206,7 +1206,7 @@ local muk={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.playing_cards > G.GAME.starting_deck_size then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size)}}, 
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size),
           card = card
