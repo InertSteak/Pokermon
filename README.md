@@ -30,4 +30,4 @@ Both [Lovely](https://github.com/ethangreen-dev/lovely-injector) (use v0.7.1 if 
 
 **Card Images:**
 
-If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you here in this readme file and via tooltip on the Joker itself. Be sure to check in the discord before you work on art assets, we've got templates for the Pokemon Jokers.
+If you'd like to contribute any card designs I would really appreciate it. Of course I'd be sure to credit you with the rest of the wonderful folks that have contributed to this mod. Be sure to check in the discord before you work on art assets, we've got templates for the Pokemon Jokers.
