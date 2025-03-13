@@ -905,7 +905,17 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
   for k, v in pairs(G.P_CENTERS) do
     if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas)
        and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and not exclude_keys[v.key] then
-      table.insert(poke_keys, v.key)
+      local no_dup = true
+      if G.jokers and G.jokers.cards and not next(find_joker("Showman")) then
+        for l, m in pairs(G.jokers.cards) do
+          if v.key == m.config.center_key then
+            no_dup = false
+          end
+        end
+      end
+      if no_dup then
+        table.insert(poke_keys, v.key)
+      end
     end
   end
   
