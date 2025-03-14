@@ -1895,6 +1895,90 @@ return {
                     "{C:dark_edition}Negative{} Joker {C:attention}instead{}",
                 } 
             },
+            j_poke_chikorita = {
+                name = 'Chikorita',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "Every {C:attention}third{} card {C:attention}held in hand{}",
+                    "earns {C:money}$#2#{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_bayleef = {
+                name = 'Bayleef',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "Every {C:attention}other{} card {C:attention}held in hand{}",
+                    "earns {C:money}$#2#{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_meganium = {
+                name = 'Meganium',
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "Every card {C:attention}held in hand{}",
+                    "earns {C:money}$#2#{} at end of round",
+                }
+            },
+            j_poke_cyndaquil = {
+                name = 'Cyndaquil',
+                text = {
+                    "{C:red}+#1#{} discard",
+                    "{C:mult}+#2#{} Mult for each",
+                    "remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_quilava = {
+                name = 'Quilava',
+                text = {
+                    "{C:red}+#1#{} discard",
+                    "{C:mult}+#2#{} Mult for each",
+                    "remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_typhlosion = {
+                name = 'Typhlosion',
+                text = {
+                    "{C:red}+#1#{} discard",
+                    "{C:mult}+#2#{} Mult and {X:red,C:white} X#3# {} Mult for",
+                    "each remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult and {X:red,C:white} X#5# {C:inactive} Mult)",
+                }
+            },
+            j_poke_totodile = {
+                name = 'Totodile',
+                text = {
+                    "{C:blue}+#1#{} hand",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_croconaw = {
+                name = 'Croconaw',
+                text = {
+                    "{C:blue}+#1#{} hand",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_feraligatr = {
+                name = 'Feraligatr',
+                text = {
+                    "{C:blue}+#1#{} hand",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                }
+            },
             j_poke_sentret = {
                 name = 'Sentret',
                 text = {
