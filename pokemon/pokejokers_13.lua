@@ -109,8 +109,8 @@ local beldum={
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
         end
-        if has_ace then
-          if context.scoring_name == "Four of a Kind" then
+        if has_ace or context.scoring_name == "Four of a Kind" then
+          if has_ace and context.scoring_name == "Four of a Kind" then
             card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
           else
             card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
@@ -133,7 +133,7 @@ local beldum={
 local metang={
   name = "metang", 
   pos = {x = 6, y = 12},
-  config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 256},
+  config = {extra = {chips = 0, chip_mod = 16, size = 4}, evo_rqmt = 256},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
@@ -152,9 +152,9 @@ local metang={
         for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
         end
-        if ace_count > 1 then
-          if context.scoring_name == "Four of a Kind" then
-            card.ability.extra.chips = card.ability.extra.chips + 4 * card.ability.extra.chip_mod
+        if ace_count > 1 or context.scoring_name == "Four of a Kind" then
+          if ace_count > 1 and context.scoring_name == "Four of a Kind" then
+            card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
           else
             card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
           end
@@ -204,9 +204,6 @@ local metagross={
       local Xmult = (total_chips)^(1/3)
       if Xmult > 0 then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}},
-          colour = G.C.XMULT,
-          mult = card.ability.extra.mult_mod, 
           x_mult = Xmult,
           card = card
         }

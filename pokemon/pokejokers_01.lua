@@ -748,10 +748,10 @@ local mega_beedrill = {
 local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
-  config = {extra = {rounds = 4}},
+  config = {extra = {mult = 5, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -760,31 +760,40 @@ local pidgey={
   atlas = "Pokedex1",
   blueprint_compat = false,
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local first_rank = nil
+        local second_rank = nil
+        local has_wild = nil
+        for k, v in pairs(context.scoring_hand) do
+          if not first_rank and v:get_id() > 0 then
+            first_rank = v:get_id()
+          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
+            second_rank = v:get_id()
+          end
+          
+          if v.ability.effect == 'Wild Card' then has_wild = true end
+        end
+        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
+      end
+    end
     return level_evo(self, card, context, "j_poke_pidgeotto")
   end,
-  add_to_deck = function(self, card, from_debuff)
-      G.E_MANAGER:add_event(Event({func = function()
-        for k, v in pairs(G.I.CARD) do
-            if v.set_cost then v:set_cost() end
-        end
-        return true end }))
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      for k, v in pairs(G.I.CARD) do
-          if v.set_cost then v:set_cost() end
-      end
-      return true end }))
-  end
 }
 local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
-  config = {extra = {rounds = 4}},
+  config = {extra = {mult = 10, rounds = 4}},
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 2, 
   cost = 8, 
@@ -792,31 +801,40 @@ local pidgeotto={
   ptype = "Colorless",
   atlas = "Pokedex1",
   calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local first_rank = nil
+        local second_rank = nil
+        local has_wild = nil
+        for k, v in pairs(context.scoring_hand) do
+          if not first_rank and v:get_id() > 0 then
+            first_rank = v:get_id()
+          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
+            second_rank = v:get_id()
+          end
+          
+          if v.ability.effect == 'Wild Card' then has_wild = true end
+        end
+        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
+      end
+    end
     return level_evo(self, card, context, "j_poke_pidgeot")
   end,
-  add_to_deck = function(self, card, from_debuff)
-      G.E_MANAGER:add_event(Event({func = function()
-        for k, v in pairs(G.I.CARD) do
-            if v.set_cost then v:set_cost() end
-        end
-        return true end }))
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      for k, v in pairs(G.I.CARD) do
-          if v.set_cost then v:set_cost() end
-      end
-      return true end }))
-  end
 }
 local pidgeot={
   name = "pidgeot", 
   pos = {x = 4, y = 1},
-  config = {extra = {money = 2}}, 
+  config = {extra = {mult = 20}}, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-		return {vars = {center.ability.extra.money}}
+		return {vars = {center.ability.extra.mult}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -825,23 +843,37 @@ local pidgeot={
   ptype = "Colorless",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      ease_poke_dollars(card, "pidgeot", card.ability.extra.money)
-    end
-  end,
-  add_to_deck = function(self, card, from_debuff)
-      G.E_MANAGER:add_event(Event({func = function()
-        for k, v in pairs(G.I.CARD) do
-            if v.set_cost then v:set_cost() end
-        end
-        return true end }))
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      for k, v in pairs(G.I.CARD) do
-          if v.set_cost then v:set_cost() end
+    if context.setting_blind then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.PLANET})
       end
-      return true end }))
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local first_rank = nil
+        local second_rank = nil
+        local has_wild = nil
+        for k, v in pairs(context.scoring_hand) do
+          if not first_rank and v:get_id() > 0 then
+            first_rank = v:get_id()
+          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
+            second_rank = v:get_id()
+          end
+          
+          if v.ability.effect == 'Wild Card' then has_wild = true end
+        end
+        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
+      end
+    end
   end,
   megas = {"mega_pidgeot"}
 }
@@ -849,16 +881,10 @@ local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
   soul_pos = { x = 11, y = 0 },
-  config = {extra = {plus_levels = 2}},
+  config = {extra = {discards_lost = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local total_levels = 0
-    for _, hand in pairs(G.GAME.hands) do
-      if hand.visible then
-        total_levels = total_levels + hand.level
-      end
-    end
-		return {vars = {center.ability.extra.plus_levels}}
+		return {vars = {math.max(1, center.ability.extra.discards_lost)}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -867,16 +893,20 @@ local mega_pidgeot = {
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
-      local text = context.consumeable.ability.hand_type
-      if type(text) == "string" then
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(text, 'poker_hands'),chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, 
-                          level = G.GAME.hands[text].level})
-        level_up_hand(card, text, nil, card.ability.extra.plus_levels)
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-      end
+    if context.setting_blind and G.GAME.current_round.discards_left > 0 then
+      card.ability.extra.discards_lost = G.GAME.current_round.discards_left
+      ease_discard(-G.GAME.current_round.discards_left, nil, true)
     end
-  end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.discards_lost = 0
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.discards_lost > 1 then
+      return {
+        x_mult = card.ability.extra.discards_lost,
+        card = card
+      }
+    end
+  end,
 }
 local rattata={
   name = "rattata", 
@@ -1177,15 +1207,15 @@ local sandshrew={
       for k, v in ipairs(context.removed) do
         if v.shattered and card.ability.extra.glass_restored <= 0 then
           card_to_copy = v
-          local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.hand:emplace(copy)
-          copy.states.visible = nil
 
           G.E_MANAGER:add_event(Event({
               func = function()
+                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  copy:add_to_deck()
+                  G.deck.config.card_limit = G.deck.config.card_limit + 1
+                  table.insert(G.playing_cards, copy)
+                  G.hand:emplace(copy)
+                  copy.states.visible = nil
                   copy:start_materialize()
                   return true
               end
@@ -1233,12 +1263,13 @@ local sandshrew={
 local sandslash={
   name = "sandslash", 
   pos = {x = 1, y = 2},
-  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0}},
+  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0, glass_limit = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
-		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, center.ability.extra.glass_limit, 
+                    center.ability.extra.glass_limit - center.ability.extra.glass_restored, 
+                    colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
   end,
   rarity = 2,
   cost = 6, 
@@ -1248,27 +1279,26 @@ local sandslash={
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 then
+    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        if v.shattered and card.ability.extra.glass_restored <= 0 then
+        card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
+        if v.shattered and card.ability.extra.glass_restored <= card.ability.extra.glass_limit then
           card_to_copy = v
-          local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.hand:emplace(copy)
-          copy.states.visible = nil
 
           G.E_MANAGER:add_event(Event({
               func = function()
+                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  copy:add_to_deck()
+                  G.deck.config.card_limit = G.deck.config.card_limit + 1
+                  table.insert(G.playing_cards, copy)
+                  G.hand:emplace(copy)
+                  copy.states.visible = nil
                   copy:start_materialize()
                   return true
               end
           }))
           playing_card_joker_effects({copy})
-          
-          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       if card_to_copy then

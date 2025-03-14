@@ -3,7 +3,7 @@
 local scizor={
   name = "scizor", 
   pos = {x = 0, y = 6},
-  config = {extra = {mult = 0, chips = 0, Xmult = 1, mult_mod = 4}},
+  config = {extra = {mult = 0, scizor_chips = 0, scizor_Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -21,7 +21,7 @@ local scizor={
     if center.edition and center.edition.polychrome then
      eXmult = center.edition.x_mult or 1
     end
-    return {vars = {center.ability.extra.mult + emult, center.ability.extra.chips + echips, center.ability.extra.Xmult * eXmult, center.ability.extra.mult_mod}}
+    return {vars = {center.ability.extra.mult + emult, center.ability.extra.scizor_chips + echips, center.ability.extra.scizor_Xmult * eXmult, center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -39,16 +39,16 @@ local scizor={
       if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
           local sliced_card = G.jokers.cards[my_pos+1]
           sliced_card.getting_sliced = true
-          if (sliced_card.config.center.rarity ~= 1) then
+          if (sliced_card.config.center.rarity ~= 1 and sliced_card.config.center.rarity ~=2) then
             if card.edition then
               if card.edition.chips then
-                card.ability.extra.chips = card.ability.extra.chips + card.edition.chips
+                card.ability.extra.scizor_chips = card.ability.extra.scizor_chips + card.edition.chips
               end
               if card.edition.mult then
                 card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
               end
               if card.edition.x_mult then
-                card.ability.extra.Xmult = card.ability.extra.Xmult * card.edition.x_mult
+                card.ability.extra.scizor_Xmult = card.ability.extra.scizor_Xmult * card.edition.x_mult
               end
             end
             local edition = nil
@@ -78,8 +78,8 @@ local scizor={
           message = localize("poke_x_scissor_ex"),
           colour = G.ARGS.LOC_COLOURS.metal,
           mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.chips,
-          Xmult_mod = card.ability.extra.Xmult
+          chip_mod = card.ability.extra.scizor_chips,
+          Xmult_mod = card.ability.extra.scizor_Xmult
         }
       end
     end
@@ -95,6 +95,64 @@ local scizor={
 -- Swinub 220
 -- Piloswine 221
 -- Corsola 222
+local corsola={
+  name = "corsola", 
+  pos = {x = 0, y = 7},
+  config = {extra = {mult_mod = 3, corsola_tally = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.corsola_tally}}
+  end,
+  rarity = 3, 
+  cost = 7, 
+  stage = "Basic", 
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN then
+      card.ability.extra.corsola_tally = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.config.center ~= G.P_CENTERS.c_base then card.ability.extra.corsola_tally = card.ability.extra.corsola_tally+1 end
+      end
+    end
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local enhanced = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.config.center ~= G.P_CENTERS.c_base then
+           enhanced = enhanced + 1
+          end
+        end
+        
+        if enhanced == 5 then
+          if (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
+            G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+            G.E_MANAGER:add_event(Event({
+              trigger = 'after',
+              delay = 0.2,
+              func = function() 
+                G.GAME.joker_buffer = 0
+                play_sound('timpani')
+                local _card = create_random_poke_joker('corsola', "Basic", nil, nil, "Water")
+                _card:add_to_deck()
+                G.jokers:emplace(_card)
+            return true end }))
+          end
+        end
+      
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.corsola_tally}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult_mod * card.ability.extra.corsola_tally 
+        }
+      end
+    end
+  end
+}
 -- Remoraid 223
 -- Octillery 224
 -- Delibird 225
@@ -579,5 +637,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, corsola, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }
