@@ -96,6 +96,7 @@ family = {
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"zorua", "zoroark"},
+    {"deino", "zweilous", "hydreigon"},
     {"litleo", "pyroar"},
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
