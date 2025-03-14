@@ -1891,89 +1891,84 @@ return {
                 name = 'Chikorita',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "{C:red}-#2#{} discard",
-                    "Every card {C:attention}held in hand{}",
-                    "earns {C:money}$#3#{} at end of round",
-                    "{C:inactive,s:0.8}(Evolves at $#4# / {C:money,s:0.8}$#5#{C:inactive,s:0.8} earned)",
+                    "Every {C:attention}third{} card {C:attention}held in hand{}",
+                    "earns {C:money}$#2#{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_bayleef = {
                 name = 'Bayleef',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "{C:red}-#2#{} discard",
-                    "Every card {C:attention}held in hand{}",
-                    "earns {C:money}$#3#{} at end of round",
-                    "{C:inactive,s:0.8}(Evolves at $#4# / {C:money,s:0.8}$#5#{C:inactive,s:0.8} earned)",
+                    "Every {C:attention}other{} card {C:attention}held in hand{}",
+                    "earns {C:money}$#2#{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_meganium = {
                 name = 'Meganium',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "{C:red}-#2#{} discard",
                     "Every card {C:attention}held in hand{}",
-                    "earns {C:money}$#3#{} at end of round",
+                    "earns {C:money}$#2#{} at end of round",
                 }
             },
             j_poke_cyndaquil = {
                 name = 'Cyndaquil',
                 text = {
                     "{C:red}+#1#{} discard",
-                    "{C:blue}-#2#{} hand",
-                    "Gains {C:mult}+#3#{} Mult per discard",
-                    "remaining after hand is scored",
-                    "{C:inactive}(Evolves at {C:mult}+#4#{C:inactive} / +#5# Mult)",
+                    "{C:mult}+#2#{} Mult for each",
+                    "remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_quilava = {
                 name = 'Quilava',
                 text = {
                     "{C:red}+#1#{} discard",
-                    "{C:blue}-#2#{} hand",
-                    "Gains {C:mult}+#3#{} Mult per discard",
-                    "remaining after hand is scored",
-                    "{C:inactive}(Evolves at {C:mult}+#4#{C:inactive} / +#5# Mult)",
+                    "{C:mult}+#2#{} Mult for each",
+                    "remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_typhlosion = {
                 name = 'Typhlosion',
                 text = {
                     "{C:red}+#1#{} discard",
-                    "{C:blue}-#2#{} hand",
-                    "Gains {C:mult}+#3#{} Mult per discard",
-                    "remaining after hand is scored",
-                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:mult}+#2#{} Mult and {X:red,C:white} X#3# {} Mult for",
+                    "each remaining {C:attention}discard{}",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult and {X:red,C:white} X#5# {C:inactive} Mult)",
                 }
             },
             j_poke_totodile = {
                 name = 'Totodile',
                 text = {
                     "{C:blue}+#1#{} hand",
-                    "{C:attention}-#2#{} hand size",
-                    "Gains {C:chips}+#3#{} Chips",
-                    "for every hand played",
-                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_croconaw = {
                 name = 'Croconaw',
                 text = {
                     "{C:blue}+#1#{} hand",
-                    "{C:attention}-#2#{} hand size",
-                    "Gains {C:chips}+#3#{} Chips",
-                    "for every hand played",
-                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 }
             },
             j_poke_feraligatr = {
                 name = 'Feraligatr',
                 text = {
                     "{C:blue}+#1#{} hand",
-                    "{C:attention}-#2#{} hand size",
-                    "Gains {C:chips}+#3#{} Chips",
-                    "for every hand played",
-                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                    "{C:chips}+#2#{} Chips for each card",
+                    "played this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_sentret = {
