@@ -1959,6 +1959,7 @@ return {
                     "{C:chips}+#2#{} Chips for each card",
                     "played this round",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_feraligatr = {
@@ -1968,7 +1969,6 @@ return {
                     "{C:chips}+#2#{} Chips for each card",
                     "played this round",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_sentret = {
