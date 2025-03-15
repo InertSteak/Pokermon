@@ -498,6 +498,11 @@ local thickclub = {
   can_use = function(self, card)
     if card.area == G.shop_jokers then return false end
     if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
+    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+       or G.STATE == G.STATES.STANDARD_PACK then 
+      if #G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit then return false end
+    end
+    
     return G.GAME.round > card.ability.extra.previous_round
   end,
   use = function(self, card, area, copier)
