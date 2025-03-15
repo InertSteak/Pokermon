@@ -172,7 +172,7 @@ local dragapult={
 }
 local dreepy_dart={
   name = "dreepy_dart",
-  pos = {x = 1, y = 11},
+  pos = {x = 13, y = 8},
   config = {extra = {money = 1, suit = "Spades"}},
   no_collection = true,
   loc_vars = function(self, info_queue, center)
