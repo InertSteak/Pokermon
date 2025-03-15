@@ -80,6 +80,8 @@ family = {
     {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
     {"sentret", "furret"},
     {"hoothoot", "noctowl"},
+    {"ledyba", "ledian"},
+    {"spinarak", "ariados"},
     {"natu", "xatu"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},

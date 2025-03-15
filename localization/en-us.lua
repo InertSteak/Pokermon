@@ -2015,6 +2015,38 @@ return {
                     "gives their total chips",
                 }
             },
+            j_poke_ledyba = {
+                name = "Ledyba",
+                text = {
+                  "{C:mult}+#1#{} Mult for every {C:attention}4{} cards",
+                  "remaining in deck",
+                  "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_ledian = {
+                name = "Ledian",
+                text = {
+                  "{C:mult}+#1#{} Mult for every {C:attention}2{} cards",
+                  "remaining in deck",
+                  "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                }
+            },
+            j_poke_spinarak = {
+                name = "Spinarak",
+                text = {
+                  "{C:chips}+#1#{} Chips",
+                  "{C:green}#2# in #3#{} for {C:chips}+#5#{} Chips instead",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention}#4#{C:inactive} rounds)",
+                }
+            },
+            j_poke_ariados = {
+              name = "Ariados",
+              text = {
+                "{C:chips}+#1#{} Chips",
+                "{C:green}#2# in #3#{} for {C:chips}+#4#{} Chips instead",
+              }
+            },
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {

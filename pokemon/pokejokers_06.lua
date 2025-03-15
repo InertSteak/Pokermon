@@ -598,9 +598,133 @@ local noctowl={
   end,
 }
 -- Ledyba 165
+local ledyba={
+  name = "ledyba",
+  pos = {x = 3, y = 1},
+  config = {extra = {mult = 1,rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * math.floor(deck_count/4)}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/4)}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_ledian")
+  end
+}
 -- Ledian 166
+local ledian={
+  name = "ledian",
+  pos = {x = 4, y = 1},
+  config = {extra = {mult = 1,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult * math.floor(deck_count/2)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/4)}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+        }
+      end
+    end
+  end
+}
 -- Spinarak 167
+local spinarak={
+  name = "spinarak",
+  pos = {x = 5, y = 1},
+  config = {extra = {chips = 40, chips2 = 90, odds = 3,rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, center.ability.extra.chips2}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local chips = card.ability.extra.chips
+        if pseudorandom('spinarak') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          chips = card.ability.extra.chips2
+        end
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = chips
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_ariados")
+  end
+}
 -- Ariados 168
+local ariados={
+  name = "ariados",
+  pos = {x = 6, y = 1},
+  config = {extra = {chips = 60, chips2 = 135, odds = 3,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.chips2}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local chips = card.ability.extra.chips
+        if pseudorandom('spinarak') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          chips = card.ability.extra.chips2
+        end
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = chips
+        }
+      end
+    end
+  end
+}
 -- Crobat 169
 local crobat={
   name = "crobat", 
@@ -912,5 +1036,6 @@ local xatu = {
 -- Flaaffy 180
 
 return {name = "Pokemon Jokers 151-180", 
-        list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, crobat, pichu, cleffa, igglybuff, natu, xatu},
+        list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
+                 crobat, pichu, cleffa, igglybuff, natu, xatu},
 }
