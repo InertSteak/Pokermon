@@ -750,15 +750,6 @@ local koffing={
 local weezing={
   name = "weezing", 
   pos = {x = 5, y = 8}, 
-  loc_txt = {      
-    name = 'Weezing',      
-    text = {
-      "Sell this card to reduce the",
-      "score requirement of the",
-      "current {C:attention}Boss Blind{} by {C:attention}half{}",
-      "and disable it",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,

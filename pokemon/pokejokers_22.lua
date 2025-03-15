@@ -5,14 +5,6 @@ local deino={
   name = "deino",
   pos = {x = 13, y = 9},
   config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 10},
-  loc_txt = {
-    name = "Deino",
-    text = {
-      "{X:mult,C:white} X#1# {} Mult if played hand",
-      "is a {C:attention}Three of a Kind{}",
-      "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times){}"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
@@ -44,14 +36,6 @@ local zweilous={
   name = "zweilous",
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 15},
-  loc_txt = {
-    name = "Zweilous",
-    text = {
-      "{X:mult,C:white} X#1# {} Mult if played hand",
-      "is a {C:attention}Three of a Kind{}",
-      "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times){}"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
@@ -83,16 +67,6 @@ local hydreigon={
   name = "hydreigon",
   pos = {x = 1, y = 10},
   config = {extra = {Xmult = 3.33, Xmult_mod = 0.33}},
-  loc_txt = {
-    name = "Hydreigon",
-    text = {
-      "If played hand is a {C:attention}Three of a Kind{}",
-      "each unscoring card is destroyed",
-      "{br:3}text needs to be here to work",
-      "Gains {X:mult,C:white} X#2# {} Mult when a card is destroyed",
-      "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}

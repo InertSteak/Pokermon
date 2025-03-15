@@ -2863,6 +2863,32 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
                 }
             },
+            j_poke_zweilous = {
+                name = "Zweilous",
+                text = {
+                  "{X:mult,C:white} X#1# {} Mult if played hand",
+                  "is a {C:attention}Three of a Kind{}",
+                  "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times){}"
+                }
+            },
+            j_poke_hydreigon = {
+                name = "Hydreigon",
+                text = {
+                  "If played hand is a {C:attention}Three of a Kind{}",
+                  "each unscoring card is destroyed",
+                  "{br:3}text needs to be here to work",
+                  "Gains {X:mult,C:white} X#2# {} Mult when a card is destroyed",
+                  "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}"
+                }
+            },
+            j_poke_deino = {
+                name = "Deino",
+                text = {
+                  "{X:mult,C:white} X#1# {} Mult if played hand",
+                  "is a {C:attention}Three of a Kind{}",
+                  "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times){}"
+                }
+            },
             j_poke_litleo = {
                 name = "Litleo",
                 text = {
