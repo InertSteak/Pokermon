@@ -15,7 +15,7 @@
 -- Dreepy 885
 local dreepy={
   name = "dreepy",
-  pos = {x = 0, y = 11},
+  pos = {x = 11, y = 5},
   config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -61,7 +61,7 @@ local dreepy={
 -- Drakloak 886
 local drakloak={
   name = "drakloak",
-  pos = {x = 2, y = 11},
+  pos = {x = 12, y = 5},
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -115,7 +115,7 @@ local drakloak={
 -- Dragapult 887
 local dragapult={
   name = "dragapult",
-  pos = {x = 3, y = 11},
+  pos = {x = 13, y = 5},
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
