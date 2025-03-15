@@ -388,6 +388,15 @@ end
 '''
 match_indent = true
 
+#Jirachi tag fix
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' then"
+position = "at"
+payload = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_poke_jirachi_tag' then"
+match_indent = true
+
 #Probopass face
 [[patches]]
 [patches.pattern]
