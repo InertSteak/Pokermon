@@ -767,7 +767,7 @@ return {
                     "When scored, {C:clubs}#2#{} cards",
                     "give {C:mult}+#1#{} Mult for each",
                     "{C:clubs}#2#{} card played this round",
-                    "{C:inactive,s:0.8}(If you play 5 clubs, each gives {C:mult,s:0.8}+5{C:inactive,s:0.8} Mult)",
+                    "{C:inactive,s:0.8}(If you play 5 clubs, each gives {C:mult,s:0.8}+#4#{C:inactive,s:0.8} Mult)",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
                 } 
             },

@@ -175,7 +175,8 @@ local clefable={
   config = {extra = {mult_mod = 1, suit = "Clubs", clubs_scored = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult_mod * center.ability.extra.clubs_scored}}
+    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult_mod * center.ability.extra.clubs_scored,
+                    5 * center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
