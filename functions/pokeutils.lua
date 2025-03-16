@@ -204,15 +204,12 @@ poke_vary_rank = function(card, decrease, seed)
       end
     end
     next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed))
-    print("poke_vary_rank (RANDOM) - ", card.base.value, next_rank)
   else
     next_rank = decrease and rank.prev or rank.next
-    print("poke_vary_rank (UP/DOWN) - ", card.base.value, next_rank)
     if #next_rank == 1 then
       next_rank = next_rank[1]
     else
       next_rank = pseudorandom_element(next_rank, pseudoseed(seed))
-      print("poke_vary_rank (UP/DOWN) - ", next_rank)
     end
   end
   G.E_MANAGER:add_event(Event({
