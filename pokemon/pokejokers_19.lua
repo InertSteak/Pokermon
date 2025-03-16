@@ -31,6 +31,7 @@
 local zorua = {
   name = "zorua", 
   pos = { x = 6, y = 5 },
+  soul_pos = { x = 8, y = 12 },
   config = {extra = {hidden_key = nil, rounds = 5}},
   rarity = 2,
   cost = 8,
@@ -135,12 +136,21 @@ local zorua = {
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if card.ability.blueprint_compat == 'compatible' and not card.debuff and other_joker.config.center.rarity ~= 4 then
+      if card.ability.blueprint_compat == 'compatible' and not card.debuff then
         card.children.center.atlas = other_joker.children.center.atlas
         card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
+        if other_joker.children.floating_sprite then
+          card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
+          card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
+        else
+          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+          card.children.floating_sprite:set_sprite_pos(self.soul_pos)
+        end
       else
         card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.center:set_sprite_pos(self.pos)
+        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
     end
   end,
