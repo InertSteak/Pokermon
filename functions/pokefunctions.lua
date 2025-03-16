@@ -82,6 +82,7 @@ family = {
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
+    {"remoraid", "octillery"},
     {"natu", "xatu"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},

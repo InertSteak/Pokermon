@@ -154,7 +154,83 @@ local corsola={
   end
 }
 -- Remoraid 223
+local remoraid={
+  name = "remoraid",
+  pos = {x = 1, y = 7},
+  config = {extra = {retriggers = 1,rounds = 4, card_max = 4, cards = 0}},
+  loc_txt = {
+    name = "Remoraid",
+    text = {
+      "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
+      "cards scored each round",
+      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and card.ability.extra.cards < card.ability.extra.card_max then
+      card.ability.extra.cards = card.ability.extra.cards + 1
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.cards = 0
+    end
+    return level_evo(self, card, context, "j_poke_octillery")
+  end
+}
 -- Octillery 224
+local octillery={
+  name = "octillery",
+  pos = {x = 2, y = 7},
+  config = {extra = {retriggers = 1, card_max = 8, cards = 0}},
+  loc_txt = {
+    name = "Octillery",
+    text = {
+      "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
+      "cards scored each round",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and card.ability.extra.cards < card.ability.extra.card_max then
+      card.ability.extra.cards = card.ability.extra.cards + 1
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.cards = 0
+    end
+  end
+}
 -- Delibird 225
 local delibird={
   name = "delibird",
@@ -637,5 +713,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, corsola, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }
