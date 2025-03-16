@@ -173,7 +173,6 @@ function unown_convert_to_unown(rank, suit)
    if suit == 'D' or suit == 'H' then
       new_rank = new_rank + 13
    end
-   print(rank, suit, "to", poke_unown_rank_names[new_rank], 'poke_Unown')
    return poke_unown_rank_names[new_rank], 'poke_Unown'
 end
 

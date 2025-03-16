@@ -105,7 +105,6 @@ payload = '''
 if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
   self.ability.extra = #G.P_CENTER_POOLS.Planet
 elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  print(self.ability.extra)
   self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
