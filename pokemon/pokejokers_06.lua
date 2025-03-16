@@ -988,7 +988,7 @@ local togetic={
   config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult = 1.5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
     return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips, card.ability.extra.Xmult}}
   end,
   rarity = "poke_safari",
