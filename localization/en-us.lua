@@ -3082,6 +3082,15 @@ return {
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
                 text = {
+                  "Hatches into a {C:attention}Basic{} or",
+                  "{C:attention}Baby{} Joker after {C:attention}#1#{} rounds",
+                  "with {C:pink}+1{} Energy if applicable"
+                }
+            },
+            --[[ Egg dynatext, not used right now
+            j_poke_mystery_egg = {
+                name = "Mystery Egg",
+                text = {
                     "This Egg needs more time to hatch.",
                     "Keep it secret. Keep it safe.",
                     "It looks cold and lonely.",
@@ -3092,7 +3101,7 @@ return {
                     "It's a secret to everybody.",
                     "Not to be put on a sandwich.",
                 }
-            },
+            },--]]
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
@@ -3624,6 +3633,18 @@ return {
                 "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
               }
             },
+            poke_egg_tip = {
+              name = "Mystery Egg",
+              text = {
+                "Hatches into a {C:attention}Basic{} or {C:attention}Baby{} Joker",
+                "after a certain amount of rounds",
+                "{br:2}text needs to be here to work",
+                "Higher chance for an {C:attention}edition{}",
+                "or a chance for {C:pink}+1{} Energy",
+                "{br:2}text needs to be here to work",
+                "Earns {C:money}$#1#{} at end of round"
+              }
+            },
             precise_energy_tooltip = {
                 name = "Precise Energy Scaling",
                 text = {
@@ -4000,6 +4021,8 @@ return {
             poke_smell_ya = "Smell Ya Later!",
             poke_wowthree = "Wow! Three!",
             poke_illusion = "...?",
+            poke_crack_ex = "CRACK!",
+            poke_shake_ex = "Shake!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

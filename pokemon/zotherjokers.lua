@@ -204,6 +204,12 @@ local mystery_egg = {
   name = "mystery_egg",
   pos = {x = 5, y = 0},
   config = {extra = {key = nil, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    return {vars = {center.ability.extra.rounds}}
+  end,
   rarity = 1,
   cost = 1,
   stage = "Other",
@@ -211,28 +217,28 @@ local mystery_egg = {
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and not context.blueprint then
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       local adjacent = 0
       local adjacent_jokers = poke_get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
         if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
       end
       card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if adjacent > 0 and pseudorandom('egg') < adjacent/4 then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+      end
       card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
-      if card.ability.extra.rounds <= 0 then
+      if card.ability.extra.rounds <= 1 then
         local eval = function(card) return not card.REMOVED end
         juice_card_until(card, eval, true)
       end
-    elseif context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       if card.ability.extra.rounds <= 0 then
         card.ability.extra.rounds = 99
         G.E_MANAGER:add_event(Event({trigger = 'immediate',
           func = function()
             -- if edition is nil, it'll try again for an edition
             local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key, edition = card.edition})
-            if pseudorandom('egg') < 0.1 then -- 10% for +1 energy
-              energy_increase(_card, 'Trans')
-            end
+            energy_increase(_card, 'Trans')
             _card:add_to_deck()
             local loc = 1
             for i,jkr in ipairs(G.jokers.cards) do
@@ -245,7 +251,11 @@ local mystery_egg = {
             return true
           end}))
         return {
-            message = "CRACK!"
+            message = localize('poke_crack_ex')
+        }
+      else
+        return {
+            message = localize('poke_shake_ex')
         }
       end
     end
@@ -267,16 +277,27 @@ local mystery_egg = {
       poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
     end
     -- common hatches in 2 turns
-    -- uncommon hatches in 2.5 turns
+    -- uncommon hatches in 2 or 3 turns
     -- rare hatches in 3 turns
 
     -- w/o fire = 2/3/3
     -- w/1 fire = 2/2/3
     -- w/2 fire = 2/2/2
-    card.ability.extra.rounds = 1.5 + poke_key.rarity / 2
+    if poke_key.rarity == 1 then
+      card.ability.extra.rounds = 2
+    elseif poke_key.rarity == 2 then
+      card.ability.extra.rounds = 2
+      if pseudorandom('regg') > .50 then
+        card.ability.extra.rounds = card.ability.extra.rounds + 1 
+      end
+    elseif poke_key.rarity == 3 then
+       card.ability.extra.rounds = 3
+    end
     card.ability.extra.key = poke_key.key
   end,
+  --[[ Function for dynatext, needs to be changed to put it as a tooltip
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+
     local _c = card and card.config.center or self
     if not full_UI_table.name then
 			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
@@ -288,8 +309,9 @@ local mystery_egg = {
       {n=G.UIT.O, config={object = DynaText({string = egg_messages,
       colours = {G.C.DARK_EDITION},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 2.5, scale = 0.32, min_cycle_time = 0})}},
     }
-    desc_nodes[#desc_nodes+1] = main_start
-  end,
+    info_queue[#info_queue+1] = main_start
+    --desc_nodes[#desc_nodes+1] = main_start
+  end,--]]
 }
 
 local rival = {
