@@ -944,6 +944,7 @@ local togepi={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  enhancement_gate = 'm_lucky',
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
