@@ -853,7 +853,6 @@ local shinystone = {
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
     return {vars = {self.config.max_highlighted, self.config.drain_amt}}
   end,
   pos = { x = 2, y = 4 },
