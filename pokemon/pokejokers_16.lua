@@ -28,6 +28,11 @@ local mantyke={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         faint_baby_poke(self, card, context)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then

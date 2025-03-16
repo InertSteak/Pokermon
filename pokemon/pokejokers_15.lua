@@ -16,6 +16,43 @@
 -- Bronzor 436
 -- Bronzong 437
 -- Bonsly 438
+local bonsly={
+  name = "bonsly",
+  pos = {x = 9, y = 3},
+  config = {extra = {Xmult_minus = 0.75, rounds = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Baby",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      local rank = pseudorandom_element({'J', 'Q', 'K'}, pseudoseed('familiar_create'))
+      local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('familiar_create'))
+      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
+      create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE})
+    end
+    return level_evo(self, card, context, "j_poke_sudowoodo")
+  end
+}
 -- Mime Jr. 439
 local mimejr={
   name = "mimejr",
@@ -156,5 +193,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {mimejr, happiny, munchlax},
+        list = {bonsly, mimejr, happiny, munchlax},
 }

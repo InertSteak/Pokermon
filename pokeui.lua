@@ -606,7 +606,7 @@ end
 
 G.FUNCS.pokedex_back = function()
   G.FUNCS.your_collection_jokers()
-  G.FUNCS.your_collection_joker_page({cycle_config = {current_option = poke_joker_page}})
+  G.FUNCS.SMODS_card_collection_page({cycle_config = {current_option = poke_joker_page}})
   local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
   page.config.ref_table.current_option = poke_joker_page
   page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]

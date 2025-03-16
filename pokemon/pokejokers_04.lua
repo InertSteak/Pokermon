@@ -342,9 +342,6 @@ local krabby={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_face() then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-            G.E_MANAGER:add_event(Event({func = function()
-                card:juice_up(0.8, 0.8)
-            return true end }))
         return {
           colour = G.C.CHIPS,
           chips = card.ability.extra.chips
@@ -546,7 +543,7 @@ local cubone={
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
-    return {vars = {card.ability.extra.mult, card.ability.extra.mult * (G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub'), consumables_left}}
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * ((G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub')), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -753,15 +750,6 @@ local koffing={
 local weezing={
   name = "weezing", 
   pos = {x = 5, y = 8}, 
-  loc_txt = {      
-    name = 'Weezing',      
-    text = {
-      "Sell this card to reduce the",
-      "score requirement of the",
-      "current {C:attention}Boss Blind{} by {C:attention}half{}",
-      "and disable it",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -891,20 +879,21 @@ local chansey={
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit then
       G.playing_card = (G.playing_card and G.playing_card + 1) or 1
       local card_to_copy = context.other_card
-      local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-      copy:add_to_deck()
-      G.deck.config.card_limit = G.deck.config.card_limit + 1
-      table.insert(G.playing_cards, copy)
-      G.hand:emplace(copy)
-      copy.states.visible = nil
-
       G.E_MANAGER:add_event(Event({
           func = function()
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.hand:emplace(copy)
+              copy.states.visible = nil
               copy:start_materialize()
               return true
           end
       })) 
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      if not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
       playing_card_joker_effects({copy})
       return {
           message = localize('k_copied_ex'),

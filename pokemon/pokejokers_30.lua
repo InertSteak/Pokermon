@@ -15,7 +15,7 @@
 -- Dreepy 885
 local dreepy={
   name = "dreepy",
-  pos = {x = 0, y = 11},
+  pos = {x = 11, y = 5},
   config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -61,7 +61,7 @@ local dreepy={
 -- Drakloak 886
 local drakloak={
   name = "drakloak",
-  pos = {x = 2, y = 11},
+  pos = {x = 12, y = 5},
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -87,7 +87,7 @@ local drakloak={
               v:set_cost()
             end
           end
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.MONEY})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
         end
         
         return {
@@ -115,7 +115,7 @@ local drakloak={
 -- Dragapult 887
 local dragapult={
   name = "dragapult",
-  pos = {x = 3, y = 11},
+  pos = {x = 13, y = 5},
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -172,7 +172,7 @@ local dragapult={
 }
 local dreepy_dart={
   name = "dreepy_dart",
-  pos = {x = 1, y = 11},
+  pos = {x = 13, y = 8},
   config = {extra = {money = 1, suit = "Spades"}},
   no_collection = true,
   loc_vars = function(self, info_queue, center)

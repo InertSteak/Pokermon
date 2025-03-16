@@ -327,7 +327,7 @@ poke_conversion_event_helper = function(func, delay, immediate)
 end
 
 local poke_id_to_rank = {'A','2','3','4','5','6','7','8','9','T','J','K','Q','A'}
-poke_convert_cards_to = function(cards, t, noflip, immediate)
+poke_convert_cards_to = function(cards, t, noflip, immediate, before)
   if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal and not noflip then
     for i = 1, #cards do
@@ -337,29 +337,37 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
   end
   for i = 1, #cards do
     if t.mod_conv then
-      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
-    elseif t.suit_conv then
-      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
-    elseif t.seal then
-      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
-    elseif t.random then
+      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate, before)
+    end
+    if t.edition then
+      poke_conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate, before)
+    end
+    if t.suit_conv then
+      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate, before)
+    end
+    if t.seal then
+      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate, before)
+    end
+    if t.random then
       poke_conversion_event_helper(function()
         local suit_prefix = string.sub(cards[i].base.suit, 1, 1) .. '_'
         local rank_suffix = poke_id_to_rank[math.floor(pseudorandom(t.seed) * 13) + 2]
         cards[i]:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-      end, nil, immediate)
-    elseif t.up or t.down then
+      end, nil, immediate, before)
+    end
+    if t.up or t.down then
       poke_conversion_event_helper(function()
         local suit_prefix = string.sub(cards[i].base.suit, 1, 1) .. '_'
         local rank_suffix = poke_id_to_rank[cards[i].base.id + (t.up and 1 or -1)]
         cards[i]:set_base(G.P_CARDS[suit_prefix .. rank_suffix])
-      end, nil, immediate)
-    elseif t.bonus_chips then
+      end, nil, immediate, before)
+    end
+    if t.bonus_chips then
       local bonus_add = function()
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus or 0
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus + t.bonus_chips
       end
-      poke_conversion_event_helper(bonus_add, nil, immediate)
+      poke_conversion_event_helper(bonus_add, nil, immediate, before)
     end
   end
   if not t.seal and not noflip then
@@ -383,4 +391,23 @@ function Game:init_game_object()
   local game = game_init_object(self)
   game.joker_rate = game.joker_rate + 8
   return game
+end
+
+poke_is_in_collection = function(card)
+  if G.your_collection then
+    for k, v in pairs(G.your_collection) do
+      if card.area == v then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+tdmsg = function(tablename)
+  if tablename and type(tablename) == "table" then
+    sendDebugMessage(inspect(tablename))
+  else
+    sendDebugMessage("Not a table, Function: tdmsg")
+  end
 end

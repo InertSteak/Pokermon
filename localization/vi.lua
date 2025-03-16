@@ -19,7 +19,7 @@ Dictonary: Yes
 Editions: Yes
 Vouchers: Yes
 Tags: Yes
-Misc Infoqueues (ancient, baby, eitem, Hệ, etc): Yes
+Misc Infoqueues (ancient, baby, eitem, Type, etc): Yes
 Other (packs, stickers, etc): Yes
 Misc: Yes
 ]]--
@@ -247,10 +247,10 @@ return {
             c_poke_shinystone = {
                 name = "Minh Thạch",
                 text = {
-                    "Thêm ấn bản {C:dark_edition}Ánh Kim{}, {C:dark_edition}Lấp Lánh{},",
-                    "hoặc {C:dark_edition}Đa Sắc{} cho {C:attention}1{} lá đã",
-                    "chọn trên tay và {C:attention}Suy Giảm{} {C:money}$#2#{}",
-                    "từ mỗi Joker",
+                    "Thêm {C:dark_edition}Ánh Kim{}, {C:dark_edition}Lấp Lánh{},",
+                    "hoặc {C:dark_edition}Đa Sắc{} cho",
+                    "{C:attention}1{} lá được chọn trên tay và",
+                    "loại bỏ lá {C:attention}Cường Hoá{}",
                     "{C:attention}Lá Tiến Hoá{}",
                 }
             },
@@ -275,11 +275,11 @@ return {
             c_poke_duskstone = {
                 name = "Đá Hoàng Hôn", -- "Hoàng Hôn Thạch" dễ gây hiểu lầm
                 text = {
-                    "Nhận {C:money}$#1#{} nếu",
-                    "được sử dụng trong {C:attention}#2#{} ván",
-                    "sau khi bạn có lá này",
+                    "Nhận {C:money}$#1#{} cho mỗi lá Joker bạn có",
+                    "{C:attention}Giảm {C:money}$1{} cho mỗi Joker bạn có",
+                    "Không {C:attention}Giảm{} sau {C:attention}#2#{} ván {C:inactive}(Ván #3#)",
                     "{C:attention}Lá Tiến Hoá{}",
-                    "{C:inactive}(Nhận {C:money}${C:inactive} bắt đầu từ Ván {C:attention}#3#{C:inactive})"
+                    "{C:inactive}(Hiện tại {C:money}$#4#{C:inactive}/$#5# Tối đa)"
                 }
             },
             c_poke_dawnstone = {
@@ -583,33 +583,36 @@ return {
             j_poke_pidgey = {
                 name = "Pidgey",
                 text = {
-                    "Mọi lá {C:planet}Hành Tinh{} và {C:planet}Gói Thiên Thể{}",
-                    "trong shop tiết kiệm được {C:money}$2{}",
+                    "{C:mult}+#2#{} Nhân nếu tay bài đang ghi điểm có",
+                    "đa bậc và đa chất",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)"
                 } 
             },
             j_poke_pidgeotto = {
                 name = "Pidgeotto",
                 text = {
-                    "Mọi lá {C:planet}Hành Tinh{} và {C:planet}Gói Thiên Thể{}",
-                    "trong shop tiết kiệm được {C:money}$3{}",
+                    "{C:mult}+#2#{} Nhân nếu tay bài đang ghi điểm có",
+                    "đa bậc và đa chất",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)"
                 } 
             },
             j_poke_pidgeot = {
                 name = "Pidgeot",
                 text = {
-                    "Mọi lá {C:planet}Hành Tinh{} và {C:planet}Gói Thiên Thể{}",
-                    "trong shop đều {C:attention}miễn phí{}",
-                    "{br:2}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
-                    "Nhận {C:money}$#1#{} khi một lá {C:planet}Hành Tinh{} được dùng"
+                    "Tạo một lá {C:planet}Hành Tinh{} khi {C:attention}Blind{} được chọn",
+                    "{br:2}text needs to be here to work",
+                    "{C:mult}+#1#{} Nhân nếu tay bài đang ghi điểm có chứa",
+                    "đa bậc và đa chất",
                 } 
             },
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "Lá {C:planet}Hành Tinh{} cho",
-                    "thêm {C:attention}#1#{} level",
+                "Khi {C:attention}Blind{} được chọn {C:attention}mất toàn bộ lượt bỏ{}",
+                "{br:2}text needs to be here to work",
+                "Mỗi lá đã chơi cho {X:mult,C:white}X{} Nhân",
+                "bằng với {C:attention}lượt bỏ đã mất{}",
+                "{C:inactive}(Hiện tại {X:mult,C:white}X#1#{C:inactive} Nhân)"
                 } 
             },
             j_poke_rattata = {
@@ -645,7 +648,7 @@ return {
             j_poke_ekans = {
                 name = "Ekans",
                 text = {
-                    "{C:mult}+#1#{} Nhân nếu tay bài",
+                    "{C:chips}+#1#{} Chip nếu tay bài",
                     "đã chơi chứa {C:attention}Sảnh{}",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)"
                 } 
@@ -653,7 +656,7 @@ return {
             j_poke_arbok = {
                 name = "Arbok",
                 text = {
-                    "{C:mult}+#1#{} Nhân nếu tay bài",
+                    "{C:chips}+#1#{} Chip nếu tay bài",
                     "đã chơi chứa {C:attention}Sảnh{}",
                     "{br:2}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
                     "Tạo ra lá {C:attention}Tarot{} nếu",
@@ -698,8 +701,8 @@ return {
                     "{C:chips}+#1#{} Chip cho mỗi lá {C:attention}Cỏ{}",
                     "trong cả bộ bài",
                     "{br:3}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
-                    "{V:1}Thêm một bản sao của lá {C:attention,V:1}Kính{V:1} đầu tiên",
-                    "bị vỡ lên tay mỗi ván",
+                    "{V:1}Thêm một bản sao của {C:attention,V:1}#3#{} {C:inactive}[#4#]{} lá {C:attention,V:1}Kính{V:1} đầu tiên",
+                    "{V:1}bị vỡ lên tay mỗi ván",
                     "{C:inactive}(Hiện tại là {C:chips}+#2#{C:inactive} Chip)",
                 } 
             },
@@ -716,7 +719,7 @@ return {
                 text = {
                     "Mỗi lá {C:attention}Đầm{} giữ trong tay",
                     "cho {C:chips}+#1#{} Chip",
-                    "{C:inactive,s:0.8}(Tiến hoá cùng với {C:attention,s:0.8}Nguyệt Thạch{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Tiến hoá cùng với lá {C:attention,s:0.8}Nguyệt Thạch{C:inactive,s:0.8})"
                 } 
             },
             j_poke_nidoqueen = {
@@ -808,22 +811,22 @@ return {
             j_poke_zubat = {
                 name = "Zubat",
                 text = {
-                    "{C:mult}+#1#{} Nhân cho mỗi lá Cường Hoá",
-                    "trong cả bộ bài",
-                    "{C:inactive}(Hiện tại là {C:mult}+#2#{C:inactive} Nhân)",
-                    "{C:inactive,s:0.8}(Tiến hoá ở mức #4#/{C:attention,s:0.8}#3#{C:inactive,s:0.8} lá Cường Hoá)",
+                    "{C:mult}+#2#{} Nhân cho mỗi lá Cường Hoá",
+                    "trong tay bài đang chơi",
+                    "{C:inactive}(Hiện tại là {C:mult}+#1#{C:inactive} Nhân)",
+                    "{C:inactive}(Tiến hoá khi {C:mult}+#1#{C:inactive} / +#3# Nhân)",
                 }
             },
             j_poke_golbat = {
                 name = "Golbat",
                 text = {
-                    "Thêm {C:chips}+#4#{} cho mỗi lá {C:attention}Thưởng{} / {C:attention}Đá{} ghi điểm",
-                    "{C:mult}+#2#{} cho mỗi lá {C:attention}Nhân{} / {C:attention}Tuỳ Chất{} ghi điểm",
-                    "{X:red,C:white}X#6#{} cho mỗi lá {C:attention}Thép{} / {C:attention}Cỏ{} ghi điểm",
-                    "Nhận {C:money}$#8#{} cho mỗi lá {C:attention}Vàng{} / {C:attention}May Mắn{} ghi điểm",
-                    "Sau đó loại bỏ {C:dark_edition}Cường Hoá{} khỏi lá ghi điểm",
-                    "{C:inactive}(Hiện tại là {C:chips}+#3#{C:inactive}, {C:Nhân}+#1#{C:inactive}, {X:red,C:white}X#5#{C:inactive}, {C:money}$#7#{C:inactive} cuối ván)",
-                    "{C:inactive,s:0.8}(Tiến hoá ở mức #9#/{C:attention,s:0.8}20{C:inactive,s:0.8} Cường Hoá đã ăn)",
+                    "Nhận {C:chips}+#4#{} cho mỗi lá {C:attention}Thưởng{} / {C:attention}Đá{} đang ghi điểm",
+                    "{C:mult}+#2#{} cho mỗi lá {C:attention}Nhận{} / {C:attention}Tuỳ Chất{} đang ghi điểm",
+                    "{X:red,C:white}X#6#{} cho mỗi lá {C:attention}Thép{} / {C:attention}Kính{} đang ghi điểm",
+                    "{C:money}$#8#{} cho mỗi lá {C:attention}Vàng{} / {C:attention}May Mắn{} đang ghi điểm",
+                    "Sau đó xoá {C:dark_edition}Cường hoá{} của những lá ghi điểm",
+                    "{C:inactive}(Hiện tại {C:chips}+#3#{C:inactive}, {C:mult}+#1#{C:inactive}, {X:red,C:white}X#5#{C:inactive}, {C:money}$#7#{C:inactive} vào cuối ván)",
+                    "{C:inactive,s:0.8}(Tiến hoá sau khi ăn {C:attention,s:0.8}#9#{C:inactive,s:0.8} Cường hoá)",
                 } 
             },
             j_poke_oddish = {
@@ -957,7 +960,7 @@ return {
                 text = {
                     "Lá {C:attention}2{}, {C:attention}3{}, {C:attention}5{}, hoặc {C:attention}7{} đã chơi",
                     "ghi thêm {C:mult}+#1#{} Nhân và {C:chips}+#2#{} Chip khi ghi điểm",
-                    "{C:inactive,s:0.8}(Tiến hoá sau kích hoạt #3#/{C:attention,s:0.8}25{C:inactive,s:0.8} lần)"
+                    "{C:inactive,s:0.8}(Tiến hoá sau kích hoạt {C:attention,s:0.8}#3#{C:inactive,s:0.8} lần)"
                 } 
             },
             j_poke_growlithe = {
@@ -973,9 +976,8 @@ return {
                 text = {
                     "{X:red,C:white} X#1# {} Nhân nếu tay bài",
                     "đã chơi chứa {C:attention}Thùng{}",
-                    "{br:2}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
-                    "Tạo ra lá {C:attention}Tình Nhân{}",
-                    "khi {C:attention}Blind{} được chọn"
+                    "Các lá chưa cường hoá trong {C:attention}Thùng{}",
+                    "trở thành lá {C:attention}Nhân{} khi tính điểm"
                 } 
             },
             j_poke_poliwag = {
@@ -1010,19 +1012,19 @@ return {
             j_poke_abra = {
                 name = "Abra",
                 text = {
-                    "Xác suất {C:green}#1# trên #2#{} tạo ra {C:attention}Kẻ Ngốc{}",
-                    "nếu như {C:attention}tay poker{} đã chơi",
-                    "đã được chơi trước đó",
+                    "Xác suất {C:green}#1# trên #2#{} khả năng để tạo một {C:item}Vật Phẩm",
+                    "hoặc lá {C:tarot}Tarot{} nếu {C:attention}tay bài poker{} đã chơi",
+                    "đã được chơi trong ván này",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#3#{C:inactive,s:0.8} ván)",
                 } 
             },
             j_poke_kadabra = {
                 name = "Kadabra",
                 text = {
-                    "Xác suất {C:green}#1# trên #2#{} tạo ra {C:attention}Kẻ Ngốc{} hoặc",
-                    "{C:item}Thìa Xoắn{} nếu {C:attention}tay poker{}",
-                    "đã chơi đã được chơi trước đó",
-                    "{C:inactive,s:0.8}(Tiến hoá cùng với {C:attention,s:0.8}Dây Nối{C:inactive,s:0.8})"
+                    "Xác suất {C:green}#1# trên #2#{} khả năng để tạo một lá {C:tarot}Tarot{}",
+                    "{C:item}Thìa Xoắn{} nếu {C:attention}tay bài poker{} đã chơi",
+                    "đã được chơi trong ván này",
+                    "{C:inactive,s:0.8}(Tiến hoá cùng {C:attention,s:0.8}Dây Nối{C:inactive,s:0.8})"
                 } 
             },
             j_poke_alakazam = {
@@ -1097,7 +1099,6 @@ return {
                 text = {
                     "Lá {C:attention}10{} đã chơi ghi thêm",
                     "{C:mult}+#1#{} Nhân khi ghi điểm",
-                    "nếu tay bài chỉ chứa lá {C:attention}10{}",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
                 } 
             },
@@ -1264,12 +1265,11 @@ return {
             j_poke_muk = {
                 name = 'Muk',      
                 text = {
-                    "{C:mult}+#1#{} Nhân mỗi lá thứ {C:attention}#3#{} trở đi trong bộ bài",
-                    "{X:mult,C:white} X#2# {} Nhân nếu bộ bài có > {C:attention}#4#{} lá",
-                    "{C:inactive}(Hiện tại là {C:mult}+#5#{} {C:inactive}Nhân){}",
-                    "{br:4}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
-                    "Ở cuối ván, loại bỏ 1 lá ngẫu nhiên",
-                    "khỏi bộ bài rồi thêm 2 lá ngẫu nhiêu",
+                    "{C:mult}+#1#{} Nhân cho mỗi lá trên {C:attention}#2#{} trong bộ bài của bạn",
+                    "{br:4}text needs to be here to work",
+                    "Vào cuối ván, bỏ 1 lá ngẫu nhiên",
+                    "từ bộ bài và thêm vào đấy 2 lá ngẫu nhiên",
+                    "{C:inactive}(Hiện tại là {C:mult}+#3#{} {C:inactive}Nhân){}"
                 } 
             },
             j_poke_shellder = {
@@ -1333,32 +1333,32 @@ return {
                     "Lá ghi điểm ở tít bên trái thuộc",
                     "{C:attention}tay bài đầu tiên{} của ván",
                     "trở thành lá {C:attention}Đá{}",
-                    "{C:inactive,s:0.8}(Tiến hoá cùng với {C:metal,s:0.8}Thiếc{C:inactive,s:0.8} sticker)"
+                    "{C:inactive,s:0.8}(Tiến hoá cùng với nhãn {C:metal,s:0.8}Thiếc{C:inactive,s:0.8})"
                 } 
             },
             j_poke_drowzee = {
                 name = 'Drowzee',      
                 text = {
-                    "{C:mult}+#2#{} Nhân cho mỗi",
+                    "{C:mult}X#2#{} Nhân cho mỗi",
                     "lá {C:planet}Hành Tinh{} riêng biệt",
                     "đã dùng trong trận này",
-                    "{C:inactive}(Hiện tại là {C:mult}+#1#{C:inactive} Nhân)",
-                    "{C:inactive,s:0.8}(Tiến hoá ở mức {C:mult,s:0.8}+28{C:inactive,s:0.8} Nhân)"
+                    "{C:inactive}(Hiện tại là {C:mult}X#1#{C:inactive} Nhân)",
+                    "{C:inactive,s:0.8}(Tiến hoá sau khi chơi {C:planet,s:0.8}#3#{C:inactive,s:0.8} lá hành tinh riêng biệt)"
                 } 
             },
             j_poke_hypno = {
                 name = 'Hypno',      
                 text = {
-                    "{C:attention}Giữ Lá Thôi Miên{}",
-                    "{C:mult}+#2#{} Nhân cho mỗi lá {C:planet}Hành Tinh{} riêng biệt",
-                    "đã dùng trong trận này",
-                    "{C:inactive}(Hiện tại là {C:mult}+#1#{C:inactive} Nhân)",
+                    "{C:attention}Giữ lá Thôi Miên{}",
+                    "{X:mult,C:white}X#2#{} Nhân mỗi lá",
+                    "{C:planet}Hành tinh{} riêng biệt được dùng trong trận này",
+                    "{C:inactive}(Hiện tại {X:mult,C:white}X#1#{C:inactive} Nhân)",
                 } 
             },
             j_poke_krabby = {
                 name = 'Krabby',      
                 text = {
-                    "Các lá {C:attention}mặt{} đã chơi ghi thêm",
+                    "Các lá {C:attention}hình{} đã chơi ghi thêm",
                     "{C:chips}+#1#{} Chip khi ghi điểm",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)"
                 } 
@@ -1366,16 +1366,18 @@ return {
             j_poke_kingler = {
                 name = 'Kingler',      
                 text = {
-                    "Mọi lá {C:attention}mặt{} đã chơi trở thành",
-                    "lá {C:attention}Thưởng{} và ghi thêm",
-                    "{C:chips}+#1#{} Chip khi ghi điểm",
+                    "Mọi lá {C:attention}hình{} đã chơi chưa cường hoá",
+                    "trở thành lá {C:attention}Thưởng{} và {C:chips}+#1#{} Chip",
+                    "khi ghi điểm",
                 } 
             },
             j_poke_voltorb = {
                 name = 'Voltorb',      
                 text = {
-                    "Nếu Joker này {C:attention}ở tít bên trái{},",
-                    "thêm {C:mult}+#1#{} Nhân, rồi vô hiệu hoá",
+                    "{C:attention}Hữu Biến{}",
+                    "{X:mult,C:white} X#1# {} Nhân",
+                    "{br:2}text needs to be here to work",
+                    "Khi kích hoạt vô hiệu chính nó",
                     "cho đến khi hết ván",
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
                 } 
@@ -1383,9 +1385,12 @@ return {
             j_poke_electrode = {
                 name = 'Electrode',      
                 text = {
-                    "Nếu Joker này {C:attention}ở tít bên trái{},",
-                    "thêm {C:mult}+#1#{} Nhân và {C:money}$#2#{}, rồi vô hiệu hoá",
-                    "cho đến khi hết ván",
+                    "{C:attention}Hữu Biến{}",
+                    "{X:mult,C:white} X#1# {} Nhân",
+                    "Nhận {C:money}$#2#{} khi tay bài được chơi",
+                    "{br:2}text needs to be here to work",
+                    "Khi kích hoạt",
+                    "Vô hiệu chính nó cho tới hết ván",
                 } 
             },
             j_poke_exeggcute = {
@@ -1412,7 +1417,7 @@ return {
                     "mỗi lá tiêu thụ {C:attention}đang giữ{}",
                     "{C:inactive,s:0.75}({C:attention,s:0.75}Chày Xương{C:inactive,s:0.75} tính là hai lần){}",
                     "{C:inactive}(Hiện tại là {C:mult}+#3#{C:inactive} Nhân)",
-                    "{C:inactive,s:0.75}(Tiến hoá ở mức {C:attention,s:0.75}#4#{C:inactive,s:0.75}/#5# lá tiêu thụ đã dùng)"
+                    "{C:inactive,s:0.75}(Tiến hoá sau khi dùng {C:attention,s:0.8}#3#{C:inactive,s:0.8} lá tiêu thụ)"
                 } 
             },
             j_poke_marowak = {
@@ -1589,18 +1594,25 @@ return {
             j_poke_jynx = {
                 name = 'Jynx',      
                 text = {
-                    "{C:attention}Lá bài thường{} được thêm vào",
-                    "bộ bài từ {C:attention}Shop{}, gói {C:attention}Tiêu Chuẩn{},",
-                    "{C:spectral}Dị Chủng{}, lá {C:item}Vật Phẩm{} và một số Joker nhất định",
-                    "đều được {C:attention}nhân bản{}"
+                "Khi {C:attention}Blind{} được chọn, thêm {C:attention}+#1#{} lá cầm trên tay",
+                "nếu lá trong bộ bài có {C:attention}#2#{} hoặc nhiều hơn",
+                "{br:4}text needs to be here to work",
+                "{C:attention}Các lá đang chơi{} thêm vào bộ bài",
+                "của bạn từ {C:attention}Shop{}, Gói {C:attention}Bài{},",
+                "{C:spectral}Dị Chủng{}, {C:item}Vật Phẩm{} và các lá Joker nhất định",
+                "are {C:attention}duplicated{}"
                 } 
             },
             j_poke_electabuzz = {
                 name = 'Electabuzz',      
                 text = {
-                    "Thêm {C:money}$#1#{} {C:attention}giá bán{} ở cuối ván",
-                    "và khi một lá bài được {C:attention}bán{}",
-                    "{C:inactive,s:0.8}(Tiến hoá cùng với {C:attention,s:0.8}Dây Nối{C:inactive,s:0.8})"
+                    "Nhận {C:money}$#1#{} {C:attention}giá bán{} khi một lá",
+                    "được bán vào cuối ván",
+                    "{br:3.5}text needs to be here to work",
+                    "Nhận {C:attention}#2#%{} giá bán của lá Joker này",
+                    "vào cuối ván {C:inactive}(được làm tròn lên){}",
+                    "{C:inactive}(Hiện tại nhận {C:money}$#3#{C:inactive}/$#4# Tối Đa)",
+                    "{C:inactive,s:0.8}(Tiến hoá với một {C:attention,s:0.8}Dây Nối{C:inactive,s:0.8})"
                 } 
             },
             j_poke_magmar = {
@@ -1727,22 +1739,22 @@ return {
                 name = 'Omanyte',
                 text = {
                     "{C:attention}Lá #1# Cổ Đại{}",
-                    "{X:attention,C:white}1+{} : Thêm {C:money}$#2#{} giá bán",
-                    "{X:attention,C:white}2+{} : Nhận {C:money}$#3#{}",
-                    "{X:attention,C:white}3+{} : Tạo ra một lá {C:attention}Tarot{} ngẫu nhiên",
-                    "{C:inactive,s:0.8}(Phải có ô trống)",
-                    "{C:inactive,s:0.8}(Tiến hoá sau khi kích hoạt cấp ba {C:attention,s:0.8}#4#{C:inactive,s:0.8}/#5# lần)"
+                    "{X:attention,C:white}1+{} : Tạo một lá {C:tarot}Tarot{}",
+                    "{X:attention,C:white}2+{} : Cho {C:money}$#2#{}",
+                    "{X:attention,C:white}3+{} : Tạo một lá {C:item}Vật Phẩm{}",
+                    "{C:inactive,s:0.8}(Cần ô trống)",
+                    "{C:inactive,s:0.8}(Tiến hoá sau khi kích hoạt cấp ba {C:attention,s:0.8}#3#{C:inactive,s:0.8} lần)"
                 } 
             },
             j_poke_omastar = {
                 name = 'Omastar',
                 text = {
                     "{C:attention}Lá #1# Cổ Đại{}",
-                    "{X:attention,C:white}1+{} : {}Thêm {C:money}$#2#{} giá bán",
-                    "{X:attention,C:white}2+{} : {}Nhận {C:money}$#3#{}",
-                    "{X:attention,C:white}3+{} : {}Tạo ra một lá {C:attention}Tarot{} ngẫu nhiên",
-                    "{X:attention,C:white}4+{} : {}Tạo ra một lá {C:item}Vật phẩm{} ngẫu nhiên",
-                    "{C:inactive,s:0.8}(Phải có ô trống)",
+                    "{X:attention,C:white}1+{} : Tạo một lá {C:tarot}Tarot{}",
+                    "{X:attention,C:white}2+{} : Cho {C:money}$#2#{}",
+                    "{X:attention,C:white}3+{} : Tạo một lá {C:item}Vật Phẩm{}",
+                    "{C:inactive,s:0.8}(Cần ô trống)",
+                    "{X:attention,C:white}4+{} : Tạo một {C:attention}nhãn{} mỗi ván{C:inactive}#3#{}",
                 } 
             },
             j_poke_kabuto = {
@@ -1770,11 +1782,12 @@ return {
                 name = 'Aerodactyl',
                 text = {
                     "{C:attention}Lá #1# Cổ Đại{}",
-                    "{X:attention,C:white}1+{} : {C:mult}+#2#{} Nhân",
-                    "{X:attention,C:white}2+{} : {C:mult}+#3#{} Nhân và {C:chips}+#4#{} Chip",
-                    "{X:attention,C:white}3+{} : {X:red,C:white}X#5#{} Nhân",
-                    "{X:attention,C:white}4+{} : {}Joker này ghi {C:attention}gấp đôi{}",
-                    "giá trị ghi điểm của nó",
+                    "{X:attention,C:white}1+{} : {X:red,C:white}X#2#{} Nhân",
+                    "{X:attention,C:white}2+{} : Cho {X:red,C:white}X#3#{} Nhân",
+                    "{X:attention,C:white}3+{} : Lá {C:attention}#1#{} chưa cường hoá đang ghi điểm đầu tiên",
+                    "trở thành lá {C:attention}Kính{}",
+                    "{X:attention,C:white}4+{} : {C:attention}Gấp đôi{} {X:red,C:white}X{} nhân của lá Joker này",
+                    "{C:inactive}(Khởi động lại vào cuối ván){}",
                 } 
             },
             j_poke_mega_aerodactyl = {
@@ -1784,7 +1797,7 @@ return {
                     "{C:attention}#1#{} trong tay bài đã chơi khi ghi điểm",
                     "{br:3.5}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
                     "Xác suất {C:green}#3# trên #4#{} cho mỗi",
-                    "lá {C:attention}#1#{} đã chơi to bị phá huỷ",
+                    "lá {C:attention}#1#{} đã chơi bị phá huỷ",
                 } 
             },
             j_poke_snorlax = {
@@ -1799,9 +1812,9 @@ return {
             j_poke_articuno = {
                 name = 'Articuno',
                 text = {
-                    "Thêm {C:attention}Lấp Lánh{}, một {C:attention}cường hoá{} ngẫu nhiên và",
-                    "một {C:attention}con dấu{} ngẫu nhiên vào lá không ghi điểm",
-                    "thuộc {C:attention}tay đầu tiên{} của ván"
+                    "Thêm {C:attention}Lấp Lánh{} và một {C:attention}con dấu{}",
+                    "vào lá ghi điểm tít bên trái",
+                    "trong tay bài đã chơi"
                 } 
             },
             j_poke_zapdos = {
@@ -1908,6 +1921,23 @@ return {
                     "{C:inactive}(Hiện tại là {C:mult}+#1#{} {C:inactive}Nhân)",
                 }  
             },
+            j_poke_hoothoot = {
+                name = 'Hoothoot',
+                text = {
+                    "{C:purple}+#1# Tiên kiến ",
+                    "Mỗi lá bài được {C:attention}Dự đoán{}",
+                    "cho lại tổng số chip của chúng",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
+                }
+            },
+            j_poke_noctowl = {
+                name = 'Noctowl',
+                text = {
+                    "{C:purple}+#1# Tiên Kiến",
+                    "Mỗi lá bài được {C:attention}Dự đoán{}",
+                    "cho lại tổng số chip của chúng",
+                }
+            },
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {
@@ -1946,6 +1976,31 @@ return {
                     "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
                 }
             },
+            j_poke_natu = {
+                name = 'Natu',
+                text = {
+                    "Các lá {C:planet}Hành Tinh{} cho thêm một cấp bổ sung",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)",
+                }
+            },
+            j_poke_xatu = {
+                name = 'Xatu',
+                text = {
+                    "Các lá {C:planet}Hành Tinh{} cho {C:attention}#1#{} cấp bổ sung",
+                    "{C:planet}Gói Thiên thể{} chứa mọi lá {C:planet}Hành Tinh{}",
+                }
+            },
+            j_poke_sudowoodo = {
+                name = "Sudowoodo",
+                text = {
+                  "{C:attention}Pokermon Hoán Hệ{}",
+                  "Các lá {C:attention}hình{} đã chơi cho {C:mult}+#1#{} Nhân khi đã ghi điểm",
+                  "{br:2}text needs to be here to work",
+                  "Tái kích mọi lá {C:attention}hình{} đã chơi nếu",
+                  "lá Joker này không phải {X:grass,C:white}Cỏ{} hoặc",
+                  "bạn có một Joker hệ {X:water,C:white}Thuỷ{}"
+                }
+            },
             j_poke_bellossom = {
                 name = 'Bellossom',
                 text = {
@@ -1966,6 +2021,32 @@ return {
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{C:inactive,s:0.8} Tái kích chia đều cho các lá ghi điểm){}",
                     "{s:0.8}Chất thay đổi sau khi tính điểm {C:inactive,s:0.8}(#3#, #4#, #5#, #6#)",
                 } 
+            },
+            j_poke_hoppip = {
+                name = 'Hoppip',
+                text = {
+                    "{C:attention}+#1#{} lá giữ trong tay",
+                    "{C:attention}2 Lá đã bỏ{} đầu tiên trở thành {C:dark_edition}Tuỳ Chất{}",
+                    "sau đó {S:1.1,C:red,E:2}tự huỷ{}",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
+                }
+            },
+            j_poke_skiploom = {
+                name = 'Skiploom',
+                text = {
+                    "{C:attention}+#1#{} lá giữ trong tay",
+                    "{C:attention}3 Lá đã bỏ{} đầu tiên trở thành {C:dark_edition}Tuỳ Chất{}",
+                    "{S:1.1,C:red,E:2}tự huỷ{} khi loại bỏ",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
+                }
+            },
+            j_poke_jumpluff = {
+                name = 'Jumpluff',
+                text = {
+                    "{C:attention}+#1#{} lá giữ trong tay",
+                    "Toàn {C:attention}lá loại bỏ{} trở thành {C:dark_edition}Tuỳ Chất{}",
+                    "{S:1.1,C:red,E:2}tự huỷ{} khi loại bỏ",
+                }
             },
             j_poke_espeon = {
                 name = 'Espeon',
@@ -2011,12 +2092,24 @@ return {
                     "Khi Blind được chọn, phá huỷ Joker",
                     "liền phải và thêm {C:mult}+#4#{} Nhân",
                     "Thêm {C:attention}Ánh Kim{}, {C:attention}Lấp Lánh{}, hoặc {C:attention}Đa Sắc{}",
-                    "nếu nó không phải Joker {C:attention}Thường{}",
+                    "nếu nó là Joker {C:attention}Hiếm{} hoặc cao hơn",
                     "Cho phép {C:attention}chồng{} ấn bản lên Joker này",
                     "{C:inactive,s:0.75}(Nếu có thể, lấy ấn bản Joker đã phá huỷ){}",
                     "{C:inactive}(Hiện tại là {C:mult}+#1#{} {C:inactive}Nhân, {C:chips}+#2#{} {C:inactive}Chip, {X:red,C:white}X#3#{} {C:inactive}Nhân)"
                 } 
             },
+            j_poke_corsola = {
+                name = 'Corsola',
+                text = {
+                  "{C:mult}+#1#{} Nhân cho mỗi lá {C:attention}Đã Cường Hoá{}",
+                  "trong bộ bài đầy đủ của bạn",
+                  "{br:2}text needs to be here to work",
+                  "Tạo một lá Joker {C:attention}Thường{} hệ {X:water,C:white}Nước{} nếu tay bài",
+                  "đang ghi điểm có chứa lá {C:attention}5 Cường hoá{}",
+                  "{C:inactive,s:0.8}(Cần ô trống)",
+                  "{C:inactive}(Hiện tại là {C:mult}+#2#{C:inactive} Nhân)",
+                }
+              },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -2117,6 +2210,13 @@ return {
                     "vào bộ bài và bốc nó lên {C:attention}Tay",
                 } 
             },
+            j_poke_celebi = {
+                name = "Celebi",
+                text = {
+                    "{C:attention}-#2#{} Ante sau khi bỏ qua {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blind{}",
+                    "{C:inactive}(Yêu cầu bỏ qua tăng lên mỗi lần)"
+                } 
+            },
             j_poke_treecko = {
                 name = "Treecko",
                 text = {
@@ -2156,7 +2256,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} lượt bỏ bài, {C:attention}Thiên Nhiên{}",
                     "Thêm {C:mult}+#1#{} Nhân cho mỗi {C:attention}#5#, #6# hoặc #7#{} đã bỏ ván này",
-                    "Thêm gấp đôi với lá {X:fire,C:white}Hoả{} hoặc {X:earth,C:white}Giác Đấu{} khác",
+                    "Thêm gấp đôi với lá {X:fire,C:white}Hoả{} hoặc {X:earth,C:white}Giác_Đấu{} khác",
                     "{C:inactive,s:0.8}(bao gồm Joker và lá Năng lượng){}",
                     "{C:inactive}(Hiện tại là {C:mult}+#4#{C:inactive} Nhân)",
                     "{C:inactive,s:0.8}(Tiến hoá ở mức #2#/{C:mult,s:0.8}60{C:inactive,s:0.8} Nhân)",
@@ -2167,7 +2267,7 @@ return {
                 text = {
                     "{C:mult}+#3#{} lượt bỏ bài, {C:attention}Thiên Nhiên{}",
                     "Thêm {C:mult}+#1#{} Nhân mỗi {C:attention}#5#, #6# hoặc #7#{} đã bỏ ván này",
-                    "Thêm gấp đôi với lá {X:fire,C:white}Hoả{} hoặc {X:earth,C:white}Giác đấu{} khác",
+                    "Thêm gấp đôi với lá {X:fire,C:white}Hoả{} hoặc {X:earth,C:white}Giác_đấu{} khác",
                     "{C:inactive,s:0.8}(bao gồm Joker và lá Năng lượng){}",
                     "{C:inactive}(Hiện tại là {C:mult}+#4#{C:inactive} Nhân)",
                     "{C:inactive,s:0.8}(Tiến hoá ở mức #2#/{C:mult,s:0.8}150{C:inactive,s:0.8} Nhân)",
@@ -2198,7 +2298,7 @@ return {
                 name = "Marshtomp",
                 text = {
                     "{C:chips}+#3#{} tay bài, {C:attention}Thiên Nhiên{}",
-                    "Lá {C:attention}#4#s, #5#s hoặc #6#s{} cho {C:chips}+#1#{} Chip",
+                    "Lá {C:attention}#4#, #5# hoặc #6#{} cho {C:chips}+#1#{} Chip",
                     "Gấp đôi với lá {X:water,C:white}Thuỷ{} hoặc {X:earth,C:white}Thổ{} khác",
                     "{C:inactive,s:0.8}(bao gồm Joker và lá Năng lượng){}",
                     "{C:inactive}(Tiến hoá sau khi nhận #2#/{C:chips}960{C:inactive} Chip)"
@@ -2212,6 +2312,30 @@ return {
                     "và {C:chips}+#5#{} Chip mỗi lá {X:water,C:white}Thuỷ{} hoặc {X:earth,C:white}Thổ{} khác",
                     "{C:inactive,s:0.8}(bao gồm Joker và lá Năng lượng){}",
                     "{C:inactive}(Hiện tại là tổng cộng {C:chips}+#4#{C:inactive})"
+                } 
+            },
+            j_poke_shroomish = {
+                name = "Shroomish",
+                text = {
+                  "Khi {C:attention}Blind{} được chọn, nhận",
+                  "{C:chips}+#1#{} tay, {C:mult}+#2#{} lượt bỏ, hoặc {C:attention}+#3#{} cỡ tay",
+                  "{C:inactive,s:0.8}(Tiến hoá sau khi đánh bại {C:inactive,s:0.8}Boss Blind {C:attention,s:0.8}Ante #4#{})"
+                }
+            }, 
+            j_poke_breloom = {
+                name = "Breloom",
+                text = {
+                  "Khi {C:attention}Blind{} được chọn, nhận",
+                  "{C:chips}+#1#{} tay, {C:mult}+#2#{} lượt bỏ, hoặc {C:attention}+#3#{} cỡ tay",
+                } 
+            },
+            j_poke_nosepass = {
+                name = 'Nosepass',      
+                text = {
+                    "Lá {C:attention}mặt{} đã chơi đầu tiên",
+                    "trở thành lá {C:attention}Đá{} và",
+                    "cho {X:mult,C:white} X#1# {} Nhân khi tính điểm",
+                    "{C:inactive,s:0.8}(Tiến hoá cùng {C:attention,s:0.8}Lôi thạch{C:inactive,s:0.8})"
                 } 
             },
             j_poke_aron = {
@@ -2265,7 +2389,7 @@ return {
             j_poke_snorunt = {
                 name = "Snorunt",
                 text = {
-                  "Ghi nợ tối đa {C:mult-$#1#{}",
+                  "Ghi nợ tối đa {C:mult}-$#1#{}",
                   "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván chịu nợ)",
                   "{C:inactive,s:0.8}(Tiến hoá cùng với {C:attention,s:0.8}Đá Bình Minh{C:inactive,s:0.8})"
                 }
@@ -2282,21 +2406,21 @@ return {
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
-                    "Nếu tay bài đã chơi chứa ít nhất",
-                    "một lá {C:attention}Át{} ghi điểm, thêm {C:chips}+#2#{} Chip",
-                    "{C:attention}Gấp đôi{} lượng nhận nếu tay bài là {C:attention}Tứ Quý{}",
-                    "{C:inactive}(Hiện tại là {C:chips}+#1#{C:inactive} Chip)",
-                    "{C:inactive,s:0.8}(Tiến hoá ở mức {C:chips,s:0.8}+64{C:inactive,s:0.8} Chip)"
+                    "Nhận {C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "là một {C:attention}Tứ Quý{}",
+                    "Nhận {C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "có chứa một {C:attention}Át",
+                    "{C:inactive}(Tiến hoá khi {C:chips}+#1#{C:inactive} / +64 Chip)",
                 } 
             },
             j_poke_metang = {
                 name = 'Metang',
                 text = {
-                    "Nếu tay bài đã chơi chứa ít nhất",
-                    "hai lá {C:attention}Át{} ghi điểm, thêm {C:chips}+#2#{} Chip",
-                    "{C:attention}Gấp bốn{} lượng nhận nếu tay bài là {C:attention}Tứ Quý{}",
-                    "{C:inactive}(Hiện tại là {C:chips}+#1#{C:inactive} Chip)",
-                    "{C:inactive,s:0.8}(Tiến hoá tại {C:chips,s:0.8}+256{C:inactive,s:0.8} Chip)"
+                    "Nhận {C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "là một {C:attention}Tứ Quý{}",
+                    "Nhận {C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "có chứa một {C:attention}Át",
+                    "{C:inactive}(Tiến hoá khi {C:chips}+#1#{C:inactive} / +256 Chip)",
                 } 
             },
             j_poke_metagross = {
@@ -2305,10 +2429,61 @@ return {
                     "{C:chips}+#1#{} Chip",
                     "{br:3}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
                     "Nếu tay bài đã chơi là {C:attention}Tứ Quý{}",
-                    "mỗi lá đã chơi cho {X:mult,C:white}XNhân{}",
+                    "mỗi lá đã chơi cho {X:mult,C:white}X{} Nhân",
                     "bằng với {C:attention}căn bậc ba{}",
                     "tổng chip lá bài đó",
                 } 
+            },
+            j_poke_jirachi = {
+                name = 'Jirachi',
+                text = {
+                    "Vào cuối shop,",
+                    "{C:dark_edition}ước một điều ước!",
+                }
+            },
+            j_poke_jirachi_banker = {
+                name = 'Jirachi',
+                text = {
+                    "{C:attention}Gấp đôi{} lượng tiền cuối ván",
+                }
+            },
+            j_poke_jirachi_booster = {
+                name = 'Jirachi',
+                text = {
+                    "+1 {C:attention}ô Gói Bài",
+                    "{C:attention}Các Gói Bài{} cộng thêm {C:attention}1{} lá",
+                }
+            },
+            j_poke_jirachi_power = {
+                name = 'Jirachi',
+                text = {
+                    "Mỗi {C:attention}#2# {C:inactive}[#3#]{} tay, lá đã chơi",
+                    "cho {X:mult,C:white}X#1#{} Nhân khi tính điểm",
+                }
+            },
+            j_poke_jirachi_negging = {
+                name = 'Jirachi',
+                text = {
+                    "{C:blue}+2{} ô Joker",
+                    "Lá {C:dark_edition}Âm Bản{} xuất hiện thường xuyên hơn {C:attention}2X{} lần",
+                }
+            },
+            j_poke_jirachi_copy = {
+                name = 'Jirachi',
+                text = {
+                    "Sao chép khả năng của lá {C:attention}Joker{} bên phải",
+                    "kể cả nó có {C:attention}#1#{} {C:pink}Năng lượng{} bổ sung",
+                }
+            },
+            j_poke_jirachi_fixer = {
+                name = 'Jirachi',
+                text = {
+                    "Nếu {C:attention}tay đầu{} chỉ có {C:attention}1{} lá,",
+                    "thêm {C:dark_edition}Ánh Kim{}, {C:dark_edition}Lấp Lánh{}, hoặc {C:dark_edition}Đa Sắc{} cho nó",
+                    "{br:3}text needs to be here to work",
+                    "Nếu {C:attention}lượt bỏ đầu{} chỉ có {C:attention}1{} lá,",
+                    "{C:attention}phá huỷ{} nó",
+                }
             },
             j_poke_buizel = {
                 name = 'Buizel',
@@ -2326,6 +2501,15 @@ return {
                     "mỗi lá {C:attention}không ghi điểm{}",
                     "trong tay bài đã chơi",
                 }  
+            },
+            j_poke_bonsly = {
+                name = "Bonsly",
+                text = {
+                  "{C:attention}Baby{}, {X:red,C:white}X#1#{} Nhân",
+                  "Tại cuối ván, thêm ngẫu nhiên một",
+                  "{C:attention}Lá mặt đã cường hoá{} vào bộ bài đầy đủ của bạn",
+                  "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
+                }
             },
             j_poke_mimejr = {
                 name = 'Mime Jr.',
@@ -2456,14 +2640,90 @@ return {
                     "{C:inactive}(Hiện tại là {X:red,C:white} X#1# {C:inactive} Nhân)"
                 } 
             },
+            j_poke_probopass = {
+                name = 'Probopass',      
+                text = {
+                    "Lá {C:attention}Đá{} coi như lá Hình",
+                    "{br:2}text needs to be here to work",
+                    "Lá {C:attention}Đá{} đã chơi",
+                    "cho {X:mult,C:white} X#1# {} Nhân khi tính điểm"
+                } 
+            },
             j_poke_froslass = {
                 name = "Froslass",
                 text = {
                   "có thể nợ tới {C:mult}-$#1#{}",
                   "{br:2.5}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
                   "tạo 1 lá {C:item}vật phẩm{} khi",
-                  "tay bài choi trong khi nợ",
+                  "tay bài chơi khi đang nợ",
                   "{C:inactive,s:0.8}(Phải có ô trống)",
+                }
+            },
+            j_poke_zorua = {
+                name = "Zorua",
+                text = {
+                    "Sao chép hiệu ứng của {C:attention}Joker{} tít bên phải",
+                    "Ảo ảnh vỡ ngay tay bài đầu tiên",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)",
+                }
+            },
+            j_poke_zoroark = {
+                name = "Zoroark",
+                text = {
+                    "Sao chép hiệu ứng của {C:attention}Joker{} tít bên phải",
+                }
+            },
+            j_poke_gothita = {
+                name = "Gothita",
+                text = {
+                    "Mọi lá {C:planet}Hành Tinh{} và các {C:planet}Gói Thiên Thể{}",
+                    "trong shop tốn ít hơn {C:money}$2{}",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)"
+                } 
+            },
+            j_poke_gothorita = {
+                name = "Gothorita",
+                text = {
+                    "Mọi lá {C:planet}Hành Tinh{} và các {C:planet}Gói Thiên Thể{}",
+                    "trong shop tốn ít hơn {C:money}$3{}",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)"
+                } 
+            },
+            j_poke_gothitelle = {
+                name = "Gothitelle",
+                text = {
+                    "Mọi lá {C:planet}Hành Tinh{} và các {C:planet}Gói Thiên Thể{}",
+                    "trong shop đều {C:attention}miễn phí{}",
+                    "{br:2}text needs to be here to work",
+                    "Cho {C:money}$#1#{} khi một lá {C:planet}Hành Tinh{} đã sử dụng"
+                } 
+            },
+            j_poke_vanillite = {
+                name = "Vanillite",
+                text = {
+                  "{C:attention}Tả Biến",
+                  "{C:chips}+#1#{} Chip",
+                  "{C:chips}-#3#{} Chip cho mỗi tay bài đã chơi",
+                  "{C:inactive,s:0.8}(Không kích hoạt sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván sẽ tiến hoá )",
+                }
+            },
+            j_poke_vanillish = {
+                name = "Vanillish",
+                text = {
+                  "{C:attention}Tả Biến",
+                  "{C:chips}+#1#{} Chip",
+                  "{C:chips}-#3#{} Chip cho mỗi tay bài đã chơi",
+                  "{C:inactive,s:0.8}(Không kích hoạt sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván sẽ tiến hoá)",
+                }
+            },
+            j_poke_vanilluxe = {
+                name = "Vanilluxe",
+                text = {
+                  "{C:chips}+#1#{} Chip",
+                  "{C:chips}-#2#{} Chip cho mỗi tay bài đã chơi",
+                  "{br:2}text needs to be here to work",
+                  "Khi tan chảy toàn bộ",
+                  "tạo {C:attention}#3# Nhãn Đôi{} "
                 }
             },
             j_poke_elgyem = {
@@ -2500,7 +2760,7 @@ return {
             j_poke_lampent = {
               name = "Lampent",
               text = {
-                "{C:attention}Suy Giảm{C:money}$#1#{} từ mọi Joker",
+                "{C:attention}Suy Giảm {C:money}$#1#{} từ mọi Joker",
                 "khác ở cuối ván",
                 "{br:3.5}phải chèn chữ ở đây mới chạy", -- chả hiểu code như nào
                 "Thêm {C:attention}hai lần{} giá bán Joker này vào Nhân",
@@ -2517,6 +2777,23 @@ return {
                     "thêm {C:attention}ba lần{} giá bán Joker này vào Nhân",
                     "{C:inactive}(Hiện tại là {C:mult}+#3#{C:inactive} Nhân){}",
                 }
+            },
+            j_poke_litleo = {
+                name = "Litleo",
+                text = {
+                    "{C:chips}+#1#{} Chip nếu tay bài đã chơi",
+                    "chứa một {C:attention}Thùng{}",
+                    "{C:inactive,s:0.8}(Tiến hoá sau {C:attention,s:0.8}#2#{C:inactive,s:0.8} ván)",
+                } 
+            },
+            j_poke_pyroar = {
+                name = "Pyroar",
+                text = {
+                    "{C:chips}+#1#{} Chip nếu tay bài đã chơi có chứa {C:attention}Thùng{}",
+                    "{br:2}text needs to be here to work",
+                    "Tạo một lá {C:pink}Năng lượng{} nếu như nó",
+                    "đồng thời chứa lá {C:attention}Già{} hoặc {C:attention}Đầm{}"
+                } 
             },
             j_poke_sylveon = {
                 name = 'Sylveon',
@@ -2677,6 +2954,27 @@ return {
                   "Lá {C:attention}Thép{} được coi như lá {C:attention}Kính{}"
                 }
             },
+            j_poke_wiglett = {
+                name = "Wiglett",
+                text = {
+                    "{C:mult}+#3#{} Nhân nếu tay bài đã chơi",
+                    "có chứa {C:attention}Sám Chi{}",
+                    "{br:2}text needs to be here to work",
+                    "{C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "có chứa {C:attention}5{}, {C:attention}6{}, hoặc {C:attention}7{}",
+                    "{C:inactive,s:0.8}(Tiếu hoá sau {C:attention,s:0.8}#1#{C:inactive,s:0.8} ván)"
+                } 
+            },
+            j_poke_wugtrio = {
+                name = "Wugtrio",
+                text = {
+                    "{X:red,C:white} X#1# {} Nhân nếu tay bài đã chơi",
+                    "có chứa {C:attention}Sám Chi{}",
+                    "{br:2}text needs to be here to work",
+                    "{C:chips}+#2#{} Chip nếu tay bài đã chơi",
+                    "có chứa {C:attention}5{}, {C:attention}6{}, hoặc {C:attention}7{}",
+                } 
+            },
             j_poke_annihilape = {
                 name = 'Annihilape',
                 text = {
@@ -2685,6 +2983,23 @@ return {
                     "cho mỗi tay bài đã chơi trong ván này",
                     "{C:inactive}(Hiện tại là {C:mult}+#3#{} {C:inactive}Nhân {C:chips}+#4#{C:inactive} Chip)",
                 } 
+            },
+            j_poke_dudunsparce = {
+                name = 'Dudunsparce',
+                text = {
+                  "{C:attention}+#1#{} ô bài trong shop",
+                  "{C:attention}+#1#{} ô Gói Bài trong shop",
+                  "{C:attention}+#1#{} ô Phiếu trong shop",
+                }
+            },
+            j_poke_dudunsparce2 = {
+                name = 'Dudunsparce',
+                text = {
+                  "{C:attention}Giữ Phiếu Giảm Giá{}",
+                  "{C:attention}+#1#{} ô bài trong shop",
+                  "{C:attention}+#1#{} ô Gói Bài trong shop",
+                  "{C:attention}+#1#{} ô Phiếu trong shop",
+                }
             },
             j_poke_gimmighoul = {
                 name = "Gimmighoul (Rương)",
@@ -2758,6 +3073,30 @@ return {
                   "Tạo ra lá {C:colorless}Vô {C:pink}Năng{}",
                   "khi blind được chọn",
                   "{C:inactive}(Còn lại {C:attention}#1#{C:inactive} ván){}"
+                }
+            },
+            j_poke_rival = {
+                name = "Rival",
+                text = {
+                    "{C:mult}+#1#{} Nhân",
+                    "Nếu điểm {C:attention}>#3#X{} Blind Yêu cầu",
+                    "{S:1.1,C:red,E:2}tự huỷ{} và nhận {C:money}$#2#",
+                }
+            },
+            j_poke_bitter_rival = {
+                name = "Bitter Rival",
+                text = {
+                    "{C:mult}+#1#{} Nhân",
+                    "Nếu điểm {C:attention}>#3#X{} Blind Yêu cầu",
+                    "{S:1.1,C:red,E:2}tự huỷ{} và nhận {C:money}$#2#",
+                }
+            },
+            j_poke_champion = {
+                name = "Champion",
+                text = {
+                    "{X:mult,C:white}X#1#{} Nhân",
+                    "Nếu điểm {C:attention}>#3#X{} Blind Yêu cầu",
+                    "{S:1.1,C:red,E:2}tự huỷ{} và nhận {C:money}$#2#",
                 }
             },
         },
@@ -2852,6 +3191,48 @@ return {
                     "lên {C:attention}1{} lá đã chọn",
                 }
             },
+            c_poke_fake_banker = {
+                name = 'Cầu Lộc',
+                text = {
+                    "{C:dark_edition}Cầu nhiều Tài Lộc!",
+                }
+            },
+            c_poke_fake_booster = {
+                name = 'Cầu Vận',
+                text = {
+                    "{C:dark_edition}Cầu nhiều Cơ May!",
+                }
+            },
+            c_poke_fake_power = {
+                name = 'Cầu Sức',
+                text = {
+                    "{C:dark_edition}Cầu nhiều Sức Mạnh!",
+                }
+            },
+            c_poke_fake_negging = {
+                name = 'Cầu Ma',
+                text = {
+                    "{C:dark_edition}Cầu thêm \"bạn\"!",
+                }
+            },
+            c_poke_fake_copy = {
+                name = 'Cầu Bản',
+                text = {
+                    "{C:dark_edition}Cầu cho một Tay Hỗ Trợ!",
+                }
+            },
+            c_poke_fake_fixer = {
+                name = 'Cầu Tịnh',
+                text = {
+                    "{C:dark_edition}Cầu cho bộ bài tốt hơn!",
+                }
+            },
+            c_poke_fake_masterball = {
+                name = 'Càu Chiêu',
+                text = {
+                    "{C:dark_edition}Cầu để triệu hồi Pokermon Huyền Thoại!",
+                }
+            },
         },
         Tag = {
             tag_poke_pocket_tag = {
@@ -2878,10 +3259,10 @@ return {
                 }, 
             },
             tag_poke_safari_tag = {
-                name = "Nhãn Thám Hiểm",
+                name = "Nhãn Hoang Dã",
                 text = {
                     "Shop có một Joker",
-                    "{C:safari}Thám Hiểm{} miễn phí",
+                    "{C:safari}Hoang Dã{} miễn phí",
                 }, 
             },
         },
@@ -3115,8 +3496,8 @@ return {
                 text = {
                     "Khi tay bài được chơi",
                     "nếu có bất kỳ Joker {C:attention}không-phải-Baby{}",
-                    "nào ở bên phải lá Joker",
-                    "này, tự {C:attention}vô hiệu hoá{}"
+                    "ở bên phải lá Joker này",
+                    "tự {C:attention}vô hiệu hoá{}"
                 }
             },
             nature = {
@@ -3125,6 +3506,13 @@ return {
                     "Giá trị {C:attention}#1#{} được",
                     "thiết lập ngẫu nhiên",
                     "khi lá Joker được tạo ra"
+                }
+            },
+            scry_cards = {
+                name = "Tiên Kiến",
+                text = {
+                    "Nhìn trước những lá đầu",
+                    "trong bộ bài của bạn"
                 }
             },
             mega_rule = {
@@ -3226,6 +3614,22 @@ return {
                 "giá bán lớn hơn {C:money}$1{}",
               }
             },
+            poke_volatile_left = {
+                name = "Tả Biến",
+                text = {
+                  "Lá Joker này chỉ kích hoạt",
+                  "khi nằm {C:attention}tít bên trái{}",
+                  "{C:inactive}(Loại trừ Pokemon {C:attention}Cực Biến{C:inactive})"
+                }
+              },
+              poke_volatile_right = {
+                name = "Hữu Biến",
+                text = {
+                  "Lá Joker này chỉ kích hoạt",
+                  "khi nằm {C:attention}tít bên phải{}",
+                  "{C:inactive}(Loại trừ Pokemon {C:attention}Cực Biến{C:inactive})"
+                }
+              },
             precise_energy_tooltip = {
                 name = "Tăng Trưởng Chính Xác",
                 text = {
@@ -3270,8 +3674,18 @@ return {
                 "{C:attention}#3#",
               }
             },
+            omastar_tag_pool = {
+                name = "Tag Pool",
+                text = {
+                  "{C:money}#1#",
+                  "{C:money}#2#",
+                  "{C:money}#3#",
+                  "{C:money}#4#",
+                  "{C:money}#5#",
+                }
+              },
             safaridesc = {
-                name = "Thám Hiểm",
+                name = "Hoang Dã",
                 text = {
                     "Chỉ có thể được thuẩn hoá",
                     "bằng {C:attention}Tiến Hoá{}",
@@ -3455,6 +3869,12 @@ return {
                     "Chọn {C:attention}#1#{} trong giữa",
                     "{C:attention}#2#{} Lá {C:item}Vật Phẩm{} và",
                     "{C:attention}#3#{} Lá {C:pink}Năng Lượng{}",
+                },  
+            },
+            p_poke_pokepack_wish_pack = {
+                name = "Gói Cầu Nguyện",
+                text = {
+                    "{C:dark_edition}Cầu một điều ước!{}",
                 },
             },
         },
@@ -3475,7 +3895,7 @@ return {
             k_item = "Vật Phẩm",
             k_poke_pocket_pack = "Gói Bỏ Túi",
 
-            k_poke_safari = "Thám Hiểm",
+            k_poke_safari = "Hoang Dã",
             k_poke_mega = "Siêu Cấp",
 
             b_save = "LƯU",
@@ -3483,30 +3903,31 @@ return {
             b_item_cards = "Lá Vật Phẩm",
             
             --Mod Menu stuff
-            poke_settings_header_required = "Restart Required:",
-            poke_settings_header_norequired = "No Restart Required:",
-            poke_settings_pokemon_only = "Pokemon only?",
-            poke_settings_unlimited_energy = "Unlmited Energy?",
-            poke_settings_shiny_playing_cards = "Shiny on playing cards?",
-            poke_settings_jokers_only = "Jokers only?",
-            poke_settings_no_evolutions = "No Evolutions?",
+            poke_settings_header_required = "Yêu cầu khởi động lại:",
+            poke_settings_header_norequired = "Không yêu cầu khởi động lại:",
+            poke_settings_pokemon_only = "Chỉ Pokemon?",
+            poke_settings_unlimited_energy = "Năng lượng vô hạn?",
+            poke_settings_shiny_playing_cards = "Shiny cho các lá bài đang chơi?",
+            poke_settings_jokers_only = "Chỉ Joker?",
+            poke_settings_no_evolutions = "Không tiến hoá?",
             poke_settings_pokeballs = "Pokéballs?",
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
+            poke_settings_pokemon_altart = "Alt Art?",
             poke_credits_actualcredits = "Credits",
-            poke_credits_thanks = "Thanks to",
-            poke_credits_lead = "Lead Developer: ",
-            poke_credits_graphics = "Graphic Design: ",
+            poke_credits_thanks = "Cảm ơn tới",
+            poke_credits_lead = "Chủ Dev: ",
+            poke_credits_graphics = "Đồ Hoạ: ",
             poke_credits_quality_assurance_main = "QA: ",
-            poke_credits_developer = "Developers: ",
-            poke_credits_designer = "Design Assistants: ",
-            poke_credits_community_manager = "Community Managers: ",
+            poke_credits_developer = "Những nhà phát triển: ",
+            poke_credits_designer = "Trợ lý thiết kế: ",
+            poke_credits_community_manager = "Quản lý cộng đồng: ",
             poke_credits_promotion_producer = "Promotion Producer: ",
-            poke_credits_localization = "Localization: ",
-            poke_credits_sound = "Audio Engineer: ",
+            poke_credits_localization = "Bản địa hoá: ",
+            poke_credits_sound = "Kĩ sư âm thanh: ",
 
             poke_plus_pokeitem = "+1 vật phẩm",
             poke_plus_energy = "+1 Năng lượng",
@@ -3517,7 +3938,7 @@ return {
             poke_tera_ex = "Tinh thể!",
             poke_metal_ex = "Thiếc!",
             poke_dragon_ex = "Rồng!",
-            poke_energized_ex = "Tràn trề năng lượng!",
+            poke_energized_ex = "Tăng lực!",
             poke_unlimited_energy = "Vô cực",
 
             --Some infoqueue/variable stuff
@@ -3598,7 +4019,7 @@ return {
             dragon_sticker = "Tinh Thể Hoá",
             earth_sticker = "Tinh Thể Hoá",
 
-            k_poke_safari = "Thám Hiểm",
+            k_poke_safari = "Hoang Dã",
             k_poke_mega = "Siêu Cấp",
         },
         v_dictionary = {

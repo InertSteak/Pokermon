@@ -28,6 +28,7 @@ position = "after"
 payload = '''
 if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
+if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
 match_indent = true
 
@@ -72,7 +73,7 @@ target = "card.lua"
 pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
-if self.config.shiny_on_add then
+if self.config.shiny_on_add and not self.debuff then
   SMODS.change_booster_limit(1)
 end
 '''
@@ -94,31 +95,36 @@ end
 '''
 match_indent = true
 
-# Voucher functionality
+# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "local _size = self.ability.extra"
+pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
 position = "after"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  _size = _size + G.GAME.extra_pocket_picks
+if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
+  self.ability.extra = #G.P_CENTER_POOLS.Planet
+elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  print(self.ability.extra)
+  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
 match_indent = true
 
-# Resize Booster Pack UI for new options
+# Xatu Make All Planets Appear
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
-position = "after"
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
+position = "at"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks
-end
+if next(find_joker("xatu")) then
+    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+elseif G.GAME.used_vouchers.v_telescope and i == 1 then
 '''
 match_indent = true
+overwrite = true
 
 #Shiny shader
 [[patches]]
@@ -138,7 +144,7 @@ end
 '''
 match_indent = true
 
-#Pidgey functionality
+#Gothita line functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -147,9 +153,9 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 '''
 position = "after"
 payload = '''
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('pidgey')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('pidgeotto')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeot') > 0 then self.cost = 0 end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothitelle') > 0 then self.cost = 0 end
 '''
 match_indent = true
 
@@ -382,6 +388,15 @@ end
 '''
 match_indent = true
 
+#Jirachi tag fix
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' then"
+position = "at"
+payload = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_poke_jirachi_tag' then"
+match_indent = true
+
 #Probopass face
 [[patches]]
 [patches.pattern]
@@ -469,3 +484,29 @@ end
 match_indent = true
 
 
+#Zorua Rental Incompatibility
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+self.ability.rental = _rental
+self:set_cost()
+'''
+position = "at"
+payload = '''
+if self.config.center.rental_compat ~= false and not self.ability.rental then 
+    self.ability.rental = _rental
+    self:set_cost()
+end
+'''
+match_indent = true
+overwrite = true
+
+#Tutorial Functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
+position = "at"
+payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
+match_indent = true
