@@ -41,6 +41,7 @@ local prismscale = {
         G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
       end
       juice_flip_table(card, cards_held, true, self.config.converted)
+      poke_unhighlight_cards()
       
       evo_item_use_total(self, card, area, copier)
     else

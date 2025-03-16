@@ -104,7 +104,7 @@ local sunstone = {
         poke_vary_rank(G.hand.highlighted[i], nil, "sunstone")
       end
       juice_flip(card, true)
-
+      poke_unhighlight_cards()
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -153,6 +153,7 @@ local waterstone = {
         conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
       end
       juice_flip(card, true)
+      poke_unhighlight_cards()
       delay(0.5)
       evo_item_use_total(self, card, area, copier)
     else
@@ -213,6 +214,7 @@ local thunderstone = {
         _card:set_ability(G.P_CENTERS.m_gold, nil, true)
         playing_card_joker_effects({_card})
       end
+      poke_unhighlight_cards()
       
       evo_item_use_total(self, card, area, copier)
     else
@@ -260,6 +262,7 @@ local firestone = {
       
       local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
       poke_remove_card(target, card)
+      poke_unhighlight_cards()
       
       evo_item_use_total(self, card, area, copier)
     else
@@ -345,12 +348,13 @@ local linkcable = {
       juice_flip(card)
       for i=1, #G.hand.highlighted do
         if G.hand.highlighted[i] ~= rightmost then
-          poke_vary_rank(G.hand.highlighted[i])
+          poke_vary_rank(G.hand.highlighted[i], false)
         else
           poke_vary_rank(G.hand.highlighted[i], true)
         end
       end
       juice_flip(card, true)
+      poke_unhighlight_cards()
       delay(0.5)
       
       evo_item_use_total(self, card, area, copier)
@@ -514,6 +518,7 @@ local thickclub = {
       conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
     end
     juice_flip(card, true)
+    poke_unhighlight_cards()
     delay(0.5)
     card.ability.extra.previous_round = G.GAME.round
   end,
@@ -590,6 +595,7 @@ local metalcoat = {
     local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
     copy:set_ability(G.P_CENTERS.m_steel, nil, true)
     poke_add_card(copy, card)
+    poke_unhighlight_cards()
   end,
   in_pool = function(self)
     return true
@@ -683,6 +689,7 @@ local kingsrock = {
       }))
       delay(0.5)
       juice_flip(card, true)
+      poke_unhighlight_cards()
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -737,6 +744,7 @@ local upgrade = {
         G.hand.highlighted[i]:set_ability(enhancement, nil, true)
       end
       juice_flip(card, true)
+      poke_unhighlight_cards()
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -833,7 +841,7 @@ local icestone = {
           poke_remove_card(G.hand.highlighted[i], card)
         end
       end
-
+      poke_unhighlight_cards()
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -882,6 +890,7 @@ local shinystone = {
           shiny_card:set_ability(G.P_CENTERS.c_base, nil, true)
           card:juice_up(0.3, 0.5)
       return true end }))
+      poke_unhighlight_cards()
 
       evo_item_use_total(self, card, area, copier)
     else
