@@ -4180,6 +4180,12 @@ return {
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
         },
+        tutorial = {
+          poke_intro_1 = {
+          "Hello, I'm {C:attention}Professor Jimbo{}!",
+          "Welcome to the world of {C:attention}Pokermon{}!",
+          },
+        },
         v_dictionary = {
             
         },
