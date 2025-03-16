@@ -650,9 +650,9 @@ local ledian={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/4)}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/2)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/2)
         }
       end
     end
