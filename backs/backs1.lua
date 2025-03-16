@@ -75,7 +75,39 @@ local telekineticdeck = {
 	atlas = "pokedeck",
 } 
 
-local dList = {luminousdeck, obituarydeck, telekineticdeck}
+local symboldeck = {
+  name = "symboldeck",
+  key = "symboldeck",
+  config = {},
+  loc_vars = function(self, info_queue, center)
+     return { vars = {} }
+  end,
+	pos = { x = 4, y = 0 },
+	atlas = "pokedeck",
+  apply = function(self)
+     G.GAME.Unown = true
+     G.GAME.starting_params.unown_cards = true
+     G.GAME.starting_params.extra_cards = G.GAME.starting_params.extra_cards or {}
+     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ!' })
+     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ!' })
+     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ?' })
+     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ?' })
+
+     G.E_MANAGER:add_event(Event({
+        func = function()
+           for k, v in pairs(G.playing_cards) do
+              if v.base.suit == 'poke_Unown' and G.GAME.starting_params.erratic_suits_and_ranks then
+                 local new_rank = pseudorandom_element(poke_unown_rank_names, pseudoseed('erratic'), {starting_deck = true})
+                 SMODS.change_base(v, 'poke_Unown', new_rank)
+              end
+           end
+           return true
+        end
+     }))
+  end
+}
+
+local dList = {luminousdeck, obituarydeck, telekineticdeck, symboldeck}
 
 if pokermon_config.pokeballs then
   table.insert(dList, 1, pokemondeck)

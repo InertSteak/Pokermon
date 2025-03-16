@@ -510,3 +510,135 @@ pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
 position = "at"
 payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
 match_indent = true
+
+# Unown Functionality
+# Hide Unown as ? Rank in Deck Preview
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''
+if SUITS[v.base.suit][v.base.value] then
+    table.insert(SUITS[v.base.suit][v.base.value], v)
+end
+rank_counts[v.base.value] = (rank_counts[v.base.value] or 0) + 1
+'''
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then
+    table.insert(SUITS['poke_Unown']['poke_UZ?'], v)
+    rank_counts['poke_UZ?'] = (rank_counts['poke_UZ?'] or 0) + 1
+else
+    if SUITS[v.base.suit][v.base.value] then
+        table.insert(SUITS[v.base.suit][v.base.value], v)
+    end
+    rank_counts[v.base.value] = (rank_counts[v.base.value] or 0) + 1
+end
+'''
+match_indent = true
+overwrite = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 1
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "local mod_ace_tally = 0"
+position = "after"
+payload = '''
+local unown_tally = 0
+'''
+match_indent = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 2
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "if v.base.value and not SMODS.Ranks[v.base.value].face and card_id ~= 14 then"
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then
+    unown_tally = unown_tally + 1
+elseif v.base.value and not SMODS.Ranks[v.base.value].face and card_id ~= 14 then
+'''
+match_indent = true
+overwrite = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 3
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''
+if v.base.value then rank_tallies[v.base.value] = rank_tallies[v.base.value] + 1 end
+if v.base.value and not v.debuff then mod_rank_tallies[v.base.value] = mod_rank_tallies[v.base.value] + 1 end
+'''
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then rank_tallies['poke_UZ?'] = rank_tallies['poke_UZ?'] + 1
+elseif v.base.value then rank_tallies[v.base.value] = rank_tallies[v.base.value] + 1 end
+if v.base.suit == 'poke_Unown' and not v.debuff then mod_rank_tallies['poke_UZ?'] = mod_rank_tallies['poke_UZ?'] + 1
+elseif v.base.value and not v.debuff then mod_rank_tallies[v.base.value] = mod_rank_tallies[v.base.value] + 1 end
+'''
+match_indent = true
+overwrite = true
+
+# Unown Straight functionality
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "if v.id == id then table.insert(ranks[k], card); break end"
+position = "at"
+payload = "if v.id == id and v.key == card.base.value then table.insert(ranks[k], card); break end"
+match_indent = true
+overwrite = true
+
+# Specific Unown abilities (I V X L ? !)
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "-- TARGET: main scoring on played cards"
+position = "after"
+payload = '''
+if card.base and card.base.suit == 'poke_Unown' then
+    ret.unown_effect = calculate_Unown_playing_card(card, context)
+end
+'''
+match_indent = true
+
+# Unown Always scores
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "if (G.P_SEALS[card.seal or {}] or {}).always_scores then return true end"
+position = "after"
+payload = "if card.base and card.base.suit == 'poke_Unown' then return true end"
+match_indent = true
+
+# Unown Unlocking when found randomly
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "function Card:add_to_deck(from_debuff)"
+position = "after"
+payload = "if self.base and self.base.suit == 'poke_Unown' then G.GAME.Unown = true end"
+match_indent = true
+
+# Unown Deck - convert normal cards
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "local _r, _s = SMODS.Ranks[v.value].card_key, SMODS.Suits[v.suit].card_key"
+position = "after"
+payload = "if self.GAME.starting_params.unown_cards then _r, _s = unown_convert_to_unown(_r, _s) end"
+match_indent = true
+
+# Unown Deck - remove "face" Unowns
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end"
+position = "at"
+payload = '''
+if self.GAME.starting_params.unown_cards and self.GAME.starting_params.no_faces then keep = keep and _r ~= 'poke_UJ' and _r ~= 'poke_UQ' and _r ~= 'poke_UK'
+elseif self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end
+'''
+match_indent = true
+

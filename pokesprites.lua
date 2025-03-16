@@ -271,6 +271,34 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "Unown",
+    path = "UnownDeck.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "Unown_hc",
+    path = "UnownDeck.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "pokeui_assets",
+    path = "pokeui_assets.png",
+    px = 18,
+    py = 18
+}):register()
+
+SMODS.Atlas({
+    key = "pokeui_assets_hc",
+    path = "pokeui_assets.png",
+    px = 18,
+    py = 18
+}):register()
+
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",

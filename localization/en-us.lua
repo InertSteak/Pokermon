@@ -62,6 +62,13 @@ return {
                     "and have {C:attention}+1{} {C:pink}Energy{}"
                 }
             },
+            b_poke_symboldeck = {
+                name = "Symbolic Deck",
+                text = {
+                        "Let the {C:dark_edition}UNOWN{} guide you"
+
+                }
+            },
         },
         Blind = {
             bl_poke_cgoose = {
@@ -4155,6 +4162,47 @@ return {
             poke_smell_ya = "Smell Ya Later!",
             poke_wowthree = "Wow! Three!",
             poke_illusion = "...?",
+
+            -- Unown text
+            k_maybe_next_time = "Maybe Next Time?"
+        },
+        -- Unown Card Ranks
+        ranks = {
+            poke_UA = 'A',
+            poke_UB = 'B',
+            poke_UC = 'C',
+            poke_UD = 'D',
+            poke_UE = 'E',
+            poke_UF = 'F',
+            poke_UG = 'G',
+            poke_UH = 'H',
+            poke_UI = 'I',
+            poke_UJ = 'J',
+            poke_UK = 'K',
+            poke_UL = 'L',
+            poke_UM = 'M',
+            poke_UN = 'N',
+            poke_UO = 'O',
+            poke_UP = 'P',
+            poke_UQ = 'Q',
+            poke_UR = 'R',
+            poke_US = 'S',
+            poke_UT = 'T',
+            poke_UU = 'U',
+            poke_UV = 'V',
+            poke_UW = 'W',
+            poke_UX = 'X',
+            poke_UY = 'Y',
+            poke_UZ = 'Z',
+            ["poke_UZ!"] = '!',
+            ["poke_UZ?"] = '?',
+        },
+        -- Unown Card Suits
+        suits_plural = {
+            poke_Unown = "Unown",
+        },
+        suits_singular = {
+            poke_Unown = "Unown",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
