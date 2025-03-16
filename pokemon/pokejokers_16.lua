@@ -336,7 +336,12 @@ local magmortar={
 local togekiss={
   name = "togekiss",
   pos = {x = 11, y = 5},
-  config = {extra = {Xmult1 = 1.0, Xmult2 = 4.0}},
+  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult = 1.5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips, card.ability.extra.Xmult}}
+  end,
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
@@ -346,35 +351,30 @@ local togekiss={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local xmult = 10 * (card.ability.extra.Xmult1 + pseudorandom('togekiss') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
-        xmult = math.floor(xmult + 0.5) / 10
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = xmult
+    if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
+      local ret = nil
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+        ret = {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
         }
       end
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+        local temp = {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+        if ret then
+          ret.extra = temp
+        else
+          ret = temp
+        end
+      end
+
+      return ret
     end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or self
-    if not full_UI_table.name then
-			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-		end
-
-    type_tooltip(_c, info_queue, card)
-
-    local r_mults = {}
-    for i = card.ability.extra.Xmult1 * 10, card.ability.extra.Xmult2 * 10 do
-      r_mults[#r_mults+1] = string.format("%.1f", i/10)
-    end
-
-    desc_nodes[#desc_nodes+1] = {{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
-      {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
-      {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
-    }}, {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
   end,
 }
 -- Yanmega 469

@@ -510,3 +510,34 @@ pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
 position = "at"
 payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
 match_indent = true
+
+# Togekiss Triple Odds - Mult
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if pseudorandom('lucky_mult') < G.GAME.probabilities.normal/5 then"
+position = "at"
+payload = "if pseudorandom('lucky_mult') < math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal/5 then"
+match_indent = true
+overwrite = true
+
+# Togekiss Triple Odds - Money
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if pseudorandom('lucky_money') < G.GAME.probabilities.normal/15 then"
+position = "at"
+payload = "if pseudorandom('lucky_money') < math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal/15 then"
+match_indent = true
+overwrite = true
+
+# Togekiss Triple Odds - Card Description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.effect == 'Lucky Card' then loc_vars = {G.GAME.probabilities.normal, cfg.mult, 5, cfg.p_dollars, 15}"
+position = "at"
+payload = "elseif _c.effect == 'Lucky Card' then loc_vars = {math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal, cfg.mult, 5, cfg.p_dollars, 15}"
+match_indent = true
+overwrite = true
+

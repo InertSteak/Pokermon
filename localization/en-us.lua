@@ -2094,6 +2094,9 @@ return {
             j_poke_togetic = {
                 name = 'Togetic',
                 text = {
+                    "{C:attention}Lucky Cards{} have",
+                    "a {C:green}#1# in #2#{} chance to give {C:chips}+#4#{} Chips",
+                    "and a {C:green}#1# in #3#{} chance to give {X:mult,C:white}X#5#{} Mult",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8} card)"
                 }
             },
@@ -2745,7 +2748,12 @@ return {
             j_poke_togekiss = {
                 name = 'Togekiss',
                 text = {
-                    "",
+                    "{C:attention}Lucky Cards{} have",
+                    "a {C:green}#1# in #2#{} chance to give {C:chips}+#4#{} Chips",
+                    "and a {C:green}#1# in #3#{} chance to give {X:mult,C:white}X#5#{} Mult",
+                    "{br:4}ERROR - CONTACT STEAK",
+                    "{C:attention}Lucky Card{} odds are {C:attention}Tripled{}",
+                    "{C:inactive}(ex: {C:green}2 in 5{C:inactive} -> {C:green}6 in 5{C:inactive})",
                 }
             },
             j_poke_leafeon = {
