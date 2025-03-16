@@ -86,6 +86,7 @@ family = {
     {"natu", "xatu"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"misdreavus", "mismagius"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},

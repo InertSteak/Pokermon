@@ -511,6 +511,60 @@ local slowking={
   end
 }
 -- Misdreavus 200
+local misdreavus = {
+  name = "misdreavus",
+  pos = {x = 8, y = 4},
+  config = {extra = {chips1 = 5, chips = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.chips1, card.ability.extra.chips, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card then
+      if not context.other_card.debuff and context.other_card:is_face() then
+        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+        local drained_vals = math.min(card.ability.extra.chips1, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+        if drained_vals > 0 then
+          context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
+        end
+        local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chips1 - drained_vals)
+        if drain_bonus > 0 then
+          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
+          drained_vals = drained_vals + drain_bonus
+        end
+        if drained_vals > 0 then
+          card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex')})
+          card.ability.extra.chips = card.ability.extra.chips + 2 * drained_vals
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS,
+            card = card,
+          }
+        end
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips,
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_mismagius")
+  end,
+}
 -- Unown 201
 -- Wobbuffet 202
 -- Girafarig 203
@@ -588,5 +642,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, misdreavus, dunsparce, steelix},
 }

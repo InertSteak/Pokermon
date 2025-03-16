@@ -2186,6 +2186,16 @@ return {
                     "{C:inactive,s:0.8}(Resets at end of round)",
                 }
             },
+            j_poke_misdreavus = {
+                name = 'Misdreavus',
+                text = {
+                    "Played {C:attention}face{} cards permanently",
+                    "lose up to {C:chips}#1#{} Chips when scored",
+                    "Gain {C:attention}Double{} lost Chips",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
             j_poke_dunsparce = {
                 name = 'Dunsparce',
                 text = {
@@ -2617,7 +2627,19 @@ return {
                     "{C:chips}+#1#{} Chips for",
                     "each {C:attention}unscored{} card",
                     "in played hand",
-                }  
+                }
+            },
+            j_poke_mismagius = {
+                name = 'Mismagius',
+                text = {
+                    "Played {C:attention}face{} cards permanently",
+                    "lose up to {C:chips}#1#{} Chips when scored",
+                    "Gain {C:attention}Double{} lost Chips",
+                    "{br:3}text needs to be here to work",
+                    "{C:green}#3# in #4#{} chance for them to",
+                    "permanently gain {C:chips}#5#{} Chips instead",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                }
             },
             j_poke_bonsly = {
                 name = "Bonsly",

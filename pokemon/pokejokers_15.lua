@@ -7,6 +7,67 @@
 -- Buneary 427
 -- Lopunny 428
 -- Mismagius 429
+local mismagius = {
+  name = "mismagius",
+  pos = {x = 0, y = 3},
+  config = {extra = {chips1 = 5, chips = 0, chips2 = 20, chip_odds = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.chips1, card.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.chips2, }}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card then
+      if not context.other_card.debuff and context.other_card:is_face() then
+        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+        if pseudorandom('mismagius') < G.GAME.probabilities.normal / card.ability.extra.chip_odds then
+          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS,
+            card = context.other_card,
+          }
+        else
+          local drained_vals = math.min(card.ability.extra.chips1, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+          if drained_vals > 0 then
+            context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
+          end
+          local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chips1 - drained_vals)
+          if drain_bonus > 0 then
+            context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
+            drained_vals = drained_vals + drain_bonus
+          end
+          if drained_vals > 0 then
+            card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex')})
+            card.ability.extra.chips = card.ability.extra.chips + 2 * drained_vals
+            return {
+              message = localize('k_upgrade_ex'),
+              colour = G.C.CHIPS,
+              card = card,
+            }
+          end
+        end
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips,
+        }
+      end
+    end
+  end,
+}
 -- Honchkrow 430
 -- Glameow 431
 -- Purugly 432
@@ -193,5 +254,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {bonsly, mimejr, happiny, munchlax},
+        list = {mismagius, bonsly, mimejr, happiny, munchlax},
 }
