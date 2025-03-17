@@ -41,6 +41,9 @@ local zorua = {
   blueprint_compat = true,
   rental_compat = false,
   calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      card.ability.extra.once = true
+    end
     local other_joker = G.jokers.cards[#G.jokers.cards]
     if other_joker and other_joker ~= card and not context.no_blueprint then
       context.blueprint = (context.blueprint or 0) + 1
@@ -70,7 +73,12 @@ local zorua = {
         message = localize('poke_reveal_ex')
       }
     end
-    return level_evo(self, card, context, "j_poke_zoroark")
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      if card.ability.extra.once then
+        card.ability.extra.once = nil
+        return level_evo(self, card, context, "j_poke_zoroark")
+      end
+    end
   end,
   set_card_type_badge = function(self, card, badges)
     local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
