@@ -83,6 +83,7 @@ family = {
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
     {"remoraid", "octillery"},
+    {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
