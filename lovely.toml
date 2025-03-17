@@ -579,16 +579,6 @@ elseif v.base.value and not v.debuff then mod_rank_tallies[v.base.value] = mod_r
 match_indent = true
 overwrite = true
 
-# Unown Straight functionality
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/overrides.lua"]'
-pattern = "if v.id == id then table.insert(ranks[k], card); break end"
-position = "at"
-payload = "if v.id == id and v.key == card.base.value then table.insert(ranks[k], card); break end"
-match_indent = true
-overwrite = true
-
 # Specific Unown abilities (I V X L ? !)
 [[patches]]
 [patches.pattern]

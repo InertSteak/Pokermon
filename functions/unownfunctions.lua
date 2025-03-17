@@ -73,24 +73,6 @@ SMODS.Ranks.poke_UK.id = 13
 SMODS.Ranks.poke_UA.id = 14
 SMODS.Ranks.poke_UA.straight_edge = true
 
-function force_link(rank, next)
-   table.insert(SMODS.Ranks[rank].next, next)
-   table.insert(SMODS.Ranks[next].prev, rank)
-end
-
-force_link('10', 'poke_UJ')    -- Mixed Straight (7 8 9 10 J)
-force_link('Jack', 'poke_UQ')  -- Mixed Straight (8 9 10 Jack Q)
-force_link('Queen', 'poke_UK') -- Mixed Straight (9 10 Jack Queen K)
-force_link('King', 'poke_UA')  -- Mixed Straight (10 Jack Queen King A)
-
-force_link('poke_UJ', 'Queen')
-force_link('poke_UQ', 'King')
-force_link('poke_UK', 'Ace')
-force_link('poke_UA', '2')
-
-force_link('poke_UJ', 'poke_UQ')
-force_link('poke_UQ', 'poke_UK')
-force_link('poke_UK', 'poke_UA')
 
 function create_new_unown()
    local _rank = SMODS.Ranks[pseudorandom_element(poke_unown_rank_names, pseudoseed('unown_rank'))]
@@ -233,4 +215,86 @@ Card.get_nominal = function(self, mod)
       val = val + 28 - SMODS.Ranks[self.base.value].pos.x
    end
    return val
+end
+
+
+local prev_get_straight = get_straight
+function get_straight(hand, min_length, skip, wrap)
+   min_length = min_length or 5
+   if min_length < 2 then min_length = 2 end
+   if #hand < min_length then return {} end
+   local ret = prev_get_straight(hand, min_length, skip, wrap)
+   if type(ret) == "table" and #ret > 0 then return ret end
+
+   local conversion = {Ace = 'poke_UA', King = 'poke_UK', Queen = 'poke_UQ', Jack = 'poke_UJ', }
+   for k,v in pairs(conversion) do
+      conversion[v] = k
+   end
+
+   ret = {}
+   local chain = {}
+   local card_list = {}
+   for _, card in pairs(hand) do
+      if card.base and card.base.value and SMODS.Ranks[card.base.value] and SMODS.Ranks[card.base.value].next then
+         chain[card.base.value] = chain[card.base.value] or {}
+         card_list[card.base.value] = card
+         for _, next in pairs(SMODS.Ranks[card.base.value].next) do
+            table.insert(chain[card.base.value], next)
+         end
+         local new_value = conversion[card.base.value]
+         if new_value then
+            chain[new_value] = chain[new_value] or {}
+            card_list[new_value] = card
+            for _, next in pairs(SMODS.Ranks[new_value].next) do
+               table.insert(chain[new_value], next)
+            end
+         end
+      end
+   end
+
+   local prev_results = {}
+   local prev_lists = {}
+   local debug_list = {}
+   local iter_search
+   iter_search = function(rank)
+      if not prev_results[rank] or not prev_lists[rank] then
+         prev_lists[rank] = {card_list[rank]}
+         debug_list[rank] = {rank}
+         prev_results[rank] = 1
+
+         if type(chain[rank]) == "table" and #chain[rank] > 0 then
+            local longest_list = nil
+            for _, next in pairs(chain[rank]) do
+               if type(chain[next]) == "table" and #chain[next] > 0 then
+                  iter_search(next)
+                  if prev_results[next] >= prev_results[rank] then
+                     longest_list = next
+                     prev_results[rank] = prev_results[next] + 1
+                  end
+               end
+            end
+            if longest_list then
+               for _,v in pairs(prev_lists[longest_list]) do
+                  table.insert(prev_lists[rank], v)
+               end
+               for _,v in pairs(debug_list[longest_list]) do
+                  table.insert(debug_list[rank], v)
+               end
+            end
+         end
+      end
+   end
+
+   for rank, _ in pairs(card_list) do
+      iter_search(rank)
+   end
+
+   for _r, list in pairs(prev_lists) do
+      if #list >= min_length then
+         table.insert(ret, list)
+      end
+   end
+
+   table.sort(ret, function(a,b) return #a > #b end)
+   return ret
 end
