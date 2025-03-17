@@ -206,6 +206,7 @@ local mystery_egg = {
   config = {extra = {key = nil, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_egg_tip'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     return {vars = {center.ability.extra.rounds}}
@@ -224,7 +225,7 @@ local mystery_egg = {
         if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
       end
       card.ability.extra.rounds = card.ability.extra.rounds - 1
-      if adjacent > 0 and pseudorandom('egg') < adjacent/4 then
+      if (adjacent + #SMODS.find_card('c_poke_fire_energy')) > 0 and pseudorandom('egg') < (adjacent + #SMODS.find_card('c_poke_fire_energy'))/4 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
       end
       card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4

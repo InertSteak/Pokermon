@@ -3593,6 +3593,12 @@ return {
                     "{C:attention}Shiny Stone{} - {X:fairy,C:white}Sylveon{}"
                 }
             },
+            poke_egg_tip = {
+              name = "Mystery Egg",
+              text = {
+                "It looks cold and lonely."
+              }
+            },
             poke_top_cards = {
               name = "Top Cards",
               text = {
@@ -3631,18 +3637,6 @@ return {
                 "This Joker only triggers",
                 "in the {C:attention}rightmost{} position",
                 "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
-              }
-            },
-            poke_egg_tip = {
-              name = "Mystery Egg",
-              text = {
-                "Hatches into a {C:attention}Basic{} or {C:attention}Baby{} Joker",
-                "after a certain amount of rounds",
-                "{br:2}text needs to be here to work",
-                "Higher chance for an {C:attention}edition{}",
-                "or a chance for {C:pink}+1{} Energy",
-                "{br:2}text needs to be here to work",
-                "Earns {C:money}$#1#{} at end of round"
               }
             },
             precise_energy_tooltip = {
