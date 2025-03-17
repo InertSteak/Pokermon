@@ -213,6 +213,159 @@ local jelly_donut={
   end
 }
 
+function is_egg_helper(card)
+  local name = ''
+  if not card.name and card.ability.name then
+    name = card.ability.name
+  end
+  if name == "rolycoly" or name == "carkol" or name == "coalossal" then
+    --print("STEAM ENGINE")
+    return true
+  elseif name == "slugma" or name == "magcargo" or name == "camerupt" then
+    --print("MAGMA ARMOR")
+    return true
+  elseif name == "magby" or name == "magmar" or name == "magmortar" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "litwick" or name == "lampent" or name == "chandelure" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "larvesta" or name == "volcarona" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "fletchinder" or name == "talonflame" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "sizzlipede" or name == "centiskorch" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "moltres" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "heatran" then
+    --print("FLAME BODY")
+    return true
+  elseif name == "charcadet" then
+    --print("FLAME BODY")
+    return true
+  end
+end
+
+local mystery_egg = {
+  name = "mystery_egg",
+  pos = {x = 5, y = 0},
+  config = {extra = {key = nil, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_egg_tip'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    return {vars = {center.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 1,
+  stage = "Other",
+  atlas = "others",
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
+      local adjacent = 0
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      for i = 1, #adjacent_jokers do
+        if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
+      end
+      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if (adjacent + #SMODS.find_card('c_poke_fire_energy')) > 0 and pseudorandom('egg') < (adjacent + #SMODS.find_card('c_poke_fire_energy'))/4 then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+      end
+      card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
+      if card.ability.extra.rounds <= 1 then
+        local eval = function(card) return not card.REMOVED end
+        juice_card_until(card, eval, true)
+      end
+      if card.ability.extra.rounds <= 0 then
+        card.ability.extra.rounds = 99
+        G.E_MANAGER:add_event(Event({trigger = 'immediate',
+          func = function()
+            -- if edition is nil, it'll try again for an edition
+            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key, edition = card.edition})
+            energy_increase(_card, 'Trans')
+            _card:add_to_deck()
+            local loc = 1
+            for i,jkr in ipairs(G.jokers.cards) do
+              if jkr == card then
+                loc = i
+              end
+            end
+            remove(self, card, context)
+            G.jokers:emplace(_card, loc)
+            return true
+          end}))
+        return {
+            message = localize('poke_crack_ex')
+        }
+      else
+        return {
+            message = localize('poke_shake_ex')
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if from_debuff then return end
+
+    local poke_keys = {}
+    for k, v in pairs(G.P_CENTERS) do
+      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
+        if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
+          table.insert(poke_keys, {key = v.key, rarity = v.rarity})
+        end
+      end
+    end
+
+    local poke_key = {key = "j_poke_rhyhorn", rarity = 2}
+    if #poke_keys > 0 then
+      poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
+    end
+    -- common hatches in 2 turns
+    -- uncommon hatches in 2 or 3 turns
+    -- rare hatches in 3 turns
+
+    -- w/o fire = 2/3/3
+    -- w/1 fire = 2/2/3
+    -- w/2 fire = 2/2/2
+    if poke_key.rarity == 1 then
+      card.ability.extra.rounds = 2
+    elseif poke_key.rarity == 2 then
+      card.ability.extra.rounds = 2
+      if pseudorandom('regg') > .50 then
+        card.ability.extra.rounds = card.ability.extra.rounds + 1 
+      end
+    elseif poke_key.rarity == 3 then
+       card.ability.extra.rounds = 3
+    end
+    card.ability.extra.key = poke_key.key
+  end,
+  --[[ Function for dynatext, needs to be changed to put it as a tooltip
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+    local egg_messages = localize({ type = "raw_descriptions", set = _c.set, key = _c.key })
+    local first_message = table.remove(egg_messages, math.random(#egg_messages))
+    table.insert(egg_messages, 1, first_message)
+    local main_start = {
+      {n=G.UIT.O, config={object = DynaText({string = egg_messages,
+      colours = {G.C.DARK_EDITION},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 2.5, scale = 0.32, min_cycle_time = 0})}},
+    }
+    info_queue[#info_queue+1] = main_start
+    --desc_nodes[#desc_nodes+1] = main_start
+  end,--]]
+}
+
 local rival = {
   name = "rival",
   pos = {x = 3, y = 1},
@@ -304,6 +457,8 @@ local rival = {
   end,
   set_sprites = function(self, card, front)
     if card.ability and card.ability.extra and card.ability.extra.form > 1 then
+      card.children.center:set_sprite_pos({x = 5, y = 1})
+    elseif card.ability and card.ability.extra and card.ability.extra.form == 1 then
       card.children.center:set_sprite_pos({x = 4, y = 1})
     else
       card.children.center:set_sprite_pos({x = 3, y = 1})
@@ -312,5 +467,5 @@ local rival = {
 }
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, rival}
+        list = {pokedex, everstone, tall_grass, jelly_donut, mystery_egg, rival}
 }

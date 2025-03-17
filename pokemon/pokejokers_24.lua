@@ -10,7 +10,7 @@
 -- Sylveon 700
 local sylveon={
   name = "sylveon", 
-  pos = {x = 7, y = 3},
+  pos = {x = 8, y = 3},
   config = {extra = {Xmult_multi = 1.2, rerolls = 0, reroll_goal = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)

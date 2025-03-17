@@ -28,6 +28,7 @@ position = "after"
 payload = '''
 if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
+if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
 match_indent = true
 
@@ -72,7 +73,7 @@ target = "card.lua"
 pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
-if self.config.shiny_on_add then
+if self.config.shiny_on_add and not self.debuff then
   SMODS.change_booster_limit(1)
 end
 '''
@@ -94,31 +95,36 @@ end
 '''
 match_indent = true
 
-# Voucher functionality
+# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "local _size = self.ability.extra"
+pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
 position = "after"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  _size = _size + G.GAME.extra_pocket_picks
+if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
+  self.ability.extra = #G.P_CENTER_POOLS.Planet
+elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  print(self.ability.extra)
+  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
 match_indent = true
 
-# Resize Booster Pack UI for new options
+# Xatu Make All Planets Appear
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
-position = "after"
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
+position = "at"
 payload = '''
-if G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  G.GAME.pack_size = G.GAME.pack_size + G.GAME.extra_pocket_picks
-end
+if next(find_joker("xatu")) then
+    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+elseif G.GAME.used_vouchers.v_telescope and i == 1 then
 '''
 match_indent = true
+overwrite = true
 
 #Shiny shader
 [[patches]]
@@ -138,7 +144,7 @@ end
 '''
 match_indent = true
 
-#Pidgey functionality
+#Gothita line functionality
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -147,9 +153,9 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 '''
 position = "after"
 payload = '''
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgey') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('pidgey')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeotto') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('pidgeotto')) end
-if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('pidgeot') > 0 then self.cost = 0 end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothitelle') > 0 then self.cost = 0 end
 '''
 match_indent = true
 
@@ -306,6 +312,33 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = 'functions/misc_functions.lua'
+pattern = "elseif part.control.X or part.control.B then"
+position = "before"
+payload = '''
+elseif part.control.br then
+  local height = 0.05
+  local gaps = 0.2
+  local mid = 0.15
+  local sides = (tonumber(part.control.br) - gaps*2 - mid) / 2
+  -- spacing
+  args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minh = height}, nodes={}}}
+  if sides < gaps then
+    args.nodes[#args.nodes+1] = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = tonumber(part.control.br), minh = height}}}
+  else
+    local temp_nodes = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TEXT_INACTIVE, minw = mid, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}}}
+    args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
+  end
+'''
+match_indent = true
+
+# For previous versions
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
 pattern = "elseif part.control.X then"
 position = "before"
 payload = '''
@@ -355,6 +388,15 @@ end
 '''
 match_indent = true
 
+#Jirachi tag fix
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' then"
+position = "at"
+payload = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_poke_jirachi_tag' then"
+match_indent = true
+
 #Probopass face
 [[patches]]
 [patches.pattern]
@@ -369,3 +411,133 @@ payload = '''
 if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
 '''
 match_indent = true
+
+
+# Scry Functionality 1
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if #G.hand.cards < 1 and #G.deck.cards < 1 and #G.play.cards < 1 then"
+position = "before"
+payload = '''
+if not self.scry_view and type(create_scry_cardarea) == "function" then
+  self.scry_view = create_scry_cardarea()
+elseif self.scry_view then
+  update_scry_cardarea(self.scry_view)
+end
+'''
+match_indent = true
+
+# Scry Functionality 2
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+position = "at"
+payload = "if self.config.type == 'hand' or self.config.type == 'scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+match_indent = true
+overwrite = true
+
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+position = "at"
+payload = "if self.config.type == 'scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+match_indent = true
+overwrite = true
+
+# Scry Functionality 4
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:update_round_eval(dt)"
+position = "after"
+payload = '''
+    if G.scry_view then G.scry_view.states.visible = false end
+'''
+match_indent = true
+
+# Scry Functionality 5
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
+position = "after"
+payload = "t[#t+1] = G.scry_view"
+match_indent = true
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local config = {}"
+position = "before"
+payload = '''
+if card.area == G.scry_view then
+    y_off = -0.05*G.CARD_H
+    card_aligned = 'tm'
+end
+'''
+match_indent = true
+
+
+#Zorua Rental Incompatibility
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+self.ability.rental = _rental
+self:set_cost()
+'''
+position = "at"
+payload = '''
+if self.config.center.rental_compat ~= false and not self.ability.rental then 
+    self.ability.rental = _rental
+    self:set_cost()
+end
+'''
+match_indent = true
+overwrite = true
+
+#Tutorial Functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
+position = "at"
+payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
+match_indent = true
+
+# Togekiss Triple Odds - Mult
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if pseudorandom('lucky_mult') < G.GAME.probabilities.normal/5 then"
+position = "at"
+payload = "if pseudorandom('lucky_mult') < math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal/5 then"
+match_indent = true
+overwrite = true
+
+# Togekiss Triple Odds - Money
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if pseudorandom('lucky_money') < G.GAME.probabilities.normal/15 then"
+position = "at"
+payload = "if pseudorandom('lucky_money') < math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal/15 then"
+match_indent = true
+overwrite = true
+
+# Togekiss Triple Odds - Card Description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.effect == 'Lucky Card' then loc_vars = {G.GAME.probabilities.normal, cfg.mult, 5, cfg.p_dollars, 15}"
+position = "at"
+payload = "elseif _c.effect == 'Lucky Card' then loc_vars = {math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal, cfg.mult, 5, cfg.p_dollars, 15}"
+match_indent = true
+overwrite = true
+

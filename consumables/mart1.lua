@@ -547,7 +547,7 @@ local megastone = {
   cost = 4,
   hidden = true,
   soul_set = "Item",
-  soul_rate = .01,
+  soul_rate = .005,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -558,11 +558,12 @@ local megastone = {
     if #G.jokers.cards == 0 then return false end
     if G.GAME.round <= card.ability.extra.previous_round then return false end
     local target = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and 
+       not G.jokers.highlighted[1].debuff then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not poke.debuff then
           target = poke
           break
         end
@@ -575,13 +576,16 @@ local megastone = {
   use = function(self, card, area, copier)
     local target = nil
     local forced_key = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and
+       not G.jokers.highlighted[1].debuff then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" and not poke.debuff then
           target = poke
-          break
+          if not target.debuff then
+            break
+          end
         end
       end
     end
@@ -759,22 +763,18 @@ local emergy = {
   end,
   in_pool = function(self)
     --another Cryptid Function, This checks for M jokers   -Jevonn
-		local mcheck = get_m_jokers()
+    local mcheck = 0
+    if get_m_jokers then
+      mcheck = get_m_jokers()
+    elseif Cryptid and Cryptid.get_m_jokers then
+      mcheck = Cryptid.get_m_jokers()
+    end
 		if (mcheck + #find_joker('Jolly Joker')) > 0 then
 			return true
 		end
 		return false
 	end,
 }
-
-if pokermon_config.jokers_only then
-  pokeball.set = "Tarot"
-  pokeball.pos.y = 2
-  greatball.set = "Tarot"
-  greatball.pos.y = 2
-  ultraball.pos.y = 2
-  masterball.pos.y = 2
-end
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
         fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}

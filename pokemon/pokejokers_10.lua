@@ -58,13 +58,6 @@ local breloom={
   name = "breloom",
   pos = {x = 4, y = 3},
   config = {extra = {hands = 2, d_size = 2, h_size = 2}},
-  loc_txt = {
-    name = "Breloom",
-    text = {
-      "When {C:attention}Blind{} is selected, gain",
-      "{C:chips}+#1#{} hands, {C:mult}+#2#{} discards, or {C:attention}+#3#{} hand size",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands, center.ability.extra.d_size, center.ability.extra.h_size}}

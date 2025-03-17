@@ -191,6 +191,60 @@ local tinkaton={
   end
 }
 -- Wiglett 960
+local wiglett={
+  name = "wiglett", 
+  pos = {x = 3, y = 4}, 
+  config = {extra = {rounds = 4, chips = 60, mult = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+		return {vars = {center.ability.extra.rounds, center.ability.extra.chips, center.ability.extra.mult}}
+  end,
+  rarity = 1, 
+  cost = 5, 
+  stage = "Basic", 
+  ptype = "Water",
+  atlas = "Pokedex9",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local score_chips = false
+        local score_mult = false
+        if next(context.poker_hands['Three of a Kind']) then score_mult = true end
+        for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 5 or v:get_id() == 6 or v:get_id() == 7 then
+            score_chips = true
+            break
+          end
+        end
+        if score_mult and score_chips then
+          return {
+            message = localize('poke_dig_ex'), 
+            colour = G.C.MULT,
+            chip_mod = card.ability.extra.chips,
+            mult_mod = card.ability.extra.mult,
+            card = card
+          }
+        elseif score_chips then
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips,
+            card = card
+          }
+        elseif score_mult then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult,
+            card = card
+          }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_wugtrio")
+  end
+}
 return {name = "Pokemon Jokers 931-960", 
-        list = {tinkatink, tinkatuff, tinkaton},
+        list = {tinkatink, tinkatuff, tinkaton, wiglett},
 }

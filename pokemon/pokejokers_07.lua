@@ -74,6 +74,46 @@ local bellossom={
 -- Marill 183
 -- Azumarill 184
 -- Sudowoodo 185
+local sudowoodo={
+  name = "sudowoodo",
+  pos = {x = 3, y = 3},
+  config = {extra = {mult = 5, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {G.ARGS.LOC_COLOURS.grass}}}
+    return {vars = {center.ability.extra.mult, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
+      return {
+        mult = card.ability.extra.mult, 
+        card = card
+      }
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
+      if (not is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0  then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial and not G.SETTINGS.paused then
+      apply_type_sticker(card, "Grass")
+    end
+  end
+}
 -- Politoed 186
 local politoed={
   name = "politoed", 
@@ -144,7 +184,7 @@ local politoed={
 local hoppip={
   name = "hoppip",
   pos = {x = 5, y = 3},
-  config = {extra = {h_size = 2, rounds = 5}},
+  config = {extra = {h_size = 1, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -160,7 +200,7 @@ local hoppip={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand[1]
+      local target = {context.full_hand[1],context.full_hand[2]}
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -185,7 +225,7 @@ local hoppip={
 local skiploom={
   name = "skiploom",
   pos = {x = 6, y = 3},
-  config = {extra = {h_size = 3, rounds = 5}},
+  config = {extra = {h_size = 2, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -201,7 +241,7 @@ local skiploom={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand[1]
+      local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -226,7 +266,7 @@ local skiploom={
 local jumpluff={
   name = "jumpluff",
   pos = {x = 7, y = 3},
-  config = {extra = {h_size = 4}},
+  config = {extra = {h_size = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
@@ -242,7 +282,7 @@ local jumpluff={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = {context.full_hand[1],context.full_hand[2]}
+      local target = context.full_hand
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -477,6 +517,35 @@ local slowking={
 -- Pineco 204
 -- Forretress 205
 -- Dunsparce 206
+local dunsparce={
+  name = "dunsparce",
+  pos = {x = 4, y = 5},
+  config = {extra = {rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds, }}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.reroll_shop then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
+    end
+    return level_evo(self, card, context, "j_poke_dudunsparce")
+  end
+}
 -- Gligar 207
 -- Steelix 208
 local steelix={
@@ -519,5 +588,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
 }

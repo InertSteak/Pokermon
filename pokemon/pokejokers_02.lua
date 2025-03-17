@@ -2,7 +2,7 @@
 local nidoqueen={
   name = "nidoqueen", 
   pos = {x = 4, y = 2}, 
-  config = {extra = {chips = 85, chip_total = 0, h_size = 1}},
+  config = {extra = {chips = 85, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
@@ -20,26 +20,14 @@ local nidoqueen={
           return {
             message = localize("k_debuffed"),
             colour = G.C.RED,
-            card = card,
+            card = context.other_card,
           }
         else
-            card.ability.extra.chip_total = card.ability.extra.chip_total + card.ability.extra.chips
-            return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
-              card = card,
-            }
+          return {
+            h_chips = card.ability.extra.chips,
+            card = card,
+          }
         end
-      end
-    end
-    if context.joker_main then
-      local chip_temp_total = card.ability.extra.chip_total
-      card.ability.extra.chip_total = 0
-      if chip_temp_total > 0 then
-        return {
-          message = localize('poke_nido_ex'),
-          chip_mod = chip_temp_total
-        }
       end
     end
   end,
@@ -187,7 +175,8 @@ local clefable={
   config = {extra = {mult_mod = 1, suit = "Clubs", clubs_scored = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult_mod * center.ability.extra.clubs_scored}}
+    return {vars = {center.ability.extra.mult_mod, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult_mod * center.ability.extra.clubs_scored,
+                    5 * center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -197,7 +186,7 @@ local clefable={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
+      if context.before and not context.blueprint then
         local club_count = 0
         for k, v in ipairs(context.scoring_hand) do
           if v:is_suit(card.ability.extra.suit) then club_count = club_count + 1 end
@@ -377,10 +366,10 @@ local wigglytuff={
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
-  config = {extra = {mult_mod = 2, zubat_tally = 0}},
+  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod*center.ability.extra.zubat_tally, 12, center.ability.extra.zubat_tally}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -388,34 +377,44 @@ local zubat={
   ptype = "Dark",
   atlas = "Pokedex1",
   blueprint_compat = true,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN then
-      card.ability.extra.zubat_tally = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.config.center ~= G.P_CENTERS.c_base then card.ability.extra.zubat_tally = card.ability.extra.zubat_tally+1 end
-      end
-    end
-  end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local enhanced = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.config.center ~= G.P_CENTERS.c_base then
+           enhanced = enhanced + 1
+          end
+        end
+        
+        if enhanced > 0 and not context.blueprint then
+          card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * enhanced)
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * enhanced}},
+            colour = G.C.MULT
+          }
+        end
+      end
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.zubat_tally}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult_mod * card.ability.extra.zubat_tally 
+          mult_mod = card.ability.extra.mult 
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.zubat_tally, 12)
+    return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
   end
 }
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 1, chips = 0, chip_mod = 10, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod, center.ability.extra.eaten}}
+  config = {extra = {mult = 0, mult_mod = 2, chips = 0, chip_mod = 15, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local eating_left = math.max(0, self.config.evo_rqmt - card.ability.extra.eaten)
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.Xmult, card.ability.extra.Xmult_mod,
+                    card.ability.extra.money, card.ability.extra.money_mod, eating_left}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -484,7 +483,7 @@ local golbat={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, 20)
+    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
@@ -606,7 +605,7 @@ local vileplume={
 local paras={
   name = "paras", 
   pos = {x = 6, y = 3}, 
-  config = {extra = {mult = 0, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -635,7 +634,7 @@ local paras={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, 8)
+    return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
   end
 }
 local parasect={
@@ -974,10 +973,11 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 5, chips = 7, primes_played = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.primes_played}}
+  config = {extra = {mult = 5, chips = 7, primes_played = 0}, evo_rqmt = 25},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local primes_left = math.max(0, self.config.evo_rqmt - card.ability.extra.primes_played)
+    return {vars = {card.ability.extra.mult, card.ability.extra.chips, primes_left}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -999,7 +999,7 @@ local primeape={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, 25)
+    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
   end
 }
 local growlithe={
@@ -1037,7 +1037,7 @@ local arcanine={
   config = {extra = {Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_lovers
+    info_queue[#info_queue+1] = G.P_CENTERS.m_mult
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
@@ -1048,20 +1048,21 @@ local arcanine={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and next(context.poker_hands['Flush']) then
+        local target = {}
+        for k, v in pairs(context.scoring_hand) do
+          if v.config.center == G.P_CENTERS.c_base then
+            target[#target + 1] = v
+          end
+        end
+        poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)
+      end
       if context.joker_main and next(context.poker_hands['Flush']) then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.MULT,
           Xmult_mod = card.ability.extra.Xmult
         }
-      end
-    end
-    if context.setting_blind then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_lovers')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
       end
     end
   end,

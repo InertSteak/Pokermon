@@ -496,10 +496,13 @@ local thickclub = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-       or G.STATE == G.STATES.STANDARD_PACK then return false end
     if card.area == G.shop_jokers then return false end
     if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
+    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+       or G.STATE == G.STATES.STANDARD_PACK then 
+      if #G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit then return false end
+    end
+    
     return G.GAME.round > card.ability.extra.previous_round
   end,
   use = function(self, card, area, copier)
@@ -624,7 +627,7 @@ local dragonscale = {
     for i = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local card_type = nil
-        if pseudorandom(pseudoseed('dragonscale')) > .50 or pokermon_config.jokers_only then
+        if pseudorandom(pseudoseed('dragonscale')) > .50 then
           card_type = "Item"
         else
           card_type = "Energy"
@@ -844,13 +847,12 @@ local shinystone = {
   name = "shinystone",
   key = "shinystone",
   set = "Item",
-  config = {max_highlighted = 1, drain_amt = 2},
+  config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
     return {vars = {self.config.max_highlighted, self.config.drain_amt}}
   end,
   pos = { x = 2, y = 4 },
@@ -876,12 +878,9 @@ local shinystone = {
           local edition = poll_edition('aura', nil, true, true)
           local shiny_card = G.hand.highlighted[1]
           shiny_card:set_edition(edition, true)
+          shiny_card:set_ability(G.P_CENTERS.c_base, nil, true)
           card:juice_up(0.3, 0.5)
       return true end }))
-
-      for i = 1, #G.jokers.cards do
-        poke_drain(nil, G.jokers.cards[i], self.config.drain_amt, true)
-      end
 
       evo_item_use_total(self, card, area, copier)
     else

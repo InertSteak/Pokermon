@@ -46,39 +46,33 @@ local gastly={
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
-        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-            if #G.jokers.cards > 0 then
-              local eligible_editionless_jokers = {}
-              for k, v in pairs(G.jokers.cards) do
-                if v.ability.set == 'Joker' and v ~= card and not v.gone then
-                    table.insert(eligible_editionless_jokers, v)
-                end
-              end
-              if #eligible_editionless_jokers > 0 then
-                local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
-                local edition = {negative = true}
-                eligible_card:set_edition(edition, true)
-              else
-                local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
-                local edition = {negative = true}
-                eligible_card:set_edition(edition, true)
-              end
-            end
-          return true end }))
-        return true end }))
-          
-        remove(self, card, context)
-        
-        return {
-            message = localize("poke_lick_ex")
-        }
-      end
-    end
     if not card.gone then
       return level_evo(self, card, context, "j_poke_haunter")
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    local eligible_card = nil
+    if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if #G.jokers.cards > 0 then
+        local eligible_editionless_jokers = {}
+        for k, v in pairs(G.jokers.cards) do
+          if v.ability.set == 'Joker' and v ~= card and not v.gone then
+              table.insert(eligible_editionless_jokers, v)
+          end
+        end
+        if #eligible_editionless_jokers > 0 then
+          eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('gastly'))
+          local edition = {negative = true}
+          eligible_card:set_edition(edition, true)
+        else
+          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+          local edition = {negative = true}
+          eligible_card:set_edition(edition, true)
+        end
+      end
+      remove(self, card, context)
+      
+      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end
 }
@@ -103,39 +97,34 @@ local haunter={
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
-        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-            if #G.jokers.cards > 0 then
-              local eligible_editionless_jokers = {}
-              for k, v in pairs(G.jokers.cards) do
-                if v.ability.set == 'Joker' and v ~= card and not v.gone then
-                    table.insert(eligible_editionless_jokers, v)
-                end
-              end
-              if #eligible_editionless_jokers > 0 then
-                local eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
-                local edition = {negative = true}
-                eligible_card:set_edition(edition, true)
-              else
-                local eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
-                local edition = {negative = true}
-                eligible_card:set_edition(edition, true)
-              end
-            end
-          return true end }))
-        return true end }))
-          
-        remove(self, card, context)
-        
-        return {
-          message = localize("poke_lick_ex")
-        }
-      end
-    end
     if not card.gone then
       return item_evo(self, card, context, "j_poke_gengar")
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    local eligible_card = nil
+    if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
+      if #G.jokers.cards > 0 then
+        local eligible_editionless_jokers = {}
+        for k, v in pairs(G.jokers.cards) do
+          if v.ability.set == 'Joker' and v ~= card and not v.gone then
+              table.insert(eligible_editionless_jokers, v)
+          end
+        end
+        if #eligible_editionless_jokers > 0 then
+          eligible_card = pseudorandom_element(eligible_editionless_jokers, pseudoseed('haunter'))
+          local edition = {negative = true}
+          eligible_card:set_edition(edition, true)
+        else
+          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+          local edition = {negative = true}
+          eligible_card:set_edition(edition, true)
+        end
+      end
+        
+      remove(self, card, context)
+      
+      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end
 }
@@ -159,47 +148,40 @@ local gengar={
   atlas = "Pokedex1",
   eternal_compat = false,
   blueprint_compat = false,
-  calculate = function(self, card, context)
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if pseudorandom('gengar') < 1/card.ability.extra.odds then
-        G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-          G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-            if #G.jokers.cards > 0 then
-              local eligible_jokers = {}
-              for k, v in pairs(G.jokers.cards) do
-                if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
-                    table.insert(eligible_jokers, v)
-                end
-              end
-              if #eligible_jokers > 0 then
-                local eligible_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
-                local edition = {negative = true}
-                eligible_card:set_edition(edition, true)
-                return {
-                  message = localize("poke_lick_ex")
-                }
-              end
-            end
-          return true end }))
-        return true end }))
-      else
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-            attention_text({
-                text = localize('k_nope_ex'),
-                scale = 1.3, 
-                hold = 1.4,
-                major = card,
-                backdrop_colour = G.C.SECONDARY_SET.Tarot,
-                align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
-                offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
-                silent = true
-                })
-                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
-                    play_sound('tarot2', 0.76, 0.4);return true end}))
-                play_sound('tarot2', 1, 0.4)
-                card:juice_up(0.3, 0.5)
-        return true end }))
+  calc_dollar_bonus = function(self, card)
+    local eligible_card = nil
+    if pseudorandom('gengar') < 1/card.ability.extra.odds then
+      if #G.jokers.cards > 0 then
+        local eligible_jokers = {}
+        for k, v in pairs(G.jokers.cards) do
+          if v.ability.set == 'Joker' and v.ability.name ~= "gengar" and not v.gone then
+              table.insert(eligible_jokers, v)
+          end
+        end
+        if #eligible_jokers > 0 then
+          eligible_card = pseudorandom_element(eligible_jokers, pseudoseed('gengar'))
+          local edition = {negative = true}
+          eligible_card:set_edition(edition, true)
+          card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
+        end
       end
+    else
+      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+          attention_text({
+              text = localize('k_nope_ex'),
+              scale = 1.3, 
+              hold = 1.4,
+              major = card,
+              backdrop_colour = G.C.SECONDARY_SET.Tarot,
+              align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
+              offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
+              silent = true
+              })
+              G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
+                  play_sound('tarot2', 0.76, 0.4);return true end}))
+              play_sound('tarot2', 1, 0.4)
+              card:juice_up(0.3, 0.5)
+      return true end }))
     end
   end,
   megas = {"mega_gengar"}
@@ -259,12 +241,14 @@ local onix={
 local drowzee={
   name = "drowzee", 
   pos = {x = 4, y = 7}, 
-  config = {extra = {mult = 0, mult_mod = 4}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  config = {extra = {Xmult_mod = 0.2, planets_used = 0}, evo_rqmt = 7},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+    local planets_left = math.max(0, self.config.evo_rqmt - card.ability.extra.planets_used)
+    return {vars = {Xmult, card.ability.extra.Xmult_mod, planets_left}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 5, 
   stage = "Basic", 
   ptype = "Psychic",
@@ -272,17 +256,16 @@ local drowzee={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
+      if context.joker_main and card.ability.extra.planets_used > 0 then
+        local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.MULT,
+          Xmult_mod = Xmult
+        }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.mult, 28)
+    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.planets_used, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -290,20 +273,21 @@ local drowzee={
       for k, v in pairs(G.GAME.consumeable_usage) do
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
-      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+      card.ability.extra.planets_used = planets_used
     end
-  end
+  end,
 }
 local hypno={
   name = "hypno", 
   pos = {x = 5, y = 7},  
-  config = {extra = {mult = 0, mult_mod = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {Xmult_mod = 0.25, planets_used = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Trance"}}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_trance'}
     info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+    local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+    return {vars = {Xmult, card.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -313,14 +297,13 @@ local hypno={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
+      if context.joker_main and card.ability.extra.planets_used > 0 then
+        local Xmult = 1 + card.ability.extra.planets_used * card.ability.extra.Xmult_mod
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.MULT,
+          Xmult_mod = Xmult
+        }
       end
     end
   end,
@@ -330,7 +313,7 @@ local hypno={
       for k, v in pairs(G.GAME.consumeable_usage) do
           if v.set == 'Planet' then planets_used = planets_used + 1 end
       end
-      card.ability.extra.mult = planets_used * card.ability.extra.mult_mod
+      card.ability.extra.planets_used = planets_used
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -359,9 +342,6 @@ local krabby={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_face() then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-            G.E_MANAGER:add_event(Event({func = function()
-                card:juice_up(0.8, 0.8)
-            return true end }))
         return {
           colour = G.C.CHIPS,
           chips = card.ability.extra.chips
@@ -390,7 +370,7 @@ local kingler={
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       local faces = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v:is_face() then 
+          if v:is_face() and v.config.center == G.P_CENTERS.c_base then 
               faces[#faces+1] = v
               v:set_ability(G.P_CENTERS.m_bonus, nil, true)
               G.E_MANAGER:add_event(Event({
@@ -443,7 +423,8 @@ local voltorb={
       if context.joker_main and volatile_active(self, card, 'right') then
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
               return true
           end
         })) 
@@ -460,7 +441,7 @@ local voltorb={
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
-  config = {extra = {Xmult = 3, money = 5}},
+  config = {extra = {Xmult = 2.5, money = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_right'}
@@ -479,8 +460,9 @@ local electrode={
         ease_poke_dollars(card, "electrode", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()
-              card.debuff = true
-              return true
+            card.ability.fainted = G.GAME.round
+            card:set_debuff()
+            return true
           end
         })) 
         
@@ -555,13 +537,13 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 6, consumables_used = 0, consumable_goal = 28}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 6, consumables_used = 0}, evo_rqmt = 28},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * (((G.consumeables and #G.consumeables.cards) or 0) + #find_joker('thickclub')),
-                    center.ability.extra.consumables_used, center.ability.extra.consumable_goal}}
+    local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * ((G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub')), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -594,7 +576,7 @@ local cubone={
     if context.using_consumeable then
       card.ability.extra.consumables_used = card.ability.extra.consumables_used + 1
     end
-    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, card.ability.extra.consumable_goal)
+    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
 }
 local marowak={
@@ -702,10 +684,11 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.jacks_played}}
+  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local jacks_left = math.max(0, self.config.evo_rqmt - card.ability.extra.jacks_played)
+    return {vars = {card.ability.extra.Xmult_multi, jacks_left}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -736,7 +719,7 @@ local lickitung={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, 20)
+    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
   end
 }
 local koffing={
@@ -767,15 +750,6 @@ local koffing={
 local weezing={
   name = "weezing", 
   pos = {x = 5, y = 8}, 
-  loc_txt = {      
-    name = 'Weezing',      
-    text = {
-      "Sell this card to reduce the",
-      "score requirement of the",
-      "current {C:attention}Boss Blind{} by {C:attention}half{}",
-      "and disable it",
-    } 
-  }, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -884,7 +858,15 @@ local chansey={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
-		return {vars = {center.ability.extra.limit, center.ability.extra.triggers}}
+    local deck_data = ''
+    if G.playing_cards then
+      local enhance_count = 0
+      for k, v in pairs(G.playing_cards) do
+        if v.ability.name == "Lucky Card" then enhance_count = enhance_count  + 1 end
+      end
+      deck_data = '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] '
+    end
+		return {vars = {center.ability.extra.limit, center.ability.extra.triggers, deck_data}}
   end,
   rarity = 3, 
   cost = 8,
@@ -897,20 +879,21 @@ local chansey={
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit then
       G.playing_card = (G.playing_card and G.playing_card + 1) or 1
       local card_to_copy = context.other_card
-      local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-      copy:add_to_deck()
-      G.deck.config.card_limit = G.deck.config.card_limit + 1
-      table.insert(G.playing_cards, copy)
-      G.hand:emplace(copy)
-      copy.states.visible = nil
-
       G.E_MANAGER:add_event(Event({
           func = function()
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.hand:emplace(copy)
+              copy.states.visible = nil
               copy:start_materialize()
               return true
           end
       })) 
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      if not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
       playing_card_joker_effects({copy})
       return {
           message = localize('k_copied_ex'),
@@ -928,12 +911,13 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0, wilds_goal = 15}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,
-                    center.ability.extra.wilds_scored, center.ability.extra.wilds_goal}}
+    local wild_left = math.max(0, self.config.evo_rqmt - card.ability.extra.wilds_scored)
+    return {vars = {card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.money_mod,
+                    ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, wild_left}}
   end,
   rarity = 2, 
   cost = 6,
@@ -982,7 +966,7 @@ local tangela={
           end
         end
     end
-    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, card.ability.extra.wilds_goal)
+    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
 }
 local kangaskhan={
@@ -1069,7 +1053,7 @@ local mega_kangaskhan={
 local horsea={
   name = "horsea", 
   pos = {x = 11, y = 8},
-  config = {extra = {mult = 0, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -1106,7 +1090,7 @@ local horsea={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, 12)
+    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
 local seadra={

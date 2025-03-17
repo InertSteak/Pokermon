@@ -101,13 +101,12 @@ local poliwrath={
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
-  config = {extra = {odds = 5, rounds = 5}},
+  config = {extra = {odds = 2, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 6, 
   stage = "Basic", 
   ptype = "Psychic",
@@ -118,10 +117,22 @@ local abra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+            local set = nil
+            local message = nil
+            local colour = nil
+            if pseudorandom('abraitem') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.item
+            else
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
+            end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
           end
         end
       end
@@ -132,10 +143,9 @@ local abra={
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
-  config = {extra = {odds = 4}},
+  config = {extra = {odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
     info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
@@ -152,15 +162,24 @@ local kadabra={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = nil
-            if pseudorandom(pseudoseed('spoon')) > .50 then
-              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            local set = nil
+            local message = nil
+            local colour = nil
+            local conname = nil
+            if pseudorandom('kadabraitem') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.item
+              conname = "c_poke_twisted_spoon"
             else
-              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
             end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, conname)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
           end
         end
       end
@@ -171,7 +190,7 @@ local kadabra={
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
-  config = {extra = {odds = 3, card_limit = 1}},
+  config = {extra = {odds = 2, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
@@ -190,15 +209,25 @@ local alakazam={
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = nil
-            if pseudorandom(pseudoseed('spoon')) > .50 then
-              _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_twisted_spoon')
+            local set = nil
+            local message = nil
+            local colour = nil
+            local conname = nil
+            if pseudorandom('alakazam') < .50 then
+              set = "Item"
+              message = "poke_plus_pokeitem"
+              colour = G.ARGS.LOC_COLOURS.item
+              conname = "c_poke_twisted_spoon"
             else
-              _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_fool')
+              set = "Tarot"
+              message = "k_plus_tarot"
+              colour = G.C.PURPLE
+              conname = "c_fool"
             end
+            local _card = create_card(set, G.consumeables, nil, nil, nil, nil, conname)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize(message), colour = colour})
           end
         end
       end
@@ -413,8 +442,6 @@ local bellsprout={
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
             chips = card.ability.extra.chips,
             card = card
           }
@@ -447,8 +474,6 @@ local weepinbell={
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
             chips = card.ability.extra.chips,
             card = card
           }
@@ -479,8 +504,6 @@ local victreebel={
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
             chips = card.ability.extra.chips,
             card = card
           }
@@ -504,7 +527,7 @@ local victreebel={
 local tentacool={
   name = "tentacool", 
   pos = {x = 6, y = 5},
-  config = {extra = {mult = 8, rounds = 5}},
+  config = {extra = {mult = 7, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
@@ -517,19 +540,10 @@ local tentacool={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and context.other_card:get_id() == 10 then
-      local allten = true
-      for k, v in pairs(context.scoring_hand) do
-        if v:get_id() ~= 10 then
-          allten = false
-          break
-        end
-      end
-      if allten then
-        return {
-          mult = card.ability.extra.mult,
-          card = card
-        }
-      end
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
     end
     return level_evo(self, card, context, "j_poke_tentacruel")
   end
@@ -542,8 +556,8 @@ local tentacruel={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1", 
@@ -664,7 +678,7 @@ local golem={
 local ponyta={
   name = "ponyta", 
   pos = {x = 11, y = 5},
-  config = {extra = {chips = 0, chip_mod = 10}},
+  config = {extra = {chips = 0, chip_mod = 10}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
@@ -694,7 +708,7 @@ local ponyta={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, 60)
+    return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
 local rapidash={
@@ -736,10 +750,11 @@ local rapidash={
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, last_goal = 4, last_counter = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.last_counter, center.ability.extra.last_goal}}
+  config = {extra = {Xmult = 2, last_counter = 0}, evo_rqmt = 4},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.last_counter)
+    return {vars = {card.ability.extra.Xmult, triggers_left}}
   end,
   rarity = 2, 
   cost = 6,
@@ -763,7 +778,7 @@ local slowpoke={
     end
     local evo = item_evo(self, card, context, "j_poke_slowking")
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, card.ability.extra.last_goal)
+      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
     end
     return evo
   end
@@ -1078,9 +1093,17 @@ local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
   config = {extra = {odds = 3, seal_goal = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.seal_goal}}
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local seal_count = 0
+    if G.playing_cards then
+      for k, v in pairs(G.playing_cards) do
+        if v.seal then
+          seal_count = seal_count + 1
+        end
+      end
+    end
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.seal_goal, seal_count}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1167,14 +1190,14 @@ local grimer={
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
-  config = {extra = {mult = 2, Xmult = 1.5}},
+  config = {extra = {mult = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, G.GAME.starting_deck_size, G.GAME.starting_deck_size + 12, 
-                    (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.mult}}
+    return {vars = {center.ability.extra.mult, G.GAME.starting_deck_size, 
+                    math.max(0, ((G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.mult))}}
   end,
-  rarity = 3, 
-  cost = 8, 
+  rarity = 2, 
+  cost = 6, 
   stage = "One", 
   ptype = "Dark",
   atlas = "Pokedex1",
@@ -1182,17 +1205,11 @@ local muk={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.playing_cards > G.GAME.starting_deck_size then
-        local Xmult
-        if #G.playing_cards > G.GAME.starting_deck_size + 12 then
-          Xmult = card.ability.extra.Xmult
-        else
-          Xmult = 1
-        end
         return {
-          message = "Sludge!", 
-          colour = G.C.XMULT,
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size)}}, 
+          colour = G.C.MULT,
           mult_mod = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size),
-          Xmult_mod = Xmult
+          card = card
         }
       end
     end

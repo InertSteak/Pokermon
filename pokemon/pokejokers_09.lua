@@ -23,15 +23,15 @@ local blissey={
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit then
       G.playing_card = (G.playing_card and G.playing_card + 1) or 1
       local card_to_copy = context.other_card
-      local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-      copy:add_to_deck()
-      G.deck.config.card_limit = G.deck.config.card_limit + 1
-      table.insert(G.playing_cards, copy)
-      G.hand:emplace(copy)
-      copy.states.visible = nil
 
       G.E_MANAGER:add_event(Event({
           func = function()
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.hand:emplace(copy)
+              copy.states.visible = nil
               copy:start_materialize()
               local edition = {polychrome = true}
               copy:set_edition(edition, true)
@@ -39,7 +39,9 @@ local blissey={
               return true
           end
       })) 
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      if not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
       return {
           message = localize('k_copied_ex'),
           colour = G.C.CHIPS,
@@ -103,7 +105,7 @@ local celebi = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    G.GAME.celebi_skips = G.GAME.celebi_skips or 2
+    G.GAME.celebi_skips = G.GAME.celebi_skips or 1
     G.GAME.celebi_triggered = false
   end
 }
@@ -111,12 +113,13 @@ local celebi = {
 local treecko={
   name = "treecko",
   pos = {x = 0, y = 0},
-  config = {extra = {money_mod = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {money_mod = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}, evo_rqmt = 16},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local money_left = math.max(0, self.config.evo_rqmt - card.ability.extra.money_earned)
+    local card_vars = {card.ability.extra.money_mod, money_left, card.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -146,7 +149,7 @@ local treecko={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_grovyle", card.ability.extra.money_earned, 16)
+    return scaling_evo(self, card, context, "j_poke_grovyle", card.ability.extra.money_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -164,12 +167,13 @@ local treecko={
 local grovyle={
   name = "grovyle",
   pos = {x = 1, y = 0},
-  config = {extra = {money_mod = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {money_mod = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}, evo_rqmt = 32},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local money_left = math.max(0, self.config.evo_rqmt - card.ability.extra.money_earned)
+    local card_vars = {card.ability.extra.money_mod, money_left, card.ability.extra.h_size, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -199,7 +203,7 @@ local grovyle={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_sceptile", card.ability.extra.money_earned, 32)
+    return scaling_evo(self, card, context, "j_poke_sceptile", card.ability.extra.money_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -267,12 +271,13 @@ local sceptile={
 local torchic={
   name = "torchic",
   pos = {x = 3, y = 0},
-  config = {extra = {mult = 1, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 1, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}, evo_rqmt = 60},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.mult, center.ability.extra.mult_earned, center.ability.extra.d_size, center.ability.extra.mult * center.ability.extra.cards_discarded}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local mult_left = math.max(0, self.config.evo_rqmt - card.ability.extra.mult_earned)
+    local card_vars = {card.ability.extra.mult, mult_left, card.ability.extra.d_size, card.ability.extra.mult * card.ability.extra.cards_discarded}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -317,7 +322,7 @@ local torchic={
       card:juice_up()
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
-    return scaling_evo(self, card, context, "j_poke_combusken", card.ability.extra.mult_earned, 60)
+    return scaling_evo(self, card, context, "j_poke_combusken", card.ability.extra.mult_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -337,12 +342,13 @@ local torchic={
 local combusken={
   name = "combusken",
   pos = {x = 4, y = 0},
-  config = {extra = {mult = 3, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {mult = 3, cards_discarded = 0, mult_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, d_size = 1}, evo_rqmt = 150},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.mult, center.ability.extra.mult_earned, center.ability.extra.d_size, center.ability.extra.mult * center.ability.extra.cards_discarded}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local mult_left = math.max(0, self.config.evo_rqmt - card.ability.extra.mult_earned)
+    local card_vars = {card.ability.extra.mult, mult_left, card.ability.extra.d_size, card.ability.extra.mult * card.ability.extra.cards_discarded}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -387,7 +393,7 @@ local combusken={
       card:juice_up()
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
-    return scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.mult_earned, 150)
+    return scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.mult_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -476,12 +482,13 @@ local blaziken={
 local mudkip={
   name = "mudkip",
   pos = {x = 6, y = 0},
-  config = {extra = {chips = 20, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {chips = 20, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}, evo_rqmt = 400},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.chips, center.ability.extra.chips_earned, center.ability.extra.hands}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local chips_left = math.max(0, self.config.evo_rqmt - card.ability.extra.chips_earned)
+    local card_vars = {card.ability.extra.chips, chips_left, card.ability.extra.hands}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -508,7 +515,7 @@ local mudkip={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_marshtomp", card.ability.extra.chips_earned, 400)
+    return scaling_evo(self, card, context, "j_poke_marshtomp", card.ability.extra.chips_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -533,12 +540,13 @@ local mudkip={
 local marshtomp={
   name = "marshtomp",
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 30, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {chips = 30, chips_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, hands = 1}, evo_rqmt = 960},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"ranks"}}
-    local card_vars = {center.ability.extra.chips, center.ability.extra.chips_earned, center.ability.extra.hands}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    local chips_left = math.max(0, self.config.evo_rqmt - card.ability.extra.chips_earned)
+    local card_vars = {card.ability.extra.chips, chips_left, card.ability.extra.hands}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -565,7 +573,7 @@ local marshtomp={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.chips_earned, 960)
+    return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.chips_earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
