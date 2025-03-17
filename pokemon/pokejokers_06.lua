@@ -935,8 +935,8 @@ local igglybuff={
 local togepi={
   name = "togepi",
   pos = {x = 3, y = 2},
-  config = {extra = {Xmult1 = 0.75, Xmult2 = 1.5, rounds = 2,}},
-  rarity = 1,
+  config = {extra = {Xmult1 = 0.50, Xmult2 = 1.5, rounds = 2,}},
+  rarity = 2,
   cost = 4,
   stage = "Baby",
   ptype = "Fairy",
