@@ -20,7 +20,9 @@ local deino={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
       if context.joker_main then
-        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        if not context.blueprint then
+          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.mult,
@@ -51,7 +53,9 @@ local zweilous={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
       if context.joker_main then
-        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        if not context.blueprint then
+          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.mult,

@@ -1202,7 +1202,7 @@ local sandshrew={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 then
+    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
         if v.shattered and card.ability.extra.glass_restored <= 0 then
@@ -1243,7 +1243,7 @@ local sandshrew={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       if card.ability.extra.glass_restored > 0 then
         card.ability.extra.glass_restored = 0
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
@@ -1279,7 +1279,7 @@ local sandslash={
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
+    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
         card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
@@ -1319,7 +1319,7 @@ local sandslash={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       if card.ability.extra.glass_restored > 0 then
         card.ability.extra.glass_restored = 0
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
