@@ -92,7 +92,7 @@ local hydreigon={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
-      if context.after then
+      if context.after and not context.blueprint then
         for k, v in pairs(context.full_hand) do
           if not SMODS.in_scoring(v, context.scoring_hand) then
             poke_remove_card(v, card)
@@ -107,7 +107,7 @@ local hydreigon={
           card = card
         }
     end]]--
-    if context.remove_playing_cards then
+    if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
       return {
         extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
