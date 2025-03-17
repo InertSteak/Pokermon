@@ -421,7 +421,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = localize("poke_credits_promotion_producer"),
+                  text = localize("poke_credits_special_thanks"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -430,7 +430,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Marie|Tsunami",
+                  text = "Marie|Tsunami, CBMX, ...and you!",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
