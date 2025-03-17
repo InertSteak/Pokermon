@@ -109,11 +109,7 @@ local hydreigon={
     end]]--
     if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      return {
-        extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-        colour = G.C.MULT,
-        card = card
-      }
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
   end
 }
