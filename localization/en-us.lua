@@ -3264,6 +3264,7 @@ return {
                   "Convert the leftmost Joker's {C:pink}type{}",
                   "into the rightmost Joker's {C:pink}type{}",
                   "when blind is selected",
+                  "{C:attention}Type Changer{}",
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }
             },
@@ -3638,6 +3639,12 @@ return {
                 text = {
                     "Applies a {V:1}#1#{} sticker",
                     "to leftmost or selected Joker"
+                }
+            },
+            typechangerother = {
+                name = "Type Changer",
+                text = {
+                    "Applies a {V:1}#1#{} sticker",
                 }
             },
             typechangerpoke = {

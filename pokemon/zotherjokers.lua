@@ -168,6 +168,7 @@ local treasure_eatery={
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
     return {vars = {center.ability.extra.rounds, }}
   end,
   rarity = 2,
