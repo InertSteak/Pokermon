@@ -4250,10 +4250,10 @@ return {
             poke_illusion = "...?",
             poke_crack_ex = "CRACK!",
             poke_shake_ex = "Shake!",
-            poke_closed_ex = "Closed!"
+            poke_closed_ex = "Closed!",
 
             -- Unown text
-            k_maybe_next_time = "Maybe Next Time?"
+            k_maybe_next_time = "Maybe Next Time?",
         },
         -- Unown Card Ranks
         ranks = {
