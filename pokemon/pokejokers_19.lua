@@ -61,7 +61,7 @@ local zorua = {
         return other_joker_ret
       end
     end
-    if context.after and G.GAME.chips + hand_chips*mult < G.GAME.blind.chips then
+    if context.after and (G.GAME.chips + hand_chips*mult < G.GAME.blind.chips and G.jokers.cards[#G.jokers.cards] ~= card) then
       G.E_MANAGER:add_event(Event({
         func = function()
           card.ability.fainted = G.GAME.round
