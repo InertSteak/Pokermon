@@ -182,6 +182,7 @@ SMODS.inject_p_card = function(suit, rank)
             value = rank.key,
             suit = suit.key,
             pos = { x = rank.pos.x % 10, y = math.floor(rank.pos.x / 10) },
+            soul_pos = { x = rank.pos.x % 10, y = math.floor(rank.pos.x / 10) + 3 },
             atlas = 'poke_Unown',
             lc_atlas = 'poke_Unown',
             hc_atlas = 'poke_Unown_hc',

@@ -645,6 +645,47 @@ t_s = Sprite(0, 0, 0.3, 0.3,
 match_indent = true
 overwrite = true
 
+# Unown Floating Sprite - Card:set_sprites
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "self.children.front:set_role({major = self, role_type = 'Glued', draw_major = self})"
+position = "after"
+payload = '''
+if _front.soul_pos then
+   print("SOUL_ATLAS",_atlas.key, _front.soul_pos)
+   if self.children.floating_sprite then self.children.floating_sprite:remove() end
+   self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_front.soul_atlas] or _atlas, _front.soul_pos)
+   self.children.floating_sprite.role.draw_major = self
+   self.children.floating_sprite.states.hover.can = false
+   self.children.floating_sprite.states.click.can = false
+end
+'''
+match_indent = true
+
+# Unown Floating Sprite - Allow Draw (card_draw.lua) pt 1
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if self.config.center.soul_pos and (self.config.center.discovered or self.bypass_discovery_center) then"
+position = "at"
+payload = "if (self.config.center.soul_pos and (self.config.center.discovered or self.bypass_discovery_center)) or (self.ability.effect ~= 'Stone Card' and self.config.card and self.config.card.soul_pos) then"
+match_indent = true
+overwrite = true
+
+# Unown Floating Sprite - Allow Draw (card_draw.lua) pt 2
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if type(self.config.center.soul_pos.draw) == 'function' then"
+position = "at"
+payload = "if self.config.center.soul_pos and type(self.config.center.soul_pos.draw) == 'function' then"
+match_indent = true
+overwrite = true
+
+
+
+
 
 # Togekiss Triple Odds - Mult
 [[patches]]
