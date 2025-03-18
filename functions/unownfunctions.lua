@@ -32,16 +32,30 @@ SMODS.Suit {
    ui_pos = { x = 0, y = 0 },
    keep_base_colours = false,
    lc_color = "374244",
-   hc_color = "374244",
    lc_atlas = 'Unown',
-   hc_atlas = 'Unown_hc',
+   ui_atlas = 'pokeui_assets',
    lc_ui_atlas = 'pokeui_assets',
-   hc_ui_atlas = 'pokeui_assets_hc',
    in_pool = function(self, args)
       if args and (args.initial_deck or args.rank == '') then
          return false
       end
       return true
+   end,
+   create_default_deck_skin = function(self)
+      SMODS.DeckSkin {
+         key = 'default_' .. self.key,
+         prefix_config = { key = false },
+         suit = self.key,
+         palettes = {
+            {
+               key = 'def',
+               ranks = poke_unown_rank_names,
+               display_ranks = { 'poke_UK', 'poke_UQ', 'poke_UJ' },
+               atlas = self.lc_atlas,
+               pos_style = 'deck'
+            },
+         }
+      }
    end,
 }
 
@@ -226,8 +240,8 @@ function get_straight(hand, min_length, skip, wrap)
    local ret = prev_get_straight(hand, min_length, skip, wrap)
    if type(ret) == "table" and #ret > 0 then return ret end
 
-   local conversion = {Ace = 'poke_UA', King = 'poke_UK', Queen = 'poke_UQ', Jack = 'poke_UJ', }
-   for k,v in pairs(conversion) do
+   local conversion = { Ace = 'poke_UA', King = 'poke_UK', Queen = 'poke_UQ', Jack = 'poke_UJ', }
+   for k, v in pairs(conversion) do
       conversion[v] = k
    end
 
@@ -258,8 +272,8 @@ function get_straight(hand, min_length, skip, wrap)
    local iter_search
    iter_search = function(rank)
       if not prev_results[rank] or not prev_lists[rank] then
-         prev_lists[rank] = {card_list[rank]}
-         debug_list[rank] = {rank}
+         prev_lists[rank] = { card_list[rank] }
+         debug_list[rank] = { rank }
          prev_results[rank] = 1
 
          if type(chain[rank]) == "table" and #chain[rank] > 0 then
@@ -274,10 +288,10 @@ function get_straight(hand, min_length, skip, wrap)
                end
             end
             if longest_list then
-               for _,v in pairs(prev_lists[longest_list]) do
+               for _, v in pairs(prev_lists[longest_list]) do
                   table.insert(prev_lists[rank], v)
                end
-               for _,v in pairs(debug_list[longest_list]) do
+               for _, v in pairs(debug_list[longest_list]) do
                   table.insert(debug_list[rank], v)
                end
             end
@@ -295,6 +309,6 @@ function get_straight(hand, min_length, skip, wrap)
       end
    end
 
-   table.sort(ret, function(a,b) return #a > #b end)
+   table.sort(ret, function(a, b) return #a > #b end)
    return ret
 end

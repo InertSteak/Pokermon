@@ -631,3 +631,19 @@ elseif self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then kee
 '''
 match_indent = true
 
+# Unown Atlas Fix
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = 't_s = Sprite(0, 0, 0.3, 0.3, G.ASSET_ATLAS[("ui_" .. (G.SETTINGS.colourblind_option and "2" or "1"))], SMODS.Suits[v].ui_pos)'
+position = "at"
+payload = '''
+t_s = Sprite(0, 0, 0.3, 0.3,
+      G.ASSET_ATLAS[SMODS.Suits[v]["ui_atlas"]] or
+      G.ASSET_ATLAS[("ui_" .. (G.SETTINGS.colourblind_option and "2" or "1"))], SMODS.Suits[v].ui_pos)
+'''
+match_indent = true
+overwrite = true
+
+
+
