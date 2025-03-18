@@ -716,7 +716,7 @@ Blind.debuff_hand = function(self, cards, hand, handname, check)
       local is_word = true
       local word = ''
       for k, v in pairs(cards) do
-         if not v.base or v.base.suit ~= 'poke_Unown' or (SMODS.has_no_rank(self) and not self.vampired) then
+         if not v.base or v.base.suit ~= 'poke_Unown' or (SMODS.has_no_rank(v) and not self.vampired) then
             is_word = false
             break
          end
