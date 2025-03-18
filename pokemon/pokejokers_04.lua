@@ -405,10 +405,10 @@ local kingler={
 local voltorb={
   name = "voltorb", 
   pos = {x = 8, y = 7}, 
-  config = {extra = {Xmult = 2, rounds = 3}},
+  config = {extra = {Xmult = 2, rounds = 3, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_right'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -420,7 +420,7 @@ local voltorb={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, 'right') then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
         G.E_MANAGER:add_event(Event({
           func = function()
               card.ability.fainted = G.GAME.round
@@ -441,10 +441,10 @@ local voltorb={
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
-  config = {extra = {Xmult = 2.5, money = 3}},
+  config = {extra = {Xmult = 2.5, money = 3, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_right'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money}}
   end,
   rarity = 3, 
@@ -456,7 +456,7 @@ local electrode={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, 'right') then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
         ease_poke_dollars(card, "electrode", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()

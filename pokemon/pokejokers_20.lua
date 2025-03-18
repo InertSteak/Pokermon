@@ -225,10 +225,10 @@ local gothitelle={
 local vanillite={
   name = "vanillite", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {chips = 60, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
+  config = {extra = {chips = 60, chips_minus = 5, rounds = 3, level_up = true, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_left'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, center.ability.extra.chips_minus}}
   end,
   rarity = 1, 
@@ -244,7 +244,7 @@ local vanillite={
       card.ability.extra.level_up = true
     end
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, 'left') then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
         card.ability.extra.level_up = false
         card.ability.extra.triggered = true
         return {
@@ -294,10 +294,10 @@ local vanillite={
 local vanillish={
   name = "vanillish", 
   pos = {x = 5, y = 6}, 
-  config = {extra = {chips = 100, chips_minus = 5, rounds = 3, level_up = true, triggered = false}},
+  config = {extra = {chips = 100, chips_minus = 5, rounds = 3, level_up = true, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_left'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, center.ability.extra.chips_minus}}
   end,
   rarity = 2, 
@@ -313,7 +313,7 @@ local vanillish={
       card.ability.extra.level_up = true
     end
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, 'left') then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
         card.ability.extra.level_up = false
         card.ability.extra.triggered = true
         return {
