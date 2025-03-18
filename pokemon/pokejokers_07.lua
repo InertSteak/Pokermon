@@ -464,6 +464,39 @@ local umbreon={
   end
 }
 -- Murkrow 198
+local murkrow={
+  name = "murkrow",
+  pos = {x = 6, y = 4},
+  config = {extra = {Xmult = 0.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * #find_pokemon_type("Dark"))}}
+  end,
+  rarity = 2,
+  cost = 6,
+  item_req = "duskstone",
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Xmult = math.max(1, 1 + card.ability.extra.Xmult * #find_pokemon_type("Dark"))
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
+      end
+    end
+    return item_evo(self, card, context, "j_poke_honchkrow")
+  end
+}
 -- Slowking 199
 local slowking={
   name = "slowking",
@@ -588,5 +621,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, dunsparce, steelix},
 }

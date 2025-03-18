@@ -932,7 +932,103 @@ local igglybuff={
   end,
 }
 -- Togepi 175
+local togepi={
+  name = "togepi",
+  pos = {x = 3, y = 2},
+  config = {extra = {Xmult1 = 0.50, Xmult2 = 1.5, rounds = 2,}},
+  rarity = 2,
+  cost = 4,
+  stage = "Baby",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  enhancement_gate = 'm_lucky',
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context)
+        local xmult = 20 * (card.ability.extra.Xmult1 + pseudorandom('togepi') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
+        xmult = math.floor(xmult + 0.5) / 20
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = xmult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_togetic")
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local _c = card and card.config.center or self
+    if not full_UI_table.name then
+			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+		end
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    type_tooltip(_c, info_queue, card)
+
+    local r_mults = {}
+    for i = card.ability.extra.Xmult1 * 20, card.ability.extra.Xmult2 * 20 do
+      r_mults[#r_mults+1] = string.format("%.2f", i/20)
+    end
+
+    desc_nodes[#desc_nodes+1] = {{n=G.UIT.T, config={text = 'Baby', colour = G.C.FILTER, scale = 0.32}},{n=G.UIT.T, config={text = ', ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
+      {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
+      {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
+    }},
+    {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
+  end,
+}
 -- Togetic 176
+local togetic={
+  name = "togetic",
+  pos = {x = 4, y = 2},
+  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult = 1.5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
+    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips, card.ability.extra.Xmult}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  item_req = "shinystone",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
+      local ret = nil
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+        ret = {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+        local temp = {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+        if ret then
+          ret.extra = temp
+        else
+          ret = temp
+        end
+      end
+
+      return ret
+    end
+    return item_evo(self, card, context, "j_poke_togekiss")
+  end,
+}
 -- Natu 177
 local natu = {
   name = "natu",
@@ -1006,7 +1102,7 @@ local xatu = {
         for hand, data in pairs(G.GAME.hands) do
           if self.config.levels[hand] ~= data.level then
             update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'), chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
-            level_up_hand(card, hand, nil, card.ability.extra.level_amt)
+            level_up_hand(context.blueprint_card or card, hand, nil, card.ability.extra.level_amt)
             update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
           end
         end
@@ -1037,5 +1133,5 @@ local xatu = {
 
 return {name = "Pokemon Jokers 151-180", 
         list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
-                 crobat, pichu, cleffa, igglybuff, natu, xatu},
+                 crobat, pichu, cleffa, igglybuff, natu, xatu, togepi, togetic},
 }

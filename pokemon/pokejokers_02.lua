@@ -186,7 +186,7 @@ local clefable={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
+      if context.before and not context.blueprint then
         local club_count = 0
         for k, v in ipairs(context.scoring_hand) do
           if v:is_suit(card.ability.extra.suit) then club_count = club_count + 1 end
