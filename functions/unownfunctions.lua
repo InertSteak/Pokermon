@@ -249,7 +249,7 @@ function get_straight(hand, min_length, skip, wrap)
    local chain = {}
    local card_list = {}
    for _, card in pairs(hand) do
-      if card.base and card.base.value and SMODS.Ranks[card.base.value] and SMODS.Ranks[card.base.value].next then
+      if (not SMODS.has_no_rank(card) or card.vampired) and card.base and card.base.value and SMODS.Ranks[card.base.value] and SMODS.Ranks[card.base.value].next then
          chain[card.base.value] = chain[card.base.value] or {}
          card_list[card.base.value] = card
          for _, next in pairs(SMODS.Ranks[card.base.value].next) do
