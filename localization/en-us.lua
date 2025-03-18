@@ -2192,6 +2192,15 @@ return {
                     "{C:inactive,s:0.8}(Required hand {C:attention,s:0.8}cycles{C:inactive,s:0.8} on each {C:green,s:0.8}Reroll{C:inactive,s:0.8})",
                 } 
             },
+            j_poke_murkrow = {
+              name = "Murkrow",
+              text = {
+                "{X:red,C:white} X#1# {} Mult for each",
+                "{X:dark,C:white}Dark{} Joker you have",
+                "{C:inactive}(Currently {X:red,C:white} X#2#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})"
+              }
+            },
             j_poke_slowking = {
                 name = 'Slowking',
                 text = {
@@ -2633,6 +2642,12 @@ return {
                     "each {C:attention}unscored{} card",
                     "in played hand",
                 }  
+            },
+            j_poke_honchkrow = {
+                name = "Honchkrow",
+                text = {
+                  "Each {X:dark,C:white}Dark{} Joker gives {X:red,C:white}X#1#{} Mult",
+                }
             },
             j_poke_bonsly = {
                 name = "Bonsly",
@@ -3239,6 +3254,15 @@ return {
                 name = "Jelly Donut",
                 text = {
                   "Create a {C:colorless}Colorless {C:pink}Energy{}",
+                  "when blind is selected",
+                  "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
+                }
+            },
+            j_poke_treasure_eatery = {
+                name = "Treasure Eatery",
+                text = {
+                  "Convert the leftmost Joker's {C:pink}type{}",
+                  "into the rightmost Joker's {C:pink}type{}",
                   "when blind is selected",
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }
@@ -4211,7 +4235,8 @@ return {
             poke_wowthree = "Wow! Three!",
             poke_illusion = "...?",
             poke_crack_ex = "CRACK!",
-            poke_shake_ex = "Shake!"
+            poke_shake_ex = "Shake!",
+            poke_closed_ex = "Closed!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

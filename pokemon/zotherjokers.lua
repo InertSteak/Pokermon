@@ -162,6 +162,58 @@ local jelly_donut={
   end
 }
 
+local treasure_eatery={
+  name = "treasure_eatery",
+  pos = {x = 6, y = 1},
+  config = {extra = {rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
+        if has_type(G.jokers.cards[#G.jokers.cards]) then
+          apply_type_sticker(G.jokers.cards[1], get_type(G.jokers.cards[#G.jokers.cards]))
+          card:juice_up()
+          card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
+        end
+      end
+
+      if card.ability.extra.rounds <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                card.T.r = -0.2
+                card:juice_up(0.3, 0.4)
+                card.states.drag.is = true
+                card.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(card)
+                            card:remove()
+                            card = nil
+                        return true; end})) 
+                return true
+            end
+        })) 
+        return {
+            message = localize('poke_closed_ex'),
+            colour = G.C.RED
+        }
+      end
+    end
+  end
+}
+
 function is_egg_helper(card)
   local name = ''
   if not card.name and card.ability.name then
@@ -416,5 +468,5 @@ local rival = {
 }
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, mystery_egg, rival}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival}
 }

@@ -8,6 +8,38 @@
 -- Lopunny 428
 -- Mismagius 429
 -- Honchkrow 430
+local honchkrow={
+  name = "honchkrow",
+  pos = {x = 1, y = 3},
+  config = {extra = {Xmult_multi = 1.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.other_joker and is_type(context.other_joker, "Dark") then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            context.other_joker:juice_up(0.5, 0.5)
+            return true
+        end
+      })) 
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+        colour = G.C.XMULT,
+        Xmult_mod = card.ability.extra.Xmult_multi
+      }
+    end
+  end
+}
 -- Glameow 431
 -- Purugly 432
 -- Chingling 433
@@ -193,5 +225,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {bonsly, mimejr, happiny, munchlax},
+        list = {honchkrow, bonsly, mimejr, happiny, munchlax},
 }

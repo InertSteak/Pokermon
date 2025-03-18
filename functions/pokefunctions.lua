@@ -85,6 +85,7 @@ family = {
     {"remoraid", "octillery"},
     {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
+    {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
