@@ -2862,7 +2862,7 @@ return {
                   "{C:attention}Volatile Left",
                   "{C:chips}+#1#{} Chips",
                   "{C:chips}-#3#{} Chips for every hand played",
-                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_vanillish = {
@@ -2871,7 +2871,7 @@ return {
                   "{C:attention}Volatile Left",
                   "{C:chips}+#1#{} Chips",
                   "{C:chips}-#3#{} Chips for every hand played",
-                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_vanilluxe = {

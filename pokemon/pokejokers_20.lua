@@ -225,7 +225,7 @@ local gothitelle={
 local vanillite={
   name = "vanillite", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {chips = 60, chips_minus = 5, rounds = 3, level_up = true, triggered = false, volatile = 'left'}},
+  config = {extra = {chips = 60, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
@@ -240,12 +240,8 @@ local vanillite={
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.level_up = true
-    end
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.level_up = false
         card.ability.extra.triggered = true
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
@@ -285,16 +281,14 @@ local vanillite={
         end
       end
     end
-    if card.ability.extra.level_up then
-      return level_evo(self, card, context, "j_poke_vanillish")
-    end
+    return level_evo(self, card, context, "j_poke_vanillish")
   end
 }
 -- Vanillish 583
 local vanillish={
   name = "vanillish", 
   pos = {x = 5, y = 6}, 
-  config = {extra = {chips = 100, chips_minus = 5, rounds = 3, level_up = true, triggered = false, volatile = 'left'}},
+  config = {extra = {chips = 100, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
@@ -314,7 +308,6 @@ local vanillish={
     end
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.level_up = false
         card.ability.extra.triggered = true
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
@@ -354,9 +347,7 @@ local vanillish={
         end
       end
     end
-    if card.ability.extra.level_up then
-      return level_evo(self, card, context, "j_poke_vanilluxe")
-    end
+    return level_evo(self, card, context, "j_poke_vanilluxe")
   end
 }
 -- Vanilluxe 584
