@@ -2903,10 +2903,27 @@ jd_def["j_poke_aerodactyl"] = {
         {
             border_nodes = {
                 { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
             },
         },
     },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+},
+    calc_function = function(card)
+        local Xmult = 1
+        local count = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card:get_id() == 14 then 
+                    count = count + 1
+                end
+            end
+        end
+        if count >= 1 then card.joker_display_values.Xmult = card.ability.extra.Xmult else card.joker_display_values.Xmult = Xmult end
+    card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks")..")"
+    end
 }
 
 jd_def["j_poke_mega_aerodactyl"] = {
