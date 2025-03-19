@@ -350,7 +350,7 @@ local linkcable = {
       juice_flip(card)
       for i=1, #G.hand.highlighted do
         if G.hand.highlighted[i] ~= rightmost then
-          poke_vary_rank(G.hand.highlighted[i])
+          poke_vary_rank(G.hand.highlighted[i], false)
         else
           poke_vary_rank(G.hand.highlighted[i], true)
         end
