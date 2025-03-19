@@ -653,7 +653,6 @@ pattern = "self.children.front:set_role({major = self, role_type = 'Glued', draw
 position = "after"
 payload = '''
 if _front.soul_pos then
-   print("SOUL_ATLAS",_atlas.key, _front.soul_pos)
    if self.children.floating_sprite then self.children.floating_sprite:remove() end
    self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_front.soul_atlas] or _atlas, _front.soul_pos)
    self.children.floating_sprite.role.draw_major = self
