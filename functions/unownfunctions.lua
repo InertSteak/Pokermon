@@ -65,8 +65,8 @@ for i, letter in pairs(letters) do
       card_key = 'U' .. letter,
       pos = { x = 28 - i },
       nominal = 20,
-      next = i ~= 1 and { 'poke_U' .. letters[i - 1] } or {},
-      prev = {},
+      next = i ~= #letters and { 'poke_U' .. letters[i + 1] } or {'poke_UZ?'},
+      prev = i ~= 1 and { 'poke_U' .. letters[i - 1] } or {'poke_UA'},
       Unown = true,
       shorthand = '' .. string.sub(letter, -1),
       in_pool = function(self, args)
