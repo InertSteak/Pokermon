@@ -386,6 +386,16 @@ poke_convert_cards_to = function(cards, t, noflip, immediate, before)
   end
 end
 
+poke_unhighlight_cards = function()
+  G.E_MANAGER:add_event(Event({
+    trigger = 'after',
+    delay = 0.2,
+    func = function()
+        G.hand:unhighlight_all(); return true
+    end
+  }))
+end
+
 local game_init_object = Game.init_game_object
 function Game:init_game_object()
   local game = game_init_object(self)
