@@ -225,6 +225,7 @@ unown_rewards = {
    GLOOM = function(card) unown_create_joker('j_poke_gloom') end,
    GOLEM = function(card) unown_create_joker('j_poke_golem') end,
    GOOMY = function(card) unown_create_joker('j_poke_goomy') end,
+   HELIX = function(card) unown_create_joker('j_poke_omanyte') end,
    HYPNO = function(card) unown_create_joker('j_poke_hypno') end,
    INKAY = function(card) unown_create_joker('j_poke_inkay') end,
    KLANG = function(card) unown_create_joker('j_poke_klang') end,
