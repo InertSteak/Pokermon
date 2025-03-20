@@ -738,8 +738,8 @@ G.SPLASH_LOGO = Sprite(0, 0,
 position = "at"
 payload = '''
 G.SPLASH_LOGO = Sprite(0, 0, 
-    16*SC_scale, 
-    16*SC_scale*(G.ASSET_ATLAS["poke_logo"].py/G.ASSET_ATLAS["poke_logo"].px),
+    15*SC_scale, 
+    15*SC_scale*(G.ASSET_ATLAS["poke_logo"].py/G.ASSET_ATLAS["poke_logo"].px),
     G.ASSET_ATLAS["poke_logo"], {x=0,y=0})
 '''
 match_indent = true
