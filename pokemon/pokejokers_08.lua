@@ -386,7 +386,115 @@ local kingdra={
   end,
 }
 -- Phanpy 231
+local phanpy={
+  name = "phanpy",
+  pos = {x = 9, y = 7},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.1,rounds = 5, Xmult2 = 1}},
+  loc_txt = {
+    name = "Phanpy",
+    text = {
+      "Gains {X:red,C:white}X#2#{} Mult for each",
+      "{C:attention}consecutive{} played hand",
+      "with {C:attention}5{} scoring cards",
+      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        if #context.scoring_hand == 5 then
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.RED,
+            card = card
+          }
+        else
+          card.ability.extra.Xmult = card.ability.extra.Xmult2
+          return {
+            message = localize('k_reset'),
+            colour = G.C.RED
+          }
+        end
+      end
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_donphan")
+  end
+}
 -- Donphan 232
+local donphan={
+  name = "donphan",
+  pos = {x = 0, y = 8},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.2, Xmult2 = 1}},
+  loc_txt = {
+    name = "Donphan",
+    text = {
+      "Gains {X:red,C:white}X#2#{} Mult for each",
+      "{C:attention}consecutive{} played hand",
+      "with {C:attention}5{} scoring cards",
+      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod,}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        if #context.scoring_hand == 5 then
+          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.RED,
+            card = card
+          }
+        else
+          card.ability.extra.Xmult = card.ability.extra.Xmult2
+          return {
+            message = localize('k_reset'),
+            colour = G.C.RED
+          }
+        end
+      end
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end
+}
 -- Porygon2 233
 local porygon2={
   name = "porygon2", 
@@ -713,5 +821,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

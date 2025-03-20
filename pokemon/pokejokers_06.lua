@@ -209,7 +209,7 @@ local quilava = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.rounds, card.ability.extra.mult * G.GAME.current_round.discards_left}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 8,
   stage = "One",
   ptype = "Fire",
