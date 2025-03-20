@@ -84,6 +84,8 @@ for i, letter in pairs(letters) do
    }
 end
 
+SMODS.Ranks.poke_UV.id = 5
+SMODS.Ranks.poke_UX.id = 10
 SMODS.Ranks.poke_UJ.id = 11
 SMODS.Ranks.poke_UQ.id = 12
 SMODS.Ranks.poke_UK.id = 13
