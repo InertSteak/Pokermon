@@ -192,6 +192,7 @@ end
 
 unown_rewards = {
    -- specific joker creation
+   EGG = function(card) unown_create_joker('j_poke_mystery_egg') end,
    UNOWN = function(card) unown_create_joker('j_poke_awakened_unown') end,
    RIVAL = function(card) unown_create_joker('j_poke_rival') end,
    GARY = function(card) unown_create_joker('j_poke_rival') end,
@@ -286,7 +287,8 @@ unown_rewards = {
    STAGE = function(card) unown_create_joker(get_random_poke_key('unown', nil, 'One')) end,
 
    -- specific tarot creation
-   O = function(card) unown_create_tarot('c_fool') end,
+   --O = function(card) unown_create_tarot('c_fool') end,
+   O = function(card) unown_nope(card) end, -- too easy
    FOOL = function(card) unown_create_tarot('c_fool') end,
    I = function(card) unown_create_tarot('c_magician') end,
    MAGIC = function(card) unown_create_tarot('c_magician') end,
@@ -735,9 +737,20 @@ Blind.debuff_hand = function(self, cards, hand, handname, check)
             end
          end
          if type(unown_rewards[word]) == "function" then
-            local middle_card = cards[math.ceil(#cards/2)]
+            local middle_card = cards[math.ceil(#cards / 2)]
             card_eval_status_text(middle_card, 'extra', nil, nil, nil, { message = word })
             unown_rewards[word](middle_card)
+         else
+            repeat
+               local part = string.sub(word, -1)
+               if part ~= '?' and part ~= '!' then break end
+               word = string.sub(word, 1, string.len(word) - 1)
+            until string.len(word) <= 1 or type(unown_rewards[word]) == "function"
+            if type(unown_rewards[word]) == "function" then
+               local middle_card = cards[math.ceil(#cards / 2)]
+               card_eval_status_text(middle_card, 'extra', nil, nil, nil, { message = word })
+               unown_rewards[word](middle_card)
+            end
          end
       end
    end
