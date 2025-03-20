@@ -11,6 +11,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "logo",
+    path = "Pokermon.png",
+    px = 389,
+    py = 216
+})
+
+SMODS.Atlas({
     key = "Pokedex1",
     path = "Pokedex1.png",
     px = 71,
