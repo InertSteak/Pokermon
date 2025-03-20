@@ -87,11 +87,6 @@ local symboldeck = {
   apply = function(self)
      G.GAME.Unown = true
      G.GAME.starting_params.unown_cards = true
-     G.GAME.starting_params.extra_cards = G.GAME.starting_params.extra_cards or {}
-     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ!' })
-     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ!' })
-     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ?' })
-     table.insert(G.GAME.starting_params.extra_cards, { s = 'poke_Unown', r = 'poke_UZ?' })
 
      G.E_MANAGER:add_event(Event({
         func = function()
