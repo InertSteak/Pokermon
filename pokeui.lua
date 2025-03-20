@@ -467,7 +467,7 @@ function G.FUNCS.pokermon_github(e)
 	love.system.openURL("https://github.com/InertSteak/Pokermon")
 end
 function G.FUNCS.pokermon_discord(e)
-  love.system.openURL("https://discord.gg/3GZTGppef4")
+  love.system.openURL("https://discord.gg/AptX86Qsyz")
 end
 function G.FUNCS.pokermon_energy(e)
   local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
