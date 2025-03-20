@@ -300,7 +300,7 @@ local torchic={
         }
       end
     end
-    if context.discard and not context.other_card.debuff then
+    if context.discard and not context.other_card.debuff and not context.blueprint then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           local discard_plus = 1
@@ -371,7 +371,7 @@ local combusken={
         }
       end
     end
-    if context.discard and not context.other_card.debuff then
+    if context.discard and not context.other_card.debuff and not context.blueprint then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           local discard_plus = 1
@@ -445,7 +445,7 @@ local blaziken={
         }
       end
     end
-    if context.discard and not context.other_card.debuff then
+    if context.discard and not context.other_card.debuff and not context.blueprint then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
           card.ability.extra.cards_discarded = card.ability.extra.cards_discarded + 1
