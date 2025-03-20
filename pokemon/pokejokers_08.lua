@@ -180,7 +180,9 @@ local remoraid={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and card.ability.extra.cards < card.ability.extra.card_max then
-      card.ability.extra.cards = card.ability.extra.cards + 1
+      if not context.blueprint then
+        card.ability.extra.cards = card.ability.extra.cards + 1
+      end
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -219,7 +221,9 @@ local octillery={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and card.ability.extra.cards < card.ability.extra.card_max then
-      card.ability.extra.cards = card.ability.extra.cards + 1
+      if not context.blueprint then
+        card.ability.extra.cards = card.ability.extra.cards + 1
+      end
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
