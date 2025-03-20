@@ -215,7 +215,7 @@ function SMODS.change_base(card, suit, rank)
       _rank = "poke_UA"
    end
    if not SMODS.Ranks[_rank].Unown then
-      _rank = letter_ranks[pseudorandom_element(letters, pseudoseed('unown_rank'))].key
+      _rank = pseudorandom_element(poke_unown_rank_names_no_punct, pseudoseed('unown_rank'))
    end
    return prev_change_base(card, 'poke_Unown', _rank)
 end
