@@ -554,5 +554,5 @@ local awakened_unown = {
 }
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, alph_ruins, awakened_unown}
 }
