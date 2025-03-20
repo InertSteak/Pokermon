@@ -470,7 +470,7 @@ local rival = {
 
 local alph_ruins = {
    name = "alph_ruins",
-   pos = { x = 1, y = 0 },
+   pos = { x = 1, y = 2 },
    config = { extra = {} },
    loc_vars = function(self, info_queue, center)
       type_tooltip(self, info_queue, center)
@@ -515,7 +515,7 @@ local alph_ruins = {
 
 local awakened_unown = {
    name = "awakened_unown",
-   pos = { x = 2, y = 0 },
+   pos = { x = 1, y = 2 },
    config = { extra = {mult = 4} },
    loc_vars = function(self, info_queue, card)
       type_tooltip(self, info_queue, card)

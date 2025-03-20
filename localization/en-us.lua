@@ -3322,6 +3322,21 @@ return {
                     "Not to be put on a sandwich.",
                 }
             },--]]
+            j_poke_alph_ruins = {
+                name = "Alph Ruins",
+                text = {
+                    "Holding {C:dark_edition}U N O W N{}",
+                    "When Blind is selected,",
+                    "a card in your deck becomes {C:dark_edition}Unown{}",
+                }
+            },
+            j_poke_awakened_unown = {
+                name = "Unown Awoken",
+                text = {
+                    "{C:mult}+#1#{} Mult for each Unown",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                }
+            },
         },
         Planet = {
            --I wonder what a Pokémon planet would do?
