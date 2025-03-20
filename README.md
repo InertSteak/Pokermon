@@ -2,7 +2,7 @@
 Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded), [Cryptid](https://github.com/MathIsFun0/Cryptid) and [Betmma](https://github.com/betmma/my_balatro_mods)!
 This mod and its features would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
 
-We now have a discord server [here](https://discord.gg/3GZTGppef4)! Please report any to bugs or issues me so I can hopefully fix them and feel free to make suggestions or contribute to the mod.
+We now have a discord server [here](https://discord.gg/AptX86Qsyz)! Please report any to bugs or issues me so I can hopefully fix them and feel free to make suggestions or contribute to the mod.
 Please use the latest code before repoting issues, the releases may be out of date with the current code.
 
 Pokermon is a full content mod for Balatro, adding content based on Pokemon. There are now 250+ Jokers that have been added alongside many other custom additions.
