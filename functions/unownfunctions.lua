@@ -129,34 +129,6 @@ function calculate_Unown_playing_card(card, context)
             chip_mod = 100
          }
       end
-      if card.base.value == 'poke_UI' then
-         return {
-            message = localize { type = 'variable', key = 'a_chips', vars = { 1 } },
-            colour = G.C.CHIPS,
-            chip_mod = 1
-         }
-      end
-      if card.base.value == 'poke_UV' then
-         return {
-            message = localize { type = 'variable', key = 'a_chips', vars = { 5 } },
-            colour = G.C.CHIPS,
-            chip_mod = 5
-         }
-      end
-      if card.base.value == 'poke_UX' then
-         return {
-            message = localize { type = 'variable', key = 'a_chips', vars = { 10 } },
-            colour = G.C.CHIPS,
-            chip_mod = 10
-         }
-      end
-      if card.base.value == 'poke_UL' then
-         return {
-            message = localize { type = 'variable', key = 'a_chips', vars = { 50 } },
-            colour = G.C.CHIPS,
-            chip_mod = 50
-         }
-      end
    end
 end
 
