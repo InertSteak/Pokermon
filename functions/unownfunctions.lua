@@ -114,7 +114,7 @@ function is_punctuation(card, hand)
 end
 
 function calculate_Unown_playing_card(card, context)
-   if context.main_scoring and context.full_hand then
+   if context.main_scoring and context.full_hand and card.ability.effect ~= 'Stone Card' then
       if card.base.value == 'poke_UZ!' and is_punctuation(card, context.full_hand) then
          return {
             message = localize { type = 'variable', key = 'a_mult', vars = { 20 } },

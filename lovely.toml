@@ -682,6 +682,40 @@ payload = "if self.config.center.soul_pos and type(self.config.center.soul_pos.d
 match_indent = true
 overwrite = true
 
+# Unown ?! ability description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Enhanced' then"
+position = "before"
+payload = '''
+if card.base and card.base.value == 'poke_UZ?' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_question'}
+end
+if card.base and card.base.value == 'poke_UZ!' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_exclaim'}
+end
+'''
+match_indent = true
+
+# Unown ?! ability description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Booster' then "
+position = "before"
+payload = '''
+if _c.name ~= 'Stone Card' and card.base and card.base.value == 'poke_UZ?' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_question'}
+end
+if _c.name ~= 'Stone Card' and card.base and card.base.value == 'poke_UZ!' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_exclaim'}
+end
+'''
+match_indent = true
+
+
+
 
 
 

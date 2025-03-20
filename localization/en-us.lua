@@ -4134,6 +4134,22 @@ return {
                     "{C:dark_edition}Make a Wish!{}",
                 },
             },
+            poke_unown_exclaim = {
+                name = "Unown Symbol - !",
+                text = {
+                    "Gives {C:mult}+20{} Mult",
+                    "if last played card",
+                    "{C:inactive,s:0.8}(Multiple {C:dark_edition,s:0.8}!{C:inactive,s:0.8} or {C:dark_edition,s:0.8}?{C:inactive,s:0.8} will stack)",
+                },
+            },
+            poke_unown_question = {
+                name = "Unown Symbol - ?",
+                text = {
+                    "Gives {C:chips}+100{} Chips",
+                    "if last played card",
+                    "{C:inactive,s:0.8}(Multiple {C:dark_edition,s:0.8}!{C:inactive,s:0.8} or {C:dark_edition,s:0.8}?{C:inactive,s:0.8} will stack)",
+                },
+            },
         },
     },
     misc = {
