@@ -1638,7 +1638,8 @@ return {
             j_poke_tauros = {
                 name = 'Tauros (Leader)',
                 text = {
-                    "{C:attention}Tauros{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+                    "{C:attention}Tauros{} and {C:attention}Miltank{} Jokers",
+                    "each give {X:mult,C:white} X#1# {} Mult",
                     "{br:4}ERROR - CONTACT STEAK",
                     "Each reroll in the shop has a",
                     "{C:green}#2# in #3#{} chance to find a {C:attention}Tauros (Herd){}",
@@ -2341,6 +2342,15 @@ return {
                     "{C:red}+#2#{} discards",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_miltank = {
+                name = "Miltank",
+                text = {
+                  "Earn {C:money}$#1#{} for each", 
+                  "{C:colorless}Colorless{} Joker you have",
+                  "at end of round",
+                  "{C:inactive}(Currently {C:money}$#2#{C:inactive}){}"
                 }
             },
             j_poke_blissey = {
