@@ -282,7 +282,10 @@ local jumpluff={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand
+      local target = {}
+      for k, v in pairs(context.full_hand) do
+        if v then table.insert(target, v) end
+      end
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
