@@ -76,7 +76,7 @@ local bonsly={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local rank = pseudorandom_element({'J', 'Q', 'K'}, pseudoseed('familiar_create'))
       local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('familiar_create'))
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
@@ -116,7 +116,7 @@ local mimejr={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = pseudorandom_element(G.playing_cards, pseudoseed('mimejr'))
       local seal_type = pseudorandom(pseudoseed('mimejr'))
       if seal_type > 0.50 then _card:set_seal('Red', true)
@@ -158,7 +158,7 @@ local happiny={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger then
+    if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger and not card.debuff then
       local max = 1
       if pseudorandom('happiny') < G.GAME.probabilities.normal/card.ability.extra.odds then
         max = max + 1
@@ -210,7 +210,7 @@ local munchlax={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)

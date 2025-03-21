@@ -558,7 +558,105 @@ local slowking={
 -- Wobbuffet 202
 -- Girafarig 203
 -- Pineco 204
+local pineco={
+  name = "pineco",
+  pos = {x = 2, y = 5},
+  config = {extra = {chips = 80,rounds = 3, volatile = 'left'}},
+  loc_txt = {
+    name = "Pineco",
+    text = {
+      "{C:attention}Volatile Left{}",
+      "{C:chips}+#1#{} Chips and debuff self",
+      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    return {vars = {center.ability.extra.chips, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  volatile = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_forretress")
+  end,
+}
 -- Forretress 205
+local forretress={
+  name = "forretress",
+  pos = {x = 3, y = 5},
+  config = {extra = {chips = 120, chip_mod = 5, volatile = 'left'}},
+  loc_txt = {
+    name = "Forretress",
+    text = {
+      "Gains {C:chips}+#2#{} Chips when",
+      "a {C:attention}Steel{} card triggers",
+      "{br:2}text needs to be here to work",
+      "{C:attention}Volatile Left{}",
+      "{C:chips}+#1#{} Chips and debuff self",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, }}
+  end,
+  rarity = 3,
+  cost = 6,
+  stage = "One",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  volatile = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
+       and context.other_card.ability.name == 'Steel Card' then
+      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+    end
+  end,
+}
 -- Dunsparce 206
 local dunsparce={
   name = "dunsparce",
@@ -631,5 +729,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, pineco, forretress, dunsparce, steelix},
 }

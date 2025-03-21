@@ -880,7 +880,7 @@ local cleffa={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_moon')
       local edition = {negative = true}
       _card:set_edition(edition, true)
@@ -921,7 +921,7 @@ local igglybuff={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_world')
       local edition = {negative = true}
       _card:set_edition(edition, true)

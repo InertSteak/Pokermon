@@ -89,6 +89,7 @@ family = {
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
@@ -422,6 +423,7 @@ end
 
 level_evo = function(self, card, context, forced_key)
     if not card.ability.extra.rounds then return end
+    if card.debuff then return end
     if can_evolve(self, card, context, forced_key) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
