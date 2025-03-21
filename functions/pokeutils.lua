@@ -363,6 +363,7 @@ end
 
 local poke_id_to_rank = {'A','2','3','4','5','6','7','8','9','T','J','K','Q','A'}
 poke_convert_cards_to = function(cards, t, noflip, immediate)
+  if not cards then return end
   if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal and not noflip then
     for i = 1, #cards do
