@@ -724,7 +724,6 @@ payload = "local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2
 match_indent = true
 overwrite = true
 
-
 # Replace start menu logo with Pokermon
 [[patches]]
 [patches.pattern]
@@ -734,6 +733,13 @@ G.SPLASH_LOGO = Sprite(0, 0,
         13*SC_scale, 
         13*SC_scale*(G.ASSET_ATLAS["balatro"].py/G.ASSET_ATLAS["balatro"].px),
         G.ASSET_ATLAS["balatro"], {x=0,y=0})
+
+    G.SPLASH_LOGO:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = {x=0,y=0}
+    })
 '''
 position = "at"
 payload = '''
@@ -741,6 +747,13 @@ G.SPLASH_LOGO = Sprite(0, 0,
     15*SC_scale, 
     15*SC_scale*(G.ASSET_ATLAS["poke_logo"].py/G.ASSET_ATLAS["poke_logo"].px),
     G.ASSET_ATLAS["poke_logo"], {x=0,y=0})
+
+    G.SPLASH_LOGO:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = {x=0,y=0.2}
+    })
 '''
 match_indent = true
 overwrite = true
