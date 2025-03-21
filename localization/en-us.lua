@@ -1377,22 +1377,16 @@ return {
                 name = 'Voltorb',      
                 text = {
                     "{C:attention}Volatile Right{}",
-                    "{X:mult,C:white} X#1# {} Mult",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "Debuffs self until end of round",
-                    "when it triggers",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds without triggering)",
+                    "{X:mult,C:white} X#1# {} Mult and debuff self",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
             },
             j_poke_electrode = {
                 name = 'Electrode',      
                 text = {
                     "{C:attention}Volatile Right{}",
-                    "{X:mult,C:white} X#1# {} Mult",
-                    "Earn {C:money}$#2#{} when hand is played",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "Debuffs self until end of round",
-                    "when it triggers",
+                    "{X:mult,C:white} X#1# {} Mult and earn {C:money}$#2#{}",
+                    "then debuff self"
                 } 
             },
             j_poke_exeggcute = {
@@ -1645,7 +1639,8 @@ return {
             j_poke_tauros = {
                 name = 'Tauros (Leader)',
                 text = {
-                    "{C:attention}Tauros{} Jokers each give {X:mult,C:white} X#1# {} Mult",
+                    "{C:attention}Tauros{} and {C:attention}Miltank{} Jokers",
+                    "each give {X:mult,C:white} X#1# {} Mult",
                     "{br:4}ERROR - CONTACT STEAK",
                     "Each reroll in the shop has a",
                     "{C:green}#2# in #3#{} chance to find a {C:attention}Tauros (Herd){}",
@@ -2348,6 +2343,15 @@ return {
                     "{C:red}+#2#{} discards",
                     "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_miltank = {
+                name = "Miltank",
+                text = {
+                  "Earn {C:money}$#1#{} for each", 
+                  "{C:colorless}Colorless{} Joker you have",
+                  "at end of round",
+                  "{C:inactive}(Currently {C:money}$#2#{C:inactive}){}"
                 }
             },
             j_poke_blissey = {
@@ -3874,16 +3878,16 @@ return {
             poke_volatile_left = {
               name = "Volatile Left",
               text = {
-                "This Joker only triggers",
-                "in the {C:attention}leftmost{} position",
+                "The following ability only triggers",
+                "when this is the leftmost Joker",
                 "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
               }
             },
             poke_volatile_right = {
               name = "Volatile Right",
               text = {
-                "This Joker only triggers",
-                "in the {C:attention}rightmost{} position",
+                "The following ability only triggers",
+                "when this is the rightmost Joker",
                 "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
               }
             },

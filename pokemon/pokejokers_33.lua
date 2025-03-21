@@ -102,6 +102,46 @@ local annihilape={
 }
 -- Clodsire 980
 -- Farigiraf 981
+--[[
+local farigiraf={
+  name = "farigiraf",
+  pos = {x = 4, y = 6},
+  config = {extra = {}},
+  loc_txt = {
+    name = "Farigiraf",
+    text = {
+      "Allows you to play",
+      "a {C:attention}Palindrome{} hand",
+      "{C:inactive,s:0.8}(2 Pairs + a different rank card){}",
+      "{br:2}text needs to be here to work",
+      "When you play a {C:attention}Palindrome{}",
+      "upgrade its level"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and next(context.poker_hands['poke_Palindrome']) then
+        return {
+          card = card,
+          level_up = true,
+          message = localize('k_level_up_ex')
+        }
+      end
+    end
+  end,
+}--]]
 -- Dudunsparce 982
 local dudunsparce={
   name = "dudunsparce",

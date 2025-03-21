@@ -2966,17 +2966,6 @@ jd_def["j_poke_snorlax"] = {
     },
 }
 
-jd_def["j_poke_articuno"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
-    },
-    calc_function = function(card)
-        local status = "Not Active!"
-        if G.GAME.current_round.hands_played == 0 then status = "Active!" end
-        card.joker_display_values.status = status
-    end
-}
-
 jd_def["j_poke_zapdos"] = {
     text = {
         {

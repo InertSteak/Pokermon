@@ -51,7 +51,7 @@ local mantyke={
         end
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local target = nil
       local unenhanced_cards = {}
       

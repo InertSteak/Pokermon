@@ -1,4 +1,33 @@
 -- Miltank 241
+local miltank={
+  name = "miltank",
+  pos = {x = 9, y = 8},
+  config = {extra = {money = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money, center.ability.extra.money * #find_pokemon_type("Colorless")}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calc_dollar_bonus = function(self, card)
+    local earned = card.ability.extra.money * #find_pokemon_type("Colorless")
+    local above_zero = nil
+    if (SMODS.Mods["Talisman"] or {}).can_load then
+      above_zero = to_big(earned) > to_big(0)
+    else
+      above_zero = earned > 0
+    end
+    if above_zero then
+      return ease_poke_dollars(card, "miltank", earned, true)
+    end
+  end,
+}
 -- Blissey 242
 local blissey={
   name = "blissey", 
@@ -662,5 +691,5 @@ local swampert={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {miltank, blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
 }
