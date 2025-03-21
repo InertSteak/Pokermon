@@ -116,6 +116,10 @@ family = {
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
 }
 
+extended_family = {
+  {"tauros", "miltank"}
+}
+
 type_sticker_applied = function(card)
   if not card then return false end
   if card.ability.grass_sticker then
@@ -649,6 +653,7 @@ end
 get_family_keys = function(cardname, custom_prefix)
   local keys = {}
   local line = nil
+  local extra = nil
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
   for k, v in pairs(family) do
     for x, y in pairs(v) do
@@ -672,6 +677,27 @@ get_family_keys = function(cardname, custom_prefix)
     end
   else
     table.insert(keys, custom_prefix..cardname)
+  end
+  for k, v in pairs(extended_family) do
+    for x, y in pairs(v) do
+      if y == cardname or (type(y) == "table" and y.key == cardname) then extra = v; break end
+    end
+  end
+  if extra and #extra > 1 then
+    for i = 2, #extra do
+      if type(line[i]) == "table" then
+        local extra_table = {}
+        extra_table.key = custom_prefix..extra[i].key
+        for k, v in pairs(extra[i]) do
+          if k ~= 'key' then
+            extra_table[k] = v
+          end
+        end
+        table.insert(keys, extra_table)
+      else
+        table.insert(keys, custom_prefix..extra[i])
+      end
+    end
   end
   return keys
 end
