@@ -86,6 +86,7 @@ family = {
     {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
     {"phanpy", "donphan"},
+    {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
@@ -117,7 +118,7 @@ family = {
 }
 
 extended_family = {
-  {"tauros", "miltank"}
+  tauros = {"miltank"}
 }
 
 type_sticker_applied = function(card)
@@ -679,13 +680,15 @@ get_family_keys = function(cardname, custom_prefix)
     table.insert(keys, custom_prefix..cardname)
   end
   for k, v in pairs(extended_family) do
-    for x, y in pairs(v) do
-      if y == cardname or (type(y) == "table" and y.key == cardname) then extra = v; break end
+    if k == cardname then
+      for x, y in pairs(v) do
+        table.insert(keys, custom_prefix..y)
+      end
     end
   end
-  if extra and #extra > 1 then
+  if extra and #extra > 0 then
     for i = 2, #extra do
-      if type(line[i]) == "table" then
+      if type(extra[i]) == "table" then
         local extra_table = {}
         extra_table.key = custom_prefix..extra[i].key
         for k, v in pairs(extra[i]) do

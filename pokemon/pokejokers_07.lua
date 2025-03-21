@@ -557,6 +557,41 @@ local slowking={
 -- Unown 201
 -- Wobbuffet 202
 -- Girafarig 203
+--[[
+local girafarig={
+  name = "girafarig",
+  pos = {x = 1, y = 5},
+  config = {extra = {palindromes = 0}, evo_rqmt = 11},
+  loc_txt = {
+    name = "Girafarig",
+    text = {
+      "Allows you to play",
+      "a {C:attention}Palindrome{} hand",
+      "{C:inactive,s:0.8}(2 Pairs + a different rank card){}",
+      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Palindromes){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.palindromes)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['poke_Palindrome']) and not context.blueprint then
+        card.ability.extra.palindromes = card.ability.extra.palindromes + 1
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.palindromes, self.config.evo_rqmt)
+  end,
+}--]]
 -- Pineco 204
 local pineco={
   name = "pineco",
