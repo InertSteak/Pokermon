@@ -589,12 +589,12 @@ local misdreavus = {
           drained_vals = drained_vals + drain_bonus
         end
         if drained_vals > 0 then
-          card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex')})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
           card.ability.extra.chips = card.ability.extra.chips + 2 * drained_vals
           return {
-            message = localize('k_upgrade_ex'),
+            message = localize('k_eroded_ex'),
             colour = G.C.CHIPS,
-            card = card,
+            card = context.other_card,
           }
         end
       end
