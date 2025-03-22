@@ -645,6 +645,28 @@ t_s = Sprite(0, 0, 0.3, 0.3,
 match_indent = true
 overwrite = true
 
+# Unown shiny chance
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.ability = self.ability or {}"
+position = "after"
+payload = "if self.ability.shiny == nil then self.ability.shiny = pseudorandom('unown_shiny') < 1/100 end"
+match_indent = true
+
+# Unown Shiny options
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "local _atlas, _pos = get_front_spriteinfo(_front)"
+position = "after"
+payload = '''
+if _front.suit == 'poke_Unown' and self.ability and self.ability.shiny then
+   _pos = {x = _pos.x, y = _pos.y + 6}
+end
+'''
+match_indent = true
+
 # Unown Floating Sprite - Card:set_sprites
 [[patches]]
 [patches.pattern]
@@ -654,7 +676,11 @@ position = "after"
 payload = '''
 if _front.soul_pos then
    if self.children.floating_sprite then self.children.floating_sprite:remove() end
-   self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_front.soul_atlas] or _atlas, _front.soul_pos)
+   local temp_pos = {x = _front.soul_pos.x, y = _front.soul_pos.y}
+   if _front.suit == 'poke_Unown' and self.ability and self.ability.shiny then
+      temp_pos.y = temp_pos.y + 6
+   end
+   self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_front.soul_atlas] or _atlas, temp_pos)
    self.children.floating_sprite.role.draw_major = self
    self.children.floating_sprite.states.hover.can = false
    self.children.floating_sprite.states.click.can = false
