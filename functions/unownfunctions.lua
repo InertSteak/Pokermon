@@ -1,15 +1,11 @@
-if SMODS.Ranks['2'].prev == SMODS.Ranks['Jack'].prev then
+if #SMODS.Ranks['2'].prev == 0 then
    print("SMODS ERROR STILL EXISTS")
    -- fix starting prev tables
-   for _, rank in pairs(SMODS.Ranks) do
-      if not rank.prev or string.len(rank.card_key) == 1 then
-         rank.prev = {}
-      end
-   end
-
-   for _, rank in pairs(SMODS.Ranks) do
-      for _, next in pairs(rank.next) do
-         table.insert(SMODS.Ranks[next].prev, rank.key)
+   local ranks_to_fix = { '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace' }
+   for _, rank in pairs(ranks_to_fix) do
+      local s_rank = SMODS.Ranks[rank]
+      for _, next in pairs(s_rank.next) do
+         table.insert(SMODS.Ranks[next].prev, s_rank.key)
       end
    end
 else
@@ -22,8 +18,7 @@ poke_unown_rank_names = { 'poke_UA', 'poke_UB', 'poke_UC', 'poke_UD', 'poke_UE',
    'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ', 'poke_UZ!', 'poke_UZ?' }
 poke_unown_rank_names_no_punct = { 'poke_UA', 'poke_UB', 'poke_UC', 'poke_UD', 'poke_UE', 'poke_UF', 'poke_UG',
    'poke_UH', 'poke_UI', 'poke_UJ', 'poke_UK', 'poke_UL', 'poke_UM', 'poke_UN', 'poke_UO', 'poke_UP', 'poke_UQ',
-   'poke_UR', 'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ', }
-local letter_ranks = {}
+   'poke_UR', 'poke_US', 'poke_UT', 'poke_UU', 'poke_UV', 'poke_UW', 'poke_UX', 'poke_UY', 'poke_UZ' }
 local letters = { 'Z?', 'Z!', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I',
    'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' }
 
@@ -63,13 +58,13 @@ SMODS.Suit {
 }
 
 for i, letter in pairs(letters) do
-   letter_ranks[letter] = SMODS.Rank {
+   SMODS.Rank {
       key = 'U' .. letter,
       card_key = 'U' .. letter,
       pos = { x = 28 - i },
       nominal = 20,
-      next = i ~= #letters and { 'poke_U' .. letters[i + 1] } or {'poke_UZ?'},
-      prev = i ~= 1 and { 'poke_U' .. letters[i - 1] } or {'poke_UA'},
+      next = i ~= #letters and { 'poke_U' .. letters[i + 1] } or { 'poke_UZ?' },
+      prev = i ~= 1 and { 'poke_U' .. letters[i - 1] } or { 'poke_UA' },
       Unown = true,
       shorthand = '' .. string.sub(letter, -1),
       in_pool = function(self, args)
@@ -91,6 +86,7 @@ SMODS.Ranks.poke_UQ.id = 12
 SMODS.Ranks.poke_UK.id = 13
 SMODS.Ranks.poke_UA.id = 14
 SMODS.Ranks.poke_UA.straight_edge = true
+SMODS.Ranks['poke_UZ?'].straight_edge = true
 
 
 function create_new_unown()
@@ -200,6 +196,10 @@ Card.set_base = function(self, card, initial)
    prev_Card_set_base(self, card, initial)
 end
 
+function Card:change_suit(new_suit)
+   SMODS.change_base(self, new_suit)
+end
+
 local prev_Card_get_nominal = Card.get_nominal
 Card.get_nominal = function(self, mod)
    local val = prev_Card_get_nominal(self, mod)
@@ -259,18 +259,27 @@ function get_straight(hand, min_length, skip, wrap)
             for _, next in pairs(chain[rank]) do
                if type(chain[next]) == "table" and #chain[next] > 0 then
                   iter_search(next)
-                  if prev_results[next] >= prev_results[rank] then
+                  local next_results = prev_results[next]
+                  if SMODS.Ranks[next].straight_edge then
+                     next_results = 1
+                  end
+                  if next_results >= prev_results[rank] then
                      longest_list = next
-                     prev_results[rank] = prev_results[next] + 1
+                     prev_results[rank] = next_results + 1
                   end
                end
             end
             if longest_list then
-               for _, v in pairs(prev_lists[longest_list]) do
-                  table.insert(prev_lists[rank], v)
-               end
-               for _, v in pairs(debug_list[longest_list]) do
-                  table.insert(debug_list[rank], v)
+               if SMODS.Ranks[longest_list].straight_edge then
+                  table.insert(prev_lists[rank], card_list[longest_list])
+                  table.insert(debug_list[rank], longest_list)
+               else
+                  for _, v in pairs(prev_lists[longest_list]) do
+                     table.insert(prev_lists[rank], v)
+                  end
+                  for _, v in pairs(debug_list[longest_list]) do
+                     table.insert(debug_list[rank], v)
+                  end
                end
             end
          end

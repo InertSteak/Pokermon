@@ -193,26 +193,18 @@ local thunderstone = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
-      local suits = {'S','H','D','C'}
       local selected = G.hand.highlighted[1]
-      local rank = (selected.base.value == 'Ace' and 'A') or
-      (selected.base.value == 'King' and 'K') or
-      (selected.base.value == 'Queen' and 'Q') or
-      (selected.base.value == 'Jack' and 'J') or
-      (selected.base.value == '10' and 'T') or 
-      (selected.base.value)
-      local area = nil
-      for i = 1, 2 do
-        if i == 1 then
-          area = G.hand
-        else
-          area = G.deck
+      local poss_cards = {}
+      for _, v in pairs(G.P_CARDS) do
+        if v.value == selected.base.value then
+          table.insert(poss_cards, v)
         end
+      end
+      for i = 1, 2 do
+        local area = i == 1 and G.hand or G.deck
         local _card = create_playing_card({
-              front = pseudorandom_element(G.P_CARDS, pseudoseed('thunderstone')), 
-              center = G.P_CENTERS.c_base}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
-        _card:set_base(G.P_CARDS[('%s_%s'):format(pseudorandom_element(suits, pseudoseed('thunderstone')), rank)])
-        _card:set_ability(G.P_CENTERS.m_gold, nil, true)
+              front = pseudorandom_element(poss_cards, pseudoseed('thunderstone')),
+              center = G.P_CENTERS.m_gold}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
         playing_card_joker_effects({_card})
       end
       
@@ -686,7 +678,8 @@ local kingsrock = {
           trigger = 'after',
           delay = 0.2,
           func = function()
-              SMODS.change_base(conv_card, nil, "King"); return true
+              SMODS.change_base(conv_card, nil, "King")
+              return true
           end
       }))
       delay(0.5)
