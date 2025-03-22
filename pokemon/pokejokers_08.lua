@@ -30,21 +30,7 @@ local qwilfish = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local hazards = {}
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      local to_add = math.floor(count / card.ability.extra.hazard_ratio)
-      for i = 1, to_add do
-        hazards[#hazards+1] = create_playing_card({
-          front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
-          center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
-        })
-      end
-      playing_card_joker_effects(hazards)
+      poke_add_hazards(card.ability.extra.hazard_ratio)
     end
     if context.hand_drawn then
       local count = 0
@@ -456,21 +442,7 @@ local skarmory = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local hazards = {}
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      local to_add = math.floor(count / card.ability.extra.hazard_ratio)
-      for i = 1, to_add do
-        hazards[#hazards+1] = create_playing_card({
-          front = pseudorandom_element(G.P_CARDS, pseudoseed('skarmory')),
-          center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
-        })
-      end
-      playing_card_joker_effects(hazards)
+      poke_add_hazards(card.ability.extra.hazard_ratio)
     end
     if context.hand_drawn then
       local count = 0

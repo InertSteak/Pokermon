@@ -430,3 +430,21 @@ G.FUNCS.draw_from_discard_to_deck = function(e)
     end
   }))
 end
+
+poke_add_hazards = function(ratio)
+  local hazards = {}
+  local count = #G.playing_cards
+  for _, v in pairs(G.playing_cards) do
+    if SMODS.has_enhancement(v, "m_poke_hazard") then
+      count = count - 1
+    end
+  end
+  local to_add = math.floor(count / ratio)
+  for i = 1, to_add do
+    hazards[#hazards+1] = create_playing_card({
+      front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
+      center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
+    })
+  end
+  playing_card_joker_effects(hazards)
+end
