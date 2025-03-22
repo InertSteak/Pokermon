@@ -2849,6 +2849,32 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_roggenrola = {
+                name = "Roggenrola",
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Cards in hand permanently gain",
+                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#3#{C:inactive,s:0.8} Hazard Cards)",
+                }
+            },
+            j_poke_boldore = {
+                name = "Boldore",
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Cards in hand permanently gain",
+                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_gigalith = {
+                name = "Gigalith",
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Cards in hand permanently gain",
+                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                }
+            },
             j_poke_zorua = {
                 name = "Zorua",
                 text = {
