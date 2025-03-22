@@ -517,11 +517,7 @@ match_indent = true
 target = "card.lua"
 pattern = "elseif card_type == 'Default' or card_type == 'Enhanced' then"
 position = "after"
-payload = '''
-if self.ability.perma_bonus and self.ability.perma_bonus < 0 and self.ability.bonus < -self.ability.perma_bonus then
-    self.ability.perma_bonus = -self.ability.bonus
-end
-'''
+payload = "poke_stabilize_chip_drain(self)"
 match_indent = true
 
 # Misdreavus add nominal drain (UI)
@@ -544,6 +540,9 @@ match_indent = true
 target = "card.lua"
 pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
 position = "at"
-payload = "return self.base.nominal - (self.ability.nominal_drain or 0) + self.ability.bonus + (self.ability.perma_bonus or 0)"
+payload = '''
+poke_stabilize_chip_drain(self)
+return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
+'''
 match_indent = true
 
