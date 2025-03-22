@@ -412,3 +412,21 @@ tdmsg = function(tablename)
     sendDebugMessage("Not a table, Function: tdmsg")
   end
 end
+
+local prev_dfdtd = G.FUNCS.draw_from_discard_to_deck
+G.FUNCS.draw_from_discard_to_deck = function(e)
+  prev_dfdtd(e)
+  G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+      for _, area in pairs({G.play, G.hand, G.discard, G.deck}) do
+        for _, card in pairs(area.cards) do
+          if SMODS.has_enhancement(card, "m_poke_hazard") then
+            --card:remove()
+          end
+        end
+      end
+      return true
+    end
+  }))
+end
