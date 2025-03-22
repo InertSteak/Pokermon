@@ -3117,6 +3117,26 @@ return {
                     "all cards held in hand to {C:spades}#2#{}",
                 }
             },
+            j_poke_qwilfish_hisuian = {
+                name = "Qwilfish (Hisuian)",
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Gain {C:chips}+#2#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{C:inactive}(Evolves at {C:chips}+#3#{C:inactive} / +#4# Chips)",
+                }
+            },
+            j_poke_overqwil = {
+                name = "Overqwil",
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Gain {C:chips}+#2#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:attention}Half{} Chips after hand played",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                }
+            },
             j_poke_fidough = {
                 name = "Fidough",
                 text = {
@@ -4283,7 +4303,8 @@ return {
             poke_illusion = "...?",
             poke_crack_ex = "CRACK!",
             poke_shake_ex = "Shake!",
-            poke_closed_ex = "Closed!"
+            poke_closed_ex = "Closed!",
+            poke_reload_ex = "Reload!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
