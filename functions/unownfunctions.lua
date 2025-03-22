@@ -218,7 +218,7 @@ function get_straight(hand, min_length, skip, wrap)
    local ret = prev_get_straight(hand, min_length, skip, wrap)
    if type(ret) == "table" and #ret > 0 then return ret end
 
-   local conversion = { Ace = 'poke_UA', King = 'poke_UK', Queen = 'poke_UQ', Jack = 'poke_UJ', }
+   local conversion = { Ace = 'poke_UA', King = 'poke_UK', Queen = 'poke_UQ', Jack = 'poke_UJ', ['10'] = 'poke_UX', ['5'] = 'poke_UV', }
    for k, v in pairs(conversion) do
       conversion[v] = k
    end
