@@ -105,7 +105,6 @@ payload = '''
 if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
   self.ability.extra = #G.P_CENTER_POOLS.Planet
 elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  print(self.ability.extra)
   self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
@@ -510,6 +509,43 @@ pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
 position = "at"
 payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
 match_indent = true
+
+
+# Misdreavus check for over-drained chips (in ui creation)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif card_type == 'Default' or card_type == 'Enhanced' then"
+position = "after"
+payload = "poke_stabilize_chip_drain(self)"
+match_indent = true
+
+# Misdreavus add nominal drain (UI)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif self.ability.set == 'Joker' then -- all remaining jokers"
+position = "before"
+payload = '''
+loc_vars.nominal_chips = loc_vars.nominal_chips - (self.ability.nominal_drain or 0)
+if not loc_vars.bonus_chips and (self.ability.bonus ~= 0 or self.ability.perma_bonus ~= 0) then
+    loc_vars.bonus_chips = bonus_chips
+end
+'''
+match_indent = true
+
+# Misdreavus add nominal drain (functionality)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
+position = "at"
+payload = '''
+poke_stabilize_chip_drain(self)
+return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
+'''
+match_indent = true
+
 
 # Togekiss Triple Odds - Mult
 [[patches]]
