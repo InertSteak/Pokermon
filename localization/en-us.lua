@@ -433,7 +433,6 @@ return {
             m_poke_hazard = {
                 name = "Hazard Card",
                 text = {
-                    "No rank or suit",
                     "When drawn, destroy",
                     "and draw new card",
                     "Removed at end of round",
