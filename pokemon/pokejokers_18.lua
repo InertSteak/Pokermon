@@ -15,7 +15,7 @@
 local roggenrola = {
   name = "roggenrola", 
   pos = {x = 2, y = 2},
-  config = {extra = {hazard_ratio = 25, chip_mod = 5, hazards_drawn = 0}, evo_rqmt = 3},
+  config = {extra = {hazard_ratio = 20, chip_mod = 5, hazards_drawn = 0}, evo_rqmt = 3},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -69,7 +69,7 @@ local roggenrola = {
 local boldore = {
   name = "boldore", 
   pos = {x = 3, y = 2},
-  config = {extra = {hazard_ratio = 15, chip_mod = 5}},
+  config = {extra = {hazard_ratio = 12, chip_mod = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -124,7 +124,7 @@ local boldore = {
 local gigalith = {
   name = "gigalith", 
   pos = {x = 4, y = 2},
-  config = {extra = {hazard_ratio = 10, chip_mod = 5}},
+  config = {extra = {hazard_ratio = 8, chip_mod = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
