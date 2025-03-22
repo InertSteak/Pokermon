@@ -15,8 +15,8 @@ local mismagius = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.chips1, card.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.chips2, }}
   end,
-  rarity = 2,
-  cost = 7,
+  rarity = "poke_safari",
+  cost = 8,
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex4",
