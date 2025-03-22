@@ -44,6 +44,12 @@ local unown_create_item = function(key, edition)
    unown_create_card({ set = 'Item', key = key, edition = edition })
 end
 
+local unown_create_stone_item = function()
+   local stones = { 'c_poke_moonstone', 'c_poke_sunstone', 'c_poke_waterstone', 'c_poke_thunderstone', 'c_poke_firestone',
+      'c_poke_leafstone', 'c_poke_icestone', 'c_poke_shinystone', 'c_poke_duskstone', 'c_poke_dawnstone' }
+   unown_create_item(stones)
+end
+
 local unown_create_energy = function(key, edition)
    if key and not G.P_CENTERS[key] then return end
    unown_create_card({ set = 'Energy', key = key, edition = edition })
@@ -188,6 +194,13 @@ end
 
 local unown_nope = function(card)
    card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_nope_ex'), colour = G.C.PURPLE })
+end
+
+local unown_reduce_blind_requirement = function(reduction)
+   if G.GAME.blind then
+      G.GAME.blind.chips = G.GAME.blind.chips * (1 - reduction)
+      G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+   end
 end
 
 unown_rewards = {
@@ -651,6 +664,8 @@ unown_rewards = {
    DUSK = function(card) unown_create_item('c_poke_duskstone') end,
    DAWN = function(card) unown_create_item('c_poke_dawnstone') end,
    SCALE = function(card) unown_create_item({ 'c_poke_dragonscale', 'c_poke_prismscale' }) end,
+   FLINT = function(card) unown_create_stone_item() end,
+   ROCKS = function(card) unown_create_stone_item() end,
 
    -- specific energy creation
    GRASS = function(card) unown_create_energy('c_poke_grass_energy') end,
@@ -686,6 +701,7 @@ unown_rewards = {
    ADD = function(card) add_new_unowns(1) end,
    ADDS = function(card) add_new_unowns(1) end,
    VOWEL = function(card) add_vowel_unown() end,
+   BLIND = function(card) unown_reduce_blind_requirement(0.1) end,
 
    -- bonuses
    HAND = function(card) ease_hands_played(1) end,
