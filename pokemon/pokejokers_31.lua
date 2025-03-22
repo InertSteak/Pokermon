@@ -2,8 +2,8 @@
 -- Basculegion 902
 -- Sneasler 903
 -- Overqwil 904
-local qwilfish_hisuian = {
-  name = "qwilfish_hisuian", 
+local hisuian_qwilfish = {
+  name = "hisuian_qwilfish", 
   pos = {x = 5, y = 4},
   config = {extra = {hazard_ratio = 10, chip_mod = 5, chips = 0}, evo_rqmt = 80},
   loc_vars = function(self, info_queue, card)
@@ -140,6 +140,57 @@ local overqwil = {
 -- Lechonk 915
 -- Oinkologne 916
 -- Tarountula 917
+local tarountula = {
+  name = "tarountula", 
+  pos = {x = 4, y = 2},
+  config = {extra = {hazard_ratio = 8, chip_mod = 5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.chip_mod}}
+  end,
+  rarity = 'poke_safari',
+  cost = 10,
+  stage = "Two",
+  ptype = "Earth",
+  atlas = "Pokedex5",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        for k, v in pairs(G.hand.cards) do
+          if not SMODS.has_enhancement(v, "m_poke_hazard") then
+            card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+            v.ability.perma_bonus = v.ability.perma_bonus + count * card.ability.extra.chip_mod
+          end
+        end
+      end
+    end
+  end,
+}
 -- Spidops 918
 -- Nymble 919
 -- Lokix 920
@@ -257,5 +308,5 @@ local dachsbun={
 -- Dolliv 929
 -- Arboliva 930
 return {name = "Pokemon Jokers 901-930", 
-        list = {qwilfish_hisuian, overqwil, fidough, dachsbun},
+        list = {hisuian_qwilfish, overqwil, fidough, dachsbun},
 }

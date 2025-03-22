@@ -3143,7 +3143,7 @@ return {
                     "all cards held in hand to {C:spades}#2#{}",
                 }
             },
-            j_poke_qwilfish_hisuian = {
+            j_poke_hisuian_qwilfish = {
                 name = "Qwilfish (Hisuian)",
                 text = {
                     "{C:purple}+#1# Hazards{}",

@@ -109,7 +109,7 @@ family = {
     {"litleo", "pyroar"},
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
-    {"qwilfish_hisuian", "overqwil"},
+    {"hisuian_qwilfish", "overqwil"},
     {"yamper","boltund"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
