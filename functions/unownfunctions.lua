@@ -232,6 +232,11 @@ function get_straight(hand, min_length, skip, wrap)
          card_list[card.base.value] = card
          for _, next in pairs(SMODS.Ranks[card.base.value].next) do
             table.insert(chain[card.base.value], next)
+            if skip then
+               for _, next_next in pairs(SMODS.Ranks[next].next) do
+                  table.insert(chain[card.base.value], next_next)
+               end
+            end
          end
          local new_value = conversion[card.base.value]
          if new_value then
@@ -239,6 +244,11 @@ function get_straight(hand, min_length, skip, wrap)
             card_list[new_value] = card
             for _, next in pairs(SMODS.Ranks[new_value].next) do
                table.insert(chain[new_value], next)
+               if skip then
+                  for _, next_next in pairs(SMODS.Ranks[next].next) do
+                     table.insert(chain[card.base.value], next_next)
+                  end
+               end
             end
          end
       end
@@ -260,7 +270,7 @@ function get_straight(hand, min_length, skip, wrap)
                if type(chain[next]) == "table" and #chain[next] > 0 then
                   iter_search(next)
                   local next_results = prev_results[next]
-                  if SMODS.Ranks[next].straight_edge then
+                  if not wrap and SMODS.Ranks[next].straight_edge then
                      next_results = 1
                   end
                   if next_results >= prev_results[rank] then
@@ -270,7 +280,7 @@ function get_straight(hand, min_length, skip, wrap)
                end
             end
             if longest_list then
-               if SMODS.Ranks[longest_list].straight_edge then
+               if not wrap and SMODS.Ranks[longest_list].straight_edge then
                   table.insert(prev_lists[rank], card_list[longest_list])
                   table.insert(debug_list[rank], longest_list)
                else
