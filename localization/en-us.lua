@@ -2240,7 +2240,6 @@ return {
                     "Gain {C:chips}+#2#{} Chips for each",
                     "{C:attention}Hazard Card{} drawn this round",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_scizor = {
@@ -2281,6 +2280,15 @@ return {
                   "Gains {C:chips}+#2#{} Chips when a {C:attention}Gold{} card",
                   "is scored or {C:attention}held{} in hand",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                }
+            },
+            j_poke_skarmory = {
+                name = 'Skarmory',
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Gain {C:mult}+#2#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {

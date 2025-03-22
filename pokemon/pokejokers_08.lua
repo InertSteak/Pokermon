@@ -2,7 +2,7 @@
 local qwilfish = {
   name = "qwilfish", 
   pos = {x = 9, y = 5},
-  config = {extra = {hazard_ratio = 10, chip_mod = 40, hazards_drawn = 0, rounds = 4}},
+  config = {extra = {hazard_ratio = 10, chip_mod = 40, hazards_drawn = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -20,7 +20,7 @@ local qwilfish = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod, abbr.chip_mod * abbr.hazards_drawn, abbr.rounds}}
+    return {vars = {to_add, abbr.chip_mod, abbr.chip_mod * abbr.hazards_drawn}}
   end,
   rarity = 2,
   cost = 7,
@@ -425,6 +425,87 @@ local mantine={
   end
 }
 -- Skarmory 227
+local skarmory = {
+  name = "skarmory", 
+  pos = {x = 5, y = 7},
+  config = {extra = {hazard_ratio = 10, mult_mod = 8, hazards_drawn = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.mult_mod, abbr.mult_mod * abbr.hazards_drawn}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local hazards = {}
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      local to_add = math.floor(count / card.ability.extra.hazard_ratio)
+      for i = 1, to_add do
+        hazards[#hazards+1] = create_playing_card({
+          front = pseudorandom_element(G.P_CARDS, pseudoseed('skarmory')),
+          center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
+        })
+      end
+      playing_card_joker_effects(hazards)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local mult = card.ability.extra.mult_mod * card.ability.extra.hazards_drawn
+        return{
+          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
+          colour = G.C.MULT,
+          mult_mod = mult
+        }
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.hazards_drawn = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
+}
 -- Houndour 228
 -- Houndoom 229
 -- Kingdra 230
@@ -906,5 +987,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }
