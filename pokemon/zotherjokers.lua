@@ -515,7 +515,8 @@ local alph_ruins = {
 
 local awakened_unown = {
    name = "awakened_unown",
-   pos = { x = 1, y = 2 },
+   pos = { x = 0, y = 0 },
+   soul_pos = { x = 0, y = 0 },
    config = { extra = {mult = 4} },
    loc_vars = function(self, info_queue, card)
       type_tooltip(self, info_queue, card)
@@ -532,7 +533,7 @@ local awakened_unown = {
    rarity = 'poke_safari',
    cost = 10,
    stage = "Other",
-   atlas = "others",
+   atlas = "j_poke_awakened_unown",
    blueprint_compat = true,
    calculate = function(self, card, context)
       if context.cardarea == G.jokers and context.scoring_hand then
@@ -548,6 +549,19 @@ local awakened_unown = {
             colour = G.C.MULT,
             mult_mod = card.ability.extra.mult * count
           }
+        end
+      end
+   end,
+   set_sprites = function(self, card, front)
+      if self.discovered or card.bypass_discovery_center then
+        card.T.w = G.CARD_W * 1.338028169014084
+        card.T.h = G.CARD_H
+        card.children.center.scale = {x = 306, y = 306}
+        card.children.center:reset()
+        if card.children.floating_sprite then
+          print("NEW ATLAS: "..card.children.center.atlas.name .. "_soul")
+          card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
+          card.children.floating_sprite:reset()
         end
       end
    end,
