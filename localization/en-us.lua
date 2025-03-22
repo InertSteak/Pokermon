@@ -2233,6 +2233,16 @@ return {
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
             },
+            j_poke_qwilfish = {
+                name = 'Qwilfish',
+                text = {
+                    "{C:purple}+#1# Hazards{}",
+                    "Gain {C:chips}+#2#{} Chips for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+                }
+            },
             j_poke_scizor = {
                 name = 'Scizor',
                 text = {
@@ -4125,6 +4135,14 @@ return {
                 name = "Wish Pack",
                 text = {
                     "{C:dark_edition}Make a Wish!{}",
+                },
+            },
+            poke_hazards = {
+                name = "Hazards",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "add 1 {C:attention}Hazard Card{} to deck",
+                    "for every {C:attention}#1#{} cards in deck",
                 },
             },
         },

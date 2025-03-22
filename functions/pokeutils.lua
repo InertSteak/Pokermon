@@ -422,7 +422,7 @@ G.FUNCS.draw_from_discard_to_deck = function(e)
       for _, area in pairs({G.play, G.hand, G.discard, G.deck}) do
         for _, card in pairs(area.cards) do
           if SMODS.has_enhancement(card, "m_poke_hazard") then
-            --card:remove()
+            card:remove()
           end
         end
       end
