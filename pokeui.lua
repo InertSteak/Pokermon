@@ -376,7 +376,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "PIPIKAI, PanbimboGD, HuyCorn",
+                  text = "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -421,7 +421,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = localize("poke_credits_promotion_producer"),
+                  text = localize("poke_credits_special_thanks"),
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.UI.TEXT_LIGHT
@@ -430,7 +430,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Marie|Tsunami",
+                  text = "Marie|Tsunami, CBMX, ...and you!",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
@@ -467,7 +467,7 @@ function G.FUNCS.pokermon_github(e)
 	love.system.openURL("https://github.com/InertSteak/Pokermon")
 end
 function G.FUNCS.pokermon_discord(e)
-  love.system.openURL("https://discord.gg/3GZTGppef4")
+  love.system.openURL("https://discord.gg/AptX86Qsyz")
 end
 function G.FUNCS.pokermon_energy(e)
   local ttip = {set = 'Other', key = 'precise_energy_tooltip'}

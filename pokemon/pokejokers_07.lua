@@ -282,7 +282,10 @@ local jumpluff={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
-      local target = context.full_hand
+      local target = {}
+      for k, v in pairs(context.full_hand) do
+        if v then table.insert(target, v) end
+      end
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -312,11 +315,11 @@ local jumpluff={
 local espeon={
   name = "espeon", 
   pos = {x = 4, y = 4},
-  config = {extra = {retriggers = 1, Xmult_multi = 1.2, rank = "Ace", id = 14, suit = "Spades"}},
+  config = {extra = {retriggers = 1, Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(center.ability.extra.rank or "2", 'ranks'),
-                    localize(center.ability.extra.suit, 'suits_singular'), colours = {G.C.SUITS[center.ability.extra.suit]}}}
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "2", 'ranks'),
+                    localize(G.GAME.current_round.espeon_suit, 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -326,24 +329,34 @@ local espeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
-                        {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
-      local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'..G.GAME.round))
-      card.ability.extra.rank = rank_id.rank
-      card.ability.extra.id = rank_id.id
-      
-      local suits = {'Spades','Hearts','Diamonds','Clubs'}
-      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
+      if not G.GAME.current_round.espeon_triggered then
+        local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
+                          {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
+        local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'..G.GAME.round))
+        G.GAME.current_round.espeon_rank = rank_id.rank
+        G.GAME.current_round.espeon_id = rank_id.id
+        local suits = {'Spades','Hearts','Diamonds','Clubs'}
+        G.GAME.current_round.espeon_suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
+        
+        G.GAME.current_round.espeon_triggered = true
+        G.E_MANAGER:add_event(Event({
+          trigger = 'immediate',
+          func = function()
+            G.GAME.current_round.espeon_triggered = false
+            return true
+          end
+        }))
+      end
       card:juice_up()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize(card.ability.extra.rank or "2", 'ranks').."s and "..localize(card.ability.extra.suit, 'suits_plural')})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize(G.GAME.current_round.espeon_rank or "2", 'ranks').."s and "..localize(G.GAME.current_round.espeon_suit, 'suits_plural')})
     end
-    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(card.ability.extra.suit) then
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.espeon_suit) then
       return {
         x_mult = card.ability.extra.Xmult_multi,
         card = card
       }
     end
-    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == card.ability.extra.id then
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.espeon_id then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -352,15 +365,15 @@ local espeon={
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial then
+    if initial and not next(SMODS.find_card("j_poke_espeon")) then
       local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
                   {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
       local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'))
-      card.ability.extra.rank = rank_id.rank
-      card.ability.extra.id = rank_id.id
+      G.GAME.current_round.espeon_rank = rank_id.rank
+      G.GAME.current_round.espeon_id = rank_id.id
       
       local suits = {'Spades','Hearts','Diamonds','Clubs'}
-      card.ability.extra.suit = pseudorandom_element(suits, pseudoseed('espeon'))
+      G.GAME.current_round.espeon_suit = pseudorandom_element(suits, pseudoseed('espeon'))
     end
   end
 }
@@ -464,6 +477,39 @@ local umbreon={
   end
 }
 -- Murkrow 198
+local murkrow={
+  name = "murkrow",
+  pos = {x = 6, y = 4},
+  config = {extra = {Xmult = 0.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * #find_pokemon_type("Dark"))}}
+  end,
+  rarity = 2,
+  cost = 6,
+  item_req = "duskstone",
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Xmult = math.max(1, 1 + card.ability.extra.Xmult * #find_pokemon_type("Dark"))
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
+      end
+    end
+    return item_evo(self, card, context, "j_poke_honchkrow")
+  end
+}
 -- Slowking 199
 local slowking={
   name = "slowking",
@@ -568,8 +614,141 @@ local misdreavus = {
 -- Unown 201
 -- Wobbuffet 202
 -- Girafarig 203
+--[[
+local girafarig={
+  name = "girafarig",
+  pos = {x = 1, y = 5},
+  config = {extra = {palindromes = 0}, evo_rqmt = 11},
+  loc_txt = {
+    name = "Girafarig",
+    text = {
+      "Allows you to play",
+      "a {C:attention}Palindrome{} hand",
+      "{C:inactive,s:0.8}(2 Pairs + a different rank card){}",
+      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Palindromes){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.palindromes)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['poke_Palindrome']) and not context.blueprint then
+        card.ability.extra.palindromes = card.ability.extra.palindromes + 1
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.palindromes, self.config.evo_rqmt)
+  end,
+}--]]
 -- Pineco 204
+local pineco={
+  name = "pineco",
+  pos = {x = 2, y = 5},
+  config = {extra = {chips = 80,rounds = 3, volatile = 'left'}},
+  loc_txt = {
+    name = "Pineco",
+    text = {
+      "{C:attention}Volatile Left{}",
+      "{C:chips}+#1#{} Chips and debuff self",
+      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    return {vars = {center.ability.extra.chips, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  volatile = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_forretress")
+  end,
+}
 -- Forretress 205
+local forretress={
+  name = "forretress",
+  pos = {x = 3, y = 5},
+  config = {extra = {chips = 120, chip_mod = 5, volatile = 'left'}},
+  loc_txt = {
+    name = "Forretress",
+    text = {
+      "Gains {C:chips}+#2#{} Chips when",
+      "a {C:attention}Steel{} card triggers",
+      "{br:2}text needs to be here to work",
+      "{C:attention}Volatile Left{}",
+      "{C:chips}+#1#{} Chips and debuff self",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, }}
+  end,
+  rarity = 3,
+  cost = 6,
+  stage = "One",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  volatile = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
+       and context.other_card.ability.name == 'Steel Card' then
+      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+    end
+  end,
+}
 -- Dunsparce 206
 local dunsparce={
   name = "dunsparce",
@@ -642,5 +821,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, slowking, misdreavus, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, pineco, forretress, dunsparce, steelix},
 }

@@ -83,10 +83,15 @@ family = {
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
     {"remoraid", "octillery"},
+    {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
+    {"phanpy", "donphan"},
+    {"girafarig", "farigiraf"},
+    {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
     {"misdreavus", "mismagius"},
+    {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
@@ -111,6 +116,10 @@ family = {
     {"gimmighoul", "gholdengo", "gimmighoulr"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
+}
+
+extended_family = {
+  tauros = {"miltank"}
 }
 
 type_sticker_applied = function(card)
@@ -420,6 +429,7 @@ end
 
 level_evo = function(self, card, context, forced_key)
     if not card.ability.extra.rounds then return end
+    if card.debuff then return end
     if can_evolve(self, card, context, forced_key) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
@@ -645,6 +655,7 @@ end
 get_family_keys = function(cardname, custom_prefix)
   local keys = {}
   local line = nil
+  local extra = nil
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
   for k, v in pairs(family) do
     for x, y in pairs(v) do
@@ -668,6 +679,29 @@ get_family_keys = function(cardname, custom_prefix)
     end
   else
     table.insert(keys, custom_prefix..cardname)
+  end
+  for k, v in pairs(extended_family) do
+    if k == cardname then
+      for x, y in pairs(v) do
+        table.insert(keys, custom_prefix..y)
+      end
+    end
+  end
+  if extra and #extra > 0 then
+    for i = 2, #extra do
+      if type(extra[i]) == "table" then
+        local extra_table = {}
+        extra_table.key = custom_prefix..extra[i].key
+        for k, v in pairs(extra[i]) do
+          if k ~= 'key' then
+            extra_table[k] = v
+          end
+        end
+        table.insert(keys, extra_table)
+      else
+        table.insert(keys, custom_prefix..extra[i])
+      end
+    end
   end
   return keys
 end

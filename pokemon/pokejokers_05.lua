@@ -300,7 +300,7 @@ local tauros={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker and context.other_joker.config and (context.other_joker.label == "tauros" or context.other_joker.label == "taurosh") then
+    if context.other_joker and context.other_joker.config and (context.other_joker.label == "tauros" or context.other_joker.label == "taurosh" or context.other_joker.label == "miltank") then
         G.E_MANAGER:add_event(Event({
           func = function()
               context.other_joker:juice_up(0.5, 0.5)

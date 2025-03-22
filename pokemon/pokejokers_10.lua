@@ -117,14 +117,6 @@ local nosepass={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play then
-      if not card.ability.extra.first then
-        for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i]:is_face() then
-            card.ability.extra.first = context.scoring_hand[i];
-            break
-          end
-        end
-      end
       if context.other_card == card.ability.extra.first then
         context.other_card:set_ability(G.P_CENTERS.m_stone, nil, true)
         return {
@@ -135,6 +127,16 @@ local nosepass={
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        if not card.ability.extra.first then
+          for i = 1, #context.scoring_hand do
+            if context.scoring_hand[i]:is_face() then
+              card.ability.extra.first = context.scoring_hand[i];
+              break
+            end
+          end
+        end
+      end
       if context.after then
         card.ability.extra.first = nil
       end

@@ -51,7 +51,7 @@ local mantyke={
         end
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local target = nil
       local unenhanced_cards = {}
       
@@ -333,6 +333,49 @@ local magmortar={
   end
 }
 -- Togekiss 468
+local togekiss={
+  name = "togekiss",
+  pos = {x = 11, y = 5},
+  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult = 1.5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips, card.ability.extra.Xmult}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Fairy",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
+      local ret = nil
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+        ret = {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+        local temp = {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+        if ret then
+          ret.extra = temp
+        else
+          ret = temp
+        end
+      end
+
+      return ret
+    end
+  end,
+}
 -- Yanmega 469
 -- Leafeon 470
 local leafeon={
@@ -513,5 +556,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, leafeon, glaceon, porygonz, probopass, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
 }

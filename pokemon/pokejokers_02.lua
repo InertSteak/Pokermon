@@ -186,7 +186,7 @@ local clefable={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
+      if context.before and not context.blueprint then
         local club_count = 0
         for k, v in ipairs(context.scoring_hand) do
           if v:is_suit(card.ability.extra.suit) then club_count = club_count + 1 end
@@ -887,14 +887,12 @@ local psyduck={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
-      if context.joker_main then
-        local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
-        return {
-          message = '$'..earned,
-          colour = G.C.MONEY
-        }
-      end
+    if context.joker_main and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
+      local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
+      return {
+        message = '$'..earned,
+        colour = G.C.MONEY
+      }
     end
     return level_evo(self, card, context, "j_poke_golduck")
   end,
@@ -914,29 +912,27 @@ local golduck={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
-      if context.before then
-        local face = context.scoring_hand[1]
-        face:set_ability(G.P_CENTERS.m_gold, nil, true)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                face:juice_up()
-                return true
-            end
-        })) 
-        return {
-          message = localize('k_gold'),
-          colour = G.C.MONEY,
-          card = card
-        }
-      end
-      if context.joker_main then
-        local earned = ease_poke_dollars(card, "golduck", card.ability.extra.money)
-        return {
-          message = '$'..earned,
-          colour = G.C.MONEY
-        }
-      end
+    if context.before and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
+      local face = context.scoring_hand[1]
+      face:set_ability(G.P_CENTERS.m_gold, nil, true)
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              face:juice_up()
+              return true
+          end
+      })) 
+      return {
+        message = localize('k_gold'),
+        colour = G.C.MONEY,
+        card = card
+      }
+    end
+    if context.joker_main and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face()  then
+      local earned = ease_poke_dollars(card, "golduck", card.ability.extra.money)
+      return {
+        message = '$'..earned,
+        colour = G.C.MONEY
+      }
     end
   end,
 }

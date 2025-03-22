@@ -25,6 +25,9 @@ local energysearch = { --+1 max energy limit
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 2
     end
+  end,
+  in_pool = function(self)
+    return not pokermon_config.unlimited_energy
   end
 }
 local energyresearch = { --+1 max energy limit
@@ -55,6 +58,9 @@ local energyresearch = { --+1 max energy limit
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
+  end,
+  in_pool = function(self)
+    return not pokermon_config.unlimited_energy
   end
 }
 

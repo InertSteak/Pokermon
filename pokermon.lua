@@ -31,6 +31,21 @@ SMODS.UndiscoveredSprite({
 mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
 
+--Load Joker Display if the mod is enabled
+if (SMODS.Mods["JokerDisplay"] or {}).can_load then
+  local jokerdisplays = NFS.getDirectoryItems(mod_dir.."jokerdisplay")
+
+  for _, file in ipairs(jokerdisplays) do
+    sendDebugMessage ("The file is: "..file)
+    local helper, load_error = SMODS.load_file("jokerdisplay/"..file)
+    if load_error then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      helper()
+    end
+  end
+end
+
 SMODS.current_mod.set_debuff = function(card)
   if card and card.ability and card.ability.fainted == G.GAME.round then
     return G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND

@@ -69,6 +69,38 @@ local mismagius = {
   end,
 }
 -- Honchkrow 430
+local honchkrow={
+  name = "honchkrow",
+  pos = {x = 1, y = 3},
+  config = {extra = {Xmult_multi = 1.5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.other_joker and is_type(context.other_joker, "Dark") then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            context.other_joker:juice_up(0.5, 0.5)
+            return true
+        end
+      })) 
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+        colour = G.C.XMULT,
+        Xmult_mod = card.ability.extra.Xmult_multi
+      }
+    end
+  end
+}
 -- Glameow 431
 -- Purugly 432
 -- Chingling 433
@@ -105,7 +137,7 @@ local bonsly={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local rank = pseudorandom_element({'J', 'Q', 'K'}, pseudoseed('familiar_create'))
       local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('familiar_create'))
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
@@ -145,7 +177,7 @@ local mimejr={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = pseudorandom_element(G.playing_cards, pseudoseed('mimejr'))
       local seal_type = pseudorandom(pseudoseed('mimejr'))
       if seal_type > 0.50 then _card:set_seal('Red', true)
@@ -187,7 +219,7 @@ local happiny={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger then
+    if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger and not card.debuff then
       local max = 1
       if pseudorandom('happiny') < G.GAME.probabilities.normal/card.ability.extra.odds then
         max = max + 1
@@ -239,7 +271,7 @@ local munchlax={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)
@@ -254,5 +286,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {mismagius, bonsly, mimejr, happiny, munchlax},
+        list = {mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
 }

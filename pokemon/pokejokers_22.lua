@@ -20,7 +20,9 @@ local deino={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
       if context.joker_main then
-        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        if not context.blueprint then
+          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.mult,
@@ -51,7 +53,9 @@ local zweilous={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
       if context.joker_main then
-        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        if not context.blueprint then
+          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+        end
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.mult,
@@ -88,7 +92,7 @@ local hydreigon={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
-      if context.after then
+      if context.after and not context.blueprint then
         for k, v in pairs(context.full_hand) do
           if not SMODS.in_scoring(v, context.scoring_hand) then
             poke_remove_card(v, card)
@@ -103,13 +107,9 @@ local hydreigon={
           card = card
         }
     end]]--
-    if context.remove_playing_cards then
+    if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      return {
-        extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-        colour = G.C.MULT,
-        card = card
-      }
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
   end
 }
