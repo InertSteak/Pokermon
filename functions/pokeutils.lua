@@ -413,22 +413,21 @@ tdmsg = function(tablename)
   end
 end
 
-local prev_dfdtd = G.FUNCS.draw_from_discard_to_deck
-G.FUNCS.draw_from_discard_to_deck = function(e)
-  prev_dfdtd(e)
+local prev_evaluate_round = G.FUNCS.evaluate_round
+G.FUNCS.evaluate_round = function()
   G.E_MANAGER:add_event(Event({
     trigger = 'immediate',
     func = function()
-      for _, area in pairs({G.play, G.hand, G.discard, G.deck}) do
-        for _, card in pairs(area.cards) do
-          if SMODS.has_enhancement(card, "m_poke_hazard") then
-            card:remove()
-          end
+      for i = #G.deck.cards, 1, -1 do
+        local card = G.deck.cards[i]
+        if SMODS.has_enhancement(card, "m_poke_hazard") then
+          card:remove()
         end
       end
       return true
     end
   }))
+  prev_evaluate_round()
 end
 
 poke_add_hazards = function(ratio)
