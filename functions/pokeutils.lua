@@ -405,6 +405,14 @@ poke_is_in_collection = function(card)
   return false
 end
 
+poke_stabilize_chip_drain = function(card)
+  if not card or not card.ability or not card.base or not card.base.nominal or not card.ability.bonus then return end
+  card.ability.nominal_drain = card.ability.nominal_drain or 0
+  card.ability.nominal_drain = math.min(card.ability.nominal_drain, card.base.nominal - 1)
+  card.ability.perma_bonus = card.ability.perma_bonus or 0
+  card.ability.perma_bonus = math.max(card.ability.perma_bonus, -card.ability.bonus)
+end
+
 tdmsg = function(tablename)
   if tablename and type(tablename) == "table" then
     sendDebugMessage(inspect(tablename))
