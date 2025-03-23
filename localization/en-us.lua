@@ -3168,7 +3168,7 @@ return {
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "When a {C:attention}Hazard Card{} is drawn,",
-                    "gain a planet card for your",
+                    "gain a {C:planet}Planet{} card for your",
                     "most played hand {C:inactive}(Must have room)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
@@ -3178,7 +3178,7 @@ return {
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "When a {C:attention}Hazard Card{} is drawn,",
-                    "gain a planet card for your",
+                    "gain a {C:planet}Planet{} card for your",
                     "most played hand {C:inactive}(Must have room)",
                 }
             },
