@@ -543,10 +543,8 @@ target = "card.lua"
 pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
 position = "at"
 payload = '''
-if loc_vars.nominal_chips then
   poke_stabilize_chip_drain(self)
   return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
-end
 '''
 match_indent = true
 
