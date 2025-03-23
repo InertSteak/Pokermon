@@ -465,7 +465,11 @@ match_indent = true
 target = '=[SMODS _ "src/utils.lua"]'
 pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
 position = "after"
-payload = "t[#t+1] = G.scry_view"
+payload = '''
+if G.scry_view and G.scry_view.cards then
+    t[#t+1] = G.scry_view
+end
+'''
 match_indent = true
 
 # Scry Functionality 3
