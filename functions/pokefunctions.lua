@@ -202,7 +202,10 @@ copy_scaled_values = function(card)
   return values
 end
 
-remove = function(self, card, context)
+remove = function(self, card, context, check_shiny)
+  if check_shiny and card.edition and card.edition.poke_shiny then
+    SMODS.change_booster_limit(-1)
+  end
   play_sound('tarot1')
   card.T.r = -0.2
   card:juice_up(0.3, 0.4)

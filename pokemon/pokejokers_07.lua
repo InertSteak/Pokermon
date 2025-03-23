@@ -204,7 +204,7 @@ local hoppip={
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context)
+          remove(self, card, context, true)
           return true
         end
       }))
@@ -245,7 +245,7 @@ local skiploom={
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context)
+          remove(self, card, context, true)
           return true
         end
       }))
@@ -289,7 +289,7 @@ local jumpluff={
       poke_convert_cards_to(target, {mod_conv = 'm_wild'})
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context)
+          remove(self, card, context, true)
           return true
         end
       }))
@@ -770,7 +770,7 @@ local dunsparce={
     if context.reroll_shop then
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context)
+          remove(self, card, context, true)
           return true
         end
       }))
