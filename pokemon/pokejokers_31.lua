@@ -10,7 +10,7 @@ local hisuian_qwilfish = {
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
@@ -23,7 +23,7 @@ local hisuian_qwilfish = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod, abbr.chips, self.config.evo_rqmt}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips, self.config.evo_rqmt}}
   end,
   rarity = 2,
   cost = 7,
@@ -70,7 +70,7 @@ local overqwil = {
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
@@ -83,7 +83,7 @@ local overqwil = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod, abbr.chips}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
   end,
   rarity = 2,
   cost = 7,
@@ -141,14 +141,14 @@ local overqwil = {
 -- Oinkologne 916
 -- Tarountula 917
 local tarountula = {
-  name = "tarountula", 
-  pos = {x = 4, y = 2},
-  config = {extra = {hazard_ratio = 8, chip_mod = 5}},
+  name = "tarountula",
+  pos = {x = 12, y = 0},
+  config = {extra = {hazard_ratio = 25}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
@@ -161,13 +161,13 @@ local tarountula = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod}}
+    return {vars = {to_add, abbr.hazard_ratio}}
   end,
-  rarity = 'poke_safari',
-  cost = 10,
-  stage = "Two",
-  ptype = "Earth",
-  atlas = "Pokedex5",
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex9",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
@@ -181,10 +181,12 @@ local tarountula = {
         end
       end
       if count > 0 then
-        for k, v in pairs(G.hand.cards) do
-          if not SMODS.has_enhancement(v, "m_poke_hazard") then
-            card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
-            v.ability.perma_bonus = v.ability.perma_bonus + count * card.ability.extra.chip_mod
+        for i = 1, count do
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, { message = localize('k_plus_tarot'), colour = G.C.PURPLE })
           end
         end
       end
@@ -308,5 +310,5 @@ local dachsbun={
 -- Dolliv 929
 -- Arboliva 930
 return {name = "Pokemon Jokers 901-930", 
-        list = {hisuian_qwilfish, overqwil, fidough, dachsbun},
+        list = {hisuian_qwilfish, overqwil, tarountula, fidough, dachsbun},
 }

@@ -2235,10 +2235,10 @@ return {
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
-                    "{C:purple}+#1# Hazards{}",
-                    "Gain {C:chips}+#2#{} Chips for each",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips for each",
                     "{C:attention}Hazard Card{} drawn this round",
-                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
                 }
             },
             j_poke_scizor = {
@@ -2284,10 +2284,10 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:purple}+#1# Hazards{}",
-                    "Gain {C:mult}+#2#{} Mult for each",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:mult}+#3#{} Mult for each",
                     "{C:attention}Hazard Card{} drawn this round",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {
@@ -2852,27 +2852,27 @@ return {
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
-                    "{C:purple}+#1# Hazards{}",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Cards in hand permanently gain",
-                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
-                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#3#{C:inactive,s:0.8} Hazard Cards)",
+                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#4#{C:inactive,s:0.8} Hazard Cards)",
                 }
             },
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
-                    "{C:purple}+#1# Hazards{}",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Cards in hand permanently gain",
-                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 }
             },
             j_poke_gigalith = {
                 name = "Gigalith",
                 text = {
-                    "{C:purple}+#1# Hazards{}",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Cards in hand permanently gain",
-                    "{C:chips}+#2#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
                 }
             },
             j_poke_zorua = {
@@ -3146,21 +3146,30 @@ return {
             j_poke_hisuian_qwilfish = {
                 name = "Qwilfish (Hisuian)",
                 text = {
-                    "{C:purple}+#1# Hazards{}",
-                    "Gain {C:chips}+#2#{} Chips when a",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
                     "{C:attention}Hazard Card{} is drawn",
-                    "{C:inactive}(Evolves at {C:chips}+#3#{C:inactive} / +#4# Chips)",
+                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
                 }
             },
             j_poke_overqwil = {
                 name = "Overqwil",
                 text = {
-                    "{C:purple}+#1# Hazards{}",
-                    "Gain {C:chips}+#2#{} Chips when a",
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
                     "{C:attention}Hazard Card{} is drawn",
                     "{br:3}ERROR - CONTACT STEAK",
-                    "{C:attention}Half{} Chips after hand played",
-                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:attention}Halve{} Chips after hand played",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
+            },
+            j_poke_tarountula = {
+                name = "Tarountula",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "When a {C:attention}Hazard Card{} is drawn,",
+                    "gain a planet card for your",
+                    "most played hand {C:inactive}(Must have room)",
                 }
             },
             j_poke_fidough = {
@@ -4194,8 +4203,8 @@ return {
                 name = "Hazards",
                 text = {
                     "When {C:attention}Blind{} is selected,",
-                    "add 1 {C:attention}Hazard Card{} to deck",
-                    "for every {C:attention}#1#{} cards in deck",
+                    "add {C:attention}Hazard Cards{} to deck",
+                    "based on deck size",
                 },
             },
         },

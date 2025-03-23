@@ -20,7 +20,7 @@ local roggenrola = {
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
@@ -33,7 +33,7 @@ local roggenrola = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod, math.max(0, self.config.evo_rqmt - abbr.hazards_drawn)}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, math.max(0, self.config.evo_rqmt - abbr.hazards_drawn)}}
   end,
   rarity = 1,
   cost = 4,
@@ -74,7 +74,7 @@ local boldore = {
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
 
@@ -88,7 +88,7 @@ local boldore = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod}}
   end,
   rarity = 2,
   cost = 6,
@@ -129,7 +129,7 @@ local gigalith = {
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazard_ratio}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
@@ -142,7 +142,7 @@ local gigalith = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.chip_mod}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod}}
   end,
   rarity = 'poke_safari',
   cost = 10,
