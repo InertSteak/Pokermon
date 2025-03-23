@@ -10,10 +10,10 @@
 local mismagius = {
   name = "mismagius",
   pos = {x = 0, y = 3},
-  config = {extra = {chips1 = 5, chips = 0, chips2 = 20, chip_odds = 4}},
+  config = {extra = {chip_mod = 5, chips = 0, chips2 = 20, chip_odds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.chips1, card.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.chips2, }}
+    return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.chips2, }}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -36,11 +36,11 @@ local mismagius = {
             card = context.other_card,
           }
         else
-          local drained_vals = math.min(card.ability.extra.chips1, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+          local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
           if drained_vals > 0 then
             context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
           end
-          local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chips1 - drained_vals)
+          local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
           if drain_bonus > 0 then
             context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
             drained_vals = drained_vals + drain_bonus

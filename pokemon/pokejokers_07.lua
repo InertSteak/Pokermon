@@ -560,10 +560,10 @@ local slowking={
 local misdreavus = {
   name = "misdreavus",
   pos = {x = 8, y = 4},
-  config = {extra = {chips1 = 5, chips = 0}},
+  config = {extra = {chip_mod = 5, chips = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.chips1, card.ability.extra.chips, }}
+    return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, }}
   end,
   rarity = 1,
   cost = 5,
@@ -579,11 +579,11 @@ local misdreavus = {
       if not context.other_card.debuff and context.other_card:is_face() then
         context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-        local drained_vals = math.min(card.ability.extra.chips1, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+        local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
         if drained_vals > 0 then
           context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
         end
-        local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chips1 - drained_vals)
+        local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
         if drain_bonus > 0 then
           context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
           drained_vals = drained_vals + drain_bonus
