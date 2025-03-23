@@ -265,14 +265,30 @@ match_indent = true
 target = 'functions/misc_functions.lua'
 pattern = '''function find_joker(name, non_debuff)'''
 position = 'after'
-payload = '''  if name == "Shortcut" then
-    local asdf = find_joker("poke_Shortcut")
-    local fdsa = find_joker("rapidash")
-    return (next(asdf) and asdf) or (next(fdsa) and fdsa) or {}
-  end
-  if name == "poke_Shortcut" then
-    name = "Shortcut"
-  end'''
+payload = '''  
+if name == "Shortcut" then
+  local asdf = find_joker("poke_Shortcut")
+  local fdsa = (G.GAME.current_round.hands_played or 0) == 0 and find_joker("rapidash") or {}
+  local dsaf = find_joker("pansage")
+  local safd = find_joker("simisage")
+  return (next(asdf) and asdf) or (next(fdsa) and fdsa) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
+elseif name == "Pareidolia" then
+  local asdf = find_joker("poke_Pareidolia")
+  local dsaf = find_joker("panpour")
+  local safd = find_joker("simipour")
+elseif name == "Four Fingers" then
+  local asdf = find_joker("poke_Four_Fingers")
+  local dsaf = find_joker("pansear")
+  local safd = find_joker("simisear")
+  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
+elseif name == "poke_Shortcut" then
+  name = "Shortcut"
+elseif name == "poke_Pareidolia" then
+  name = "Pareidolia"
+elseif name == "poke_Four_Fingers" then
+  name = "Four Fingers"
+end
+'''
 match_indent = true
 
 #Joker emplace patch

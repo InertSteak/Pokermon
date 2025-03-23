@@ -436,10 +436,21 @@ end
 
 local scuffed_af = SMODS.find_card
 function SMODS.find_card(key, count_debuffed)
-	if key == "j_shortcut" and (G.GAME.current_round.hands_played or 0) == 0 then
+	if key == "j_shortcut" then
 		local bruh = find_joker("Shortcut")
 		return bruh
-	end	
+  -- I'll join in on this cursed party
+  elseif key == "j_four_fingers" then
+    local ret = scuffed_af("j_poke_pansear")
+    if #ret > 0 then return ret end
+    ret = scuffed_af("j_poke_simisear")
+    if #ret > 0 then return ret end
+  elseif key == "j_pareidolia" then
+    local ret = scuffed_af("j_poke_panpour")
+    if #ret > 0 then return ret end
+    ret = scuffed_af("j_poke_simipour")
+    if #ret > 0 then return ret end
+  end
 	return scuffed_af(key, count_debuffed)
 end
 

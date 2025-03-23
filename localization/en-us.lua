@@ -2843,6 +2843,51 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_pansage = {
+                name = "Pansage",
+                text = {
+                    "Applies {C:attention}Shortcut",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_simisage = {
+                name = "Simisage",
+                text = {
+                    "Applies {C:attention}Shortcut",
+                    "All played unenhanced cards have a",
+                    "{C:green}#1# in #2#{} chance to become {C:attention}Lucky{}"
+                }
+            },
+            j_poke_pansear = {
+                name = "Pansear",
+                text = {
+                    "Applies {C:attention}Four Fingers",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Fire Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_simisear = {
+                name = "Simisear",
+                text = {
+                    "Applies {C:attention}Four Fingers",
+                    "All played unenhanced cards have a",
+                    "{C:green}#1# in #2#{} chance to become {C:attention}Mult{}"
+                }
+            },
+            j_poke_panpour = {
+                name = "Panpour",
+                text = {
+                    "Applies {C:attention}Pareidolia",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_simipour = {
+                name = "Simipour",
+                text = {
+                    "Applies {C:attention}Pareidolia",
+                    "All played unenhanced cards have a",
+                    "{C:green}#1# in #2#{} chance to become {C:attention}Bonus{}"
+                }
+            },
             j_poke_zorua = {
                 name = "Zorua",
                 text = {
