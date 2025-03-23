@@ -85,7 +85,7 @@ local overqwil = {
     end
     return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
   end,
-  rarity = 2,
+  rarity = 'poke_safari',
   cost = 7,
   stage = "Basic",
   ptype = "Dark",

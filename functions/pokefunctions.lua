@@ -111,6 +111,7 @@ family = {
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"hisuian_qwilfish", "overqwil"},
     {"yamper","boltund"},
+    {"tarountula", "spidops"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
