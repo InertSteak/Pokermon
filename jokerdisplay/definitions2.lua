@@ -152,8 +152,41 @@ text_config = { colour = G.C.CHIPS },
 --	Chinchou
 --	Lanturn
 --	Pichu
+jd_def["j_poke_pichu"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Cleffa
+jd_def["j_poke_cleffa"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Igglybuff
+jd_def["j_poke_igglybuff"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Togepi
 --	Togetic
 --	Natu
@@ -464,7 +497,7 @@ jd_def["j_poke_tyrogue"] = {
         {
             border_nodes = {
                 { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "Xmul_minust", retrigger_type = "exp" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
             },
         },
     },
