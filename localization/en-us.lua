@@ -3357,9 +3357,9 @@ return {
                 }
             },
             j_poke_awakened_unown = {
-                name = "Unown Awoken",
+                name = "Unown",
                 text = {
-                    "{C:mult}+#1#{} Mult for each Unown",
+                    "{C:mult}+#1#{} Mult for each Unown in deck",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
             },

@@ -513,60 +513,6 @@ local alph_ruins = {
    end,
 }
 
-local awakened_unown = {
-   name = "awakened_unown",
-   pos = { x = 0, y = 0 },
-   soul_pos = { x = 0, y = 0 },
-   config = { extra = {mult = 4} },
-   loc_vars = function(self, info_queue, card)
-      type_tooltip(self, info_queue, card)
-      local count = 0
-      if G.playing_cards and #G.playing_cards > 0 then
-         for k,v in pairs(G.playing_cards) do
-            if v.base and v.base.suit == 'poke_Unown' then
-               count = count + 1
-            end
-         end
-      end
-      return { vars = {card.ability.extra.mult, card.ability.extra.mult * count} }
-   end,
-   rarity = 'poke_safari',
-   cost = 10,
-   stage = "Other",
-   atlas = "j_poke_awakened_unown",
-   blueprint_compat = true,
-   calculate = function(self, card, context)
-      if context.cardarea == G.jokers and context.scoring_hand then
-        if context.joker_main then
-         local count = 0
-         for k,v in pairs(G.playing_cards) do
-            if v.base and v.base.suit == 'poke_Unown' then
-               count = count + 1
-            end
-         end
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * count}},
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * count
-          }
-        end
-      end
-   end,
-   set_sprites = function(self, card, front)
-      if self.discovered or card.bypass_discovery_center then
-        card.T.w = G.CARD_W * 1.338028169014084
-        card.T.h = G.CARD_H
-        card.children.center.scale = {x = 306, y = 306}
-        card.children.center:reset()
-        if card.children.floating_sprite then
-          print("NEW ATLAS: "..card.children.center.atlas.name .. "_soul")
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
-          card.children.floating_sprite:reset()
-        end
-      end
-   end,
-}
-
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, alph_ruins, awakened_unown}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, alph_ruins}
 }
