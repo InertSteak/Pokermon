@@ -720,7 +720,7 @@ jd_def["j_poke_clefable"] = {
         else
             count = 3
         end
-        card.joker_display_values.mult = card.ability.extra.mult_mod * count * count
+        card.joker_display_values.mult = card.ability.extra.mult_mod * count * #scoring_hand 
         card.joker_display_values.localized_text = localize("Clubs", 'suits_plural')
     end
 }
