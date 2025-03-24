@@ -2212,6 +2212,16 @@ return {
                     "{C:inactive,s:0.8}(Resets at end of round)",
                 }
             },
+            j_poke_misdreavus = {
+                name = 'Misdreavus',
+                text = {
+                    "Played {C:attention}face{} cards permanently",
+                    "lose up to {C:chips}#1#{} Chips when scored",
+                    "Gain {C:attention}Double{} lost Chips",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
             j_poke_dunsparce = {
                 name = 'Dunsparce',
                 text = {
@@ -2652,7 +2662,19 @@ return {
                     "{C:chips}+#1#{} Chips for",
                     "each {C:attention}unscored{} card",
                     "in played hand",
-                }  
+                }
+            },
+            j_poke_mismagius = {
+                name = 'Mismagius',
+                text = {
+                    "Played {C:attention}face{} cards permanently",
+                    "lose up to {C:chips}#1#{} Chips when scored",
+                    "Gain {C:attention}Double{} lost Chips",
+                    "{br:3}text needs to be here to work",
+                    "{C:green}#3# in #4#{} chance for them to",
+                    "permanently gain {C:chips}#5#{} Chips instead",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                }
             },
             j_poke_honchkrow = {
                 name = "Honchkrow",
@@ -4166,6 +4188,10 @@ return {
         challenge_names = {
             c_poke_poke_master = "Pokemon Master",
             c_poke_nuzlocke = "Nuzlocke",
+            c_poke_goodasgold = "Good As Gold",
+            c_poke_parenthood = "Parenthood",
+            c_poke_littlecup = "Little Cup",
+            c_poke_hammertime = "Hammertime"
         },
         dictionary = {
             k_energy = "Energy",
@@ -4363,7 +4389,7 @@ return {
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
-           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"}
+           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
         },
     }
 }

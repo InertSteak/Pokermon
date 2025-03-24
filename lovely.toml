@@ -465,7 +465,11 @@ match_indent = true
 target = '=[SMODS _ "src/utils.lua"]'
 pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
 position = "after"
-payload = "t[#t+1] = G.scry_view"
+payload = '''
+if G.scry_view and G.scry_view.cards then
+    t[#t+1] = G.scry_view
+end
+'''
 match_indent = true
 
 # Scry Functionality 3
@@ -740,6 +744,31 @@ end
 '''
 match_indent = true
 
+# Misdreavus check for over-drained chips (in ui creation)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif card_type == 'Default' or card_type == 'Enhanced' then"
+position = "after"
+payload = "poke_stabilize_chip_drain(self)"
+match_indent = true
+
+# Misdreavus add nominal drain (UI)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif self.ability.set == 'Joker' then -- all remaining jokers"
+position = "before"
+payload = '''
+if loc_vars.nominal_chips then
+  loc_vars.nominal_chips = loc_vars.nominal_chips - (self.ability.nominal_drain or 0)
+  if not loc_vars.bonus_chips and (self.ability.bonus ~= 0 or self.ability.perma_bonus ~= 0) then
+      loc_vars.bonus_chips = bonus_chips
+  end
+end
+'''
+match_indent = true
+
 # Replace start menu card with Unown R
 [[patches]]
 [patches.pattern]
@@ -785,6 +814,17 @@ match_indent = true
 overwrite = true
 
 
+# Misdreavus add nominal drain (functionality)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
+position = "at"
+payload = '''
+  poke_stabilize_chip_drain(self)
+  return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
+'''
+match_indent = true
 
 
 # Togekiss Triple Odds - Mult
@@ -816,4 +856,84 @@ position = "at"
 payload = "elseif _c.effect == 'Lucky Card' then loc_vars = {math.pow(3, #find_joker('togekiss')) * G.GAME.probabilities.normal, cfg.mult, 5, cfg.p_dollars, 15}"
 match_indent = true
 overwrite = true
+
+# Controller support for reserving
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+base_attach.children.use = G.UIDEF.card_focus_button{
+  card = card, parent = base_attach, type = 'use',
+  func = 'can_use_consumeable', button = 'use_card', card_width = card_width
+}
+'''
+position = "at"
+payload = '''
+local reserve_and_use = nil
+if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")) or (G.GAME.poke_save_all and not SMODS.OPENED_BOOSTER.label:find("Wish")) 
+or (card.ability.name == 'megastone') then
+  base_attach.children.reserve = G.UIDEF.card_focus_button{
+    card = card, parent = base_attach, type = 'reserve',
+    func = 'can_reserve_card', button = 'Can Reserve', card_width = card_width
+  }
+  reserve_and_use = true
+end
+base_attach.children.use = G.UIDEF.card_focus_button{
+  card = card, parent = base_attach, type = 'use',
+  func = 'can_use_consumeable', button = 'use_card', card_width = card_width, reserve_and_use = reserve_and_use
+}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+  elseif args.type == 'buy_and_use' then
+    button_contents = 
+    {n=G.UIT.C, config={align = "cr"}, nodes={
+      {n=G.UIT.R, config={align = "cr", maxw = 1}, nodes={
+        {n=G.UIT.T, config={text = localize('b_buy'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
+      }},
+      {n=G.UIT.R, config={align = "cr", maxw = 1}, nodes={
+        {n=G.UIT.T, config={text = localize('b_and_use'),colour = G.C.WHITE, scale = 0.3, shadow = true}},
+      }}
+    }}
+  end
+'''
+position = "before"
+payload = '''
+  elseif args.type == 'reserve' then
+    button_contents = 
+    {n=G.UIT.C, config={align = "cr"}, nodes={
+      {n=G.UIT.R, config={align = "cr", maxw = 1}, nodes={
+        {n=G.UIT.T, config={text = localize('b_save'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
+      }},
+    }}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+focus_args = {button = args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.type == 'sell' and 'tli' or 'tri', offset = {x = args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
+'''
+position = "at"
+payload = '''
+focus_args = {button = args.type == 'sell' and 'leftshoulder' or args.type == 'buy_and_use' and 'leftshoulder' or args.type == 'reserve' and 'leftshoulder' or 'rightshoulder', scale = 0.55, orientation = args.type == 'sell' and 'tli' or 'tri', offset = {x = args.type == 'sell' and 0.1 or -0.1, y = 0}, type = 'none'},
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2),y=args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or 0}, 
+'''
+position = "at"
+payload = '''
+offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - args.card.T.w/2),y=args.type == 'buy_and_use' and 0.6 or (args.buy_and_use) and -0.6 or args.type == 'reserve' and 0.6 or (args.reserve_and_use) and -0.6 or 0}, 
+'''
+match_indent = true
 
