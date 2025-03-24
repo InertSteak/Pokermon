@@ -1,13 +1,20 @@
 local jd_def = JokerDisplay.Definitions
 
 
+jd_def["j_poke_mismagius"] = { --	Mismagius
+text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+},
+text_config = { colour = G.C.CHIPS },
+}
 
 jd_def["j_poke_probopass"] = {
     text = {
         {
             border_nodes = {
                 { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
             },
         },
     },
@@ -26,3 +33,19 @@ jd_def["j_poke_probopass"] = {
         card.joker_display_values.x_mult = math.max(card.ability.extra.Xmult_multi^count,1)
     end
     }
+
+    jd_def["j_poke_electivire"] = {
+        text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+                },
+            },
+        },
+    
+    calc_function = function(card)
+        card.joker_display_values.Xmult =  1 + card.ability.extra.Xmult_mod * card.sell_cost
+    end
+    
+}

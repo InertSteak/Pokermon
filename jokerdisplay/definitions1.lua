@@ -98,11 +98,11 @@ jd_def["j_poke_venusaur"] = {
 
 
 jd_def["j_poke_charmander"] = {
-text = {
-    { text = "+" },
-    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
-},
-text_config = { colour = G.C.MULT },
+    text = {
+        { text = "+" },
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+    },
+    text_config = { colour = G.C.MULT },
 }
 
 jd_def["j_poke_charmeleon"] = {
@@ -431,6 +431,7 @@ retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_ca
 jd_def["j_poke_spearow"] = {
     text = {
         { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },
         { text = "]",                              colour = G.C.GREY }
@@ -441,6 +442,7 @@ jd_def["j_poke_spearow"] = {
 jd_def["j_poke_fearow"] = {
     text = {
         { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },
         { text = "]",                              colour = G.C.GREY }
@@ -2083,7 +2085,7 @@ jd_def["j_poke_voltorb"] = {
             end
         else
             -- Handle cases where there are not enough jokers
-            card.joker_display_values.x_mult = 1
+            card.joker_display_values.x_mult = card.ability.extra.Xmult
         end
     
         -- Update `joker_display_values` with count and pos
@@ -2135,7 +2137,7 @@ jd_def["j_poke_electrode"] = {
             end
         else
             -- Handle cases where there are not enough jokers
-            card.joker_display_values.x_mult = 1
+            card.joker_display_values.x_mult = card.ability.extra.Xmult
         end
     
         -- Update `joker_display_values` with count and pos
