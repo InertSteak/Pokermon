@@ -4150,6 +4150,10 @@ return {
         challenge_names = {
             c_poke_poke_master = "Pokemon Master",
             c_poke_nuzlocke = "Nuzlocke",
+            c_poke_goodasgold = "Good As Gold",
+            c_poke_parenthood = "Parenthood",
+            c_poke_littlecup = "Little Cup",
+            c_poke_hammertime = "Hammertime"
         },
         dictionary = {
             k_energy = "Energy",
@@ -4306,7 +4310,7 @@ return {
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
-           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"}
+           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
         },
     }
 }
