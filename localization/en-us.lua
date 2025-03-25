@@ -428,6 +428,16 @@ return {
         },
         Enhanced = {
             --No enchanced cards? kind of surprising ngl
+            -- HA HA! Not anymore!
+
+            m_poke_hazard = {
+                name = "Hazard Card",
+                text = {
+                    "When drawn, destroy",
+                    "and draw new card",
+                    "Removed at end of round",
+                },
+            }
         },
         Joker = {
             j_poke_bulbasaur = {
@@ -2232,6 +2242,15 @@ return {
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
             },
+            j_poke_qwilfish = {
+                name = 'Qwilfish',
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
+            },
             j_poke_scizor = {
                 name = 'Scizor',
                 text = {
@@ -2270,6 +2289,15 @@ return {
                   "Gains {C:chips}+#2#{} Chips when a {C:attention}Gold{} card",
                   "is scored or {C:attention}held{} in hand",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                }
+            },
+            j_poke_skarmory = {
+                name = 'Skarmory',
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "{X:mult,C:white}X#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {
@@ -2843,6 +2871,38 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_roggenrola = {
+                name = "Roggenrola",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#5#{C:inactive,s:0.8} Hazard Cards)",
+                }
+            },
+            j_poke_boldore = {
+                name = "Boldore",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_gigalith = {
+                name = "Gigalith",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "When second to last hand is played add",
+                    "{C:attention}#5#{} additional {C:attention}Hazard Cards{} to deck",
+                    "{br:4}text needs to be here to work",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                }
+            },
             j_poke_zorua = {
                 name = "Zorua",
                 text = {
@@ -3109,6 +3169,45 @@ return {
                     "When sold, adds {C:money}$#1#{} of sell value",
                     "to every Joker card and {C:attention}converts{}",
                     "all cards held in hand to {C:spades}#2#{}",
+                }
+            },
+            j_poke_hisuian_qwilfish = {
+                name = "Qwilfish (Hisuian)",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
+                }
+            },
+            j_poke_overqwil = {
+                name = "Overqwil",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:attention}Halve{} Chips after hand played",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
+            },
+            j_poke_tarountula = {
+                name = "Tarountula",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "For every #4# {C:inactive}[#5#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
+                    "most played hand {C:inactive}(Must have room)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_spidops = {
+                name = "Spidops",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "For every #3# {C:inactive}[#4#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
+                    "most played hand {C:inactive}(Must have room)",
                 }
             },
             j_poke_fidough = {
@@ -4138,6 +4237,14 @@ return {
                     "{C:dark_edition}Make a Wish!{}",
                 },
             },
+            poke_hazards = {
+                name = "Hazards",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "add {C:attention}Hazard Cards{} to deck",
+                    "based on deck size",
+                },
+            },
         },
     },
     misc = {
@@ -4273,7 +4380,8 @@ return {
             poke_illusion = "...?",
             poke_crack_ex = "CRACK!",
             poke_shake_ex = "Shake!",
-            poke_closed_ex = "Closed!"
+            poke_closed_ex = "Closed!",
+            poke_reload_ex = "Reload!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

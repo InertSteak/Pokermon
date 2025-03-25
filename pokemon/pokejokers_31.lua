@@ -2,6 +2,133 @@
 -- Basculegion 902
 -- Sneasler 903
 -- Overqwil 904
+--[[
+local hisuian_qwilfish = {
+  name = "hisuian_qwilfish", 
+  pos = {x = 5, y = 4},
+  config = {extra = {hazard_ratio = 10, chip_mod = 5, chips = 0}, evo_rqmt = 80},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Regionals",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * count
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.CHIPS
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return{
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_overqwil", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+}
+local overqwil = {
+  name = "overqwil", 
+  pos = {x = 7, y = 8},
+  config = {extra = {hazard_ratio = 5, chip_mod = 20, chips = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
+  end,
+  rarity = 'poke_safari',
+  cost = 7,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex8",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * count
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.CHIPS
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local chips = card.ability.extra.chips
+        card.ability.extra.chips = card.ability.extra.chips / 2
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = chips,
+          extra = {
+            message = localize('poke_reload_ex'),
+            colour = G.C.CHIPS,
+          }
+        }
+      end
+    end
+  end,
+}
+--]]
 -- Enamorus 905
 -- Sprigatito 906
 -- Floragato 907
@@ -15,7 +142,152 @@
 -- Lechonk 915
 -- Oinkologne 916
 -- Tarountula 917
+local tarountula = {
+  name = "tarountula",
+  pos = {x = 12, y = 0},
+  config = {extra = {hazard_ratio = 10, rounds = 4, planet_goal = 3, hazards_drawn = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex9",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
+          local _planet, _hand, _tally = nil, nil, 0
+          for k, v in ipairs(G.handlist) do
+              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                  _hand = v
+                  _tally = G.GAME.hands[v].played
+              end
+          end
+          if _hand then
+              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                  if v.config.hand_type == _hand then
+                      _planet = v.key
+                  end
+              end
+          end
+          for i = 1, count do
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
+            end
+          end
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_spidops")
+  end,
+}
 -- Spidops 918
+local spidops = {
+  name = "spidops",
+  pos = {x = 13, y = 0},
+  config = {extra = {hazard_ratio = 10, planet_goal = 2, hazards_drawn = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex9",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
+          local _planet, _hand, _tally = nil, nil, 0
+          for k, v in ipairs(G.handlist) do
+              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                  _hand = v
+                  _tally = G.GAME.hands[v].played
+              end
+          end
+          if _hand then
+              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                  if v.config.hand_type == _hand then
+                      _planet = v.key
+                  end
+              end
+          end
+          for i = 1, count do
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
+            end
+          end
+        end
+      end
+    end
+  end,
+}
 -- Nymble 919
 -- Lokix 920
 -- Pawmi 921
@@ -132,5 +404,5 @@ local dachsbun={
 -- Dolliv 929
 -- Arboliva 930
 return {name = "Pokemon Jokers 901-930", 
-        list = {fidough, dachsbun},
+        list = {tarountula, spidops, fidough, dachsbun},
 }

@@ -1,4 +1,63 @@
 -- Qwilfish 211
+local qwilfish = {
+  name = "qwilfish", 
+  pos = {x = 9, y = 5},
+  config = {extra = {hazard_ratio = 10, chips = 0, chip_mod = 6}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * count
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.CHIPS
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+  end,
+}
 -- Scizor 212
 local scizor={
   name = "scizor", 
@@ -344,6 +403,73 @@ local mantine={
   end
 }
 -- Skarmory 227
+local skarmory = {
+  name = "skarmory", 
+  pos = {x = 5, y = 7},
+  config = {extra = {hazard_ratio = 10, Xmult_mod = 0.5, hazards_drawn = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_mod, 1 + abbr.Xmult_mod * abbr.hazards_drawn}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.XMULT
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Xmult = 1 + card.ability.extra.Xmult_mod * card.ability.extra.hazards_drawn
+        return{
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = Xmult
+        }
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.hazards_drawn = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
+}
 -- Houndour 228
 -- Houndoom 229
 -- Kingdra 230
@@ -825,5 +951,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

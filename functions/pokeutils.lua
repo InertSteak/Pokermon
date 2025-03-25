@@ -420,3 +420,39 @@ tdmsg = function(tablename)
     sendDebugMessage("Not a table, Function: tdmsg")
   end
 end
+
+local prev_evaluate_round = G.FUNCS.evaluate_round
+G.FUNCS.evaluate_round = function()
+  G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+      for i = #G.deck.cards, 1, -1 do
+        local card = G.deck.cards[i]
+        if SMODS.has_enhancement(card, "m_poke_hazard") then
+          card:remove()
+        end
+      end
+      return true
+    end
+  }))
+  prev_evaluate_round()
+end
+
+poke_add_hazards = function(ratio, flat)
+  local hazards = {}
+  flat = flat or 0
+  local count = #G.playing_cards
+  for _, v in pairs(G.playing_cards) do
+    if SMODS.has_enhancement(v, "m_poke_hazard") then
+      count = count - 1
+    end
+  end
+  local to_add = ratio and math.floor(count / ratio) or flat
+  for i = 1, to_add do
+    hazards[#hazards+1] = create_playing_card({
+      front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
+      center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
+    })
+  end
+  playing_card_joker_effects(hazards)
+end
