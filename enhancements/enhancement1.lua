@@ -15,16 +15,12 @@ local hazard = {
          G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
             func = function()
-               if not card.poke_dissolve then
-                  if card.area == G.hand then
-                     card:start_dissolve()
-                     for i = 1, #G.jokers.cards do
-                        G.jokers.cards[i]:calculate_joker({ remove_playing_cards = true, removed = { card } })
-                     end
-                     poke_draw_one()
-                  else
-                     card:remove()
+               if not card.poke_dissolve and card.area == G.hand then
+                  card:start_dissolve()
+                  for i = 1, #G.jokers.cards do
+                     G.jokers.cards[i]:calculate_joker({ remove_playing_cards = true, removed = { card } })
                   end
+                  poke_draw_one()
                   card.poke_dissolve = true
                end
                return true
