@@ -104,6 +104,7 @@ family = {
     {"vanillite", "vanillish", "vanilluxe"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
+    {"golett", "golurk"},
     {"roggenrola", "boldore", "gigalith"},
     {"zorua", "zoroark"},
     {"deino", "zweilous", "hydreigon"},
@@ -247,6 +248,7 @@ evolve = function(self, card, context, forced_key)
     local previous_rank = nil
     local previous_id = nil
     local previous_cards_scored = nil
+    local previous_hazards_drawn = nil
     local previous_upgrade = nil
     local previous_mega = nil
     
@@ -314,6 +316,11 @@ evolve = function(self, card, context, forced_key)
       previous_cards_scored = card.ability.extra.cards_scored
       previous_upgrade = card.ability.extra.upgrade
     end
+    
+    if card.ability.name == "tarountula" then
+      previous_hazards_drawn = card.ability.extra.hazards_drawn
+    end
+    
     
     if card.config.center.rarity == "poke_mega" then
       previous_mega = true
@@ -411,6 +418,13 @@ evolve = function(self, card, context, forced_key)
       end
       new_card.ability.extra.cards_scored = previous_cards_scored
       new_card.ability.extra.upgrade = previous_upgrade
+    end
+    
+    if previous_hazards_drawn then
+      if previous_hazards_drawn > 1 then
+        previous_hazards_drawn = previous_hazards_drawn % 2
+      end
+      new_card.ability.extra.hazards_drawn = previous_hazards_drawn
     end
     
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()

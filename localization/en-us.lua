@@ -2295,9 +2295,9 @@ return {
                 name = 'Skarmory',
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Gain {C:mult}+#3#{} Mult for each",
+                    "{X:mult,C:white}X#3#{} Mult for each",
                     "{C:attention}Hazard Card{} drawn this round",
-                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {
@@ -2875,17 +2875,19 @@ return {
                 name = "Roggenrola",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Cards in hand permanently gain",
-                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
-                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#4#{C:inactive,s:0.8} Hazard Cards)",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#5#{C:inactive,s:0.8} Hazard Cards)",
                 }
             },
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Cards in hand permanently gain",
-                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 }
             },
@@ -2893,8 +2895,12 @@ return {
                 name = "Gigalith",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Cards in hand permanently gain",
-                    "{C:chips}+#3#{} Chips when a {C:attention}Hazard Card{} is drawn",
+                    "When second to last hand is played add",
+                    "{C:attention}#5#{} additional {C:attention}Hazard Cards{} to deck",
+                    "{br:4}text needs to be here to work",
+                    "{C:mult}+#3#{} Mult for each",
+                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
                 }
             },
             j_poke_zorua = {
@@ -3189,8 +3195,8 @@ return {
                 name = "Tarountula",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "When a {C:attention}Hazard Card{} is drawn,",
-                    "gain a {C:planet}Planet{} card for your",
+                    "For every #4# {C:inactive}[#5#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
                     "most played hand {C:inactive}(Must have room)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
@@ -3199,8 +3205,8 @@ return {
                 name = "Spidops",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "When a {C:attention}Hazard Card{} is drawn,",
-                    "gain a {C:planet}Planet{} card for your",
+                    "For every #3# {C:inactive}[#4#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
                     "most played hand {C:inactive}(Must have room)",
                 }
             },

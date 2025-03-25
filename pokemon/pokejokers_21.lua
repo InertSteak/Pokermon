@@ -309,7 +309,144 @@ local chandelure={
 -- Mienshao 620
 -- Druddigon 621
 -- Golett 622
+--[[
+local golett={
+  name = "golett",
+  pos = {x = 2, y = 9},
+  config = {extra = {h_size = 1, hazard_ratio = 10, hazards_drawn = 0, h_size_max = 3, h_size_given = 0}, evo_rqmt = 20},
+  loc_txt = {
+    name = "Golett",
+    text = {
+      "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+      "The first {C:attention}#4#{} {C:inactive}[#5#] {C:attention}Hazard Cards{}",
+      "drawn give {C:attention}+#3#{} hand size",
+      "until end of round",
+      "{C:inactive,s:0.8}(Evolves after drawing {C:attention,s:0.8}#6#{C:inactive,s:0.8} Hazard Cards)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    -- just to shorten function
+    local abbr = center.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    
+    return {vars = {to_add, abbr.hazard_ratio, abbr.h_size, abbr.h_size_max, math.max(0, abbr.h_size_max - abbr.h_size_given), math.max(0, self.config.evo_rqmt - abbr.hazards_drawn)}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 and card.ability.extra.h_size_given < card.ability.extra.h_size_max then
+        count = math.min(card.ability.extra.h_size_max, count)
+        G.hand:change_size(card.ability.extra.h_size * count)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + (card.ability.extra.h_size * count)
+        if not context.blueprint then
+          card.ability.extra.h_size_given = card.ability.extra.h_size_given + count
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        end
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.h_size_given = 0
+    end
+    return scaling_evo(self, card, context, "j_poke_golurk", card.ability.extra.hazards_drawn, self.config.evo_rqmt)
+  end,
+}
 -- Golurk 623
+local golurk={
+  name = "golurk",
+  pos = {x = 3, y = 9},
+  config = {extra = {h_size = 1, hazard_ratio = 10, h_size_max = 10, h_size_given = 0}},
+  loc_txt = {
+    name = "Golurk",
+    text = {
+      "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+      "The first {C:attention}#4#{} {C:inactive}[#5#] {C:attention}Hazard Cards{}",
+      "drawn give {C:attention}+#3#{} hand size",
+      "until end of round"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    -- just to shorten function
+    local abbr = center.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    
+    return {vars = {to_add, abbr.hazard_ratio, abbr.h_size, abbr.h_size_max, math.max(0, abbr.h_size_max - abbr.h_size_given)}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 and card.ability.extra.h_size_given < card.ability.extra.h_size_max then
+        count = math.min(card.ability.extra.h_size_max, count)
+        G.hand:change_size(card.ability.extra.h_size * count)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + (card.ability.extra.h_size * count)
+        if not context.blueprint then
+          card.ability.extra.h_size_given = card.ability.extra.h_size_given + count
+        end
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.h_size_given = 0
+    end
+  end,
+}
+]]--
 -- Pawniard 624
 -- Bisharp 625
 -- Bouffalant 626

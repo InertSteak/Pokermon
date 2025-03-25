@@ -2,6 +2,7 @@
 -- Basculegion 902
 -- Sneasler 903
 -- Overqwil 904
+--[[
 local hisuian_qwilfish = {
   name = "hisuian_qwilfish", 
   pos = {x = 5, y = 4},
@@ -127,6 +128,7 @@ local overqwil = {
     end
   end,
 }
+--]]
 -- Enamorus 905
 -- Sprigatito 906
 -- Floragato 907
@@ -143,7 +145,7 @@ local overqwil = {
 local tarountula = {
   name = "tarountula",
   pos = {x = 12, y = 0},
-  config = {extra = {hazard_ratio = 20, rounds = 3}},
+  config = {extra = {hazard_ratio = 10, rounds = 4, planet_goal = 3, hazards_drawn = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -161,7 +163,7 @@ local tarountula = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
   end,
   rarity = 1,
   cost = 5,
@@ -181,26 +183,31 @@ local tarountula = {
         end
       end
       if count > 0 then
-        local _planet, _hand, _tally = nil, nil, 0
-        for k, v in ipairs(G.handlist) do
-            if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
-                _hand = v
-                _tally = G.GAME.hands[v].played
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
+          local _planet, _hand, _tally = nil, nil, 0
+          for k, v in ipairs(G.handlist) do
+              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                  _hand = v
+                  _tally = G.GAME.hands[v].played
+              end
+          end
+          if _hand then
+              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                  if v.config.hand_type == _hand then
+                      _planet = v.key
+                  end
+              end
+          end
+          for i = 1, count do
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
             end
-        end
-        if _hand then
-            for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-                if v.config.hand_type == _hand then
-                    _planet = v.key
-                end
-            end
-        end
-        for i = 1, count do
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
           end
         end
       end
@@ -212,7 +219,7 @@ local tarountula = {
 local spidops = {
   name = "spidops",
   pos = {x = 13, y = 0},
-  config = {extra = {hazard_ratio = 15}},
+  config = {extra = {hazard_ratio = 10, planet_goal = 2, hazards_drawn = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -230,7 +237,7 @@ local spidops = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
   end,
   rarity = 2,
   cost = 7,
@@ -250,26 +257,31 @@ local spidops = {
         end
       end
       if count > 0 then
-        local _planet, _hand, _tally = nil, nil, 0
-        for k, v in ipairs(G.handlist) do
-            if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
-                _hand = v
-                _tally = G.GAME.hands[v].played
+        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
+          local _planet, _hand, _tally = nil, nil, 0
+          for k, v in ipairs(G.handlist) do
+              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                  _hand = v
+                  _tally = G.GAME.hands[v].played
+              end
+          end
+          if _hand then
+              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                  if v.config.hand_type == _hand then
+                      _planet = v.key
+                  end
+              end
+          end
+          for i = 1, count do
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
             end
-        end
-        if _hand then
-            for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-                if v.config.hand_type == _hand then
-                    _planet = v.key
-                end
-            end
-        end
-        for i = 1, count do
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
           end
         end
       end
@@ -392,5 +404,5 @@ local dachsbun={
 -- Dolliv 929
 -- Arboliva 930
 return {name = "Pokemon Jokers 901-930", 
-        list = {hisuian_qwilfish, overqwil, tarountula, spidops, fidough, dachsbun},
+        list = {tarountula, spidops, fidough, dachsbun},
 }

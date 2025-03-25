@@ -438,15 +438,16 @@ G.FUNCS.evaluate_round = function()
   prev_evaluate_round()
 end
 
-poke_add_hazards = function(ratio)
+poke_add_hazards = function(ratio, flat)
   local hazards = {}
+  flat = flat or 0
   local count = #G.playing_cards
   for _, v in pairs(G.playing_cards) do
     if SMODS.has_enhancement(v, "m_poke_hazard") then
       count = count - 1
     end
   end
-  local to_add = math.floor(count / ratio)
+  local to_add = ratio and math.floor(count / ratio) or flat
   for i = 1, to_add do
     hazards[#hazards+1] = create_playing_card({
       front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 

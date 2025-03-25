@@ -2,7 +2,7 @@
 local qwilfish = {
   name = "qwilfish", 
   pos = {x = 9, y = 5},
-  config = {extra = {hazard_ratio = 10, chip_mod = 40, hazards_drawn = 0}},
+  config = {extra = {hazard_ratio = 10, chips = 0, chip_mod = 6}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -20,7 +20,7 @@ local qwilfish = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chip_mod * abbr.hazards_drawn}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
   end,
   rarity = 2,
   cost = 7,
@@ -40,7 +40,7 @@ local qwilfish = {
         end
       end
       if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * count
         return {
           message = localize('k_upgrade_ex'),
           colour = G.C.CHIPS
@@ -49,20 +49,12 @@ local qwilfish = {
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local chips = card.ability.extra.chip_mod * card.ability.extra.hazards_drawn
-        return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
-          chip_mod = chips
+          chip_mod = card.ability.extra.chips
         }
       end
-    end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.hazards_drawn = 0
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
     end
   end,
 }
@@ -414,7 +406,7 @@ local mantine={
 local skarmory = {
   name = "skarmory", 
   pos = {x = 5, y = 7},
-  config = {extra = {hazard_ratio = 10, mult_mod = 8, hazards_drawn = 0}},
+  config = {extra = {hazard_ratio = 10, Xmult_mod = 0.5, hazards_drawn = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -432,9 +424,9 @@ local skarmory = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod, abbr.mult_mod * abbr.hazards_drawn}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_mod, 1 + abbr.Xmult_mod * abbr.hazards_drawn}}
   end,
-  rarity = 2,
+  rarity = 3,
   cost = 7,
   stage = "Basic",
   ptype = "Metal",
@@ -455,17 +447,17 @@ local skarmory = {
         card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
         return {
           message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
+          colour = G.C.XMULT
         }
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local mult = card.ability.extra.mult_mod * card.ability.extra.hazards_drawn
+        local Xmult = 1 + card.ability.extra.Xmult_mod * card.ability.extra.hazards_drawn
         return{
-          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
-          colour = G.C.MULT,
-          mult_mod = mult
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = Xmult
         }
       end
     end
