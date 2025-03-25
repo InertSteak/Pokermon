@@ -2265,7 +2265,7 @@ return {
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Gain {C:chips}+#3#{} Chips for each",
-                    "{C:attention}Hazard Card{} drawn this round",
+                    "{C:attention}Hazard Card{} drawn",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
                 }
             },
