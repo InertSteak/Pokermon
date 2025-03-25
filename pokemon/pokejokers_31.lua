@@ -183,8 +183,10 @@ local tarountula = {
         end
       end
       if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+        if not context.blueprint then
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        end
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
           card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
           local _planet, _hand, _tally = nil, nil, 0
@@ -257,8 +259,10 @@ local spidops = {
         end
       end
       if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal then
+        if not context.blueprint then
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        end
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
           card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
           local _planet, _hand, _tally = nil, nil, 0
