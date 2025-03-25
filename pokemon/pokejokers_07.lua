@@ -652,17 +652,20 @@ local awakened_unown = {
      end
   end,
   set_sprites = function(self, card, front)
-     if self.discovered or card.bypass_discovery_center then
-       card.T.w = G.CARD_W * 1.338028169014084
-       card.T.h = G.CARD_H
-       card.children.center.scale = {x = 306, y = 306}
-       card.children.center:reset()
-       if card.children.floating_sprite then
-         print("NEW ATLAS: "..card.children.center.atlas.name .. "_soul")
-         card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
-         card.children.floating_sprite:reset()
-       end
-     end
+    if self.discovered or card.bypass_discovery_center then
+      card.T.w = G.CARD_H * 290 / 285
+      card.T.h = G.CARD_H
+      card.children.center:reset()
+      if card.children.floating_sprite then
+        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
+        card.children.floating_sprite:reset()
+      end
+    end
+  end,
+  update = function(self, card, dt)
+    if card.children.use_button then
+      card.children.use_button.alignment.offset.x = -0.6
+    end
   end,
 }
 -- Wobbuffet 202
