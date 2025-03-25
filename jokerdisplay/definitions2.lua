@@ -103,6 +103,26 @@ jd_def["j_poke_furret"] = {
 }
 
 --	Hoothoot
+-- jd_def["j_poke_hoothoot"] = { 
+--     text = {
+--         { text = "+" },
+--         { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+--     },
+--     text_config = { colour = G.C.CHIPS },
+-- calc_function = function(card)
+--     local chips = 0
+--     if G.scry_view then
+--         for k, v in pairs(G.scry_view.cards) do
+--             local total_chips = poke_total_chips(v)
+--             chips = chips + total_chips
+--         end
+--         card.joker_display_values.chips = chips
+--     else
+--         card.joker_display_values.chips = 0
+--     end
+-- end
+--}
+
 --	Noctowl
 --	Ledyba
 jd_def["j_poke_ledyba"] = { 

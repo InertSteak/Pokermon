@@ -315,7 +315,40 @@ jd_def["j_poke_farigiraf"] = {
 --	Arctibax
 --	Baxcalibur
 --	Gimmighoul
+jd_def["j_poke_gimmighoul"] = {
+    text = {
+        { text = "+$" },
+        { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "mult" },
+},
+text_config = { colour = G.C.GOLD },
+calc_function = function(card)
+    local count = 0
+    local playing_hand = next(G.play.cards)
+    local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
+    if text ~= "Unknown" then
+        for _, scoring_card in pairs(scoring_hand) do --Polychrome cards scored
+            if scoring_card.ability.effect and scoring_card.ability.effect == "Gold Card" then
+                count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+            end
+        end
+    end
+    card.joker_display_values.money = card.ability.extra.money * count
+end
+}
+
 --	Gholdengo
+jd_def["j_poke_gholdengo"] = {
+text = {
+    {
+        border_nodes = {
+            { text = "X" },
+            { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+        },
+    },
+},
+}
+
 --	Wo-Chien
 --	Chien-Pao
 --	Ting-Lu
