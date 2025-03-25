@@ -283,6 +283,7 @@ jd_def["j_poke_slowking"] = {
         },
     },
 }
+
 --	Misdreavus
 jd_def["j_poke_misdreavus"] = { 
 text = {
@@ -294,7 +295,52 @@ text_config = { colour = G.C.CHIPS },
 
 --	Unown
 --	Wobbuffet
+jd_def["j_poke_wobbuffet"] = {
+reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+},
+calc_function = function(card)
+    card.joker_display_values.localized_text = "(6,7,8,9,10)"
+end,
+retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    return (playing_card:get_id() == 6 or playing_card:get_id() == 7 or
+            playing_card:get_id() == 8 or playing_card:get_id() == 9 or playing_card:get_id() == 10) and
+        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+end
+}
+
 --	Girafarig
+jd_def["j_poke_girafarig"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+            }
+        }
+    },
+    text_config = { colour = G.C.WHITE },
+    calc_function = function(card)
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        local face_cards = {}
+        if text == 'Two Pair' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card:is_face() then
+                    table.insert(face_cards, scoring_card)
+                end
+            end
+        end
+        local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+        local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
+        card.joker_display_values.x_mult = math.max(last_face and
+            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1)
+
+    end
+}
+
+
+
 --	Pineco
 jd_def["j_poke_pineco"] = { 
 text = {
@@ -401,6 +447,13 @@ end
 --	Snubbull
 --	Granbull
 --	Qwilfish
+jd_def["j_poke_qwilfish"] = {
+    text = {
+        { text = "+", colour = G.C.CHIPS},
+        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
+    },
+}
+
 --	Scizor
 jd_def["j_poke_scizor"] = { 
     text = {
@@ -443,6 +496,20 @@ jd_def["j_poke_mantine"] = {
     }
 
 --	Skarmory
+jd_def["j_poke_skarmory"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X", colour = G.C.WHITE  },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", colour = G.C.WHITE }
+            },
+        },
+    },
+    calc_function = function(card)
+        card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * card.ability.extra.hazards_drawn)
+    end
+}
+
 --	Houndour
 --	Houndoom
 --	Kingdra

@@ -1,7 +1,61 @@
 local jd_def = JokerDisplay.Definitions
 
 
-jd_def["j_poke_mismagius"] = { --	Mismagius
+--	Turtwig
+--	Grotle
+--	Torterra
+--	Chimchar
+--	Monferno
+--	Infernape
+--	Piplup
+--	Prinplup
+--	Empoleon
+--	Starly
+--	Staravia
+--	Staraptor
+--	Bidoof
+--	Bibarel
+--	Kricketot
+--	Kricketune
+--	Shinx
+--	Luxio
+--	Luxray
+--	Budew
+jd_def["j_poke_budew"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Roserade
+--	Cranidos
+--	Rampardos
+--	Shieldon
+--	Bastiodon
+--	Burmy
+--	Wormadam
+--	Mothim
+--	Combee
+--	Vespiquen
+--	Pachirisu
+--	Buizel
+--	Floatzel
+--	Cherubi
+--	Cherrim
+--	Shellos
+--	Gastrodon
+--	Ambipom
+--	Drifloon
+--	Drifblim
+--	Buneary
+--	Lopunny
+--	Mismagius
+jd_def["j_poke_mismagius"] = { 
 text = {
     { text = "+" },
     { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
@@ -9,7 +63,137 @@ text = {
 text_config = { colour = G.C.CHIPS },
 }
 
-jd_def["j_poke_probopass"] = {
+--	Honchkrow
+--	Glameow
+--	Purugly
+--	Chingling
+--	Stunky
+--	Skuntank
+--	Bronzor
+--	Bronzong
+--	Bonsly
+jd_def["j_poke_bonsly"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Mime Jr.
+jd_def["j_poke_mimejr"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Happiny
+jd_def["j_poke_happiny"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Chatot
+--	Spiritomb
+--	Gible
+--	Gabite
+--	Garchomp
+--	Munchlax
+jd_def["j_poke_munchlax"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Riolu
+jd_def["j_poke_riolu"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Lucario
+--	Hippopotas
+--	Hippowdon
+--	Skorupi
+--	Drapion
+--	Croagunk
+--	Toxicroak
+--	Carnivine
+--	Finneon
+--	Lumineon
+
+--	Mantyke
+jd_def["j_poke_mantyke"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Snover
+--	Abomasnow
+--	Weavile
+--	Magnezone
+--	Lickilicky
+--	Rhyperior
+--	Tangrowth
+--	Electivire
+jd_def["j_poke_electivire"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+
+calc_function = function(card)
+    card.joker_display_values.Xmult =  1 + card.ability.extra.Xmult_mod * card.sell_cost
+end
+
+}
+
+--	Magmortar
+--	Togekiss
+--	Yanmega
+--	Leafeon
+--	Glaceon
+--	Gliscor
+--	Mamoswine
+--	Porygon-Z
+--	Gallade
+--	Probopass
+jd_def["j_poke_probopass"] = { 
     text = {
         {
             border_nodes = {
@@ -32,20 +216,27 @@ jd_def["j_poke_probopass"] = {
         end
         card.joker_display_values.x_mult = math.max(card.ability.extra.Xmult_multi^count,1)
     end
-    }
-
-    jd_def["j_poke_electivire"] = {
-        text = {
-            {
-                border_nodes = {
-                    { text = "X" },
-                    { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-                },
-            },
-        },
-    
-    calc_function = function(card)
-        card.joker_display_values.Xmult =  1 + card.ability.extra.Xmult_mod * card.sell_cost
-    end
-    
 }
+
+--	Dusknoir
+--	Froslass
+--	Rotom
+--	Uxie
+--	Mesprit
+--	Azelf
+--	Dialga
+--	Palkia
+--	Heatran
+--	Regigigas
+--	Giratina
+--	Cresselia
+--	Phione
+--	Manaphy
+--	Darkrai
+--	Shaymin
+--	Arceus
+
+
+
+
+

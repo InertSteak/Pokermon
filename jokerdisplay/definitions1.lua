@@ -706,9 +706,9 @@ jd_def["j_poke_clefable"] = {
 
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
         local count = 0
         if G.play then
-            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then
                 for _, scoring_card in pairs(scoring_hand) do
                     if scoring_card:is_suit("Clubs") then
@@ -2343,36 +2343,25 @@ jd_def["j_poke_lickitung"] = {
     },
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
-        local count = 0
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        local first_jack = nil
-        local second_jack = nil
-
-        -- Identify the first and second Jacks in the scoring hand
-        for i = 1, #scoring_hand do
-            if scoring_hand[i]:get_id() == 11 then
-                if not first_jack then
-                    first_jack = scoring_hand[i]
-                elseif not second_jack then
-                    second_jack = scoring_hand[i]
-                    break -- Exit the loop once we have the first and second Jacks
+        local jacks = {}
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card:get_id() == 11 then
+                    table.insert(jacks, scoring_card)
                 end
             end
         end
-
-        -- Only proceed if there is a valid scoring hand
-        if text ~= "Unknown" then
-            -- Check the triggers only for the first and second Jacks
-            if first_jack then
-                count = count + JokerDisplay.calculate_card_triggers(first_jack, scoring_hand)
-            end
-            if second_jack then
-                count = count + JokerDisplay.calculate_card_triggers(second_jack, scoring_hand)
-            end
+        local first_face = JokerDisplay.calculate_leftmost_card(jacks)
+        local last_face = JokerDisplay.calculate_second_card(jacks)
+        if #jacks == 1 then
+            card.joker_display_values.x_mult = math.max(first_face and
+            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(first_face, scoring_hand))) or 1)
+        else
+        card.joker_display_values.x_mult = math.max(last_face and
+            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + ((JokerDisplay.calculate_card_triggers(first_face, scoring_hand) or 0)))) or 1)
         end
 
-        -- Apply the count to the card's x_mult value
-        card.joker_display_values.x_mult = card.ability.extra.Xmult_multi^count
     end
 }
 
