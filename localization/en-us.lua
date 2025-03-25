@@ -2225,6 +2225,24 @@ return {
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
             },
+            j_poke_pineco = {
+              name = "Pineco",
+              text = {
+                "{C:attention}Volatile Left{}",
+                "{C:chips}+#1#{} Chips and debuff self",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_forretress = {
+              name = "Forretress",
+              text = {
+                "Gains {C:chips}+#2#{} Chips when",
+                "a {C:attention}held{} {C:attention}Steel{} card triggers",
+                "{br:2}text needs to be here to work",
+                "{C:attention}Volatile Left{}",
+                "{C:chips}+#1#{} Chips and debuff self",
+              }
+            },
             j_poke_dunsparce = {
                 name = 'Dunsparce',
                 text = {

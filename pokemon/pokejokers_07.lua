@@ -654,14 +654,6 @@ local pineco={
   name = "pineco",
   pos = {x = 2, y = 5},
   config = {extra = {chips = 80,rounds = 3, volatile = 'left'}},
-  loc_txt = {
-    name = "Pineco",
-    text = {
-      "{C:attention}Volatile Left{}",
-      "{C:chips}+#1#{} Chips and debuff self",
-      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
@@ -701,16 +693,6 @@ local forretress={
   name = "forretress",
   pos = {x = 3, y = 5},
   config = {extra = {chips = 120, chip_mod = 5, volatile = 'left'}},
-  loc_txt = {
-    name = "Forretress",
-    text = {
-      "Gains {C:chips}+#2#{} Chips when",
-      "a {C:attention}Steel{} card triggers",
-      "{br:2}text needs to be here to work",
-      "{C:attention}Volatile Left{}",
-      "{C:chips}+#1#{} Chips and debuff self",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
