@@ -724,8 +724,7 @@ local forretress={
         }
       end
     end
-    if context.repetition and not context.end_of_round and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-       and context.other_card.ability.name == 'Steel Card' then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and context.other_card.ability.name == 'Steel Card' then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
     end
