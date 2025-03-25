@@ -28,16 +28,16 @@ end
 hide_scry_cardarea = function()
    G.scry_view.states.visible = false
    local to_kill = #G.scry_view.cards
-   for i = 1, to_kill do
-      scry_view.cards[i] = nil
+   for i = to_kill, 1, -1 do
+      G.scry_view.cards[i]:remove()
    end
 end
 
 update_scry_cardarea = function(scry_view)
    if not scry_view.states.visible then
       local to_kill = #scry_view.cards
-      for i = 1, to_kill do
-         scry_view.cards[i] = nil
+      for i = to_kill, 1, -1 do
+         scry_view.cards[i]:remove()
       end
      scry_view.states.visible = true
    end
