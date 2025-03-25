@@ -38,7 +38,7 @@ local hisuian_qwilfish = {
     end
     if context.hand_drawn then
       local count = 0
-      for k, v in pairs(G.hand.cards) do
+      for k, v in pairs(context.hand_drawn) do
         if SMODS.has_enhancement(v, "m_poke_hazard") then
           count = count + 1
         end
@@ -98,7 +98,7 @@ local overqwil = {
     end
     if context.hand_drawn then
       local count = 0
-      for k, v in pairs(G.hand.cards) do
+      for k, v in pairs(context.hand_drawn) do
         if SMODS.has_enhancement(v, "m_poke_hazard") then
           count = count + 1
         end
@@ -177,7 +177,7 @@ local tarountula = {
     end
     if context.hand_drawn then
       local count = 0
-      for k, v in pairs(G.hand.cards) do
+      for k, v in pairs(context.hand_drawn) do
         if SMODS.has_enhancement(v, "m_poke_hazard") then
           count = count + 1
         end
@@ -253,7 +253,7 @@ local spidops = {
     end
     if context.hand_drawn then
       local count = 0
-      for k, v in pairs(G.hand.cards) do
+      for k, v in pairs(context.hand_drawn) do
         if SMODS.has_enhancement(v, "m_poke_hazard") then
           count = count + 1
         end

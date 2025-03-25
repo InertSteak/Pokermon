@@ -1234,3 +1234,30 @@ poke_family_present = function(center)
   end
   return false
 end
+
+
+-- code copied from function G.FUNCS.draw_from_deck_to_hand(e)
+poke_draw_one = function()
+  SMODS.drawn_cards = SMODS.drawn_cards or {}
+  draw_card(G.deck, G.hand, nil, nil, true)
+  -- double delay event so that it happens after all cards are drawn
+  G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+      G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+          if #SMODS.drawn_cards > 0 then
+            SMODS.calculate_context({first_hand_drawn = not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind,
+                                    hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards,
+                                    other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards})
+            SMODS.drawn_cards = {}
+            if G.GAME.facing_blind then G.GAME.current_round.any_hand_drawn = true end
+          end
+          return true
+        end
+      }))
+      return true
+    end
+  }))
+end
