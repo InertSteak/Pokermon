@@ -17,6 +17,9 @@ local hazard = {
             if card.area == G.hand then
                if not card.poke_dissolve then
                   card:start_dissolve()
+                  for i = 1, #G.jokers.cards do
+                    G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {card}})
+                  end
                   card.poke_dissolve = true
                end
                if not self.config.is_drawing then
