@@ -455,7 +455,7 @@ target = "game.lua"
 pattern = "function Game:update_round_eval(dt)"
 position = "after"
 payload = '''
-    if G.scry_view then G.scry_view.states.visible = false end
+    if G.scry_view then hide_scry_cardarea() end
 '''
 match_indent = true
 
