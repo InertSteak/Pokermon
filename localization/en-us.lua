@@ -2913,7 +2913,7 @@ return {
                 name = "Gigalith",
                 text = {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "When second to last hand is played add",
+                    "When second to last hand is played, add",
                     "{C:attention}#5#{} additional {C:attention}Hazard Cards{} to deck",
                     "{br:4}text needs to be here to work",
                     "{C:mult}+#3#{} Mult for each",

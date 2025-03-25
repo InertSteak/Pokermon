@@ -443,7 +443,7 @@ local skarmory = {
           count = count + 1
         end
       end
-      if count > 0 then
+      if count > 0 and not context.blueprint then
         card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
         return {
           message = localize('k_upgrade_ex'),
