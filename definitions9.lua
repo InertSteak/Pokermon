@@ -13,7 +13,27 @@ local jd_def = JokerDisplay.Definitions
 --	Lechonk
 --	Oinkologne
 --	Tarountula
+jd_def["j_poke_tarountula"] = { 
+    text = {
+        {ref_table = "card.ability.extra", ref_value = "hazards_drawn", colour = G.C.ORANGE},
+        {text = " "},
+        {text = "[", colour = G.C.GREY},
+        {ref_table = "card.ability.extra", ref_value = "planet_goal", colour = G.C.GREY},
+        {text = "]", colour = G.C.GREY},
+    },
+}
+
 --	Spidops
+jd_def["j_poke_spidops"] = { 
+    text = {
+        {ref_table = "card.ability.extra", ref_value = "hazards_drawn", colour = G.C.ORANGE},
+        {text = " "},
+        {text = "[", colour = G.C.GREY},
+        {ref_table = "card.ability.extra", ref_value = "planet_goal", colour = G.C.GREY},
+        {text = "]", colour = G.C.GREY},
+    },
+}
+
 --	Nymble
 --	Lokix
 --	Pawmi
