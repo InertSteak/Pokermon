@@ -904,7 +904,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:mult}+#3#{} Mult if played hand",
-                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
+                    "contains a scoring {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
@@ -915,7 +915,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{X:red,C:white} X#1# {} Mult if played hand",
-                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
+                    "contains a scoring {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                 } 
             },
             j_poke_meowth = {
@@ -3284,7 +3284,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:chips}+#2#{} Chips if played hand",
-                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                    "contains a scoring {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
@@ -3295,7 +3295,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:chips}+#2#{} Chips if played hand",
-                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                    "contains a scoring {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
                 } 
             },
             j_poke_annihilape = {
