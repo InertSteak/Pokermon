@@ -615,7 +615,15 @@ local misdreavus = {
 local awakened_unown = {
   name = "awakened_unown",
   pos = { x = 0, y = 0 },
-  soul_pos = { x = 0, y = 0 },
+  soul_pos = { x = 0, y = 0,
+    draw = function(card, scale_mod, rotate_mod)
+      -- AAAAA
+      card.children.center.VT.w = card.T.w
+      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL), nil, 0.6)
+      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+      card.children.center.VT.w = card.T.w * 1.174
+    end
+  },
   config = { extra = {mult = 4} },
   loc_vars = function(self, info_queue, card)
      type_tooltip(self, info_queue, card)
@@ -653,8 +661,6 @@ local awakened_unown = {
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
-      card.T.w = G.CARD_H * 290 / 285
-      card.T.h = G.CARD_H
       card.children.center:reset()
       if card.children.floating_sprite then
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
@@ -663,9 +669,9 @@ local awakened_unown = {
     end
   end,
   update = function(self, card, dt)
-    if card.children.use_button then
-      card.children.use_button.alignment.offset.x = -0.6
-    end
+    card.children.center.VT.x = card.T.x - (G.CARD_H - G.CARD_W) / 2
+    card.children.floating_sprite.VT.x = card.children.center.VT.x
+    card.children.center.VT.w = card.T.w * 1.174
   end,
 }
 -- Wobbuffet 202
