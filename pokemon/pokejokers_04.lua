@@ -888,13 +888,13 @@ local chansey={
               G.hand:emplace(copy)
               copy.states.visible = nil
               copy:start_materialize()
+              playing_card_joker_effects({copy})
               return true
           end
       })) 
       if not context.blueprint then
         card.ability.extra.triggers = card.ability.extra.triggers + 1
       end
-      playing_card_joker_effects({copy})
       return {
           message = localize('k_copied_ex'),
           colour = G.C.CHIPS,
