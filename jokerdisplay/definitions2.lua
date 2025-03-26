@@ -526,15 +526,16 @@ jd_def["j_poke_skarmory"] = {
         },
     },
     calc_function = function(card)
-        local hazard_count = 0
-        if G.hand and G.hand.cards and #G.hand.cards > 0 then
-          for i=1, #G.hand.cards do
-            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
-              hazard_count = hazard_count + 1
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        for _, playing_card in ipairs(G.hand.cards) do
+            if playing_hand or not playing_card.highlighted then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                    count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                end
             end
-          end 
         end
-        card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * hazard_count)
+        card.joker_display_values.Xmult = 1 + (count * card.ability.extra.Xmult_mod)
     end
 }
 

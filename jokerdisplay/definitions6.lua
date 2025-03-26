@@ -32,6 +32,7 @@ calc_function = function(card)
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
         chips = card.ability.extra.chips
     end
+    card.joker_display_values.chips = chips
 end
 }
 
@@ -49,6 +50,7 @@ calc_function = function(card)
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
         chips = card.ability.extra.chips
     end
+    card.joker_display_values.chips = chips
 end
 }
 

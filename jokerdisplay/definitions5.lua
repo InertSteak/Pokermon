@@ -35,7 +35,7 @@ local jd_def = JokerDisplay.Definitions
 jd_def["j_poke_roggenrola"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
     },
     calc_function = function(card)
         local playing_hand = next(G.play.cards)
@@ -47,7 +47,7 @@ jd_def["j_poke_roggenrola"] = {
                 end
             end
         end
-        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+        card.joker_display_values.mult = count * card.ability.extra.mult_mod
     end
 }
 
@@ -55,7 +55,7 @@ jd_def["j_poke_roggenrola"] = {
 jd_def["j_poke_boldore"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
     },
     calc_function = function(card)
         local playing_hand = next(G.play.cards)
@@ -67,7 +67,7 @@ jd_def["j_poke_boldore"] = {
                 end
             end
         end
-        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+        card.joker_display_values.mult = count * card.ability.extra.mult_mod
     end
 }
 
@@ -75,7 +75,7 @@ jd_def["j_poke_boldore"] = {
 jd_def["j_poke_gigalith"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
     },
     calc_function = function(card)
         local playing_hand = next(G.play.cards)
@@ -87,7 +87,10 @@ jd_def["j_poke_gigalith"] = {
                 end
             end
         end
-        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+        card.joker_display_values.mult = count * card.ability.extra.mult_mod
+    end,
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+        return held_in_hand and SMODS.has_enhancement(playing_card, "m_poke_hazard") and (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
     end
 }
 
