@@ -233,10 +233,14 @@ local spidops = {
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
     if context.end_of_round and not context.individual and not context.repetition then
+      local hazard_count = 0
       if G.hand and G.hand.cards and #G.hand.cards > 0 then
         for i=1, #G.hand.cards do
-          if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") and i % 3 == 0 then
-            G.hand.cards[i]:set_seal("Blue", nil, true)
+          if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+            hazard_count = hazard_count + 1
+            if hazard_count % 3 == 0 then
+              G.hand.cards[i]:set_seal("Blue", nil, true)
+            end
           end
         end
       end
