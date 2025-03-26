@@ -35,33 +35,60 @@ local jd_def = JokerDisplay.Definitions
 jd_def["j_poke_roggenrola"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
     },
-calc_function = function(card)
-    card.joker_display_values.mult = card.ability.extra.hazards_drawn * card.ability.extra.mult_mod
-end
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        for _, playing_card in ipairs(G.hand.cards) do
+            if playing_hand or not playing_card.highlighted then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                    count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                end
+            end
+        end
+        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+    end
 }
 
 --	Boldore
 jd_def["j_poke_boldore"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
     },
-calc_function = function(card)
-    card.joker_display_values.mult = card.ability.extra.hazards_drawn * card.ability.extra.mult_mod
-end
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        for _, playing_card in ipairs(G.hand.cards) do
+            if playing_hand or not playing_card.highlighted then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                    count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                end
+            end
+        end
+        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+    end
 }
 
 --	Gigalith
 jd_def["j_poke_gigalith"] = {
     text = {
         { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values",        ref_value = "mult_mod", colour = G.C.MULT },
     },
-calc_function = function(card)
-    card.joker_display_values.mult = card.ability.extra.hazards_drawn * card.ability.extra.mult_mod
-end
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        for _, playing_card in ipairs(G.hand.cards) do
+            if playing_hand or not playing_card.highlighted then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                    count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                end
+            end
+        end
+        card.joker_display_values.mult_mod = count * card.ability.extra.mult_mod
+    end
 }
 
 --	Woobat

@@ -145,7 +145,7 @@ local overqwil = {
 local tarountula = {
   name = "tarountula",
   pos = {x = 12, y = 0},
-  config = {extra = {hazard_ratio = 10, rounds = 4, planet_goal = 3, hazards_drawn = 0}},
+  config = {extra = {hazard_ratio = 10, rounds = 3, hazards_held = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -163,7 +163,7 @@ local tarountula = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds, abbr.hazards_held}}
   end,
   rarity = 1,
   cost = 5,
@@ -175,44 +175,24 @@ local tarountula = {
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
-    if context.hand_drawn then
-      local count = 0
-      for k, v in pairs(context.hand_drawn) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count + 1
-        end
-      end
-      if count > 0 then
-        if not context.blueprint then
-          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-        end
-        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
-          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
-          local _planet, _hand, _tally = nil, nil, 0
-          for k, v in ipairs(G.handlist) do
-              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
-                  _hand = v
-                  _tally = G.GAME.hands[v].played
-              end
-          end
-          if _hand then
-              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-                  if v.config.hand_type == _hand then
-                      _planet = v.key
-                  end
-              end
-          end
-          for i = 1, count do
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
+    if context.end_of_round and not context.individual and not context.repetition then
+        local hazard_count = 0
+        if G.hand and G.hand.cards and #G.hand.cards > 0 then
+          for i=1, #G.hand.cards do
+            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+              hazard_count = hazard_count + 1
             end
+          end 
+        end
+        local count = math.floor(hazard_count/card.ability.extra.hazards_held)
+        for i = 1, count do
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
           end
         end
-      end
     end
     return level_evo(self, card, context, "j_poke_spidops")
   end,
@@ -221,13 +201,14 @@ local tarountula = {
 local spidops = {
   name = "spidops",
   pos = {x = 13, y = 0},
-  config = {extra = {hazard_ratio = 10, planet_goal = 2, hazards_drawn = 0}},
+  config = {extra = {hazard_ratio = 10}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
     if G.playing_cards then
@@ -239,7 +220,7 @@ local spidops = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.planet_goal, abbr.planet_goal - abbr.hazards_drawn}}
+    return {vars = {to_add, abbr.hazard_ratio}}
   end,
   rarity = 2,
   cost = 7,
@@ -251,41 +232,11 @@ local spidops = {
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
-    if context.hand_drawn then
-      local count = 0
-      for k, v in pairs(context.hand_drawn) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count + 1
-        end
-      end
-      if count > 0 then
-        if not context.blueprint then
-          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-        end
-        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
-          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
-          local _planet, _hand, _tally = nil, nil, 0
-          for k, v in ipairs(G.handlist) do
-              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
-                  _hand = v
-                  _tally = G.GAME.hands[v].played
-              end
-          end
-          if _hand then
-              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-                  if v.config.hand_type == _hand then
-                      _planet = v.key
-                  end
-              end
-          end
-          for i = 1, count do
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
-            end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if G.hand and G.hand.cards and #G.hand.cards > 0 then
+        for i=1, #G.hand.cards do
+          if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") and i % 3 == 0 then
+            G.hand.cards[i]:set_seal("Blue", nil, true)
           end
         end
       end

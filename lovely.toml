@@ -663,3 +663,37 @@ offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - a
 '''
 match_indent = true
 
+# Hazard negative logic
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "function CardArea:emplace(*"
+position = "after"
+payload = '''
+    if not card.debuff and SMODS.has_enhancement(card, "m_poke_hazard") and (self == G.hand) then
+        self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) + card.ability.card_limit
+        self.config.card_limit = math.max(0, self.config.real_card_limit)
+    end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "card:remove_from_area()"
+position = "before"
+payload = '''
+if not card.debuff and SMODS.has_enhancement(card, "m_poke_hazard") and (self == G.hand) then
+    self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) - card.ability.card_limit
+    self.config.card_limit = math.max(0, self.config.real_card_limit)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or 0)"
+position = "at"
+payload = """limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or SMODS.has_enhancement(card, "m_poke_hazard") and card.ability.card_limit or 0)"""
+match_indent = true

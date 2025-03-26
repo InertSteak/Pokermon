@@ -506,7 +506,15 @@ jd_def["j_poke_skarmory"] = {
         },
     },
     calc_function = function(card)
-        card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * card.ability.extra.hazards_drawn)
+        local hazard_count = 0
+        if G.hand and G.hand.cards and #G.hand.cards > 0 then
+          for i=1, #G.hand.cards do
+            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+              hazard_count = hazard_count + 1
+            end
+          end 
+        end
+        card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * hazard_count)
     end
 }
 

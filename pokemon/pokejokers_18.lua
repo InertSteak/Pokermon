@@ -15,7 +15,7 @@
 local roggenrola = {
   name = "roggenrola", 
   pos = {x = 2, y = 2},
-  config = {extra = {hazard_ratio = 10, mult_mod = 4, hazards_drawn = 0, total_hazards_drawn = 0}, evo_rqmt = 12},
+  config = {extra = {hazard_ratio = 10, mult_mod = 4, hazard_triggered = 0}, evo_rqmt = 25},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -33,7 +33,7 @@ local roggenrola = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod, abbr.mult_mod * abbr.hazards_drawn, math.max(0, self.config.evo_rqmt - abbr.total_hazards_drawn)}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod, math.max(0, self.config.evo_rqmt - abbr.hazard_triggered)}}
   end,
   rarity = 1,
   cost = 4,
@@ -45,40 +45,31 @@ local roggenrola = {
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
-    if context.hand_drawn then
-      local count = 0
-      for k, v in pairs(context.hand_drawn) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count + 1
-        end
-      end
-      if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-        card.ability.extra.total_hazards_drawn = card.ability.extra.total_hazards_drawn + count
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local mult = card.ability.extra.mult_mod * card.ability.extra.hazards_drawn
-        return{
-          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
-          colour = G.C.MULT,
-          mult_mod = mult
-        }
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          if not context.blueprint then
+            card.ability.extra.hazard_triggered = card.ability.extra.hazard_triggered + 1
+          end
+          return {
+              h_mult = card.ability.extra.mult_mod,
+              card = card
+          }
       end
     end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.hazards_drawn = 0
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
-    end
-    return scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.total_hazards_drawn, self.config.evo_rqmt)
+    return scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.hazard_triggered, self.config.evo_rqmt)
   end,
 }
 -- Boldore 525
 local boldore = {
   name = "boldore", 
   pos = {x = 3, y = 2},
-  config = {extra = {hazard_ratio = 10, mult_mod = 8, hazards_drawn = 0}},
+  config = {extra = {hazard_ratio = 10, mult_mod = 8}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -97,7 +88,7 @@ local boldore = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod, abbr.mult_mod * abbr.hazards_drawn}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod}}
   end,
   rarity = 2,
   cost = 6,
@@ -110,30 +101,19 @@ local boldore = {
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
-    if context.hand_drawn then
-      local count = 0
-      for k, v in pairs(context.hand_drawn) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count + 1
-        end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              h_mult = card.ability.extra.mult_mod,
+              card = card
+          }
       end
-      if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local mult = card.ability.extra.mult_mod * card.ability.extra.hazards_drawn
-        return{
-          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
-          colour = G.C.MULT,
-          mult_mod = mult
-        }
-      end
-    end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.hazards_drawn = 0
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
     return item_evo(self, card, context, "j_poke_gigalith")
   end,
@@ -142,7 +122,7 @@ local boldore = {
 local gigalith = {
   name = "gigalith", 
   pos = {x = 4, y = 2},
-  config = {extra = {hazard_ratio = 10, mult_mod = 8, hazards_drawn = 0, additional = 5}},
+  config = {extra = {hazard_ratio = 10, mult_mod = 6, retriggers = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -160,7 +140,7 @@ local gigalith = {
       end
       to_add = math.floor(count / abbr.hazard_ratio)
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod, abbr.mult_mod * abbr.hazards_drawn, abbr.additional}}
+    return {vars = {to_add, abbr.hazard_ratio, abbr.mult_mod}}
   end,
   rarity = 'poke_safari',
   cost = 10,
@@ -172,38 +152,27 @@ local gigalith = {
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
     end
-    if context.hand_drawn then
-      local count = 0
-      for k, v in pairs(context.hand_drawn) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count + 1
-        end
-      end
-      if count > 0 then
-        card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if G.GAME.current_round.hands_left == 1 then
-          poke_add_hazards(nil, card.ability.extra.additional)
-        end
-        local mult = card.ability.extra.mult_mod * card.ability.extra.hazards_drawn
-        return{
-          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
-          colour = G.C.MULT,
-          mult_mod = mult
-        }
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              h_mult = card.ability.extra.mult_mod,
+              card = card
+          }
       end
     end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.hazards_drawn = 0
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
       return {
-        message = localize('k_reset'),
-        colour = G.C.RED
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
       }
     end
-    return item_evo(self, card, context, "j_poke_gigalith")
   end,
 }
 -- Woobat 527
