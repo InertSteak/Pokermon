@@ -670,7 +670,7 @@ target = "cardarea.lua"
 pattern = "function CardArea:emplace(*"
 position = "after"
 payload = '''
-    if not card.debuff and SMODS.has_enhancement(card, "m_poke_hazard") and (self == G.hand) then
+    if not card.debuff and card.ability and card.ability.card_limit and (self == G.hand) then
         self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) + card.ability.card_limit
         self.config.card_limit = math.max(0, self.config.real_card_limit)
     end
@@ -683,7 +683,7 @@ target = "cardarea.lua"
 pattern = "card:remove_from_area()"
 position = "before"
 payload = '''
-if not card.debuff and SMODS.has_enhancement(card, "m_poke_hazard") and (self == G.hand) then
+if not card.debuff and card.ability and card.ability.card_limit and (self == G.hand) then
     self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) - card.ability.card_limit
     self.config.card_limit = math.max(0, self.config.real_card_limit)
 end
@@ -695,5 +695,41 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or 0)"
 position = "at"
-payload = """limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or SMODS.has_enhancement(card, "m_poke_hazard") and card.ability.card_limit or 0)"""
+payload = """limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or card.ability and card.ability.card_limit or 0)"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability and old_center and old_center.config.bonus then
+    self.ability.bonus = self.ability.bonus - old_center.config.bonus
+end
+'''
+position = "after"
+payload = '''
+if self.ability and old_center and old_center.config.card_limit then
+    if self.area == G.hand then
+      if G.hand.config.real_card_limit then
+        G.hand.config.real_card_limit = G.hand.config.real_card_limit - self.ability.card_limit
+      end
+      G.hand.config.card_limit = G.hand.config.card_limit - self.ability.card_limit
+    end
+    self.ability.card_limit = self.ability.card_limit - old_center.config.card_limit
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability and old_center and old_center.config.bonus then
+    self.ability.bonus = self.ability.bonus - old_center.config.bonus
+end
+'''
+position = "after"
+payload = '''
+
+'''
 match_indent = true
