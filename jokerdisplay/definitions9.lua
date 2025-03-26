@@ -13,7 +13,27 @@ local jd_def = JokerDisplay.Definitions
 --	Lechonk
 --	Oinkologne
 --	Tarountula
---	Spidops
+-- jd_def["j_poke_tarountula"] = { 
+--     text = {
+--         {ref_table = "card.ability.extra", ref_value = "hazards_drawn", colour = G.C.ORANGE},
+--         {text = " "},
+--         {text = "[", colour = G.C.GREY},
+--         {ref_table = "card.ability.extra", ref_value = "planet_goal", colour = G.C.GREY},
+--         {text = "]", colour = G.C.GREY},
+--     },
+-- }
+
+-- --	Spidops
+-- jd_def["j_poke_spidops"] = { 
+--     text = {
+--         {ref_table = "card.ability.extra", ref_value = "hazards_drawn", colour = G.C.ORANGE},
+--         {text = " "},
+--         {text = "[", colour = G.C.GREY},
+--         {ref_table = "card.ability.extra", ref_value = "planet_goal", colour = G.C.GREY},
+--         {text = "]", colour = G.C.GREY},
+--     },
+-- }
+
 --	Nymble
 --	Lokix
 --	Pawmi
@@ -224,7 +244,7 @@ jd_def["j_poke_wugtrio"] = {
             end
         end
         card.joker_display_values.chips = chips
-        card.joker_display_values.Xmult = mult 
+        card.joker_display_values.Xmult = math.max(1,mult) 
         card.joker_display_values.localized_text = "(5,6,7)"
     end
 }

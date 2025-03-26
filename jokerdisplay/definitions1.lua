@@ -1095,7 +1095,7 @@ jd_def["j_poke_dugtrio"] = {
             end
         end
         card.joker_display_values.chips = chips
-        card.joker_display_values.Xmult = mult 
+        card.joker_display_values.Xmult = math.max(1,mult)
         card.joker_display_values.localized_text = "(2,3,4)"
     end
 }
