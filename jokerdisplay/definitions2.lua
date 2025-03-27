@@ -2,8 +2,83 @@ local jd_def = JokerDisplay.Definitions
 
 
 --	Chikorita
+jd_def["j_poke_chikorita"] = { 
+    text = {
+        {text = "+$", colour = G.C.GOLD},
+        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
+        },
+    reminder_text = {
+        {text = "End of Round"}
+    },
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        local interval = card.ability.extra.interval or 3
+
+                for i, playing_card in ipairs(G.hand.cards) do
+                    if playing_hand or not playing_card.highlighted then
+                    -- Check if the card is at the nth interval
+                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
+                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                    end
+                end
+        end
+        card.joker_display_values.money = card.ability.extra.money * count
+    end 
+}
+
 --	Bayleef
+jd_def["j_poke_bayleef"] = { 
+    text = {
+        {text = "+$", colour = G.C.GOLD},
+        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
+        },
+    reminder_text = {
+        {text = "End of Round"}
+    },
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        local interval = card.ability.extra.interval or 2
+
+                for i, playing_card in ipairs(G.hand.cards) do
+                    if playing_hand or not playing_card.highlighted then
+                    -- Check if the card is at the nth interval
+                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
+                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                    end
+                end
+        end
+        card.joker_display_values.money = card.ability.extra.money * count
+    end 
+}
+
 --	Meganium
+jd_def["j_poke_meganium"] = { 
+    text = {
+        {text = "+$", colour = G.C.GOLD},
+        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
+        },
+    reminder_text = {
+        {text = "End of Round"}
+    },
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+        local interval = card.ability.extra.interval or 1
+
+                for i, playing_card in ipairs(G.hand.cards) do
+                    if playing_hand or not playing_card.highlighted then
+                    -- Check if the card is at the nth interval
+                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
+                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                    end
+                end
+        end
+        card.joker_display_values.money = card.ability.extra.money * count
+    end 
+}
+
 --	Cyndaquil
 jd_def["j_poke_cyndaquil"] = { 
 text = {
