@@ -165,6 +165,18 @@ jd_def["j_poke_mantyke"] = {
 --	Magnezone
 --	Lickilicky
 --	Rhyperior
+jd_def["j_poke_rhyperior"] = {
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    
+        -- Find the first Stone Card in the scoring hand
+        local rhytriggers = #find_pokemon_type("Earth")
+        -- Check if the current playing card is the first Stone Card
+        if held_in_hand then return 0 end
+            return playing_card.ability.effect == "Stone Card" and (rhytriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+
+    }
+
 --	Tangrowth
 --	Electivire
 jd_def["j_poke_electivire"] = { 
