@@ -3069,6 +3069,23 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
                 }
             },
+            j_poke_golett = {
+                name = "Golett",
+                text = {
+                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                  "Every {C:attention}fourth{} card {C:attention}held{} in hand",
+                  "gives {X:mult,C:white}X#3#{} Mult",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)"
+                }
+            },
+            j_poke_golurk = {
+                name = "Golurk",
+                text = {
+                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                  "Every {C:attention}third{} card {C:attention}held{} in hand",
+                  "gives {X:mult,C:white}X#3#{} Mult",
+                }
+            },
             j_poke_zweilous = {
                 name = "Zweilous",
                 text = {
