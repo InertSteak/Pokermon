@@ -64,6 +64,30 @@ text_config = { colour = G.C.CHIPS },
 }
 
 --	Honchkrow
+jd_def["j_poke_honchkrow"] = {
+    reminder_text = {
+        { text = "(" },
+        { ref_table = "card.joker_display_values", ref_value = "count",          colour = G.C.ORANGE },
+        { text = "x" },
+        { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREEN },
+        { text = ")" },
+    },
+    calc_function = function(card)
+        local count = 0
+        if G.jokers then
+            for _, joker_card in ipairs(G.jokers.cards) do
+                if joker_card.config.center.rarity and is_type(joker_card, "Dark") then
+                    count = count + 1
+                end
+            end
+        end
+        card.joker_display_values.count = count
+        card.joker_display_values.localized_text = "Dark"
+    end,
+    mod_function = function(card, mod_joker)
+        return { x_mult = (is_type(card, "Dark") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+    end
+}
 --	Glameow
 --	Purugly
 --	Chingling
