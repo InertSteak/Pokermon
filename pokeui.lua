@@ -349,7 +349,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Rafael, PainKiller, FlamingRok, Mr. Clover",
+                  text = "Rafael, PainKiller, FlamingRok, Mr. Clover, Mr. Onyx",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
