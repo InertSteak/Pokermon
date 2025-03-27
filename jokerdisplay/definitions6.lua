@@ -88,11 +88,31 @@ end
 --	Sylveon
 jd_def["j_poke_sylveon"] = {
     text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+    reminder_text = {
         {ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE},
         { text = " [", colour = G.C.GREY},
         { ref_table = "card.ability.extra", ref_value = "reroll_goal", colour = G.C.GREY },
         { text = "]", colour = G.C.GREY}
-    },
+        },
+    calc_function = function(card)
+        local playing_hand = next(G.play.cards)
+        local count = 0
+                for i, playing_card in ipairs(G.hand.cards) do
+                    if playing_hand or not playing_card.highlighted then
+                    if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card.edition then
+                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                    end
+                end
+        end
+        card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
+    end 
 }
 
 --	Hawlucha
