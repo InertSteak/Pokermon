@@ -2869,8 +2869,9 @@ return {
                 name = "Simisear",
                 text = {
                     "Applies {C:attention}Four Fingers",
-                    "All played unenhanced cards have a",
-                    "{C:green}#1# in #2#{} chance to become {C:attention}Mult{}"
+                    "If first played hand contains a {C:attention}Straight",
+                    "or {C:attention}Flush{}, create an {C:attention}Empress{} card",
+                    "and each unscoring card is destroyed {C:inactive}#1#{}",
                 }
             },
             j_poke_panpour = {
@@ -2884,8 +2885,9 @@ return {
                 name = "Simipour",
                 text = {
                     "Applies {C:attention}Pareidolia",
-                    "All played unenhanced cards have a",
-                    "{C:green}#1# in #2#{} chance to become {C:attention}Bonus{}"
+                    "Leftmost unenhanced card with the",
+                    "lowest base chips in played hand",
+                    "becomes a {C:attention}Bonus{} card",
                 }
             },
             j_poke_zorua = {

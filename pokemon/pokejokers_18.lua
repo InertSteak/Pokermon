@@ -89,12 +89,13 @@ local pansear = {
 local simisear = {
   name = "simisear",
   pos = { x = 6, y = 1 },
-  config = { extra = { odds = 3 } },
+  config = { extra = { destroy = false} },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_four_fingers', config = {} }
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_mult
-    return { vars = { '' .. (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    info_queue[#info_queue + 1] = G.P_CENTERS.c_empress
+    local active = G.GAME and G.GAME.current_round and G.GAME.current_round.hands_played == 0
+    return { vars = {active and "("..localize('k_active_ex')..")" or '' } }
   end,
   rarity = 'poke_safari',
   cost = 8,
@@ -103,27 +104,37 @@ local simisear = {
   atlas = "Pokedex5",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint then
-      local stall_for_effects = false
-      for _, v in ipairs(context.full_hand) do
-        if v.config.center == G.P_CENTERS.c_base then
-          if pseudorandom('simisear') < G.GAME.probabilities.normal / card.ability.extra.odds then
-            stall_for_effects = true
-            v:set_ability(G.P_CENTERS.m_mult, nil, true)
+    if context.first_hand_drawn then
+      local eval = function() return G.GAME.current_round.hands_played == 0 end
+      juice_card_until(card, eval, true)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) and G.GAME.current_round.hands_played == 0 then
+        card.ability.extra.destroy = true
+        return {
+          extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
             G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              delay = 0.0,
               func = function()
-                v:juice_up()
+                local card_type = 'Tarot'
+                local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, "c_empress")
+                _card:add_to_deck()
+                G.consumeables:emplace(_card)
+                G.GAME.consumeable_buffer = 0
                 return true
               end
             }))
+          end},
+        }
+      end
+      if context.after and card.ability.extra.destroy and not context.blueprint then
+        card.ability.extra.destroy = nil
+        for k, v in pairs(context.full_hand) do
+          if not SMODS.in_scoring(v, context.scoring_hand) then
+            poke_remove_card(v, card)
           end
         end
-      end
-      if stall_for_effects then
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
       end
     end
   end,
@@ -154,12 +165,12 @@ local panpour = {
 local simipour = {
   name = "simipour",
   pos = { x = 8, y = 1 },
-  config = { extra = { odds = 3 } },
+  config = { extra = {} },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_pareidolia', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.m_bonus
-    return { vars = { '' .. (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    return { vars = {} }
   end,
   rarity = 'poke_safari',
   cost = 8,
@@ -169,26 +180,24 @@ local simipour = {
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint then
-      local stall_for_effects = false
+      local lowest_card = nil
       for _, v in ipairs(context.full_hand) do
         if v.config.center == G.P_CENTERS.c_base then
-          if pseudorandom('simipour') < G.GAME.probabilities.normal / card.ability.extra.odds then
-            stall_for_effects = true
-            v:set_ability(G.P_CENTERS.m_bonus, nil, true)
-            G.E_MANAGER:add_event(Event({
-              func = function()
-                v:juice_up()
-                return true
-              end
-            }))
+          if not lowest_card then
+            lowest_card = v
+          elseif v.base.nominal < lowest_card.base.nominal then
+            lowest_card = v
           end
         end
       end
-      if stall_for_effects then
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.CHIPS
-        }
+      if lowest_card then
+        lowest_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            lowest_card:juice_up()
+            return true
+          end
+        }))
       end
     end
   end,

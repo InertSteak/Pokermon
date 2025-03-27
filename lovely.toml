@@ -276,6 +276,7 @@ elseif name == "Pareidolia" then
   local asdf = find_joker("poke_Pareidolia")
   local dsaf = find_joker("panpour")
   local safd = find_joker("simipour")
+  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
 elseif name == "Four Fingers" then
   local asdf = find_joker("poke_Four_Fingers")
   local dsaf = find_joker("pansear")
