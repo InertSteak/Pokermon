@@ -214,7 +214,7 @@ jd_def["j_poke_probopass"] = {
                 end
             end
         end
-        card.joker_display_values.x_mult = math.max(card.ability.extra.Xmult_multi^count,1)
+        card.joker_display_values.Xmult = math.max(card.ability.extra.Xmult_multi^count,1)
     end
 }
 
