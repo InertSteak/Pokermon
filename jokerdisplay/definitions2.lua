@@ -219,6 +219,58 @@ jd_def["j_poke_igglybuff"] = {
 --	Azumarill
 --	Sudowoodo
 --	Politoed
+jd_def["j_poke_politoed"] = {
+    text = {
+        { text = "+",                              colour = G.C.MULT },
+        {ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT},
+    },
+    reminder_text = {
+        { text = "(" },
+        { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREY, 0.35},
+        { text = ")" }
+    },
+
+    extra_config = { colour = G.C.GREEN, scale = 0.3 },
+    calc_function = function(card)
+        local count = 0
+        local suit = card.ability.extra.suits[card.ability.extra.indice]
+        if G.play then
+            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+            if text ~= 'Unknown' then
+                for _, scoring_card in pairs(scoring_hand) do
+                    if scoring_card:is_suit(suit) then
+                        count = count +
+                            JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                    end
+                end
+            end
+        else
+            count = 3
+        end
+        card.joker_display_values.mult = count * card.ability.extra.mult
+        card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+        local suit = joker_card.ability.extra.suits[joker_card.ability.extra.indice]
+        local total = #find_pokemon_type("Water")
+        local cards = #scoring_hand
+        local pos
+        local remainder
+        local retriggers
+        for i=1, #scoring_hand do
+          if scoring_hand[i] == playing_card then
+            pos = i
+            break
+          end
+        end
+        retriggers = math.floor(total/cards)
+        remainder = total % cards
+        if pos <= remainder then retriggers = retriggers + 1 end
+        if held_in_hand then return 0 end
+            return (playing_card:is_suit(suit)) and (retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+}
+
 --	Hoppip
 --	Skiploom
 --	Jumpluff
@@ -292,6 +344,21 @@ jd_def["j_poke_umbreon"] = {
 end
 }
 --	Murkrow
+jd_def["j_poke_murkrow"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+    calc_function = function(card)
+        local dark = #find_pokemon_type("Dark")
+        card.joker_display_values.Xmult = 1 + (dark * card.ability.extra.Xmult)
+    end
+}
+
 --	Slowking
 jd_def["j_poke_slowking"] = {
     text = {
