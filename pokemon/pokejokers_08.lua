@@ -210,14 +210,6 @@ local remoraid={
   name = "remoraid",
   pos = {x = 1, y = 7},
   config = {extra = {retriggers = 1,rounds = 4, card_max = 4, cards = 0}},
-  loc_txt = {
-    name = "Remoraid",
-    text = {
-      "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
-      "cards scored each round",
-      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
@@ -252,13 +244,6 @@ local octillery={
   name = "octillery",
   pos = {x = 2, y = 7},
   config = {extra = {retriggers = 1, card_max = 8, cards = 0}},
-  loc_txt = {
-    name = "Octillery",
-    text = {
-      "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
-      "cards scored each round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
@@ -509,16 +494,6 @@ local phanpy={
   name = "phanpy",
   pos = {x = 9, y = 7},
   config = {extra = {Xmult = 1,Xmult_mod = 0.1,rounds = 5, Xmult2 = 1}},
-  loc_txt = {
-    name = "Phanpy",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult for each",
-      "{C:attention}consecutive{} played hand",
-      "with {C:attention}5{} scoring cards",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rounds, }}
@@ -565,15 +540,6 @@ local donphan={
   name = "donphan",
   pos = {x = 0, y = 8},
   config = {extra = {Xmult = 1, Xmult_mod = 0.2, Xmult2 = 1}},
-  loc_txt = {
-    name = "Donphan",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult for each",
-      "{C:attention}consecutive{} played hand",
-      "with {C:attention}5{} scoring cards",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod,}}

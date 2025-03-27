@@ -2294,6 +2294,21 @@ return {
                 "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
               }
             },
+            j_poke_remoraid = {
+              name = "Remoraid",
+              text = {
+                "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
+                "cards scored each round",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_octillery = {
+              name = "Octillery",
+              text = {
+                "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
+                "cards scored each round",
+              }
+            },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -2327,6 +2342,25 @@ return {
                     "gains {X:red,C:white}X#4#{} Mult {C:attention}instead{} for each scored {C:attention}6{}",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
+            },
+            j_poke_phanpy = {
+                name = "Phanpy",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult for each",
+                  "{C:attention}consecutive{} played hand",
+                  "with {C:attention}5{} scoring cards",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_donphan = {
+                name = "Donphan",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult for each",
+                  "{C:attention}consecutive{} played hand",
+                  "with {C:attention}5{} scoring cards",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                }
             },
             j_poke_porygon2 = {
                 name = 'Porygon2',
