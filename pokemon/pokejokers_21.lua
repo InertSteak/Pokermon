@@ -398,7 +398,7 @@ local golurk={
   end,
   rarity = "poke_safari",
   cost = 7,
-  stage = "Basic",
+  stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex5",
   perishable_compat = true,
