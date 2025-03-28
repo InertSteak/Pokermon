@@ -711,7 +711,9 @@ local lickitung={
         end
       end
       if context.other_card == first_jack or context.other_card == second_jack then
-        card.ability.extra.jacks_played = card.ability.extra.jacks_played + 1
+        if not context.blueprint then
+          card.ability.extra.jacks_played = card.ability.extra.jacks_played + 1
+        end
         return {
             x_mult = card.ability.extra.Xmult_multi,
             colour = G.C.RED,

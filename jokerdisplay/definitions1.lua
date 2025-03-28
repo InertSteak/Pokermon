@@ -2356,10 +2356,10 @@ jd_def["j_poke_lickitung"] = {
         local last_face = JokerDisplay.calculate_second_card(jacks)
         if #jacks == 1 then
             card.joker_display_values.x_mult = math.max(first_face and
-            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(first_face, scoring_hand))) or 1)
+            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(first_face, scoring_hand))) or 1, 1)
         else
         card.joker_display_values.x_mult = math.max(last_face and
-            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + ((JokerDisplay.calculate_card_triggers(first_face, scoring_hand) or 0)))) or 1)
+            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + ((JokerDisplay.calculate_card_triggers(first_face, scoring_hand) or 0)))) or 1, 1)
         end
 
     end
