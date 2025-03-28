@@ -11,14 +11,29 @@ for k, tbl in pairs(AnimatedPokemon) do
       SMODS.Atlas({
          key = k,
          path = k .. ".png",
-         px = 71,
-         py = 95
+         px = tbl.size and tbl.size.x or 71,
+         py = tbl.size and tbl.size.y or 95,
       }):register()
       SMODS.Atlas({
          key = k .. "_shiny",
          path = k .. "_shiny.png",
-         px = 71,
-         py = 95
+         px = tbl.size and tbl.size.x or 71,
+         py = tbl.size and tbl.size.y or 95,
+      }):register()
+   end
+   if tbl.soul and not tbl.soul_atlas then
+      tbl.soul_atlas = true
+      SMODS.Atlas({
+         key = k .. "_soul",
+         path = k .. "_soul.png",
+         px = tbl.soul_size and tbl.soul_size.x or tbl.size and tbl.size.x or 71,
+         py = tbl.soul_size and tbl.soul_size.y or tbl.size and tbl.size.y or 95,
+      }):register()
+      SMODS.Atlas({
+         key = k .. "_shiny_soul",
+         path = k .. "_shiny_soul.png",
+         px = tbl.soul_size and tbl.soul_size.x or tbl.size and tbl.size.x or 71,
+         py = tbl.soul_size and tbl.soul_size.y or tbl.size and tbl.size.y or 95,
       }):register()
    end
 end
@@ -28,8 +43,7 @@ NotAura_update_frame = function(dt, k, obj, jkr)
       local next_frame = false
       local next_frame_extra = false
       local anim = AnimatedPokemon[k]
-      if not anim.t then anim.t = 0 end
-      anim.t = anim.t + dt
+      anim.t = (anim.t or 0) + dt
       if anim.t > 1 / (anim.fps or 10) then
          anim.t = anim.t - 1 / (anim.fps or 10)
          next_frame = true
@@ -53,6 +67,11 @@ NotAura_update_frame = function(dt, k, obj, jkr)
          if loc >= anim.frames then loc = anim.start_frame or 0 end
          obj.pos.x = loc % (anim.frames_per_row or anim.frames)
          obj.pos.y = math.floor(loc / (anim.frames_per_row or anim.frames))
+         if obj.soul_pos then
+            obj.soul_pos.x = obj.pos.x
+            obj.soul_pos.y = obj.pos.y
+            obj.soul_pos.anim = true
+         end
       end
       if next_frame_extra then
          local loc = obj.pos.extra.y * (anim.extra.frames_per_row or anim.extra.frames) + obj.pos.extra.x
@@ -70,14 +89,24 @@ NotAura_update_frame = function(dt, k, obj, jkr)
 end
 
 if pokermon_config.poke_enable_animations then
-  local upd = Game.update
-  function Game:update(dt)
-     upd(self, dt)
-     for k, v in pairs(AnimatedPokemon) do
-        NotAura_update_frame(dt, k, G.P_CENTERS[k])
-     end
-     for _, v in pairs(AnimatedSingles) do
-        NotAura_update_frame(dt, v.config.center_key, v.config.center, v)
-     end
-  end
+   local upd = Game.update
+   function Game:update(dt)
+      upd(self, dt)
+      for k, v in pairs(AnimatedPokemon) do
+         NotAura_update_frame(dt, k, G.P_CENTERS[k])
+      end
+      for _, v in pairs(AnimatedSingles) do
+         NotAura_update_frame(dt, v.config.center_key, v.config.center, v)
+      end
+   end
+
+   local cd = Card.draw
+   function Card:draw(layer)
+      if self.config and self.config.center and self.config.center.soul_pos and self.config.center.soul_pos.anim then
+         if self.children.floating_sprite then
+            self.children.floating_sprite:set_sprite_pos(self.config.center.soul_pos)
+         end
+      end
+      cd(self, layer)
+   end
 end
