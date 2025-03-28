@@ -317,6 +317,25 @@ for _, file in ipairs(editions) do
   end
 end
 
+--Load enhancements
+local enhancements = NFS.getDirectoryItems(mod_dir.."enhancements")
+
+for _, file in ipairs(enhancements) do
+  sendDebugMessage ("The file is: "..file)
+  local enhancement, load_error = SMODS.load_file("enhancements/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_enhance = enhancement()
+    if curr_enhance.init then curr_enhance:init() end
+    
+    for i, item in ipairs(curr_enhance.list) do
+      item.discovered = not pokermon_config.pokemon_discovery
+      SMODS.Enhancement(item)
+    end
+  end
+end
+
 
 --Load vouchers
 local vouchers = NFS.getDirectoryItems(mod_dir.."vouchers")

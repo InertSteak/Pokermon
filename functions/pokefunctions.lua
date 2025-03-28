@@ -107,12 +107,16 @@ family = {
     {"pansage", "simisage"},
     {"pansear", "simisear"},
     {"panpour", "simipour"},
+    {"golett", "golurk"},
+    {"roggenrola", "boldore", "gigalith"},
     {"zorua", "zoroark"},
     {"deino", "zweilous", "hydreigon"},
     {"litleo", "pyroar"},
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
+    {"hisuian_qwilfish", "overqwil"},
     {"yamper","boltund"},
+    {"tarountula", "spidops"},
     {"fidough", "dachsbun"},
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
@@ -247,6 +251,7 @@ evolve = function(self, card, context, forced_key)
     local previous_rank = nil
     local previous_id = nil
     local previous_cards_scored = nil
+    local previous_hazards_drawn = nil
     local previous_upgrade = nil
     local previous_mega = nil
     
@@ -314,6 +319,11 @@ evolve = function(self, card, context, forced_key)
       previous_cards_scored = card.ability.extra.cards_scored
       previous_upgrade = card.ability.extra.upgrade
     end
+    
+    if card.ability.name == "tarountula" then
+      previous_hazards_drawn = card.ability.extra.hazards_drawn
+    end
+    
     
     if card.config.center.rarity == "poke_mega" then
       previous_mega = true
@@ -411,6 +421,13 @@ evolve = function(self, card, context, forced_key)
       end
       new_card.ability.extra.cards_scored = previous_cards_scored
       new_card.ability.extra.upgrade = previous_upgrade
+    end
+    
+    if previous_hazards_drawn then
+      if previous_hazards_drawn > 1 then
+        previous_hazards_drawn = previous_hazards_drawn % 2
+      end
+      new_card.ability.extra.hazards_drawn = previous_hazards_drawn
     end
     
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
@@ -1219,4 +1236,31 @@ poke_family_present = function(center)
     end
   end
   return false
+end
+
+
+-- code copied from function G.FUNCS.draw_from_deck_to_hand(e)
+poke_draw_one = function()
+  SMODS.drawn_cards = SMODS.drawn_cards or {}
+  draw_card(G.deck, G.hand, nil, nil, true)
+  -- double delay event so that it happens after all cards are drawn
+  G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+      G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+          if #SMODS.drawn_cards > 0 then
+            SMODS.calculate_context({first_hand_drawn = not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind,
+                                    hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards,
+                                    other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards})
+            SMODS.drawn_cards = {}
+            if G.GAME.facing_blind then G.GAME.current_round.any_hand_drawn = true end
+          end
+          return true
+        end
+      }))
+      return true
+    end
+  }))
 end

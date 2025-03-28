@@ -472,7 +472,7 @@ target = "game.lua"
 pattern = "function Game:update_round_eval(dt)"
 position = "after"
 payload = '''
-    if G.scry_view then G.scry_view.states.visible = false end
+    if G.scry_view then hide_scry_cardarea() end
 '''
 match_indent = true
 
@@ -482,7 +482,11 @@ match_indent = true
 target = '=[SMODS _ "src/utils.lua"]'
 pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
 position = "after"
-payload = "t[#t+1] = G.scry_view"
+payload = '''
+if G.scry_view and G.scry_view.cards then
+    t[#t+1] = G.scry_view
+end
+'''
 match_indent = true
 
 # Scry Functionality 3
@@ -676,3 +680,73 @@ offset = {x=(args.type == 'sell' and -1 or 1)*((args.card_width or 0) - 0.17 - a
 '''
 match_indent = true
 
+# Hazard negative logic
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "function CardArea:emplace(*"
+position = "after"
+payload = '''
+    if not card.debuff and card.ability and card.ability.card_limit and (self == G.hand) then
+        self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) + card.ability.card_limit
+        self.config.card_limit = math.max(0, self.config.real_card_limit)
+    end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "card:remove_from_area()"
+position = "before"
+payload = '''
+if not card.debuff and card.ability and card.ability.card_limit and (self == G.hand) then
+    self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) - card.ability.card_limit
+    self.config.card_limit = math.max(0, self.config.real_card_limit)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or 0)"
+position = "at"
+payload = """limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or card.ability and card.ability.card_limit or 0)"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability and old_center and old_center.config.bonus then
+    self.ability.bonus = self.ability.bonus - old_center.config.bonus
+end
+'''
+position = "after"
+payload = '''
+if self.ability and old_center and old_center.config.card_limit then
+    if self.area == G.hand then
+      if G.hand.config.real_card_limit then
+        G.hand.config.real_card_limit = G.hand.config.real_card_limit - self.ability.card_limit
+      end
+      G.hand.config.card_limit = G.hand.config.card_limit - self.ability.card_limit
+    end
+    self.ability.card_limit = self.ability.card_limit - old_center.config.card_limit
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability and old_center and old_center.config.bonus then
+    self.ability.bonus = self.ability.bonus - old_center.config.bonus
+end
+'''
+position = "after"
+payload = '''
+
+'''
+match_indent = true

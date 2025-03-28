@@ -428,6 +428,16 @@ return {
         },
         Enhanced = {
             --No enchanced cards? kind of surprising ngl
+            -- HA HA! Not anymore!
+
+            m_poke_hazard = {
+                name = "Hazard Card",
+                text = {
+                    "{C:attention}+1{} hand size",
+                    "no rank or suit",
+                    "removed at end of round",
+                },
+            }
         },
         Joker = {
             j_poke_bulbasaur = {
@@ -894,7 +904,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:mult}+#3#{} Mult if played hand",
-                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
+                    "contains a scoring {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
@@ -905,7 +915,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{X:red,C:white} X#1# {} Mult if played hand",
-                    "contains a {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
+                    "contains a scoring {C:attention}2{}, {C:attention}3{}, or {C:attention}4{}",
                 } 
             },
             j_poke_meowth = {
@@ -2215,6 +2225,24 @@ return {
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
             },
+            j_poke_pineco = {
+              name = "Pineco",
+              text = {
+                "{C:attention}Volatile Left{}",
+                "{C:chips}+#1#{} Chips and debuff self",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_forretress = {
+              name = "Forretress",
+              text = {
+                "Gains {C:chips}+#2#{} Chips when",
+                "a {C:attention}held{} {C:attention}Steel{} card triggers",
+                "{br:2}text needs to be here to work",
+                "{C:attention}Volatile Left{}",
+                "{C:chips}+#1#{} Chips and debuff self",
+              }
+            },
             j_poke_dunsparce = {
                 name = 'Dunsparce',
                 text = {
@@ -2231,6 +2259,16 @@ return {
                     "{br:4}ERROR - CONTACT STEAK",
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
+            },
+            j_poke_qwilfish = {
+                name = 'Qwilfish',
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips for each",
+                    "{C:attention}Hazard Card held{} in hand",
+                    "when hand is played",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
             },
             j_poke_scizor = {
                 name = 'Scizor',
@@ -2256,6 +2294,21 @@ return {
                 "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
               }
             },
+            j_poke_remoraid = {
+              name = "Remoraid",
+              text = {
+                "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
+                "cards scored each round",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_octillery = {
+              name = "Octillery",
+              text = {
+                "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
+                "cards scored each round",
+              }
+            },
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
@@ -2272,6 +2325,15 @@ return {
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
+            j_poke_skarmory = {
+                name = 'Skarmory',
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "{X:mult,C:white}X#3#{} Mult for each",
+                    "{C:attention}Hazard Card held{} in hand",
+                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
+                }
+            },
             j_poke_kingdra = {
                 name = 'Kingdra',
                 text = {
@@ -2280,6 +2342,25 @@ return {
                     "gains {X:red,C:white}X#4#{} Mult {C:attention}instead{} for each scored {C:attention}6{}",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:red,C:white}X#3#{C:inactive} Mult)",
                 } 
+            },
+            j_poke_phanpy = {
+                name = "Phanpy",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult for each",
+                  "{C:attention}consecutive{} played hand",
+                  "with {C:attention}5{} scoring cards",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_donphan = {
+                name = "Donphan",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult for each",
+                  "{C:attention}consecutive{} played hand",
+                  "with {C:attention}5{} scoring cards",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                }
             },
             j_poke_porygon2 = {
                 name = 'Porygon2',
@@ -2888,6 +2969,30 @@ return {
                     "Leftmost unenhanced card with the",
                     "lowest base chips in played hand",
                     "becomes a {C:attention}Bonus{} card",
+            j_poke_roggenrola = {
+                name = "Roggenrola",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Each {C:attention}Hazard Card held{} in hand",
+                    "gives {C:mult}+#3#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves after triggering Hazard Cards {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)",
+                }
+            },
+            j_poke_boldore = {
+                name = "Boldore",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Each {C:attention}Hazard Card held{} in hand",
+                    "gives {C:mult}+#3#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_gigalith = {
+                name = "Gigalith",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Each {C:attention}Hazard Card held{} in hand",
+                    "gives {C:mult}+#3#{} Mult and retriggers",
                 }
             },
             j_poke_zorua = {
@@ -3007,6 +3112,23 @@ return {
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "Adds {C:attention}triple{} this Joker's sell value to Mult",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+                }
+            },
+            j_poke_golett = {
+                name = "Golett",
+                text = {
+                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                  "Every {C:attention}fourth{} card {C:attention}held{} in hand",
+                  "gives {X:mult,C:white}X#3#{} Mult",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)"
+                }
+            },
+            j_poke_golurk = {
+                name = "Golurk",
+                text = {
+                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                  "Every {C:attention}third{} card {C:attention}held{} in hand",
+                  "gives {X:mult,C:white}X#3#{} Mult",
                 }
             },
             j_poke_zweilous = {
@@ -3158,6 +3280,46 @@ return {
                     "all cards held in hand to {C:spades}#2#{}",
                 }
             },
+            j_poke_hisuian_qwilfish = {
+                name = "Qwilfish (Hisuian)",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{C:inactive}(Evolves at {C:chips}+#4#{C:inactive} / +#5# Chips)",
+                }
+            },
+            j_poke_overqwil = {
+                name = "Overqwil",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Gain {C:chips}+#3#{} Chips when a",
+                    "{C:attention}Hazard Card{} is drawn",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:attention}Halve{} Chips after hand played",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
+            },
+            j_poke_tarountula = {
+                name = "Tarountula",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Create a {C:planet}Planet{} card for every",
+                    "{C:attention}#4# Hazard Cards held{} in hand",
+                    "at end of round",
+                    "{C:inactive}(Must have room)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_spidops = {
+                name = "Spidops",
+                text = {
+                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
+                    "Adds a {C:chips}Blue{} seal to every third",
+                    "{C:attention}Hazard Card held{} in hand",
+                    "at end of round",
+                }
+            },
             j_poke_fidough = {
                 name = "Fidough",
                 text = {
@@ -3218,7 +3380,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:chips}+#2#{} Chips if played hand",
-                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                    "contains a scoring {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
@@ -3229,7 +3391,7 @@ return {
                     "contains a {C:attention}Three of a kind{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:chips}+#2#{} Chips if played hand",
-                    "contains a {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
+                    "contains a scoring {C:attention}5{}, {C:attention}6{}, or {C:attention}7{}",
                 } 
             },
             j_poke_annihilape = {
@@ -4185,6 +4347,14 @@ return {
                     "{C:dark_edition}Make a Wish!{}",
                 },
             },
+            poke_hazards = {
+                name = "Hazards",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "add {C:attention}Hazard Cards{} to deck",
+                    "based on deck size",
+                },
+            },
         },
     },
     misc = {
@@ -4197,6 +4367,10 @@ return {
         challenge_names = {
             c_poke_poke_master = "Pokemon Master",
             c_poke_nuzlocke = "Nuzlocke",
+            c_poke_goodasgold = "Good As Gold",
+            c_poke_parenthood = "Parenthood",
+            c_poke_littlecup = "Little Cup",
+            c_poke_hammertime = "Hammertime"
         },
         dictionary = {
             k_energy = "Energy",
@@ -4316,7 +4490,8 @@ return {
             poke_illusion = "...?",
             poke_crack_ex = "CRACK!",
             poke_shake_ex = "Shake!",
-            poke_closed_ex = "Closed!"
+            poke_closed_ex = "Closed!",
+            poke_reload_ex = "Reload!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
@@ -4353,7 +4528,7 @@ return {
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
-           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"}
+           ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
         },
     }
 }

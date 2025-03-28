@@ -1,4 +1,56 @@
 -- Qwilfish 211
+local qwilfish = {
+  name = "qwilfish", 
+  pos = {x = 9, y = 5},
+  config = {extra = {hazard_ratio = 10, chips = 0, chip_mod = 3}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+      return {
+        message = localize('k_upgrade_ex'),
+        colour = G.C.CHIPS,
+        card = card
+      }
+    end
+  end,
+}
 -- Scizor 212
 local scizor={
   name = "scizor", 
@@ -158,14 +210,6 @@ local remoraid={
   name = "remoraid",
   pos = {x = 1, y = 7},
   config = {extra = {retriggers = 1,rounds = 4, card_max = 4, cards = 0}},
-  loc_txt = {
-    name = "Remoraid",
-    text = {
-      "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
-      "cards scored each round",
-      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
@@ -200,13 +244,6 @@ local octillery={
   name = "octillery",
   pos = {x = 2, y = 7},
   config = {extra = {retriggers = 1, card_max = 8, cards = 0}},
-  loc_txt = {
-    name = "Octillery",
-    text = {
-      "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
-      "cards scored each round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.card_max, center.ability.extra.card_max - center.ability.extra.cards}}
@@ -344,6 +381,69 @@ local mantine={
   end
 }
 -- Skarmory 227
+local skarmory = {
+  name = "skarmory", 
+  pos = {x = 5, y = 7},
+  config = {extra = {hazard_ratio = 10, Xmult_mod = 0.40}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    local hazard_count = 0
+    if G.hand and G.hand.cards and #G.hand.cards > 0 then
+      for i=1, #G.hand.cards do
+        if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+          hazard_count = hazard_count + 1
+        end
+      end 
+    end
+    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_mod, 1 + abbr.Xmult_mod * hazard_count}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local hazard_count = 0
+        if G.hand and G.hand.cards and #G.hand.cards > 0 then
+          for i=1, #G.hand.cards do
+            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+              hazard_count = hazard_count + 1
+            end
+          end 
+        end
+        local Xmult = 1 + card.ability.extra.Xmult_mod * hazard_count
+        if Xmult > 1 then
+          return{
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Houndour 228
 -- Houndoom 229
 -- Kingdra 230
@@ -394,16 +494,6 @@ local phanpy={
   name = "phanpy",
   pos = {x = 9, y = 7},
   config = {extra = {Xmult = 1,Xmult_mod = 0.1,rounds = 5, Xmult2 = 1}},
-  loc_txt = {
-    name = "Phanpy",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult for each",
-      "{C:attention}consecutive{} played hand",
-      "with {C:attention}5{} scoring cards",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rounds, }}
@@ -450,15 +540,6 @@ local donphan={
   name = "donphan",
   pos = {x = 0, y = 8},
   config = {extra = {Xmult = 1, Xmult_mod = 0.2, Xmult2 = 1}},
-  loc_txt = {
-    name = "Donphan",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult for each",
-      "{C:attention}consecutive{} played hand",
-      "with {C:attention}5{} scoring cards",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod,}}
@@ -825,5 +906,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {scizor, corsola, remoraid, octillery, delibird, mantine, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
 }

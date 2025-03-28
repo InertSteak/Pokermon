@@ -1,13 +1,240 @@
 local jd_def = JokerDisplay.Definitions
 
 
-
-jd_def["j_poke_probopass"] = {
+--	Turtwig
+--	Grotle
+--	Torterra
+--	Chimchar
+--	Monferno
+--	Infernape
+--	Piplup
+--	Prinplup
+--	Empoleon
+--	Starly
+--	Staravia
+--	Staraptor
+--	Bidoof
+--	Bibarel
+--	Kricketot
+--	Kricketune
+--	Shinx
+--	Luxio
+--	Luxray
+--	Budew
+jd_def["j_poke_budew"] = {
     text = {
         {
             border_nodes = {
                 { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Roserade
+--	Cranidos
+--	Rampardos
+--	Shieldon
+--	Bastiodon
+--	Burmy
+--	Wormadam
+--	Mothim
+--	Combee
+--	Vespiquen
+--	Pachirisu
+--	Buizel
+--	Floatzel
+--	Cherubi
+--	Cherrim
+--	Shellos
+--	Gastrodon
+--	Ambipom
+--	Drifloon
+--	Drifblim
+--	Buneary
+--	Lopunny
+--	Mismagius
+jd_def["j_poke_mismagius"] = { 
+text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+},
+text_config = { colour = G.C.CHIPS },
+}
+
+--	Honchkrow
+jd_def["j_poke_honchkrow"] = {
+    reminder_text = {
+        { text = "(" },
+        { ref_table = "card.joker_display_values", ref_value = "count",          colour = G.C.ORANGE },
+        { text = "x" },
+        { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREEN },
+        { text = ")" },
+    },
+    calc_function = function(card)
+        local count = 0
+        if G.jokers then
+            for _, joker_card in ipairs(G.jokers.cards) do
+                if joker_card.config.center.rarity and is_type(joker_card, "Dark") then
+                    count = count + 1
+                end
+            end
+        end
+        card.joker_display_values.count = count
+        card.joker_display_values.localized_text = "Dark"
+    end,
+    mod_function = function(card, mod_joker)
+        return { x_mult = (is_type(card, "Dark") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+    end
+}
+--	Glameow
+--	Purugly
+--	Chingling
+--	Stunky
+--	Skuntank
+--	Bronzor
+--	Bronzong
+--	Bonsly
+jd_def["j_poke_bonsly"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Mime Jr.
+jd_def["j_poke_mimejr"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Happiny
+jd_def["j_poke_happiny"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Chatot
+--	Spiritomb
+--	Gible
+--	Gabite
+--	Garchomp
+--	Munchlax
+jd_def["j_poke_munchlax"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Riolu
+jd_def["j_poke_riolu"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Lucario
+--	Hippopotas
+--	Hippowdon
+--	Skorupi
+--	Drapion
+--	Croagunk
+--	Toxicroak
+--	Carnivine
+--	Finneon
+--	Lumineon
+
+--	Mantyke
+jd_def["j_poke_mantyke"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
+--	Snover
+--	Abomasnow
+--	Weavile
+--	Magnezone
+--	Lickilicky
+--	Rhyperior
+jd_def["j_poke_rhyperior"] = {
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    
+        -- Find the first Stone Card in the scoring hand
+        local rhytriggers = #find_pokemon_type("Earth")
+        -- Check if the current playing card is the first Stone Card
+        if held_in_hand then return 0 end
+            return playing_card.ability.effect == "Stone Card" and (rhytriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+
+    }
+
+--	Tangrowth
+--	Electivire
+jd_def["j_poke_electivire"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+
+calc_function = function(card)
+    card.joker_display_values.Xmult =  1 + card.ability.extra.Xmult_mod * card.sell_cost
+end
+
+}
+
+--	Magmortar
+--	Togekiss
+--	Yanmega
+--	Leafeon
+--	Glaceon
+--	Gliscor
+--	Mamoswine
+--	Porygon-Z
+--	Gallade
+--	Probopass
+jd_def["j_poke_probopass"] = { 
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
             },
         },
     },
@@ -23,6 +250,29 @@ jd_def["j_poke_probopass"] = {
                 end
             end
         end
-        card.joker_display_values.x_mult = math.max(card.ability.extra.Xmult_multi^count,1)
+        card.joker_display_values.Xmult = math.max(card.ability.extra.Xmult_multi^count,1)
     end
-    }
+}
+
+--	Dusknoir
+--	Froslass
+--	Rotom
+--	Uxie
+--	Mesprit
+--	Azelf
+--	Dialga
+--	Palkia
+--	Heatran
+--	Regigigas
+--	Giratina
+--	Cresselia
+--	Phione
+--	Manaphy
+--	Darkrai
+--	Shaymin
+--	Arceus
+
+
+
+
+

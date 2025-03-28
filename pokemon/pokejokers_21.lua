@@ -309,7 +309,130 @@ local chandelure={
 -- Mienshao 620
 -- Druddigon 621
 -- Golett 622
+local golett={
+  name = "golett",
+  pos = {x = 2, y = 9},
+  config = {extra = {hazard_ratio = 10, interval = 4, Xmult_multi = 1.4, rounds = 5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    -- just to shorten function
+    local abbr = center.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    
+    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_multi, abbr.rounds}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and #G.hand.cards > card.ability.extra.interval then
+      local score = nil
+      for i = card.ability.extra.interval, #G.hand.cards, card.ability.extra.interval do
+        if G.hand.cards[i] == context.other_card then
+          score = true
+          break
+        end
+      end
+      if score then
+        if context.other_card.debuff then
+            return {
+                message = localize('k_debuffed'),
+                colour = G.C.RED,
+                card = card,
+            }
+        else
+            return {
+                x_mult = card.ability.extra.Xmult_multi,
+                card = card
+            }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_golurk")
+  end,
+}
 -- Golurk 623
+local golurk={
+  name = "golurk",
+  pos = {x = 3, y = 9},
+  config = {extra = {hazard_ratio = 10, interval = 3, Xmult_multi = 1.6}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    -- just to shorten function
+    local abbr = center.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    
+    local to_add = math.floor(52 / abbr.hazard_ratio)
+    if G.playing_cards then
+      local count = #G.playing_cards
+      for _, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count - 1
+        end
+      end
+      to_add = math.floor(count / abbr.hazard_ratio)
+    end
+    
+    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_multi}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      poke_add_hazards(card.ability.extra.hazard_ratio)
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and #G.hand.cards > card.ability.extra.interval then
+      local score = nil
+      for i = card.ability.extra.interval, #G.hand.cards, card.ability.extra.interval do
+        if G.hand.cards[i] == context.other_card then
+          score = true
+          break
+        end
+      end
+      if score then
+        if context.other_card.debuff then
+            return {
+                message = localize('k_debuffed'),
+                colour = G.C.RED,
+                card = card,
+            }
+        else
+            return {
+                x_mult = card.ability.extra.Xmult_multi,
+                card = card
+            }
+        end
+      end
+    end
+  end,
+}
 -- Pawniard 624
 -- Bisharp 625
 -- Bouffalant 626
@@ -318,5 +441,5 @@ local chandelure={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure},
+        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk},
 }
