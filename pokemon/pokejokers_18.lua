@@ -111,22 +111,24 @@ local simisear = {
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) and G.GAME.current_round.hands_played == 0 then
         card.ability.extra.destroy = true
-        return {
-          extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
-            G.E_MANAGER:add_event(Event({
-              trigger = 'before',
-              delay = 0.0,
-              func = function()
-                local card_type = 'Tarot'
-                local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, "c_empress")
-                _card:add_to_deck()
-                G.consumeables:emplace(_card)
-                G.GAME.consumeable_buffer = 0
-                return true
-              end
-            }))
-          end},
-        }
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          return {
+            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local card_type = 'Tarot'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, "c_empress")
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end},
+          }
+        end
       end
       if context.after and card.ability.extra.destroy and not context.blueprint then
         card.ability.extra.destroy = nil
