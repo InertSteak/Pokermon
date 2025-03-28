@@ -528,7 +528,7 @@ local furret={
 local hoothoot={
   name = "hoothoot",
   pos = {x = 1, y = 1},
-  config = {extra = {scry = 3, rounds = 4}},
+  config = {extra = {scry = 2, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
@@ -565,7 +565,7 @@ local hoothoot={
 local noctowl={
   name = "noctowl",
   pos = {x = 2, y = 1},
-  config = {extra = {scry = 5}},
+  config = {extra = {scry = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
@@ -605,10 +605,10 @@ local ledyba={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * math.floor(deck_count/4)}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * math.floor(deck_count/5)}}
   end,
   rarity = 1,
-  cost = 5,
+  cost = 4,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex2",
@@ -619,7 +619,7 @@ local ledyba={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/4)}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/5)}}, 
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
         }
@@ -636,10 +636,10 @@ local ledian={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult * math.floor(deck_count/2)}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult * math.floor(deck_count/3)}}
   end,
   rarity = 2,
-  cost = 6,
+  cost = 5,
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex2",
@@ -650,7 +650,7 @@ local ledian={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/2)}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/3)}}, 
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/2)
         }
@@ -668,7 +668,7 @@ local spinarak={
     return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, center.ability.extra.chips2}}
   end,
   rarity = 1,
-  cost = 5,
+  cost = 4,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex2",
@@ -702,7 +702,7 @@ local ariados={
     return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.chips2}}
   end,
   rarity = 2,
-  cost = 6,
+  cost = 5,
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex2",

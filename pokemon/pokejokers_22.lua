@@ -4,7 +4,7 @@
 local deino={
   name = "deino",
   pos = {x = 13, y = 9},
-  config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 10},
+  config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
@@ -37,7 +37,7 @@ local deino={
 local zweilous={
   name = "zweilous",
   pos = {x = 0, y = 10},
-  config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 15},
+  config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}

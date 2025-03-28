@@ -207,7 +207,7 @@ jd_def["j_poke_ledyba"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-    card.joker_display_values.mult = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+    card.joker_display_values.mult = card.ability.extra.mult * math.floor(#G.deck.cards/5)
     end
 
 }
@@ -220,7 +220,7 @@ text = {
 },
 text_config = { colour = G.C.MULT },
 calc_function = function(card)
-card.joker_display_values.mult = card.ability.extra.mult * math.floor(#G.deck.cards/2)
+card.joker_display_values.mult = card.ability.extra.mult * math.floor(#G.deck.cards/3)
 end
 
 }

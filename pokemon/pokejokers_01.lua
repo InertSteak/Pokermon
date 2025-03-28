@@ -722,7 +722,7 @@ local mega_beedrill = {
   name = "mega_beedrill", 
   pos = { x = 8, y = 0 },
   soul_pos = { x = 9, y = 0 },
-  config = {extra = {chips = 800, rounds = 1}},
+  config = {extra = {chips = 640, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips}}

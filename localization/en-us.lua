@@ -2022,7 +2022,7 @@ return {
             j_poke_ledyba = {
                 name = "Ledyba",
                 text = {
-                  "{C:mult}+#1#{} Mult for every {C:attention}4{} cards",
+                  "{C:mult}+#1#{} Mult for every {C:attention}5{} cards",
                   "remaining in deck",
                   "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                   "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
@@ -2031,7 +2031,7 @@ return {
             j_poke_ledian = {
                 name = "Ledian",
                 text = {
-                  "{C:mult}+#1#{} Mult for every {C:attention}2{} cards",
+                  "{C:mult}+#1#{} Mult for every {C:attention}3{} cards",
                   "remaining in deck",
                   "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
