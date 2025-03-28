@@ -529,6 +529,235 @@ position = "at"
 payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
 match_indent = true
 
+# Unown Functionality
+# Hide Unown as ? Rank in Deck Preview
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''
+if SUITS[v.base.suit][v.base.value] then
+    table.insert(SUITS[v.base.suit][v.base.value], v)
+end
+rank_counts[v.base.value] = (rank_counts[v.base.value] or 0) + 1
+'''
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then
+    table.insert(SUITS['poke_Unown']['poke_UZ?'], v)
+    rank_counts['poke_UZ?'] = (rank_counts['poke_UZ?'] or 0) + 1
+else
+    if SUITS[v.base.suit][v.base.value] then
+        table.insert(SUITS[v.base.suit][v.base.value], v)
+    end
+    rank_counts[v.base.value] = (rank_counts[v.base.value] or 0) + 1
+end
+'''
+match_indent = true
+overwrite = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 1
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "local mod_ace_tally = 0"
+position = "after"
+payload = '''
+local unown_tally = 0
+'''
+match_indent = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 2
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "if v.base.value and not SMODS.Ranks[v.base.value].face and card_id ~= 14 then"
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then
+    unown_tally = unown_tally + 1
+elseif v.base.value and not SMODS.Ranks[v.base.value].face and card_id ~= 14 then
+'''
+match_indent = true
+overwrite = true
+
+# Hide Unown as ? Rank in Full Deck View Pt 3
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''
+if v.base.value then rank_tallies[v.base.value] = rank_tallies[v.base.value] + 1 end
+if v.base.value and not v.debuff then mod_rank_tallies[v.base.value] = mod_rank_tallies[v.base.value] + 1 end
+'''
+position = "at"
+payload = '''
+if v.base.suit == 'poke_Unown' then rank_tallies['poke_UZ?'] = rank_tallies['poke_UZ?'] + 1
+elseif v.base.value then rank_tallies[v.base.value] = rank_tallies[v.base.value] + 1 end
+if v.base.suit == 'poke_Unown' and not v.debuff then mod_rank_tallies['poke_UZ?'] = mod_rank_tallies['poke_UZ?'] + 1
+elseif v.base.value and not v.debuff then mod_rank_tallies[v.base.value] = mod_rank_tallies[v.base.value] + 1 end
+'''
+match_indent = true
+overwrite = true
+
+# Specific Unown abilities (I V X L ? !)
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "-- TARGET: main scoring on played cards"
+position = "after"
+payload = '''
+if card.base and card.base.suit == 'poke_Unown' then
+    ret.unown_effect = calculate_Unown_playing_card(card, context)
+end
+'''
+match_indent = true
+
+# Unown Always scores
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "if (G.P_SEALS[card.seal or {}] or {}).always_scores then return true end"
+position = "after"
+payload = "if card.base and card.base.suit == 'poke_Unown' then return true end"
+match_indent = true
+
+# Unown Unlocking when found randomly
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "function Card:add_to_deck(from_debuff)"
+position = "after"
+payload = "if self.base and self.base.suit == 'poke_Unown' then G.GAME.Unown = true end"
+match_indent = true
+
+# Unown Deck - convert normal cards
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "local _r, _s = SMODS.Ranks[v.value].card_key, SMODS.Suits[v.suit].card_key"
+position = "after"
+payload = "if self.GAME.starting_params.unown_cards then _r, _s = unown_convert_to_unown(_r, _s) end"
+match_indent = true
+
+# Unown Deck - remove "face" Unowns
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end"
+position = "at"
+payload = '''
+if self.GAME.starting_params.unown_cards and self.GAME.starting_params.no_faces then keep = keep and _r ~= 'poke_UJ' and _r ~= 'poke_UQ' and _r ~= 'poke_UK'
+elseif self.GAME.starting_params.no_faces and SMODS.Ranks[v.value].face then keep = false end
+'''
+match_indent = true
+
+# Unown Atlas Fix
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = 't_s = Sprite(0, 0, 0.3, 0.3, G.ASSET_ATLAS[("ui_" .. (G.SETTINGS.colourblind_option and "2" or "1"))], SMODS.Suits[v].ui_pos)'
+position = "at"
+payload = '''
+t_s = Sprite(0, 0, 0.3, 0.3,
+      G.ASSET_ATLAS[SMODS.Suits[v]["ui_atlas"]] or
+      G.ASSET_ATLAS[("ui_" .. (G.SETTINGS.colourblind_option and "2" or "1"))], SMODS.Suits[v].ui_pos)
+'''
+match_indent = true
+overwrite = true
+
+# Unown shiny chance
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.ability = self.ability or {}"
+position = "after"
+payload = "if self.ability.shiny == nil then self.ability.shiny = pseudorandom('unown_shiny') < 1/100 end"
+match_indent = true
+
+# Unown Shiny options
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "local _atlas, _pos = get_front_spriteinfo(_front)"
+position = "after"
+payload = '''
+if _front.suit == 'poke_Unown' and self.ability and self.ability.shiny then
+   _pos = {x = _pos.x, y = _pos.y + 6}
+end
+'''
+match_indent = true
+
+# Unown Floating Sprite - Card:set_sprites
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "self.children.front:set_role({major = self, role_type = 'Glued', draw_major = self})"
+position = "after"
+payload = '''
+if _front.soul_pos then
+   if self.children.floating_sprite then self.children.floating_sprite:remove() end
+   local temp_pos = {x = _front.soul_pos.x, y = _front.soul_pos.y}
+   if _front.suit == 'poke_Unown' and self.ability and self.ability.shiny then
+      temp_pos.y = temp_pos.y + 6
+   end
+   self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_front.soul_atlas] or _atlas, temp_pos)
+   self.children.floating_sprite.role.draw_major = self
+   self.children.floating_sprite.states.hover.can = false
+   self.children.floating_sprite.states.click.can = false
+end
+'''
+match_indent = true
+
+# Unown Floating Sprite - Allow Draw (card_draw.lua) pt 1
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if self.config.center.soul_pos and (self.config.center.discovered or self.bypass_discovery_center) then"
+position = "at"
+payload = "if (self.config.center.soul_pos and (self.config.center.discovered or self.bypass_discovery_center)) or (self.ability.effect ~= 'Stone Card' and self.config.card and self.config.card.soul_pos) then"
+match_indent = true
+overwrite = true
+
+# Unown Floating Sprite - Allow Draw (card_draw.lua) pt 2
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if type(self.config.center.soul_pos.draw) == 'function' then"
+position = "at"
+payload = "if self.config.center.soul_pos and type(self.config.center.soul_pos.draw) == 'function' then"
+match_indent = true
+overwrite = true
+
+# Unown ?! ability description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Enhanced' then"
+position = "before"
+payload = '''
+if card and card.base and card.base.value == 'poke_UZ?' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_question'}
+end
+if card and card.base and card.base.value == 'poke_UZ!' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_exclaim'}
+end
+'''
+match_indent = true
+
+# Unown ?! ability description
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Booster' then "
+position = "before"
+payload = '''
+if _c.name ~= 'Stone Card' and card and card.base and card.base.value == 'poke_UZ?' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_question'}
+end
+if _c.name ~= 'Stone Card' and card and card.base and card.base.value == 'poke_UZ!' then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_unown_exclaim'}
+end
+'''
+match_indent = true
 
 # Misdreavus check for over-drained chips (in ui creation)
 [[patches]]
@@ -554,6 +783,51 @@ if loc_vars.nominal_chips then
 end
 '''
 match_indent = true
+
+# Replace start menu card with Unown R
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)"
+position = "at"
+payload = "local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.poke_Unown_poke_UR, G.P_CENTERS.c_base)"
+match_indent = true
+overwrite = true
+
+# Replace start menu logo with Pokermon
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+G.SPLASH_LOGO = Sprite(0, 0, 
+        13*SC_scale, 
+        13*SC_scale*(G.ASSET_ATLAS["balatro"].py/G.ASSET_ATLAS["balatro"].px),
+        G.ASSET_ATLAS["balatro"], {x=0,y=0})
+
+    G.SPLASH_LOGO:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = {x=0,y=0}
+    })
+'''
+position = "at"
+payload = '''
+G.SPLASH_LOGO = Sprite(0, 0, 
+    15*SC_scale, 
+    15*SC_scale*(G.ASSET_ATLAS["poke_logo"].py/G.ASSET_ATLAS["poke_logo"].px),
+    G.ASSET_ATLAS["poke_logo"], {x=0,y=0})
+
+    G.SPLASH_LOGO:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = {x=0,y=0.2}
+    })
+'''
+match_indent = true
+overwrite = true
+
 
 # Misdreavus add nominal drain (functionality)
 [[patches]]

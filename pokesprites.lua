@@ -11,6 +11,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "logo",
+    path = "Pokermon.png",
+    px = 389,
+    py = 216
+})
+
+SMODS.Atlas({
     key = "Pokedex1",
     path = "Pokedex1.png",
     px = 71,
@@ -283,6 +290,34 @@ SMODS.Atlas({
     path = "shinyaltjirachi.png",
     px = 71,
     py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "Unown",
+    path = "UnownDeck.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "Unown_hc",
+    path = "UnownDeck.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "pokeui_assets",
+    path = "pokeui_assets.png",
+    px = 18,
+    py = 18
+}):register()
+
+SMODS.Atlas({
+    key = "pokeui_assets_hc",
+    path = "pokeui_assets.png",
+    px = 18,
+    py = 18
 }):register()
 
 --Custom sounds
