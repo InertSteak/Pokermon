@@ -731,6 +731,7 @@ local rapidash={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        card.ability.extra.chip_mod = card.ability.extra.chip_mod + 1
         return {
             message = localize('k_upgrade_ex'),
             colour = G.C.CHIPS,

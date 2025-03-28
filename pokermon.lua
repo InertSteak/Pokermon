@@ -331,6 +331,25 @@ for _, file in ipairs(editions) do
   end
 end
 
+--Load enhancements
+local enhancements = NFS.getDirectoryItems(mod_dir.."enhancements")
+
+for _, file in ipairs(enhancements) do
+  sendDebugMessage ("The file is: "..file)
+  local enhancement, load_error = SMODS.load_file("enhancements/"..file)
+  if load_error then
+    sendDebugMessage ("The error is: "..load_error)
+  else
+    local curr_enhance = enhancement()
+    if curr_enhance.init then curr_enhance:init() end
+    
+    for i, item in ipairs(curr_enhance.list) do
+      item.discovered = not pokermon_config.pokemon_discovery
+      SMODS.Enhancement(item)
+    end
+  end
+end
+
 
 --Load vouchers
 local vouchers = NFS.getDirectoryItems(mod_dir.."vouchers")
@@ -445,15 +464,25 @@ for _, file in ipairs(pchallenges) do
   end
 end 
 
---Add Rapidash's shortcut effect 2/2
 --Hook SMODS.find_card to force it to return find_joker instead (EXTREMELY CURSED)
 
 local scuffed_af = SMODS.find_card
 function SMODS.find_card(key, count_debuffed)
-	if key == "j_shortcut" and (G.GAME.current_round.hands_played or 0) == 0 then
+	if key == "j_shortcut" then
 		local bruh = find_joker("Shortcut")
 		return bruh
-	end	
+  -- I'll join in on this cursed party
+  elseif key == "j_four_fingers" then
+    local ret = scuffed_af("j_poke_pansear")
+    if #ret > 0 then return ret end
+    ret = scuffed_af("j_poke_simisear")
+    if #ret > 0 then return ret end
+  elseif key == "j_pareidolia" then
+    local ret = scuffed_af("j_poke_panpour")
+    if #ret > 0 then return ret end
+    ret = scuffed_af("j_poke_simipour")
+    if #ret > 0 then return ret end
+  end
 	return scuffed_af(key, count_debuffed)
 end
 

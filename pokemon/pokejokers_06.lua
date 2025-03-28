@@ -277,7 +277,7 @@ local typhlosion = {
 local totodile = {
   name = "totodile",
   pos = {x = 6, y = 0},
-  config = {extra = {chips = 0, chip_mod = 3, hands = 1, rounds = 5}},
+  config = {extra = {chips = 0, chip_mod = 4, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
@@ -336,7 +336,7 @@ local totodile = {
 local croconaw = {
   name = "croconaw",
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 6, hands = 1, rounds = 5}},
+  config = {extra = {chips = 0, chip_mod = 7, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
@@ -1083,7 +1083,7 @@ local natu = {
 local xatu = {
   name = "xatu",
   pos = {x = 6, y = 2},
-  config = {levels = {}, extra = {level_amt = 2}},
+  config = {levels = {}, extra = {level_amt = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.level_amt}}

@@ -977,13 +977,13 @@ local spearow={
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Colorless",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
+    if context.first_hand_drawn and not context.blueprint then
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.before and card.ability.extra.upgrade then
         card.ability.extra.upgrade = false
         card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
@@ -1018,13 +1018,13 @@ local fearow={
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Colorless",
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
+    if context.first_hand_drawn and not context.blueprint then
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.before and card.ability.extra.upgrade then
         if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
           card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold

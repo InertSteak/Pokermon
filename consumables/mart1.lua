@@ -524,7 +524,8 @@ local transformation = {
     end
     local highest = get_highest_evo(choice)
     if highest and type(highest) == "string" then
-      local forced_key = "j_poke_"..highest
+      local prefix = choice.config.center.poke_custom_prefix or "poke"
+      local forced_key = "j_"..prefix.."_"..highest
       local context = {}
       evolve(choice, choice, context, forced_key)
     end
