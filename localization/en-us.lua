@@ -2969,6 +2969,8 @@ return {
                     "Leftmost unenhanced card with the",
                     "lowest base chips in played hand",
                     "becomes a {C:attention}Bonus{} card",
+                }
+            },
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
