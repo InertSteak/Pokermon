@@ -2719,6 +2719,35 @@ return {
                     "{C:attention}destroy{} it",
                 }
             },
+            j_poke_shinx = {
+                name = 'Shinx',
+                text = {
+                    "{C:green}#1# in #2#{} cards are drawn face down",
+                    "Earn {C:money}$#3#{} for each",
+                    "scored face down card",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)"
+                }
+            },
+            j_poke_luxio = {
+                name = 'Luxio',
+                text = {
+                    "{C:green}#1# in #2#{} cards are drawn face down",
+                    "Earn {C:money}$#3#{} and {C:mult}+#4#{} Mult for each",
+                    "scored face down card",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#5#{C:inactive,s:0.8} rounds)"
+                }
+            },
+            j_poke_luxray = {
+                name = 'Luxray',
+                text = {
+                    "{C:green}#1# in #2#{} cards are drawn face down",
+                    "Earn {C:money}$#3#{} and {X:red,C:white}X#4#{} Mult for each",
+                    "scored face down card",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Hand type preview treats",
+                    "face down cards as face up"
+                }
+            },
             j_poke_buizel = {
                 name = 'Buizel',
                 text = {
