@@ -489,6 +489,7 @@ poke_add_hazards = function(ratio, flat)
       front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
       center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
     })
+    SMODS.recalc_debuff(hazards[#hazards])
   end
   playing_card_joker_effects(hazards)
 end
