@@ -652,7 +652,15 @@ local stantler={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
-        local chips = card.ability.extra.chips * context.scoring_hand[1].base.nominal
+        local highest_rank = nil
+        for k, v in pairs(context.scoring_hand) do
+          if v.base.nominal and not highest_rank then
+            highest_rank = v.base.nominal
+          elseif v.base.nominal and highest_rank and v.base.nominal > highest_rank then
+            highest_rank = v.base.nominal
+          end
+        end
+        local chips = card.ability.extra.chips * highest_rank
         if G.GAME.current_round.hands_left == 0 then
           chips = chips * 2
         end

@@ -258,8 +258,7 @@ end
 '''
 match_indent = true
 
-# Rapidash Shortcut effect 1/2
-# Make the game think that Rapidash is Shortcut for find_joker
+# Shortcut Pareidolia Four Fingers effects
 [[patches]]
 [patches.pattern]
 target = 'functions/misc_functions.lua'
@@ -268,10 +267,9 @@ position = 'after'
 payload = '''  
 if name == "Shortcut" then
   local asdf = find_joker("poke_Shortcut")
-  local fdsa = (G.GAME.current_round.hands_played or 0) == 0 and find_joker("rapidash") or {}
   local dsaf = find_joker("pansage")
   local safd = find_joker("simisage")
-  return (next(asdf) and asdf) or (next(fdsa) and fdsa) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
+  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
 elseif name == "Pareidolia" then
   local asdf = find_joker("poke_Pareidolia")
   local dsaf = find_joker("panpour")

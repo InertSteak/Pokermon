@@ -450,7 +450,6 @@ for _, file in ipairs(pchallenges) do
   end
 end 
 
---Add Rapidash's shortcut effect 2/2
 --Hook SMODS.find_card to force it to return find_joker instead (EXTREMELY CURSED)
 
 local scuffed_af = SMODS.find_card

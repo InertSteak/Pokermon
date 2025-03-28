@@ -1143,7 +1143,7 @@ return {
             j_poke_ponyta = {
                 name = "Ponyta",
                 text = {
-                    "Gains {C:chips}#2#{} Chips if played", 
+                    "Gains {C:chips}+#2#{} Chips if played", 
                     "hand contains a {C:attention}Straight{}",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +60 Chips)",
                 } 
@@ -1151,10 +1151,9 @@ return {
             j_poke_rapidash = {
                 name = "Rapidash",
                 text = {
-                    "Gains {C:chips}#2#{} Chips if played", 
+                    "Gains {C:chips}+#2#{} Chips if played", 
                     "hand contains a {C:attention}Straight{}",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "Applies {C:attention}Shortcut{} for first hand",
+                    "Chip increase goes up by {C:chips}+1{} each time",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 } 
             },
@@ -2115,7 +2114,7 @@ return {
             j_poke_xatu = {
                 name = 'Xatu',
                 text = {
-                    "{C:planet}Planet{} cards give {C:attention}#1#{} extra levels",
+                    "{C:planet}Planet{} cards give {C:attention}#1#{} extra level",
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
@@ -2375,10 +2374,9 @@ return {
             j_poke_stantler = {
                 name = "Stantler",
                 text = {
-                  "{C:chips}+#1#{} Chips times first scoring card's",
-                  "{C:attention}base{} chips if played hand",
-                  "contains a {C:attention}Pair{}",
-                  "{C:attention}Doubled{} on {C:attention}final hand{} of round",
+                  "Gives {C:chips}+#1#{} Chips times {C:attention}highest{} scoring",
+                  "rank if played hand contains a {C:attention}Pair{}",
+                  "Chips {C:attention}Doubled{} on {C:attention}final hand{} of round",
                 }
             },
             j_poke_tyrogue = {
