@@ -542,13 +542,14 @@ local hoothoot={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view then
+      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
         local chips = poke_total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+          message_card = context.other_card,
           colour = G.C.CHIPS,
           chip_mod = chips,
-          card = context.other_card,
+          card = card,
         }
       end
     end
@@ -579,13 +580,14 @@ local noctowl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view then
+      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
         local chips = poke_total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+          message_card = context.other_card,
           colour = G.C.CHIPS,
           chip_mod = chips,
-          card = context.other_card,
+          card = card,
         }
       end
     end
