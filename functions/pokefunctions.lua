@@ -1142,7 +1142,10 @@ volatile_active = function(self, card, direction)
 end
 
 poke_total_chips = function(card)
-  local total_chips = (card.base.nominal) + (card.ability.bonus) + (card.ability.perma_bonus or 0) 
+  local total_chips = (card.ability.bonus) + (card.ability.perma_bonus or 0)
+  if card.ability.effect ~= 'Stone Card' and not card.config.center.replace_base_card then
+    total_chips = total_chips + (card.base.nominal)
+  end
   if card.edition then
     total_chips = total_chips + (card.edition.chips or 0)
   end
