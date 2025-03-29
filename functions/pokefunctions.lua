@@ -99,6 +99,7 @@ family = {
     {"mudkip", "marshtomp", "swampert"},
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
+    {"shinx", "luxio", "luxray"},
     {"buizel", "floatzel"},
     {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
