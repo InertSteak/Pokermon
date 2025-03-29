@@ -764,6 +764,8 @@ local pidgey={
       if context.joker_main then
         local first_rank = nil
         local second_rank = nil
+        local first_suit = nil
+        local second_suit = nil
         local has_wild = nil
         for k, v in pairs(context.scoring_hand) do
           if not first_rank and v:get_id() > 0 then
@@ -771,10 +773,16 @@ local pidgey={
           elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
             second_rank = v:get_id()
           end
+
+          if not first_suit and not SMODS.has_no_suit(v) then
+            first_suit = v.base.suit
+          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
+            second_suit = v.base.suit
+          end
           
           if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
@@ -805,6 +813,8 @@ local pidgeotto={
       if context.joker_main then
         local first_rank = nil
         local second_rank = nil
+        local first_suit = nil
+        local second_suit = nil
         local has_wild = nil
         for k, v in pairs(context.scoring_hand) do
           if not first_rank and v:get_id() > 0 then
@@ -812,10 +822,16 @@ local pidgeotto={
           elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
             second_rank = v:get_id()
           end
+
+          if not first_suit and not SMODS.has_no_suit(v) then
+            first_suit = v.base.suit
+          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
+            second_suit = v.base.suit
+          end
           
           if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
@@ -855,6 +871,8 @@ local pidgeot={
       if context.joker_main then
         local first_rank = nil
         local second_rank = nil
+        local first_suit = nil
+        local second_suit = nil
         local has_wild = nil
         for k, v in pairs(context.scoring_hand) do
           if not first_rank and v:get_id() > 0 then
@@ -862,10 +880,16 @@ local pidgeot={
           elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
             second_rank = v:get_id()
           end
+
+          if not first_suit and not SMODS.has_no_suit(v) then
+            first_suit = v.base.suit
+          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
+            second_suit = v.base.suit
+          end
           
           if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
@@ -904,6 +928,8 @@ local mega_pidgeot = {
       if context.before then
         local first_rank = nil
         local second_rank = nil
+        local first_suit = nil
+        local second_suit = nil
         local has_wild = nil
         for k, v in pairs(context.scoring_hand) do
           if not first_rank and v:get_id() > 0 then
@@ -911,10 +937,16 @@ local mega_pidgeot = {
           elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
             second_rank = v:get_id()
           end
+
+          if not first_suit and not SMODS.has_no_suit(v) then
+            first_suit = v.base.suit
+          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
+            second_suit = v.base.suit
+          end
           
           if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
           card.ability.extra.score = true
         end
       end
