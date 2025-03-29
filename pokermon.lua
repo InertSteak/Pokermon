@@ -110,6 +110,14 @@ else
   helper()
 end
 
+--Load Draw Logic file
+local sprite, load_error = SMODS.load_file("functions/pokedraw.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  sprite()
+end
+
 --Load Sprites file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then

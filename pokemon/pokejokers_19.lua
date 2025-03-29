@@ -96,6 +96,9 @@ local zorua = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
+    if not type_sticker_applied(card) then
+      apply_type_sticker(card, "Dark")
+    end
     if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
       card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
       local _o = G.P_CENTERS[card.ability.extra.hidden_key]
@@ -123,6 +126,12 @@ local zorua = {
       textDyna:update_text(true)
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
+      local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
+      for i = #info_queue, 1, -1 do
+        if info_queue[i].set == "Other" and info_queue[i].key and poketype_list[info_queue[i].key] then
+          table.remove(info_queue, i)
+        end
+      end
     else
       if not full_UI_table.name then
         full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
@@ -160,6 +169,8 @@ local zorua = {
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
+    elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
+      self:set_ability(card)
     end
   end,
 }
