@@ -84,7 +84,7 @@ local hydreigon={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
+    if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
@@ -92,7 +92,7 @@ local hydreigon={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
-      if context.after and not context.blueprint then
+      if context.after and context.scoring_name == "Three of a Kind" and not context.blueprint then
         for k, v in pairs(context.full_hand) do
           if not SMODS.in_scoring(v, context.scoring_hand) then
             poke_remove_card(v, card)
