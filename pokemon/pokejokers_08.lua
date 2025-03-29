@@ -364,14 +364,13 @@ local mantine={
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
         if context.cardarea == G.play then
           return {
-            extra = {focus = card, message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
             card = card,
-            colour = G.C.CHIPS
+            colour = G.C.CHIPS,
+            message = localize('k_upgrade_ex'),
           }
         else
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
           return {
-              message = '',
+              message = localize("k_upgrade_ex"),
               colour = G.C.CHIPS,
               card = card
           }
