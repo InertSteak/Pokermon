@@ -620,14 +620,15 @@ return {
                     "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
                     "{br:2}text needs to be here to work",
                     "Each played card gives {X:mult,C:white}X{} Mult",
-                    "equal to {C:attention}discards lost{}",
+                    "equal to {C:attention}discards lost{} if scoring hand",
+                    "contains multiple ranks and multiple suits",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 } 
             },
             j_poke_rattata = {
                 name = "Rattata",
                 text = {
-                    "Retrigger {C:attention}first{} scored card",
+                    "Retrigger {C:attention}first 2{} scored cards",
                     "{C:attention}#1#{} additional time",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
                 } 
@@ -635,8 +636,8 @@ return {
             j_poke_raticate = {
                 name = "Raticate",
                 text = {
-                    "Retrigger {C:attention}first{} and {C:attention}second{}",
-                    "scored cards {C:attention}#1#{} additional time",
+                    "Retrigger {C:attention}first 3{} scored cards",
+                    "{C:attention}#1#{} additional time",
                 }
             },
             j_poke_spearow = {
@@ -2575,10 +2576,7 @@ return {
             j_poke_aron = {
                 name = 'Aron',
                 text = {
-                    "Create a {C:attention}Chariot{} card",
-                    "when {C:attention}Small Blind{} is selected",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "When a Steel Card is scored,",
+                    "When a {C:attention}Steel{} Card is scored,",
                     "gain {X:mult,C:white}X#2#{} Mult then destroy it",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
@@ -2586,10 +2584,7 @@ return {
             j_poke_lairon = {
                 name = 'Lairon',
                 text = {
-                    "Create a {C:attention}Chariot{} card when",
-                    "{C:attention}Small Blind{} or {C:attention}Big Blind{} is selected",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "When a Steel Card is scored,",
+                    "When a {C:attention}Steel{} or {C:attention}Stone{} Card is scored,",
                     "gain {X:mult,C:white}X#2#{} Mult then destroy it",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
@@ -2597,10 +2592,7 @@ return {
             j_poke_aggron = {
                 name = 'Aggron',
                 text = {
-                    "Create a {C:attention}Chariot{} card",
-                    "when {C:attention}Blind{} is selected",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "When a Steel Card is scored,",
+                    "When a {C:attention}Steel{}, {C:attention}Stone{} or {C:attention}Gold{} Card is scored,",
                     "gain {X:mult,C:white}X#2#{} Mult then destroy it",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }

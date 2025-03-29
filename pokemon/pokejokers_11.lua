@@ -12,20 +12,13 @@ local aron = {
   atlas = "Pokedex3",
   ptype = "Metal",
   blueprint_compat = true,
+  enhancement_gate = 'm_steel',
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_chariot
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not card.getting_sliced and context.blind == G.P_BLINDS.bl_small then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, { message = localize('k_plus_tarot'), colour = G.C.PURPLE })
-      end
-    elseif context.cardarea == G.jokers and context.before and not context.blueprint then
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
         if v.config.center == G.P_CENTERS.m_steel and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
@@ -54,7 +47,7 @@ local aron = {
 local lairon = {
   name = "lairon",
   pos = { x = 3, y = 5 },
-  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 }, evo_rqmt = 4 },
+  config = { extra = { Xmult = 1, Xmult_mod = .4, eaten = 0 }, evo_rqmt = 4 },
   rarity = 3,
   cost = 8,
   stage = "One",
@@ -63,20 +56,12 @@ local lairon = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_chariot
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not card.getting_sliced and not context.blind.boss then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, { message = localize('k_plus_tarot'), colour = G.C.PURPLE })
-      end
-    elseif context.cardarea == G.jokers and context.before and not context.blueprint then
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
-        if v.config.center == G.P_CENTERS.m_steel and not v.debuff then
+        if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           G.E_MANAGER:add_event(Event({
@@ -94,7 +79,7 @@ local lairon = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
+      return not context.blueprint and (context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone)
     end
     return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
@@ -103,7 +88,7 @@ local lairon = {
 local aggron = {
   name = "aggron",
   pos = { x = 4, y = 5 },
-  config = { extra = { Xmult = 1, Xmult_mod = .25, eaten = 0 } },
+  config = { extra = { Xmult = 1, Xmult_mod = .4, eaten = 0 } },
   rarity = "poke_safari",
   cost = 12,
   stage = "Two",
@@ -112,20 +97,12 @@ local aggron = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_chariot
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
-    if context.setting_blind and not card.getting_sliced then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_chariot')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, { message = localize('k_plus_tarot'), colour = G.C.PURPLE })
-      end
-    elseif context.cardarea == G.jokers and context.before and not context.blueprint then
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
-        if v.config.center == G.P_CENTERS.m_steel and not v.debuff then
+        if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone or v.config.center == G.P_CENTERS.m_gold) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           G.E_MANAGER:add_event(Event({
@@ -143,7 +120,9 @@ local aggron = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
+      local eat = context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone or
+                  context.destroying_card.config.center == G.P_CENTERS.m_gold
+      return not context.blueprint and eat
     end
   end
 }

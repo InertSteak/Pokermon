@@ -748,13 +748,13 @@ local mega_beedrill = {
 local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
-  config = {extra = {mult = 5, rounds = 4}},
+  config = {extra = {mult = 8, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -789,14 +789,14 @@ local pidgey={
 local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
-  config = {extra = {mult = 10, rounds = 4}},
+  config = {extra = {mult = 12, rounds = 4}},
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 2, 
-  cost = 8, 
+  cost = 6, 
   stage = "One", 
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -881,7 +881,7 @@ local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
   soul_pos = { x = 11, y = 0 },
-  config = {extra = {discards_lost = 0}},
+  config = {extra = {discards_lost = 0, score = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {math.max(1, center.ability.extra.discards_lost)}}
@@ -900,7 +900,29 @@ local mega_pidgeot = {
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.discards_lost = 0
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.discards_lost > 1 then
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local first_rank = nil
+        local second_rank = nil
+        local has_wild = nil
+        for k, v in pairs(context.scoring_hand) do
+          if not first_rank and v:get_id() > 0 then
+            first_rank = v:get_id()
+          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
+            second_rank = v:get_id()
+          end
+          
+          if v.ability.effect == 'Wild Card' then has_wild = true end
+        end
+        if first_rank and second_rank and (has_wild or (not next(context.poker_hands['Flush']) and #context.scoring_hand > 1)) then
+          card.ability.extra.score = true
+        end
+      end
+      if context.after then
+        card.ability.extra.score = false
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.discards_lost > 1 and card.ability.extra.score then
       return {
         x_mult = card.ability.extra.discards_lost,
         card = card
@@ -911,7 +933,7 @@ local mega_pidgeot = {
 local rattata={
   name = "rattata", 
   pos = {x = 5, y = 1},
-  config = {extra = {retriggers = 1, rounds = 3}},
+  config = {extra = {retriggers = 1, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds}}
@@ -924,7 +946,7 @@ local rattata={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play then
-      if (context.other_card == context.scoring_hand[1]) then
+      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) then
         return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
@@ -954,7 +976,7 @@ local raticate={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) then
+      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) or (context.other_card == context.scoring_hand[3]) then
         return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
