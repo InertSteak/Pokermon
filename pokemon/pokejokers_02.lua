@@ -1049,6 +1049,7 @@ local arcanine={
         for k, v in pairs(context.scoring_hand) do
           if v.config.center == G.P_CENTERS.c_base then
             target[#target + 1] = v
+            break
           end
         end
         poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)

@@ -565,7 +565,7 @@ local misdreavus = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, }}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 5,
   stage = "Basic",
   ptype = "Psychic",
@@ -589,7 +589,7 @@ local misdreavus = {
           drained_vals = drained_vals + drain_bonus
         end
         if drained_vals > 0 then
-          card.ability.extra.chips = card.ability.extra.chips + 2 * drained_vals
+          card.ability.extra.chips = card.ability.extra.chips + drained_vals
           return {
             message = localize('k_eroded_ex'),
             colour = G.C.CHIPS,

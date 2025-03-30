@@ -983,8 +983,8 @@ return {
                 name = "Arcanine",
                 text = {
                     "{X:red,C:white} X#1# {} Mult if played hand contains a {C:attention}Flush{}",
-                    "Played unenhanced cards in that {C:attention}Flush{}",
-                    "become {C:attention}Mult{} cards when scored"
+                    "First played unenhanced card in that {C:attention}Flush{}",
+                    "becomes a {C:attention}Mult{} card when scored"
                 } 
             },
             j_poke_poliwag = {
@@ -2220,7 +2220,7 @@ return {
                 text = {
                     "Played {C:attention}face{} cards permanently",
                     "lose up to {C:chips}#1#{} Chips when scored",
-                    "Gain {C:attention}Double{} lost Chips",
+                    "Gain lost Chips",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
@@ -2733,7 +2733,7 @@ return {
                 text = {
                     "Played {C:attention}face{} cards permanently",
                     "lose up to {C:chips}#1#{} Chips when scored",
-                    "Gain {C:attention}Double{} lost Chips",
+                    "Gain lost Chips",
                     "{br:3}text needs to be here to work",
                     "{C:green}#3# in #4#{} chance for them to",
                     "permanently gain {C:chips}#5#{} Chips instead",

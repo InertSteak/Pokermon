@@ -46,7 +46,7 @@ local mismagius = {
             drained_vals = drained_vals + drain_bonus
           end
           if drained_vals > 0 then
-            card.ability.extra.chips = card.ability.extra.chips + 2 * drained_vals
+            card.ability.extra.chips = card.ability.extra.chips + drained_vals
             return {
               message = localize('k_eroded_ex'),
               colour = G.C.CHIPS,
