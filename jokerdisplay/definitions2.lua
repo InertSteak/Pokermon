@@ -1,3 +1,4 @@
+
 local jd_def = JokerDisplay.Definitions
 
 
@@ -248,15 +249,30 @@ text_config = { colour = G.C.CHIPS },
 --	Lanturn
 --	Pichu
 jd_def["j_poke_pichu"] = {
-    text = {
+    extra = {{
         {
             border_nodes = {
                 { text = "X" },
                 { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
             },
         },
+    },},
+    text = {
+        {text = "$", colour = G.C.GOLD},
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+    
     },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+        local money
+        money = math.min(10, #G.jokers.cards * card.ability.extra.money)
+        card.joker_display_values.money = money
+        card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+    end
 }
+
 
 --	Cleffa
 jd_def["j_poke_cleffa"] = {
@@ -283,6 +299,29 @@ jd_def["j_poke_igglybuff"] = {
 }
 
 --	Togepi
+jd_def["j_poke_togepi"] = {
+    text = {
+        {
+            border_nodes = {
+                {
+                    dynatext = {
+                        string = {"X0.50","X0.55","X0.60","X0.65","X0.70","X0.75","X0.80","X0.85","X0.90","X0.95",
+                        "X1.00","X1.05","X1.10","X1.15","X1.20","X1.25","X1.30","X1.35","X1.40","X1.45","X1.50"
+                    },
+                        colours = { G.C.WHITE },
+                        pop_in_rate = 9999999,
+                        silent = true,
+                        random_element = true,
+                        pop_delay = 0.5,
+                        scale = 0.4,
+                        min_cycle_time = 0
+                    }
+                },
+            },
+        },
+    },
+}
+
 --	Togetic
 --	Natu
 --	Xatu
@@ -293,6 +332,41 @@ jd_def["j_poke_igglybuff"] = {
 --	Marill
 --	Azumarill
 --	Sudowoodo
+jd_def["j_poke_sudowoodo"] = {
+    text = {            
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+},
+text_config = { colour = G.C.MULT },
+reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+},
+calc_function = function(card)
+    local mult = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:is_face() then
+                mult = mult +
+                    card.ability.extra.mult *
+                    JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+            end
+        end
+    end
+    card.joker_display_values.mult = mult
+    card.joker_display_values.localized_text = localize("k_face_cards")
+end,
+retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    local total = #find_pokemon_type("Water")
+    if held_in_hand then return 0 end
+    if not is_type(joker_card, "Grass") or total > 0 then
+    return playing_card:is_face() and
+        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 end
+end
+}
+
 --	Politoed
 jd_def["j_poke_politoed"] = {
     text = {
@@ -606,6 +680,17 @@ end
 --	Dunsparce
 --	Gligar
 --	Steelix
+jd_def["j_poke_steelix"] = {
+    text = {
+        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+    },
+    calc_function = function(card)
+        local status = "Not Active!"
+        if G.GAME.current_round.hands_played == 0 then status = "Active!" end
+        card.joker_display_values.status = status
+    end
+}
+
 --	Snubbull
 --	Granbull
 --	Qwilfish
@@ -645,6 +730,17 @@ jd_def["j_poke_scizor"] = {
 --	Swinub
 --	Piloswine
 --	Corsola
+jd_def["j_poke_corsola"] = { 
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+    },
+    text_config = { colour = G.C.MULT },
+calc_function = function(card)
+card.joker_display_values.mult = card.ability.extra.mult_mod * card.ability.extra.corsola_tally
+end
+}
+
 --	Remoraid
 --	Octillery
 --	Delibird
@@ -728,6 +824,35 @@ jd_def["j_poke_donphan"] = {
 
 --	Porygon2
 --	Stantler
+jd_def["j_poke_stantler"] = { 
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+    },
+    text_config = { colour = G.C.CHIPS },
+calc_function = function(card)
+    local highest_rank = nil
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card.base.nominal and not highest_rank then
+            highest_rank = scoring_card.base.nominal
+            elseif scoring_card.base.nominal and highest_rank and scoring_card.base.nominal > highest_rank then
+            highest_rank = scoring_card.base.nominal
+            end
+        end
+        local chips = card.ability.extra.chips * highest_rank
+        if G.GAME.current_round.hands_left <= 1 then
+            card.joker_display_values.chips = chips * 2
+        else
+            card.joker_display_values.chips = chips
+        end
+    else card.joker_display_values.chips = 0
+    end
+end
+}
+
 --	Smeargle
 --	Tyrogue
 jd_def["j_poke_tyrogue"] = {
@@ -790,7 +915,39 @@ jd_def["j_poke_magby"] = {
 }
 
 --	Miltank
+jd_def["j_poke_miltank"] = {
+    text = {
+        {text = "$", colour = G.C.GOLD},
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+
+    },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+        local type = #find_pokemon_type("Colorless")
+        card.joker_display_values.money = type * card.ability.extra.money
+                card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+    end
+}
+
 --	Blissey
+jd_def["j_poke_blissey"] = {
+    text = {
+        {text = "[", colour = G.C.GREY},
+        {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
+        {text = "/", colour = G.C.GREY},
+        {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+        {text = "]", colour = G.C.GREY},
+    },
+    calc_function = function(card)
+        local count = card.ability.extra.triggers
+        local limit = card.ability.extra.limit
+        card.joker_display_values.count = count
+        card.joker_display_values.limit = limit
+    end
+}
+
 --	Raikou
 --	Entei
 --	Suicune
@@ -800,7 +957,19 @@ jd_def["j_poke_magby"] = {
 --	Lugia
 --	Ho-oh
 --	Celebi
-
+jd_def["j_poke_celebi"] = {
+    text = {
+        {text = "[", colour = G.C.GREY},
+        {ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY},
+        {text = "/", colour = G.C.GREY},
+        {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+        {text = "]", colour = G.C.GREY},
+    },
+    calc_function = function(card)
+        local limit = G.GAME.celebi_skips
+        card.joker_display_values.limit = limit
+    end
+}
 
 
 

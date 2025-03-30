@@ -256,33 +256,31 @@ jd_def["j_poke_pidgey"] = {
     },
 text_config = { colour = G.C.MULT },
 calc_function = function(card)
-    local mult = 0
     local first_rank = nil
     local second_rank = nil
-    local has_wild = false
-    local not_flush = true
+    local first_suit = nil
+    local second_suit = nil
+    local has_wild = nil
+    local mult
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if text ~= 'Unknown' then
-        for i = 1, #scoring_hand do
-            if scoring_hand[i].ability.name == 'Wild Card' then
-                has_wild = true
-            end
-        end
-        for _, scoring_card in pairs(scoring_hand) do
-            if not first_rank and scoring_card:get_id() > 0 then
-                first_rank = scoring_card:get_id()
-              elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
-                second_rank = scoring_card:get_id()
-              end
-            end
-        end
-        if scoring_hand['Flush'] and next(scoring_hand['Flush']) then
-            not_flush = false
-        end
-        if first_rank and second_rank and (has_wild or (not_flush and #scoring_hand > 1)) then
-            mult = card.ability.extra.mult
+    for _, scoring_card in pairs(scoring_hand) do
+      if not first_rank and scoring_card:get_id() > 0 then
+        first_rank = scoring_card:get_id()
+      elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
+        second_rank = scoring_card:get_id()
+      end
 
+      if not first_suit and not SMODS.has_no_suit(scoring_card) then
+        first_suit = scoring_card.base.suit
+      elseif not second_suit and not SMODS.has_no_suit(scoring_card) and scoring_card.base.suit ~= first_suit then
+        second_suit = scoring_card.base.suit
+      end
 
+      if scoring_card.ability.effect == 'Wild Card' then has_wild = true end
+    end
+    if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #scoring_hand > 1) then
+        mult = card.ability.extra.mult
+    else mult = 0
     end
     card.joker_display_values.mult = mult
 end
@@ -295,33 +293,31 @@ jd_def["j_poke_pidgeotto"] = {
     },
 text_config = { colour = G.C.MULT },
 calc_function = function(card)
-    local mult = 0
     local first_rank = nil
     local second_rank = nil
-    local has_wild = false
-    local not_flush = true
+    local first_suit = nil
+    local second_suit = nil
+    local has_wild = nil
+    local mult
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if text ~= 'Unknown' then
-        for i = 1, #scoring_hand do
-            if scoring_hand[i].ability.name == 'Wild Card' then
-                has_wild = true
-            end
-        end
-        for _, scoring_card in pairs(scoring_hand) do
-            if not first_rank and scoring_card:get_id() > 0 then
-                first_rank = scoring_card:get_id()
-              elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
-                second_rank = scoring_card:get_id()
-              end
-            end
-        end
-        if scoring_hand['Flush'] and next(scoring_hand['Flush']) then
-            not_flush = false
-        end
-        if first_rank and second_rank and (has_wild or (not_flush and #scoring_hand > 1)) then
-            mult = card.ability.extra.mult
+    for _, scoring_card in pairs(scoring_hand) do
+      if not first_rank and scoring_card:get_id() > 0 then
+        first_rank = scoring_card:get_id()
+      elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
+        second_rank = scoring_card:get_id()
+      end
 
+      if not first_suit and not SMODS.has_no_suit(scoring_card) then
+        first_suit = scoring_card.base.suit
+      elseif not second_suit and not SMODS.has_no_suit(scoring_card) and scoring_card.base.suit ~= first_suit then
+        second_suit = scoring_card.base.suit
+      end
 
+      if scoring_card.ability.effect == 'Wild Card' then has_wild = true end
+    end
+    if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #scoring_hand > 1) then
+        mult = card.ability.extra.mult
+    else mult = 0
     end
     card.joker_display_values.mult = mult
 end
@@ -334,52 +330,53 @@ jd_def["j_poke_pidgeot"] = {
     },
 text_config = { colour = G.C.MULT },
 calc_function = function(card)
-    local mult = 0
     local first_rank = nil
     local second_rank = nil
-    local has_wild = false
-    local not_flush = true
+    local first_suit = nil
+    local second_suit = nil
+    local has_wild = nil
+    local mult
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if text ~= 'Unknown' then
-        for i = 1, #scoring_hand do
-            if scoring_hand[i].ability.name == 'Wild Card' then
-                has_wild = true
-            end
-        end
-        for _, scoring_card in pairs(scoring_hand) do
-            if not first_rank and scoring_card:get_id() > 0 then
-                first_rank = scoring_card:get_id()
-              elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
-                second_rank = scoring_card:get_id()
-              end
-            end
-        end
-        if scoring_hand['Flush'] and next(scoring_hand['Flush']) then
-            not_flush = false
-        end
-        if first_rank and second_rank and (has_wild or (not_flush and #scoring_hand > 1)) then
-            mult = card.ability.extra.mult
+    for _, scoring_card in pairs(scoring_hand) do
+      if not first_rank and scoring_card:get_id() > 0 then
+        first_rank = scoring_card:get_id()
+      elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
+        second_rank = scoring_card:get_id()
+      end
 
+      if not first_suit and not SMODS.has_no_suit(scoring_card) then
+        first_suit = scoring_card.base.suit
+      elseif not second_suit and not SMODS.has_no_suit(scoring_card) and scoring_card.base.suit ~= first_suit then
+        second_suit = scoring_card.base.suit
+      end
 
+      if scoring_card.ability.effect == 'Wild Card' then has_wild = true end
+    end
+    if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #scoring_hand > 1) then
+        mult = card.ability.extra.mult
+    else mult = 0
     end
     card.joker_display_values.mult = mult
 end
 }
 
-
 jd_def["j_poke_mega_pidgeot"] = {
     text = {
-        { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
-        { text = "x",                              scale = 0.35 },
         {
             border_nodes = {
                 { text = "X",colour = G.C.WHITE },
-                { ref_table = "card.ability.extra", ref_value = "discards_lost", colour = G.C.WHITE }
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", colour = G.C.WHITE }
             }
         }
     },
-
     calc_function = function(card)
+        local first_rank = nil
+        local second_rank = nil
+        local first_suit = nil
+        local second_suit = nil
+        local has_wild = nil
+        local Xmult
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
         local count = 0
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
@@ -393,22 +390,37 @@ jd_def["j_poke_mega_pidgeot"] = {
             count = 3
         end
         card.joker_display_values.count = count
+        for _, scoring_card in pairs(scoring_hand) do
+          if not first_rank and scoring_card:get_id() > 0 then
+            first_rank = scoring_card:get_id()
+          elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank then
+            second_rank = scoring_card:get_id()
+          end
+    
+          if not first_suit and not SMODS.has_no_suit(scoring_card) then
+            first_suit = scoring_card.base.suit
+          elseif not second_suit and not SMODS.has_no_suit(scoring_card) and scoring_card.base.suit ~= first_suit then
+            second_suit = scoring_card.base.suit
+          end
+    
+          if scoring_card.ability.effect == 'Wild Card' then has_wild = true end
+        end
+        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #scoring_hand > 1) then
+           Xmult = math.max((card.ability.extra.discards_lost * count), 1)
+        else Xmult = 1
+        end
+        card.joker_display_values.Xmult = Xmult
     end
-}
-
----@param cards table Cards to calculate.
----@return table? # Leftmost card in hand if any.
-JokerDisplay.calculate_second_card = function(cards)
-    local sorted_cards = JokerDisplay.sort_cards(cards)
-    return sorted_cards and sorted_cards[2]
-end
-
+    }
 
 jd_def["j_poke_rattata"] = {
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
         if held_in_hand then return 0 end
         local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+        local second_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[2]
         return first_card and playing_card == first_card and
+        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and 
+        second_card and playing_card == second_card and
         joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
     end
     }
@@ -418,9 +430,12 @@ retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_ca
     if held_in_hand then return 0 end
     local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
     local second_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[2]
+    local third_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[3]
     return first_card and playing_card == first_card and
     joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and 
     second_card and playing_card == second_card and
+    joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+    third_card and playing_card == third_card and
     joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
     end
 
@@ -1747,38 +1762,20 @@ text = {
     },
 },
 calc_function = function(card)
-    local jokers = {}
-    if #G.jokers.cards > 1 then
-      local pos = 0
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card then
-          pos = i
-          break
-        end
-      end
-      if pos > 1 and G.jokers.cards[pos-1] then 
-        table.insert(jokers, G.jokers.cards[pos-1])
-      end
-      if pos < #G.jokers.cards and G.jokers.cards[pos+1] then 
-        table.insert(jokers, G.jokers.cards[pos+1])
-      end
-    end
-
     local adjacent = 0
-    if G.jokers then
-        for _, joker_card in ipairs(jokers) do
-            if joker_card.config.center.ptype and joker_card.config.center.ptype == "Metal" then
-                adjacent = adjacent + 1
-            end
-        end
+    local pos = 0
+    if G.STAGE == G.STAGES.RUN then
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      for i = 1, #adjacent_jokers do
+        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
+      end
     end
-
     local count = 0
     local playing_hand = next(G.play.cards)
     local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
     local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
     if text ~= "Unknown" then
-        for _, scoring_card in pairs(scoring_hand) do --Polychrome cards scored
+        for _, scoring_card in pairs(scoring_hand) do 
             if scoring_card.ability.effect and scoring_card.ability.effect == "Steel Card" then
                 count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
             end
@@ -2149,9 +2146,8 @@ jd_def["j_poke_electrode"] = {
 
 jd_def["j_poke_exeggcute"] = {
     text = {
-        { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
-        { text = "x",                              scale = 0.35 },
-        {ref_table = "card.ability.extra", ref_value = "mult", colour = G.C.MULT},
+        { text = "+",                              colour = G.C.MULT },
+        {ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT},
     },
     reminder_text = {
         { text = "(" },
@@ -2175,7 +2171,7 @@ jd_def["j_poke_exeggcute"] = {
         else
             count = 3
         end
-        card.joker_display_values.count = count
+        card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.localized_text = localize("Hearts", 'suits_plural')
     end
 }
