@@ -362,7 +362,7 @@ poke_conversion_event_helper = function(func, delay, immediate)
 end
 
 poke_convert_cards_to = function(cards, t, noflip, immediate)
-  if not cards or (type(cards) == "table" and #cards == 0) then return end
+  if not cards then return end
   if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal and not noflip then
     for i = 1, #cards do
@@ -381,6 +381,7 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
       poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
     end
     if t.seal then
+      poke_debug(t.seal)
       poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
     end
     if t.random then
