@@ -316,6 +316,7 @@ local mystery_egg = {
   end,
   add_to_deck = function(self, card, from_debuff)
     if from_debuff then return end
+    if not card.ability or not card.ability.extra or not card.ability.extra.key then return end
 
     local poke_keys = {}
     for k, v in pairs(G.P_CENTERS) do
