@@ -22,6 +22,18 @@ local jd_def = JokerDisplay.Definitions
 --	Simisage
 --	Pansear
 --	Simisear
+jd_def["j_poke_simisear"] = {
+    text = {
+        { text = "[" },
+        { ref_table = "card.joker_display_values", ref_value = "localized_text"},
+        { text = "]" }
+    },
+    text_config = {colour = G.C.UI.BACKGROUND_INACTIVE},
+    calc_function = function(card)
+    card.joker_display_values.localized_text = localize('Straight', 'poker_hands').." / "..localize('Flush', 'poker_hands')
+    end
+}
+
 --	Panpour
 --	Simipour
 --	Munna

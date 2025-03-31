@@ -329,6 +329,48 @@ jd_def["j_poke_togepi"] = {
 --	Flaaffy
 --	Ampharos
 --	Bellossom
+jd_def["j_poke_bellossom"] = {
+    text = {
+        { text = "Max: ", colour = G.C.GREY, },
+        { text = "+",                              colour = G.C.MULT , },
+        {ref_table = "card.joker_display_values",    ref_value = "upper", colour = G.C.MULT,   }
+    },
+    extra = {
+        {        
+                { text = "Min: ", colour = G.C.GREY, },
+                { text = "+",                              colour = G.C.MULT },
+                {ref_table = "card.joker_display_values",    ref_value = "lower", colour = G.C.MULT,   }
+        }
+            },  
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+},
+calc_function = function(card)
+    local count = 0
+    local editioncount = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:get_id() == 3 or 
+            scoring_card:get_id() == 5 or 
+            scoring_card:get_id() == 7 or 
+            scoring_card:get_id() == 9 or 
+            scoring_card:get_id() == 14 then
+                count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+            end
+        end
+        for _, scoring_card in pairs(scoring_hand) do
+            if not (scoring_card.facing == 'back') and not scoring_card.debuff and scoring_card.edition then
+                editioncount = editioncount + JokerDisplay.calculate_card_triggers(scoring_card, nil, true)
+            end
+        end
+    end
+    card.joker_display_values.lower = editioncount * card.ability.extra.mult
+    card.joker_display_values.upper = count * card.ability.extra.mult
+    card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks") .. ",9,7,5,3)"
+end
+}
+
 --	Marill
 --	Azumarill
 --	Sudowoodo
