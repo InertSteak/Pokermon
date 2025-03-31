@@ -356,13 +356,71 @@ jd_def["j_poke_swampert"] = {
 --	Hariyama
 --	Azurill
 --	Nosepass
+jd_def["j_poke_nosepass"] = { 
+text = {
+    {
+        border_nodes = {
+            { text = "X" },
+            { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+        }
+    }
+},
+calc_function = function(card)
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local face_cards = {}
+    if text ~= 'Unknown' then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:is_face() then
+                table.insert(face_cards, scoring_card)
+            end
+        end
+    end
+    local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+    card.joker_display_values.x_mult = first_face and
+        (card.ability.extra.Xmult_multi ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1
+end
+}
+
 --	Skitty
 --	Delcatty
 --	Sableye
 --	Mawile
 --	Aron
+jd_def["j_poke_aron"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Lairon
+jd_def["j_poke_lairon"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Aggron
+jd_def["j_poke_aggron"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Meditite
 --	Medicham
 --	Electrike
@@ -406,7 +464,43 @@ jd_def["j_poke_swampert"] = {
 --	Anorith
 --	Armaldo
 --	Feebas
+jd_def["j_poke_feebas"] = {
+    text = {
+        { text = "+" ,
+        colour = G.C.MULT},
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", 
+        colour = G.C.MULT},
+    },
+scoring_function = function(playing_card, scoring_hand, joker_card)
+    return true
+end
+}
+
 --	Milotic
+jd_def["j_poke_milotic"] = {
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+        local first_suit = nil
+        local second_suit = nil
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        for _, scoring_card in pairs(scoring_hand) do
+        if not first_suit and not SMODS.has_no_suit(scoring_card) then
+            first_suit = scoring_card.base.suit
+        elseif not second_suit and not SMODS.has_no_suit(scoring_card) and scoring_card.base.suit ~= first_suit then
+            second_suit = scoring_card.base.suit
+        end
+        end
+        if held_in_hand then
+            return 0
+        end
+        if first_suit and not second_suit then
+            return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+        end
+    end
+}
+
+
+
+
 --	Castform
 --	Kecleon
 --	Shuppet
