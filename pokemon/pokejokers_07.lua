@@ -54,6 +54,11 @@ local bellossom={
           }
       end
     end
+    if context.after and context.cardarea == G.jokers and not context.blueprint then
+      for k, v in ipairs(context.scoring_hand) do
+        if v.bellossom_score then v.bellossom_score = nil end
+      end
+    end
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if context.other_card:get_id() == 3 or 
          context.other_card:get_id() == 5 or 
@@ -61,7 +66,6 @@ local bellossom={
          context.other_card:get_id() == 9 or 
          context.other_card:get_id() == 14 then
           if context.other_card.bellossom_score then
-            context.other_card.bellossom_score = nil
             return {
               mult = card.ability.extra.mult,
               card = card

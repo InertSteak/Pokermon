@@ -176,7 +176,7 @@ jd_def["j_poke_mantyke"] = {
     text = {
         {text = "+", colour = G.C.CHIPS},
         {ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS},
-        {text = "+"},
+        {text = " "},
         {
             border_nodes = {
                 { text = "X" },

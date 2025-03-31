@@ -267,6 +267,36 @@ jd_def["j_poke_wugtrio"] = {
 --	Dondozo
 --	Tatsugiri
 --	Annihilape
+jd_def["j_poke_annihilape"] = {
+    text = {
+        { text = "+", colour = G.C.CHIPS},
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+        {text = " "},
+        { text = "+", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+    },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+    },
+    calc_function = function(card)
+        local count = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card:get_id() == 2 or 
+                scoring_card:get_id() == 3 or 
+                scoring_card:get_id() == 5 or 
+                scoring_card:get_id() == 7 then
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                end
+            end
+        end
+        card.joker_display_values.chips = count * card.ability.extra.chips * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.mult = count * card.ability.extra.mult * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.localized_text = "(2,3,5,7)"
+    end
+}
+    
 --	Clodsire
 --	Farigiraf
 jd_def["j_poke_farigiraf"] = {
