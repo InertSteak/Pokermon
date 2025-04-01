@@ -5,10 +5,10 @@ SMODS.DrawStep({
    order = 69,
    func = function(card, layer)
       if not card or not card.ability or not card.children.center or (card.ability.name ~= 'zorua' and card.ability.name ~= 'zoroark') then return end
-      if poke_is_in_collection(card) then return end
-      local other_joker = G.jokers.cards[#G.jokers.cards]
-      if card.area == G.jokers and other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat then
-         return
+      if card.debuff or not card.ability.extra.active or poke_is_in_collection(card) then return end
+      if card.area == G.jokers then
+         local other_joker = G.jokers.cards[#G.jokers.cards]
+         if other_joker == card or other_joker.debuff or not other_joker.config.center.blueprint_compat then return end
       end
       local center = card.config.center
       local prev_atlas = card.children.center.atlas
