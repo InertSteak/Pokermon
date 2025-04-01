@@ -44,7 +44,41 @@ jd_def["j_poke_budew"] = {
 --	Vespiquen
 --	Pachirisu
 --	Buizel
+jd_def["j_poke_buizel"] = {
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "add" }
+    },
+text_config = { colour = G.C.CHIPS },
+calc_function = function(card)
+    local hand = JokerDisplay.current_hand
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local count = 0
+    if scoring_hand and #scoring_hand > 0 then
+        count = #hand - #scoring_hand
+    end
+        card.joker_display_values.chips = count * card.ability.extra.chips 
+end
+}
+
 --	Floatzel
+jd_def["j_poke_floatzel"] = {
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "add" }
+    },
+text_config = { colour = G.C.CHIPS },
+calc_function = function(card)
+    local hand = JokerDisplay.current_hand
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local count = 0
+    if scoring_hand and #scoring_hand > 0 then
+        count = #hand - #scoring_hand
+    end
+        card.joker_display_values.chips = count * card.ability.extra.chips 
+end
+}
+
 --	Cherubi
 --	Cherrim
 --	Shellos
