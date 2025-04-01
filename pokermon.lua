@@ -476,6 +476,9 @@ function SMODS.find_card(key, count_debuffed)
     if #ret > 0 then return ret end
     ret = scuffed_af("j_poke_simipour")
     if #ret > 0 then return ret end
+  elseif key == "j_smeared" then
+    local ret = scuffed_af("j_poke_smeargle")
+    if #ret > 0 then return ret end
   end
 	return scuffed_af(key, count_debuffed)
 end

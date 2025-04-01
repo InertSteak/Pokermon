@@ -673,6 +673,30 @@ local stantler={
   end
 }
 -- Smeargle 235
+local smeargle={
+  name = "smeargle",
+  pos = {x = 3, y = 8},
+  config = {extra = {}},
+  loc_txt = {
+    name = "Smeargle",
+    text = {
+      "Applies {C:attention}Smeared Joker{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_smeared', config = {} }
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+}
 -- Tyrogue 236
 local tyrogue={
   name = "tyrogue",
@@ -913,5 +937,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

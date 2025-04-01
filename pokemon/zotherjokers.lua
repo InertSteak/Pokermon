@@ -468,7 +468,54 @@ local rival = {
     end
   end
 }
+local billion_lions = {
+  name = "billion_lions",
+  pos = {x = 5, y = 12},
+  soul_pos = {x = 6, y = 12},
+  config = {extra= {Xmult = 1, Xmult_mod = 1, lions = 1000000000}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.lions}}
+  end,
+  rarity = 4,
+  cost = 6,
+  stage = "Other",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced then
+      local destroyed = 0
+      for k, v in pairs(G.jokers.cards) do
+        if v ~= card and has_type(v) then
+          destroyed = destroyed + 1
+          v.getting_sliced = true
+          G.E_MANAGER:add_event(Event({func = function()
+              (context.blueprint_card or card):juice_up(0.8, 0.8)
+              v:start_dissolve({G.C.RED}, nil, 1.6)
+          return true end }))
+        end
+      end
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * destroyed
+      card.ability.extra.lions = card.ability.extra.lions - destroyed
+      if card.ability.extra.lions <= 0 then 
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "They lose!", colour = G.C.RED})
+        card:start_dissolve({G.C.RED}, nil, 1.6) 
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end
+}
 
 return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, billion_lions}
 }

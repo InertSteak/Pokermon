@@ -285,6 +285,13 @@ SMODS.Atlas({
     py = 95
 }):register()
 
+SMODS.Atlas({
+    key = "smeargle_logo",
+    path = "smeargle_logo.png",
+    px = 300,
+    py = 194
+}):register()
+
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",
@@ -321,5 +328,25 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
   G.ARGS.LOC_COLOURS["item"] = HEX("9AA4B7")
   G.ARGS.LOC_COLOURS["safari"] = HEX("F2C74E")
+  G.ARGS.LOC_COLOURS["pocket"] = HEX("E8C069")
   return pokecolors(_c, _default)
+end
+
+--Stake textures for Malverk
+if (SMODS.Mods["malverk"] or {}).can_load then
+  AltTexture({
+      key = 'chips', -- the key of the texture
+      set = 'Stake', -- define the object type that you are retexturing, see wiki for full list of types
+      path = 'pokestakes.png', -- the filename of your spritesheet, saved in assets/1x AND assets/2x
+      stickers = true,
+      original_sheet = true,
+    })
+  TexturePack({
+      key = 'pokestakes', -- the key of the texture
+      textures = {'poke_chips'}, -- a table of keys of your AltTexture objects
+      loc_txt = { -- Localization text for tooltips displayed in the texture selection screen - can be added to a localization file under [descriptions][texture_packs]
+        name = 'Pokéball Stakes',
+        text = {'Adds Pokéball sprites to the stake chips!'}
+      }
+    })
 end

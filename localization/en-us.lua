@@ -2991,7 +2991,8 @@ return {
                 name = "Zorua",
                 text = {
                     "Copies ability of rightmost {C:attention}Joker{}",
-                    "Illusion breaks after first hand",
+                    "each round until scoring hand",
+                    "is played while copying",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -3526,6 +3527,16 @@ return {
                   "{C:attention}Baby{} Joker after {C:attention}#1#{} rounds",
                   "with {C:pink}+1{} Energy if applicable"
                 }
+            },
+            j_poke_billion_lions = {
+                name = 'A Billion Lions',
+                text = {
+                    "When blind is selected",
+                    "destroy each {C:pink}typed{} Joker you have",
+                    "then gain {X:mult,C:white}X#2#{} Mult for each",
+                    "{S:1.1,C:red,E:2}self destructs{} when out of lions",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult, {C:attention}#3#{C:inactive} lions)"
+                } 
             },
             --[[ Egg dynatext, not used right now
             j_poke_mystery_egg = {

@@ -241,6 +241,24 @@ end
 '''
 match_indent = true
 
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+    G.SPLASH_LOGO = Sprite(0, 0, 
+        13*SC_scale, 
+        13*SC_scale*(G.ASSET_ATLAS["balatro"].py/G.ASSET_ATLAS["balatro"].px),
+        G.ASSET_ATLAS["balatro"], {x=0,y=0})
+'''
+position = "at"
+payload = '''
+    G.SPLASH_LOGO = Sprite(0, 0, 
+        13*SC_scale, 
+        13*SC_scale*(G.ASSET_ATLAS["poke_smeargle_logo"].py/G.ASSET_ATLAS["poke_smeargle_logo"].px),
+        G.ASSET_ATLAS["poke_smeargle_logo"], {x=0,y=0})
+'''
+match_indent = true
+
 # Description functionality, a little hacky but it works
 [[patches]]
 [patches.pattern]
@@ -280,6 +298,10 @@ elseif name == "Four Fingers" then
   local dsaf = find_joker("pansear")
   local safd = find_joker("simisear")
   return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
+elseif name == "Smeared Joker" then
+  local smeared = find_joker("poke_Smeared_Joker")
+  local smeargle = find_joker("smeargle")
+  return (next(smeared) and smeared) or (next(smeargle) and smeargle) or {}
 elseif name == "poke_Shortcut" then
   name = "Shortcut"
 elseif name == "poke_Pareidolia" then

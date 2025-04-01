@@ -137,7 +137,7 @@ missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
 
 local missingno ={
   name = "missingno", 
-  pos = { x = 1, y = 12},
+  pos = { x = pokermon_config.pokemon_altart and 12 or 1, y = 12},
   soul_pos = { x = 2, y = 12},
   config = {extra = {tags_created = 2}},
   loc_vars = function(self, info_queue, center)

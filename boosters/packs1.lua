@@ -76,6 +76,25 @@ local create_pocket_card = function(self, card, i)
     end
 end
 
+local pocket_background = function(self)
+  ease_background_colour{new_colour = G.ARGS.LOC_COLOURS.pocket, contrast = 3}
+end
+local pocket_particle = function(self)
+  G.booster_pack_sparkles = Particles(1, 1, 0,0, {
+    timer = 0.015,
+    scale = 0.1,
+    initialize = true,
+    lifespan = 3,
+    speed = 0.2,
+    padding = -1,
+    attach = G.ROOM_ATTACH,
+    colours = {G.C.WHITE, lighten(G.C.RED, 0.2)},
+    fill = true
+  })
+  G.booster_pack_sparkles.fade_alpha = 1
+  G.booster_pack_sparkles:fade(1, 0)
+end
+
 local pack1 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_1",
@@ -305,10 +324,45 @@ local wish_pack = {
   in_pool = function(self)
     return false
   end,
+  ease_background_colour = function(self)
+    --Copy planet packs
+    ease_colour(G.C.DYN_UI.MAIN, mix_colours(G.C.SECONDARY_SET.Planet, G.C.BLACK, 0.9))
+    ease_background_colour{new_colour = G.C.BLACK, contrast = 3}
+  end,
+  particles = function(self)
+    G.booster_pack_stars = Particles(1, 1, 0,0, {
+      timer = 0.07,
+      scale = 0.1,
+      initialize = true,
+      lifespan = 15,
+      speed = 0.1,
+      padding = -4,
+      attach = G.ROOM_ATTACH,
+      colours = {G.C.WHITE, HEX('a7d6e0'), HEX('fddca0')},
+      fill = true
+    })
+    G.booster_pack_meteors = Particles(1, 1, 0,0, {
+        timer = 2,
+        scale = 0.05,
+        lifespan = 1.5,
+        speed = 4,
+        attach = G.ROOM_ATTACH,
+        colours = {G.C.WHITE},
+        fill = true
+    })
+	end,
 	group_key = "k_poke_wish_pack",
 }
 
+local pack_list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack}
+
+for k, v in pairs(pack_list) do
+  if not v.ease_background_colour then
+    v.ease_background_colour = pocket_background
+    v.particles = pocket_particle
+  end
+end
 
 return {name = "Pocket Packs",
-        list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack}
+        list = pack_list
 }

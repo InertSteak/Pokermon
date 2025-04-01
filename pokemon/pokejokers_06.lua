@@ -1,7 +1,7 @@
 --Code for pokemon jokers 151-180
 local mew ={
   name = "mew", 
-  pos = {x = 12, y = 11},
+  pos = {x = pokermon_config.pokemon_altart and 11 or 12, y = pokermon_config.pokemon_altart and 12 or 11},
   soul_pos = { x = 0, y = 12},
   config = {extra = {percent = 15}},
   loc_vars = function(self, info_queue, center)
