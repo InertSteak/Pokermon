@@ -484,6 +484,7 @@ local billion_lions = {
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  no_collection = true,
   calculate = function(self, card, context)
     if context.setting_blind and not card.getting_sliced then
       local destroyed = 0
