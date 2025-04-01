@@ -3475,7 +3475,6 @@ return {
                     "Pokemon {C:attention}Joker{} when hand is played",
                     "Guaranteed with a scoring {C:attention}Wild{} card",
                     "{C:inactive}(Must have room){}",
-                    
                 } 
             },
             j_poke_jelly_donut = {
