@@ -833,7 +833,7 @@ local pichu={
   stage = "Baby", 
   ptype = "Lightning",
   atlas = "Pokedex2",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
