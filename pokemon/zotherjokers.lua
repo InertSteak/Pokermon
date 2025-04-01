@@ -479,7 +479,7 @@ local billion_lions = {
   end,
   rarity = 4,
   cost = 6,
-  stage = "Other",
+  stage = "Legendary",
   atlas = "Pokedex9",
   perishable_compat = true,
   blueprint_compat = true,
