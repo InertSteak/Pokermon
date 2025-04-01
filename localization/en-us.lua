@@ -3471,11 +3471,11 @@ return {
             j_poke_tall_grass = {
                 name = 'Tall Grass',
                 text = {
-                    "{C:green}#1# in #2#{} chance to create a",
-                    "{C:chips}Common{} Pokemon {C:attention}Joker{}",
-                    "when hand is played",
-                    "Guaranteed if scoring hand",
-                    "contains a {C:attention}Wild{} card",
+                    "{C:green}#1# in #2#{} chance to create a {C:chips}Common{}",
+                    "Pokemon {C:attention}Joker{} when hand is played",
+                    "Guaranteed with a scoring {C:attention}Wild{} card",
+                    "{C:inactive}(Must have room){}",
+                    
                 } 
             },
             j_poke_jelly_donut = {
