@@ -1915,8 +1915,8 @@ jd_def["j_poke_shellder"] = {
     },
 calc_function = function(card)
     local status
-    local hand = JokerDisplay.current_hand
-    if hand and #hand > 0 and #hand == 5 then
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
         status = "Active!"
     else
         status = "Not Active!"
@@ -1937,18 +1937,18 @@ jd_def["j_poke_cloyster"] = {
             { text = ")" },
         },
     },
-calc_function = function(card)
-    local status
-    local hand = JokerDisplay.current_hand
-    if hand and #hand > 0 and #hand == 5 then
-        status = "Active!"
-    else
-        status = "Not Active!"
+    calc_function = function(card)
+        local status
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+            status = "Active!"
+        else
+            status = "Not Active!"
+        end
+            card.joker_display_values.status = status
+            card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
     end
-        card.joker_display_values.status = status
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-end
-}
+    }
 
 -- Gastly 
 -- Haunter 
