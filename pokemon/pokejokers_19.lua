@@ -32,8 +32,8 @@ local zorua = {
   name = "zorua", 
   pos = { x = 6, y = 5 },
   soul_pos = { x = 8, y = 12 },
-  config = {extra = {hidden_key = nil, rounds = 5}},
-  rarity = 2,
+  config = {extra = {hidden_key = nil, rounds = 5, active = true}},
+  rarity = 3,
   cost = 8,
   stage = "Basic",
   ptype = "Dark",
@@ -41,11 +41,8 @@ local zorua = {
   blueprint_compat = true,
   rental_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.once = true
-    end
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
+    if other_joker and other_joker ~= card and not context.no_blueprint and card.ability.extra.active then
       context.blueprint = (context.blueprint or 0) + 1
       context.blueprint_card = context.blueprint_card or card
       if context.blueprint > #G.jokers.cards + 1 then return end
@@ -61,24 +58,20 @@ local zorua = {
         return other_joker_ret
       end
     end
-    if context.after and (G.GAME.chips + hand_chips*mult < G.GAME.blind.chips and G.jokers.cards[#G.jokers.cards] ~= card) then
+    if context.after and G.jokers.cards[#G.jokers.cards] ~= card and card.ability.extra.active then
       G.E_MANAGER:add_event(Event({
-        func = function()
-          card.ability.fainted = G.GAME.round
-          card:set_debuff()
-          return true
-        end
-      }))
-      return {
-        message = localize('poke_reveal_ex')
-      }
+        trigger = 'after',
+        delay = 0.2,
+        func = function() 
+          card.ability.extra.active = false
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_reveal_ex')})
+      return true end }))
     end
-    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      if card.ability.extra.once then
-        card.ability.extra.once = nil
-        return level_evo(self, card, context, "j_poke_zoroark")
-      end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.active = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
+    return level_evo(self, card, context, "j_poke_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
     local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
@@ -145,15 +138,15 @@ local zorua = {
           }}
         }}
       } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
+      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds, card.ability.extra.active and "("..localize('k_active_ex')..")" or ''}}
       desc_nodes[#desc_nodes+1] = main_end
     end
   end,
   update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+    if G.STAGE == G.STAGES.RUN and card.area == G.jokers  then
       local other_joker = G.jokers.cards[#G.jokers.cards]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if card.ability.blueprint_compat == 'compatible' and not card.debuff then
+      if card.ability.blueprint_compat == 'compatible' and not card.debuff and card.ability.extra.active then
         card.children.center.atlas = other_joker.children.center.atlas
         card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
         if other_joker.children.floating_sprite then
