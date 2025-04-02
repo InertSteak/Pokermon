@@ -726,18 +726,19 @@ local smeargle={
     type_tooltip(self, info_queue, card)
     if card and card.ability and card.ability.extra.copy_joker then
       local other_center = card.ability.extra.copy_joker.config.center
-      local other_vars = nil
+      local new_config = copy_table(card.ability.extra.copy_joker.ability)
       if type(other_center.loc_vars) == "function" then
         local other_queue = {}
-        other_vars = other_center:loc_vars(other_queue, card.ability.extra.copy_joker)
+        local other_vars = other_center:loc_vars(other_queue, card.ability.extra.copy_joker)
         if other_vars and other_vars.vars then
-          other_vars = other_vars.vars
+          new_config.loc_vars_replacement = other_vars.vars
         end
         if other_queue and #other_queue > 0 then
           -- Can filter sub-tooltips for any "needed" tooltips
         end
       end
-      info_queue[#info_queue + 1] = { set = 'Joker', key = other_center.key, config = {loc_vars_replacement = other_vars} }
+      info_queue[#info_queue + 1] = { set = 'Joker', key = other_center.key, name = other_center.name, config = new_config }
+      print(info_queue[#info_queue])
     end
     local _c = card and card.config.center or card
     if not full_UI_table.name then
