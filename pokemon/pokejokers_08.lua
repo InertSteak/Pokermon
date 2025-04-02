@@ -738,7 +738,6 @@ local smeargle={
         end
       end
       info_queue[#info_queue + 1] = { set = 'Joker', key = other_center.key, name = other_center.name, config = new_config }
-      print(info_queue[#info_queue])
     end
     local _c = card and card.config.center or card
     if not full_UI_table.name then
