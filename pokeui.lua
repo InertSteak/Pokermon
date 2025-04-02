@@ -1,7 +1,8 @@
 --Config UI
 local restart_toggles_left = { 
                  {ref_value = "pokeballs", label = "poke_settings_pokeballs"},
-                 {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"}
+                 {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"},
+                 {ref_value = "pokemon_aprilfools", label = "poke_settings_pokemon_aprilfools"}
                 }
                 
 local restart_toggles_right = { 
@@ -597,7 +598,7 @@ G.FUNCS.pokedexui = function(e)
       local selected = G.jokers.highlighted[1]
       if selected.config.center.stage then
         G.FUNCS.overlay_menu{
-          definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name, selected.config.center.poke_custom_prefix)),
+          definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name, selected.config.center.poke_custom_prefix, selected)),
         }
       end
     end
@@ -630,7 +631,7 @@ function Controller:queue_R_cursor_press(x, y)
         local menu = G.SETTINGS.paused and 'pokedex_back' or nil
         if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
         G.FUNCS.overlay_menu{
-          definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix), menu),
+          definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
         }
       end
     end
@@ -647,7 +648,7 @@ function Controller:capture_focused_input(button, input_type, dt)
           if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
           G.SETTINGS.paused = true
           G.FUNCS.overlay_menu{
-            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix), menu),
+            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
           }
           self:update_focus()
         end

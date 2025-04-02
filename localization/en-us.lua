@@ -2380,6 +2380,16 @@ return {
                   "Chips {C:attention}Doubled{} on {C:attention}final hand{} of round",
                 }
             },
+            j_poke_smeargle = {
+                name = "Smeargle",
+                text = {
+                  "Copy ability of {C:attention}Joker{} to the right",
+                  "when blind is selected",
+                  "{C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Applies {C:attention}Smeared Joker{}",
+                }
+            },
             j_poke_tyrogue = {
                 name = 'Tyrogue',
                 text = {
@@ -4402,6 +4412,7 @@ return {
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
+            poke_settings_pokemon_aprilfools = "April Fools Content?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

@@ -675,7 +675,7 @@ get_previous_evo = function(card, full_key)
   return prev
 end
 
-get_family_keys = function(cardname, custom_prefix)
+get_family_keys = function(cardname, custom_prefix, card)
   local keys = {}
   local line = nil
   local extra = nil
@@ -724,6 +724,11 @@ get_family_keys = function(cardname, custom_prefix)
       else
         table.insert(keys, custom_prefix..extra[i])
       end
+    end
+  end
+  if cardname == "smeargle" then
+    if card.ability.extra.copy_joker then
+      table.insert(keys, card.ability.extra.copy_joker.config.center_key)
     end
   end
   return keys

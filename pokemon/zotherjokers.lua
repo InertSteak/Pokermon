@@ -517,6 +517,12 @@ local billion_lions = {
   end
 }
 
-return {name = "Other Jokers",
+if pokermon_config.pokemon_aprilfools then
+  return {name = "Other Jokers",
         list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, billion_lions}
-}
+  }
+else
+  return {name = "Other Jokers",
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival}
+  }
+end

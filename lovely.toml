@@ -252,10 +252,11 @@ pattern = '''
 '''
 position = "at"
 payload = '''
+    local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "balatro"
     G.SPLASH_LOGO = Sprite(0, 0, 
         13*SC_scale, 
-        13*SC_scale*(G.ASSET_ATLAS["poke_smeargle_logo"].py/G.ASSET_ATLAS["poke_smeargle_logo"].px),
-        G.ASSET_ATLAS["poke_smeargle_logo"], {x=0,y=0})
+        13*SC_scale*(G.ASSET_ATLAS[poke_logo].py/G.ASSET_ATLAS[poke_logo].px),
+        G.ASSET_ATLAS[poke_logo], {x=0,y=0})
 '''
 match_indent = true
 
