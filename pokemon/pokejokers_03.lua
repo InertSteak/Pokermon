@@ -630,11 +630,7 @@ local graveler={
         }
       end
     end
-    if not context.repetition and not context.individual and context.end_of_round and card.ability.extra.evolve then
-      return {
-        message = evolve (self, card, context, 'j_poke_golem')
-      }
-    end
+    return item_evo(self, card, context, "j_poke_golem")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
