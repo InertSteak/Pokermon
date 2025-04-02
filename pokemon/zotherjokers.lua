@@ -314,42 +314,41 @@ local mystery_egg = {
       end
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if from_debuff then return end
-    if not card.ability or not card.ability.extra or not card.ability.extra.key then return end
-
-    local poke_keys = {}
-    for k, v in pairs(G.P_CENTERS) do
-      if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
-        if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
-          table.insert(poke_keys, {key = v.key, rarity = v.rarity})
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local poke_keys = {}
+      for k, v in pairs(G.P_CENTERS) do
+        if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
+          if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
+            table.insert(poke_keys, {key = v.key, rarity = v.rarity})
+          end
         end
       end
-    end
 
-    local poke_key = {key = "j_poke_rhyhorn", rarity = 2}
-    if #poke_keys > 0 then
-      poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
-    end
-    -- common hatches in 2 turns
-    -- uncommon hatches in 2 or 3 turns
-    -- rare hatches in 3 turns
-
-    -- w/o fire = 2/3/3
-    -- w/1 fire = 2/2/3
-    -- w/2 fire = 2/2/2
-    if poke_key.rarity == 1 then
-      card.ability.extra.rounds = 2
-    elseif poke_key.rarity == 2 then
-      card.ability.extra.rounds = 2
-      if pseudorandom('regg') > .50 then
-        card.ability.extra.rounds = card.ability.extra.rounds + 1 
+      local poke_key = {key = "j_poke_rhyhorn", rarity = 2}
+      if #poke_keys > 0 then
+        poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
       end
-    elseif poke_key.rarity == 3 then
-       card.ability.extra.rounds = 3
+      -- common hatches in 2 turns
+      -- uncommon hatches in 2 or 3 turns
+      -- rare hatches in 3 turns
+
+      -- w/o fire = 2/3/3
+      -- w/1 fire = 2/2/3
+      -- w/2 fire = 2/2/2
+      if poke_key.rarity == 1 then
+        card.ability.extra.rounds = 2
+      elseif poke_key.rarity == 2 then
+        card.ability.extra.rounds = 2
+        if pseudorandom('regg') > .50 then
+          card.ability.extra.rounds = card.ability.extra.rounds + 1 
+        end
+      elseif poke_key.rarity == 3 then
+         card.ability.extra.rounds = 3
+      end
+      card.ability.extra.key = poke_key.key
     end
-    card.ability.extra.key = poke_key.key
-  end,
+  end
   --[[ Function for dynatext, needs to be changed to put it as a tooltip
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
 
