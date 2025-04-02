@@ -2383,9 +2383,8 @@ return {
             j_poke_smeargle = {
                 name = "Smeargle",
                 text = {
-                  "Copy ability of {C:attention}Joker{} to the right",
+                  "{C:attention}Sketch{} ability of {C:attention}Joker{} to the right",
                   "when blind is selected",
-                  "{C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Applies {C:attention}Smeared Joker{}",
                 }
@@ -4110,6 +4109,15 @@ return {
                 "The following ability only triggers",
                 "when this is the rightmost Joker",
                 "{C:inactive}(Ignoring {C:attention}Volatile{C:inactive} Pokemon)"
+              }
+            },
+            sketch = {
+              name = "Sketch",
+              text = {
+                "Copies Joker until it is sold,",
+                "destroyed or you copy another ability",
+                "Copy appears as a tooltip",
+                "and in Pokedex menu"
               }
             },
             precise_energy_tooltip = {

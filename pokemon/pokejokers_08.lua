@@ -680,6 +680,7 @@ local smeargle={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_smeared', config = {} }
+    info_queue[#info_queue+1] = {set = 'Other', key = 'sketch', vars = {}}
     return {vars = {}}
   end,
   rarity = 3,
@@ -721,6 +722,7 @@ local smeargle={
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_smeared', config = {} }
+    info_queue[#info_queue+1] = {set = 'Other', key = 'sketch', vars = {}}
     type_tooltip(self, info_queue, card)
     if card and card.ability and card.ability.extra.copy_joker then
       info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.copy_joker.config.center_key]
