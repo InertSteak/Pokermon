@@ -489,7 +489,7 @@ local billion_lions = {
     if context.setting_blind and not card.getting_sliced then
       local destroyed = 0
       for k, v in pairs(G.jokers.cards) do
-        if v ~= card and has_type(v) then
+        if v ~= card and has_type(v) and not v.ability.eternal then
           destroyed = destroyed + 1
           v.getting_sliced = true
           G.E_MANAGER:add_event(Event({func = function()
