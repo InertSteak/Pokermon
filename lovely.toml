@@ -283,7 +283,7 @@ match_indent = true
 target = 'functions/misc_functions.lua'
 pattern = '''function find_joker(name, non_debuff)'''
 position = 'after'
-payload = '''  
+payload = '''
 if name == "Shortcut" then
   local asdf = find_joker("poke_Shortcut")
   local dsaf = find_joker("pansage")
@@ -309,6 +309,8 @@ elseif name == "poke_Pareidolia" then
   name = "Pareidolia"
 elseif name == "poke_Four_Fingers" then
   name = "Four Fingers"
+elseif name == "poke_Smeared_Joker" then
+  name = "Smeared Joker"
 end
 '''
 match_indent = true
