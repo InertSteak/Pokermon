@@ -2228,12 +2228,12 @@ return {
             j_poke_wobbuffet = {
               name = "Wobbuffet",
               text = {
+                "Retrigger each played",
+                "{C:attention}6{}, {C:attention}7{}, {C:attention}8{}, {C:attention}9{} or {C:attention}10{}",
+                "{br:2}text needs to be here to work",
                 "{C:attention}Volatile Left{}",
                 "When blind is selected",
                 "add {C:attention}Eternal{} to rightmost Joker",
-                "{br:2}text needs to be here to work",
-                "Retrigger each played",
-                "{C:attention}6{}, {C:attention}7{}, {C:attention}8{}, {C:attention}9{} or {C:attention}10{}"
               }
             },
             j_poke_pineco = {

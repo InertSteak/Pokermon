@@ -638,7 +638,7 @@ local wobbuffet={
   calculate = function(self, card, context)
     if context.setting_blind and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
       local target = G.jokers.cards[#G.jokers.cards]
-      if target ~= card and not (target.ability.eternal or target.ability.perishable) then
+      if target ~= card and not (target.ability.eternal or target.ability.perishable) and target.config.center.eternal_compat then
         target:set_eternal(true)
         card:juice_up()
         card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_shadow_tag_ex'), COLOUR = G.C.DARK_EDITION})
@@ -657,6 +657,32 @@ local wobbuffet={
         }
       end
     end
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+      local right_joker = G.jokers.cards[#G.jokers.cards]
+      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.eternal_compat and 'compatible') or 'incompatible'
+    end
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+      info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'}
+      type_tooltip(self, info_queue, card)
+    local _c = card and card.config.center or card
+    if not full_UI_table.name then
+      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+    end
+    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
+    card.ability.blueprint_compat_check = nil
+    local main_end = (card.area and card.area == G.jokers) and {
+      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
+          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
+        }}
+      }}
+    } or nil
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.retriggers}}
+    desc_nodes[#desc_nodes+1] = main_end
   end,
 }
 -- Girafarig 203
