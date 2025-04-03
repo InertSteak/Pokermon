@@ -689,7 +689,7 @@ local smeargle={
   ptype = "Colorless",
   atlas = "Pokedex2",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind and card.ability.blueprint_compat == 'compatible' and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
