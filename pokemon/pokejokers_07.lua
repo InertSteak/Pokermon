@@ -617,6 +617,48 @@ local misdreavus = {
 }
 -- Unown 201
 -- Wobbuffet 202
+local wobbuffet={
+  name = "wobbuffet",
+  pos = {x = 0, y = 5},
+  config = {extra = {retriggers = 1, volatile = 'left'}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'}
+    return {vars = {center.ability.extra.retriggers, }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
+      local target = G.jokers.cards[#G.jokers.cards]
+      if target ~= card and not (target.ability.eternal or target.ability.perishable) then
+        target:set_eternal(true)
+        card:juice_up()
+        card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_shadow_tag_ex'), COLOUR = G.C.DARK_EDITION})
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 6 or 
+         context.other_card:get_id() == 7 or 
+         context.other_card:get_id() == 8 or 
+         context.other_card:get_id() == 9 or 
+         context.other_card:get_id() == 10 then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Girafarig 203
 --[[
 local girafarig={
@@ -806,5 +848,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, pineco, forretress, dunsparce, steelix},
 }

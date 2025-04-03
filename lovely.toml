@@ -252,12 +252,33 @@ pattern = '''
 '''
 position = "at"
 payload = '''
-    local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "balatro"
+    local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "poke_logo"
     G.SPLASH_LOGO = Sprite(0, 0, 
         13*SC_scale, 
         13*SC_scale*(G.ASSET_ATLAS[poke_logo].py/G.ASSET_ATLAS[poke_logo].px),
         G.ASSET_ATLAS[poke_logo], {x=0,y=0})
 '''
+match_indent = true
+
+# Replace start menu card with wobbuffet
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)
+'''
+position = "at"
+payload = '''
+local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.empty, G.P_CENTERS.j_poke_wobbuffet)
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "replace_card.states.visible = false"
+position = "after"
+payload = "replace_card.seal = nil"
 match_indent = true
 
 # Description functionality, a little hacky but it works

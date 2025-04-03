@@ -2225,6 +2225,17 @@ return {
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
             },
+            j_poke_wobbuffet = {
+              name = "Wobbuffet",
+              text = {
+                "{C:attention}Volatile Left{}",
+                "When blind is selected",
+                "add {C:attention}Eternal{} to rightmost Joker",
+                "{br:2}text needs to be here to work",
+                "Retrigger each played",
+                "{C:attention}6{}, {C:attention}7{}, {C:attention}8{}, {C:attention}9{} or {C:attention}10{}"
+              }
+            },
             j_poke_pineco = {
               name = "Pineco",
               text = {
@@ -2619,6 +2630,15 @@ return {
                 text = {
                   "Retrigger all played cards if",
                   "they all have the same {C:attention}suit{}",
+                }
+            },
+            j_poke_wynaut = {
+                name = 'Wynaut',
+                text = {
+                    "{C:attention}Baby{}, {X:red,C:white} X#1# {} Mult",
+                    "Create a {C:attention}Fool{} card with",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_snorunt = {
@@ -4513,6 +4533,7 @@ return {
             poke_shake_ex = "Shake!",
             poke_closed_ex = "Closed!",
             poke_reload_ex = "Reload!",
+            poke_shadow_tag_ex = "Shadow Tag!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
