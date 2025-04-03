@@ -362,6 +362,7 @@ local jirachi_copy = {
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    if not card then return end
     local _c = card and card.config.center or card
     if not full_UI_table.name then
 			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
