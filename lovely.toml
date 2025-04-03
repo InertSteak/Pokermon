@@ -783,3 +783,50 @@ if not should_debuff and self.area == G.hand and self.ability and self.ability.c
 end
 '''
 match_indent = true
+
+
+#Fix Missing video draw check for Sprite:draw_from function
+[[patches]]
+[patches.pattern]
+target = "engine/sprite.lua"
+pattern = '''
+love.graphics.setColor(G.BRUTE_OVERLAY or G.C.WHITE)
+love.graphics.draw(
+    self.atlas.image,
+    self.sprite,
+    -(other_obj.T.w/2 -other_obj.VT.w/2)*10,
+    0,
+    0,
+    other_obj.VT.w/(other_obj.T.w),
+    other_obj.VT.h/(other_obj.T.h)
+)
+'''
+position = "at"
+payload = '''
+love.graphics.setColor(G.BRUTE_OVERLAY or G.C.WHITE)
+if self.video then 
+    self.video_dims = self.video_dims or {
+        w = self.video:getWidth(),
+        h = self.video:getHeight(),
+    }
+    love.graphics.draw(
+        self.video,
+        -(other_obj.T.w/2 -other_obj.VT.w/2)*10,
+        0,
+        0,
+        other_obj.VT.w/(other_obj.T.w)/(self.video_dims.w/self.scale.x),
+        other_obj.VT.h/(other_obj.T.h)/(self.video_dims.h/self.scale.y)
+    )
+else
+    love.graphics.draw(
+        self.atlas.image,
+        self.sprite,
+        -(other_obj.T.w/2 -other_obj.VT.w/2)*10,
+        0,
+        0,
+        other_obj.VT.w/(other_obj.T.w),
+        other_obj.VT.h/(other_obj.T.h)
+    )
+end
+'''
+match_indent = true

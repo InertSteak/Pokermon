@@ -676,6 +676,7 @@ local stantler={
 local smeargle={
   name = "smeargle",
   pos = {x = 3, y = 8},
+  soul_pos = { x = 5, y = 10},
   config = {extra = {copy_joker = nil, copy_pos = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -773,7 +774,53 @@ local smeargle={
       local right_joker = G.jokers.cards[found_pos]
       card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
     end
-  end
+  end,
+  -- Stolen completely from CardSauce
+  --    Thank you for your code, <3
+  draw = function(self, card, layer)
+    if card.area.config.collection and not self.discovered then
+      return
+    end
+
+    love.graphics.push('all')
+    love.graphics.reset()
+    if not card.children.floating_sprite.video then
+      --Sometimes, such as when a game is saved and loaded, the canvas gets de-initialized.
+      --We need to check for this, and re-initialize it.
+      card.children.floating_sprite.video = love.graphics.newCanvas(3*71, 3*95)
+      card.children.floating_sprite.video:renderTo(function()
+        love.graphics.clear(1, 1, 1, 0)
+        love.graphics.setColor(1, 1, 1, 1)
+      end)
+    end
+
+    local other_joker = card.ability.extra.copy_joker
+    card.children.floating_sprite.video:renderTo(function()
+      love.graphics.clear(1, 1, 1, 0)
+      if other_joker and other_joker.children and other_joker.children.center then
+        local x, y, w, h = card.children.center.sprite:getViewport()
+        local x2, y2, w2, h2 = other_joker.children.center.sprite:getViewport()
+        local scale = h/h2
+        love.graphics.draw(
+          other_joker.children.center.atlas.image,
+          other_joker.children.center.sprite,
+          150, 75,
+          0,
+          h/h2, h/h2,
+          w2/2, h2/2)
+        if other_joker.children.floating_sprite then
+          love.graphics.draw(
+            other_joker.children.floating_sprite.atlas.image,
+            other_joker.children.floating_sprite.sprite,
+            150, 75,
+            0,
+            h/h2, h/h2,
+            w2/2, h2/2)
+        end
+      end
+    end)
+    love.graphics.pop()
+  end,
 }
 -- Tyrogue 236
 local tyrogue={
