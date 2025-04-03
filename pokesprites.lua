@@ -295,8 +295,8 @@ SMODS.Atlas({
 SMODS.Atlas({
     key = "poke_logo",
     path = "poke_logo.png",
-    px = 350,
-    py = 194
+    px = 389,
+    py = 216
 }):register()
 
 --Custom sounds
