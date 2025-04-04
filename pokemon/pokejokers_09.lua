@@ -776,7 +776,7 @@ local linoone={
   end,
   rarity = 2,
   cost = 5,
-  stage = "Basic",
+  stage = "One",
   ptype = "Colorless",
   atlas = "Pokedex3",
   perishable_compat = true,
