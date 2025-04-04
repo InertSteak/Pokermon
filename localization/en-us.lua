@@ -171,8 +171,8 @@ return {
                     "{C:attention}Reusable{}",
                     "{C:green}#1# in #2#{} chance to add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
-                    "{C:dark_edition}Polychrome{} edition to self",
-                    "{C:green}#1# in #3#{} chance to {S:1.1,C:red,E:2}self destruct{}",
+                    "{C:dark_edition}Polychrome{} to self",
+                    "remove {C:attention}Edition{} at end of round",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -224,7 +224,7 @@ return {
                 name = "Upgrade",
                 text = {
                     "Gives {C:attention}#1#{} selected cards",
-                    "a random {C:attention}Enhancement{}",
+                    "a random {C:attention}non-Stone Enhancement{}",
                     "{C:attention}Evolution Card{}",
                 }
             },
@@ -4055,6 +4055,23 @@ return {
                     "{C:green}20%{} - {C:attention}Coupon Tag",
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
+            },
+            pickup = {
+              name = "Pickup",
+              text = {
+                "{C:green}34%{} - {C:item}Item{} {C:attention}Card",
+                "{C:green}25%{} - {C:attention}Leftovers",
+                "{C:green}25%{} - {C:attention}Poke Ball",
+                "{C:green}15%{} - {C:attention}Great Ball",
+                "{C:green}1%{} - {C:attention}Ultra Ball",
+              }
+            },
+            pokeballs_group = {
+              name = "Pokeballs",
+              text = {
+                "Creates a random Joker",
+                "with a certain quality",
+              }
             },
             percent_chance = {
                 name = "Percent Chance",

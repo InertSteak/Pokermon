@@ -683,7 +683,131 @@ local swampert={
 -- Poochyena 261
 -- Mightyena 262
 -- Zigzagoon 263
+local zigzagoon={
+  name = "zigzagoon",
+  pos = {x = 1, y = 1},
+  config = {extra = {odds = 6,rounds = 5,}},
+  loc_txt = {
+    name = "Zigzagoon",
+    text = {
+      "{C:attention}Holding Pickup{} {C:item}Item{}",
+      "{C:green}#1# in #2#{} chance to create an",
+      "{C:item}Item{} when hand is played",
+      "{C:inactive}(Must have room)",
+      "{C:inactive,s:0.8}(Evolves after {C:attention}#3#{C:inactive,s:0.8} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'pokeballs_group'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if pseudorandom('zigzag') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local card_type = 'Item'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end}
+          }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_linoone")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local item_key = 'c_poke_ultraball'
+      local item_chance = pseudorandom('zigzag')
+      if item_chance < .34 then item_key = nil
+      elseif item_chance < .59 then item_key = 'c_poke_leftovers'
+      elseif item_chance < .84 then item_key = 'c_poke_pokeball'
+      elseif item_chance < .99 then item_key = 'c_poke_greatball'
+      end
+      local _card = create_card('Item',G.consumeables, nil, nil, nil, nil, item_key)
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card:juice_up()
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink})
+    end
+  end,
+}
 -- Linoone 264
+local linoone={
+  name = "linoone",
+  pos = {x = 2, y = 1},
+  config = {extra = {odds = 4,rounds = 5,}},
+  loc_txt = {
+    name = "Linoone",
+    text = {
+      "{C:green}#1# in #2#{} chance to create an",
+      "{C:item}Item{} when hand is played",
+      "Guaranteed if hand",
+      "contains a {C:attention}Straight{}",
+      "{C:inactive}(Must have room)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if next(context.poker_hands['Straight']) or pseudorandom('linoone') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local card_type = 'Item'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end}
+          }
+        end
+      end
+    end
+  end,
+}
 -- Wurmple 265
 -- Silcoon 266
 -- Beautifly 267
@@ -691,5 +815,5 @@ local swampert={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {miltank, blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert},
+        list = {miltank, blissey, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
 }

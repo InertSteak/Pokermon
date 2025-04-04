@@ -366,7 +366,7 @@ local leftovers = {
   key = "leftovers",
   set = "Item",
   helditem = true,
-  config = {extra = {joker_highlighted = 1, previous_round = 0, money_mod = 2}},
+  config = {extra = {joker_highlighted = 1, money_mod = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     return {vars = {self.config.extra.joker_highlighted, self.config.extra.money_mod}}
@@ -376,13 +376,16 @@ local leftovers = {
   cost = 3,
   unlocked = true,
   discovered = true,
+  hidden = true,
+  soul_set = "Item",
+  soul_rate = .025,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
        or G.STATE == G.STATES.STANDARD_PACK then return false end
     if card.area == G.shop_jokers then return false end
     if not (G.jokers and G.jokers.cards) then return false end
     if #G.jokers.cards == 0 then return false end
-    return G.GAME.round > card.ability.extra.previous_round
+    return card.ability.extra.usable
   end,
   use = function(self, card, area, copier)
     local target = nil
@@ -396,7 +399,13 @@ local leftovers = {
     G.E_MANAGER:add_event(Event({
       func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
     end}))
-    card.ability.extra.previous_round = G.GAME.round
+    card.ability.extra.usable = false
+  end,
+  calculate = function(self, card, context)
+    if context.end_of_round and not card.ability.extra.usable then
+      card.ability.extra.usable = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+    end
   end,
   keep_on_use = function(self, card)
     return true
@@ -411,7 +420,7 @@ local leek = {
   key = "leek",
   set = "Item",
   helditem = true,
-  config = {extra = {odds = 3, odds2 = 8, previous_round = 0}},
+  config = {extra = {odds = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     local card = center or self
@@ -424,8 +433,7 @@ local leek = {
     if not card.edition or (card.edition and not card.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds, 
-            card.ability and card.ability.extra.odds2 or card.config.extra.odds2}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds}}
   end,
   pos = { x = 8, y = 4 },
   atlas = "Mart",
@@ -436,15 +444,13 @@ local leek = {
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
        or G.STATE == G.STATES.STANDARD_PACK then return false end
     if card.area == G.shop_jokers then return false end
-    return G.GAME.round > card.ability.extra.previous_round
+    return card.ability.extra.usable
   end,
   use = function(self, card, area, copier)
     local item_chance = pseudorandom('leek')
     local removed = nil
-    if item_chance < G.GAME.probabilities.normal/card.ability.extra.odds2 then
-      removed = true
-      remove(self, card, {})
-    elseif item_chance < G.GAME.probabilities.normal/card.ability.extra.odds then
+    
+    if item_chance < G.GAME.probabilities.normal/card.ability.extra.odds then
       local edition = poll_edition('wheel_of_fortune', nil, true, true)
       card:set_edition(edition, true)
     else
@@ -465,15 +471,22 @@ local leek = {
               card:juice_up(0.3, 0.5)
       return true end }))
     end
-    if not removed then
-      card.ability.extra.previous_round = G.GAME.round
+    card.ability.extra.usable = false
+  end,
+  calculate = function(self, card, context)
+    if context.end_of_round and card.edition then
+      card:set_edition(nil, true)
+    end
+    if context.end_of_round and not card.ability.extra.usable then
+      card.ability.extra.usable = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
     end
   end,
   keep_on_use = function(self, card)
     return true
   end,
   in_pool = function(self)
-    return true
+    return false
   end
 }
 
@@ -482,7 +495,7 @@ local thickclub = {
   key = "thickclub",
   set = "Item",
   helditem = true,
-  config = {max_highlighted = 1, bonus = 10, extra = {previous_round = 0}},
+  config = {max_highlighted = 1, bonus = 10, extra = {usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -493,6 +506,9 @@ local thickclub = {
   cost = 3,
   unlocked = true,
   discovered = true,
+  hidden = true,
+  soul_set = "Item",
+  soul_rate = .025,
   can_use = function(self, card)
     if card.area == G.shop_jokers then return false end
     if G.hand.highlighted and #G.hand.highlighted ~= 1 then return false end
@@ -501,7 +517,7 @@ local thickclub = {
       if #G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit then return false end
     end
     
-    return G.GAME.round > card.ability.extra.previous_round
+    return card.ability.extra.usable
   end,
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
@@ -514,7 +530,13 @@ local thickclub = {
     juice_flip(card, true)
     delay(0.5)
     poke_unhighlight_cards()
-    card.ability.extra.previous_round = G.GAME.round
+    card.ability.extra.usable = false
+  end,
+  calculate = function(self, card, context)
+    if context.end_of_round and not card.ability.extra.usable then
+      card.ability.extra.usable = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+    end
   end,
   keep_on_use = function(self, card)
     return true
@@ -723,17 +745,7 @@ local upgrade = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
-      local enhancement_type = pseudorandom(pseudoseed('upgrade'))
-      local enhancement = nil
-      if enhancement_type > .875 then enhancement = G.P_CENTERS.m_bonus
-      elseif enhancement_type > .75 then enhancement = G.P_CENTERS.m_mult
-      elseif enhancement_type > .625 then enhancement = G.P_CENTERS.m_wild
-      elseif enhancement_type > .50 then enhancement = G.P_CENTERS.m_glass
-      elseif enhancement_type > .375 then enhancement = G.P_CENTERS.m_steel
-      elseif enhancement_type > .25 then enhancement = G.P_CENTERS.m_stone
-      elseif enhancement_type > .125 then enhancement = G.P_CENTERS.m_gold
-      else enhancement = G.P_CENTERS.m_lucky
-      end
+      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(enhancement, nil, true)
