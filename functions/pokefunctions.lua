@@ -233,212 +233,124 @@ remove = function(self, card, context, check_shiny)
   return true
 end
 
-evolve = function(self, card, context, forced_key)
-  if not context.retrigger_joker then
-    local previous_position = nil
-    local poketype_list = nil
-    local previous_edition = nil
-    local previous_perishable = nil
-    local previous_perish_tally = nil
-    local previous_eternal = nil
-    local previous_rental = nil
-    local previous_energy_count = nil
-    local previous_c_energy_count = nil
-    local shiny = nil
-    local type_sticker = nil
-    local scaled_values = nil
-    local reset_apply_type = nil
-    local previous_extra_value = nil
-    local previous_targets = nil
-    local previous_rank = nil
-    local previous_id = nil
-    local previous_cards_scored = nil
-    local previous_hazards_drawn = nil
-    local previous_upgrade = nil
-    local previous_mega = nil
-    
-    for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i] == card then
-        previous_position = i
-        break
+poke_evolve = function(card, to_key, immediate)
+  if immediate then
+    poke_backend_evolve(card, to_key)
+  else
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if card.evolution_timer or G.P_CENTERS[to_key] == card.config.center then return true end
+        card.evolution_timer = 0
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 1.5,
+            delay = 2.0,
+            func = (function(t) return t end)
+        }))
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            poke_backend_evolve(card, to_key)
+            return true
+          end
+        }))
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 2.25,
+            delay = 1.0,
+            func = (function(t) return t end)
+        }))
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card.evolution_timer = nil
+            play_sound('tarot1')
+            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            return true
+          end
+        }))
+        return true
       end
-    end
-    
-    if card.edition then
-      previous_edition = card.edition
-      if card.edition.poke_shiny then
-        shiny = true
-      end
-    end
-    
-    if card.ability.perishable then
-      previous_perishable = card.ability.perishable
-      previous_perish_tally = card.ability.perish_tally
-    end
-      
-    if card.ability.eternal then
-      previous_eternal = card.ability.eternal
-    end
+    }))
+  end
+end
 
-    if card.ability.rental then
-      previous_rental = card.ability.rental
-    end
-    
-    if card.ability.extra and card.ability.extra.energy_count then
-      previous_energy_count  = card.ability.extra.energy_count
-    end
-      
-    if card.ability.extra and card.ability.extra.c_energy_count then
-      previous_c_energy_count  = card.ability.extra.c_energy_count
-    end 
-    
-    scaled_values = copy_scaled_values(card)
+-- Stolen from Cardsauce
+-- Based on code from Ortalab
+poke_backend_evolve = function(card, to_key)
+  local new_card = G.P_CENTERS[to_key]
+  if card.config.center == new_card then return end
 
-    if type_sticker_applied then
-      poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-      for l, v in pairs(poketype_list) do
-        if card.ability[v.."_sticker"] then
-          type_sticker = v
-          break
+  -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
+  if card.ability.perishable and card.config.center.rarity ~= "poke_mega" and not card.ability.extra.devolved and card.ability.perish_tally > 0 then
+    card.ability.perish_tally = G.GAME.perishable_rounds
+  end
+
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  local values_to_keep = copy_scaled_values(card)
+  if type(card.ability.extra) == "table" then
+    for _, k in pairs(names_to_keep) do
+      values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+
+  -- value filtering
+  if values_to_keep.hazards_drawn then
+    values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
+  end
+
+  if values_to_keep.cards_scored and values_to_keep.cards_scored >= 15 then
+    values_to_keep.upgrade = true
+    values_to_keep.cards_scored = values_to_keep.cards_scored - 15
+  end
+
+  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas], new_card.pos)
+  card.children.center.states.hover = card.states.hover
+  card.children.center.states.click = card.states.click
+  card.children.center.states.drag = card.states.drag
+  card.children.center.states.collide.can = false
+  card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+  card:set_ability(new_card)
+  card:set_cost()
+
+  if type(card.ability.extra) == "table" then
+    for k,v in pairs(values_to_keep) do
+      if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" then
+        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) then
+          card.ability.extra[k] = v
         end
       end
     end
-    
-    if card.ability.extra_value then
-      previous_extra_value = card.ability.extra_value
+    if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
+      energize(card, nil, true, true)
     end
-    
-    if card.ability.extra and card.ability.extra.targets then
-      previous_targets = card.ability.extra.targets
-    end
-    
-    if card.ability.name == "fidough" then
-      previous_rank = card.ability.extra.rank
-      previous_id = card.ability.extra.id
-    end
-    
-    if card.ability.name == "spearow" then
-      previous_cards_scored = card.ability.extra.cards_scored
-      previous_upgrade = card.ability.extra.upgrade
-    end
-    
-    if card.ability.name == "tarountula" then
-      previous_hazards_drawn = card.ability.extra.hazards_drawn
-    end
-    
-    
-    if card.config.center.rarity == "poke_mega" then
-      previous_mega = true
-    end
-    
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
-      remove(self, card, context)
-    return true end }))
-    
-    if G.GAME.modifiers.apply_type then
-      G.GAME.modifiers.apply_type = false
-      reset_apply_type = true
-    end
-    
-    local temp_card = {set = "Joker", area = G.jokers, key = forced_key, no_edition = true}
-    local new_card = SMODS.create_card(temp_card)
-    
-    new_card.states.visible = false
-    
-    if reset_apply_type then
-      G.GAME.modifiers.apply_type = true
-    end
-    
-    if previous_edition then
-      if shiny then
-        local edition = {poke_shiny = true}
-         new_card:set_edition(edition, true)
-         new_card.config.shiny_on_add = true
-         SMODS.change_booster_limit(-1)
-      else
-        new_card:set_edition(previous_edition, true)
-      end
-    end
-    
-    if previous_perishable then
-       new_card.ability.perishable = previous_perishable
-       if previous_mega or card.ability.extra.devolved or card.ability.perish_tally <= 0 then
-        new_card.ability.extra.devolved = true
-        new_card.ability.perish_tally = previous_perish_tally
-       else
-         new_card.ability.perish_tally = G.GAME.perishable_rounds
-       end
-    end
+  end
 
-    if previous_eternal then
-      new_card.ability.eternal = previous_eternal
-    end
+  if new_card.soul_pos then
+    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas], new_card.soul_pos)
+    card.children.floating_sprite.role.draw_major = card
+    card.children.floating_sprite.states.hover.can = false
+    card.children.floating_sprite.states.click.can = false
+  elseif card.children.floating_sprite then
+    card.children.floating_sprite:remove()
+    card.children.floating_sprite = nil
+  end
 
-    if previous_rental then
-      new_card.ability.rental = previous_rental
+  if not card.edition then
+    card:juice_up()
+    play_sound('generic1')
+  else
+    card:juice_up(1, 0.5)
+    if card.edition.foil then play_sound('foil1', 1.2, 0.4) end
+    if card.edition.holo then play_sound('holo1', 1.2*1.58, 0.4) end
+    if card.edition.polychrome then play_sound('polychrome1', 1.2, 0.7) end
+    if card.edition.negative then play_sound('negative', 1.5, 0.4) end
+    if card.edition.poke_shiny then
+      play_sound('poke_e_shiny', 1, 0.2)
+      G.P_CENTERS.e_poke_shiny.on_load(card)
     end
-    
-    if new_card.ability and new_card.ability.extra and previous_energy_count then
-      new_card.ability.extra.energy_count = previous_energy_count
-    end
-    
-    if new_card.ability and new_card.ability.extra and previous_c_energy_count then
-      new_card.ability.extra.c_energy_count = previous_c_energy_count
-    end
-    
-    if new_card.ability and new_card.ability.extra and (new_card.ability.extra.energy_count or new_card.ability.extra.c_energy_count) then
-      energize(new_card, nil, true)
-    end
-    
-    if scaled_values then
-      for l, v in pairs(scaled_values) do
-        if v and v > 0 and new_card.ability and new_card.ability.extra and type(new_card.ability.extra) == "table" and new_card.ability.extra[l] and v > new_card.ability.extra[l] then
-          new_card.ability.extra[l] = v
-        end
-      end
-    end
-    
-    if type_sticker then
-      apply_type_sticker(new_card, type_sticker)
-    end
-    
-    if previous_extra_value then
-      new_card.ability.extra_value = previous_extra_value
-      new_card:set_cost()
-    end
-    
-    if previous_targets then
-      new_card.ability.extra.targets = previous_targets
-    end
-    
-    if previous_rank and previous_id then
-      new_card.ability.extra.rank = previous_rank
-      new_card.ability.extra.id = previous_id
-    end
-    
-    if previous_cards_scored then
-      if previous_cards_scored >= 15 then
-        previous_upgrade = true
-        previous_cards_scored = previous_cards_scored - 15
-      end
-      new_card.ability.extra.cards_scored = previous_cards_scored
-      new_card.ability.extra.upgrade = previous_upgrade
-    end
-    
-    if previous_hazards_drawn then
-      if previous_hazards_drawn > 1 then
-        previous_hazards_drawn = previous_hazards_drawn % 2
-      end
-      new_card.ability.extra.hazards_drawn = previous_hazards_drawn
-    end
-    
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.1, func = function()
-        new_card:add_to_deck()
-        G.jokers:emplace(new_card, previous_position)
-        new_card.states.visible = true
-    return true end }))
-
-    return localize("poke_evolve_success")
   end
 end
 
@@ -461,7 +373,7 @@ level_evo = function(self, card, context, forced_key)
       end
       if card.ability.extra.rounds <= 0 then
         return {
-          message = evolve (self, card, context, forced_key)
+          message = poke_evolve(card, forced_key)
         }
       elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
@@ -474,7 +386,7 @@ level_evo = function(self, card, context, forced_key)
     end
     if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
       juice_card_until(card, eval, true)
     end
 end
@@ -485,8 +397,9 @@ item_evo = function(self, card, context, forced_key)
         forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]
       end
       if forced_key and can_evolve(self, card, context, forced_key) then
+        card.ability.extra.evolve = nil
         return {
-          message = evolve (self, card, context, forced_key)
+          message = poke_evolve(card, forced_key)
         }
       end
 
@@ -508,7 +421,7 @@ scaling_evo = function (self, card, context, forced_key, current, target)
   end
   if can_evolve(self, card, context, forced_key) and current >= target then
     return {
-      message = evolve (self, card, context, forced_key)
+      message = poke_evolve(card, forced_key)
     }
   end
   if can_evolve(self, card, context, forced_key, true) and current >= target then
@@ -523,7 +436,7 @@ end
 type_evo = function (self, card, context, forced_key, type_req)
   if can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
     return {
-      message = evolve (self, card, context, forced_key)
+      message = poke_evolve(card, forced_key)
     }
   elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
     if not card.ability.extra.juiced then
@@ -542,7 +455,7 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
     end
     if suit_count/#G.playing_cards >= percentage then
       return {
-        message = evolve (self, card, context, forced_key)
+        message = poke_evolve(card, forced_key)
       }
     end
   end
@@ -556,11 +469,11 @@ deck_enhance_evo = function (self, card, context, forced_key, enhancement, perce
     end
     if percentage and (enhance_count/#G.playing_cards >= percentage) then
       return {
-        message = evolve (self, card, context, forced_key)
+        message = poke_evolve(card, forced_key)
       }
     elseif flat and (enhance_count >= flat) then
       return {
-        message = evolve (self, card, context, forced_key)
+        message = poke_evolve(card, forced_key)
       }
     end
   end
@@ -578,11 +491,11 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
     end
     if percentage and (seal_count/#G.playing_cards >= percentage) then
       return {
-        message = evolve (self, card, context, forced_key)
+        message = poke_evolve(card, forced_key)
       }
     elseif flat and (seal_count >= flat) then
       return {
-        message = evolve (self, card, context, forced_key)
+        message = poke_evolve(card, forced_key)
       }
     end
   end
@@ -796,7 +709,7 @@ evo_item_use = function(self, card, area, copier)
         if evolve then
           v.ability.extra.evolve = evolve
           applied = true
-          local eval = function(v) return not v.REMOVED end
+          local eval = function(v) return not v.ability.extra.evolve end
           juice_card_until(v, eval, true)
         end
       end

@@ -18,7 +18,7 @@ local fake_banker = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_banker")
+            poke_evolve(jirachi, "j_poke_jirachi_banker")
             return
          end
       end
@@ -48,7 +48,7 @@ local fake_booster = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_booster")
+            poke_evolve(jirachi, "j_poke_jirachi_booster")
             return
          end
       end
@@ -78,7 +78,7 @@ local fake_power = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_power")
+            poke_evolve(jirachi, "j_poke_jirachi_power")
             return
          end
       end
@@ -107,7 +107,7 @@ local fake_negging = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_negging")
+            poke_evolve(jirachi, "j_poke_jirachi_negging")
             return
          end
       end
@@ -137,7 +137,7 @@ local fake_copy = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_copy")
+            poke_evolve(jirachi, "j_poke_jirachi_copy")
             return
          end
       end
@@ -167,7 +167,7 @@ local fake_fixer = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            evolve(jirachi, jirachi, {}, "j_poke_jirachi_fixer")
+            poke_evolve(jirachi, "j_poke_jirachi_fixer")
             return
          end
       end
@@ -198,7 +198,7 @@ local fake_masterball = {
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
             local forced_evo = get_random_poke_key("masterball", "Legendary", nil, nil, nil, {j_poke_jirachi = true})
-            evolve(jirachi, jirachi, {}, forced_evo)
+            poke_evolve(jirachi, forced_evo)
             return
          end
       end
