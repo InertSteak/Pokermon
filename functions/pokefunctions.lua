@@ -265,6 +265,7 @@ poke_evolve = function(card, to_key, immediate)
         G.E_MANAGER:add_event(Event({
           func = function()
             card.evolution_timer = nil
+            play_sound('tarot1')
             card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
             return true
           end
@@ -395,6 +396,7 @@ item_evo = function(self, card, context, forced_key)
         forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]
       end
       if forced_key and can_evolve(self, card, context, forced_key) then
+        card.ability.extra.evolve = nil
         return {
           message = poke_evolve(card, forced_key)
         }
@@ -706,7 +708,7 @@ evo_item_use = function(self, card, area, copier)
         if evolve then
           v.ability.extra.evolve = evolve
           applied = true
-          local eval = function(v) return not v.REMOVED end
+          local eval = function(v) return not v.ability.extra.evolve end
           juice_card_until(v, eval, true)
         end
       end
