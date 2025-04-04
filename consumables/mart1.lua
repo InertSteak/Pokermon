@@ -527,7 +527,7 @@ local transformation = {
       local prefix = choice.config.center.poke_custom_prefix or "poke"
       local forced_key = "j_"..prefix.."_"..highest
       local context = {}
-      evolve(choice, choice, context, forced_key)
+      poke_evolve(choice, forced_key)
     end
   end
 }
@@ -608,7 +608,7 @@ local megastone = {
     local context = {}
     card.ability.extra.previous_round = G.GAME.round
      
-    evolve(target, target, context, forced_key)
+    poke_evolve(target, forced_key)
   end,
   keep_on_use = function(self, card)
     return true
@@ -628,9 +628,8 @@ local megastone = {
     if card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then
       for k, v in ipairs(G.jokers.cards) do
         if v.config.center.key == card.ability.extra.used_on then
-          local context = {}
           local forced_key = get_previous_evo(v, true)
-          evolve(v, v, context, forced_key)
+          poke_evolve(v, forced_key)
           break
         end
       end
