@@ -238,7 +238,7 @@ poke_evolve = function(card, to_key, immediate)
   else
     G.E_MANAGER:add_event(Event({
       func = function()
-        if card.evolution_timer then return true end
+        if card.evolution_timer or G.P_CENTERS[to_key] == card.config.center then return true end
         card.evolution_timer = 0
         G.E_MANAGER:add_event(Event({
             trigger = 'ease',
