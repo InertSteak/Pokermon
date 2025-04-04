@@ -112,24 +112,31 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     number mid_hid = (1.-length(adjusted_uv)) - evolution.b * 5. * length(adjusted_uv);
     mid_hid = 13. * (evolution.b + 0.5) * length(adjusted_uv) - 2./(0.5+evolution.b);
     if (evolution.b > 1.5)
-        mid_hid = mid_hid - 260. * (evolution.b - 1.5) * length(adjusted_uv) * length(adjusted_uv) - (evolution.b - 1.0) * 0.7;
+        mid_hid = min(1.,mid_hid) - (evolution.b - 1.75) * 2. - 10. * (evolution.b - 1.5) * length(adjusted_uv);
     else
         mid_hid = mid_hid - 0.1/length(adjusted_uv);
 
-    if (evolution.b > 0.5)
+    vec4 hsl_evo = HSL(vec4(0.,0.,0.,1.));
+    hsl_evo.r = evolution.g / 3.;
+    hsl_evo.g = 0.4;
+    hsl_evo.b = sqrt(min(1., max(0., bg_color)));
+    if (evolution.b > 0.75)
     {
         number new_b = sin(2.*(evolution.b - 0.75) * 3.14159265359 / 3.)/5;
         new_b = new_b * (1+sin(angle*3.14159265359 * 5 + evolution.g)/30+cos(angle*3.14159265359 * 2 + evolution.g)/30);
-        new_b = new_b / length(adjusted_uv);                    
-        bg_color = min(1., bg_color + new_b * new_b * new_b * new_b );
-
-        mid_hid = max(mid_hid, new_b);
+        new_b = new_b / length(adjusted_uv);
+        new_b = new_b * new_b * new_b * new_b - 0.2;
+        new_b = new_b * min(1., max(0., evolution.b * 2. - 1.5));
+        hsl_evo.g = min(1., hsl_evo.g + new_b);
+        hsl_evo.b = min(1., hsl_evo.b + new_b);
+        mid_hid = min(1., max(0., max(mid_hid, new_b)));
+        if (evolution.b > 1.75)
+            mid_hid = mid_hid * min(1., max(0., 4.5 - evolution.b*2.));
     }
+    hsl_evo = RGB(hsl_evo);
+    hsl_evo.a = min(tex.a, mid_hid);
+    tex = hsl_evo;
 
-    tex.r = bg_color;
-    tex.g = bg_color;
-    tex.b = bg_color;
-    tex.a = min(tex.a, mid_hid);
 
     return dissolve_mask(tex*colour, texture_coords, uv);
 }
