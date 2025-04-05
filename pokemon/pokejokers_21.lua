@@ -339,7 +339,7 @@ local golett={
   ptype = "Psychic",
   atlas = "Pokedex5",
   perishable_compat = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
