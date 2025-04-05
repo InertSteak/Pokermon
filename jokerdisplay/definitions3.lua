@@ -556,10 +556,28 @@ text_config = { colour = G.C.CHIPS },
 --	Metagross
 jd_def["j_poke_metagross"] = {
     text = {
-        { text = "+" },
-        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+        { text = "+", colour = G.C.CHIPS },
+        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+        { text = " " },
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+            }
+        },
     },
-text_config = { colour = G.C.CHIPS },
+    calc_function = function(card)
+        local x_mult = 1
+        local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
+        if poker_hands['Four of a Kind'] and next(poker_hands['Four of a Kind']) then
+            for _, scoring_card in pairs(scoring_hand) do
+                local total_chips = poke_total_chips(scoring_card)
+                local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                x_mult = x_mult * (total_chips ^ (retriggers/3))
+            end
+        end
+        card.joker_display_values.x_mult = x_mult
+    end,
 }
 
 --	Regirock
@@ -571,4 +589,48 @@ text_config = { colour = G.C.CHIPS },
 --	Groudon
 --	Rayquaza
 --	Jirachi
+jd_def["j_poke_jirachi_power"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+            }
+        }
+    },
+    reminder_text = {
+        { text = "(" },
+        { ref_table = "card.joker_display_values", ref_value = "loyalty_text" },
+        { text = ")" },
+    },
+    calc_function = function(card)
+        card.joker_display_values.loyalty_text = localize { type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = { card.ability.extra.loyalty_remaining } }
+
+        if card.ability.extra.loyalty_remaining == 0 then
+            local total_triggers = 0
+            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+            if text ~= 'Unknown' then
+                for _, scoring_card in pairs(scoring_hand) do
+                    total_triggers = total_triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                end
+            end
+            card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ total_triggers
+        else
+            card.joker_display_values.x_mult = 1
+        end
+    end
+}
+jd_def["j_poke_jirachi_fixer"] = {
+    reminder_text = {
+        { text = "(Hand: " },
+        { ref_table = "card.joker_display_values", ref_value = "hand_active_text" },
+        { text = "  Discard: " },
+        { ref_table = "card.joker_display_values", ref_value = "discard_active_text" },
+        { text = ")" },
+    },
+    calc_function = function(card)
+        card.joker_display_values.hand_active_text = localize(G.GAME.current_round.hands_played == 0 and 'k_active_ex' or 'k_copied_ex')
+        card.joker_display_values.discard_active_text = localize(G.GAME.current_round.discards_used == 0 and 'k_active_ex' or 'k_copied_ex')
+    end
+}
 --	Deoxys

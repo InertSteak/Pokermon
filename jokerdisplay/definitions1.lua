@@ -836,8 +836,13 @@ jd_def["j_poke_jigglypuff"] = {
 jd_def["j_poke_wigglytuff"] = {
     text = {
         { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
-        { text = "x",                              scale = 0.35 },
+        { text = "x(",                              scale = 0.35 },
         {ref_table = "card.ability.extra", ref_value = "mult", colour = G.C.MULT},
+        { text = " ",                              scale = 0.35 },
+        {ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS},
+        { text = ")",                              scale = 0.35 },
+        { text = " +", colour = G.C.CHIPS,         scale = 0.35 },
+        { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS, retrigger_type = "mult" },
     },
     extra = {
         {
@@ -854,13 +859,15 @@ jd_def["j_poke_wigglytuff"] = {
 
     calc_function = function(card)
         local count = 0
+        local chips = 0
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then
                 for _, scoring_card in pairs(scoring_hand) do
                     if scoring_card:is_suit("Spades") then
-                        count = count +
-                            JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                        local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                        count = count + retriggers
+                        chips = chips + poke_total_chips(scoring_card) * retriggers
                     end
                 end
             end
@@ -868,8 +875,9 @@ jd_def["j_poke_wigglytuff"] = {
             count = 3
         end
         card.joker_display_values.count = count
+        card.joker_display_values.chips = chips
         card.joker_display_values.localized_text = localize("Spades", 'suits_plural')
-    end
+    end,
 }
 
 jd_def["j_poke_zubat"] = {
