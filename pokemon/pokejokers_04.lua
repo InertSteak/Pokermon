@@ -987,8 +987,9 @@ local kangaskhan={
   atlas = "Pokedex1",
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
+    local add = card.ability.extra.card_limit
     G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit + add
       return true end }))
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
     local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
@@ -997,8 +998,9 @@ local kangaskhan={
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
+    local remove = card.ability.extra.card_limit
     G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
+      G.consumeables.config.card_limit = G.consumeables.config.card_limit - remove
       return true end }))
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
     if not from_debuff then
