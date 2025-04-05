@@ -261,8 +261,7 @@ energize = function(card, etype, evolving, silent)
   end
 end
 
-can_increase_energy = function(card)
-  if pokermon_config.unlimited_energy then return true end
+get_total_energy = function(card)
   local curr_energy_count = nil
   local curr_c_energy_count = nil
   if card.ability.extra and type(card.ability.extra) == "table" then
@@ -272,7 +271,12 @@ can_increase_energy = function(card)
     curr_energy_count = card.ability.energy_count or 0
     curr_c_energy_count = card.ability.c_energy_count or 0
   end
-  return curr_energy_count + curr_c_energy_count < energy_max + (G.GAME.energy_plus or 0)
+  return curr_energy_count + curr_c_energy_count
+end
+
+can_increase_energy = function(card)
+  if pokermon_config.unlimited_energy then return true end
+  return get_total_energy(card) < energy_max + (G.GAME.energy_plus or 0)
 end
 
 increment_energy = function(card, etype)

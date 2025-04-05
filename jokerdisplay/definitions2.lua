@@ -179,27 +179,45 @@ jd_def["j_poke_furret"] = {
 }
 
 --	Hoothoot
--- jd_def["j_poke_hoothoot"] = { 
---     text = {
---         { text = "+" },
---         { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
---     },
---     text_config = { colour = G.C.CHIPS },
--- calc_function = function(card)
---     local chips = 0
---     if G.scry_view then
---         for k, v in pairs(G.scry_view.cards) do
---             local total_chips = poke_total_chips(v)
---             chips = chips + total_chips
---         end
---         card.joker_display_values.chips = chips
---     else
---         card.joker_display_values.chips = 0
---     end
--- end
---}
+jd_def["j_poke_hoothoot"] = { 
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+    },
+    text_config = { colour = G.C.CHIPS },
+calc_function = function(card)
+    local chips = 0
+    if G.scry_view then
+        for k, v in pairs(G.scry_view.cards) do
+            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+        end
+        card.joker_display_values.chips = chips
+    else
+        card.joker_display_values.chips = 0
+    end
+end
+}
 
 --	Noctowl
+jd_def["j_poke_noctowl"] = { 
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+    },
+    text_config = { colour = G.C.CHIPS },
+calc_function = function(card)
+    local chips = 0
+    if G.scry_view then
+        for k, v in pairs(G.scry_view.cards) do
+            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+        end
+        card.joker_display_values.chips = chips
+    else
+        card.joker_display_values.chips = 0
+    end
+end
+}
+
 --	Ledyba
 jd_def["j_poke_ledyba"] = { 
     text = {
@@ -784,7 +802,51 @@ end
 }
 
 --	Remoraid
+jd_def["j_poke_remoraid"] = {
+    text = {
+        { ref_table = "card.joker_display_values", ref_value = "status", retrigger_type = "mult" },
+        { text = " Left" },
+    },
+    text_config = { colour = G.C.GREY },
+    calc_function = function(card)
+        card.joker_display_values.status = card.ability.extra.card_max - card.ability.extra.cards
+    end,
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+        if held_in_hand then return 0 end
+        local remaining = joker_card.ability.extra.card_max - joker_card.ability.extra.cards
+        if remaining >= #scoring_hand then return 1 end
+
+        for i = 1, remaining do
+            if playing_card == scoring_hand[i] then
+                return 1
+            end
+        end
+        return 0
+    end,
+}
 --	Octillery
+jd_def["j_poke_octillery"] = {
+    text = {
+        { ref_table = "card.joker_display_values", ref_value = "status", retrigger_type = "mult" },
+        { text = " Left" },
+    },
+    text_config = { colour = G.C.GREY },
+    calc_function = function(card)
+        card.joker_display_values.status = card.ability.extra.card_max - card.ability.extra.cards
+    end,
+    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+        if held_in_hand then return 0 end
+        local remaining = joker_card.ability.extra.card_max - joker_card.ability.extra.cards
+        if remaining >= #scoring_hand then return 1 end
+
+        for i = 1, remaining do
+            if playing_card == scoring_hand[i] then
+                return 1
+            end
+        end
+        return 0
+    end,
+}
 --	Delibird
 --	Mantine
 jd_def["j_poke_mantine"] = { 

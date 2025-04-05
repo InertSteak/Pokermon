@@ -2712,8 +2712,9 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
+                    "Every {C:attention}#2# hands{}, played cards",
                     "give {X:mult,C:white}X#1#{} Mult when scored",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {
