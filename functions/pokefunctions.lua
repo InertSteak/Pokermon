@@ -283,6 +283,8 @@ poke_backend_evolve = function(card, to_key)
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
 
+  local old_key = card.config.center.key
+
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" and not card.ability.extra.devolved and card.ability.perish_tally > 0 then
     card.ability.perish_tally = G.GAME.perishable_rounds
@@ -352,6 +354,13 @@ poke_backend_evolve = function(card, to_key)
       G.P_CENTERS.e_poke_shiny.on_load(card)
     end
   end
+
+  -- can be removed once this PR has been merged:
+  --    https://github.com/Steamodded/smods/pull/611
+  if old_key and not next(SMODS.find_card(old_key, true)) then
+    G.GAME.used_jokers[old_key] = nil
+  end
+
 end
 
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
