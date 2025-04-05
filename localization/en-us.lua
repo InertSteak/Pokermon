@@ -4173,7 +4173,7 @@ return {
                 "destroyed or you copy another ability",
                 "Copy appears as a tooltip",
                 "and in Pokedex menu",
-                "Sketch reset when Joker copied"
+                "Sketch resets when Joker is copied"
               }
             },
             precise_energy_tooltip = {
