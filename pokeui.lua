@@ -215,7 +215,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive, PrincessRoxie",
+                  text = "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive, PrincessRoxie, Catzzadilla, bt",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
