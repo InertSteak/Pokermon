@@ -185,6 +185,7 @@ for _, file in ipairs(pfiles) do
           end
         end
         item.discovered = not pokermon_config.pokemon_discovery
+        if item.name == "wobbuffet" then item.discovered = true end
         local prev_load = item.load
         item.load = function(self, card, card_table, other_card)
           card_table.ability.extra.juiced = nil
