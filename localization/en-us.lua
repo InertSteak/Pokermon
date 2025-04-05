@@ -2236,6 +2236,15 @@ return {
                 "add {C:attention}Eternal{} to rightmost Joker",
               }
             },
+            j_poke_girafarig = {
+              name = "Girafarig",
+              text = {
+                "First and last {C:attention}face{} card",
+                "give {X:mult,C:white}X#1#{} Mult when scored",
+                "if played hand contains a {C:attention}Two Pair{}",
+                "{C:inactive,s:0.8}(Evolves after using a {C:attention,s:0.8}Death{C:inactive,s:0.8} on {C:attention,s:0.8}2{C:inactive,s:0.8} face cards){}"
+              }
+            },
             j_poke_pineco = {
               name = "Pineco",
               text = {
@@ -3442,6 +3451,15 @@ return {
                   "{C:attention}+#1#{} Voucher slot available in shop",
                 }
             },
+            j_poke_farigiraf = {
+              name = "Farigiraf",
+              text = {
+                "{C:attention}Holding{} {C:spectral}Cryptid{}",
+                "First and last {C:attention}face{} card",
+                "give {X:mult,C:white}X#1#{} Mult when scored",
+                "if played hand contains a {C:attention}Two Pair{}",
+              }
+            },
             j_poke_gimmighoul = {
                 name = "Gimmighoul (Chest)",
                 text = {
@@ -4154,7 +4172,8 @@ return {
                 "Copies Joker until it is sold,",
                 "destroyed or you copy another ability",
                 "Copy appears as a tooltip",
-                "and in Pokedex menu"
+                "and in Pokedex menu",
+                "Sketch reset when Joker copied"
               }
             },
             precise_energy_tooltip = {

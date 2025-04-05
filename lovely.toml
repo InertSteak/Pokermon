@@ -820,3 +820,17 @@ if vars_only and type(self.ability.loc_vars_replacement) == "table" then
 end
 '''
 match_indent = true
+
+# Smeargle fix with copy effects
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "new_card:set_base(other.config.card)"
+position = "after"
+payload = '''
+if other.config.center.name == "smeargle" then
+  other.ability.extra.copy_joker = nil
+  other.ability.extra.copy_pos = 0
+end
+'''
+match_indent = true
