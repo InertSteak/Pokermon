@@ -620,17 +620,93 @@ jd_def["j_poke_jirachi_power"] = {
         end
     end
 }
-jd_def["j_poke_jirachi_fixer"] = {
+-- Can't think of a good way to show this without it being ridiculous
+-- jd_def["j_poke_jirachi_fixer"] = {
+--     reminder_text = {
+--         { text = "(Hand: " },
+--         { ref_table = "card.joker_display_values", ref_value = "hand_active_text" },
+--         { text = "  Discard: " },
+--         { ref_table = "card.joker_display_values", ref_value = "discard_active_text" },
+--         { text = ")" },
+--     },
+--     calc_function = function(card)
+--         card.joker_display_values.hand_active_text = localize(G.GAME.current_round.hands_played == 0 and 'k_active_ex' or 'k_copied_ex')
+--         card.joker_display_values.discard_active_text = localize(G.GAME.current_round.discards_used == 0 and 'k_active_ex' or 'k_copied_ex')
+--     end
+-- }
+jd_def["j_poke_jirachi_copy"] = {
     reminder_text = {
-        { text = "(Hand: " },
-        { ref_table = "card.joker_display_values", ref_value = "hand_active_text" },
-        { text = "  Discard: " },
-        { ref_table = "card.joker_display_values", ref_value = "discard_active_text" },
-        { text = ")" },
+        { text = "(" },
+        { ref_table = "card.joker_display_values", ref_value = "blueprint_compat", colour = G.C.RED },
+        { text = ")" }
     },
     calc_function = function(card)
-        card.joker_display_values.hand_active_text = localize(G.GAME.current_round.hands_played == 0 and 'k_active_ex' or 'k_copied_ex')
-        card.joker_display_values.discard_active_text = localize(G.GAME.current_round.discards_used == 0 and 'k_active_ex' or 'k_copied_ex')
+        local copied_joker, copied_debuff = JokerDisplay.calculate_blueprint_copy(card)
+        local true_copy = copied_joker
+        card.joker_display_values.blueprint_compat = localize('k_incompatible')
+        if true_copy then
+            if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
+                true_copy = card.joker_display_values.fake_card
+                while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
+                    energize(true_copy, nil, nil, true)
+                    if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
+                      true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
+                    else
+                      true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + 1
+                    end
+                end
+
+                true_copy:update_joker_display(true)
+            else
+                true_copy = copy_card(copied_joker)
+
+                card.joker_display_values.to_track = {}
+                card.joker_display_values.extra_to_track = {}
+                for i = 1, card.ability.extra.energy_buff do
+                  energize(true_copy, nil, nil, true)
+                end
+                for k,v in pairs(copied_joker.ability) do
+                    if type(true_copy.ability[k]) ~= "table" then
+                        if true_copy.ability[k] == v then
+                            true_copy.ability[k] = nil
+                        end
+                    end
+                end
+                setmetatable(true_copy.ability, {__index=copied_joker.ability})
+                if type(copied_joker.ability.extra) == "table" then
+                    for k,v in pairs(copied_joker.ability.extra) do
+                        if true_copy.ability.extra[k] == v then
+                            true_copy.ability.extra[k] = nil
+                        end
+                    end
+                    setmetatable(true_copy.ability.extra, {__index=copied_joker.ability.extra})
+                end
+
+                if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
+                  true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + card.ability.extra.energy_buff
+                  true_copy.ability.extra.c_energy_count = (true_copy.ability.extra.c_energy_count or 0)
+                else
+                  true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + card.ability.extra.energy_buff
+                  true_copy.ability.c_energy_count = (true_copy.ability.c_energy_count or 0)
+                end
+                
+                true_copy:remove()
+                true_copy:update_joker_display(true, true)
+                if card.joker_display_values then
+                    card.joker_display_values.fake_card = true_copy
+                end
+            end
+        end
+        JokerDisplay.copy_display(card, true_copy, copied_debuff)
+    end,
+    get_blueprint_joker = function(card)
+        for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i] == card then
+                return G.jokers.cards[i + 1]
+            end
+        end
+        return nil
     end
 }
+
 --	Deoxys
