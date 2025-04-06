@@ -723,7 +723,7 @@ evo_item_use = function(self, card, area, copier)
         if evolve then
           v.ability.extra.evolve = evolve
           applied = true
-          local eval = function(v) return not v.ability.extra.evolve end
+          local eval = function(v) return v.ability.extra.evolve end
           juice_card_until(v, eval, true)
         end
       end
@@ -748,7 +748,7 @@ highlighted_evo_item = function(self, card, area, copier)
     
     if evolve then
       choice.ability.extra.evolve = evolve
-      local eval = function(choice) return not v.ability.extra.evolve end
+      local eval = function(choice) return choice.ability.extra.evolve end
       juice_card_until(choice, eval, true)
     end
     return evolve
