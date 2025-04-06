@@ -686,23 +686,13 @@ local wobbuffet={
   end,
 }
 -- Girafarig 203
---[[
 local girafarig={
   name = "girafarig",
   pos = {x = 1, y = 5},
-  config = {extra = {palindromes = 0}, evo_rqmt = 11},
-  loc_txt = {
-    name = "Girafarig",
-    text = {
-      "Allows you to play",
-      "a {C:attention}Palindrome{} hand",
-      "{C:inactive,s:0.8}(2 Pairs + a different rank card){}",
-      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Palindromes){}"
-    }
-  },
+  config = {extra = {Xmult_multi = 2, score = false, death_used = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.palindromes)}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 2,
   cost = 6,
@@ -714,13 +704,46 @@ local girafarig={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and next(context.poker_hands['poke_Palindrome']) and not context.blueprint then
-        card.ability.extra.palindromes = card.ability.extra.palindromes + 1
+      if context.before and next(context.poker_hands['Two Pair']) and not context.blueprint then
+        card.ability.extra.score = true
+      end
+      if context.after then
+        card.ability.extra.score = false
       end
     end
-    return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.palindromes, self.config.evo_rqmt)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.score then
+      local first_face = nil
+      local last_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          first_face = context.scoring_hand[i];
+          break
+        end
+      end
+      for i = #context.scoring_hand, 1, -1 do
+        if context.scoring_hand[i]:is_face() and context.scoring_hand[i] ~= first_face then
+          last_face = context.scoring_hand[i];
+          break
+        end
+      end
+      if context.other_card == first_face or context.other_card == last_face then
+        return {
+            x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.RED,
+            card = card
+        }
+      end
+    end
+    if context.using_consumeable and context.consumeable.label == "Death" then
+      if G.hand and G.hand.highlighted and #G.hand.highlighted > 1 then
+        if G.hand.highlighted[1]:is_face() and G.hand.highlighted[2]:is_face() then
+          card.ability.extra.death_used = card.ability.extra.death_used + 1
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.death_used, 1)
   end,
-}--]]
+}
 -- Pineco 204
 local pineco={
   name = "pineco",
@@ -874,5 +897,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }

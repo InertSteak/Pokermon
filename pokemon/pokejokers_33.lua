@@ -102,25 +102,14 @@ local annihilape={
 }
 -- Clodsire 980
 -- Farigiraf 981
---[[
 local farigiraf={
   name = "farigiraf",
   pos = {x = 4, y = 6},
-  config = {extra = {}},
-  loc_txt = {
-    name = "Farigiraf",
-    text = {
-      "Allows you to play",
-      "a {C:attention}Palindrome{} hand",
-      "{C:inactive,s:0.8}(2 Pairs + a different rank card){}",
-      "{br:2}text needs to be here to work",
-      "When you play a {C:attention}Palindrome{}",
-      "upgrade its level"
-    }
-  },
+  config = {extra = {Xmult_multi = 2.2, score = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {}}
+    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -132,16 +121,48 @@ local farigiraf={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and next(context.poker_hands['poke_Palindrome']) then
+      if context.before and next(context.poker_hands['Two Pair']) and not context.blueprint then
+        card.ability.extra.score = true
+      end
+      if context.after then
+        card.ability.extra.score = false
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.score then
+      local first_face = nil
+      local last_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          first_face = context.scoring_hand[i];
+          break
+        end
+      end
+      for i = #context.scoring_hand, 1, -1 do
+        if context.scoring_hand[i]:is_face() and context.scoring_hand[i] ~= first_face then
+          last_face = context.scoring_hand[i];
+          break
+        end
+      end
+      if context.other_card == first_face or context.other_card == last_face then
         return {
-          card = card,
-          level_up = true,
-          message = localize('k_level_up_ex')
+            x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.RED,
+            card = card
         }
       end
     end
   end,
-}--]]
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_cryptid')
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+      end
+    end
+  end,
+}
 -- Dudunsparce 982
 local dudunsparce={
   name = "dudunsparce",
@@ -211,5 +232,5 @@ local dudunsparce={
 -- Sandy Shocks 989
 -- Iron Treads 990
 return {name = "Pokemon Jokers 961-990", 
-        list = {wugtrio, annihilape, dudunsparce},
+        list = {wugtrio, annihilape, farigiraf, dudunsparce},
 }

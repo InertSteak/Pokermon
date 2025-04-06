@@ -3028,9 +3028,11 @@ return {
             j_poke_zorua = {
                 name = "Zorua",
                 text = {
-                    "Copies ability of rightmost {C:attention}Joker{}",
-                    "each round until scoring hand",
-                    "is played while copying",
+                    "{V:1}Copies ability of rightmost {C:attention}Joker{}",
+                    "{br:2.5}ERROR - CONTACT STEAK",
+                    "After scoring played hand while",
+                    "copying, remove copy effect",
+                    "until end of round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },

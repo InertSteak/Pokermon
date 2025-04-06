@@ -138,7 +138,7 @@ local zorua = {
           }}
         }}
       } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds, card.ability.extra.active and "("..localize('k_active_ex')..")" or ''}}
+      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds, colours = {not card.ability.extra.active and G.C.UI.TEXT_INACTIVE}}}
       desc_nodes[#desc_nodes+1] = main_end
     end
   end,
