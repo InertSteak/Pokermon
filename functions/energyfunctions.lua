@@ -379,7 +379,7 @@ end
 
 matching_energy = function(card)
   local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" then
+  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" and not type_sticker_applied(card) then
     if card.ability.extra.ptype == "Dark" or card.ability.extra.ptype == "dark" then
       return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
     else
