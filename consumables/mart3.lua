@@ -37,7 +37,6 @@ local prismscale = {
       pseudoshuffle(cards_held, pseudoseed('prism'))
       
       local limit = math.min(#cards_held, self.config.converted)
-      sendDebugMessage(limit)
       juice_flip_table(card, cards_held, false, limit)
       for i = 1, limit do
         G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
