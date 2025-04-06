@@ -478,6 +478,35 @@ local earth_energy = {
     end
   end
 }
+--[[local bird_energy = {
+  name = "bird_energy",
+  key = "bird_energy",
+  set = "Energy",
+  loc_vars = function(self, info_queue, center)
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+  end,
+  pos = { x = 4, y = 1 },
+  atlas = "birdup",
+  cost = 4,
+  hidden = true,
+  etype = "Bird",
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
+  end,
+  use = function(self, card, area, copier)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_use(self, card, area, copier)
+    else
+      return highlighted_energy_use(self, card, area, copier)
+    end
+  end
+}]]--
 
 local transformation = {
   name = "transformation",

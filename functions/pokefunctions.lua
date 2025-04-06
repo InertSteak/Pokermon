@@ -830,7 +830,7 @@ type_tooltip = function(self, info_queue, center)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Bird"}
   local apply_type = nil
   
   if sticker_type then
