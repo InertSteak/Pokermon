@@ -913,8 +913,6 @@ local magnemite={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        context.other_card.ability.name == 'Steel Card' then
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
           x_mult = card.ability.extra.Xmult_multi
         }
     end
@@ -957,8 +955,6 @@ local magneton={
         end
         
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)}}, 
-          colour = G.C.XMULT,
           x_mult = card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)
         }
     end

@@ -96,8 +96,6 @@ local magnezone={
        context.other_card.ability.name == 'Steel Card' then
         local total = #find_pokemon_type("Metal")
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2)}}, 
-          colour = G.C.XMULT,
           x_mult = card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2),
           card = card
         }
