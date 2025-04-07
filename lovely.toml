@@ -834,3 +834,11 @@ if other.config.center.name == "smeargle" then
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "colour = part.control.V and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+position = "at"
+payload = "colour = part.control.V and args.vars.colours and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+match_indent = true
