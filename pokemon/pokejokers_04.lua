@@ -1035,7 +1035,7 @@ local mega_kangaskhan={
     if context.using_consumeable then
       card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1
       if card.ability.extra.consumeables_used >= 2 then
-        local eval = function(card) return (card.ability.extra.consumeables_used >= 2) and not G.RESET_JIGGLES end
+        local eval = function(card) return (card.ability.extra.consumeables_used and card.ability.extra.consumeables_used >= 2) and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
       end
     end
