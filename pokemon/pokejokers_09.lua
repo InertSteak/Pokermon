@@ -106,7 +106,7 @@ local celebi = {
   stage = "Legendary",
   ptype = "Grass",
   atlas = "Pokedex2",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.skip_blind then
       card:juice_up(0.1)
