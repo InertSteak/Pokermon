@@ -159,7 +159,7 @@ local tinkaton={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.after then
         for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i].ability.name == 'Steel Card' and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
+          if context.scoring_hand[i].ability.name == 'Steel Card' and not context.scoring_hand[i].debuff and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
             context.scoring_hand[i].shattered = true
             local destroyed = context.scoring_hand[i]
             G.E_MANAGER:add_event(Event({
