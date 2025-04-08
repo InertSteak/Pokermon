@@ -199,25 +199,6 @@ if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = f
 '''
 match_indent = true
 
-#Gholdengo functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "before"
-payload = '''
-if self.ability.name == "gholdengo" then return end
-'''
-match_indent = true
-
 # Splash Screen
 [[patches]]
 [patches.pattern]
