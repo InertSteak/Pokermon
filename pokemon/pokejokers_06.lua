@@ -1164,7 +1164,7 @@ local mareep = {
   end,
   add_to_deck = function(self, card, from_debuff)
     -- set sell value equal to purchase price
-    card.ability.extra_value = (card.ability.extra_value or 0) + self.cost - card.sell_cost
+    card.ability.extra_value = (card.ability.extra_value or 0) + math.max(card.cost, self.cost) - card.sell_cost
     -- if sell value is still 1 or less, then increase it to prevent immediate evolution
     if card.sell_cost + card.ability.extra_value <= 1 then
       card.ability.extra_value = card.ability.extra_value + 1
