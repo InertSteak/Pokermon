@@ -1086,7 +1086,7 @@ poke_total_chips = function(card)
   return total_chips
 end
 
-poke_drain = function(drain_target, amount, gain_target)
+poke_drain = function(drain_target, amount, gain_target, silent)
   if drain_target.sell_cost == 1 then return end
 
   -- if sell_cost is under 1, it will be restored to 1
@@ -1095,12 +1095,16 @@ poke_drain = function(drain_target, amount, gain_target)
 
   if amount > 0 then
     drain_target:set_cost()
-    card_eval_status_text(drain_target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+    if not silent then
+      card_eval_status_text(drain_target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+    end
 
     if gain_target then
       gain_target.ability.extra_value = (gain_target.ability.extra_value or 0) + amount
       gain_target:set_cost()
-      card_eval_status_text(gain_target, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+      if not silent then
+        card_eval_status_text(gain_target, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+      end
     end
   end
   return amount
