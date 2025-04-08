@@ -1163,8 +1163,8 @@ local mareep = {
     return scaling_evo(self, card, context, "j_poke_flaaffy", self.config.evo_rqmt, card.sell_cost)
   end,
   add_to_deck = function(self, card, from_debuff)
-    -- set sell value equal to purchase price
-    card.ability.extra_value = (card.ability.extra_value or 0) + math.max(card.cost, self.cost) - card.sell_cost
+    -- set sell value equal to purchase price (without coupon or discounts)
+    card.ability.extra_value = (card.ability.extra_value or 0) + math.max(1, math.floor((card.base_cost + card.extra_cost + 0.5)*(100-G.GAME.discount_percent)/100)) - card.sell_cost
     -- if sell value is still 1 or less, then increase it to prevent immediate evolution
     if card.sell_cost + card.ability.extra_value <= 1 then
       card.ability.extra_value = card.ability.extra_value + 1
