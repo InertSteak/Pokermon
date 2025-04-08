@@ -1163,6 +1163,7 @@ local mareep = {
     return scaling_evo(self, card, context, "j_poke_flaaffy", self.config.evo_rqmt, card.sell_cost)
   end,
   add_to_deck = function(self, card, from_debuff)
+    card:set_cost()
     print("ADDING TO DECK")
     print(card.cost, card.sell_cost)
     -- set sell value equal to purchase price
