@@ -179,26 +179,6 @@ if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card
 '''
 match_indent = true
 
-#Debuff functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "after"
-payload = '''
-if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
-if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
-'''
-match_indent = true
-
 # Splash Screen
 [[patches]]
 [patches.pattern]
