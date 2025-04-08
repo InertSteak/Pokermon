@@ -321,14 +321,12 @@ local sunkern={
     return {vars = {card.ability.extra.money}}
   end,
   rarity = 1,
-  cost = 8,
+  cost = 4,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex2",
   item_req = "sunstone",
-  blueprint_compat = false,
-  perishable_compat = false,
-  eternal_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       return {
@@ -350,14 +348,12 @@ local sunflora={
     local suns = #find_joker('sunstone')
     return {vars = {card.ability.extra.mult, card.ability.extra.mult * suns}}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 8,
-  stage = "Basic",
+  stage = "One",
   ptype = "Grass",
   atlas = "Pokedex2",
-  blueprint_compat = false,
-  perishable_compat = false,
-  eternal_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind and G.GAME.blind.boss then
       G.E_MANAGER:add_event(Event({
