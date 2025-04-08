@@ -1103,6 +1103,7 @@ poke_drain = function(drain_target, amount, gain_target)
       card_eval_status_text(gain_target, 'extra', nil, nil, nil, {message = localize('k_val_up')})
     end
   end
+  return amount
 end
 
 fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
