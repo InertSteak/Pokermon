@@ -82,6 +82,7 @@ local marill={
   config = {extra = {bonus_scored = 0}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
     local bonus_left = math.max(0, self.config.evo_rqmt - card.ability.extra.bonus_scored)
 		return {vars = {bonus_left}}
   end,
@@ -115,6 +116,7 @@ local azumarill={
   config = {extra = {Xmult = 2.0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
 		return {vars = {card.ability.extra.Xmult}}
   end,
   rarity = 'poke_safari',
