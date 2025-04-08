@@ -76,7 +76,79 @@ local bellossom={
   end
 }
 -- Marill 183
+local marill={
+  name = "marill",
+  pos = {x = 1, y = 3},
+  config = {extra = {bonus_scored = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local bonus_left = math.max(0, self.config.evo_rqmt - card.ability.extra.bonus_scored)
+		return {vars = {bonus_left}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local chips = poke_total_chips(context.other_card)
+      return {
+        message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+        message_card = context.other_card,
+        colour = G.C.CHIPS,
+        chip_mod = chips,
+        card = card,
+      }
+    end
+    return level_evo(self, card, context, "j_poke_azumarill")
+  end,
+}
 -- Azumarill 184
+local azumarill={
+  name = "azumarill",
+  pos = {x = 2, y = 3},
+  config = {extra = {Xmult = 2.0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+		return {vars = {card.ability.extra.Xmult}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local chips = poke_total_chips(context.other_card)
+      return {
+        message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
+        message_card = context.other_card,
+        colour = G.C.CHIPS,
+        chip_mod = chips,
+        card = card,
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+      local all_bonus = true
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.has_enhancement(v, 'm_bonus') then
+          all_bonus = false
+          break
+        end
+      end
+      if all_bonus then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end,
+}
 -- Sudowoodo 185
 local sudowoodo={
   name = "sudowoodo",
@@ -897,5 +969,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }

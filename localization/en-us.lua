@@ -2119,6 +2119,32 @@ return {
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
+            j_poke_azurill = {
+                name = 'Azurill',
+                text = {
+                    "{C:attention}Baby{}, {X:red,C:white}X#1#{} Mult",
+                    "Create a {C:attention}Hierophant{} card with",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_marill = {
+                name = 'Marill',
+                text = {
+                    "Played cards give {C:attention}double{}",
+                    "their total chips when scored",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#1# Bonus Cards{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_azumarill = {
+                name = 'Azumarill',
+                text = {
+                    "Played cards give {C:attention}double{}",
+                    "their total chips when scored",
+                    "{X:mult,C:white}X#1#{} Mult if played hand",
+                    "only contains {C:attention}Bonus{} cards",
+                }
+            },
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
