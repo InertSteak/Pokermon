@@ -2141,6 +2141,7 @@ return {
                 text = {
                     "Played cards give {C:attention}double{}",
                     "their total chips when scored",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "{X:mult,C:white}X#1#{} Mult if played hand",
                     "only contains {C:attention}Bonus{} cards",
                 }

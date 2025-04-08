@@ -85,14 +85,17 @@ local marill={
     local bonus_left = math.max(0, self.config.evo_rqmt - card.ability.extra.bonus_scored)
 		return {vars = {bonus_left}}
   end,
-  rarity = 1,
-  cost = 4,
+  rarity = 2,
+  cost = 6,
   stage = "Basic",
-  ptype = "Colorless",
+  ptype = "Water",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if SMODS.has_enhancement(context.other_card, 'm_bonus') then
+        card.ability.extra.bonus_scored = card.ability.extra.bonus_scored + 1
+      end
       local chips = poke_total_chips(context.other_card)
       return {
         message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
@@ -102,7 +105,7 @@ local marill={
         card = card,
       }
     end
-    return level_evo(self, card, context, "j_poke_azumarill")
+    return scaling_evo(self, card, context, "j_poke_azumarill", card.ability.extra.bonus_scored, self.config.evo_rqmt)
   end,
 }
 -- Azumarill 184
@@ -114,10 +117,10 @@ local azumarill={
     type_tooltip(self, info_queue, card)
 		return {vars = {card.ability.extra.Xmult}}
   end,
-  rarity = 1,
-  cost = 4,
-  stage = "Basic",
-  ptype = "Colorless",
+  rarity = 'poke_safari',
+  cost = 7,
+  stage = "One",
+  ptype = "Water",
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
