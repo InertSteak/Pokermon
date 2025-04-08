@@ -323,7 +323,7 @@ local espeon={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "2", 'ranks'),
-                    localize(G.GAME.current_round.espeon_suit, 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit]}}}
+                    localize(G.GAME.current_round.espeon_suit or "Clubs", 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit or "Clubs"]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
