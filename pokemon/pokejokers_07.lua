@@ -311,7 +311,80 @@ local jumpluff={
 }
 -- Aipom 190
 -- Sunkern 191
+local sunkern={
+  name = "sunkern",
+  pos = {x = 9, y = 3},
+  config = {extra = {money = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    return {vars = {card.ability.extra.money}}
+  end,
+  rarity = 1,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  item_req = "sunstone",
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      return {
+        dollars = card.ability.extra.money,
+      }
+    end
+    return item_evo(self, card, context, "j_poke_sunflora")
+  end,
+}
 -- Sunflora 192
+local sunflora={
+  name = "sunflora",
+  pos = {x = 0, y = 4},
+  config = {extra = {mult = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    local suns = #find_joker('sunstone')
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * suns}}
+  end,
+  rarity = 1,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind and G.GAME.blind.boss then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_sunstone')
+          local edition = {negative = true}
+          _card:set_edition(edition, true)
+          _card:add_to_deck()
+          G.consumeables:emplace(_card)
+          return true
+        end
+      }))
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if not context.other_card.debuff and SMODS.has_enhancement(context.other_card, 'm_wild') then
+        local suns = #find_joker('sunstone')
+        if suns > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * suns}},
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult * suns
+          }
+        end
+      end
+    end
+  end,
+}
 -- Yanma 193
 -- Wooper 194
 -- Quagsire 195
@@ -897,5 +970,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }
