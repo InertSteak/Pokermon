@@ -1,4 +1,61 @@
 -- Ampharos 181
+local ampharos = {
+  name = "ampharos", 
+  pos = {x = 9, y = 2},
+  config = {extra = {money_mod1 = 2, money_mod2 = 2, money_minus = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    return {vars = {card.ability.extra.money_mod1, card.ability.extra.money_mod2, card.ability.extra.money_minus}}
+  end,
+  rarity = 'poke_safari',
+  cost = 10,
+  stage = "Two",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      for _, v in pairs(G.jokers.cards) do
+        v.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money_mod1
+        v:set_cost()
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+            return true
+          end
+        }))
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if SMODS.has_enhancement(context.other_card, 'm_glass') or context.other_card:is_suit('Spades') then
+        local to_drain = {}
+        for _, v in pairs(G.jokers.cards) do
+          if v.sell_cost >= 1 + card.ability.extra.money_minus then
+            table.insert(to_drain, v)
+          end
+        end
+
+        if #to_drain > 0 then
+          local target = pseudorandom_element(to_drain, pseudoseed('ampharos'))
+          local val = poke_drain(target, card.ability.extra.money_minus, nil, true)
+          if val > 0 then
+            return {
+              message = localize('poke_val_down'),
+              message_card = target,
+              card = card,
+              extra = {
+                dollars = val * card.ability.extra.money_mod2,
+                colour = G.C.MONEY,
+                message_card = card,
+              }
+            }
+          end
+        end
+      end
+    end
+  end,
+}
 -- Bellossom 182
 local bellossom={
   name = "bellossom",
@@ -897,5 +954,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {ampharos, bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }

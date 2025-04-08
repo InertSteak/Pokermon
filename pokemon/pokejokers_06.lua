@@ -1131,9 +1131,97 @@ local xatu = {
   end,
 }
 -- Mareep 179
+local mareep = {
+  name = "mareep", 
+  pos = {x = 7, y = 2},
+  config = {extra = {money_mod = 2, money_minus = 1}, evo_rqmt = 1},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    return {vars = {card.ability.extra.money_minus, card.ability.extra.money_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  rental_compat = false,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if card.sell_cost >= 1 + card.ability.extra.money_minus and (SMODS.has_enhancement(context.other_card, 'm_glass') or context.other_card:is_suit('Spades')) then
+        local val = poke_drain(card, card.ability.extra.money_minus)
+        if val > 0 then
+          return {
+            dollars = val * card.ability.extra.money_mod,
+            colour = G.C.MONEY,
+            message_card = card,
+          }
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_flaaffy", self.config.evo_rqmt, card.sell_cost)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    print("ADDING TO DECK")
+    print(card.cost, card.sell_cost)
+    -- set sell value equal to purchase price
+    card.ability.extra_value = (card.ability.extra_value or 0) + card.cost - card.sell_cost
+    -- if sell value is still 1 or less, then increase it to prevent immediate evolution
+    if card.sell_cost + card.ability.extra_value <= 1 then
+      card.ability.extra_value = card.ability.extra_value + 1
+    end
+    card:set_cost()
+    print(card.cost, card.sell_cost, card.ability.extra_value)
+  end,
+}
 -- Flaaffy 180
+local flaaffy = {
+  name = "flaaffy", 
+  pos = {x = 8, y = 2},
+  config = {extra = {money_mod = 2, money_minus = 1, earned = 0}, evo_rqmt = 20},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    local money_left = math.max(0, self.config.evo_rqmt - card.ability.extra.earned)
+    return {vars = {card.ability.extra.money_mod, card.ability.extra.money_minus, money_left}}
+  end,
+  rarity = 2,
+  cost = 8,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra.money_mod
+      card:set_cost()
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+          return true
+        end
+      }))
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if card.sell_cost >= 1 + card.ability.extra.money_minus and (SMODS.has_enhancement(context.other_card, 'm_glass') or context.other_card:is_suit('Spades')) then
+        local val = poke_drain(card, card.ability.extra.money_minus)
+        if val > 0 then
+          local earned = val * card.ability.extra.money_mod2
+          card.ability.extra.earned = card.ability.extra.earned + earned
+          return {
+            dollars = earned,
+            colour = G.C.MONEY,
+            message_card = card,
+          }
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.earned, self.config.evo_rqmt)
+  end,
+}
 
 return {name = "Pokemon Jokers 151-180", 
         list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
-                 crobat, pichu, cleffa, igglybuff, natu, xatu, togepi, togetic},
+                 crobat, pichu, cleffa, igglybuff, natu, xatu, togepi, togetic, mareep, flaaffy},
 }

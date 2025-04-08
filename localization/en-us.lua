@@ -2119,6 +2119,35 @@ return {
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
+            j_poke_mareep = {
+                name = 'Mareep',
+                text = {
+                    "When a {C:spades}Spade{} or {C:attention}Glass{} card is scored,",
+                    "lose {C:money}$#1#{} of sell value to earn {C:money}$#2#{}",
+                    "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} Sell Value)",
+                }
+            },
+            j_poke_flaaffy = {
+                name = 'Flaaffy',
+                text = {
+                    "When {C:attention}Blind{} is selected, gain {C:money}$#1#{} of {C:attention}sell value{}",
+                    "{br:4}ERROR - CONTACT STEAK",
+                    "When a {C:spades}Spade{} or {C:attention}Glass{} card is scored,",
+                    "lose {C:money}$#2#{} of sell value to earn {C:money}$#1#{}",
+                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_ampharos = {
+                name = 'Ampharos',
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "all Jokers gain {C:money}$#1#{} of {C:attention}sell value{}",
+                    "{br:4}ERROR - CONTACT STEAK",
+                    "When a {C:spades}Spade{} or {C:attention}Glass{} card is scored,",
+                    "a random Joker loses {C:money}$#3#{} of sell value",
+                    "Earn {C:money}$#2#{} for each {C:money}$#3#{} lost",
+                }
+            },
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
