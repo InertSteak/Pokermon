@@ -1086,28 +1086,22 @@ poke_total_chips = function(card)
   return total_chips
 end
 
-poke_drain = function(card, target, amount, one_way)
-  local amt = amount
-  local amt_drained = 0
-  if target.sell_cost == 1 then return end
-  target.ability.extra_value = target.ability.extra_value or 0
-  if target.sell_cost <= amt then
-    amt_drained = amt_drained + target.sell_cost - 1
-    target.ability.extra_value = target.ability.extra_value - amt_drained
-  else
-     target.ability.extra_value = target.ability.extra_value - amt
-     amt_drained = amt
-  end
-  
-  if amt_drained > 0 then
-    target:set_cost()
-    card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
-    if not one_way then
-      card.ability.extra_value = card.ability.extra_value or 0
-      card.ability.extra_value = card.ability.extra_value + amt_drained
-      card:set_cost()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
-    end    
+poke_drain = function(drain_target, amount, gain_target)
+  if drain_target.sell_cost == 1 then return end
+
+  -- if sell_cost is under 1, it will be restored to 1
+  amount = math.min(amount, drain_target.sell_cost - 1)
+  drain_target.ability.extra_value = (drain_target.ability.extra_value or 0) - amount
+
+  if amount > 0 then
+    drain_target:set_cost()
+    card_eval_status_text(drain_target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+
+    if gain_target then
+      gain_target.ability.extra_value = (gain_target.ability.extra_value or 0) + amount
+      gain_target:set_cost()
+      card_eval_status_text(gain_target, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+    end
   end
 end
 
