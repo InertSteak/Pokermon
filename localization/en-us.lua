@@ -2177,6 +2177,24 @@ return {
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                 }
             },
+            j_poke_sunkern = {
+                name = 'Sunkern',
+                text = {
+                    "Earn {C:money}$#1#{} when {C:attention}Blind{} is selected",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Sun Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_sunflora = {
+                name = 'Sunflora',
+                text = {
+                    "When {C:attention}Boss Blind{} is selected,",
+                    "create a {C:dark_edition}Negative {C:attention}Sun Stone{} card",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Played {C:attention}Wild{} card give {C:mult}+#1#{} Mult",
+                    "for each {C:attention}Sun Stone{} held",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                }
+            },
             j_poke_espeon = {
                 name = 'Espeon',
                 text = {

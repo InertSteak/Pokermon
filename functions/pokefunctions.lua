@@ -90,6 +90,7 @@ family = {
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
