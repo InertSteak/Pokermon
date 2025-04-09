@@ -2271,6 +2271,16 @@ return {
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
+            j_poke_gligar = {
+                name = 'Gligar',
+                text = {
+                    "When a {C:attention}card{} is scored,",
+                    "{C:attention}debuff{} it until next {C:attention}Ante{}",
+                    "and gain {X:mult,C:white}X#1#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
             j_poke_steelix = {
                 name = 'Steelix',
                 text = {
@@ -2923,6 +2933,17 @@ return {
                     "a {C:attention}Glass{} copy of a random",
                     "card in your deck to shop",
                 } 
+            },
+            j_poke_gliscor = {
+                name = 'Gliscor',
+                text = {
+                    "After scoring, {C:attention}debuff{}",
+                    "played cards until next {C:attention}Ante{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "When a {C:attention}card{} is scored,",
+                    "gain {X:mult,C:white}X#1#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                }
             },
             j_poke_porygonz = {
                 name = 'Porygon-Z',

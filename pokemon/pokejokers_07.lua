@@ -856,6 +856,54 @@ local dunsparce={
   end
 }
 -- Gligar 207
+local gligar = {
+  name = "gligar",
+  pos = {x = 5, y = 5},
+  config = {extra = {Xmult_mod = 0.05, Xmult = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
+  end,
+  rarity = 3,
+  cost = 10,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local target = context.other_card
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      target.ability.played_this_ante_gligar = true
+      target.delay_debuff_sprites = true
+      G.GAME.blind:debuff_card(target)
+      return {
+        message = localize('k_upgrade_ex'),
+        message_card = card,
+        colour = G.C.PURPLE,
+        func = function ()
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              target.delay_debuff_sprites = false
+              return true
+            end
+          }))
+        end
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_gliscor")
+  end
+}
 -- Steelix 208
 local steelix={
   name = "steelix", 
@@ -897,5 +945,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix},
 }

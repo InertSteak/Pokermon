@@ -94,6 +94,7 @@ family = {
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
+    {"gligar", "gliscor"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
