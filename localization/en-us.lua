@@ -3204,7 +3204,7 @@ return {
                     "{C:chips}+#1#{} Chips if played hand contains a {C:attention}Flush{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Create an {C:pink}Energy{} card if it",
-                    "also contains an {C:attention}King{} or {C:attention}Queen{}"
+                    "also contains a {C:attention}King{} or {C:attention}Queen{}"
                 } 
             },
             j_poke_sylveon = {
