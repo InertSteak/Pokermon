@@ -3203,7 +3203,7 @@ return {
                 text = {
                     "{C:chips}+#1#{} Chips if played hand contains a {C:attention}Flush{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Create a {C:pink}Energy{} card if it",
+                    "Create an {C:pink}Energy{} card if it",
                     "also contains an {C:attention}King{} or {C:attention}Queen{}"
                 } 
             },
