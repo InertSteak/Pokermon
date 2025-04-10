@@ -201,7 +201,7 @@ local magcargo = {
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
       local total = #find_pokemon_type("Fire")
       if total > 0 then
-        context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + total
+        context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + total * card.ability.extra.mult
         return {
           message = localize('k_upgrade_ex'),
           colour = G.C.MULT,
