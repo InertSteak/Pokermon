@@ -1150,12 +1150,15 @@ local mareep = {
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       if card.sell_cost >= 1 + card.ability.extra.money_minus and (SMODS.has_enhancement(context.other_card, 'm_glass') or context.other_card:is_suit('Spades')) then
-        local val = poke_drain(card, card.ability.extra.money_minus)
+        local val = poke_drain(card, card.ability.extra.money_minus, nil, true)
         if val > 0 then
           return {
-            dollars = val * card.ability.extra.money_mod,
-            colour = G.C.MONEY,
+            message = localize('poke_val_down'),
             message_card = card,
+            extra = {
+              dollars = val * card.ability.extra.money_mod,
+              colour = G.C.MONEY,
+            }
           }
         end
       end
@@ -1202,14 +1205,17 @@ local flaaffy = {
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       if card.sell_cost >= 1 + card.ability.extra.money_minus and (SMODS.has_enhancement(context.other_card, 'm_glass') or context.other_card:is_suit('Spades')) then
-        local val = poke_drain(card, card.ability.extra.money_minus)
+        local val = poke_drain(card, card.ability.extra.money_minus, nil, true)
         if val > 0 then
-          local earned = val * card.ability.extra.money_mod2
+          local earned = val * card.ability.extra.money_mod
           card.ability.extra.earned = card.ability.extra.earned + earned
           return {
-            dollars = earned,
-            colour = G.C.MONEY,
+            message = localize('poke_val_down'),
             message_card = card,
+            extra = {
+              dollars = earned,
+              colour = G.C.MONEY,
+            }
           }
         end
       end

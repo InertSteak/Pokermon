@@ -47,7 +47,6 @@ local ampharos = {
               extra = {
                 dollars = val * card.ability.extra.money_mod2,
                 colour = G.C.MONEY,
-                message_card = card,
               }
             }
           end
