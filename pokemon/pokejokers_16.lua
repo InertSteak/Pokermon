@@ -106,10 +106,8 @@ local weavile = {
     end
     if context.remove_playing_cards and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * #context.removed
-      return {
-        message = localize('k_upgrade_ex'),
-        colour = G.C.MULT,
-      }
+      card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_upgrade_ex'), colour = G.C.MULT, })
+      return nil, true
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and card.ability.extra.Xmult ~= 1 then
