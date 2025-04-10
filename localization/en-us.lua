@@ -2148,6 +2148,15 @@ return {
                     "Earn {C:money}$#2#{} for each {C:money}$#3#{} lost",
                 }
             },
+            j_poke_mega_ampharos = {
+                name = "Mega Ampharos",
+                text = {
+                    "Played {C:attention}Glass{} cards",
+                    "earn {C:money}$#1#{} when scored",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:attention}Glass{} cards cannot shatter",
+                }
+            },
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
