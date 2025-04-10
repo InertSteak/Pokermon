@@ -79,7 +79,7 @@ local duskstone = {
     set_spoon_item(card)
     if not (G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds) then
       for i = 1, #G.jokers.cards do
-        poke_drain(card, G.jokers.cards[i], 1, true)
+        poke_drain(G.jokers.cards[i], 1)
       end
     end
     local money = math.min(card.ability.extra.max, card.ability.extra.money * #G.jokers.cards)
