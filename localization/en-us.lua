@@ -2316,7 +2316,7 @@ return {
                 text = {
                     "When scored, {C:attention}Stone{} cards",
                     "gain {C:mult}+#1#{} Mult permanently",
-                    "for each {X:fire,C:white}Fire{} card you have",
+                    "for each {X:fire,C:white}Fire{} Joker you have",
                 }
             },
             j_poke_corsola = {
