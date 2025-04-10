@@ -2302,6 +2302,23 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_slugma = {
+                name = 'Slugma',
+                text = {
+                    "When Blind is selected,",
+                    "add a {C:attention}Stone{} card to hand",
+                    "for each adjacent {X:water,C:white}Water{C:attention} Joker",
+                    "{C:inactive,s:0.8}(Evolves after creating {C:attention,s:0.8}#1# Stone{C:inactive,s:0.8} cards){}"
+                }
+            },
+            j_poke_magcargo = {
+                name = 'Magcargo',
+                text = {
+                    "When scored, {C:attention}Stone{} cards",
+                    "gain {C:mult}+#1#{} Mult permanently",
+                    "for each {X:fire,C:white}Fire{} card you have",
+                }
+            },
             j_poke_corsola = {
               name = 'Corsola',
               text = {
