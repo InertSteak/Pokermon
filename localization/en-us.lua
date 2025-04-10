@@ -2302,6 +2302,14 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_sneasel = {
+                name = 'Sneasel',
+                text = {
+                    "Destroy rightmost card",
+                    "in {C:attention}first hand{} of round",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
             j_poke_corsola = {
               name = 'Corsola',
               text = {
@@ -2832,6 +2840,16 @@ return {
                   "{C:attention}Gold{} cards {C:attention}held{} in hand",
                   "give {C:chips}+#1#{} Chips",
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_weavile = {
+                name = 'Weavile',
+                text = {
+                    "Destroy rightmost card in {C:attention}first hand{}",
+                    "{br:4}ERROR - CONTACT STEAK",
+                    "Gain {X:mult,C:white}X#1#{} Mult when a card is destroyed",
+                    "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
+                    "{C:inactive,s:0.8}(Resets when {C:attention,s:0.8}Boss Blind{C:inactive,s:0.8} is defeated)",
                 }
             },
             j_poke_magnezone = {

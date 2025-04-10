@@ -140,6 +140,42 @@ local scizor={
 -- Shuckle 213
 -- Heracross 214
 -- Sneasel 215
+local sneasel = {
+  name = "sneasel",
+  pos = {x = 3, y = 6},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
+    return {vars = {}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if G.GAME.current_round.hands_played == 0 then
+      if context.final_scoring_step then
+        for i = #context.full_hand, 1, -1 do
+          if not context.full_hand[i].to_be_removed_by then
+            context.full_hand[i].to_be_removed_by = card
+            break
+          end
+        end
+      end
+      if context.destroy_card and context.destroy_card.to_be_removed_by == card then
+        context.destroy_card.to_be_removed_by = nil
+        return {
+          remove = true
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_weavile")
+  end
+}
 -- Teddiursa 216
 -- Ursaring 217
 -- Slugma 218
@@ -1027,5 +1063,5 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
