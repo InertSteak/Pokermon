@@ -6,6 +6,7 @@ local ampharos = {
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {card.ability.extra.money_mod1, card.ability.extra.money_mod2, card.ability.extra.money_minus}}
   end,
   rarity = 'poke_safari',
@@ -51,6 +52,34 @@ local ampharos = {
             }
           end
         end
+      end
+    end
+  end,
+  megas = { "mega_ampharos" },
+}
+
+local mega_ampharos = {
+  name = "mega_ampharos",
+  pos = { x = 0, y = 2 },
+  soul_pos = { x = 1, y = 2 },
+  config = { extra = { money = 5 } },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Lightning",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      if SMODS.has_enhancement(context.other_card, 'm_glass') then
+        return {
+          dollars = card.ability.extra.money,
+          colour = G.C.MONEY,
+        }
       end
     end
   end,
@@ -953,5 +982,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {ampharos, bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {ampharos, mega_ampharos, bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }
