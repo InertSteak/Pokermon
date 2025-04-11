@@ -38,7 +38,7 @@ family = {
     {"grimer","muk"},
     {"shellder","cloyster"},
     {"gastly","haunter","gengar","mega_gengar",},
-    {"onix","steelix"},
+    {"onix", "steelix", "mega_steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
     {"voltorb","electrode"},
