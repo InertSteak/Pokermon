@@ -571,6 +571,13 @@ get_previous_evo = function(card, full_key)
   local found = nil
   local prev = nil
   local max = nil
+  local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+  local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
   else
@@ -599,7 +606,7 @@ get_previous_evo = function(card, full_key)
     if found then break end
   end
   if full_key then
-    prev = 'j_poke_'..prev
+    prev = "j_"..prefix.."_"..prev 
   end
   return prev
 end
