@@ -494,3 +494,19 @@ poke_add_hazards = function(ratio, flat)
   end
   playing_card_joker_effects(hazards)
 end
+
+function poke_same_suit(hand)
+  local ret = {}
+  local suits = SMODS.Suit.obj_buffer
+  for j = 1, #suits do
+    local suit = suits[j]
+    local flush_count = 0
+    for i=1, #hand do
+      if hand[i]:is_suit(suit, nil, true) then flush_count = flush_count + 1 end 
+    end
+    if flush_count == #hand then
+      return true
+    end
+  end
+  return false
+end
