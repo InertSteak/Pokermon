@@ -577,7 +577,7 @@ get_previous_evo = function(card, full_key)
     else
       choice = G.jokers.cards[1]
     end
-  local prefix = choice.config.center.poke_custom_prefix or "poke"
+  local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
   else
