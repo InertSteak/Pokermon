@@ -114,7 +114,7 @@ end
 
 energy_matches = function(card, etype, include_colorless)
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
-    if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype) or (card.ability[string.lower(etype).."_sticker"]) then
+    if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype and not type_sticker_applied(card)) or (card.ability[string.lower(etype).."_sticker"]) then
       return true
     elseif etype == "Colorless" and (card.ability.extra.ptype or type_sticker_applied(card)) and include_colorless then
       return true
