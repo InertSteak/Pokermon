@@ -302,6 +302,9 @@ local mystery_egg = {
                 loc = i
               end
             end
+            if card.edition and card.edition.poke_shiny then
+              SMODS.change_booster_limit(-1)
+            end
             remove(self, card, context)
             G.jokers:emplace(_card, loc)
             return true
