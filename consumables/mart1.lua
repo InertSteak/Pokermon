@@ -576,7 +576,7 @@ local megastone = {
   end,
   use = function(self, card, area, copier)
     local target = nil
-    local forced_key = nil
+    -- local forced_key = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and
        not G.jokers.highlighted[1].debuff then
       target = G.jokers.highlighted[1]
@@ -590,6 +590,10 @@ local megastone = {
         end
       end
     end
+    -- Experiment
+    local prefix = target.config.center.poke_custom_prefix or "poke"
+    local forced_mega_key = "j_"..prefix.."_"
+    -- End Experiment
     if target.config.center.megas then
       local mega = target.config.center.megas[1]
       if #target.config.center.megas > 1 then
@@ -599,7 +603,10 @@ local megastone = {
           mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
         end
       end
-      forced_key = "j_poke_" .. mega
+      -- forced_key = "j_poke_" .. mega
+      -- Experiment 2
+      forced_key = forced_mega_key.. mega
+      -- End Experiment 2
       card.ability.extra.used_on = forced_key
     else
       forced_key = get_previous_evo(target, true)
