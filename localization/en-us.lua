@@ -2280,6 +2280,14 @@ return {
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
             },
+            j_poke_mega_steelix = {
+                name = 'Mega Steelix',
+                text = {
+                    "Played cards become {C:attention}Steel",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Retrigger {C:attention}Steel{} cards {C:attention}held in hand{}"
+                }
+            },
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
