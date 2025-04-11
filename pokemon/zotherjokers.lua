@@ -84,7 +84,7 @@ local tall_grass={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and #G.jokers.cards < G.jokers.config.card_limit then
+      if context.before and (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
         local has_wild = false
         for k, v in ipairs(context.scoring_hand) do
           if v.ability.name == 'Wild Card' then
@@ -94,7 +94,9 @@ local tall_grass={
         end
         
         if has_wild or pseudorandom('tallgrass') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          G.GAME.joker_buffer = G.GAME.joker_buffer + 1
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            G.GAME.joker_buffer = 0
             play_sound('timpani')
             local _card = create_random_poke_joker("tallgrass", nil, "common")
             _card:add_to_deck()

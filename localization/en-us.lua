@@ -2729,8 +2729,9 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
+                    "Every {C:attention}#2# hands{}, played cards",
                     "give {X:mult,C:white}X#1#{} Mult when scored",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {
@@ -3211,8 +3212,8 @@ return {
                 text = {
                     "{C:chips}+#1#{} Chips if played hand contains a {C:attention}Flush{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Create a {C:pink}Energy{} card if it",
-                    "also contains an {C:attention}King{} or {C:attention}Queen{}"
+                    "Create an {C:pink}Energy{} card if it",
+                    "also contains a {C:attention}King{} or {C:attention}Queen{}"
                 } 
             },
             j_poke_sylveon = {

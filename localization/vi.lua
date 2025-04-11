@@ -2457,8 +2457,9 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Mỗi {C:attention}#2# {C:inactive}[#3#]{} tay, lá đã chơi",
+                    "Mỗi {C:attention}#2# tay{}, lá đã chơi",
                     "cho {X:mult,C:white}X#1#{} Nhân khi tính điểm",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {
