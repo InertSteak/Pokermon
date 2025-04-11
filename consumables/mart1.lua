@@ -576,6 +576,7 @@ local megastone = {
   end,
   use = function(self, card, area, copier)
     local target = nil
+    local forced_key = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and
        not G.jokers.highlighted[1].debuff then
       target = G.jokers.highlighted[1]
