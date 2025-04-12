@@ -3502,9 +3502,8 @@ return {
             j_poke_pokedex = {
                 name = 'Pokedex',
                 text = {
-                    "{C:mult}+#2#{} Mult for each Joker",
-                    "you have that has a {C:pink}Type{}",
-                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:mult}+#2#{} Mult for each unique {C:attention}Joker{} seen",
+                    "{br:3}text needs to be here to work",
                     "{C:attention}Pokemon{} from the same", 
                     "evolutionary line may appear",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
@@ -4565,6 +4564,7 @@ return {
             poke_val_down = "Value Down!",
             poke_powder_ex = "Powder Snow!",
             poke_future_sight = "Future Sight!",
+            poke_pokedex_entry = "New Entry!",
             poke_smell_ya = "Smell Ya Later!",
             poke_wowthree = "Wow! Three!",
             poke_illusion = "...?",
