@@ -314,7 +314,7 @@ poke_backend_evolve = function(card, to_key)
   card.children.center.states.drag = card.states.drag
   card.children.center.states.collide.can = false
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
-  card:set_ability(new_card)
+  card:set_ability(new_card, true)
   card:set_cost()
 
   if type(card.ability.extra) == "table" then
