@@ -738,7 +738,7 @@ local diglett={
   stage = "Basic", 
   ptype = "Earth",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then

@@ -261,7 +261,7 @@ local jirachi_banker = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = true,
+  blueprint_compat = false,
   custom_pool_func = true,
   in_pool = function(self)
     return false
