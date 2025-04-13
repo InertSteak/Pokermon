@@ -85,6 +85,7 @@ family = {
     {"remoraid", "octillery"},
     {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
+    {"azurill", "marill", "azumarill"},
     {"phanpy", "donphan"},
     {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
