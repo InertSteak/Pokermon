@@ -564,7 +564,7 @@ local megastone = {
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not poke.debuff then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") then
           target = poke
           break
         end
@@ -582,11 +582,9 @@ local megastone = {
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" and not poke.debuff then
+        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
           target = poke
-          if not target.debuff then
-            break
-          end
+          break
         end
       end
     end
