@@ -894,8 +894,74 @@ local steelix={
   end
 }
 -- Snubbull 209
+local snubbull = {
+  name = "snubbull",
+  pos = {x = 7, y = 5},
+  config = {extra = {Xmult = 3, rounds = 5,}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+      local first_queen = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == 12 then
+          first_queen = context.scoring_hand[i]
+          break
+        end
+      end
+      if context.other_card == first_queen then
+        return {
+            x_mult = card.ability.extra.Xmult,
+            colour = G.C.RED,
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_granbull")
+  end
+}
 -- Granbull 210
+local granbull = {
+  name = "granbull",
+  pos = {x = 8, y = 5},
+  config = {extra = {Xmult = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult}}
+  end,
+  rarity = 3,
+  cost = 10,
+  stage = "One",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+      local first_queen = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == 12 then
+          first_queen = context.scoring_hand[i]
+          break
+        end
+      end
+      if context.other_card == first_queen then
+        return {
+            x_mult = card.ability.extra.Xmult,
+            colour = G.C.RED,
+        }
+      end
+    end
+  end
+
+}
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix, snubbull, granbull},
 }
