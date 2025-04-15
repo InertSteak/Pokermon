@@ -436,6 +436,55 @@ local glaceon={
   end,
 }
 -- Gliscor 472
+local gliscor = {
+  name = "gliscor",
+  pos = {x = 1, y = 6},
+  config = {extra = {Xmult_mod = 0.05, Xmult = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
+  end,
+  rarity = 'poke_safari',
+  cost = 12,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      return {
+        message = localize('k_upgrade_ex'),
+        message_card = card,
+        colour = G.C.PURPLE,
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      elseif context.after then
+        for k,v in pairs(context.full_hand) do
+          v.ability.played_this_ante_gligar = true
+          card_eval_status_text(v, 'extra', nil, nil, nil, { message = "", colour = G.C.CLEAR})
+          if not v.debuff then
+            v.delay_debuff_sprites = true
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                v.delay_debuff_sprites = false
+                return true
+              end
+            }))
+          end
+          G.GAME.blind:debuff_card(v)
+        end
+      end
+    end
+  end
+}
 -- Mamoswine 473
 -- Porygon-Z 474
 local porygonz={
@@ -554,5 +603,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
+        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, gliscor, porygonz, probopass, froslass},
 }

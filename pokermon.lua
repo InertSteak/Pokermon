@@ -46,13 +46,6 @@ if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   end
 end
 
-SMODS.current_mod.set_debuff = function(card)
-  if card and card.ability and card.ability.fainted == G.GAME.round then
-    return G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND
-  end
-  return false
-end
-
 --Load Custom Rarities
 SMODS.Rarity{
     key = "safari",
@@ -112,6 +105,14 @@ end
 
 --Load Draw Logic file
 local sprite, load_error = SMODS.load_file("functions/pokedraw.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  sprite()
+end
+
+--Load Debuff logic
+local sprite, load_error = SMODS.load_file("functions/debufffunctions.lua")
 if load_error then
   sendDebugMessage ("The error is: "..load_error)
 else
