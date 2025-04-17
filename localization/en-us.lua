@@ -439,6 +439,24 @@ return {
                 },
             }
         },
+        Stake = {
+            stake_poke_diamond = {
+                name = "Diamond Stake",
+                colour = "Diamond",
+                text = {
+                    "{C:attention}Non-Baby{} Pokemon Jokers evolve {C:attention}1{} round slower",
+                    "{s:0.8}Applies all previous Stakes"
+                }
+            },
+            stake_poke_pearl = {
+                name = "Pearl Stake",
+                colour = "Pearl",
+                text = {
+                    "{C:attention}-1{} Energy Limit",
+                    "{s:0.8}Applies all previous Stakes"
+                }
+            },
+        },
         Joker = {
             j_poke_bulbasaur = {
                 name = "Bulbasaur",
@@ -2606,7 +2624,7 @@ return {
                 name = 'Aron',
                 text = {
                     "When a {C:attention}Steel{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
             },
@@ -2614,7 +2632,7 @@ return {
                 name = 'Lairon',
                 text = {
                     "When a {C:attention}Steel{} or {C:attention}Stone{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
@@ -2622,7 +2640,7 @@ return {
                 name = 'Aggron',
                 text = {
                     "When a {C:attention}Steel{}, {C:attention}Stone{} or {C:attention}Gold{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
@@ -4202,6 +4220,13 @@ return {
                 "{C:red}Discovering all objects can't be undone{}"
               }
             }, 
+            pokemaster_tooltip = {
+              name = "Pokemon Master Mode",
+              text = {
+                "Pokemon Only setting applied",
+                "Additional Stakes are available"
+              }
+            },
             designed_by = {
               name = "Designed By",
               text = {
@@ -4480,6 +4505,7 @@ return {
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
             poke_settings_pokemon_aprilfools = "April Fools Content?",
+            poke_settings_pokemon_master = "Pokemon Master Mode?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",
