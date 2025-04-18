@@ -207,7 +207,7 @@ local litwick={
     if context.end_of_round and not context.individual and not context.repetition then
       local adjacent = poke_get_adjacent_jokers(card)
       for i = 1, #adjacent do 
-        poke_drain(card, adjacent[i], card.ability.extra.money_minus)
+        poke_drain(adjacent[i], card.ability.extra.money_minus, card)
       end
     end
     return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
@@ -243,10 +243,9 @@ local lampent={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local adjacent = poke_get_adjacent_jokers(card)
       for i = 1, #G.jokers.cards do 
         if G.jokers.cards[i] ~= card then
-          poke_drain(card, G.jokers.cards[i], card.ability.extra.money_minus)
+          poke_drain(G.jokers.cards[i], card.ability.extra.money_minus, card)
         end
       end
     end
