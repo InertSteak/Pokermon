@@ -2320,6 +2320,14 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:red,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_heracross = {
+                name = 'Heracross',
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if no scored cards",
+                    "have the {C:attention}same rank{} as",
+                    "a card {C:attention}held in hand{}"
+                }
+            },
             j_poke_corsola = {
               name = 'Corsola',
               text = {
