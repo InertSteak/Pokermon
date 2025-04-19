@@ -3,7 +3,107 @@
 -- Gastrodon 423
 -- Ambipom 424
 -- Drifloon 425
+local drifloon = {
+  name = "drifloon",
+  pos = {x = 10, y = 2},
+  config = {extra = {rounds = 3, volatile = "right"}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    return {vars = {card.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  volatile = true,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    -- TODO: should we make a lovely patch to create a context that runs before a new joker is emplaced?
+    -- Or maybe tweak volatile_active function somehow
+    if context.buying_card and 
+      (volatile_active(self, card, card.ability.extra.volatile)
+      --if we buy a new card we suddenly aren't the last joker, but the second-to-last
+      --the card count will update in the next frame, though
+      or ((card and card.rank) == G.jokers.config.card_count and (context.card and context.card.rank) == G.jokers.config.card_count + 1)) then
+      local target = context.card
+      context.card.config.center.in_pool = function(self)
+        return false
+      end
+      card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_banished_ex'), colour = G.C.SECONDARY_SET.Spectral})
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function() 
+            if target.ability.name == 'Glass Card' then 
+                target:shatter()
+            else
+                target:start_dissolve()
+            end
+        return true end }))
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.4,
+        func = function()
+          remove(self, card, context, true)
+          return true
+        end
+      }))
+      return {
+        message = localize("poke_pop_ex"),
+      }
+    end
+    return level_evo(self, card, context, "j_poke_drifblim")
+  end,
+}
+
 -- Drifblim 426
+local drifblim = {
+  name = "drifblim",
+  pos = {x = 11, y = 2},
+  config = {extra = {volatile = "right", last_usage = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    return {vars = {card.ability.extra.last_usage}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  volatile = true,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.buying_card and 
+      card.ability.extra.last_usage < G.GAME.round_resets.ante and 
+      (volatile_active(self, card, card.ability.extra.volatile)
+      or ((card and card.rank) == G.jokers.config.card_count and (context.card and context.card.rank) == G.jokers.config.card_count + 1)) then
+      local target = context.card
+      context.card.config.center.in_pool = function(self)
+        return false
+      end
+      card.ability.extra.last_usage = G.GAME.round_resets.ante
+      card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_banished_ex'), colour = G.C.SECONDARY_SET.Spectral})
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function() 
+            if target.ability.name == 'Glass Card' then 
+                target:shatter()
+            else
+                target:start_dissolve()
+            end
+        return true end }))
+    end
+  end,
+}
+--G.GAME.round_resets.ante 
 -- Buneary 427
 -- Lopunny 428
 -- Mismagius 429
@@ -286,5 +386,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
+        list = {drifloon, drifblim, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
 }
