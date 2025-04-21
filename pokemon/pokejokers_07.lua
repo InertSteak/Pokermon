@@ -864,6 +864,7 @@ local steelix={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -891,11 +892,48 @@ local steelix={
     if context.individual and context.cardarea == G.hand and context.other_card.ability.name == 'Stone Card' and not context.blueprint then
       context.other_card:set_ability(G.P_CENTERS.m_steel, nil, true)
     end
-  end
+  end,
+  megas = { "mega_steelix" },
+}
+local mega_steelix = {
+  name = "mega_steelix",
+  pos = {x = 2, y = 2},
+  soul_pos = {x = 3, y = 2},
+  config = {extra = {retriggers = 1,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Metal",
+  atlas = "Megas",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and context.cardarea == G.hand then
+      if SMODS.has_enhancement(context.other_card, 'm_steel') then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+    if context.after and not context.blueprint then
+      for k,v in pairs(context.full_hand) do
+        if not SMODS.has_enhancement(v, 'm_steel') then
+          poke_conversion_event_helper(function() v:juice_up(); v:set_ability(G.P_CENTERS.m_steel); play_sound('tarot1') end)
+        end
+      end
+      delay(0.4)
+    end
+  end,
+  megas = { "mega_steelix" },
 }
 -- Snubbull 209
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix, mega_steelix},
 }
