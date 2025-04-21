@@ -23,6 +23,7 @@ local aron = {
         if v.config.center == G.P_CENTERS.m_steel and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          v.aron_target = true
           G.E_MANAGER:add_event(Event({
             func = function()
               v:juice_up()
@@ -38,7 +39,7 @@ local aron = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel
+      return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel and context.destroying_card.aron_target
     end
     return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
@@ -64,6 +65,7 @@ local lairon = {
         if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          v.lairon_target = true
           G.E_MANAGER:add_event(Event({
             func = function()
               v:juice_up()
@@ -79,7 +81,8 @@ local lairon = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and (context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone)
+      return not context.blueprint and (context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone) 
+             and context.destroying_card.lairon_target
     end
     return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
@@ -105,6 +108,7 @@ local aggron = {
         if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone or v.config.center == G.P_CENTERS.m_gold) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+          v.aggron_target = true
           G.E_MANAGER:add_event(Event({
             func = function()
               v:juice_up()
@@ -122,7 +126,7 @@ local aggron = {
     elseif context.destroying_card then
       local eat = context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone or
                   context.destroying_card.config.center == G.P_CENTERS.m_gold
-      return not context.blueprint and eat
+      return not context.blueprint and eat and context.destroying_card.aggron_target
     end
   end
 }

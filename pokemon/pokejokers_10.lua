@@ -118,7 +118,6 @@ local nosepass={
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       if context.other_card == card.ability.extra.first then
-        context.other_card:set_ability(G.P_CENTERS.m_stone, nil, true)
         return {
             x_mult = card.ability.extra.Xmult_multi,
             colour = G.C.XMULT,
@@ -131,6 +130,7 @@ local nosepass={
         if not card.ability.extra.first then
           for i = 1, #context.scoring_hand do
             if context.scoring_hand[i]:is_face() then
+              context.scoring_hand[i]:set_ability(G.P_CENTERS.m_stone, nil, true)
               card.ability.extra.first = context.scoring_hand[i];
               break
             end
