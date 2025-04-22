@@ -24,7 +24,7 @@ highlighted_energy_can_use = function(self, card)
   local choice = G.jokers.highlighted[1]
   if energy_matches(choice, self.etype, true) then
     if type(choice.ability.extra) == "table" then
-      if (pokermon_config.unlimited_energy or ((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if (pokermon_config.unlimited_energy or ((choice.ability.energy_count or 0) + (choice.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
         for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             return true
@@ -57,7 +57,7 @@ highlighted_energy_use = function(self, card, area, copier)
   set_spoon_item(card)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
-      if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if (pokermon_config.unlimited_energy) or (((choice.ability.energy_count or 0) + (choice.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
         for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             viable = true
@@ -73,17 +73,17 @@ highlighted_energy_use = function(self, card, area, copier)
     if viable then
       if type(choice.ability.extra) == "table" then
         if (energy_matches(choice, self.etype, false) or self.etype == "Trans") then
-          if choice.ability.extra.energy_count then
-            choice.ability.extra.energy_count = choice.ability.extra.energy_count + 1
+          if choice.ability.energy_count then
+            choice.ability.energy_count = choice.ability.energy_count + 1
           else
-            choice.ability.extra.energy_count = 1
+            choice.ability.energy_count = 1
           end
           energize(choice, false)
         elseif self.etype == "Colorless" then
-          if choice.ability.extra.c_energy_count then
-            choice.ability.extra.c_energy_count = choice.ability.extra.c_energy_count + 1
+          if choice.ability.c_energy_count then
+            choice.ability.c_energy_count = choice.ability.c_energy_count + 1
           else
-            choice.ability.extra.c_energy_count = 1
+            choice.ability.c_energy_count = 1
           end
           energize(choice, self.etype, false)
         end
@@ -198,9 +198,9 @@ energize = function(card, etype, evolving, silent)
         if name == "mult_mod" or name == "chip_mod" then previous_mod = card.ability.extra[name] end
         if evolving then
           if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
-            addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
+            addition = (addition * (card.ability.energy_count or 0)) + (addition/2 * (card.ability.c_energy_count or 0))
           else
-            addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
+            addition = (addition * ((card.ability.energy_count or 0) + (card.ability.c_energy_count or 0)))
           end
           card.ability.extra[name] =  data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
           updated_mod = card.ability.extra[name]
@@ -293,15 +293,8 @@ energize = function(card, etype, evolving, silent)
 end
 
 get_total_energy = function(card)
-  local curr_energy_count = nil
-  local curr_c_energy_count = nil
-  if card.ability.extra and type(card.ability.extra) == "table" then
-    curr_energy_count = card.ability.extra.energy_count or 0
-    curr_c_energy_count = card.ability.extra.c_energy_count or 0
-  else
-    curr_energy_count = card.ability.energy_count or 0
-    curr_c_energy_count = card.ability.c_energy_count or 0
-  end
+  local curr_energy_count = card.ability.energy_count or 0
+  local curr_c_energy_count = card.ability.c_energy_count or 0
   return curr_energy_count + curr_c_energy_count
 end
 
@@ -313,17 +306,17 @@ end
 increment_energy = function(card, etype)
   if card.ability.extra and type(card.ability.extra) == "table" then
     if (energy_matches(card, etype, false) or etype == "Trans") then
-      if card.ability.extra.energy_count then
-        card.ability.extra.energy_count = card.ability.extra.energy_count + 1
+      if card.ability.energy_count then
+        card.ability.energy_count = card.ability.energy_count + 1
       else
-        card.ability.extra.energy_count = 1
+        card.ability.energy_count = 1
       end
       energize(card, false)
     elseif etype == "Colorless" then
-      if card.ability.extra.c_energy_count then
-        card.ability.extra.c_energy_count = card.ability.extra.c_energy_count + 1
+      if card.ability.c_energy_count then
+        card.ability.c_energy_count = card.ability.c_energy_count + 1
       else
-        card.ability.extra.c_energy_count = 1
+        card.ability.c_energy_count = 1
       end
       energize(card, etype, false)
     end
@@ -390,7 +383,7 @@ energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
-        if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+        if (pokermon_config.unlimited_energy or ((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
           for name, _ in pairs(energy_values) do
             local data = v.ability.extra[name]
             if type(data) == "number" then
