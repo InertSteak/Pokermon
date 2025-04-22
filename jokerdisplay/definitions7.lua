@@ -56,7 +56,7 @@ jd_def["j_poke_vikavolt"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local count = #find_pokemon_type("Lightning")
-        if is_type(card, "Lightning") then
+        if get_type(card) == "Lightning" then
             count = count - 1
           end
         card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult * count)

@@ -110,7 +110,7 @@ jd_def["j_poke_honchkrow"] = {
         local count = 0
         if G.jokers then
             for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Dark") then
+                if joker_card.config.center.rarity and get_type(joker_card) == "Dark" then
                     count = count + 1
                 end
             end
@@ -119,7 +119,7 @@ jd_def["j_poke_honchkrow"] = {
         card.joker_display_values.localized_text = "Dark"
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = (is_type(card, "Dark") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+        return { x_mult = (get_type(card) == "Dark" and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
 }
 --	Glameow

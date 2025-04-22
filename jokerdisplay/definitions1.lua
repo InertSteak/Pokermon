@@ -1762,7 +1762,7 @@ calc_function = function(card)
     if G.STAGE == G.STAGES.RUN then
       local adjacent_jokers = poke_get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
+        if get_type(adjacent_jokers[i]) == "Metal" then adjacent = adjacent + 1 end
       end
     end
     local count = 0

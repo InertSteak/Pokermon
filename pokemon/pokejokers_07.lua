@@ -103,7 +103,7 @@ local sudowoodo={
       }
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
-      if (not is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0  then
+      if (get_type(card) ~= "Grass") or find_other_poke_or_energy_type(card, "Water", true) > 0  then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
