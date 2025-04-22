@@ -413,24 +413,16 @@ energy_can_use = function(self, card)
   return false
 end
 
+energy_from_type = function(type)
+  if type == "Dark" then
+    return "c_poke_darkness_energy"
+  elseif is_poketype(type) then
+    return "c_poke_"..string.lower(type).."_energy"
+  end
+end
+
 matching_energy = function(card)
-  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" and not type_sticker_applied(card) then
-    if card.ability.extra.ptype == "Dark" or card.ability.extra.ptype == "dark" then
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
-    else
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."_energy"
-    end
-  end
-  for l, v in pairs(poketype_list) do
-    if card.ability[v.."_sticker"] then
-      if v == "dark" then
-        return "c_poke_"..v.."ness_energy"
-      else
-        return "c_poke_"..v.."_energy"
-      end
-    end
-  end
+  return energy_from_type(get_type(card))
 end
 
 ease_poke_dollars = function(card, seed, amt, calc_only)

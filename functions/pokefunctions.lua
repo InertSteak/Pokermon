@@ -132,36 +132,40 @@ extended_family = {
   tauros = {"miltank"}
 }
 
+poketype_list = {
+  "Grass",
+  "Fire",
+  "Water",
+  "Lightning",
+  "Psychic",
+  "Fighting",
+  "Colorless",
+  "Dark",
+  "Metal",
+  "Fairy",
+  "Dragon",
+  "Earth"
+}
+
+is_poketype_table = {}
+for _, v in ipairs(poketype_list) do
+  is_poketype_table[v] = true
+end
+
+is_poketype = function(s)
+  return is_poketype_table[s]
+end
+
 type_sticker_applied = function(card)
-  if not card then return false end
-  if card.ability.grass_sticker then
-    return "Grass"
-  elseif card.ability.fire_sticker then
-    return "Fire"
-  elseif card.ability.water_sticker then
-    return "Water"
-  elseif card.ability.lightning_sticker then
-    return "Lightning"
-  elseif card.ability.psychic_sticker then
-    return "Psychic"
-  elseif card.ability.fighting_sticker then
-    return "Fighting"
-  elseif card.ability.colorless_sticker then
-    return "Colorless"
-  elseif card.ability.dark_sticker then
-    return "Dark"
-  elseif card.ability.metal_sticker then
-    return "Metal"
-  elseif card.ability.fairy_sticker then
-    return "Fairy"
-  elseif card.ability.dragon_sticker then
-    return "Dragon"
-  elseif card.ability.earth_sticker then
-    return "Earth"
-  else
-    return false
+  if not card then return nil end
+  local ret = nil
+  for _, v in ipairs(poketype_list) do
+    if card.ability[string.lower(v)..'_sticker'] then
+      assert(not ret, "Pokermon error: card has two type stickers")
+      ret = v
+    end
   end
-  
+  return ret
 end
 
 find_pokemon_type = function(target_type)
@@ -826,49 +830,41 @@ type_tooltip = function(self, info_queue, center)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-  local apply_type = nil
-  
-  if sticker_type then
-    apply_type = sticker_type
-    card.ability[string.lower(apply_type).."_sticker"] = true
-  else
-    apply_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
-    card.ability[string.lower(apply_type).."_sticker"] = true
+  if not sticker_type then 
+    sticker_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
   end
   
-  for l, v in pairs(poketype_list) do
-    if string.lower(v) ~= string.lower(apply_type) then
+  if not sticker_type then return end
+  card.ability[string.lower(sticker_type).."_sticker"] = true
+  for _, v in ipairs(poketype_list) do
+    if v ~= sticker_type then
       card.ability[string.lower(v).."_sticker"] = false
     end
   end
   
-  if card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
-    card.ability.extra.ptype = apply_type 
-  end
-  
-  if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
-     and not G.P_CENTERS[card.config.center_key].taken_ownership then
-    if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
-      local lv = G.P_CENTERS[card.config.center_key].loc_vars
-      SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
-        discovered = true,
-        loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
-          return lv(self, info_queue, center)
-        end,
-      }, true)
-    else
-      SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
-        discovered = true,
-        loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
-        end,
-      }, true)
-    end
-  end
+  -- TODO make these take_ownership calls unnecessary by patching
+  -- if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
+  --    and not G.P_CENTERS[card.config.center_key].taken_ownership then
+  --   if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
+  --     local lv = G.P_CENTERS[card.config.center_key].loc_vars
+  --     SMODS.Joker:take_ownership(card.config.center_key, {
+  --       unlocked = true, 
+  --       discovered = true,
+  --       loc_vars = function(self, info_queue, center)
+  --         type_tooltip(self, info_queue, center)
+  --         return lv(self, info_queue, center)
+  --       end,
+  --     }, true)
+  --   else
+  --     SMODS.Joker:take_ownership(card.config.center_key, {
+  --       unlocked = true, 
+  --       discovered = true,
+  --       loc_vars = function(self, info_queue, center)
+  --         type_tooltip(self, info_queue, center)
+  --       end,
+  --     }, true)
+  --   end
+  -- end
 end
 
 get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
