@@ -114,20 +114,8 @@ round_energy_value = function(value, field)
 end
 
 energy_matches = function(card, etype, include_colorless)
-  if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
-    if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype and not type_sticker_applied(card)) or (card.ability[string.lower(etype).."_sticker"]) then
-      return true
-    elseif etype == "Colorless" and (card.ability.extra.ptype or type_sticker_applied(card)) and include_colorless then
-      return true
-    end
-  elseif card.ability and (card.ability.extra and type(card.ability.extra) == "number") or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
-      (card.ability.t_chips and card.ability.t_chips > 0) or (card.ability.x_mult and card.ability.x_mult > 1) then
-    if card.ability[string.lower(etype).."_sticker"] then
-      return true
-    elseif etype == "Colorless" and type_sticker_applied(card) and include_colorless then
-      return true
-    end
-  end
+  if get_type(card) == etype then return true end
+  if include_colorless and etype == "Colorless" and get_type(card) then return true end
   return false
 end
 
