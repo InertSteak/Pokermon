@@ -6,6 +6,19 @@ energy_values = {
 energy_max = 3
 
 
+energy_use_backend = function(self, card, area, copier, opts)
+  opts = opts or {}
+  local choice = nil
+  if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+    choice = G.jokers.highlighted[1]
+  end
+  if not opts.check_only then
+    G.GAME.energies_used = (G.GAME.energies_used or 0) + 1
+    set_spoon_item(card)
+  end
+  -- todo
+end
+
 highlighted_energy_can_use = function(self, card)
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
@@ -146,10 +159,35 @@ set_frac = function(card, frac, field, increased, ratio)
   end
 end
 
+-- todo
+-- Try to increment a card's energy_count/c_energy_count.
+-- Automatically updates card values accordingly.
+try_increment_energy_count = function(card, inc_energy_table, opts)
+end
+
+-- todo
+-- Update all of card's values according to how much energy it has.
+update_card_with_energy = function(card)
+  opts = opts or {}
+  local rounded = nil
+  local frac = nil
+  if type(card.ability.extra) == "table" then
+  end
+end
+
+-- todo
+-- Helper function for update_card_with_energy.
+--
+-- Update `card.ability[k1][k2]...` according to the amount of energy `card` has.
+-- k is a list of keys to go down.
+-- Calculated by multiplying the value from `card.config.center.config`
+-- by a factor, see implementation.
+update_value_with_energy = function(card, k)
+end
+
 energize = function(card, etype, evolving, silent)
   local rounded = nil
   local frac = nil
-  local frac_added = nil
   if type(card.ability.extra) == "table" then
     for name, _ in pairs(energy_values) do
       local data = card.ability.extra[name]
