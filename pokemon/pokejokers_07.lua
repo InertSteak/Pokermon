@@ -311,7 +311,61 @@ local jumpluff={
 }
 -- Aipom 190
 -- Sunkern 191
+local sunkern={
+  name = "sunkern",
+  pos = {x = 9, y = 3},
+  config = {extra = {money = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    return {vars = {card.ability.extra.money}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  item_req = "sunstone",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind or context.joker_main then
+      local earned = ease_poke_dollars(card, "sunkern", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
+    end
+    return item_evo(self, card, context, "j_poke_sunflora")
+  end,
+}
 -- Sunflora 192
+local sunflora={
+  name = "sunflora",
+  pos = {x = 0, y = 4},
+  config = {extra = {money = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.money}}
+  end,
+  rarity = 2,
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind or context.joker_main or context.pre_discard or context.using_consumeable or context.selling_card then
+      local earned = ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    return ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+	end
+}
 -- Yanma 193
 -- Wooper 194
 -- Quagsire 195
@@ -897,5 +951,5 @@ local steelix={
 -- Granbull 210
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
 }
