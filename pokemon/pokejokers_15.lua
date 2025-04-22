@@ -24,7 +24,7 @@ local drifloon = {
   calculate = function(self, card, context)
     -- TODO: should we make a lovely patch to create a context that runs before a new joker is emplaced?
     -- Or maybe tweak volatile_active function somehow
-    if context.buying_card and 
+    if context.buying_card and context.card ~= card and 
       (volatile_active(self, card, card.ability.extra.volatile)
       --if we buy a new card we suddenly aren't the last joker, but the second-to-last
       --the card count will update in the next frame, though
@@ -80,7 +80,7 @@ local drifblim = {
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.buying_card and 
+    if context.buying_card and context.card ~= card and
       card.ability.extra.last_usage < G.GAME.round_resets.ante and 
       (volatile_active(self, card, card.ability.extra.volatile)
       or ((card and card.rank) == G.jokers.config.card_count and (context.card and context.card.rank) == G.jokers.config.card_count + 1)) then
