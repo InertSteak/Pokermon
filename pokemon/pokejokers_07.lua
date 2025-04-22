@@ -347,7 +347,7 @@ local sunflora={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.money}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 8,
   stage = "One",
   ptype = "Grass",
