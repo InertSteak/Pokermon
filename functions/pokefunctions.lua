@@ -100,6 +100,7 @@ family = {
     {"torchic", "combusken", "blaziken"},
     {"mudkip", "marshtomp", "swampert"},
     {"zigzagoon", "linoone"},
+    {"ralts", "kirlia", "gardevoir", "mega_gardevoir"},
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
