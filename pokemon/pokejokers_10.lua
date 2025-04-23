@@ -40,7 +40,7 @@ local ralts = {
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and not G.consumeables.cards[1].ability.extra.used_on then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('ralts') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -86,7 +86,7 @@ local kirlia = {
       local seal_type ="poke_pink_seal"
       _card:set_seal(seal_type, true)
     end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and not G.consumeables.cards[1].ability.extra.used_on then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('kirlia') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -148,7 +148,7 @@ local gardevoir = {
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and not G.consumeables.cards[1].ability.extra.used_on then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('gardevoir') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -215,7 +215,7 @@ local mega_gardevoir = {
         end
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and not G.consumeables.cards[1].ability.extra.used_on then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('mega_gardevoir') < G.GAME.probabilities.normal/card.ability.extra.odds then
