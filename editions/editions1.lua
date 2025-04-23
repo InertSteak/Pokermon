@@ -29,6 +29,11 @@ local shiny = ({
     end,
     on_apply = function(card)
       G.P_CENTERS.e_poke_shiny.on_load(card)
+
+      -- This ensures that evolving a shiny Pokémon doesn't add an extra booster pack.
+      if card.config.center and card.config.center.shiny then
+        return
+      end
       
       --we don't want to do this in the collection screen
       if card.area and card.area.config and not card.area.config.collection then
