@@ -24,7 +24,7 @@ local ralts = {
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds or 5, center.ability.extra.triggers, center.ability.extra.Xmult_minus}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 6, 
   stage = "Baby", 
   ptype = "Psychic",
   atlas = "Pokedex3",
@@ -74,9 +74,9 @@ local kirlia = {
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds or 4, center.ability.extra.triggers, center.ability.extra.hsize or 0 }}
   end,
-  rarity = 1, 
-  cost = 5, 
-  stage = "2", 
+  rarity = 3, 
+  cost = 8, 
+  stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
@@ -131,9 +131,9 @@ local gardevoir = {
     info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds or 4, center.ability.extra.hsize or 0, center.ability.extra.Xmult, center.ability.extra.Xmult_mod, (center.ability.extra.Xmult_mod * 2) }}
   end,
-  rarity = 1, 
-  cost = 5, 
-  stage = "3", 
+  rarity = "poke_safari", 
+  cost = 10, 
+  stage = "Two", 
   ptype = "Psychic",
   atlas = "Pokedex3",
   blueprint_compat = true,
@@ -199,7 +199,7 @@ local mega_gardevoir = {
   end,
   rarity = "poke_mega",
   cost = 12,
-  stage = "3",
+  stage = "Mega",
   ptype = "Psychic",
   atlas = "Megas",
   blueprint_compat = true,
