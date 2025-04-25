@@ -40,9 +40,9 @@ local ralts = {
         }
       end
     end
-    local _mega= "not_a_mega"
-	  if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega=G.consumeables.cards[1].ability.name end end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and _mega == "not_a_mega" then
+    --local _mega1= "not_a_mega"
+	--if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega1=G.consumeables.cards[1].ability.name end end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff --[[and _mega1 == "not_a_mega"]] then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('ralts') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -88,9 +88,9 @@ local kirlia = {
       local seal_type ="poke_pink_seal"
       _card:set_seal(seal_type, true)
     end
-    local _mega= "not_a_mega"
-	  if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega=G.consumeables.cards[1].ability.name end end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and _mega == "not_a_mega" then
+    --local _mega2= "not_a_mega"
+	--if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega2=G.consumeables.cards[1].ability.name end end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff --[[and _mega2 == "not_a_mega"]] then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('kirlia') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -152,9 +152,9 @@ local gardevoir = {
         }
       end
     end
-    local _mega= "not_a_mega"
-	  if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega=G.consumeables.cards[1].ability.name end end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and _mega == "not_a_mega" then
+    --local _mega= "not_a_mega"
+	--if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega=G.consumeables.cards[1].ability.name end end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff --[[and _mega == "not_a_mega"]] then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('gardevoir') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -221,9 +221,9 @@ local mega_gardevoir = {
         end
       end
     end
-    local _mega= "not_a_mega"
-	  if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega=G.consumeables.cards[1].ability.name end end
-    if context.end_of_round and not context.individual and not context.repetition and not card.debuff and _mega == "not_a_mega" then
+    --local _mega3= "not_a_mega"
+	--if G.consumeables.cards[1].ability.name == "megastone" then if G.consumeables.cards[1].ability.extra.used_on then _mega3=G.consumeables.cards[1].ability.name end end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff --[[and _mega3 == "not_a_mega"]] then
       local _card
       if G.consumeables.cards[1] then
         if pseudorandom('mega_gardevoir') < G.GAME.probabilities.normal/card.ability.extra.odds then
