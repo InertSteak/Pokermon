@@ -2305,9 +2305,9 @@ return {
             j_poke_slugma = {
                 name = 'Slugma',
                 text = {
-                    "When Blind is selected,",
-                    "add a {C:attention}Stone{} card to hand",
-                    "for each adjacent {X:water,C:white}Water{C:attention} Joker",
+                    "{C:green}#2# in #3#{} chance to add a {C:attention}Stone{} card",
+                    "to hand when {C:attention}first hand{} is drawn,",
+                    "Guaranteed if you have a {X:water,C:white}Water{C:attention} Joker",
                     "{C:inactive,s:0.8}(Evolves after creating {C:attention,s:0.8}#1# Stone{C:inactive,s:0.8} cards){}"
                 }
             },

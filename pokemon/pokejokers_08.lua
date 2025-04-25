@@ -146,12 +146,12 @@ local scizor={
 local slugma = {
   name = "slugma", 
   pos = {x = 6, y = 6},
-  config = {extra = {created = 0}, evo_rqmt = 5},
-  loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+  config = {extra = {created = 0, odds = 2}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-    local remaining = math.max(0, self.config.evo_rqmt - card.ability.extra.created)
-    return {vars = {remaining}}
+    local remaining = math.max(0, self.config.evo_rqmt - center.ability.extra.created)
+    return {vars = {remaining, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 1,
   cost = 3,
@@ -161,19 +161,11 @@ local slugma = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
-      local adjacent = 0
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
-      for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[i], "Water") then adjacent = adjacent + 1 end
-      end
-      while adjacent > 0 do
-        card.ability.extra.created = card.ability.extra.created + 1
+      if pseudorandom('slugma') < G.GAME.probabilities.normal/card.ability.extra.odds or next(find_pokemon_type("Water")) then
         local _card = create_playing_card({front = pseudorandom_element(G.P_CARDS, pseudoseed('slugma')), center = G.P_CENTERS.m_stone}, G.hand, nil, nil, {G.C.RED})
         playing_card_joker_effects({_card})
-        adjacent = adjacent - 1
-        if adjacent == 0 then
-          card:juice_up()
-        end
+        card:juice_up()
+        card.ability.extra.created = card.ability.extra.created + 1
       end
     end
     return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.created, self.config.evo_rqmt)
@@ -194,6 +186,7 @@ local magcargo = {
   stage = "One",
   ptype = "Fire",
   atlas = "Pokedex2",
+  enhancement_gate = 'm_stone',
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
