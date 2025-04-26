@@ -291,7 +291,7 @@ poke_backend_evolve = function(card, to_key)
     card.ability.perish_tally = G.GAME.perishable_rounds
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "ptype"}
   local values_to_keep = copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
