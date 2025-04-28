@@ -90,6 +90,7 @@ family = {
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
@@ -291,7 +292,7 @@ poke_backend_evolve = function(card, to_key)
     card.ability.perish_tally = G.GAME.perishable_rounds
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "ptype"}
   local values_to_keep = copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
@@ -315,7 +316,7 @@ poke_backend_evolve = function(card, to_key)
   card.children.center.states.drag = card.states.drag
   card.children.center.states.collide.can = false
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
-  card:set_ability(new_card)
+  card:set_ability(new_card, true)
   card:set_cost()
 
   if type(card.ability.extra) == "table" then
@@ -572,6 +573,13 @@ get_previous_evo = function(card, full_key)
   local found = nil
   local prev = nil
   local max = nil
+  local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+  local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
   else
@@ -600,7 +608,7 @@ get_previous_evo = function(card, full_key)
     if found then break end
   end
   if full_key then
-    prev = 'j_poke_'..prev
+    prev = "j_"..prefix.."_"..prev 
   end
   return prev
 end
