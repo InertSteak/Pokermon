@@ -2283,16 +2283,18 @@ return {
             j_poke_snubbull = {
                 name = 'Snubbull',
                 text = {
-                    "First played {C:attention}Queen",
-                    "gives {X:mult,C:white}X#1#{} Mult when scored",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                    "First played {C:attention}face{} card",
+                    "gives {X:mult,C:white}X#2#{} Mult when scored if it",
+                    "is a {C:attention}Queen{} and {X:mult,C:white}X#1#{} Mult otherwise",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_granbull = {
                 name = 'Granbull',
                 text = {
-                    "First played {C:attention}Queen",
-                    "gives {X:mult,C:white}X#1#{} Mult when scored",
+                    "First played {C:attention}face{} card",
+                    "gives {X:mult,C:white}X#2#{} Mult when scored if it",
+                    "is a {C:attention}Queen{} and {X:mult,C:white}X#1#{} Mult otherwise",
                 }
             },
             j_poke_qwilfish = {
