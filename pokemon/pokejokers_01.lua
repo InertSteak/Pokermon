@@ -758,7 +758,7 @@ local pidgey={
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -798,7 +798,7 @@ local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
   config = {extra = {mult = 12, rounds = 4}},
-  blueprint_compat = false,
+  blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}

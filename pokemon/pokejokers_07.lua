@@ -396,7 +396,61 @@ local jumpluff={
 }
 -- Aipom 190
 -- Sunkern 191
+local sunkern={
+  name = "sunkern",
+  pos = {x = 9, y = 3},
+  config = {extra = {money = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    return {vars = {card.ability.extra.money}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  item_req = "sunstone",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind or context.joker_main then
+      local earned = ease_poke_dollars(card, "sunkern", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
+    end
+    return item_evo(self, card, context, "j_poke_sunflora")
+  end,
+}
 -- Sunflora 192
+local sunflora={
+  name = "sunflora",
+  pos = {x = 0, y = 4},
+  config = {extra = {money = 1}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.money}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind or context.joker_main or context.pre_discard or context.using_consumeable or context.selling_card then
+      local earned = ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+      return {
+        dollars = earned,
+        card = card
+      }
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    return ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+	end
+}
 -- Yanma 193
 -- Wooper 194
 -- Quagsire 195
@@ -408,7 +462,7 @@ local espeon={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "2", 'ranks'),
-                    localize(G.GAME.current_round.espeon_suit, 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit]}}}
+                    localize(G.GAME.current_round.espeon_suit or "Clubs", 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit or "Clubs"]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -782,7 +836,7 @@ local girafarig={
   rarity = 2,
   cost = 6,
   stage = "Basic",
-  ptype = "Colorless",
+  ptype = "Psychic",
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = true,
@@ -979,8 +1033,86 @@ local steelix={
   end
 }
 -- Snubbull 209
+local snubbull = {
+  name = "snubbull",
+  pos = {x = 7, y = 5},
+  config = {extra = {Xmult = 2, Xmult2 = 2.5, rounds = 5,}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2, card.ability.extra.rounds}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+      local first_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          first_face = context.scoring_hand[i]
+          break
+        end
+      end
+      if context.other_card == first_face then
+        local Xmult = nil
+        if context.other_card:get_id() == 12 then
+          Xmult = card.ability.extra.Xmult2
+        else
+          Xmult = card.ability.extra.Xmult
+        end
+        return {
+            x_mult = Xmult,
+            colour = G.C.RED,
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_granbull")
+  end
+}
 -- Granbull 210
+local granbull = {
+  name = "granbull",
+  pos = {x = 8, y = 5},
+  config = {extra = {Xmult = 2.5, Xmult2 = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "One",
+  ptype = "Fairy",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+      local first_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          first_face = context.scoring_hand[i]
+          break
+        end
+      end
+      if context.other_card == first_face then
+        local Xmult = nil
+        if context.other_card:get_id() == 12 then
+          Xmult = card.ability.extra.Xmult2
+        else
+          Xmult = card.ability.extra.Xmult
+        end
+        return {
+            x_mult = Xmult,
+            colour = G.C.RED,
+        }
+      end
+    end
+  end
+
+}
 
 return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix},
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix, snubbull, granbull},
 }
