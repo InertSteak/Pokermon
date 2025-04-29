@@ -2141,7 +2141,6 @@ return {
                 name = 'Azumarill',
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
-                    "{br:2}ERROR - CONTACT STEAK",
                     "Gives double {X:mult,C:white}X{} Mult if played hand",
                     "contains a scoring {C:attention}non-Bonus{} card",
                     "and a scoring {C:attention}Bonus{} card"
