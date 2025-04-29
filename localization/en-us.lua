@@ -2131,19 +2131,20 @@ return {
             j_poke_marill = {
                 name = 'Marill',
                 text = {
-                    "Played cards give {C:attention}double{}",
-                    "their total chips when scored",
+                    "{X:mult,C:white}X#2#{} Mult if played hand",
+                    "contains a scoring {C:attention}unenhanced{} card",
+                    "and a scoring {C:attention}enhanced{} card",
                     "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#1# Bonus Cards{C:inactive,s:0.8})",
                 }
             },
             j_poke_azumarill = {
                 name = 'Azumarill',
                 text = {
-                    "Played cards give {C:attention}double{}",
-                    "their total chips when scored",
+                    "{X:mult,C:white}X#1#{} Mult",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{X:mult,C:white}X#1#{} Mult if played hand",
-                    "only contains {C:attention}Bonus{} cards",
+                    "Gives double {X:mult,C:white}X{} Mult if played hand",
+                    "contains a scoring {C:attention}non-Bonus{} card",
+                    "and a scoring {C:attention}Bonus{} card"
                 }
             },
             j_poke_sudowoodo = {
