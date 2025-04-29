@@ -636,7 +636,7 @@ return {
                 name = "Mega Pidgeot",
                 text = {
                     "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
-                    "{br:2}text needs to be here to work",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Each played card gives {X:mult,C:white}X{} Mult",
                     "equal to {C:attention}discards lost{} if scoring hand",
                     "contains multiple ranks and multiple suits",
@@ -1614,7 +1614,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, gain {C:attention}+#1#{} hand size",
                     "if deck size is {C:attention}#2#{} or greater",
-                    "{br:4}text needs to be here to work",
+                    "{br:4}ERROR - CONTACT STEAK",
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
                     "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
@@ -1626,7 +1626,7 @@ return {
                 text = {
                     "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
                     "is sold and at end of round",
-                    "{br:3.5}text needs to be here to work",
+                    "{br:3.5}ERROR - CONTACT STEAK",
                     "Earn {C:attention}#2#%{} of this Joker's sell value",
                     "at end of round {C:inactive}(rounded up){}",
                     "{C:inactive}(Currently earns {C:money}$#3#{C:inactive}/$#4# Max)",
@@ -2137,12 +2137,39 @@ return {
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
+            j_poke_azurill = {
+                name = 'Azurill',
+                text = {
+                    "{C:attention}Baby{}, {X:red,C:white}X#1#{} Mult",
+                    "Create a {C:attention}Hierophant{} card with",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_marill = {
+                name = 'Marill',
+                text = {
+                    "{X:mult,C:white}X#2#{} Mult if played hand",
+                    "contains a scoring {C:attention}unenhanced{} card",
+                    "and a scoring {C:attention}enhanced{} card",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#1# Bonus Cards{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_azumarill = {
+                name = 'Azumarill',
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult",
+                    "Gives double {X:mult,C:white}X{} Mult if played hand",
+                    "contains a scoring {C:attention}non-Bonus{} card",
+                    "and a scoring {C:attention}Bonus{} card"
+                }
+            },
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
                   "{C:attention}Type Changer Pokemon{}",
                   "Played {C:attention}face{} cards give {C:mult}+#1#{} Mult when scored",
-                  "{br:2}text needs to be here to work",
+                  "{br:3.5}ERROR - CONTACT STEAK",
                   "Retrigger all played {C:attention}face{} cards if",
                   "this Joker isn't {X:grass,C:white}Grass{} or",
                   "you have a {X:water,C:white}Water{} Joker"
@@ -2265,7 +2292,7 @@ return {
               text = {
                 "Retrigger each played",
                 "{C:attention}6{}, {C:attention}7{}, {C:attention}8{}, {C:attention}9{} or {C:attention}10{}",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Volatile Left{}",
                 "When blind is selected",
                 "add {C:attention}Eternal{} to rightmost Joker",
@@ -2293,7 +2320,7 @@ return {
               text = {
                 "Gains {C:chips}+#2#{} Chips when",
                 "a {C:attention}held{} {C:attention}Steel{} card triggers",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Volatile Left{}",
                 "{C:chips}+#1#{} Chips and debuff self",
               }
@@ -2367,7 +2394,7 @@ return {
               text = {
                 "{C:mult}+#1#{} Mult for each {C:attention}Enhanced{}",
                 "card in your full deck",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "Create a {C:attention}Basic{} {X:water,C:white}Water{} Joker if scoring",
                 "hand contains {C:attention}5 Enhanced{} cards",
                 "{C:inactive,s:0.8}(Must have room)",
@@ -2833,7 +2860,7 @@ return {
                     "Played {C:attention}face{} cards permanently",
                     "lose up to {C:chips}#1#{} Chips when scored",
                     "Gain lost Chips",
-                    "{br:3}text needs to be here to work",
+                    "{br:3}ERROR - CONTACT STEAK",
                     "{C:green}#3# in #4#{} chance for them to",
                     "permanently gain {C:chips}#5#{} Chips instead",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
@@ -3124,7 +3151,7 @@ return {
                 text = {
                     "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
                     "in the shop are {C:attention}free{}",
-                    "{br:2}text needs to be here to work",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
                 } 
             },
@@ -3238,7 +3265,7 @@ return {
                 text = {
                   "If played hand is a {C:attention}Three of a Kind{}",
                   "each unscoring card is destroyed",
-                  "{br:3}text needs to be here to work",
+                  "{br:3}ERROR - CONTACT STEAK",
                   "Gains {X:mult,C:white} X#2# {} Mult when a card is destroyed",
                   "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}"
                 }
