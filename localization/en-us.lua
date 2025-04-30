@@ -2388,6 +2388,7 @@ return {
                     "destroy it and earn {C:money}$#2#",
                     "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
             },
             j_poke_heracross = {
                 name = 'Heracross',
