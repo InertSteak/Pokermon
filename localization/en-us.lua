@@ -2935,7 +2935,7 @@ return {
                 name = 'Weavile',
                 text = {
                     "If played hand is a single {C:attention}#3#{} destroy it,",
-                    "earn {C:money}$#4#{} and this gains {X:mult,C:white}X#1#{} Mult",
+                    "earn {C:money}$#4#{} and this gains {X:mult,C:white}X#1#{} Mult,",
                     "resets when {C:attention}Boss Blind{} is defeated",
                     "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
