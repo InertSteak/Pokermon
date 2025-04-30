@@ -26,7 +26,7 @@ target = "functions/common_events.lua"
 pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
 position = "after"
 payload = '''
-if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
+if v.set == 'Joker' and not v.stage and pokermon_config and (pokermon_config.pokemon_only or pokermon_config.pokemon_master) then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
 if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
@@ -74,6 +74,7 @@ pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
 if self.config.shiny_on_add and not self.debuff then
+  self.config.shiny_on_add = false
   SMODS.change_booster_limit(1)
 end
 '''

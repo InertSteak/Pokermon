@@ -439,6 +439,24 @@ return {
                 },
             }
         },
+        Stake = {
+            stake_poke_diamond = {
+                name = "Diamond Stake",
+                colour = "Diamond",
+                text = {
+                    "{C:attention}Non-Baby{} Pokemon Jokers evolve {C:attention}1{} round slower",
+                    "{s:0.8}Applies all previous Stakes"
+                }
+            },
+            stake_poke_pearl = {
+                name = "Pearl Stake",
+                colour = "Pearl",
+                text = {
+                    "{C:attention}-1{} Energy Limit",
+                    "{s:0.8}Applies all previous Stakes"
+                }
+            },
+        },
         Joker = {
             j_poke_bulbasaur = {
                 name = "Bulbasaur",
@@ -618,7 +636,7 @@ return {
                 name = "Mega Pidgeot",
                 text = {
                     "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
-                    "{br:2}text needs to be here to work",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Each played card gives {X:mult,C:white}X{} Mult",
                     "equal to {C:attention}discards lost{} if scoring hand",
                     "contains multiple ranks and multiple suits",
@@ -1371,9 +1389,9 @@ return {
             j_poke_kingler = {
                 name = 'Kingler',      
                 text = {
-                    "All played unenhanced {C:attention}face{} cards",
-                    "become {C:attention}Bonus{} cards and give",
-                    "{C:chips}+#1#{} Chips when scored",
+                    "All played {C:attention}face{} cards give",
+                    "{C:chips}+#1#{} Chips when scored and become",
+                    "{C:attention}Bonus{} cards if unenhanced",
                 } 
             },
             j_poke_voltorb = {
@@ -1596,7 +1614,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, gain {C:attention}+#1#{} hand size",
                     "if deck size is {C:attention}#2#{} or greater",
-                    "{br:4}text needs to be here to work",
+                    "{br:4}ERROR - CONTACT STEAK",
                     "{C:attention}Playing cards{} added to your",
                     "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
                     "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
@@ -1608,7 +1626,7 @@ return {
                 text = {
                     "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
                     "is sold and at end of round",
-                    "{br:3.5}text needs to be here to work",
+                    "{br:3.5}ERROR - CONTACT STEAK",
                     "Earn {C:attention}#2#%{} of this Joker's sell value",
                     "at end of round {C:inactive}(rounded up){}",
                     "{C:inactive}(Currently earns {C:money}$#3#{C:inactive}/$#4# Max)",
@@ -2115,8 +2133,35 @@ return {
             j_poke_xatu = {
                 name = 'Xatu',
                 text = {
-                    "{C:planet}Planet{} cards give {C:attention}#1#{} extra level",
+                    "{C:planet}Planet{} cards give an extra level",
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
+                }
+            },
+            j_poke_azurill = {
+                name = 'Azurill',
+                text = {
+                    "{C:attention}Baby{}, {X:red,C:white}X#1#{} Mult",
+                    "Create a {C:attention}Hierophant{} card with",
+                    "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_marill = {
+                name = 'Marill',
+                text = {
+                    "{X:mult,C:white}X#2#{} Mult if played hand",
+                    "contains a scoring {C:attention}unenhanced{} card",
+                    "and a scoring {C:attention}enhanced{} card",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#1# Bonus Cards{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_azumarill = {
+                name = 'Azumarill',
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult",
+                    "Gives double {X:mult,C:white}X{} Mult if played hand",
+                    "contains a scoring {C:attention}non-Bonus{} card",
+                    "and a scoring {C:attention}Bonus{} card"
                 }
             },
             j_poke_sudowoodo = {
@@ -2124,7 +2169,7 @@ return {
                 text = {
                   "{C:attention}Type Changer Pokemon{}",
                   "Played {C:attention}face{} cards give {C:mult}+#1#{} Mult when scored",
-                  "{br:2}text needs to be here to work",
+                  "{br:3.5}ERROR - CONTACT STEAK",
                   "Retrigger all played {C:attention}face{} cards if",
                   "this Joker isn't {X:grass,C:white}Grass{} or",
                   "you have a {X:water,C:white}Water{} Joker"
@@ -2175,6 +2220,23 @@ return {
                     "{C:attention}+#1#{} hand size",
                     "All {C:attention}discarded cards{} become {C:dark_edition}Wild{}",
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
+                }
+            },
+            j_poke_sunkern = {
+                name = 'Sunkern',
+                text = {
+                    "Earn {C:money}$#1#{} when {C:attention}Blind{} is selected",
+                    "and when hand is {C:attention}played{}",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Sun Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_sunflora = {
+                name = 'Sunflora',
+                text = {
+                    "Earn {C:money}$#1#{} when {C:attention}Blind{} is selected,",
+                    "hand is {C:attention}played{}, hand is {C:attention}discarded{},",
+                    "consumable is {C:attention}used{}, card is {C:attention}sold{},",
+                    "and at end of round"
                 }
             },
             j_poke_espeon = {
@@ -2230,7 +2292,7 @@ return {
               text = {
                 "Retrigger each played",
                 "{C:attention}6{}, {C:attention}7{}, {C:attention}8{}, {C:attention}9{} or {C:attention}10{}",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Volatile Left{}",
                 "When blind is selected",
                 "add {C:attention}Eternal{} to rightmost Joker",
@@ -2258,7 +2320,7 @@ return {
               text = {
                 "Gains {C:chips}+#2#{} Chips when",
                 "a {C:attention}held{} {C:attention}Steel{} card triggers",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Volatile Left{}",
                 "{C:chips}+#1#{} Chips and debuff self",
               }
@@ -2279,6 +2341,23 @@ return {
                     "{br:4}ERROR - CONTACT STEAK",
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
+            },
+            j_poke_snubbull = {
+                name = 'Snubbull',
+                text = {
+                    "First played {C:attention}face{} card",
+                    "gives {X:mult,C:white}X#2#{} Mult when scored if it",
+                    "is a {C:attention}Queen{} and {X:mult,C:white}X#1#{} Mult otherwise",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_granbull = {
+                name = 'Granbull',
+                text = {
+                    "First played {C:attention}face{} card",
+                    "gives {X:mult,C:white}X#2#{} Mult when scored if it",
+                    "is a {C:attention}Queen{} and {X:mult,C:white}X#1#{} Mult otherwise",
+                }
             },
             j_poke_qwilfish = {
                 name = 'Qwilfish',
@@ -2309,6 +2388,13 @@ return {
                     "destroy it and earn {C:money}$#2#",
                     "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+            },
+            j_poke_heracross = {
+                name = 'Heracross',
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if no scored cards",
+                    "have the {C:attention}same rank{} as",
+                    "a card {C:attention}held in hand{}"
                 }
             },
             j_poke_corsola = {
@@ -2316,7 +2402,7 @@ return {
               text = {
                 "{C:mult}+#1#{} Mult for each {C:attention}Enhanced{}",
                 "card in your full deck",
-                "{br:2}text needs to be here to work",
+                "{br:2}ERROR - CONTACT STEAK",
                 "Create a {C:attention}Basic{} {X:water,C:white}Water{} Joker if scoring",
                 "hand contains {C:attention}5 Enhanced{} cards",
                 "{C:inactive,s:0.8}(Must have room)",
@@ -2615,7 +2701,7 @@ return {
                 name = 'Aron',
                 text = {
                     "When a {C:attention}Steel{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
             },
@@ -2623,7 +2709,7 @@ return {
                 name = 'Lairon',
                 text = {
                     "When a {C:attention}Steel{} or {C:attention}Stone{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
@@ -2631,7 +2717,7 @@ return {
                 name = 'Aggron',
                 text = {
                     "When a {C:attention}Steel{}, {C:attention}Stone{} or {C:attention}Gold{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult then destroy it",
+                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
@@ -2730,8 +2816,9 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Every {C:attention}#2# {C:inactive}[#3#]{} hands, played cards",
+                    "Every {C:attention}#2# hands{}, played cards",
                     "give {X:mult,C:white}X#1#{} Mult when scored",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {
@@ -2781,7 +2868,7 @@ return {
                     "Played {C:attention}face{} cards permanently",
                     "lose up to {C:chips}#1#{} Chips when scored",
                     "Gain lost Chips",
-                    "{br:3}text needs to be here to work",
+                    "{br:3}ERROR - CONTACT STEAK",
                     "{C:green}#3# in #4#{} chance for them to",
                     "permanently gain {C:chips}#5#{} Chips instead",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
@@ -3082,7 +3169,7 @@ return {
                 text = {
                     "All {C:planet}Planet{} cards and {C:planet}Celestial Packs{}",
                     "in the shop are {C:attention}free{}",
-                    "{br:2}text needs to be here to work",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
                 } 
             },
@@ -3196,7 +3283,7 @@ return {
                 text = {
                   "If played hand is a {C:attention}Three of a Kind{}",
                   "each unscoring card is destroyed",
-                  "{br:3}text needs to be here to work",
+                  "{br:3}ERROR - CONTACT STEAK",
                   "Gains {X:mult,C:white} X#2# {} Mult when a card is destroyed",
                   "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}"
                 }
@@ -3222,8 +3309,8 @@ return {
                 text = {
                     "{C:chips}+#1#{} Chips if played hand contains a {C:attention}Flush{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Create a {C:pink}Energy{} card if it",
-                    "also contains an {C:attention}King{} or {C:attention}Queen{}"
+                    "Create an {C:pink}Energy{} card if it",
+                    "also contains a {C:attention}King{} or {C:attention}Queen{}"
                 } 
             },
             j_poke_sylveon = {
@@ -4220,6 +4307,13 @@ return {
                 "{C:red}Discovering all objects can't be undone{}"
               }
             }, 
+            pokemaster_tooltip = {
+              name = "Pokemon Master Mode",
+              text = {
+                "Pokemon Only setting applied",
+                "Additional Stakes are available"
+              }
+            },
             designed_by = {
               name = "Designed By",
               text = {
@@ -4498,6 +4592,7 @@ return {
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
             poke_settings_pokemon_aprilfools = "April Fools Content?",
+            poke_settings_pokemon_master = "Pokemon Master Mode?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

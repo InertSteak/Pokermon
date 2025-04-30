@@ -86,15 +86,18 @@ family = {
     {"remoraid", "octillery"},
     {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
+    {"azurill", "marill", "azumarill"},
     {"phanpy", "donphan"},
     {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
+    {"snubbull", "granbull"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
@@ -292,6 +295,9 @@ poke_backend_evolve = function(card, to_key)
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  if type_sticker_applied(card) then
+    table.insert(names_to_keep, "ptype")
+  end
   local values_to_keep = copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
@@ -315,7 +321,7 @@ poke_backend_evolve = function(card, to_key)
   card.children.center.states.drag = card.states.drag
   card.children.center.states.collide.can = false
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
-  card:set_ability(new_card)
+  card:set_ability(new_card, true)
   card:set_cost()
 
   if type(card.ability.extra) == "table" then
@@ -401,7 +407,7 @@ level_evo = function(self, card, context, forced_key)
     end
     if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end
@@ -572,6 +578,13 @@ get_previous_evo = function(card, full_key)
   local found = nil
   local prev = nil
   local max = nil
+  local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+  local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
   else
@@ -600,7 +613,7 @@ get_previous_evo = function(card, full_key)
     if found then break end
   end
   if full_key then
-    prev = 'j_poke_'..prev
+    prev = "j_"..prefix.."_"..prev 
   end
   return prev
 end

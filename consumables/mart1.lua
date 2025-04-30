@@ -564,7 +564,7 @@ local megastone = {
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not poke.debuff then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") then
           target = poke
           break
         end
@@ -582,14 +582,14 @@ local megastone = {
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" and not poke.debuff then
+        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
           target = poke
-          if not target.debuff then
-            break
-          end
+          break
         end
       end
     end
+    local prefix = target.config.center.poke_custom_prefix or "poke"
+    local forced_mega_key = "j_"..prefix.."_"
     if target.config.center.megas then
       local mega = target.config.center.megas[1]
       if #target.config.center.megas > 1 then
@@ -599,7 +599,7 @@ local megastone = {
           mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
         end
       end
-      forced_key = "j_poke_" .. mega
+      forced_key = forced_mega_key.. mega
       card.ability.extra.used_on = forced_key
     else
       forced_key = get_previous_evo(target, true)

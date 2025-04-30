@@ -2497,8 +2497,9 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Ogni{C:attention}#2# {C:inactive}[#3#]{} mano, le carte giocate",
+                    "Ogni{C:attention}#2# mano{}, le carte giocate",
                     "danno {X:mult,C:white}X#1#{} Mult quando assegnano punti",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {

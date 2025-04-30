@@ -2644,8 +2644,9 @@ return {
             j_poke_jirachi_power = {
                 name = '基拉祈',
                 text = {
-                    "每第{}{C:attention}#2# {C:inactive}[#3#]{}次出牌時",
+                    "每第{}{C:attention}#2#次出牌時",
                     "每張打出的卡牌在得分時給予{X:mult,C:white}X#1#{}倍數",
+                    "{C:inactive}(#3#){}",
                 }
             },
             j_poke_jirachi_negging = {

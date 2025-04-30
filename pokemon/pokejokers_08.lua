@@ -139,6 +139,41 @@ local scizor={
 }
 -- Shuckle 213
 -- Heracross 214
+local heracross = {
+  name = "heracross", 
+  pos = {x = 2, y = 6},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
+      if context.joker_main then
+        if G.hand and G.hand.cards then
+          local found_ranks = {}
+          for _, played_card in pairs(context.scoring_hand) do
+            found_ranks[played_card:get_id()] = true
+          end
+          for _, hand_card in pairs(G.hand.cards) do
+            if found_ranks[hand_card:get_id()] then return end
+          end
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Sneasel 215
 local sneasel = {
   name = "sneasel",
@@ -1083,5 +1118,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, heracross, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
