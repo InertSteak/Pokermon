@@ -2305,8 +2305,9 @@ return {
             j_poke_sneasel = {
                 name = 'Sneasel',
                 text = {
-                    "Destroy rightmost card",
-                    "in {C:attention}first hand{} of round",
+                    "If played hand is a single {C:attention}#1#{}",
+                    "destroy it and earn {C:money}$#2#",
+                    "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
             },
@@ -2845,11 +2846,11 @@ return {
             j_poke_weavile = {
                 name = 'Weavile',
                 text = {
-                    "Destroy rightmost card in {C:attention}first hand{}",
-                    "{br:4}ERROR - CONTACT STEAK",
-                    "Gain {X:mult,C:white}X#1#{} Mult when a card is destroyed",
+                    "If played hand is a single {C:attention}#3#{} destroy it,",
+                    "earn {C:money}$#4#{} and this gains {X:mult,C:white}X#1#{} Mult",
+                    "resets when {C:attention}Boss Blind{} is defeated",
+                    "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
-                    "{C:inactive,s:0.8}(Resets when {C:attention,s:0.8}Boss Blind{C:inactive,s:0.8} is defeated)",
                 }
             },
             j_poke_magnezone = {

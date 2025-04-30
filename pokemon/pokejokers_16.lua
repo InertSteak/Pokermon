@@ -76,10 +76,11 @@ local mantyke={
 local weavile = {
   name = "weavile",
   pos = {x = 4, y = 5},
-  config = {extra = {Xmult_mod = 1, Xmult = 1}},
+  config = {extra = {Xmult_mod = 1, Xmult = 1, Xmult2 = 1, money = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
+    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'),
+                    card.ability.extra.money}}
   end,
   rarity = 'poke_safari',
   cost = 10,
@@ -88,26 +89,17 @@ local weavile = {
   atlas = "Pokedex4",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if G.GAME.current_round.hands_played == 0 then
-      if context.final_scoring_step then
-        for i = #context.full_hand, 1, -1 do
-          if not context.full_hand[i].to_be_removed_by then
-            context.full_hand[i].to_be_removed_by = card
-            break
-          end
-        end
-      end
-      if context.destroy_card and context.destroy_card.to_be_removed_by == card then
-        context.destroy_card.to_be_removed_by = nil
-        return {
-          remove = true
-        }
-      end
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id then
+      context.full_hand[1].to_be_removed_by = card
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      ease_poke_dollars(card, "weavile", card.ability.extra.money)
+      card:juice_up()
     end
-    if context.remove_playing_cards and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * #context.removed
-      card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_upgrade_ex'), colour = G.C.MULT, })
-      return nil, true
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and card.ability.extra.Xmult ~= 1 then
@@ -120,7 +112,7 @@ local weavile = {
     end
     if context.end_of_round and not context.blueprint then
       if G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
-        card.ability.extra.Xmult = 1
+        card.ability.extra.Xmult = card.ability.extra.Xmult2
         return {
           message = localize('k_reset'),
           colour = G.C.RED

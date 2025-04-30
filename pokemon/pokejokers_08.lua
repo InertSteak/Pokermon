@@ -143,11 +143,11 @@ local scizor={
 local sneasel = {
   name = "sneasel",
   pos = {x = 3, y = 6},
-  config = {extra = {}},
+  config = {extra = {money = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
-    return {vars = {}}
+    return {vars = {localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'), card.ability.extra.money}}
   end,
   rarity = 2,
   cost = 7,
@@ -157,21 +157,16 @@ local sneasel = {
   item_req = "duskstone",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if G.GAME.current_round.hands_played == 0 then
-      if context.final_scoring_step then
-        for i = #context.full_hand, 1, -1 do
-          if not context.full_hand[i].to_be_removed_by then
-            context.full_hand[i].to_be_removed_by = card
-            break
-          end
-        end
-      end
-      if context.destroy_card and context.destroy_card.to_be_removed_by == card then
-        context.destroy_card.to_be_removed_by = nil
-        return {
-          remove = true
-        }
-      end
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id then
+      context.full_hand[1].to_be_removed_by = card
+      ease_poke_dollars(card, "sneasel", card.ability.extra.money)
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
     end
     return item_evo(self, card, context, "j_poke_weavile")
   end
@@ -1063,5 +1058,30 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
+        init = function()
+            local game_init_object = Game.init_game_object;
+            function Game:init_game_object()
+                local game = game_init_object(self)
+                game.current_round.sneaselcard = {rank = 'Ace'}
+                return game
+            end
+            
+            local rmr = reset_mail_rank;
+            function reset_mail_rank()
+              rmr()
+              G.GAME.current_round.sneaselcard = {rank = 'Ace'}
+              local valid_sneasel_cards = {}
+              for k, v in ipairs(G.playing_cards) do
+                if v.ability.effect ~= 'Stone Card' then
+                  valid_sneasel_cards[#valid_sneasel_cards+1] = v
+                end
+              end
+              if valid_sneasel_cards[1] then
+                local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
+                G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
+                G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
+              end
+            end
+        end,
         list = {qwilfish, scizor, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
