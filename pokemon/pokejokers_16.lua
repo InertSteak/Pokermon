@@ -89,13 +89,14 @@ local weavile = {
   atlas = "Pokedex4",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id then
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
       context.full_hand[1].to_be_removed_by = card
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       ease_poke_dollars(card, "weavile", card.ability.extra.money)
       card:juice_up()
     end
-    if context.destroy_card and context.destroy_card.to_be_removed_by == card then
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
       context.destroy_card.to_be_removed_by = nil
       return {
         remove = true
@@ -110,7 +111,7 @@ local weavile = {
         }
       end
     end
-    if context.end_of_round and not context.blueprint then
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       if G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
         card.ability.extra.Xmult = card.ability.extra.Xmult2
         return {
