@@ -4004,7 +4004,7 @@ return {
 		dictionary = {
 			b_energy_cards = "能量牌",
 			b_item_cards = "道具牌",
-			b_save = "SAVE",
+			b_save = "保留",
 			cubone_marowak_infoqueue = "卡拉卡拉及嘎啦嘎啦",
 			farfetchd_infoqueue = "大葱鸭",
 			goodrod_variable = "好钓竿",
@@ -4095,7 +4095,7 @@ return {
 			poke_silver_seal = "白银封蜡",
 			psychic_sticker = "属性贴纸",
 			water_sticker = "属性贴纸",
-			k_poke_safari = "宝可梦公园",
+			k_poke_safari = "野生",
 			k_poke_mega = "超级进化"
 		},
 		tutorial = {
