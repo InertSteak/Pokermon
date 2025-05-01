@@ -462,21 +462,22 @@ jd_def["j_poke_politoed"] = {
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
         local suit = joker_card.ability.extra.suits[joker_card.ability.extra.indice]
         local total = #find_pokemon_type("Water")
-        local cards = #scoring_hand
+        local cards = scoring_hand and #scoring_hand or 0
         local pos
         local remainder
-        local retriggers
-        for i=1, #scoring_hand do
-          if scoring_hand[i] == playing_card then
-            pos = i
-            break
+        if cards > 0 then
+          for i=1, cards do
+            if scoring_hand[i] == playing_card then
+              pos = i
+              break
+            end
           end
+          local retriggers = math.floor(total/cards)
+          remainder = total % cards
+          if pos <= remainder then retriggers = retriggers + 1 end
+          if held_in_hand then return 0 end
+              return (playing_card:is_suit(suit)) and (retriggers * JokerDisplay.calculate_joker_triggers(joker_card or 0)) or 0
         end
-        retriggers = math.floor(total/cards)
-        remainder = total % cards
-        if pos <= remainder then retriggers = retriggers + 1 end
-        if held_in_hand then return 0 end
-            return (playing_card:is_suit(suit)) and (retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
     end
 }
 
