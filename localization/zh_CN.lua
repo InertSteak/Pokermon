@@ -200,10 +200,10 @@ return {
 				name = "暗之石",
 				text = {
 					"每拥有一张小丑牌，获得 {C:money}$#1#{}",
-					"{C:attention}每张小丑牌扣除 {C:money}$1{}",
-					"{C:attention}#2#{} 回合后无{C:attention}扣除{} {C:inactive}(回合 #3#)",
+					"{C:attention}每张小丑牌吸取 {C:money}$1{}",
+					"{C:attention}#2#{} 回合后解除{C:attention}吸取{} {C:inactive}(回合 #3#)",
 					"{C:attention}进化牌{}",
-					"{C:inactive}(当前 {C:money}$#4#{C:inactive}/$#5# 最大)"
+					"{C:inactive}(当前 {C:money}$#4#{C:inactive}/上限 $#5#)"
 				}
 			},
 			c_poke_firestone = {
@@ -3872,14 +3872,14 @@ return {
 			  name = "吸取",
 			  text = {
 				"如果一张小丑牌的出售价值高于{C:money}$1{}",
-				"就将它的出售价值并转移给自身",
+				"就将它那么多的出售价值转移给自身",
 			  }
 			},
 			poke_drain_item = {
 			  name = "吸取",
 			  text = {
 				"如果一张小丑牌的出售价值高于{C:money}$1{}",
-				"就移除它的出售价值",
+				"就移除它那么多的出售价值",
 			  }
 			},
 			poke_volatile_left = {
