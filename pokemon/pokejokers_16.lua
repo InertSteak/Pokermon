@@ -73,6 +73,54 @@ local mantyke={
 -- Snover 459
 -- Abomasnow 460
 -- Weavile 461
+local weavile = {
+  name = "weavile",
+  pos = {x = 4, y = 5},
+  config = {extra = {Xmult_mod = 1, Xmult = 1, Xmult2 = 1, money = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'),
+                    card.ability.extra.money}}
+  end,
+  rarity = 'poke_safari',
+  cost = 10,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id then
+      context.full_hand[1].to_be_removed_by = card
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      ease_poke_dollars(card, "weavile", card.ability.extra.money)
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult ~= 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.end_of_round and not context.blueprint then
+      if G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
+        card.ability.extra.Xmult = card.ability.extra.Xmult2
+        return {
+          message = localize('k_reset'),
+          colour = G.C.RED
+        }
+      end
+    end
+  end
+}
 -- Magnezone 462
 local magnezone={
   name = "magnezone", 
@@ -554,5 +602,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
 }
