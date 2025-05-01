@@ -340,7 +340,7 @@ return {
                 name = "弯曲的汤匙",
                 text = {
                     "产生比赛中最近使用的",
-                    "{C:item}物品{}牌或{C:pink}能量{}牌",
+                    "{C:item}道具{}牌或{C:pink}能量{}牌",
                     "{s:0.8,C:item}弯曲的汤匙{s:0.8}除外"
                 }
             },
@@ -1500,7 +1500,7 @@ return {
                 name = "梦幻",
                 text = {
                     "离开商店后，产生一张随机的",
-                    "{C:dark_edition}负片{}{C:attention}塔罗{}，{C:spectral}幻灵{}或{C:item}物品{}牌",
+                    "{C:dark_edition}负片{}{C:attention}塔罗{}，{C:spectral}幻灵{}或{C:item}道具{}牌",
                     "有几率产生一张随机的{C:dark_edition}负片{}小丑牌"
                 }
             },
@@ -3539,7 +3539,7 @@ return {
                 name = "礼物",
                 text = {
                     "{C:green}35%{} - {C:money}$8{}",
-                    "{C:green}30%{} - {C:item}物品{}{C:attention}牌",
+                    "{C:green}30%{} - {C:item}道具{}{C:attention}牌",
                     "{C:green}20%{} - {C:attention}优惠券标签",
                     "{C:green}15%{} - {C:dark_edition}彩色{}{C:attention}礼物卡"
                 }
@@ -3625,7 +3625,7 @@ return {
                 }
             },
             holding = {
-                name = "携带物品",
+                name = "携带道具",
                 text = {
                     "这张牌附带",
                     "一张{C:attention}#1#{}牌",
@@ -3675,56 +3675,56 @@ return {
             p_poke_pokepack_jumbo_1 = {
                 name = "特大宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_jumbo_2 = {
                 name = "特大宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_mega_1 = {
                 name = "超级宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_mega_2 = {
                 name = "超级宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_normal_1 = {
                 name = "宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_normal_2 = {
                 name = "宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_normal_3 = {
                 name = "宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
             p_poke_pokepack_normal_4 = {
                 name = "宝可梦礼包",
                 text = {
-                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}物品{}牌中",
+                    "从{C:attention}#2#{}张{C:pink}能量{}或{C:item}道具{}牌中",
                     "选择{C:attention}#1#{}张"
                 }
             },
@@ -3786,8 +3786,8 @@ return {
             safaridesc = {
                 name = "野生",
                 text = {
-                    "只可以透过",
-                    "{C:attention}进化{}或特定{C:attention}的物品{}",
+                    "只可以通过",
+                    "{C:attention}进化{}或特定的{C:attention}道具{}",
                     "来获得此牌"
                 }
             },
@@ -4009,7 +4009,7 @@ return {
             farfetchd_infoqueue = "大葱鸭",
             goodrod_variable = "好钓竿",
             k_energy = "能量",
-            k_item = "物品",
+            k_item = "道具",
             k_poke_pocket_pack = "宝可梦礼包",
             k_poke_safari = "野生",
             pinkseal_variable = "粉红封蜡",
@@ -4051,7 +4051,7 @@ return {
             poke_pinsir_pin = "钉选！",
             poke_pinsir_remove_pin = "解钉！",
             poke_plus_energy = "+1 能量",
-            poke_plus_pokeitem = "+1 物品",
+            poke_plus_pokeitem = "+1 道具",
             poke_screech_ex = "尖叫！",
             poke_settings_header_norequired = "无需重启：",
             poke_settings_header_required = "需要重启：",
