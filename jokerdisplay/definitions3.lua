@@ -377,7 +377,7 @@ calc_function = function(card)
     end
     local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
     card.joker_display_values.x_mult = first_face and
-        (card.ability.extra.Xmult_multi ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1
+        (card.ability.extra.Xmult_multi --[[^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)--]]) or 1
 end
 }
 

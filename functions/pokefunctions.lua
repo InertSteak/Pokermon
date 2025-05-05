@@ -82,18 +82,22 @@ family = {
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
+    {"sneasel", "weavile"},
     {"remoraid", "octillery"},
     {"togepi", "togetic", "togekiss"},
     {"natu", "xatu"},
+    {"azurill", "marill", "azumarill"},
     {"phanpy", "donphan"},
     {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
+    {"snubbull", "granbull"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
@@ -292,6 +296,9 @@ poke_backend_evolve = function(card, to_key)
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  if type_sticker_applied(card) then
+    table.insert(names_to_keep, "ptype")
+  end
   local values_to_keep = copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
@@ -401,7 +408,7 @@ level_evo = function(self, card, context, forced_key)
     end
     if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end

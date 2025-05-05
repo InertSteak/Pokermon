@@ -534,9 +534,10 @@ local gloom={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
   end,
-  rarity = 2, 
+  rarity = 2,
   cost = 6,
   item_req = {"leafstone", "sunstone"},
   evo_list = {leafstone = "j_poke_vileplume", sunstone = "j_poke_bellossom"},
