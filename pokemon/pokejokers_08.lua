@@ -41,7 +41,7 @@ local qwilfish = {
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       return {
         message = localize('k_upgrade_ex'),
