@@ -2274,10 +2274,10 @@ return {
             j_poke_gligar = {
                 name = 'Gligar',
                 text = {
-                    "When a {C:attention}card{} is scored,",
-                    "{C:attention}debuff{} it until next {C:attention}Ante{}",
-                    "and gain {X:mult,C:white}X#1#{} Mult",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                    "Played cards give {X:mult,C:white}X#1#{} Mult",
+                    "for each {V:1}#2#{} {C:attention}held{} in hand",
+                    "{C:inactive, s:0.8}(Suit changes every round)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
             },
@@ -2937,12 +2937,10 @@ return {
             j_poke_gliscor = {
                 name = 'Gliscor',
                 text = {
-                    "After scoring, {C:attention}debuff{}",
-                    "played cards until next {C:attention}Ante{}",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "When a {C:attention}card{} is scored,",
-                    "gain {X:mult,C:white}X#1#{} Mult",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+                    "Played cards give {X:mult,C:white}X#1#{} Mult for each",
+                    "{V:1}#2#{} or debuffed card {C:attention}held{} in hand",
+                    "{C:inactive, s:0.8}(Suit changes every round)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
                 }
             },
             j_poke_porygonz = {

@@ -859,13 +859,24 @@ local dunsparce={
 local gligar = {
   name = "gligar",
   pos = {x = 5, y = 5},
-  config = {extra = {Xmult_mod = 0.05, Xmult = 1}},
+  config = {extra = {Xmult_multi = 0.2}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
+    local played_Xmult = 1
+    if G.hand then
+        local suit_count = 0
+        for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) and not G.hand.cards[i].highlighted then
+          suit_count = suit_count + 1
+        end
+      end
+      played_Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+    end
+    return {vars = {card.ability.extra.Xmult_multi, localize(G.GAME.current_round.gligar_suit or "Clubs", 'suits_singular'), played_Xmult,
+                    colours = {G.C.SUITS[G.GAME.current_round.gligar_suit or "Clubs"]}}}
   end,
   rarity = 3,
-  cost = 10,
+  cost = 8,
   stage = "Basic",
   ptype = "Earth",
   atlas = "Pokedex2",
@@ -873,31 +884,17 @@ local gligar = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      local target = context.other_card
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      target.ability.played_this_ante_gligar = true
-      target.delay_debuff_sprites = true
-      G.GAME.blind:debuff_card(target)
-      return {
-        message = localize('k_upgrade_ex'),
-        message_card = card,
-        colour = G.C.PURPLE,
-        func = function ()
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              target.delay_debuff_sprites = false
-              return true
-            end
-          }))
+      local suit_count = 0
+      for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) then
+          suit_count = suit_count + 1
         end
-      }
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      end
+      if suit_count > 0 then
+        local Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          x_mult = Xmult,
+          card = card
         }
       end
     end
@@ -944,6 +941,25 @@ local steelix={
 -- Snubbull 209
 -- Granbull 210
 
-return {name = "Pokemon Jokers 181-210", 
+return {name = "Pokemon Jokers 181-210",
+        init = function()
+          local game_init_object = Game.init_game_object;
+          function Game:init_game_object()
+              local game = game_init_object(self)
+              game.current_round.sneaselcard = {rank = 'Ace'}
+              return game
+          end
+          
+          local rac = reset_ancient_card;
+          function reset_ancient_card()
+            rac()
+            local gligar_suits = {}
+            for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+                if v ~= G.GAME.current_round.gligar_suit then gligar_suits[#gligar_suits + 1] = v end
+            end
+            local gligar_card = pseudorandom_element(gligar_suits, pseudoseed('gligar'..G.GAME.round_resets.ante))
+            G.GAME.current_round.gligar_suit = gligar_card
+          end
+        end,
         list = {bellossom, sudowoodo, politoed, hoppip, skiploom, jumpluff, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix},
 }

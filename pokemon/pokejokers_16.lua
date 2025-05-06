@@ -439,48 +439,42 @@ local glaceon={
 local gliscor = {
   name = "gliscor",
   pos = {x = 1, y = 6},
-  config = {extra = {Xmult_mod = 0.05, Xmult = 1}},
+  config = {extra = {Xmult_multi = 0.3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
+    local played_Xmult = 1
+    if G.hand then
+        local suit_count = 0
+        for i=1, #G.hand.cards do
+        if (G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff) and not G.hand.cards[i].highlighted then
+          suit_count = suit_count + 1
+        end
+      end
+      played_Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+    end
+    return {vars = {card.ability.extra.Xmult_multi, localize(G.GAME.current_round.gligar_suit or "Clubs", 'suits_singular'), played_Xmult,
+                    colours = {G.C.SUITS[G.GAME.current_round.gligar_suit or "Clubs"]}}}
   end,
   rarity = 'poke_safari',
-  cost = 12,
+  cost = 10,
   stage = "One",
   ptype = "Earth",
   atlas = "Pokedex4",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      return {
-        message = localize('k_upgrade_ex'),
-        message_card = card,
-        colour = G.C.PURPLE,
-      }
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      elseif context.after then
-        for k,v in pairs(context.full_hand) do
-          v.ability.played_this_ante_gligar = true
-          card_eval_status_text(v, 'extra', nil, nil, nil, { message = "", colour = G.C.CLEAR})
-          if not v.debuff then
-            v.delay_debuff_sprites = true
-            G.E_MANAGER:add_event(Event({
-              func = function()
-                v.delay_debuff_sprites = false
-                return true
-              end
-            }))
-          end
-          G.GAME.blind:debuff_card(v)
+      local suit_count = 0
+      for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff then
+          suit_count = suit_count + 1
         end
+      end
+      if suit_count > 0 then
+        local Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+        return {
+          x_mult = Xmult,
+          card = card
+        }
       end
     end
   end
