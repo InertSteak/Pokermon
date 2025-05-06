@@ -439,7 +439,7 @@ local glaceon={
 local gliscor = {
   name = "gliscor",
   pos = {x = 1, y = 6},
-  config = {extra = {Xmult_multi = 0.3}},
+  config = {extra = {Xmult_multi = 0.25}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local played_Xmult = 1

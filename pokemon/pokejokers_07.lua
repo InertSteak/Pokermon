@@ -859,7 +859,7 @@ local dunsparce={
 local gligar = {
   name = "gligar",
   pos = {x = 5, y = 5},
-  config = {extra = {Xmult_multi = 0.2}},
+  config = {extra = {Xmult_multi = 0.15}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local played_Xmult = 1
