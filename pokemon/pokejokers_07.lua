@@ -995,6 +995,51 @@ local dunsparce={
   end
 }
 -- Gligar 207
+local gligar = {
+  name = "gligar",
+  pos = {x = 5, y = 5},
+  config = {extra = {Xmult_multi = 0.15}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local played_Xmult = 1
+    if G.hand then
+        local suit_count = 0
+        for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) and not G.hand.cards[i].highlighted then
+          suit_count = suit_count + 1
+        end
+      end
+      played_Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+    end
+    return {vars = {card.ability.extra.Xmult_multi, localize(G.GAME.current_round.gligar_suit or "Clubs", 'suits_singular'), played_Xmult,
+                    colours = {G.C.SUITS[G.GAME.current_round.gligar_suit or "Clubs"]}}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local suit_count = 0
+      for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) then
+          suit_count = suit_count + 1
+        end
+      end
+      if suit_count > 0 then
+        local Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+        return {
+          x_mult = Xmult,
+          card = card
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_gliscor")
+  end
+}
 -- Steelix 208
 local steelix={
   name = "steelix", 
@@ -1113,6 +1158,25 @@ local granbull = {
 
 }
 
-return {name = "Pokemon Jokers 181-210", 
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, steelix, snubbull, granbull},
+return {name = "Pokemon Jokers 181-210",
+        init = function()
+          local game_init_object = Game.init_game_object;
+          function Game:init_game_object()
+              local game = game_init_object(self)
+              game.current_round.sneaselcard = {rank = 'Ace'}
+              return game
+          end
+          
+          local rac = reset_ancient_card;
+          function reset_ancient_card()
+            rac()
+            local gligar_suits = {}
+            for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+                if v ~= G.GAME.current_round.gligar_suit then gligar_suits[#gligar_suits + 1] = v end
+            end
+            local gligar_card = pseudorandom_element(gligar_suits, pseudoseed('gligar'..G.GAME.round_resets.ante))
+            G.GAME.current_round.gligar_suit = gligar_card
+          end
+        end,
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

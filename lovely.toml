@@ -180,45 +180,6 @@ if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card
 '''
 match_indent = true
 
-#Debuff functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "after"
-payload = '''
-if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
-if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
-'''
-match_indent = true
-
-#Gholdengo functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "before"
-payload = '''
-if self.ability.name == "gholdengo" then return end
-'''
-match_indent = true
-
 # Splash Screen
 [[patches]]
 [patches.pattern]
@@ -842,4 +803,14 @@ target = "functions/misc_functions.lua"
 pattern = "colour = part.control.V and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
 position = "at"
 payload = "colour = part.control.V and args.vars.colours and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+match_indent = true
+
+
+# Gligar Delay Debuff shader until after trigger
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if self.debuff then"
+position = "at"
+payload = "if self.debuff and not self.delay_debuff_sprites then"
 match_indent = true

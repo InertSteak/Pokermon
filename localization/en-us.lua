@@ -2333,6 +2333,16 @@ return {
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
+            j_poke_gligar = {
+                name = 'Gligar',
+                text = {
+                    "Played cards give {X:mult,C:white}X#1#{} Mult",
+                    "for each {V:1}#2#{} {C:attention}held{} in hand",
+                    "{C:inactive, s:0.8}(Suit changes every round)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
             j_poke_steelix = {
                 name = 'Steelix',
                 text = {
@@ -3030,6 +3040,15 @@ return {
                     "a {C:attention}Glass{} copy of a random",
                     "card in your deck to shop",
                 } 
+            },
+            j_poke_gliscor = {
+                name = 'Gliscor',
+                text = {
+                    "Played cards give {X:mult,C:white}X#1#{} Mult for each",
+                    "{V:1}#2#{} or debuffed card {C:attention}held{} in hand",
+                    "{C:inactive, s:0.8}(Suit changes every round)",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+                }
             },
             j_poke_porygonz = {
                 name = 'Porygon-Z',
