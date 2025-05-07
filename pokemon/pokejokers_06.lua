@@ -623,7 +623,7 @@ local ledyba={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/5)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/5)
         }
       end
     end
@@ -654,7 +654,7 @@ local ledian={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/3)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/2)
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/3)
         }
       end
     end

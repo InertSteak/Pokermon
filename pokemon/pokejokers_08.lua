@@ -41,7 +41,7 @@ local qwilfish = {
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       return {
         message = localize('k_upgrade_ex'),
@@ -139,7 +139,73 @@ local scizor={
 }
 -- Shuckle 213
 -- Heracross 214
+local heracross = {
+  name = "heracross", 
+  pos = {x = 2, y = 6},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
+      if context.joker_main then
+        if G.hand and G.hand.cards then
+          local found_ranks = {}
+          for _, played_card in pairs(context.scoring_hand) do
+            found_ranks[played_card:get_id()] = true
+          end
+          for _, hand_card in pairs(G.hand.cards) do
+            if found_ranks[hand_card:get_id()] then return end
+          end
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Sneasel 215
+local sneasel = {
+  name = "sneasel",
+  pos = {x = 3, y = 6},
+  config = {extra = {money = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
+    return {vars = {localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'), card.ability.extra.money}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
+      context.full_hand[1].to_be_removed_by = card
+      ease_poke_dollars(card, "sneasel", card.ability.extra.money)
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
+    end
+    return item_evo(self, card, context, "j_poke_weavile")
+  end
+}
 -- Teddiursa 216
 -- Ursaring 217
 -- Slugma 218
@@ -1027,5 +1093,30 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        init = function()
+            local game_init_object = Game.init_game_object;
+            function Game:init_game_object()
+                local game = game_init_object(self)
+                game.current_round.sneaselcard = {rank = 'Ace'}
+                return game
+            end
+            
+            local rmr = reset_mail_rank;
+            function reset_mail_rank()
+              rmr()
+              G.GAME.current_round.sneaselcard = {rank = 'Ace'}
+              local valid_sneasel_cards = {}
+              for k, v in ipairs(G.playing_cards) do
+                if v.ability.effect ~= 'Stone Card' then
+                  valid_sneasel_cards[#valid_sneasel_cards+1] = v
+                end
+              end
+              if valid_sneasel_cards[1] then
+                local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
+                G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
+                G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
+              end
+            end
+        end,
+        list = {qwilfish, scizor, heracross, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
