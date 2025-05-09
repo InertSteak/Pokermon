@@ -4588,7 +4588,8 @@ return {
             k_item = "Item",
             k_poke_pocket_pack = "Pocket Pack",
             k_poke_wish_pack = "Wish Pack",
-
+            
+            k_poke_baby = "Baby",
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
 

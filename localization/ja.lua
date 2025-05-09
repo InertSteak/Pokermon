@@ -4770,7 +4770,8 @@ return {
             k_item = "アイテム",
             k_poke_pocket_pack = "ポケットパック",
             k_poke_wish_pack = "願い事パック",
-
+            
+            k_poke_baby = "ベイビィ",
             k_poke_safari = "サファリ",
 
             b_save = "蓄える",
