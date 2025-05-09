@@ -11,8 +11,128 @@
 -- Kricketot 401
 -- Kricketune 402
 -- Shinx 403
+local shinx={
+  name = "shinx",
+  pos = {x = 2, y = 1},
+  config = {extra = {flip_num = 1, flip_in = 8, money = 1, known_flipped = {}, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {
+      center.ability.extra.flip_num * G.GAME.probabilities.normal,
+      center.ability.extra.flip_in,
+      center.ability.extra.money,
+      center.ability.extra.rounds
+    }}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  atlas = "Pokedex4",
+  ptype = "Lightning",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and context.cardarea == G.jokers then
+      for _, drawn in pairs(context.hand_drawn) do
+        if drawn.ability.wheel_flipped then
+          card.ability.extra.known_flipped[drawn.ID] = true
+        end
+      end
+    end
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+      if card.ability.extra.known_flipped[context.other_card.ID] then
+        return {dollars = card.ability.extra.money}
+      end
+    end
+    if context.end_of_round and context.cardarea == G.jokers then
+      card.ability.extra.known_flipped = {}
+    end
+    return level_evo(self, card, context, "j_poke_luxio")
+  end
+}
 -- Luxio 404
+local luxio={
+  name = "luxio",
+  pos = {x = 3, y = 1},
+  config = {extra = {flip_num = 1, flip_in = 6, money = 1, mult = 2, known_flipped = {}, rounds = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {
+      center.ability.extra.flip_num * G.GAME.probabilities.normal,
+      center.ability.extra.flip_in,
+      center.ability.extra.money,
+      center.ability.extra.mult,
+      center.ability.extra.rounds
+    }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  atlas = "Pokedex4",
+  ptype = "Lightning",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and context.cardarea == G.jokers then
+      for _, drawn in pairs(context.hand_drawn) do
+        if drawn.ability.wheel_flipped then
+          card.ability.extra.known_flipped[drawn.ID] = true
+        end
+      end
+    end
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+      if card.ability.extra.known_flipped[context.other_card.ID] then
+        return {
+          dollars = card.ability.extra.money,
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    if context.end_of_round and context.cardarea == G.jokers then
+      card.ability.extra.known_flipped = {}
+    end
+    return level_evo(self, card, context, "j_poke_luxray")
+  end
+}
 -- Luxray 405
+local luxray={
+  name = "luxray",
+  pos = {x = 4, y = 1},
+  config = {extra = {flip_num = 1, flip_in = 2, money = 1, Xmult = 1.1, known_flipped = {}}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {
+      center.ability.extra.flip_num * G.GAME.probabilities.normal,
+      center.ability.extra.flip_in,
+      center.ability.extra.money,
+      center.ability.extra.Xmult
+    }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "Basic",
+  atlas = "Pokedex4",
+  ptype = "Lightning",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and context.cardarea == G.jokers then
+      for _, drawn in pairs(context.hand_drawn) do
+        if drawn.ability.wheel_flipped then
+          card.ability.extra.known_flipped[drawn.ID] = true
+        end
+      end
+    end
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff then
+      if card.ability.extra.known_flipped[context.other_card.ID] then
+        return {
+          dollars = card.ability.extra.money,
+          xmult = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.end_of_round and context.cardarea == G.jokers then
+      card.ability.extra.known_flipped = {}
+    end
+  end
+}
 -- Budew 406
 -- Roserade 407
 -- Cranidos 408
@@ -88,5 +208,5 @@ local floatzel={
 }
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 
-        list = {buizel, floatzel},
+        list = {shinx, luxio, luxray, buizel, floatzel},
 }
