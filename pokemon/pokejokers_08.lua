@@ -574,7 +574,7 @@ local phanpy={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        if #context.scoring_hand == 5 then
+        if #context.scoring_hand == 5 and not context.blueprint then
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           return {
             message = localize('k_upgrade_ex'),
@@ -620,7 +620,7 @@ local donphan={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        if #context.scoring_hand == 5 then
+        if #context.scoring_hand == 5 and not context.blueprint then
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           return {
             message = localize('k_upgrade_ex'),
