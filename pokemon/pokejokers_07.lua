@@ -529,7 +529,8 @@ local umbreon={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'tag_orbital', set = 'Tag', specific_vars = {"Random Hand", 3}}
     info_queue[#info_queue+1] = {key = 'tag_negative', set = 'Tag'}
-    return {vars = {center.ability.extra.hand_played or localize('poke_none'), center.ability.extra.decrease_goal, center.ability.extra.decreases}}
+    return {vars = {center.ability.extra.hand_played and localize(center.ability.extra.hand_played, 'poker_hands') or localize('poke_none'), 
+                    center.ability.extra.decrease_goal, center.ability.extra.decreases}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
