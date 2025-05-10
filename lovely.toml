@@ -814,3 +814,12 @@ pattern = "if self.debuff then"
 position = "at"
 payload = "if self.debuff and not self.delay_debuff_sprites then"
 match_indent = true
+
+#fix booster pack choices being deducted when a consumable in the jokers area is used
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if area == G.consumeables then"
+position = "at"
+payload = "if area == G.consumeables or area == G.jokers then"
+match_indent = true
