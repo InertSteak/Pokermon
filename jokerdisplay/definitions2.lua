@@ -421,7 +421,7 @@ end,
 retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
     local total = #find_pokemon_type("Water")
     if held_in_hand then return 0 end
-    if not is_type(joker_card, "Grass") or total > 0 then
+    if get_type(joker_card) ~= "Grass" or total > 0 then
     return playing_card:is_face() and
         joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 end
 end
