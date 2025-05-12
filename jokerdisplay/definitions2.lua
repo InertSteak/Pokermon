@@ -263,6 +263,27 @@ text_config = { colour = G.C.CHIPS },
 }
 
 --	Crobat
+jd_def["j_poke_crobat"] = {
+    text = {
+        { text = "+",  colour = G.C.CHIPS },
+        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult",  colour = G.C.CHIPS  },
+        {text = " "},
+        { text = "+",  colour = G.C.MULT },
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult",  colour = G.C.MULT  },
+        {text = " "},
+        {
+            border_nodes = {
+                { text = "X", colour = G.C.WHITE  },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", colour = G.C.WHITE }
+            },
+        },
+
+        {text = " "},
+        { text = "+$",  colour = G.C.GOLD  },
+        { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult",  colour = G.C.GOLD  }
+    },
+}
+
 --	Chinchou
 --	Lanturn
 --	Pichu
