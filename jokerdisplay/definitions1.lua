@@ -2002,16 +2002,16 @@ jd_def["j_poke_krabby"] = {
             },
     calc_function = function(card)
         local count = 0
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+        local chips = card.ability.extra.chips
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:get_id() == 11 or 
-                scoring_card:get_id() == 12 or 
-                scoring_card:get_id() == 13 then
-                    count = count + 1
-                end
+        if text ~= 'Unknown' then
+          for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:is_face() then
+              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
             end
-        card.joker_display_values.chips = count * card.ability.extra.chips
+          end
+        end
+        card.joker_display_values.chips = count * chips
     end
 }
 
@@ -2022,16 +2022,16 @@ jd_def["j_poke_kingler"] = {
             },
     calc_function = function(card)
         local count = 0
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+        local chips = card.ability.extra.chips
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:get_id() == 11 or 
-                scoring_card:get_id() == 12 or 
-                scoring_card:get_id() == 13 then
-                    count = count + 1
-                end
+        if text ~= 'Unknown' then
+          for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:is_face() then
+              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
             end
-        card.joker_display_values.chips = count * card.ability.extra.chips
+          end
+        end
+        card.joker_display_values.chips = count * chips
     end
 }
 
