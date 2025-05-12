@@ -263,6 +263,27 @@ text_config = { colour = G.C.CHIPS },
 }
 
 --	Crobat
+jd_def["j_poke_crobat"] = {
+    text = {
+        { text = "+",  colour = G.C.CHIPS },
+        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult",  colour = G.C.CHIPS  },
+        {text = " "},
+        { text = "+",  colour = G.C.MULT },
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult",  colour = G.C.MULT  },
+        {text = " "},
+        {
+            border_nodes = {
+                { text = "X", colour = G.C.WHITE  },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", colour = G.C.WHITE }
+            },
+        },
+
+        {text = " "},
+        { text = "+$",  colour = G.C.GOLD  },
+        { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult",  colour = G.C.GOLD  }
+    },
+}
+
 --	Chinchou
 --	Lanturn
 --	Pichu
@@ -620,8 +641,9 @@ jd_def["j_poke_girafarig"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
         local face_cards = {}
-        if text == 'Two Pair' then
+        if poker_hands['Two Pair'] and next(poker_hands['Two Pair']) then
             for _, scoring_card in pairs(scoring_hand) do
                 if scoring_card:is_face() then
                     table.insert(face_cards, scoring_card)
@@ -630,9 +652,13 @@ jd_def["j_poke_girafarig"] = {
         end
         local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
         local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
-        card.joker_display_values.x_mult = math.max(last_face and
-            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
-
+        if first_face ~= last_face then
+          card.joker_display_values.x_mult = math.max(last_face and
+              (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
+        else
+          card.joker_display_values.x_mult = math.max(last_face and
+              (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand))) or 1, 1)
+        end
     end
 }
 
