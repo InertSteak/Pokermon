@@ -969,7 +969,7 @@ local forretress={
 local dunsparce={
   name = "dunsparce",
   pos = {x = 4, y = 5},
-  config = {extra = {rounds = 5,}},
+  config = {extra = {rounds = 5, rerolled = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds, }}
@@ -983,7 +983,12 @@ local dunsparce={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop then
+    if context.reroll_shop and not context.blueprint then
+      card.ability.extra.rerolled = true
+      local eval = function(card) return not card.REMOVED end
+      juice_card_until(card, eval, true)
+    end
+    if context.ending_shop and not context.blueprint and card.ability.extra.rerolled then
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
