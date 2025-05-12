@@ -230,7 +230,7 @@ jd_def["j_poke_mudkip"] = {
                 if scoring_card:get_id() == card.ability.extra.targets[1].id or
                    scoring_card:get_id() == card.ability.extra.targets[2].id or
                    scoring_card:get_id() == card.ability.extra.targets[3].id then              
-                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, nil, true)
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                 end
             end
         end
@@ -268,7 +268,7 @@ jd_def["j_poke_marshtomp"] = {
                 if scoring_card:get_id() == card.ability.extra.targets[1].id or
                    scoring_card:get_id() == card.ability.extra.targets[2].id or
                    scoring_card:get_id() == card.ability.extra.targets[3].id then              
-                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, nil, true)
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                 end
             end
         end
@@ -306,7 +306,7 @@ jd_def["j_poke_swampert"] = {
                 if scoring_card:get_id() == card.ability.extra.targets[1].id or
                    scoring_card:get_id() == card.ability.extra.targets[2].id or
                    scoring_card:get_id() == card.ability.extra.targets[3].id then              
-                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, nil, true)
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                 end
             end
         end
