@@ -1799,9 +1799,7 @@ calc_function = function(card)
     end
     if text ~= 'Unknown' then
         for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
+            if scoring_card:is_face() then
                 facecount = facecount + 1
             end
         end
@@ -1828,9 +1826,7 @@ calc_function = function(card)
     end
     if text ~= 'Unknown' then
         for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
+            if scoring_card:is_face() then
                 facecount = facecount + 1
             end
         end
