@@ -3061,8 +3061,9 @@ return {
               text = {
                 "Each played {C:attention}3{} or {C:attention}6{} gives",
                 "{C:chips}+#2#{} Chips and {C:mult}+#1#{} Mult when scored",
-                "{C:green}#3# in #4#{} chance each played {C:attention}3{}",
-                "or {C:attention}6{} retriggers"
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:green}#3# in #4#{} chance to retrigger each",
+                "played {C:attention}3{} or {C:attention}6{}"
               }
             },
             j_poke_leafeon = {
