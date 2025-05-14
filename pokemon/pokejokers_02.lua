@@ -14,13 +14,13 @@ local nidoqueen={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.other_card.debuff and context.other_card:get_id() == 12 then
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 12 then
       if not context.end_of_round and not context.before and not context.after then
         if context.other_card.debuff then
           return {
             message = localize("k_debuffed"),
             colour = G.C.RED,
-            card = context.other_card,
+            card = card,
           }
         else
           return {
