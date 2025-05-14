@@ -211,7 +211,95 @@ local sneasel = {
 -- Slugma 218
 -- Magcargo 219
 -- Swinub 220
+local swinub={
+  name = "swinub",
+  pos = {x = 8, y = 6},
+  config = {extra = {mult = 5,money = 3,odds = 2,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          return {
+            mult = card.ability.extra.mult * stoneglass,
+            card = card
+          }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_piloswine")
+  end,
+  calc_dollar_bonus = function(self, card)
+    if pseudorandom('swinub') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
+    end
+  end,
+}
 -- Piloswine 221
+local piloswine={
+  name = "piloswine",
+  pos = {x = 9, y = 6},
+  config = {extra = {mult = 10,money = 6,odds = 2,scored = 0,}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, 
+                    math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+        card.ability.extra.scored = card.ability.extra.scored + 1
+      end
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          return {
+            mult = card.ability.extra.mult * stoneglass,
+            card = card
+          }
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.scored, self.config.evo_rqmt)
+  end,
+  calc_dollar_bonus = function(self, card)
+    if pseudorandom('piloswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
+    end
+  end,
+}
 -- Corsola 222
 local corsola={
   name = "corsola", 
@@ -1118,5 +1206,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, heracross, sneasel, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, heracross, sneasel, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

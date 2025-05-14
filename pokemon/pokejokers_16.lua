@@ -424,6 +424,54 @@ local togekiss={
   end,
 }
 -- Yanmega 469
+local yanmega={
+  name = "yanmega",
+  pos = {x = 12, y = 5},
+  config = {extra = {mult = 6,chips = 12, odds = 3, retriggers = 1}},
+  loc_txt = {
+    name = "Yanmega",
+    text = {
+      "Each played {C:attention}3{} or {C:attention}6{} gives",
+      "{C:chips}+#2#{} Chips and {C:mult}+#1#{} Mult when scored",
+      "{C:green}#3# in #4#{} chance each played {C:attention}3{}",
+      "or {C:attention}6{} retriggers"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
+        return {
+          mult = card.ability.extra.mult,
+          chips = card.ability.extra.chips,
+          card = card
+        }
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
+        if pseudorandom('yanmega') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
+      end
+    end
+  end,
+}
 -- Leafeon 470
 local leafeon={
   name = "leafeon", 
@@ -529,6 +577,71 @@ local gliscor = {
   end
 }
 -- Mamoswine 473
+local mamoswine={
+  name = "mamoswine",
+  pos = {x = 2, y = 6},
+  config = {extra = {mult = 15,money = 4,odds = 2,}},
+  loc_txt = {
+    name = "Mamoswine",
+    text = {
+      "First played card gives {C:mult}+#1#{} Mult for each",
+      "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
+      "{br:2}text needs to be here to work",
+      "{C:green}#3# in #4#{} chance for played {C:attention}Stone{}",
+      "and {C:attention}Glass{} Cards to earn {C:money}$#2#{} when scored",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      local earn = false
+      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+        if pseudorandom('mamoswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          earn = true
+        end
+      end
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          if earn then
+            return {
+              mult = card.ability.extra.mult * stoneglass,
+              dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+              card = card
+            }
+          else
+            return {
+              mult = card.ability.extra.mult * stoneglass,
+              card = card
+            }
+          end
+        end
+      elseif earn then
+        return {
+          dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Porygon-Z 474
 local porygonz={
   name = "porygonz", 
@@ -646,5 +759,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, gliscor, porygonz, probopass, froslass},
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, froslass},
 }

@@ -2239,6 +2239,16 @@ return {
                     "and at end of round"
                 }
             },
+            j_poke_yanma = {
+              name = "Yanma",
+              text = {
+                "Each played {C:attention}3{} or {C:attention}6{} gives",
+                "{C:chips}+#2#{} Chips and {C:mult}+#1#{} Mult when scored",
+                "{C:green}#5# in #6#{} chance for {C:chips}+#4#{} Chips",
+                "and {C:mult}+#3#{} Mult instead",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#7#{C:inactive,s:0.8} 3s or 6s)"
+              }
+            },
             j_poke_espeon = {
                 name = 'Espeon',
                 text = {
@@ -2400,6 +2410,28 @@ return {
                     "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
+            },
+            j_poke_swinub = {
+                name = "Swinub",
+                text = {
+                  "First played card gives {C:mult}+#1#{} Mult for each",
+                  "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
+                  "{br:2}text needs to be here to work",
+                  "{C:green}#3# in #4#{} chance to earn {C:money}$#2#{} ",
+                  "at end of round",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#5#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_piloswine = {
+              name = "Piloswine",
+              text = {
+                "First played card gives {C:mult}+#1#{} Mult for each",
+                "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
+                "{br:2}text needs to be here to work",
+                "{C:green}#3# in #4#{} chance to earn {C:money}$#2#{} ",
+                "at end of round",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#5#{C:inactive,s:0.8} Stone or Glass cards)",
+              }
             },
             j_poke_heracross = {
                 name = 'Heracross',
@@ -3024,6 +3056,15 @@ return {
                     "{C:inactive}(ex: {C:green}2 in 5{C:inactive} -> {C:green}6 in 5{C:inactive})",
                 }
             },
+            j_poke_yanmega = {
+              name = "Yanmega",
+              text = {
+                "Each played {C:attention}3{} or {C:attention}6{} gives",
+                "{C:chips}+#2#{} Chips and {C:mult}+#1#{} Mult when scored",
+                "{C:green}#3# in #4#{} chance each played {C:attention}3{}",
+                "or {C:attention}6{} retriggers"
+              }
+            },
             j_poke_leafeon = {
                 name = 'Leafeon',
                 text = {
@@ -3050,6 +3091,16 @@ return {
                     "{C:inactive, s:0.8}(Suit changes every round)",
                     "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
                 }
+            },
+            j_poke_mamoswine = {
+              name = "Mamoswine",
+              text = {
+                "First played card gives {C:mult}+#1#{} Mult for each",
+                "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
+                "{br:2}text needs to be here to work",
+                "{C:green}#3# in #4#{} chance for played {C:attention}Stone{}",
+                "and {C:attention}Glass{} Cards to earn {C:money}$#2#{} when scored",
+              }
             },
             j_poke_porygonz = {
                 name = 'Porygon-Z',

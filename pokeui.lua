@@ -233,6 +233,33 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
+                  text = localize("poke_credits_graphics"),
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.UI.TEXT_LIGHT
+                }
+              },
+              {
+                n = G.UIT.T,
+                config = {
+                  text = "Catzzadilla, bt",
+                  shadow = true,
+                  scale = scale * 0.8,
+                  colour = G.C.BLUE
+                }
+              }
+            },
+          },
+          {
+            n = G.UIT.R,
+            config = {
+              padding = 0,
+              align = "cm"
+            },
+            nodes = {
+              {
+                n = G.UIT.T,
+                config = {
                   text = localize("poke_credits_quality_assurance_main"),
                   shadow = true,
                   scale = scale * 0.8,

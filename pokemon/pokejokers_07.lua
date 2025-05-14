@@ -452,6 +452,43 @@ local sunflora={
 	end
 }
 -- Yanma 193
+local yanma={
+  name = "yanma",
+  pos = {x = 1, y = 4},
+  config = {extra = {mult = 3,chips = 6, mult2 = 6, chips2 = 12, odds = 3, scored = 0}, evo_rqmt = 36},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult2, center.ability.extra.chips2, 
+                    ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
+  end,
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
+        card.ability.extra.scored = card.ability.extra.scored + 1
+        local Mult = card.ability.extra.mult
+        local Chips = card.ability.extra.chips
+        if pseudorandom('yanma') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          Mult = card.ability.extra.mult2
+          Chips = card.ability.extra.chips2
+        end
+        return {
+          mult = Mult,
+          chips = Chips,
+          card = card
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_yanmega", card.ability.extra.scored, self.config.evo_rqmt)
+  end,
+}
 -- Wooper 194
 -- Quagsire 195
 -- Espeon 196
@@ -1184,5 +1221,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }
