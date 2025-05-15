@@ -2336,6 +2336,16 @@ return {
                     "{C:money}$#1#{} を得る",
                 }
             },
+			j_poke_yanma = {
+              name = "ヤンヤンマ",
+              text = {
+					"プレイされた {C:attention}3{} か {C:attention}6{} がスコアされた時",
+					"チップ {C:chips}+#2#{} と 倍率 {C:mult}+#1#{} を与える",
+					"{C:green}#6#分の#5#{} 確率で",
+					"代わりに チップ {C:chips}+#4#{} と 倍率 {C:mult}+#3#{}",
+                    "{C:inactive,s:0.8}(3か6を {C:attention,s:0.8}#7#{C:inactive,s:0.8}枚スコアした後に進化)"
+              }
+            },
             j_poke_espeon = {
                 name = 'エーフィ',
                 text = {
@@ -2430,7 +2440,8 @@ return {
                 name = 'ノコッチ',
                 text = {
                   "{C:inactive}何もしない？",
-                  "{C:green}リロール{}する後に {S:1.1,C:red,E:2}自らを破壊する{}",
+                  "{C:green}リロール{}した場合",
+				  "ショップ終了時に {S:1.1,C:red,E:2}自らを破壊する{}",
                   "{C:inactive,s:0.8}({C:attention,s:0.8}#1#{C:inactive,s:0.8} ラウンド後に進化)",
                 }
             },
@@ -2510,6 +2521,30 @@ return {
                     "{C:inactive,s:0.8}(ランクはラウンド終了時に変わる){}",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}闇の石{C:inactive,s:0.8} で進化)",
                 }
+            },
+			j_poke_swinub = {
+                name = "ウリムー",
+                text = {
+					"最初のプレイされたカードは",
+					"スコアされたハンドある {C:attention}ストーン{} と {C:attention}グラス{} カードにつき",
+					"倍率 {C:mult}+#1#{}",
+					"{br:2}text needs to be here to work",
+					"ラウンド終了時に {C:green}#4#分の#3#{} 確率で",
+					"{C:money}$#2#{} を得る",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}#5#{C:inactive,s:0.8} ラウンド後に進化)",
+                }
+            },
+            j_poke_piloswine = {
+              name = "イノムー",
+              text = {
+                    "最初のプレイされたカードは",
+					"スコアされたハンドある {C:attention}ストーン{} と {C:attention}グラス{} カードにつき",
+					"倍率 {C:mult}+#1#{}",
+                    "{br:2}text needs to be here to work",
+                    "ラウンド終了時に {C:green}#4#分の#3#{} 確率で",
+					"{C:money}$#2#{} を得る",
+                    "{C:inactive,s:0.8}(ストーン か グラスカードを {C:attention,s:0.8}#5#{C:inactive,s:0.8}枚スコアした後に進化)",
+              }
             },
 			j_poke_heracross = {
                 name = 'ヘラクロス',
@@ -2664,7 +2699,7 @@ return {
 					"{C:attention}スタンダードタグ{} を作る",
                     "倍率 {X:red,C:white} X#1# {}",
                     "{C:inactive}(この倍率を {C:attention}減ら{} します)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{}{C:inactive,s:0.8} ラウンド後に進化)"
+                    "{C:inactive,s:0.8}( {C:attention,s:0.8}#2#{}{C:inactive,s:0.8} ラウンド後に進化)"
                 }
             },
             j_poke_elekid = {
@@ -2675,7 +2710,7 @@ return {
 					"{C:attention}クーポンタグ{} を作る",
                     "倍率 {X:red,C:white} X#1# {}",
                     "{C:inactive}(この倍率を {C:attention}減ら{} します)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{}{C:inactive,s:0.8} ラウンド後に進化)"
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}#2#{}{C:inactive,s:0.8} ラウンド後に進化)"
                 }
             },
             j_poke_magby = {
@@ -2685,7 +2720,7 @@ return {
                     "ディスカード {C:red}+#2#{}",
                     "倍率 {X:red,C:white} X#1# {}",
                     "{C:inactive}(この倍率を {C:attention}減ら{} します)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{}{C:inactive,s:0.8} ラウンド後に進化)"
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}#3#{}{C:inactive,s:0.8} ラウンド後に進化)"
                 }
             },
 			j_poke_miltank = {
@@ -3075,7 +3110,7 @@ return {
 					"ラウンド終了時に",
 					"デッキにランダムな {C:attention}強化されているフェイス{} カードを加える",
 				    "倍率 {X:red,C:white}X#1# {}",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_mimejr = {
@@ -3214,6 +3249,17 @@ return {
                     "{C:inactive}(例: {C:green}5分の2{C:inactive} -> {C:green}5分の6{C:inactive})",
                 }
             },
+			j_poke_yanmega = {
+              name = "Yanmega",
+              text = {
+					"プレイされた {C:attention}3{} か {C:attention}6{} がスコアされた時",
+					"チップ {C:chips}+#2#{} と 倍率 {C:mult}+#1#{} を与える",
+					"{br:2}ERROR - CONTACT STEAK",
+					"プレイされた {C:attention}3{} か {C:attention}6{} を",
+					"{C:green}#4#分の#3#{} 確率で",
+					"再発動する",
+              }
+            },
             j_poke_leafeon = {
                 name = 'リーフィア',
                 text = {
@@ -3241,6 +3287,17 @@ return {
                     "{C:inactive, s:0.8}(スーツはラウンド終了時に変わる)",
                     "{C:inactive}(現在 倍率 {X:mult,C:white}X#3#{C:inactive})",
 				}
+            },
+			j_poke_mamoswine = {
+              name = "マンムー",
+              text = {
+					"最初のプレイされたカードは",
+					"スコアされたハンドある {C:attention}ストーン{} と {C:attention}グラス{} カードにつき",
+					"倍率 {C:mult}+#1#{}",
+					"{br:2}text needs to be here to work",
+					"プレイされた {C:attention}ストーン{} と {C:attention}グラス{} カードが",
+					"{C:green}#4#分の#3#{} 確率で {C:money}$#2#{} を得る",
+              }
             },
             j_poke_porygonz = {
                 name = 'ポリゴンZ',
@@ -3309,7 +3366,8 @@ return {
                 name = "ヒヤップ",
                 text = {
                     "{C:attention}パレイドリア{} を適用する",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
+                    "{C:attention}パレイドリア{} を適用する",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}水の石{C:inactive,s:0.8} で進化)"
                 }
             },
             j_poke_simipour = {
@@ -3689,7 +3747,7 @@ return {
                 name = "バウッツェル",
                 text = {
 					"スコアされたハンドが {C:attention}#3#{} を含む場合",
-					"チップ +#2#{} を得る",
+					"チップ {C:chips}+#2#{} を得る",
 					"発動した後に {C:attention}ランク{} が増やす",
                     "{br:4}ERROR - CONTACT STEAK",
 					"{X:fire,C:white}炎{} タイプのジョーカーにつき",
