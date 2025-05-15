@@ -596,9 +596,9 @@ local mamoswine={
     return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
   end,
   rarity = "poke_safari",
-  cost = 8,
-  stage = "One",
-  ptype = "Water",
+  cost = 10,
+  stage = "Two",
+  ptype = "Earth",
   atlas = "Pokedex4",
   perishable_compat = true,
   blueprint_compat = true,
