@@ -779,7 +779,73 @@ jd_def["j_poke_steelix"] = {
 }
 
 --	Snubbull
+jd_def["j_poke_snubbull"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  text_config = { colour = G.C.WHITE},
+  calc_function = function(card)
+    local xmult = card.ability.extra.Xmult
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    face_cards = {}
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card:is_face() then
+              table.insert(face_cards, scoring_card)
+          end
+      end
+    end
+    local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+    if first_face then
+      if first_face:get_id() == 12 then
+        xmult = card.ability.extra.Xmult2
+      else
+        xmult = card.ability.extra.Xmult
+      end
+    end
+    card.joker_display_values.x_mult = math.max(first_face and (xmult ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1, 1)
+  end
+}
+
 --	Granbull
+jd_def["j_poke_granbull"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  text_config = { colour = G.C.WHITE},
+  calc_function = function(card)
+    local xmult = card.ability.extra.Xmult
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    face_cards = {}
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card:is_face() then
+              table.insert(face_cards, scoring_card)
+          end
+      end
+    end
+    local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+    if first_face then
+      if first_face:get_id() == 12 then
+        xmult = card.ability.extra.Xmult2
+      else
+        xmult = card.ability.extra.Xmult
+      end
+    end
+    card.joker_display_values.x_mult = math.max(first_face and (xmult ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1, 1)
+  end
+}
+
 --	Qwilfish
 jd_def["j_poke_qwilfish"] = {
     text = {
