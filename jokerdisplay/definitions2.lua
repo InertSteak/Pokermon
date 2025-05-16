@@ -411,7 +411,68 @@ end
 }
 
 --	Marill
+jd_def["j_poke_marill"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+    calc_function = function(card)
+      local enhanced_found = false
+      local unenhanced_found = false
+      local xmult = 1
+      local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+      if text ~= "Unknown" then
+        for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card.config.center == G.P_CENTERS.c_base then
+            unenhanced_found = true
+          else
+            enhanced_found = true
+          end
+        end
+      end
+      if (enhanced_found == true) and (unenhanced_found == true) then
+        card.joker_display_values.Xmult = card.ability.extra.Xmult
+      else
+        card.joker_display_values.Xmult = xmult
+      end
+    end
+}
+
 --	Azumarill
+jd_def["j_poke_azumarill"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+    calc_function = function(card)
+      local bonus_found = false
+      local nonbonus_found = false
+      local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+      if text ~= "Unknown" then
+        for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card.ability.effect and scoring_card.ability.effect == "Bonus Card" then
+            bonus_found = true
+          else
+            nonbonus_found = true
+          end
+        end
+      end
+      if (bonus_found == true) and (nonbonus_found == true) then
+        card.joker_display_values.Xmult = card.ability.extra.Xmult * 2
+      else
+        card.joker_display_values.Xmult = card.ability.extra.Xmult
+      end
+    end
+}
+
 --	Sudowoodo
 jd_def["j_poke_sudowoodo"] = {
     text = {            
