@@ -2999,6 +2999,7 @@ jd_def["j_poke_dragonite"] = {
     },
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if held_in_hand then return 0 end
         if #scoring_hand == 1 and #JokerDisplay.current_hand == 1 then
             return joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)
         end
