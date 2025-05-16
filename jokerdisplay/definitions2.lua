@@ -827,6 +827,52 @@ end
 
 --	Dunsparce
 --	Gligar
+jd_def["j_poke_gligar"] = {
+  text = {
+      {
+          border_nodes = {
+              { text = "X" },
+              { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+          }
+      }
+  },
+  reminder_text = {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "gligar_suit" },
+      { text = ")" }
+  },
+  calc_function = function(card)
+    local count = 0
+    local suit_count = 0
+    local playing_hand = next(G.play.cards)
+    for _, playing_card in ipairs(G.hand.cards) do
+        if playing_hand or not playing_card.highlighted then
+            if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card:is_suit(G.GAME.current_round.gligar_suit) then
+                suit_count = suit_count + 1
+            end
+        end
+    end
+    if G.play then
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card then
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                end
+            end
+        end
+    end
+    card.joker_display_values.x_mult = (1 + (card.ability.extra.Xmult_multi * suit_count)) ^ count
+    card.joker_display_values.gligar_suit = localize(G.GAME.current_round.gligar_suit, 'suits_singular')
+  end,
+  style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+          reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.gligar_suit], 0.35)
+      end
+      return false
+  end
+}
+
 --	Steelix
 jd_def["j_poke_steelix"] = {
     text = {
