@@ -184,8 +184,9 @@ local treasure_eatery={
     if context.setting_blind then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
-        if has_type(G.jokers.cards[#G.jokers.cards]) then
-          apply_type_sticker(G.jokers.cards[1], get_type(G.jokers.cards[#G.jokers.cards]))
+        local type = get_type(G.jokers.cards[#G.jokers.cards])
+        if type then
+          apply_type_sticker(G.jokers.cards[1], type)
           card:juice_up()
           card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
         end
@@ -493,7 +494,7 @@ local billion_lions = {
     if context.setting_blind and not card.getting_sliced then
       local destroyed = 0
       for k, v in pairs(G.jokers.cards) do
-        if v ~= card and has_type(v) and not v.ability.eternal then
+        if v ~= card and get_type(v) and not v.ability.eternal then
           destroyed = destroyed + 1
           v.getting_sliced = true
           G.E_MANAGER:add_event(Event({func = function()
