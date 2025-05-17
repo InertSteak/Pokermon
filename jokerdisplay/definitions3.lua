@@ -355,8 +355,19 @@ jd_def["j_poke_swampert"] = {
 --	Makuhita
 --	Hariyama
 --	Azurill
+jd_def["j_poke_azurill"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+            },
+        },
+    },
+}
+
 --	Nosepass
-jd_def["j_poke_nosepass"] = { 
+jd_def["j_poke_nosepass"] = {
 text = {
     {
         border_nodes = {
