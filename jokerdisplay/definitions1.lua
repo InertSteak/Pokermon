@@ -1914,32 +1914,48 @@ calc_function = function(card)
     end
         card.joker_display_values.status = status
         card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+end,
+retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+  if held_in_hand then return 0 end
+  if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+    if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+      return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+  end
 end
 }
 
 jd_def["j_poke_cloyster"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+  text = {
+    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
     },
-    extra = {
-        {
-            { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-            { text = ")" },
-        },
-    },
-    calc_function = function(card)
-        local status
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
-            status = "Active!"
-        else
-            status = "Not Active!"
-        end
-            card.joker_display_values.status = status
-            card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  },
+  calc_function = function(card)
+      local status
+      local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+      if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+        status = "Active!"
+      else
+        status = "Not Active!"
+      end
+        card.joker_display_values.status = status
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+      if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+        return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+      end
     end
-    }
+  end
+  }
 
 -- Gastly 
 -- Haunter 
