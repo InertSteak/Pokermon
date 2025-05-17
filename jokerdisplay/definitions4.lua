@@ -471,6 +471,47 @@ jd_def["j_poke_gliscor"] = {
 }
 
 --	Mamoswine
+jd_def["j_poke_mamoswine"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  extra = {
+    {
+      { ref_table = "card.joker_display_values", ref_value = "money_triggers", retrigger_type = "mult" },
+      { text = "x", scale = 0.35 },
+      { text = "$", colour = G.C.GOLD},
+      { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
+    },
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+    local count = 0
+    local money_triggers = 0
+    local first_card_triggers = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if first_card then
+      first_card_triggers = JokerDisplay.calculate_card_triggers(first_card, scoring_hand)
+    end
+    if text ~= "Unknown" then
+      for _, scoring_card in pairs(scoring_hand) do
+        if (scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card") or (scoring_card.ability.effect and scoring_card.ability.effect == "Stone Card") then
+          count = count + 1
+          money_triggers = money_triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.mult = card.ability.extra.mult * count * first_card_triggers
+    card.joker_display_values.money_triggers = money_triggers
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end
+}
+
 --	Porygon-Z
 jd_def["j_poke_porygonz"] = { 
     text = {

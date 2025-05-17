@@ -1044,6 +1044,7 @@ jd_def["j_poke_swinub"] = {
     {
       {text = "$", colour = G.C.GOLD},
       { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
+      { text = " (Round)", colour = G.C.GREY, },
     },
     {
       { text = "(" },
@@ -1053,7 +1054,12 @@ jd_def["j_poke_swinub"] = {
   },
   calc_function = function(card)
     local count = 0
+    local first_card_triggers = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if first_card then
+      first_card_triggers = JokerDisplay.calculate_card_triggers(first_card, scoring_hand)
+    end
     if text ~= "Unknown" then
       for _, scoring_card in pairs(scoring_hand) do
         if (scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card") or (scoring_card.ability.effect and scoring_card.ability.effect == "Stone Card") then
@@ -1061,7 +1067,7 @@ jd_def["j_poke_swinub"] = {
         end
       end
     end
-    card.joker_display_values.mult = card.ability.extra.mult * count
+    card.joker_display_values.mult = card.ability.extra.mult * count * first_card_triggers
     card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
   end
 }
@@ -1076,6 +1082,7 @@ jd_def["j_poke_piloswine"] = {
     {
       {text = "$", colour = G.C.GOLD},
       { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
+      { text = " (Round)", colour = G.C.GREY, },
     },
     {
       { text = "(" },
@@ -1085,7 +1092,12 @@ jd_def["j_poke_piloswine"] = {
   },
   calc_function = function(card)
     local count = 0
+    local first_card_triggers = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if first_card then
+      first_card_triggers = JokerDisplay.calculate_card_triggers(first_card, scoring_hand)
+    end
     if text ~= "Unknown" then
       for _, scoring_card in pairs(scoring_hand) do
         if (scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card") or (scoring_card.ability.effect and scoring_card.ability.effect == "Stone Card") then
@@ -1093,7 +1105,7 @@ jd_def["j_poke_piloswine"] = {
         end
       end
     end
-    card.joker_display_values.mult = card.ability.extra.mult * count
+    card.joker_display_values.mult = card.ability.extra.mult * count * first_card_triggers
     card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
   end
 }
