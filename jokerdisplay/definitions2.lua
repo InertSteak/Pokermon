@@ -1035,7 +1035,69 @@ jd_def["j_poke_scizor"] = {
 --	Slugma
 --	Magcargo
 --	Swinub
+jd_def["j_poke_swinub"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  extra = {
+    {
+      {text = "$", colour = G.C.GOLD},
+      { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
+    },
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= "Unknown" then
+      for _, scoring_card in pairs(scoring_hand) do
+        if (scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card") or (scoring_card.ability.effect and scoring_card.ability.effect == "Stone Card") then
+          count = count + 1
+        end
+      end
+    end
+    card.joker_display_values.mult = card.ability.extra.mult * count
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end
+}
+
 --	Piloswine
+jd_def["j_poke_piloswine"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  extra = {
+    {
+      {text = "$", colour = G.C.GOLD},
+      { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
+    },
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= "Unknown" then
+      for _, scoring_card in pairs(scoring_hand) do
+        if (scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card") or (scoring_card.ability.effect and scoring_card.ability.effect == "Stone Card") then
+          count = count + 1
+        end
+      end
+    end
+    card.joker_display_values.mult = card.ability.extra.mult * count
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end
+}
+
 --	Corsola
 jd_def["j_poke_corsola"] = { 
     text = {
