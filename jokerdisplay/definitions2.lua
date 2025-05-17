@@ -570,6 +570,53 @@ jd_def["j_poke_politoed"] = {
 --	Sunkern
 --	Sunflora
 --	Yanma
+jd_def["j_poke_yanma"] = {
+  text = {
+    { text = "Min: ", colour = G.C.GREY, },
+    { text = "+", colour = G.C.CHIPS , },
+    {ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " "},
+    { text = "+", colour = G.C.MULT , },
+    {ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT }
+  },
+  extra = {
+    {
+      { text = "Max: ", colour = G.C.GREY, },
+      { text = "+", colour = G.C.CHIPS , },
+      {ref_table = "card.joker_display_values", ref_value = "chips2", colour = G.C.CHIPS },
+      { text = " "},
+      { text = "+", colour = G.C.MULT , },
+      {ref_table = "card.joker_display_values", ref_value = "mult2", colour = G.C.MULT },
+    },
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")" },
+    },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+      local count = 0
+      local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+      if text ~= 'Unknown' then
+          for _, scoring_card in pairs(scoring_hand) do
+              if scoring_card:get_id() == 3 or
+              scoring_card:get_id() == 6 then
+                  count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+              end
+          end
+      end
+      card.joker_display_values.chips = count * card.ability.extra.chips
+      card.joker_display_values.mult = count * card.ability.extra.mult
+      card.joker_display_values.chips2 = count * card.ability.extra.chips2
+      card.joker_display_values.mult2 = count * card.ability.extra.mult2
+      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+      card.joker_display_values.localized_text = "(3,6)"
+  end
+}
+
 --	Wooper
 --	Quagsire
 --	Espeon

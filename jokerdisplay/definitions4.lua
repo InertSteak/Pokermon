@@ -379,6 +379,48 @@ text_config = { colour = G.C.WHITE },
 }
 --	Togekiss
 --	Yanmega
+jd_def["j_poke_yanmega"] = {
+text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " "},
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+},
+extra = {
+  {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+    { text = ")" },
+  },
+},
+reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+},
+calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:get_id() == 3 or
+            scoring_card:get_id() == 6 then
+                count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+            end
+        end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+    card.joker_display_values.mult = count * card.ability.extra.mult
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    card.joker_display_values.localized_text = "(3,6)"
+end,
+retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+      return (playing_card:get_id() == 3 or playing_card:get_id() == 6) and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    end
+end
+}
+
 --	Leafeon
 --	Glaceon
 --	Gliscor
