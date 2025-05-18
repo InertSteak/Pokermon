@@ -537,29 +537,54 @@ jd_def["j_poke_raichu"] = {
 }
 
 jd_def["j_poke_sandshrew"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    {text = "[", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
+    {text = "/", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+    {text = "]", colour = G.C.GREY},
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
     local chips
+    local count = card.ability.extra.glass_restored
+    local limit = 1
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.count = count
+    card.joker_display_values.limit = limit
+  end
 }
 
 jd_def["j_poke_sandslash"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    {text = "[", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
+    {text = "/", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+    {text = "]", colour = G.C.GREY},
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
     local chips
+    local count = card.ability.extra.glass_restored
+    local limit = card.ability.extra.glass_limit
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-end
+    if count > 2 then
+      count = 2
+    end
+    card.joker_display_values.count = count
+    card.joker_display_values.limit = limit
+  end
 }
 
 jd_def["j_poke_nidoranf"] = {
