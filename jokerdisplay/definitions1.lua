@@ -1134,24 +1134,28 @@ jd_def["j_poke_persian"] = {
 }
 
 jd_def["j_poke_psyduck"] = {
-    text = {
-        { text = "+$", colour = G.C.GOLD },
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
-        },
-calc_function = function(card)
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local face_cards = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['High Card'] and next(poker_hands['High Card']) and #JokerDisplay.current_hand == 1 then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
-                face_cards = card.ability.extra.money
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          face_cards = card.ability.extra.money
         end
+      end
     end
     card.joker_display_values.money = face_cards
+    card.joker_display_values.localized_text = localize("k_face_cards")
 end
 }
 
@@ -1160,20 +1164,24 @@ text = {
         { text = "+$", colour = G.C.GOLD },
         { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
         },
+reminder_text = {
+  { text = "(" },
+  { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+  { text = ")" },
+},
 calc_function = function(card)
     local face_cards = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['High Card'] and next(poker_hands['High Card']) and #JokerDisplay.current_hand == 1 then
         for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
+            if scoring_card:is_face() then
                 face_cards = card.ability.extra.money
             end
         end
     end
     card.joker_display_values.money = face_cards
+    card.joker_display_values.localized_text = localize("k_face_cards")
 end
 }
 
