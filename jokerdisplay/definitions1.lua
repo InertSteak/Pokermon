@@ -2016,43 +2016,55 @@ jd_def["j_poke_hypno"] = {
 }
 
 jd_def["j_poke_krabby"] = {
-    text = {
-            { text = "+", colour = G.C.CHIPS },
-            { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
-            },
-    calc_function = function(card)
-        local count = 0
-        local chips = card.ability.extra.chips
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-          for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-          end
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local chips = card.ability.extra.chips
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
-        card.joker_display_values.chips = count * chips
+      end
     end
+    card.joker_display_values.chips = count * chips
+    card.joker_display_values.localized_text = localize("k_face_cards")
+  end
 }
 
 jd_def["j_poke_kingler"] = {
-    text = {
-            { text = "+", colour = G.C.CHIPS },
-            { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
-            },
-    calc_function = function(card)
-        local count = 0
-        local chips = card.ability.extra.chips
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-          for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-          end
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local chips = card.ability.extra.chips
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
-        card.joker_display_values.chips = count * chips
+      end
     end
+    card.joker_display_values.chips = count * chips
+    card.joker_display_values.localized_text = localize("k_face_cards")
+  end
 }
 
 jd_def["j_poke_voltorb"] = {
