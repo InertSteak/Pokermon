@@ -2908,7 +2908,6 @@ jd_def["j_poke_aerodactyl"] = {
     { ref_table = "card.joker_display_values", ref_value = "localized_text" }
   },
   calc_function = function(card)
-    local Xmult = 1
     local count = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text ~= 'Unknown' then
@@ -2925,7 +2924,7 @@ jd_def["j_poke_aerodactyl"] = {
     elseif count == 1 then 
       card.joker_display_values.Xmult = card.ability.extra.Xmult_original
     else
-      card.joker_display_values.Xmult = Xmult
+      card.joker_display_values.Xmult = 1
     end
     card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks")..")"
     end
