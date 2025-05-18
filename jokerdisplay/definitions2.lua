@@ -1061,6 +1061,37 @@ jd_def["j_poke_scizor"] = {
 
 --	Shuckle
 --	Heracross
+jd_def["j_poke_heracross"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X", colour = G.C.WHITE  },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", colour = G.C.WHITE }
+      },
+    },
+  },
+  calc_function = function(card)
+    local samerank = false
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local found_ranks = {}
+    for _,played_card in pairs(scoring_hand) do
+        found_ranks[played_card:get_id()] = true
+    end
+    for _,hand_card in pairs(G.hand.cards) do
+        if not hand_card.highlighted and found_ranks[hand_card:get_id()] then
+          samerank = true
+        else
+          samerank = false
+        end
+    end
+    if samerank == false then
+        card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+        card.joker_display_values.Xmult = 1
+    end
+  end
+}
+
 --	Sneasel
 jd_def["j_poke_sneasel"] = {
   text = {
