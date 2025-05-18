@@ -2115,7 +2115,10 @@ jd_def["j_poke_electrode"] = {
                 { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" },
             },
         },
-    },
+        { text = " "},
+        { text = "$", colour = G.C.GOLD},
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+        },
     calc_function = function(card)
         local count = 0
         local pos = 0
@@ -2144,8 +2147,10 @@ jd_def["j_poke_electrode"] = {
             -- Set `x_mult` based on the condition
             if count + pos == #G.jokers.cards then
                 card.joker_display_values.x_mult = card.ability.extra.Xmult or 1
+                card.joker_display_values.money = card.ability.extra.money
             else
                 card.joker_display_values.x_mult = 1
+                card.joker_display_values.money = 0
             end
         else
             -- Handle cases where there are not enough jokers
