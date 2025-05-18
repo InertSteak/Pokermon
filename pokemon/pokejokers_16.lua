@@ -541,8 +541,8 @@ local gliscor = {
     type_tooltip(self, info_queue, card)
     local played_Xmult = 1
     if G.hand then
-        local suit_count = 0
-        for i=1, #G.hand.cards do
+      local suit_count = 0
+      for i=1, #G.hand.cards do
         if (G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff) and not G.hand.cards[i].highlighted then
           suit_count = suit_count + 1
         end
