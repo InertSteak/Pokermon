@@ -378,6 +378,38 @@ jd_def["j_poke_magmortar"] = {
 text_config = { colour = G.C.WHITE },
 }
 --	Togekiss
+jd_def["j_poke_togekiss"] = {
+  text = {
+    { text = 'Max Xmult: ', colour = G.C.GREY, }, 
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  extra = {
+    {
+      { text = "Max Chips: ", colour = G.C.GREY, },
+      { text = "+", colour = G.C.CHIPS, },
+      { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "exp" , colour = G.C.CHIPS, },
+    }
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= "Unknown" then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card.ability.effect and scoring_card.ability.effect == "Lucky Card" then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = card.ability.extra.chips * count
+    card.joker_display_values.Xmult = card.ability.extra.Xmult ^ count
+  end
+}
+
 --	Yanmega
 jd_def["j_poke_yanmega"] = {
 text = {
