@@ -229,12 +229,50 @@ jd_def["j_poke_mantyke"] = {
                 end
         end
         card.joker_display_values.chips = card.ability.extra.chips * count
-    end 
+    end
 }
 
 --	Snover
 --	Abomasnow
 --	Weavile
+jd_def["j_poke_weavile"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+    { text = " "},
+    { text = "$", colour = G.C.GOLD},
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "sneaselcard", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    local rank_found = false
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+
+    if poker_hands['High Card'] and next(poker_hands['High Card']) and #JokerDisplay.current_hand == 1 then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:get_id() == G.GAME.current_round.sneaselcard.id then
+                rank_found = true
+            end
+        end
+    end
+    if rank_found == true then
+      card.joker_display_values.money = card.ability.extra.money
+    else
+      card.joker_display_values.money = 0
+    end
+    card.joker_display_values.sneaselcard = localize(G.GAME.current_round.sneaselcard.rank, 'ranks')
+  end
+}
+
 --	Magnezone
 jd_def["j_poke_magnezone"] = {
     text = {
