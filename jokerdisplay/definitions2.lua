@@ -1349,6 +1349,11 @@ jd_def["j_poke_stantler"] = {
         { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
     },
     text_config = { colour = G.C.CHIPS },
+    reminder_text = {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")" },
+    },
 calc_function = function(card)
     local highest_rank = nil
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
@@ -1369,6 +1374,7 @@ calc_function = function(card)
         end
     else card.joker_display_values.chips = 0
     end
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
 end
 }
 
