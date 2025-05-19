@@ -242,7 +242,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Catzzadilla, bt",
+                  text = "Catzzadilla, bt, KatRoman",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
