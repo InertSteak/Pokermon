@@ -433,42 +433,54 @@ jd_def["j_poke_golurk"] = {
 --	Durant
 --	Deino
 jd_def["j_poke_deino"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    calc_function = function(card)
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-        if poker_hands['Three of a Kind'] and next(poker_hands['Three of a Kind']) then
-            card.joker_display_values.Xmult = card.ability.extra.Xmult
-        else 
-            card.joker_display_values.Xmult = 1
-        end
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local text, _, _ = JokerDisplay.evaluate_hand()
+    if text == "Three of a Kind" then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
     end
+    card.joker_display_values.localized_text = localize('Three of a Kind', 'poker_hands')
+  end
 }
 
 --	Zweilous
 jd_def["j_poke_zweilous"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    calc_function = function(card)
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-        if poker_hands['Three of a Kind'] and next(poker_hands['Three of a Kind']) then
-            card.joker_display_values.Xmult = card.ability.extra.Xmult
-        else 
-            card.joker_display_values.Xmult = 1
-        end
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local text, _, _ = JokerDisplay.evaluate_hand()
+    if text == "Three of a Kind" then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
     end
+    card.joker_display_values.localized_text = localize('Three of a Kind', 'poker_hands')
+  end
 }
 
 --	Hydreigon
