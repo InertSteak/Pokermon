@@ -597,8 +597,8 @@ jd_def["j_poke_sandslash"] = {
     local limit = card.ability.extra.glass_limit
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-    if count > 2 then
-      count = 2
+    if count > limit then
+      count = limit
     end
     card.joker_display_values.count = count
     card.joker_display_values.limit = limit
