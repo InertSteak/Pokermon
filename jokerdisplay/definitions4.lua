@@ -90,11 +90,21 @@ end
 --	Lopunny
 --	Mismagius
 jd_def["j_poke_mismagius"] = { 
-text = {
-    { text = "+" },
-    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
-},
-text_config = { colour = G.C.CHIPS },
+  text = {
+      { text = "+" },
+      { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+  card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds }}
+  end
 }
 
 --	Honchkrow
