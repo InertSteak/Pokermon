@@ -2729,36 +2729,36 @@ end
 }
 
 jd_def["j_poke_tauros"] = {
-    text = {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "count",          colour = G.C.ORANGE },
-        { text = "x" },
-        { text = "Tauros", colour = G.C.ORANGE , scale = 0.3},
-        { text = ")" },
-    },
-    calc_function = function(card)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.name and joker_card.config.center.name == "tauros" or joker_card.config.center.name == "taurosh" then
-                    count = count + 1
-                end
+  text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "count", colour = G.C.ORANGE },
+    { text = "x" },
+    { text = "Herd", colour = G.C.ORANGE , scale = 0.3},
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    if G.jokers then
+        for _, joker_card in ipairs(G.jokers.cards) do
+            if joker_card.config.center.name and joker_card.config.center.name == "tauros" or joker_card.config.center.name == "taurosh" or joker_card.config.center.name == "miltank" then
+                count = count + 1
             end
         end
-        card.joker_display_values.count = count
-        card.joker_display_values.localized_basic = localize({type = "name_text", set = "Joker", key = "j_poke_tauros"})
-        card.joker_display_values.localized_baby = localize({type = "name_text", set = "Joker", key = "j_poke_taurosh"})
-    end,
-    mod_function = function(card, mod_joker)
-        return { x_mult = ((card.config.center.name and card.config.center.name == "tauros" or card.config.center.name == "taurosh") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
+    card.joker_display_values.count = count
+    card.joker_display_values.localized_basic = localize({type = "name_text", set = "Joker", key = "j_poke_tauros"})
+    card.joker_display_values.localized_baby = localize({type = "name_text", set = "Joker", key = "j_poke_taurosh"})
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = ((card.config.center.name and card.config.center.name == "tauros" or card.config.center.name == "taurosh" or card.config.center.name == "miltank") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
 }
 
 jd_def["j_poke_taurosh"] = {
     text = {
         { text = "+" ,
         colour = G.C.MULT},
-        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", 
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult",
         colour = G.C.MULT},
     },
 }
