@@ -566,29 +566,35 @@ text_config = { colour = G.C.CHIPS },
 
 --	Metagross
 jd_def["j_poke_metagross"] = {
-    text = {
-        { text = "+", colour = G.C.CHIPS },
-        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
-        { text = " " },
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
-            }
-        },
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " " },
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
     },
-    calc_function = function(card)
-        local x_mult = 1
-        local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
-        if poker_hands['Four of a Kind'] and next(poker_hands['Four of a Kind']) then
-            for _, scoring_card in pairs(scoring_hand) do
-                local total_chips = poke_total_chips(scoring_card)
-                local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-                x_mult = x_mult * (total_chips ^ (retriggers/3))
-            end
-        end
-        card.joker_display_values.x_mult = x_mult
-    end,
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local x_mult = 1
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text == 'Four of a Kind' then
+      for _, scoring_card in pairs(scoring_hand) do
+        local total_chips = poke_total_chips(scoring_card)
+        local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        x_mult = x_mult * (total_chips ^ (retriggers/3))
+      end
+    end
+    card.joker_display_values.localized_text = localize('Four of a Kind', 'poker_hands')
+    card.joker_display_values.x_mult = x_mult
+  end,
 }
 
 --	Regirock
