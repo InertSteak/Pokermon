@@ -637,6 +637,20 @@ jd_def["j_poke_probopass"] = {
 
 --	Dusknoir
 --	Froslass
+jd_def["j_poke_froslass"] = {
+  text = {
+    { text = "+", colour = HEX("9AA4B7") },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = HEX("9AA4B7") },
+  },
+  calc_function = function(card)
+    if G.GAME and to_big(G.GAME.dollars) < to_big(0) then
+      card.joker_display_values.count = 1
+    else
+      card.joker_display_values.count = 0
+    end
+  end
+}
+
 --	Rotom
 --	Uxie
 --	Mesprit
