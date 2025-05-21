@@ -357,8 +357,17 @@ jd_def["j_poke_linoone"] = {
     { text = ")" },
   },
   calc_function = function(card)
+    local straight_bool = false
+    local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
+    if poker_hands['Straight'] and next(poker_hands['Straight']) then
+      straight_bool = true
+    end
     card.joker_display_values.count = 1
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    if straight_bool == true then
+      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (card.ability.extra.odds), card.ability.extra.odds } }
+    else
+      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    end
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
   end
 }
