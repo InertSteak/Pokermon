@@ -1141,17 +1141,14 @@ jd_def["j_poke_sneasel"] = {
 jd_def["j_poke_swinub"] = {
   text = {
     { text = "+", colour = G.C.MULT },
-    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+    { text = " $", colour = G.C.GOLD},
+    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
     {
-      {text = "$", colour = G.C.GOLD},
-      { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
-      { text = " (Round)", colour = G.C.GREY, },
-    },
-    {
       { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
       { text = ")" },
     },
   },
@@ -1179,17 +1176,14 @@ jd_def["j_poke_swinub"] = {
 jd_def["j_poke_piloswine"] = {
   text = {
     { text = "+", colour = G.C.MULT },
-    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+    { text = " $", colour = G.C.GOLD},
+    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
     {
-      {text = "$", colour = G.C.GOLD},
-      { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
-      { text = " (Round)", colour = G.C.GREY, },
-    },
-    {
       { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
       { text = ")" },
     },
   },
