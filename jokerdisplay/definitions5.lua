@@ -485,22 +485,14 @@ text = {
 
 --	Hydreigon
 jd_def["j_poke_hydreigon"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    calc_function = function(card)
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-        if poker_hands['Three of a Kind'] and next(poker_hands['Three of a Kind']) then
-            card.joker_display_values.Xmult = card.ability.extra.Xmult
-        else 
-            card.joker_display_values.Xmult = 1
-        end
-    end
+  },
 }
 
 --	Larvesta
