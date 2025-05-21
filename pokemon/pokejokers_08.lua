@@ -598,7 +598,138 @@ local skarmory = {
   end,
 }
 -- Houndour 228
+local houndour={
+  name = "houndour",
+  pos = {x = 6, y = 7},
+  config = {extra = {mult_mod = 1,rounds = 5, discards = 2, active = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.discards}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
+      if card.ability.extra.active then
+        card.ability.extra.active = false
+      elseif #context.full_hand > 3 then
+        card.ability.extra.active = true
+      end
+    end
+    if context.discard then
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
+    end
+    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
+      G.E_MANAGER:add_event(Event({func = function()
+        card.ability.extra.active = false
+        local targets = {}
+        local selected = nil
+        for i=1, #G.hand.cards do
+          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
+            table.insert(targets, G.hand.cards[i])
+          end
+        end
+        pseudoshuffle(targets, pseudoseed('houndour'))
+        if #targets > 0 then
+          for i = 1, math.min(#targets, card.ability.extra.discards) do
+              G.hand:add_to_highlighted(targets[i], true)
+              selected = true
+              play_sound('card1', 1)
+          end
+          if selected then 
+            delay(0.2)
+            G.FUNCS.discard_cards_from_highlighted(nil, true)
+          end
+          for i = 1, math.min(#targets, card.ability.extra.discards) do
+              G.hand:remove_from_highlighted(targets[i], true)
+              targets[i]:highlight(true)
+          end  
+        end
+      return true end }))
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.active = false
+    end
+    return level_evo(self, card, context, "j_poke_houndoom")
+  end,
+}
 -- Houndoom 229
+local houndoom={
+  name = "houndoom",
+  pos = {x = 7, y = 7},
+  config = {extra = {mult_mod = 2,rounds = 5, active = false}},
+  loc_txt = {
+    name = "Houndoom",
+    text = {
+      "Discarding more than {C:attention}3{} cards",
+      "also discards {C:attention}all{} cards {C:attention}held{} in hand",
+      "{br:2}ERROR - CONTACT STEAK",
+      "Discarded cards permanently gain {C:mult}+#1#{} Mult",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
+      if card.ability.extra.active then
+        card.ability.extra.active = false
+      elseif #context.full_hand > 3 then
+        card.ability.extra.active = true
+      end
+    end
+    if context.discard then
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
+    end
+    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
+      G.E_MANAGER:add_event(Event({func = function()
+        card.ability.extra.active = false
+        local targets = {}
+        local selected = nil
+        for i=1, #G.hand.cards do
+          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
+            table.insert(targets, G.hand.cards[i])
+          end
+        end
+        if #targets > 0 then
+          for i = 1, #targets do
+              G.hand:add_to_highlighted(targets[i], true)
+              selected = true
+              play_sound('card1', 1)
+          end
+          if selected then 
+            delay(0.2)
+            G.FUNCS.discard_cards_from_highlighted(nil, true)
+          end
+          for i = 1, #targets do
+              G.hand:remove_from_highlighted(targets[i], true)
+              targets[i]:highlight(true)
+          end  
+        end
+      return true end }))
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.active = false
+    end
+  end,
+}
 -- Kingdra 230
 local kingdra={
   name = "kingdra", 
@@ -1206,5 +1337,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, heracross, sneasel, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, heracross, sneasel, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
