@@ -770,36 +770,45 @@ end
 
 --	Girafarig
 jd_def["j_poke_girafarig"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
-            }
-        }
-    },
-    text_config = { colour = G.C.WHITE },
-    calc_function = function(card)
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-        local face_cards = {}
-        if poker_hands['Two Pair'] and next(poker_hands['Two Pair']) then
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:is_face() then
-                    table.insert(face_cards, scoring_card)
-                end
-            end
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_face", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  text_config = { colour = G.C.WHITE },
+  calc_function = function(card)
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local face_cards = {}
+    if poker_hands['Two Pair'] and next(poker_hands['Two Pair']) then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          table.insert(face_cards, scoring_card)
         end
-        local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
-        local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
-        if first_face ~= last_face then
-          card.joker_display_values.x_mult = math.max(last_face and
-              (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
-        else
-          card.joker_display_values.x_mult = math.max(last_face and
-              (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand))) or 1, 1)
-        end
+      end
     end
+    local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+    local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
+    if first_face ~= last_face then
+      card.joker_display_values.x_mult = math.max(last_face and
+        (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
+    else
+      card.joker_display_values.x_mult = math.max(last_face and
+        (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand))) or 1, 1)
+    end
+    card.joker_display_values.localized_text = localize('Two Pair', 'poker_hands')
+    card.joker_display_values.localized_text_face = localize("k_face_cards")
+  end
 }
 
 
