@@ -320,7 +320,48 @@ jd_def["j_poke_swampert"] = {
 --	Poochyena
 --	Mightyena
 --	Zigzagoon
+jd_def["j_poke_zigzagoon"] = {
+  text = {
+    { text = "+", colour = HEX("9AA4B7") },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = HEX("9AA4B7") },
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end
+}
+
 --	Linoone
+jd_def["j_poke_linoone"] = {
+  text = {
+    { text = "+", colour = HEX("9AA4B7") },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = HEX("9AA4B7") },
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
+    },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
+  end
+}
 --	Wurmple
 --	Silcoon
 --	Beautifly
