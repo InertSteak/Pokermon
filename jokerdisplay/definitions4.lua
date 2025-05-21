@@ -503,6 +503,19 @@ end
 
 --	Leafeon
 --	Glaceon
+jd_def["j_poke_glaceon"] = {
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
+    },
+  },
+  calc_function = function(card)
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end
+}
+
 --	Gliscor
 jd_def["j_poke_gliscor"] = {
   text = {
