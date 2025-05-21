@@ -40,11 +40,7 @@ jd_def["j_poke_treecko"] = {
     card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
     card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
     card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
-    if #find_pokemon_type("Grass") > 1 then
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (card.ability.extra.odds), card.ability.extra.odds } }
-    else
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-    end
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
   end
 }
 
@@ -88,11 +84,7 @@ jd_def["j_poke_grovyle"] = {
     card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
     card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
     card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
-    if #find_pokemon_type("Grass") > 1 then
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (card.ability.extra.odds), card.ability.extra.odds } }
-    else
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-    end
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
   end
 }
 
@@ -369,17 +361,8 @@ jd_def["j_poke_linoone"] = {
     { text = ")" },
   },
   calc_function = function(card)
-    local straight_bool = false
-    local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
-    if poker_hands['Straight'] and next(poker_hands['Straight']) then
-      straight_bool = true
-    end
     card.joker_display_values.count = 1
-    if straight_bool == true then
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (card.ability.extra.odds), card.ability.extra.odds } }
-    else
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
-    end
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
   end
 }
