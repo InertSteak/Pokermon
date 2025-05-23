@@ -823,3 +823,18 @@ pattern = "if area == G.consumeables then"
 position = "at"
 payload = "if area == G.consumeables or area == G.jokers then"
 match_indent = true
+
+# Post Discard context
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+check_for_unlock({type = 'discard_custom', cards = cards})
+'''
+position = "after"
+payload = '''
+if not hook then
+  SMODS.calculate_context({post_discard = true})
+end
+'''
+match_indent = true
