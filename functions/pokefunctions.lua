@@ -109,6 +109,7 @@ family = {
     {"zigzagoon", "linoone"},
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
+    {"shinx", "luxio", "luxray"},
     {"buizel", "floatzel"},
     {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
