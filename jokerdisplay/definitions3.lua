@@ -712,7 +712,7 @@ jd_def["j_poke_jirachi_copy"] = {
                 while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
                     energize(true_copy, nil, nil, true)
                     if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
-                      true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
+                      true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + 1
                     else
                       true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + 1
                     end
@@ -745,8 +745,8 @@ jd_def["j_poke_jirachi_copy"] = {
                 end
 
                 if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
-                  true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + card.ability.extra.energy_buff
-                  true_copy.ability.extra.c_energy_count = (true_copy.ability.extra.c_energy_count or 0)
+                  true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + card.ability.extra.energy_buff
+                  true_copy.ability.c_energy_count = (true_copy.ability.c_energy_count or 0)
                 else
                   true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + card.ability.extra.energy_buff
                   true_copy.ability.c_energy_count = (true_copy.ability.c_energy_count or 0)
