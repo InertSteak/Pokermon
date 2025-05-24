@@ -2925,6 +2925,28 @@ return {
                     "in played hand",
                 }
             },
+            j_poke_drifloon = {
+                name = 'Drifloon',      
+                text = {
+                    "{C:attention}Volatile Right{}",
+                    "When a shop item is bought,",
+                    "destroy it and prevent it from appearing",
+                    "for the rest of the run,",
+                    "then {S:1.1,C:red,E:2}self destructs{}",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                } 
+            },
+            j_poke_drifblim = {
+                name = 'Drifblim',      
+                text = {
+                    "{C:attention}Volatile Right{}",
+                    "Once per ante,",
+                    "when a shop item is bought,",
+                    "destroy it and prevent it from appearing",
+                    "for the rest of the run",
+                    "Last usage: Ante {C:attention}#1#{}"
+                } 
+            },
             j_poke_mismagius = {
                 name = 'Mismagius',
                 text = {
@@ -4748,6 +4770,9 @@ return {
             poke_x_scissor = "X Scissor",
             --From Kingdra
             poke_twister_ex = "Twister!",
+            --From Drifloon
+            poke_pop_ex = "Pop!",
+            poke_banished_ex = "Banished!",
             --From Mime Jr.
             poke_mime_ex = "Mime!",
             --From Magmortar
