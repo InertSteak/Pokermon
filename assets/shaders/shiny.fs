@@ -4,6 +4,8 @@
 	#define PRECISION mediump
 #endif
 
+#define M_PI 3.1415926535897932384626433832795
+
 // Look ionized.fs for explanation
 extern PRECISION vec2 shiny;
 
@@ -29,6 +31,21 @@ vec4 HSL(vec4 c);
 // Apply dissolve effect (when card is being "burnt", e.g. when consumable is used)
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv);
 
+float stackoverflow_hash(number value, number index)
+{
+    return fract(sin(dot(vec2(index/value, value/index), vec2(12.9898,78.233))) * 43758.5453);
+}
+
+number logisticCurve(number x)
+{
+    return 1 / (1 + exp(6-8*x)) - 0.005;
+}
+
+number hideFormula(number x)
+{
+    return 1 - pow(sin(M_PI/2 * x),20);
+}
+
 // This is what actually changes the look of card
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
@@ -37,41 +54,70 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     // Position of a pixel within the sprite
 	vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
 
-    float t = shiny.g + time;
-    float adjust_value = 0.1 * sin(t) + 0.5;
+    float adjust_value = 0.5;
+    //adjust_value += 0.1 * sin(shiny.g + time);
     vec2 adjusted_uv = uv - vec2(adjust_value, adjust_value);
-    adjusted_uv.x = adjusted_uv.x*texture_details.b/texture_details.a;
-    adjusted_uv.y = adjusted_uv.y*texture_details.b/texture_details.a;
     
-
-
     vec4 hsl = HSL(tex); // convert texture to HSL values
     vec4 bhsl = HSL(tex); // make a base copy of HSL values
+    hsl.r = 0.14;
+    hsl.g = 1.;
+    hsl.b = 0.7;
+    hsl.a = 0.0;
 
-    //vec2 rotater = vec2(cos(shiny.r*0.1221), sin(shiny.r*0.3512));
+    number time_val = shiny.g + time + 7777;    
+    vec2 newCenter = vec2(0,0);
+    for (int i = 4; i < 8; i += 1)
+    {
+        number i_val = sqrt(i);
+        number iter = fract(time_val / i_val);
+        number hash = floor(time_val / i_val);
 
+        number angle = 2 * M_PI * stackoverflow_hash(hash, 1);
+        number dist = 0.1 + 0.3 * stackoverflow_hash(hash, 2);
+        newCenter.x = dist * cos(angle);
+        newCenter.y = dist * sin(angle);
+        adjusted_uv += newCenter;
+        number size = sin(iter * M_PI) * (sqrt(i) / 3) * (0.05 + 0.2 * stackoverflow_hash(hash, 3));
 
-    if (shiny.g > 0.0 || shiny.g < 0.0) {
-        // hsl.y = 0.02;
-        hsl.x = mod(hsl.x + .5, 1);
-        hsl.y = min(hsl.y, .7);
-        hsl.z *= (1 - adjusted_uv.x*(cos(shiny.r*0.512)));
+        float star_angle = atan(adjusted_uv.x, adjusted_uv.y) + sin(shiny.r + time + M_PI * stackoverflow_hash(hash, 4));
+        float star = size * 0.2 / cos(asin(cos(5*star_angle))/10 + 0.942477796077);
+        number star_color = 1.2 - 15. * abs(length(adjusted_uv) - star) - 0.0075 / length(adjusted_uv);
+        number opacity = hideFormula(iter) * logisticCurve(star_color);
+        number prev_opacity = hsl.a;
+        hsl.a = opacity + prev_opacity * (1 - opacity);
+        hsl.b = (0.3 * stackoverflow_hash(hash, 9) + 0.6) * (opacity / hsl.a) + (hsl.b * prev_opacity / hsl.a);
+        
+        adjusted_uv -= newCenter;
     }
+    for (int i = 1; i < 8; i += 1)
+    {
+        number i_val = sqrt(i);
+        number iter = fract(time_val / i_val);
+        number hash = floor(time_val / i_val);
 
-    if (bhsl.z > 0.95){
-        hsl.a = 0;
-    }
+        number angle = 2 * M_PI * stackoverflow_hash(hash, 5);
+        number dist = 0.1 + 0.3 * stackoverflow_hash(hash, 6);
+        newCenter.x = dist * cos(angle);
+        newCenter.y = dist * sin(angle);
+        adjusted_uv += newCenter;
+        number size = sin(iter * M_PI) * (sqrt(i) / 3) * (0.05 + 0.2 * stackoverflow_hash(hash, 7));
 
-    if (bhsl.a == 0){
-        hsl.a = 0;
+        float star_angle = atan(adjusted_uv.x, adjusted_uv.y) + sin(shiny.r*10 + time + M_PI * stackoverflow_hash(hash, 8));
+        float star = size * 0.05 / cos(asin(cos(4*star_angle))/3 + 0.942477796077);
+        number star_color = star / length(adjusted_uv);
+        number opacity = min(1., max(0., hideFormula(iter) * logisticCurve(star_color)));
+        number prev_opacity = hsl.a;
+        hsl.a = opacity + prev_opacity * (1 - opacity);
+        hsl.b = (opacity / hsl.a) + (hsl.b * prev_opacity * (1 - opacity) / hsl.a);
+        
+        adjusted_uv -= newCenter;
     }
 
 
     // Mix with base texture
     float ratio = 1;
     tex = ratio*RGB(hsl) + (1-ratio)*RGB(bhsl);
-
-
 
     // required
 	return dissolve_mask(tex*colour, texture_coords, uv);

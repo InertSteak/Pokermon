@@ -11,7 +11,7 @@ local shiny = ({
     -- Stop extra layer from being rendered below the card.
     -- For edition that modify shape or transparency of the card.
     disable_base_shader = false,
-    shader = "booster",
+    shader = "shiny",
     discovered = true,
     unlocked = true,
     config = {},
