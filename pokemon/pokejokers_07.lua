@@ -472,7 +472,9 @@ local yanma={
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
-        card.ability.extra.scored = card.ability.extra.scored + 1
+        if not context.blueprint then
+          card.ability.extra.scored = card.ability.extra.scored + 1
+        end
         local Mult = card.ability.extra.mult
         local Chips = card.ability.extra.chips
         if pseudorandom('yanma') < G.GAME.probabilities.normal/card.ability.extra.odds then
