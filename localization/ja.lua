@@ -2723,6 +2723,25 @@ return {
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#3#{}{C:inactive,s:0.8} ラウンド後に進化)"
                 }
             },
+			j_poke_houndour = {
+              name = "デルビル",
+              text = {
+				"ディスカードされたカードが 永久的に倍率 {C:mult}+#1#{} を得る",
+				"{br:2}ERROR - CONTACT STEAK",
+				"カードを {C:attention}3枚{}以上ディスカードする時",
+				"{C:attention}#3#枚{} のランダムな {C:attention}手札にある{} カードもディスカードする",
+                "{C:inactive}({C:attention}#2#{C:inactive} ラウンド後に進化)",
+              }
+            },
+            j_poke_houndoom = {
+              name = "ヘルガー",
+              text = {
+			    "ディスカードされたカードが 永久的に倍率 {C:mult}+#1#{} を得る",
+				"{br:2}ERROR - CONTACT STEAK",
+				"カードを {C:attention}3枚{}以上ディスカードする時",
+				"{C:attention}すべて{} の {C:attention}手札にある {}カードもディスカードする",
+              }
+            },
 			j_poke_miltank = {
                 name = "Miltank",
                 text = {
