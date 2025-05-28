@@ -514,6 +514,45 @@ function Card:remove()
   return removed(self)
 end
 
+--Pokerhand jokers
+SMODS.PokerHandPart:take_ownership('_straight', 
+    { 
+      func = function(hand) 
+        local max = 5
+        if next(SMODS.find_card('j_four_fingers')) then max = 4 end
+        if (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) then max = 3 end
+        return get_straight(hand, max, not not next(SMODS.find_card('j_shortcut'))) 
+      end
+    },
+    true 
+)
+
+local prev_flush = get_flush
+function get_flush(hand)
+  local ret = prev_flush(hand)
+  if #ret <= 0 then
+    ret = {}
+    local aipom = (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) 
+    local suits = SMODS.Suit.obj_buffer
+    if #hand < (5 - (aipom and 2 or 0)) then return ret else
+      for j = 1, #suits do
+        local t = {}
+        local suit = suits[j]
+        local flush_count = 0
+        for i=1, #hand do
+          if hand[i]:is_suit(suit, nil, true) then flush_count = flush_count + 1;  t[#t+1] = hand[i] end 
+        end
+        if flush_count >= (5 - (aipom and 2 or 0)) then
+          table.insert(ret, t)
+          return ret
+        end
+      end
+      return {}
+    end
+  else
+    return ret
+  end
+end
 --Tutorial WIP
 --[[
 local gu = Game.update

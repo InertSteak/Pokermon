@@ -395,6 +395,61 @@ local jumpluff={
   end
 }
 -- Aipom 190
+local aipom={
+  name = "aipom",
+  pos = {x = 8, y = 3},
+  config = {extra = {straights_played = 0, flushes_played = 0, hands = 1}, straight_rqmt = 5, flush_rqmt = 5},
+  loc_txt = {
+    name = "Aipom",
+    text = {
+      "{C:chips}-#3#{} hand",
+      "All {C:attention}Flushes{} and {C:attention}Straights{} can",
+      "be made with {C:attention}3{} cards",
+      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Straights and {C:attention,s:0.8}#2#{C:inactive,s:0.8} Flushes){}"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local straights_remaining = math.max(0, self.config.straight_rqmt - center.ability.extra.straights_played)
+    local flushes_remaining = math.max(0, self.config.flush_rqmt - center.ability.extra.flushes_played)
+    return {vars = {straights_remaining, flushes_remaining, center.ability.extra.hands}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if next(context.poker_hands['Straight']) then
+          card.ability.extra.straights_played = card.ability.extra.straights_played + 1
+        end
+        if next(context.poker_hands['Flush']) then
+          card.ability.extra.flushes_played = card.ability.extra.flushes_played + 1
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_ambipom", math.min(self.config.straight_rqmt, card.ability.extra.straights_played) + 
+                       math.min(self.config.straight_rqmt, card.ability.extra.flushes_played), self.config.straight_rqmt + self.config.flush_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+  end, 
+}
 -- Sunkern 191
 local sunkern={
   name = "sunkern",
@@ -1223,5 +1278,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }
