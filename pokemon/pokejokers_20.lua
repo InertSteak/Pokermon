@@ -76,9 +76,8 @@ local zoroark = {
       end
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
-      local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
       for i = #info_queue, 1, -1 do
-        if info_queue[i].set == "Other" and info_queue[i].key and poketype_list[info_queue[i].key] then
+        if info_queue[i].set == "Other" and info_queue[i].key and is_poketype(info_queue[i].key) then
           table.remove(info_queue, i)
         end
       end

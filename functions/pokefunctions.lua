@@ -141,56 +141,52 @@ extended_family = {
   tauros = {"miltank"}
 }
 
+poketype_list = {
+  "Grass",
+  "Fire",
+  "Water",
+  "Lightning",
+  "Psychic",
+  "Fighting",
+  "Colorless",
+  "Dark",
+  "Metal",
+  "Fairy",
+  "Dragon",
+  "Earth"
+}
+
+is_poketype_table = {}
+for _, v in ipairs(poketype_list) do
+  is_poketype_table[v] = true
+end
+
+is_poketype = function(s)
+  return is_poketype_table[s]
+end
+
 type_sticker_applied = function(card)
-  if not card then return false end
-  if card.ability.grass_sticker then
-    return "Grass"
-  elseif card.ability.fire_sticker then
-    return "Fire"
-  elseif card.ability.water_sticker then
-    return "Water"
-  elseif card.ability.lightning_sticker then
-    return "Lightning"
-  elseif card.ability.psychic_sticker then
-    return "Psychic"
-  elseif card.ability.fighting_sticker then
-    return "Fighting"
-  elseif card.ability.colorless_sticker then
-    return "Colorless"
-  elseif card.ability.dark_sticker then
-    return "Dark"
-  elseif card.ability.metal_sticker then
-    return "Metal"
-  elseif card.ability.fairy_sticker then
-    return "Fairy"
-  elseif card.ability.dragon_sticker then
-    return "Dragon"
-  elseif card.ability.earth_sticker then
-    return "Earth"
-  else
-    return false
+  if not card then return nil end
+  local ret = nil
+  for _, v in ipairs(poketype_list) do
+    if card.ability[string.lower(v)..'_sticker'] then
+      assert(not ret, "Pokermon error: card has two type stickers")
+      ret = v
+    end
   end
-  
+  return ret
 end
 
 find_pokemon_type = function(target_type)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
-      if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) then
+      if get_type(v) == target_type then
         table.insert(found, v)
       end
     end
   end
   return found
-end
-
-is_type = function(card, target_type)
-  if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
-    return true
-  else
-    return false
-  end
 end
 
 get_type = function(card)
@@ -203,10 +199,6 @@ get_type = function(card)
     end
   end
   return nil
-end
-
-has_type = function(card)
-  return (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) or type_sticker_applied(card)
 end
 
 copy_scaled_values = function(card)
@@ -293,8 +285,6 @@ poke_backend_evolve = function(card, to_key)
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
 
-  local old_key = card.config.center.key
-
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" and not card.ability.extra.devolved and card.ability.perish_tally > 0 then
     card.ability.perish_tally = G.GAME.perishable_rounds
@@ -338,7 +328,7 @@ poke_backend_evolve = function(card, to_key)
         end
       end
     end
-    if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
+    if card.ability.energy_count or card.ability.c_energy_count then
       energize(card, nil, true, true)
     end
   end
@@ -366,18 +356,6 @@ poke_backend_evolve = function(card, to_key)
       play_sound('poke_e_shiny', 1, 0.2)
       G.P_CENTERS.e_poke_shiny.on_load(card)
     end
-  end
-
-  -- can be removed once this PR has been merged:
-  --    https://github.com/Steamodded/smods/pull/611
-  local to_fix = {}
-  for k,_ in pairs(G.GAME.used_jokers) do
-    if not next(SMODS.find_card(k, true)) then
-      table.insert(to_fix, k)
-    end
-  end
-  for _,k in pairs(to_fix) do
-    G.GAME.used_jokers[k] = nil
   end
 end
 
@@ -820,8 +798,8 @@ type_tooltip = function(self, info_queue, center)
   if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
     info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
   end
-  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
+  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
+      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
         percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
@@ -864,49 +842,41 @@ type_tooltip = function(self, info_queue, center)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-  local apply_type = nil
-  
-  if sticker_type then
-    apply_type = sticker_type
-    card.ability[string.lower(apply_type).."_sticker"] = true
-  else
-    apply_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
-    card.ability[string.lower(apply_type).."_sticker"] = true
+  if not sticker_type then 
+    sticker_type = pseudorandom_element(poketype_list, pseudoseed("tera"))
   end
   
-  for l, v in pairs(poketype_list) do
-    if string.lower(v) ~= string.lower(apply_type) then
+  if not sticker_type then return end
+  card.ability[string.lower(sticker_type).."_sticker"] = true
+  for _, v in ipairs(poketype_list) do
+    if v ~= sticker_type then
       card.ability[string.lower(v).."_sticker"] = false
     end
   end
   
-  if card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
-    card.ability.extra.ptype = apply_type 
-  end
-  
-  if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
-     and not G.P_CENTERS[card.config.center_key].taken_ownership then
-    if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
-      local lv = G.P_CENTERS[card.config.center_key].loc_vars
-      SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
-        discovered = true,
-        loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
-          return lv(self, info_queue, center)
-        end,
-      }, true)
-    else
-      SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
-        discovered = true,
-        loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
-        end,
-      }, true)
-    end
-  end
+  -- TODO make these take_ownership calls unnecessary by patching
+  -- if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
+  --    and not G.P_CENTERS[card.config.center_key].taken_ownership then
+  --   if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
+  --     local lv = G.P_CENTERS[card.config.center_key].loc_vars
+  --     SMODS.Joker:take_ownership(card.config.center_key, {
+  --       unlocked = true, 
+  --       discovered = true,
+  --       loc_vars = function(self, info_queue, center)
+  --         type_tooltip(self, info_queue, center)
+  --         return lv(self, info_queue, center)
+  --       end,
+  --     }, true)
+  --   else
+  --     SMODS.Joker:take_ownership(card.config.center_key, {
+  --       unlocked = true, 
+  --       discovered = true,
+  --       loc_vars = function(self, info_queue, center)
+  --         type_tooltip(self, info_queue, center)
+  --       end,
+  --     }, true)
+  --   end
+  -- end
 end
 
 get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
@@ -1017,23 +987,12 @@ add_target_cards_to_vars = function(vars, targets)
 end
 
 find_other_poke_or_energy_type = function(card, poke_type, count_self)
-  local energy = nil
-  local type_count = 0
-  if string.lower(poke_type) == "dark" then
-    energy = "darkness_energy"
-  else
-    energy = string.lower(poke_type).."_energy"
-  end
-  type_count = #find_pokemon_type(poke_type)
-  if is_type(card, poke_type) and not count_self then
+  local energy = energy_from_type(poke_type)
+  local type_count = #find_pokemon_type(poke_type)
+  if get_type(card) == poke_type and not count_self then
     type_count = type_count - 1
   end
-  
-  if type_count > 0 or #find_joker(energy) > 0 then
-    return type_count + #find_joker(energy)
-  else
-    return 0
-  end
+  return type_count + #SMODS.find_card(energy)
 end
 
 faint_baby_poke = function(self, card, context)
@@ -1221,164 +1180,3 @@ poke_draw_one = function()
     end
   }))
 end
-
---[[ Putting this here for later use
-{C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
--- Zorua 570
-local zorua = {
-  name = "zorua", 
-  pos = { x = 6, y = 5 },
-  soul_pos = { x = 8, y = 12 },
-  config = {extra = {hidden_key = nil, rounds = 5, copy_joker = nil, copy_pos = 0}},
-  rarity = 3,
-  cost = 8,
-  stage = "Basic",
-  ptype = "Dark",
-  atlas = "Pokedex5",
-  blueprint_compat = true,
-  rental_compat = false,
-  calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.once = true
-    end
-    if context.setting_blind and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
-      card.ability.extra.copy_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.extra.copy_pos = #G.jokers.cards
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-    end
-
-    local other_joker = G.jokers.cards[card.ability.extra.copy_pos]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-      local other_joker_ret = other_joker:calculate_joker(context)
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
-    end
-    return level_evo(self, card, context, "j_poke_zoroark")
-  end,
-  set_card_type_badge = function(self, card, badges)
-    local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
-    local card_type_colour = get_type_colour(card.config.center or card.config, card)
-    if card.area and card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card_type = SMODS.Rarity:get_rarity_badge(_o.rarity)
-      card_type_colour = get_type_colour(_o, card)
-    end
-    badges[#badges + 1] = create_badge(card_type, card_type_colour, nil, 1.2)
-  end,
-  set_sprites = function(self, card, front)
-    if card.ability and card.ability.extra and card.ability.extra.hidden_key then
-      self:set_ability(card)
-    end
-  end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if not type_sticker_applied(card) then
-      apply_type_sticker(card, "Dark")
-    end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-    else
-      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-      card.children.center:set_sprite_pos(self.pos)
-    end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or card
-    card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-    local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local temp_ability = card.ability
-      card.ability = _o.config
-      _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
-      card.ability = temp_ability
-      local textDyna = full_UI_table.name[1].nodes[1].config.object
-      textDyna.string = textDyna.string .. localize("poke_illusion")
-      textDyna.config.string = {textDyna.string}
-      textDyna.strings = {}
-      textDyna:update_text(true)
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-      local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
-      for i = #info_queue, 1, -1 do
-        if info_queue[i].set == "Other" and info_queue[i].key and poketype_list[info_queue[i].key] then
-          table.remove(info_queue, i)
-        end
-      end
-    else
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-      end
-      card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-      card.ability.blueprint_compat_check = nil
-      local main_end = (card.area and card.area == G.jokers) and {
-        {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-          {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-            {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-          }}
-        }}
-      } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
-      desc_nodes[#desc_nodes+1] = main_end
-    end
-  end,
-  load = function(self, card, card_table, other_card)
-    card.has_loaded = true
-  end,
-  update = function(self, card, dt)
-    if card.has_loaded then
-      card.ability.extra.copy_joker = G.jokers.cards[card.ability.extra.copy_pos]
-      card.has_loaded = false
-    end
-    if card.ability.extra.copy_joker and card.ability.extra.copy_joker ~= G.jokers.cards[card.ability.extra.copy_pos] then
-      local found = nil
-      for i=1, #G.jokers.cards do
-        if card.ability.extra.copy_joker == G.jokers.cards[i] then
-          card.ability.extra.copy_pos = i
-          found = true
-          break
-        end
-      end
-      if not found then
-        card.ability.extra.copy_joker = nil
-        card.ability.extra.copy_pos = 0
-      end
-    end
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local other_joker = G.jokers.cards[card.ability.extra.copy_pos]
-      local copy_compatible = other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat
-      local right_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if copy_compatible and not card.debuff then
-        card.children.center.atlas = other_joker.children.center.atlas
-        card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-        if other_joker.children.floating_sprite then
-          card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
-          card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
-        else
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-          card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-        end
-      else
-        card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-      end
-    elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
-      self:set_ability(card)
-    end
-  end,
-}
-]]--

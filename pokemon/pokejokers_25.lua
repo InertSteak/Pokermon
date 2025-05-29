@@ -101,7 +101,7 @@ local vikavolt={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #find_pokemon_type("Lightning")
-        if is_type(card, "Lightning") then
+        if get_type(card) == "Lightning" then
           count = count - 1
         end
         return {

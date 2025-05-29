@@ -725,7 +725,7 @@ local nightmare = {
     end
   end,
   can_use = function(self, card)
-    return G.jokers.highlighted and #G.jokers.highlighted == 1 and has_type(G.jokers.highlighted[1]) and not G.jokers.highlighted[1].ability.eternal
+    return G.jokers.highlighted and #G.jokers.highlighted == 1 and get_type(G.jokers.highlighted[1]) and not G.jokers.highlighted[1].ability.eternal
   end,
 }
 
