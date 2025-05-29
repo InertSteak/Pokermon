@@ -2222,6 +2222,15 @@ return {
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                 }
             },
+            j_poke_aipom = {
+              name = "Aipom",
+              text = {
+                "{C:chips}-#3#{} hand",
+                "All {C:attention}Flushes{} and {C:attention}Straights{} can",
+                "be made with {C:attention}3{} cards",
+                "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Straights and {C:attention,s:0.8}#2#{C:inactive,s:0.8} Flushes){}"
+              }
+            },
             j_poke_sunkern = {
                 name = 'Sunkern',
                 text = {
@@ -2410,6 +2419,24 @@ return {
                     "{C:inactive,s:0.8}(Rank changes every round){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
                 }
+            },
+            j_poke_teddiursa = {
+              name = "Teddiursa",
+              text = {
+                "Gains {C:mult}+#2#{} Mult when any",
+                "{C:attention}Booster Pack{} is skipped",
+                "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / #3# Mult)",
+              }
+            },
+            j_poke_ursaring = {
+              name = "Ursaring",
+              text = {
+                "Gains {C:mult}+#2#{} Mult and",
+                "creates an {C:item}Item{} when any",
+                "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
+              }
             },
             j_poke_swinub = {
                 name = "Swinub",
@@ -2736,6 +2763,26 @@ return {
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} total)"
                 } 
             },
+            j_poke_zigzagoon = {
+              name = "Zigzagoon",
+              text = {
+                "{C:attention}Holding Pickup{} {C:item}Item{}",
+                "{C:green}#1# in #2#{} chance to create an",
+                "{C:item}Item{} when hand is played",
+                "{C:inactive}(Must have room)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention}#3#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_linoone = {
+              name = "Linoone",
+              text = {
+                "{C:green}#1# in #2#{} chance to create an",
+                "{C:item}Item{} when hand is played",
+                "Guaranteed if hand",
+                "contains a {C:attention}Straight{}",
+                "{C:inactive}(Must have room)"
+              }
+            },
             j_poke_shroomish = {
                 name = "Shroomish",
                 text = {
@@ -2924,6 +2971,13 @@ return {
                     "each {C:attention}unscored{} card",
                     "in played hand",
                 }
+            },
+            j_poke_ambipom = {
+              name = "Ambipom",
+              text = {
+                "All {C:attention}Flushes{} and {C:attention}Straights{} can",
+                "be made with {C:attention}3{} cards",
+              }
             },
             j_poke_mismagius = {
                 name = 'Mismagius',
@@ -3530,6 +3584,15 @@ return {
                     "{C:attention}Halve{} Chips after hand played",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
                 }
+            },
+            j_poke_ursaluna = {
+              name = "Ursaluna",
+              text = {
+                "Gains {C:mult}+#2#{} Mult and creates",
+                "an {C:item}Item{} with {C:dark_edition}Polychrome{} when any",
+                "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
             },
             j_poke_tarountula = {
                 name = "Tarountula",

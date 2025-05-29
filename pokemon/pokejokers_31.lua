@@ -3,15 +3,6 @@ local ursaluna={
   name = "ursaluna",
   pos = {x = 2, y = 8},
   config = {extra = {mult = 0,mult_mod = 3,}},
-  loc_txt = {
-    name = "Ursaluna",
-    text = {
-      "Gains {C:mult}+#2#{} Mult and creates",
-      "an {C:item}Item{} with {C:dark_edition}Polychrome{} when any",
-      "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.polychrome) then

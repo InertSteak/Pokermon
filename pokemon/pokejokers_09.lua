@@ -687,16 +687,6 @@ local zigzagoon={
   name = "zigzagoon",
   pos = {x = 1, y = 1},
   config = {extra = {odds = 6,rounds = 5,}},
-  loc_txt = {
-    name = "Zigzagoon",
-    text = {
-      "{C:attention}Holding Pickup{} {C:item}Item{}",
-      "{C:green}#1# in #2#{} chance to create an",
-      "{C:item}Item{} when hand is played",
-      "{C:inactive}(Must have room)",
-      "{C:inactive,s:0.8}(Evolves after {C:attention}#3#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
@@ -760,16 +750,6 @@ local linoone={
   name = "linoone",
   pos = {x = 2, y = 1},
   config = {extra = {odds = 4,rounds = 5,}},
-  loc_txt = {
-    name = "Linoone",
-    text = {
-      "{C:green}#1# in #2#{} chance to create an",
-      "{C:item}Item{} when hand is played",
-      "Guaranteed if hand",
-      "contains a {C:attention}Straight{}",
-      "{C:inactive}(Must have room)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}

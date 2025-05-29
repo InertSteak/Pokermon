@@ -6,13 +6,6 @@ local ambipom={
   name = "ambipom",
   pos = {x = 9, y = 2},
   config = {extra = {}},
-  loc_txt = {
-    name = "Ambipom",
-    text = {
-      "All {C:attention}Flushes{} and {C:attention}Straights{} can",
-      "be made with {C:attention}3{} cards",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}

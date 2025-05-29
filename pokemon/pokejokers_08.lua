@@ -211,14 +211,6 @@ local teddiursa={
   name = "teddiursa",
   pos = {x = 4, y = 6},
   config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 16},
-  loc_txt = {
-    name = "Teddiursa",
-    text = {
-      "Gains {C:mult}+#2#{} Mult when any",
-      "{C:attention}Booster Pack{} is skipped",
-      "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / #3# Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
@@ -254,16 +246,6 @@ local ursaring={
   name = "ursaring",
   pos = {x = 5, y = 6},
   config = {extra = {mult = 0,mult_mod = 3,}},
-  loc_txt = {
-    name = "Ursaring",
-    text = {
-      "Gains {C:mult}+#2#{} Mult and",
-      "creates an {C:item}Item{} when any",
-      "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
-      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-      "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
@@ -760,15 +742,6 @@ local houndoom={
   name = "houndoom",
   pos = {x = 7, y = 7},
   config = {extra = {mult_mod = 2,rounds = 5, active = false}},
-  loc_txt = {
-    name = "Houndoom",
-    text = {
-      "Discarding more than {C:attention}3{} cards",
-      "also discards {C:attention}all{} cards {C:attention}held{} in hand",
-      "{br:2}ERROR - CONTACT STEAK",
-      "Discarded cards permanently gain {C:mult}+#1#{} Mult",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult_mod}}

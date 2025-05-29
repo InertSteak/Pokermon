@@ -399,15 +399,6 @@ local aipom={
   name = "aipom",
   pos = {x = 8, y = 3},
   config = {extra = {straights_played = 0, flushes_played = 0, hands = 1}, straight_rqmt = 5, flush_rqmt = 5},
-  loc_txt = {
-    name = "Aipom",
-    text = {
-      "{C:chips}-#3#{} hand",
-      "All {C:attention}Flushes{} and {C:attention}Straights{} can",
-      "be made with {C:attention}3{} cards",
-      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Straights and {C:attention,s:0.8}#2#{C:inactive,s:0.8} Flushes){}"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local straights_remaining = math.max(0, self.config.straight_rqmt - center.ability.extra.straights_played)
