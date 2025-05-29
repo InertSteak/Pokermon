@@ -207,7 +207,102 @@ local sneasel = {
   end
 }
 -- Teddiursa 216
+local teddiursa={
+  name = "teddiursa",
+  pos = {x = 4, y = 6},
+  config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 16},
+  loc_txt = {
+    name = "Teddiursa",
+    text = {
+      "Gains {C:mult}+#2#{} Mult when any",
+      "{C:attention}Booster Pack{} is skipped",
+      "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / #3# Mult)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.skipping_booster and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult, 
+          card = card
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+}
 -- Ursaring 217
+local ursaring={
+  name = "ursaring",
+  pos = {x = 5, y = 6},
+  config = {extra = {mult = 0,mult_mod = 3,}},
+  loc_txt = {
+    name = "Ursaring",
+    text = {
+      "Gains {C:mult}+#2#{} Mult and",
+      "creates an {C:item}Item{} when any",
+      "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+      "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  end,
+  rarity = 2,
+  cost = 8,
+  item_req = "moonstone",
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.skipping_booster then
+      if not context.blueprint then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+      end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult, 
+          card = card
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_ursaluna")
+  end,
+}
 -- Slugma 218
 -- Magcargo 219
 -- Swinub 220
@@ -1337,5 +1432,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, heracross, sneasel, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, heracross, sneasel, teddiursa, ursaring, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
