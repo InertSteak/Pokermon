@@ -1291,8 +1291,8 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult per card over {C:attention}#2#{} in your deck",
                     "{br:4}ERROR - CONTACT STEAK",
-                    "At end of round, remove 1 random card",
-                    "from deck then add 2 random cards",
+                    "At end of round, remove {C:attention}1{} random card",
+                    "from deck then add {C:attention}2{} random cards",
                     "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult){}"
                 } 
             },
@@ -4530,7 +4530,7 @@ return {
                   "in hand when cards are scored"
                 }
             },
-
+            --[[
             grass_sticker = {
                 name = "Type",
                 text = {
@@ -4603,6 +4603,7 @@ return {
                     "{X:earth,C:white}Earth{}"
                 } 
             },
+            --]]
             --Since these are normally discovered by default these will probably not matter
             --But they COULD matter? Right? Right??????
             undiscovered_energy = {
@@ -4767,6 +4768,7 @@ return {
             poke_destroyed_ex = "Destroyed!",
             poke_evolve_success = "Evolved!",
             poke_evolve_level = "Level up!",
+            poke_tera = "Tera",
             poke_tera_ex = "Tera!",
             poke_metal_ex = "Metal!",
             poke_dragon_ex = "Dragon!",
