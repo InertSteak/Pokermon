@@ -170,8 +170,8 @@ for _, file in ipairs(pfiles) do
           elseif item.config then
             item.config.extra = {ptype = item.ptype}
           end
-          item.set_badges = poke_set_type_badge
         end
+        item.set_badges = poke_set_type_badge
         if item.item_req then
           if item.config and item.config.extra then
             item.config.extra.item_req = item.item_req
