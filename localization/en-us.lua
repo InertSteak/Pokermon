@@ -2842,8 +2842,8 @@ return {
             j_poke_milotic = {
                 name = "Milotic",
                 text = {
-                  "Retrigger all played cards if",
-                  "they all have the same {C:attention}suit{}",
+                  "Retrigger all cards played if",
+                  "scoring hand is {C:attention}mono-suit{}"
                 }
             },
             j_poke_wynaut = {
