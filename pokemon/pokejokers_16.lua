@@ -428,15 +428,6 @@ local yanmega={
   name = "yanmega",
   pos = {x = 12, y = 5},
   config = {extra = {mult = 6,chips = 12, odds = 3, retriggers = 1}},
-  loc_txt = {
-    name = "Yanmega",
-    text = {
-      "Each played {C:attention}3{} or {C:attention}6{} gives",
-      "{C:chips}+#2#{} Chips and {C:mult}+#1#{} Mult when scored",
-      "{C:green}#3# in #4#{} chance each played {C:attention}3{}",
-      "or {C:attention}6{} retriggers"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
@@ -541,8 +532,8 @@ local gliscor = {
     type_tooltip(self, info_queue, card)
     local played_Xmult = 1
     if G.hand then
-        local suit_count = 0
-        for i=1, #G.hand.cards do
+      local suit_count = 0
+      for i=1, #G.hand.cards do
         if (G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff) and not G.hand.cards[i].highlighted then
           suit_count = suit_count + 1
         end
@@ -581,24 +572,14 @@ local mamoswine={
   name = "mamoswine",
   pos = {x = 2, y = 6},
   config = {extra = {mult = 15,money = 4,odds = 2,}},
-  loc_txt = {
-    name = "Mamoswine",
-    text = {
-      "First played card gives {C:mult}+#1#{} Mult for each",
-      "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
-      "{br:2}text needs to be here to work",
-      "{C:green}#3# in #4#{} chance for played {C:attention}Stone{}",
-      "and {C:attention}Glass{} Cards to earn {C:money}$#2#{} when scored",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
   end,
   rarity = "poke_safari",
-  cost = 8,
-  stage = "One",
-  ptype = "Water",
+  cost = 10,
+  stage = "Two",
+  ptype = "Earth",
   atlas = "Pokedex4",
   perishable_compat = true,
   blueprint_compat = true,

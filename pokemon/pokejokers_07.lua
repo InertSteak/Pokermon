@@ -395,6 +395,52 @@ local jumpluff={
   end
 }
 -- Aipom 190
+local aipom={
+  name = "aipom",
+  pos = {x = 8, y = 3},
+  config = {extra = {straights_played = 0, flushes_played = 0, hands = 1}, straight_rqmt = 5, flush_rqmt = 5},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local straights_remaining = math.max(0, self.config.straight_rqmt - center.ability.extra.straights_played)
+    local flushes_remaining = math.max(0, self.config.flush_rqmt - center.ability.extra.flushes_played)
+    return {vars = {straights_remaining, flushes_remaining, center.ability.extra.hands}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if next(context.poker_hands['Straight']) then
+          card.ability.extra.straights_played = card.ability.extra.straights_played + 1
+        end
+        if next(context.poker_hands['Flush']) then
+          card.ability.extra.flushes_played = card.ability.extra.flushes_played + 1
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_ambipom", math.min(self.config.straight_rqmt, card.ability.extra.straights_played) + 
+                       math.min(self.config.straight_rqmt, card.ability.extra.flushes_played), self.config.straight_rqmt + self.config.flush_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+    if not from_debuff then
+      ease_hands_played(card.ability.extra.hands)
+    end
+  end, 
+}
 -- Sunkern 191
 local sunkern={
   name = "sunkern",
@@ -472,7 +518,9 @@ local yanma={
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
-        card.ability.extra.scored = card.ability.extra.scored + 1
+        if not context.blueprint then
+          card.ability.extra.scored = card.ability.extra.scored + 1
+        end
         local Mult = card.ability.extra.mult
         local Chips = card.ability.extra.chips
         if pseudorandom('yanma') < G.GAME.probabilities.normal/card.ability.extra.odds then
@@ -1124,10 +1172,10 @@ local steelix={
 local snubbull = {
   name = "snubbull",
   pos = {x = 7, y = 5},
-  config = {extra = {Xmult = 2, Xmult2 = 2.5, rounds = 5,}},
+  config = {extra = {Xmult = 1.75, rounds = 4,}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2, card.ability.extra.rounds}}
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.rounds}}
   end,
   rarity = 1,
   cost = 5,
@@ -1145,12 +1193,7 @@ local snubbull = {
         end
       end
       if context.other_card == first_face then
-        local Xmult = nil
-        if context.other_card:get_id() == 12 then
-          Xmult = card.ability.extra.Xmult2
-        else
-          Xmult = card.ability.extra.Xmult
-        end
+        local Xmult = card.ability.extra.Xmult
         return {
             x_mult = Xmult,
             colour = G.C.RED,
@@ -1164,7 +1207,7 @@ local snubbull = {
 local granbull = {
   name = "granbull",
   pos = {x = 8, y = 5},
-  config = {extra = {Xmult = 2.5, Xmult2 = 4}},
+  config = {extra = {Xmult = 2.25, Xmult2 = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2}}
@@ -1221,5 +1264,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

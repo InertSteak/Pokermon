@@ -207,8 +207,7 @@ local thunderstone = {
               center = G.P_CENTERS.m_gold}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
         playing_card_joker_effects({_card})
       end
-      
-      poke_unhighlight_cards()
+      poke_remove_card(selected, card)
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -498,7 +497,6 @@ local thickclub = {
   config = {max_highlighted = 1, bonus = 10, extra = {usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,
   pos = { x = 9, y = 4 },
@@ -524,9 +522,6 @@ local thickclub = {
     local current_bonus = conv_card.ability.perma_bonus or 0
     juice_flip(card)
     conv_card.ability.perma_bonus = current_bonus + self.config.bonus
-    if current_bonus > 0 then
-      conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
-    end
     juice_flip(card, true)
     delay(0.5)
     poke_unhighlight_cards()

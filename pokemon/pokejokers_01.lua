@@ -1336,8 +1336,7 @@ local sandslash={
     if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
-        if v.shattered and card.ability.extra.glass_restored <= card.ability.extra.glass_limit then
+        if v.shattered and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
           card_to_copy = v
 
           G.E_MANAGER:add_event(Event({
@@ -1353,6 +1352,8 @@ local sandslash={
               end
           }))
           playing_card_joker_effects({copy})
+          
+          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       if card_to_copy then

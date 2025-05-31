@@ -2,6 +2,23 @@
 -- Shellos 422
 -- Gastrodon 423
 -- Ambipom 424
+local ambipom={
+  name = "ambipom",
+  pos = {x = 9, y = 2},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+}
 -- Drifloon 425
 -- Drifblim 426
 -- Buneary 427
@@ -286,5 +303,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
+        list = {ambipom, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
 }

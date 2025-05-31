@@ -466,41 +466,59 @@ jd_def["j_poke_fearow"] = {
 }
 
 jd_def["j_poke_ekans"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
     local chips = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
     end
     card.joker_display_values.chips = chips
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
-end
-
+  end
 }
 
 jd_def["j_poke_arbok"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " +", colour = G.C.SECONDARY_SET.Tarot },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Tarot },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_ace", colour = G.C.ORANGE },
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local chips = 0
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local count = 0
+    local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
+      for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card:get_id() == 14 then
+              count = 1
+          end
+      end
     end
     card.joker_display_values.chips = chips
+    card.joker_display_values.count = count
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
-end
-
+    card.joker_display_values.localized_text_ace = localize("Ace", "ranks")
+  end
 }
-
 
 jd_def["j_poke_pikachu"] = {
     text = {
@@ -537,29 +555,54 @@ jd_def["j_poke_raichu"] = {
 }
 
 jd_def["j_poke_sandshrew"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    {text = "[", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
+    {text = "/", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+    {text = "]", colour = G.C.GREY},
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
     local chips
+    local count = card.ability.extra.glass_restored
+    local limit = 1
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.count = count
+    card.joker_display_values.limit = limit
+  end
 }
 
 jd_def["j_poke_sandslash"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    {text = "[", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
+    {text = "/", colour = G.C.GREY},
+    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+    {text = "]", colour = G.C.GREY},
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
     local chips
+    local count = card.ability.extra.glass_restored
+    local limit = card.ability.extra.glass_limit
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-end
+    if count > limit then
+      count = limit
+    end
+    card.joker_display_values.count = count
+    card.joker_display_values.limit = limit
+  end
 }
 
 jd_def["j_poke_nidoranf"] = {
@@ -1134,24 +1177,28 @@ jd_def["j_poke_persian"] = {
 }
 
 jd_def["j_poke_psyduck"] = {
-    text = {
-        { text = "+$", colour = G.C.GOLD },
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
-        },
-calc_function = function(card)
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local face_cards = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['High Card'] and next(poker_hands['High Card']) and #JokerDisplay.current_hand == 1 then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
-                face_cards = card.ability.extra.money
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          face_cards = card.ability.extra.money
         end
+      end
     end
     card.joker_display_values.money = face_cards
+    card.joker_display_values.localized_text = localize("k_face_cards")
 end
 }
 
@@ -1160,20 +1207,24 @@ text = {
         { text = "+$", colour = G.C.GOLD },
         { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
         },
+reminder_text = {
+  { text = "(" },
+  { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+  { text = ")" },
+},
 calc_function = function(card)
     local face_cards = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['High Card'] and next(poker_hands['High Card']) and #JokerDisplay.current_hand == 1 then
         for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 11 or 
-            scoring_card:get_id() == 12 or 
-            scoring_card:get_id() == 13 then
+            if scoring_card:is_face() then
                 face_cards = card.ability.extra.money
             end
         end
     end
     card.joker_display_values.money = face_cards
+    card.joker_display_values.localized_text = localize("k_face_cards")
 end
 }
 
@@ -1238,34 +1289,43 @@ end
 }
 
 jd_def["j_poke_growlithe"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.MULT },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
     local mult = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
-        mult = card.ability.extra.mult
+      mult = card.ability.extra.mult
     end
     card.joker_display_values.mult = mult
     card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
-end
-
+  end
 }
 
 jd_def["j_poke_arcanine"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X", colour = G.C.WHITE  },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", colour = G.C.WHITE }
-            },
-        },
+  text = {
+    {
+      border_nodes = {
+        { text = "X", colour = G.C.WHITE  },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", colour = G.C.WHITE }
+      },
     },
-text_config = { colour = G.C.MULT },
-calc_function = function(card)
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
     local Xmult = 1
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
@@ -1273,8 +1333,7 @@ calc_function = function(card)
     end
     card.joker_display_values.Xmult = Xmult
     card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
-end
-
+  end
 }
 
 --Poliwag
@@ -1914,35 +1973,85 @@ calc_function = function(card)
     end
         card.joker_display_values.status = status
         card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+end,
+retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+  if held_in_hand then return 0 end
+  if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+    if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+      return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+  end
 end
 }
 
 jd_def["j_poke_cloyster"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+  text = {
+    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+  },
+  extra = {
+    {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
+      { text = ")" },
     },
-    extra = {
-        {
-            { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-            { text = ")" },
-        },
-    },
-    calc_function = function(card)
-        local status
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
-            status = "Active!"
-        else
-            status = "Not Active!"
-        end
-            card.joker_display_values.status = status
-            card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  },
+  calc_function = function(card)
+      local status
+      local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+      if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+        status = "Active!"
+      else
+        status = "Not Active!"
+      end
+        card.joker_display_values.status = status
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+      if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
+        return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+      end
     end
-    }
+  end
+  }
 
--- Gastly 
--- Haunter 
+-- Gastly
+jd_def["j_poke_gastly"] = {
+	extra = {
+		{
+			{ text = "(" },
+			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ text = ")" },
+		},
+	},
+	calc_function = function(card)
+		card.joker_display_values.odds = localize({
+			type = "variable",
+			key = "jdis_odds",
+			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+		})
+	end,
+}
+
+-- Haunter
+jd_def["j_poke_haunter"] = {
+	extra = {
+		{
+			{ text = "(" },
+			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ text = ")" },
+		},
+	},
+	calc_function = function(card)
+		card.joker_display_values.odds = localize({
+			type = "variable",
+			key = "jdis_odds",
+			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+		})
+	end,
+}
+
 -- Gengar 
 -- Mega Gengar 
 
@@ -1992,43 +2101,55 @@ jd_def["j_poke_hypno"] = {
 }
 
 jd_def["j_poke_krabby"] = {
-    text = {
-            { text = "+", colour = G.C.CHIPS },
-            { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
-            },
-    calc_function = function(card)
-        local count = 0
-        local chips = card.ability.extra.chips
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-          for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-          end
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local chips = card.ability.extra.chips
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
-        card.joker_display_values.chips = count * chips
+      end
     end
+    card.joker_display_values.chips = count * chips
+    card.joker_display_values.localized_text = localize("k_face_cards")
+  end
 }
 
 jd_def["j_poke_kingler"] = {
-    text = {
-            { text = "+", colour = G.C.CHIPS },
-            { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
-            },
-    calc_function = function(card)
-        local count = 0
-        local chips = card.ability.extra.chips
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-          for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-          end
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS}
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local chips = card.ability.extra.chips
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
-        card.joker_display_values.chips = count * chips
+      end
     end
+    card.joker_display_values.chips = count * chips
+    card.joker_display_values.localized_text = localize("k_face_cards")
+  end
 }
 
 jd_def["j_poke_voltorb"] = {
@@ -2091,7 +2212,10 @@ jd_def["j_poke_electrode"] = {
                 { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" },
             },
         },
-    },
+        { text = " "},
+        { text = "$", colour = G.C.GOLD},
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+        },
     calc_function = function(card)
         local count = 0
         local pos = 0
@@ -2120,8 +2244,10 @@ jd_def["j_poke_electrode"] = {
             -- Set `x_mult` based on the condition
             if count + pos == #G.jokers.cards then
                 card.joker_display_values.x_mult = card.ability.extra.Xmult or 1
+                card.joker_display_values.money = card.ability.extra.money
             else
                 card.joker_display_values.x_mult = 1
+                card.joker_display_values.money = 0
             end
         else
             -- Handle cases where there are not enough jokers
@@ -2637,36 +2763,36 @@ end
 }
 
 jd_def["j_poke_tauros"] = {
-    text = {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "count",          colour = G.C.ORANGE },
-        { text = "x" },
-        { text = "Tauros", colour = G.C.ORANGE , scale = 0.3},
-        { text = ")" },
-    },
-    calc_function = function(card)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.name and joker_card.config.center.name == "tauros" or joker_card.config.center.name == "taurosh" then
-                    count = count + 1
-                end
+  text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "count", colour = G.C.ORANGE },
+    { text = "x" },
+    { text = "Herd", colour = G.C.ORANGE , scale = 0.3},
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    if G.jokers then
+        for _, joker_card in ipairs(G.jokers.cards) do
+            if joker_card.config.center.name and joker_card.config.center.name == "tauros" or joker_card.config.center.name == "taurosh" or joker_card.config.center.name == "miltank" then
+                count = count + 1
             end
         end
-        card.joker_display_values.count = count
-        card.joker_display_values.localized_basic = localize({type = "name_text", set = "Joker", key = "j_poke_tauros"})
-        card.joker_display_values.localized_baby = localize({type = "name_text", set = "Joker", key = "j_poke_taurosh"})
-    end,
-    mod_function = function(card, mod_joker)
-        return { x_mult = ((card.config.center.name and card.config.center.name == "tauros" or card.config.center.name == "taurosh") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
+    card.joker_display_values.count = count
+    card.joker_display_values.localized_basic = localize({type = "name_text", set = "Joker", key = "j_poke_tauros"})
+    card.joker_display_values.localized_baby = localize({type = "name_text", set = "Joker", key = "j_poke_taurosh"})
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = ((card.config.center.name and card.config.center.name == "tauros" or card.config.center.name == "taurosh" or card.config.center.name == "miltank") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
 }
 
 jd_def["j_poke_taurosh"] = {
     text = {
         { text = "+" ,
         colour = G.C.MULT},
-        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", 
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult",
         colour = G.C.MULT},
     },
 }
@@ -2880,29 +3006,36 @@ end
 }
 -- Aerodactyl
 jd_def["j_poke_aerodactyl"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    reminder_text = {
-        { ref_table = "card.joker_display_values", ref_value = "localized_text" }
-},
-    calc_function = function(card)
-        local Xmult = 1
-        local count = 0
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:get_id() == 14 then 
-                    count = count + 1
-                end
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+        for _, scoring_card in pairs(scoring_hand) do
+            if scoring_card:get_id() == 14 then 
+                count = count + 1
             end
         end
-        if count >= 1 then card.joker_display_values.Xmult = card.ability.extra.Xmult else card.joker_display_values.Xmult = Xmult end
+    end
+    if count >= 4 then
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod) * 2
+    elseif count < 4 and count >= 2 then
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod)
+    elseif count == 1 then 
+      card.joker_display_values.Xmult = card.ability.extra.Xmult_original
+    else
+      card.joker_display_values.Xmult = 1
+    end
     card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks")..")"
     end
 }
@@ -2999,6 +3132,7 @@ jd_def["j_poke_dragonite"] = {
     },
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
         local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if held_in_hand then return 0 end
         if #scoring_hand == 1 and #JokerDisplay.current_hand == 1 then
             return joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)
         end

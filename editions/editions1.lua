@@ -11,7 +11,7 @@ local shiny = ({
     -- Stop extra layer from being rendered below the card.
     -- For edition that modify shape or transparency of the card.
     disable_base_shader = false,
-    shader = "booster",
+    shader = "shiny",
     discovered = true,
     unlocked = true,
     config = {},
@@ -75,7 +75,7 @@ local shiny = ({
         card.config.center.atlas = "poke_Regionals"
       end
       if card.config.center.atlas == "poke_jirachi" then
-        card.config.center.atlas = "poke_jirachi_shiny"
+        card.config.center.atlas = "poke_shinyjirachi"
         card:set_sprites(card.config.center)
         card.config.center.atlas = "poke_jirachi"
       end

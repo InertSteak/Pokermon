@@ -83,7 +83,9 @@ family = {
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
     {"sneasel", "weavile"},
+    {"teddiursa", "ursaring", "ursaluna"},
     {"remoraid", "octillery"},
+    {"aipom", "ambipom"},
     {"togepi", "togetic", "togekiss"},
     {"yanma", "yanmega"},
     {"natu", "xatu"},
@@ -94,6 +96,7 @@ family = {
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
     {"sunkern", "sunflora"},
+    {"houndour", "houndoom"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
@@ -814,9 +817,6 @@ end
 
 type_tooltip = function(self, info_queue, center)
   local percent
-  if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
-    info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
-  end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
@@ -860,6 +860,21 @@ type_tooltip = function(self, info_queue, center)
   end
 end
 
+poke_set_type_badge = function(self, card, badges)
+  local ptype = get_type(card)
+  if ptype then
+    local lower_ptype = string.lower(ptype)
+    local text_colour = G.C.WHITE
+    if ptype == "Lightning" then
+      text_colour = G.C.BLACK
+    end
+    if type_sticker_applied(card) then
+      ptype = ptype.." "..localize("poke_tera")
+    end
+    badges[#badges+1] = create_badge(ptype, G.ARGS.LOC_COLOURS[lower_ptype], text_colour, 1.2 )
+  end
+end
+
 apply_type_sticker = function(card, sticker_type)
   local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
   local apply_type = nil
@@ -886,6 +901,7 @@ apply_type_sticker = function(card, sticker_type)
      and not G.P_CENTERS[card.config.center_key].taken_ownership then
     if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
       local lv = G.P_CENTERS[card.config.center_key].loc_vars
+      local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
         unlocked = true, 
         discovered = true,
@@ -893,13 +909,22 @@ apply_type_sticker = function(card, sticker_type)
           type_tooltip(self, info_queue, center)
           return lv(self, info_queue, center)
         end,
+        set_badges = function(self, card, badges)
+          if badge then badge(self, card, badges) end
+          poke_set_type_badge(self, card, badges)          
+        end,
       }, true)
     else
+      local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
         unlocked = true, 
         discovered = true,
         loc_vars = function(self, info_queue, center)
           type_tooltip(self, info_queue, center)
+        end,
+        set_badges = function(self, card, badges)
+          if badge then badge(self, card, badges) end
+          poke_set_type_badge(self, card, badges)          
         end,
       }, true)
     end
