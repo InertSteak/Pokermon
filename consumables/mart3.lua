@@ -210,8 +210,8 @@ local hardstone = {
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
-  pos = { x = 0, y = 0 },
-  atlas = "placeholder_item",
+  pos = { x = 5, y = 5 },
+  atlas = "Mart",
   cost = 4,
   evo_item = true,
   unlocked = true,

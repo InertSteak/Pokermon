@@ -371,6 +371,7 @@ local leftovers = {
     return {vars = {self.config.extra.joker_highlighted, self.config.extra.money_mod}}
   end,
   pos = { x = 7, y = 4 },
+  soul_pos = { x = 6, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -399,11 +400,13 @@ local leftovers = {
       func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
     end}))
     card.ability.extra.usable = false
+    self.soul_pos = nil
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      self.soul_pos = { x = 6, y = 5 }
     end
   end,
   keep_on_use = function(self, card)
@@ -435,6 +438,7 @@ local leek = {
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds}}
   end,
   pos = { x = 8, y = 4 },
+  soul_pos = { x = 7, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -471,6 +475,7 @@ local leek = {
       return true end }))
     end
     card.ability.extra.usable = false
+    self.soul_pos = nil
   end,
   calculate = function(self, card, context)
     if context.end_of_round and card.edition then
@@ -479,6 +484,7 @@ local leek = {
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      self.soul_pos = { x = 7, y = 5 }
     end
   end,
   keep_on_use = function(self, card)
@@ -500,6 +506,7 @@ local thickclub = {
     return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,
   pos = { x = 9, y = 4 },
+  soul_pos = { x = 8, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -526,11 +533,13 @@ local thickclub = {
     delay(0.5)
     poke_unhighlight_cards()
     card.ability.extra.usable = false
+    self.soul_pos = nil
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      self.soul_pos = { x = 8, y = 5 }
     end
   end,
   keep_on_use = function(self, card)
