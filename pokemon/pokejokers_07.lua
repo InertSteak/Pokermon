@@ -1172,10 +1172,10 @@ local steelix={
 local snubbull = {
   name = "snubbull",
   pos = {x = 7, y = 5},
-  config = {extra = {Xmult = 2, Xmult2 = 2.5, rounds = 5,}},
+  config = {extra = {Xmult = 1.75, rounds = 4,}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2, card.ability.extra.rounds}}
+    return {vars = {card.ability.extra.Xmult, card.ability.extra.rounds}}
   end,
   rarity = 1,
   cost = 5,
@@ -1193,12 +1193,7 @@ local snubbull = {
         end
       end
       if context.other_card == first_face then
-        local Xmult = nil
-        if context.other_card:get_id() == 12 then
-          Xmult = card.ability.extra.Xmult2
-        else
-          Xmult = card.ability.extra.Xmult
-        end
+        local Xmult = card.ability.extra.Xmult
         return {
             x_mult = Xmult,
             colour = G.C.RED,
@@ -1212,7 +1207,7 @@ local snubbull = {
 local granbull = {
   name = "granbull",
   pos = {x = 8, y = 5},
-  config = {extra = {Xmult = 2.5, Xmult2 = 4}},
+  config = {extra = {Xmult = 2.25, Xmult2 = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2}}
