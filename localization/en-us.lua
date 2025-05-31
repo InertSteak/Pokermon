@@ -122,10 +122,9 @@ return {
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
-                  
-                    "Adds {C:attention}2 Gold{} cards",
-                    "with the same rank as",
-                    "{C:attention}1{} selected card to deck",
+                    "Destroys {C:attention}1{} selected card,",
+                    "adds {C:attention}2 Gold{} cards with",
+                    "the same rank to deck",
                     "and draws {C:attention}1{} to hand",
                     "{C:attention}Evolution Card{}",
                 },
@@ -181,9 +180,7 @@ return {
                 text = {
                     "{C:attention}Reusable{}",
                     "Permanently adds {C:chips}+#2#{} Chips",
-                    "to {C:attention}#1#{} selected card and",
-                    "enhances it to {C:attention}Stone{} if it",
-                    "already has added Chips",
+                    "to {C:attention}#1#{} selected card",
                     "{C:inactive}(Useable once per round)",
                 }
             },
@@ -278,8 +275,8 @@ return {
             c_poke_duskstone = {
                 name = "Dusk Stone",
                 text = {
-                    "Earn {C:money}$#1#{} for each Joker you have",
-                    "{C:attention}Drain {C:money}$1{} from each Joker you have",
+                    "Earn {C:money}$#1#{} for each {C:attention}Drainable{} Joker",
+                    "you have and {C:attention}Drain {C:money}$1{} from them",
                     "No {C:attention}Drain{} after {C:attention}#2#{} Rounds {C:inactive}(Round #3#)",
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
@@ -293,6 +290,14 @@ return {
                     "{C:inactive}#4#{}",
                     "{C:attention}Evolution Card{}",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive}/$40 Max)",
+                }
+            },
+            c_poke_hardstone = {
+                name = "Hard Stone",
+                text = {
+                    "Enhances {C:attention}1{} selected card into a",
+                    "{C:attention}Stone Card{} with {C:chips}+#2#{} extra Chips",
+                    "for each {X:earth,C:white}Earth{} Joker you have"
                 }
             },
         },
