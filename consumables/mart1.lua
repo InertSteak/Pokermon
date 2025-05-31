@@ -136,6 +136,7 @@ local grass_energy = {
   key = "grass_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 0, y = 0 },
@@ -165,6 +166,7 @@ local fire_energy = {
   key = "fire_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 1, y = 0 },
@@ -194,6 +196,7 @@ local water_energy = {
   key = "water_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 2, y = 0 },
@@ -223,6 +226,7 @@ local lightning_energy = {
   key = "lightning_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 3, y = 0 },
@@ -252,6 +256,7 @@ local psychic_energy = {
   key = "psychic_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 4, y = 0 },
@@ -281,6 +286,7 @@ local fighting_energy = {
   key = "fighting_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 5, y = 0 },
@@ -310,6 +316,7 @@ local colorless_energy = {
   key = "colorless_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 6, y = 0 },
@@ -339,6 +346,7 @@ local darkness_energy = {
   key = "darkness_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 7, y = 0 },
@@ -368,6 +376,7 @@ local metal_energy = {
   key = "metal_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 8, y = 0 },
@@ -397,6 +406,7 @@ local fairy_energy = {
   key = "fairy_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 9, y = 0 },
@@ -426,6 +436,7 @@ local dragon_energy = {
   key = "dragon_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 0, y = 1 },
@@ -455,6 +466,7 @@ local earth_energy = {
   key = "earth_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
   end,
   pos = { x = 1, y = 1 },

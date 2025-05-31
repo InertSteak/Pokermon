@@ -305,91 +305,82 @@ return {
             c_poke_grass_energy = {
                 name = "Grass Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Grass{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:grass,C:white}Grass{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_fire_energy = {
                 name = "Fire Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Fire{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:fire,C:white}Fire{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_water_energy = {
                 name = "Water Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Water{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:water,C:white}Water{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_lightning_energy = {
                 name = "Lightning Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Lightning{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:lightning,C:black}Lightning{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_psychic_energy = {
                 name = "Psychic Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Psychic{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:psychic,C:white}Psychic{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_fighting_energy = {
                 name = "Fighting Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Fighting{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:fighting,C:white}Fighting{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_colorless_energy = {
                 name = "Colorless Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "of leftmost or selected Joker permanently if able",
-                    "Half as effective with ",
-                    "non-{C:attention}Colorless{} Jokers",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:colorless,C:white}Colorless{} Joker if able",
+                    "Half as effective with",
+                    "non-{X:colorless,C:white}Colorless{} Jokers",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)"
                 },
             },
             c_poke_darkness_energy = {
                 name = "Darkness Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Dark{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:dark,C:white}Dark{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_metal_energy = {
                 name = "Metal Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Metal{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:Metal,C:white}Metal{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_fairy_energy = {
                 name = "Fairy Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Fairy{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:fairy,C:white}Fairy{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
@@ -397,18 +388,16 @@ return {
             c_poke_dragon_energy = {
                 name = "Dragon Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Dragon{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:dragon,C:white}Dragon{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
             c_poke_earth_energy = {
                 name = "Earth Energy",
                 text = {
-                    "Increases most {C:attention}scoring{} and {C:money}${} number",
-                    "values of leftmost or selected {C:attention}Earth{} type",
-                    "Joker permanently if able",
+                    "{C:pink}Energize{} leftmost or selected",
+                    "{X:earth,C:white}Earth{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
@@ -4168,6 +4157,14 @@ return {
                     "number of {C:attention}#1#s{}",
                     "in poker hand",
                     "{C:inactive}(Effects are {C:attention}cumulative{C:inactive})"
+                }
+            },
+            energize = {
+                name = "Energize",
+                text = {
+                  "Permanently increases the",
+                  "{C:mult}Mult{}, {C:chips}Chips{}, {C:money}${} and {X:mult,C:white}X{} Mult",
+                  "values of a Joker"
                 }
             },
             eitem = {
