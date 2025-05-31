@@ -75,7 +75,7 @@ local shiny = ({
         card.config.center.atlas = "poke_Regionals"
       end
       if card.config.center.atlas == "poke_jirachi" then
-        card.config.center.atlas = "poke_jirachi_shiny"
+        card.config.center.atlas = "poke_shinyjirachi"
         card:set_sprites(card.config.center)
         card.config.center.atlas = "poke_jirachi"
       end
