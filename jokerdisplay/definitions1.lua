@@ -2016,8 +2016,42 @@ jd_def["j_poke_cloyster"] = {
   end
   }
 
--- Gastly 
--- Haunter 
+-- Gastly
+jd_def["j_poke_gastly"] = {
+	extra = {
+		{
+			{ text = "(" },
+			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ text = ")" },
+		},
+	},
+	calc_function = function(card)
+		card.joker_display_values.odds = localize({
+			type = "variable",
+			key = "jdis_odds",
+			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+		})
+	end,
+}
+
+-- Haunter
+jd_def["j_poke_haunter"] = {
+	extra = {
+		{
+			{ text = "(" },
+			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ text = ")" },
+		},
+	},
+	calc_function = function(card)
+		card.joker_display_values.odds = localize({
+			type = "variable",
+			key = "jdis_odds",
+			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+		})
+	end,
+}
+
 -- Gengar 
 -- Mega Gengar 
 

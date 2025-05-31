@@ -1130,7 +1130,21 @@ jd_def["j_poke_sneasel"] = {
 }
 
 --	Teddiursa
+jd_def["j_poke_teddiursa"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  }
+}
+
 --	Ursaring
+jd_def["j_poke_ursaring"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  }
+}
+
 --	Slugma
 --	Magcargo
 --	Swinub

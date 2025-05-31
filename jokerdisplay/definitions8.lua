@@ -198,7 +198,15 @@ jd_def["j_poke_dragapult"] = {
 --	Calyrex
 --	Wyrdeer
 --	Kleavor
+
 --	Ursaluna
+jd_def["j_poke_ursaluna"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  }
+}
+
 --	Basculegion
 --	Sneasler
 --	Overqwil
