@@ -136,7 +136,7 @@ local grass_energy = {
   key = "grass_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "Mart",
@@ -165,7 +165,7 @@ local fire_energy = {
   key = "fire_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 1, y = 0 },
   atlas = "Mart",
@@ -194,7 +194,7 @@ local water_energy = {
   key = "water_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 2, y = 0 },
   atlas = "Mart",
@@ -223,7 +223,7 @@ local lightning_energy = {
   key = "lightning_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 3, y = 0 },
   atlas = "Mart",
@@ -252,7 +252,7 @@ local psychic_energy = {
   key = "psychic_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 4, y = 0 },
   atlas = "Mart",
@@ -281,7 +281,7 @@ local fighting_energy = {
   key = "fighting_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 5, y = 0 },
   atlas = "Mart",
@@ -310,7 +310,7 @@ local colorless_energy = {
   key = "colorless_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 6, y = 0 },
   atlas = "Mart",
@@ -339,7 +339,7 @@ local darkness_energy = {
   key = "darkness_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 7, y = 0 },
   atlas = "Mart",
@@ -368,7 +368,7 @@ local metal_energy = {
   key = "metal_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 8, y = 0 },
   atlas = "Mart",
@@ -397,7 +397,7 @@ local fairy_energy = {
   key = "fairy_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 9, y = 0 },
   atlas = "Mart",
@@ -426,7 +426,7 @@ local dragon_energy = {
   key = "dragon_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 1 },
   atlas = "Mart",
@@ -455,7 +455,7 @@ local earth_energy = {
   key = "earth_energy",
   set = "Energy",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 1, y = 1 },
   atlas = "Mart",
@@ -484,7 +484,7 @@ local transformation = {
   key = "transformation",
   set = "Spectral",
   loc_vars = function(self, info_queue, center)
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 2, y = 1 },
   atlas = "Mart",
