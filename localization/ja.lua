@@ -197,7 +197,6 @@ return {
 					"{br:2}ERROR - CONTACT STEAK",
                     "選択したか一番左ジョーカーを",
                     "{C:pink}エナジャイズ{} する",
-                    "{C:pink}エナジャイズ{} する",
                 },
             },
             c_poke_metalcoat = {
