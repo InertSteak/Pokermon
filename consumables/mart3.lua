@@ -208,6 +208,7 @@ local hardstone = {
   config = {max_highlighted = 1, max_chips = 10},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
   pos = { x = 5, y = 5 },
@@ -216,6 +217,15 @@ local hardstone = {
   evo_item = true,
   unlocked = true,
   discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
   use = function(self, card, area, copier)
     set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -230,6 +240,9 @@ local hardstone = {
       juice_flip(card, true)
       delay(0.5)
       poke_unhighlight_cards()
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)

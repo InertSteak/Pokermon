@@ -49,7 +49,7 @@ family = {
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
-    {"scyther", "scizor"},
+    {"scyther", "scizor", "kleavor"},
     {"mimejr", "mrmime"},
     {"tauros", "taurosh"},
     {"kangaskhan", "mega_kangaskhan"},

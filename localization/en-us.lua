@@ -315,6 +315,8 @@ return {
             c_poke_hardstone = {
                 name = "Hard Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}1{} selected card into a",
                     "{C:attention}Stone Card{} with {C:chips}+#2#{} extra Chips",
                     "for each {X:earth,C:white}Earth{} Joker you have"
@@ -1617,10 +1619,10 @@ return {
                 text = {
                     "When Blind is selected, destroy Joker",
                     "to the right and gain {C:mult}+#2#{} Mult",
-                    "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
+                    "Gain {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
                     "if it was {C:red}Rare{} or higher",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
+                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker or a {C:attention,s:0.8}Hard Stone{C:inactive,s:0.8})",
                 } 
             },
             j_poke_jynx = {
@@ -2417,7 +2419,7 @@ return {
                 text = {
                     "When Blind is selected, destroy Joker",
                     "to the right and gain {C:mult}+#4#{} Mult",
-                    "Gain {C:attention}Foil{}, {C:attention}Holographic{}, or {C:attention}Polychrome{}",
+                    "Gain {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
                     "if it was {C:red}Rare{} or higher",
                     "Those editions {C:attention}stack{} on this Joker",
                     "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
@@ -3597,6 +3599,17 @@ return {
                     "{C:attention}Halve{} Chips after hand played",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
                 }
+            },
+            j_poke_kleavor = {
+                name = 'Kleavor',      
+                text = {
+                    "When Blind is selected, destroy",
+                    "Joker to the right and gain {C:mult}+#2#{} Mult",
+                    "Add a {C:attention}Stone{} card to deck with",
+                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{} if",
+                    "it was {C:green}Uncommon{} or higher",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                } 
             },
             j_poke_ursaluna = {
               name = "Ursaluna",

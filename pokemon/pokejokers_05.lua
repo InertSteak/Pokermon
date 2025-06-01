@@ -61,10 +61,12 @@ local scyther={
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_hardstone
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
+  item_req = "hardstone",
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
@@ -103,7 +105,12 @@ local scyther={
         }
       end
     end
-    return type_evo(self, card, context, "j_poke_scizor", "metal")
+    local evo = nil
+    evo = type_evo(self, card, context, "j_poke_scizor", "metal")
+    if not evo then
+      evo = item_evo(self, card, context, "j_poke_kleavor")
+    end
+    if evo then return evo end
   end
 }
 local jynx={
