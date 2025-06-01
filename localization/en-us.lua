@@ -57,9 +57,9 @@ return {
             b_poke_luminousdeck = {
                 name = "Luminous Deck",
                 text = {
-                    "All Jokers are created",
-                    "with random {C:pink}Type{} stickers",
-                    "and have {C:attention}+1{} {C:pink}Energy{}"
+                    "All Jokers are",
+                    "created {C:pink}Energized{} and",
+                    "with random {C:pink}Type{} stickers"
                 }
             },
         },
@@ -92,73 +92,81 @@ return {
             c_poke_moonstone = {
                 name = "Moon Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "{C:green}#2# in #3#{} chance to",
                     "upgrade level of",
                     "selected {C:attention}poker hand{}",
-                    "{C:attention}Evolution Card{}",
                     "{C:inactive}(Hand: {C:attention}#1#{Cinactive}){}"
                 },
             },
             c_poke_sunstone = {
                 name = "Sun Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}#1#{} selected cards",
                     "to {C:attention}Wild Cards{} and",
                     "{C:attention}randomizes{} their ranks",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_waterstone = {
                 name = "Water Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}#1#{} selected card",
                     "into a {C:attention}Bonus{} card",
                     "If already a {C:attention}Bonus{} card",
                     "{C:attention}Doubles{} its total chips",
                     "{C:inactive}(Max of {C:chips}+#2#{C:inactive} Chips)",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_thunderstone = {
                 name = "Thunder Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Destroys {C:attention}1{} selected card,",
                     "adds {C:attention}2 Gold{} cards with",
                     "the same rank to deck",
                     "and draws {C:attention}1{} to hand",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_firestone = {
                 name = "Fire Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}#1#{} selected cards to {C:attention}Mult Cards{}",
                     "then destroys {C:attention}1{} at random",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_leafstone = {
                 name = "Leaf Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "{C:green}#1# in #2#{} chance for",
                     "each card in hand to",
                     "be enhanced to a {C:attention}Lucky Card{}",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_linkcable = {
                 name = "Linking Cord",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Select {C:attention}#1#{} cards,",
                     "{C:attention}Increase{} the rank of the {C:attention}left{} card",
                     "{C:attention}Decrease{} the rank of the {C:attention}right{} card",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_leftovers = {
                 name = "Leftovers",
                 text = {
                     "{C:attention}Reusable{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Adds {C:money}$#2#{} of sell value to",
                     "leftmost or selected Joker",
                     "{C:inactive}(Useable once per round)",
@@ -168,6 +176,7 @@ return {
                 name = "Leek",
                 text = {
                     "{C:attention}Reusable{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "{C:green}#1# in #2#{} chance to add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
                     "{C:dark_edition}Polychrome{} to self",
@@ -179,6 +188,7 @@ return {
                 name = "Thick Club",
                 text = {
                     "{C:attention}Reusable{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Permanently adds {C:chips}+#2#{} Chips",
                     "to {C:attention}#1#{} selected card",
                     "{C:inactive}(Useable once per round)",
@@ -187,71 +197,78 @@ return {
             c_poke_teraorb = {
                 name = "Tera Orb",
                 text = {
-                    "Gives {C:attention}+1{} {C:pink}Energy{}",
-                    "to leftmost or selected Joker{}",
-                    "{C:attention}Type Changer{}"
+                    "{C:attention}Type Changer{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:pink}Energize{} leftmost or selected Joker{}",
                 },
             },
             c_poke_metalcoat = {
                 name = "Metal Coat",
                 text = {
+                    "{C:attention}Type Changer{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Creates a {C:attention}Steel{} copy of",
                     "{C:attention}1{} selected card",
-                    "{C:attention}Type Changer{}"
                 },
             },
             c_poke_dragonscale = {
                 name = "Dragon Scale",
                 text = {
+                    "{C:attention}Type Changer{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Creates up to {C:attention}3{} random",
                     "{C:item}Item{} or {C:pink}Energy{} cards",
-                    "{C:attention}Type Changer{}",
                     "{C:inactive}(Must have room){}"
                 },
             },
             c_poke_kingsrock = {
                 name = "King's Rock",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Turns {C:attention}#1#{} selected",
                     "card into a {C:attention}King{}",
-                    "{C:attention}Evolution Card{}",
                 },
             },
             c_poke_upgrade = {
                 name = "Upgrade",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Gives {C:attention}#1#{} selected cards",
                     "a random {C:attention}non-Stone Enhancement{}",
-                    "{C:attention}Evolution Card{}",
                 }
             },
             c_poke_dubious_disc = {
                 name = "Dubious Disc",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Randomizes or removes {C:attention}enhancements{}",
                     "of all cards held in hand",
-                    "{C:attention}Evolution Card{}",
                     "{C:inactive}(Includes cards without enhancements){}"
                 }
             },
             c_poke_icestone = {
                 name = "Ice Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Enhances {C:attention}#1#{} selected cards",
                     "to {C:attention}Glass Cards{}",
                     "{C:green}#2# in #3#{} chance for each",
                     "selected card to {C:attention}shatter{}",
-                    "{C:attention}Evolution Card{}",
                 }
             },
             c_poke_shinystone = {
                 name = "Shiny Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
                     "or {C:dark_edition}Polychrome{} effect to",
                     "{C:attention}1{} selected card in hand and",
                     "remove card {C:attention}Enhancement{}",
-                    "{C:attention}Evolution Card{}",
                 }
             },
             c_poke_twisted_spoon = {
@@ -266,29 +283,32 @@ return {
             c_poke_prismscale = {
                 name = "Prism Scale",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Converts {C:attention}#2#{} random {C:attention}held{}",
                     "cards to be the {C:attention}suit{} of",
                     "{C:attention}#1#{} selected card",
-                    "{C:attention}Evolution Card{}"
                 }
             },
             c_poke_duskstone = {
                 name = "Dusk Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Earn {C:money}$#1#{} for each {C:attention}Drainable{} Joker",
                     "you have and {C:attention}Drain {C:money}$1{} from them",
                     "No {C:attention}Drain{} after {C:attention}#2#{} Rounds {C:inactive}(Round #3#)",
-                    "{C:attention}Evolution Card{}",
                     "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
                 }
             },
             c_poke_dawnstone = {
                 name = "Dawn Stone",
                 text = {
+                    "{C:attention}Evolution Card{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Earn {C:money}${} equal to {c:attention}twice{}",
                     "the {C:mult}Mult{} value of {C:attention}#1#{}",
                     "{C:inactive}#4#{}",
-                    "{C:attention}Evolution Card{}",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive}/$40 Max)",
                 }
             },
@@ -1878,8 +1898,8 @@ return {
                 name = 'Mewtwo',
                 text = {
                     "At end of shop, create a",
-                    "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of",
-                    "leftmost {C:attention}Joker{} with {C:attention}+1{} {C:pink}Energy{}",
+                    "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of leftmost",
+                    "{C:attention}Joker{} and {C:pink}Energize{} the {C:attention}duplicate{}",
                     "then destroy leftmost {C:attention}Joker{}",
                     "{br:3}ERROR - CONTACT STEAK",
                     "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white} X#1# {} Mult",
@@ -1895,8 +1915,8 @@ return {
             j_poke_mega_mewtwo_y = {
                 name = "Mega Mewtwo Y",
                 text = {
-                    "Gives {C:attention}+2{} {C:pink}Energy{} to leftmost",
-                    "Joker at end of shop",
+                    "{C:pink}Energize{} leftmost joker {C:attention}twice{}",
+                    "at end of shop",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:pink}+1{} Energy Limit when",
                     "{C:attention}Boss Blind{} is defeated"
@@ -2935,7 +2955,7 @@ return {
                 name = 'Jirachi',
                 text = {
                     "Copies ability of {C:attention}Joker{} to the right",
-                    "as if it had {C:attention}#1#{} extra {C:pink}Energy",
+                    "as if it was {C:pink}Energized{} an extra time",
                 }
             },
             j_poke_jirachi_fixer = {
@@ -3827,7 +3847,7 @@ return {
                 text = {
                   "Hatches into a {C:attention}Basic{} or",
                   "{C:attention}Baby{} Joker after {C:attention}#1#{} rounds",
-                  "with {C:pink}+1{} Energy if applicable"
+                  "that is {C:pink}Energized{} if applicable"
                 }
             },
             j_poke_billion_lions = {
@@ -3912,7 +3932,7 @@ return {
                 name = "Transformation",
                 text = {
                     "Evolves leftmost or selected Pokemon to",
-                    "the highest {C:attention}stage{} and gives {}+1{} {C:pink}Energy{}", 
+                    "the highest {C:attention}stage{} and {C:pink}Energizes{} it", 
                 },
             },
             c_poke_megastone = {

@@ -1391,6 +1391,7 @@ local mewtwo={
   config = {extra = {Xmult_mod = 1.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     if not center.edition or (center.edition and not center.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
@@ -1501,6 +1502,7 @@ local mega_mewtwo_y = {
   config = {extra = {Xmult_mod = 3, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_mega",

@@ -555,6 +555,7 @@ local teraorb = {
   key = "teraorb",
   set = "Item",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Random Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
   end,
   pos = { x = 9, y = 2 },

@@ -264,6 +264,7 @@ local mystery_egg = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_egg_tip'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1,
