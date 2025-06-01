@@ -400,13 +400,13 @@ local leftovers = {
       func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
     end}))
     card.ability.extra.usable = false
-    self.soul_pos = nil
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
-      self.soul_pos = { x = 6, y = 5 }
+      card.children.floating_sprite:set_sprite_pos({ x = 6, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
@@ -475,7 +475,7 @@ local leek = {
       return true end }))
     end
     card.ability.extra.usable = false
-    self.soul_pos = nil
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and card.edition then
@@ -484,7 +484,7 @@ local leek = {
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
-      self.soul_pos = { x = 7, y = 5 }
+      card.children.floating_sprite:set_sprite_pos({ x = 7, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
@@ -533,13 +533,13 @@ local thickclub = {
     delay(0.5)
     poke_unhighlight_cards()
     card.ability.extra.usable = false
-    self.soul_pos = nil
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
-      self.soul_pos = { x = 8, y = 5 }
+      card.children.floating_sprite:set_sprite_pos({ x = 8, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
