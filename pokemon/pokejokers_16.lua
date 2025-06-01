@@ -73,6 +73,55 @@ local mantyke={
 -- Snover 459
 -- Abomasnow 460
 -- Weavile 461
+local weavile = {
+  name = "weavile",
+  pos = {x = 4, y = 5},
+  config = {extra = {Xmult_mod = 1, Xmult = 1, Xmult2 = 1, money = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'),
+                    card.ability.extra.money}}
+  end,
+  rarity = 'poke_safari',
+  cost = 10,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
+      context.full_hand[1].to_be_removed_by = card
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      ease_poke_dollars(card, "weavile", card.ability.extra.money)
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult ~= 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      if G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
+        card.ability.extra.Xmult = card.ability.extra.Xmult2
+        return {
+          message = localize('k_reset'),
+          colour = G.C.RED
+        }
+      end
+    end
+  end
+}
 -- Magnezone 462
 local magnezone={
   name = "magnezone", 
@@ -375,6 +424,45 @@ local togekiss={
   end,
 }
 -- Yanmega 469
+local yanmega={
+  name = "yanmega",
+  pos = {x = 12, y = 5},
+  config = {extra = {mult = 6,chips = 12, odds = 3, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
+        return {
+          mult = card.ability.extra.mult,
+          chips = card.ability.extra.chips,
+          card = card
+        }
+      end
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
+        if pseudorandom('yanmega') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          return {
+            message = localize('k_again_ex'),
+            repetitions = card.ability.extra.retriggers,
+            card = card
+          }
+        end
+      end
+    end
+  end,
+}
 -- Leafeon 470
 local leafeon={
   name = "leafeon", 
@@ -436,7 +524,105 @@ local glaceon={
   end,
 }
 -- Gliscor 472
+local gliscor = {
+  name = "gliscor",
+  pos = {x = 1, y = 6},
+  config = {extra = {Xmult_multi = 0.25}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local played_Xmult = 1
+    if G.hand then
+      local suit_count = 0
+      for i=1, #G.hand.cards do
+        if (G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff) and not G.hand.cards[i].highlighted then
+          suit_count = suit_count + 1
+        end
+      end
+      played_Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+    end
+    return {vars = {card.ability.extra.Xmult_multi, localize(G.GAME.current_round.gligar_suit or "Clubs", 'suits_singular'), played_Xmult,
+                    colours = {G.C.SUITS[G.GAME.current_round.gligar_suit or "Clubs"]}}}
+  end,
+  rarity = 'poke_safari',
+  cost = 10,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
+      local suit_count = 0
+      for i=1, #G.hand.cards do
+        if G.hand.cards[i]:is_suit(G.GAME.current_round.gligar_suit) or G.hand.cards[i].debuff then
+          suit_count = suit_count + 1
+        end
+      end
+      if suit_count > 0 then
+        local Xmult = 1 + (card.ability.extra.Xmult_multi * suit_count)
+        return {
+          x_mult = Xmult,
+          card = card
+        }
+      end
+    end
+  end
+}
 -- Mamoswine 473
+local mamoswine={
+  name = "mamoswine",
+  pos = {x = 2, y = 6},
+  config = {extra = {mult = 15,money = 4,odds = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Earth",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      local earn = false
+      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+        if pseudorandom('mamoswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          earn = true
+        end
+      end
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          if earn then
+            return {
+              mult = card.ability.extra.mult * stoneglass,
+              dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+              card = card
+            }
+          else
+            return {
+              mult = card.ability.extra.mult * stoneglass,
+              card = card
+            }
+          end
+        end
+      elseif earn then
+        return {
+          dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Porygon-Z 474
 local porygonz={
   name = "porygonz", 
@@ -554,5 +740,5 @@ local froslass={
 -- Rotom 479
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, leafeon, glaceon, porygonz, probopass, froslass},
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, froslass},
 }

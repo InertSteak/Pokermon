@@ -58,13 +58,19 @@ local duskstone = {
   name = "duskstone",
   key = "duskstone",
   set = "Item",
-  config = {extra = {money = 4, max = 28, rounds = 3, round_on_add = 1}},
+  config = {extra = {money = 4, max = 30, rounds = 3, round_on_add = 1}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
     local card_info = center and center.ability.extra or self.config.extra
     local jokers = (G.jokers and G.jokers.cards) and #G.jokers.cards or 0
-    return {vars = {card_info.money, card_info.rounds, card_info.round_on_add + card_info.rounds, math.min(card_info.max, card_info.money * jokers), card_info.max,}}
+    local joker_count = 0
+    for i = 1, jokers do
+      if G.jokers.cards[i].sell_cost > 1 then
+        joker_count = joker_count + 1
+      end
+    end
+    return {vars = {card_info.money, card_info.rounds, card_info.round_on_add + card_info.rounds, math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
   atlas = "Mart",
@@ -77,12 +83,16 @@ local duskstone = {
   end,
   use = function(self, card, area, copier)
     set_spoon_item(card)
-    if not (G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds) then
-      for i = 1, #G.jokers.cards do
-        poke_drain(card, G.jokers.cards[i], 1, true)
+    local joker_count = 0
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i].sell_cost > 1 then
+        joker_count = joker_count + 1
+        if not (G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds) then
+          poke_drain(card, G.jokers.cards[i], 1, true)
+        end
       end
     end
-    local money = math.min(card.ability.extra.max, card.ability.extra.money * #G.jokers.cards)
+    local money = math.min(card.ability.extra.max, card.ability.extra.money * joker_count)
     ease_dollars(money)
     evo_item_use_total(self, card, area, copier)
   end,
@@ -191,6 +201,55 @@ local dawnstone = {
   end
 }
 
+local hardstone = {
+  name = "hardstone",
+  key = "hardstone",
+  set = "Item",
+  config = {max_highlighted = 1, max_chips = 10},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
+    return {vars = {self.config.max_highlighted, self.config.max_chips}}
+  end,
+  pos = { x = 5, y = 5 },
+  atlas = "Mart",
+  cost = 4,
+  evo_item = true,
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+      return true
+    end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      return true
+    end
+    return false
+  end,
+  use = function(self, card, area, copier)
+    set_spoon_item(card)
+    if G.hand.highlighted and #G.hand.highlighted == 1 then
+      local conv_card = G.hand.highlighted[1]
+      juice_flip(card)
+      conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
+      local bonus = self.config.max_chips * #find_pokemon_type("Earth")
+      if bonus > 0 then
+        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
+        conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
+      end
+      juice_flip(card, true)
+      delay(0.5)
+      poke_unhighlight_cards()
+      evo_item_use_total(self, card, area, copier)
+    else
+      highlighted_evo_item(self, card, area, copier)
+    end
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
 return {name = "Items 3",
-        list = {prismscale, dawnstone,duskstone}
+        list = {prismscale, dawnstone,duskstone, hardstone}
 }

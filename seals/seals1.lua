@@ -15,7 +15,6 @@ local pink_seal = {
 	calculate = function(self, card, context)
 		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and G.GAME.current_round.hands_played == 0 then
 			G.E_MANAGER:add_event(Event({
-				trigger = "after",
 				func = function()
 					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local energy_types = {}

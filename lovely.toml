@@ -26,7 +26,7 @@ target = "functions/common_events.lua"
 pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
 position = "after"
 payload = '''
-if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
+if v.set == 'Joker' and not v.stage and pokermon_config and (pokermon_config.pokemon_only or pokermon_config.pokemon_master) then add = nil end
 if v.set == 'Joker' and v.stage and not (v.atlas == "poke_Pokedex1" or v.atlas == "poke_others") and pokermon_config and pokermon_config.gen_one then add = nil end
 if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
@@ -74,6 +74,7 @@ pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
 if self.config.shiny_on_add and not self.debuff then
+  self.config.shiny_on_add = false
   SMODS.change_booster_limit(1)
 end
 '''
@@ -176,45 +177,6 @@ position = "after"
 payload = '''
 if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
 if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card); energy_increase(card, type_sticker_applied(card)) end
-'''
-match_indent = true
-
-#Debuff functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "after"
-payload = '''
-if next(find_joker("tangrowth")) and self.ability.name == "Wild Card" then should_debuff = false end
-if next(find_joker("tentacruel")) and self:get_id() == 10 then should_debuff = false end
-'''
-match_indent = true
-
-#Gholdengo functionality
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if self.ability.perishable and self.ability.perish_tally <= 0 then 
-    if not self.debuff then
-        self.debuff = true
-        if self.area == G.jokers then self:remove_from_deck(true) end
-    end
-    return
-end
-'''
-position = "before"
-payload = '''
-if self.ability.name == "gholdengo" then return end
 '''
 match_indent = true
 
@@ -831,6 +793,48 @@ payload = '''
 if other.config.center.name == "smeargle" then
   other.ability.extra.copy_joker = nil
   other.ability.extra.copy_pos = 0
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "colour = part.control.V and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+position = "at"
+payload = "colour = part.control.V and args.vars.colours and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+match_indent = true
+
+
+# Gligar Delay Debuff shader until after trigger
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if self.debuff then"
+position = "at"
+payload = "if self.debuff and not self.delay_debuff_sprites then"
+match_indent = true
+
+#fix booster pack choices being deducted when a consumable in the jokers area is used
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if area == G.consumeables then"
+position = "at"
+payload = "if area == G.consumeables or area == G.jokers then"
+match_indent = true
+
+# Post Discard context
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+check_for_unlock({type = 'discard_custom', cards = cards})
+'''
+position = "after"
+payload = '''
+if not hook then
+  SMODS.calculate_context({post_discard = true})
 end
 '''
 match_indent = true

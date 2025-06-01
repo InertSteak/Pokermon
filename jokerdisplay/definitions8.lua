@@ -34,7 +34,11 @@ jd_def["j_poke_yamper"] = {
         { text = " " },
         { text = "+$", colour = G.C.GOLD },
         { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "add", colour = G.C.GOLD }
-
+    },
+    reminder_text = {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")" },
     },
 text_config = { colour = G.C.MULT },
 calc_function = function(card)
@@ -65,6 +69,11 @@ jd_def["j_poke_boltund"] = {
         { text = "+$", colour = G.C.GOLD },
         { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "add", colour = G.C.GOLD }
 
+    },
+    reminder_text = {
+      { text = "(" },
+      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+      { text = ")" },
     },
 text_config = { colour = G.C.WHITE },
 calc_function = function(card)
@@ -189,7 +198,15 @@ jd_def["j_poke_dragapult"] = {
 --	Calyrex
 --	Wyrdeer
 --	Kleavor
+
 --	Ursaluna
+jd_def["j_poke_ursaluna"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  }
+}
+
 --	Basculegion
 --	Sneasler
 --	Overqwil

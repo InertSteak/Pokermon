@@ -49,7 +49,7 @@ family = {
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
-    {"scyther", "scizor"},
+    {"scyther", "scizor", "kleavor"},
     {"mimejr", "mrmime"},
     {"tauros", "taurosh"},
     {"kangaskhan", "mega_kangaskhan"},
@@ -82,18 +82,28 @@ family = {
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
+    {"sneasel", "weavile"},
+    {"teddiursa", "ursaring", "ursaluna"},
     {"remoraid", "octillery"},
+    {"aipom", "ambipom"},
     {"togepi", "togetic", "togekiss"},
+    {"yanma", "yanmega"},
     {"natu", "xatu"},
+    {"azurill", "marill", "azumarill"},
     {"phanpy", "donphan"},
     {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
+    {"houndour", "houndoom"},
     {"misdreavus", "mismagius"},
     {"wynaut", "wobbuffet"},
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
+    {"gligar", "gliscor"},
+    {"swinub", "piloswine", "mamoswine"},
+    {"snubbull", "granbull"},
     {"mantyke", "mantine"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
@@ -291,6 +301,9 @@ poke_backend_evolve = function(card, to_key)
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  if type_sticker_applied(card) then
+    table.insert(names_to_keep, "ptype")
+  end
   local values_to_keep = copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
@@ -314,7 +327,7 @@ poke_backend_evolve = function(card, to_key)
   card.children.center.states.drag = card.states.drag
   card.children.center.states.collide.can = false
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
-  card:set_ability(new_card)
+  card:set_ability(new_card, true)
   card:set_cost()
 
   if type(card.ability.extra) == "table" then
@@ -400,7 +413,7 @@ level_evo = function(self, card, context, forced_key)
     end
     if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and not card.REMOVED end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end
@@ -571,6 +584,13 @@ get_previous_evo = function(card, full_key)
   local found = nil
   local prev = nil
   local max = nil
+  local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+  local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
   else
@@ -599,7 +619,7 @@ get_previous_evo = function(card, full_key)
     if found then break end
   end
   if full_key then
-    prev = 'j_poke_'..prev
+    prev = "j_"..prefix.."_"..prev 
   end
   return prev
 end
@@ -797,9 +817,6 @@ end
 
 type_tooltip = function(self, info_queue, center)
   local percent
-  if center.ability.extra and type(center.ability.extra) == "table" and center.ability.extra.ptype and not type_sticker_applied(center) then
-    info_queue[#info_queue+1] = {set = 'Other', key = center.ability.extra.ptype}
-  end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
@@ -843,6 +860,21 @@ type_tooltip = function(self, info_queue, center)
   end
 end
 
+poke_set_type_badge = function(self, card, badges)
+  local ptype = get_type(card)
+  if ptype then
+    local lower_ptype = string.lower(ptype)
+    local text_colour = G.C.WHITE
+    if ptype == "Lightning" then
+      text_colour = G.C.BLACK
+    end
+    if type_sticker_applied(card) then
+      ptype = ptype.." "..localize("poke_tera")
+    end
+    badges[#badges+1] = create_badge(ptype, G.ARGS.LOC_COLOURS[lower_ptype], text_colour, 1.2 )
+  end
+end
+
 apply_type_sticker = function(card, sticker_type)
   local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
   local apply_type = nil
@@ -869,6 +901,7 @@ apply_type_sticker = function(card, sticker_type)
      and not G.P_CENTERS[card.config.center_key].taken_ownership then
     if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
       local lv = G.P_CENTERS[card.config.center_key].loc_vars
+      local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
         unlocked = true, 
         discovered = true,
@@ -876,13 +909,22 @@ apply_type_sticker = function(card, sticker_type)
           type_tooltip(self, info_queue, center)
           return lv(self, info_queue, center)
         end,
+        set_badges = function(self, card, badges)
+          if badge then badge(self, card, badges) end
+          poke_set_type_badge(self, card, badges)          
+        end,
       }, true)
     else
+      local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
         unlocked = true, 
         discovered = true,
         loc_vars = function(self, info_queue, center)
           type_tooltip(self, info_queue, center)
+        end,
+        set_badges = function(self, card, badges)
+          if badge then badge(self, card, badges) end
+          poke_set_type_badge(self, card, badges)          
         end,
       }, true)
     end

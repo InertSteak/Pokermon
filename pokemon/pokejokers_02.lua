@@ -14,13 +14,13 @@ local nidoqueen={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.other_card.debuff and context.other_card:get_id() == 12 then
+    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == 12 then
       if not context.end_of_round and not context.before and not context.after then
         if context.other_card.debuff then
           return {
             message = localize("k_debuffed"),
             colour = G.C.RED,
-            card = context.other_card,
+            card = card,
           }
         else
           return {
@@ -213,9 +213,9 @@ local clefable={
 local vulpix={
   name = "vulpix", 
   pos = {x = 10, y = 2},
-  config = {extra = {odds = 4}},
+  config = {extra = {odds = 3}},
   rarity = 1, 
-  cost = 6, 
+  cost = 4, 
   item_req = "firestone",
   stage = "Basic", 
   atlas = "Pokedex1",
@@ -230,10 +230,23 @@ local vulpix={
     if context.individual and context.cardarea == G.play then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('vulpix') < G.GAME.probabilities.normal/card.ability.extra.odds) then
-          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local card_type = 'Tarot'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end},
+          }
         end
       end 
     end
@@ -252,7 +265,7 @@ local ninetales={
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
-  cost = 6, 
+  cost = 8, 
   stage = "One", 
   atlas = "Pokedex1", 
   ptype = "Fire",
@@ -261,27 +274,15 @@ local ninetales={
     if context.individual and context.cardarea == G.play then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if (context.other_card:get_id() == 9) and (not context.other_card.debuff) and (pseudorandom('ninetails') < G.GAME.probabilities.normal/card.ability.extra.odds) then
-          local _card = nil
-          local text = nil
-          local text_colour = nil
-          local set = nil
-          if pseudorandom('ninetails') > .50 then
-            set = 'Tarot'
-            text = 'k_plus_tarot'
-            text_colour = G.C.PURPLE
-          else
-            set = 'Planet'
-            text = 'k_plus_planet'
-            text_colour = G.C.SECONDARY_SET.Planet
-          end
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            extra = {focus = card, message = localize(text), colour = text_colour, func = function()
+            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  _card = create_card(set, G.consumeables, nil, nil, nil, nil, nil)
+                  local card_type = 'Tarot'
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0
@@ -289,7 +290,6 @@ local ninetales={
                 end
               }))
             end},
-            card = card
           }
         end
       end 
@@ -534,9 +534,10 @@ local gloom={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
   end,
-  rarity = 2, 
+  rarity = 2,
   cost = 6,
   item_req = {"leafstone", "sunstone"},
   evo_list = {leafstone = "j_poke_vileplume", sunstone = "j_poke_bellossom"},
@@ -738,7 +739,7 @@ local diglett={
   stage = "Basic", 
   ptype = "Earth",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then

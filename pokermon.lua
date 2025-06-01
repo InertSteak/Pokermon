@@ -46,13 +46,6 @@ if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   end
 end
 
-SMODS.current_mod.set_debuff = function(card)
-  if card and card.ability and card.ability.fainted == G.GAME.round then
-    return G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND
-  end
-  return false
-end
-
 --Load Custom Rarities
 SMODS.Rarity{
     key = "safari",
@@ -118,6 +111,14 @@ else
   sprite()
 end
 
+--Load Debuff logic
+local sprite, load_error = SMODS.load_file("functions/debufffunctions.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  sprite()
+end
+
 --Load Sprites file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then
@@ -170,6 +171,7 @@ for _, file in ipairs(pfiles) do
             item.config.extra = {ptype = item.ptype}
           end
         end
+        item.set_badges = poke_set_type_badge
         if item.item_req then
           if item.config and item.config.extra then
             item.config.extra.item_req = item.item_req
@@ -302,6 +304,7 @@ for _, file in ipairs(pseals) do
     
     for i, item in ipairs(curr_sticker.list) do
       item.discovered = not pokermon_config.pokemon_discovery
+      item.hide_badge = true
       SMODS.Sticker(item)
     end
   end
@@ -513,6 +516,45 @@ function Card:remove()
   return removed(self)
 end
 
+--Pokerhand jokers
+SMODS.PokerHandPart:take_ownership('_straight', 
+    { 
+      func = function(hand) 
+        local max = 5
+        if next(SMODS.find_card('j_four_fingers')) then max = 4 end
+        if (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) then max = 3 end
+        return get_straight(hand, max, not not next(SMODS.find_card('j_shortcut'))) 
+      end
+    },
+    true 
+)
+
+local prev_flush = get_flush
+function get_flush(hand)
+  local ret = prev_flush(hand)
+  if #ret <= 0 then
+    ret = {}
+    local aipom = (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) 
+    local suits = SMODS.Suit.obj_buffer
+    if #hand < (5 - (aipom and 2 or 0)) then return ret else
+      for j = 1, #suits do
+        local t = {}
+        local suit = suits[j]
+        local flush_count = 0
+        for i=1, #hand do
+          if hand[i]:is_suit(suit, nil, true) then flush_count = flush_count + 1;  t[#t+1] = hand[i] end 
+        end
+        if flush_count >= (5 - (aipom and 2 or 0)) then
+          table.insert(ret, t)
+          return ret
+        end
+      end
+      return {}
+    end
+  else
+    return ret
+  end
+end
 --Tutorial WIP
 --[[
 local gu = Game.update

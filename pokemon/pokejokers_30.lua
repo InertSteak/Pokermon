@@ -226,6 +226,63 @@ local dreepy_dart={
 -- Calyrex 898
 -- Wyrdeer 899
 -- Kleavor 900
+local kleavor={
+  name = "kleavor", 
+  pos = {x = 1, y = 8},
+  config = {extra = {mult = 0, mult_mod = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  end,
+  rarity = "poke_safari", 
+  cost = 8,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex8",
+  perishable_compat = false,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+          if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
+          local sliced_card = G.jokers.cards[my_pos+1]
+          sliced_card.getting_sliced = true
+          if (sliced_card.config.center.rarity ~= 1) then
+            local edition = poll_edition('aura', nil, true, true)
+            local _card = create_playing_card({
+                            front = pseudorandom_element(G.P_CARDS, pseudoseed('kleavor')), 
+                            center = G.P_CENTERS.m_stone}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+            _card:set_edition(edition, true)
+          end
+          
+          G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+          G.E_MANAGER:add_event(Event({func = function()
+              G.GAME.joker_buffer = 0
+              card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+              card:juice_up(0.8, 0.8)
+              sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+              play_sound('slice1', 0.96+math.random()*0.08)
+          return true end }))
+          card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, colour = G.C.RED, no_juice = true})
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+  end
+}
 return {name = "Pokemon Jokers 871-900", 
-        list = {dreepy, drakloak, dragapult, dreepy_dart},
+        list = {dreepy, drakloak, dragapult, dreepy_dart, kleavor},
 }

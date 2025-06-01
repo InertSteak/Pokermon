@@ -19,9 +19,17 @@ local jd_def = JokerDisplay.Definitions
 jd_def["j_poke_grubbin"] = {
     text = {
         { text = "+" },
-        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
     },
     text_config = { colour = G.C.MULT },
+    calc_function = function(card)
+        local count = #find_pokemon_type("Lightning")
+        if count >= 1 then
+          card.joker_display_values.mult = card.ability.extra.mult * 3
+        else
+          card.joker_display_values.mult = card.ability.extra.mult
+        end
+    end
 }
 
 --	Charjabug

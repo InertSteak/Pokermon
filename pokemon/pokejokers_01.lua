@@ -758,7 +758,7 @@ local pidgey={
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -798,7 +798,7 @@ local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
   config = {extra = {mult = 12, rounds = 4}},
-  blueprint_compat = false,
+  blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
@@ -1336,8 +1336,7 @@ local sandslash={
     if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
-        if v.shattered and card.ability.extra.glass_restored <= card.ability.extra.glass_limit then
+        if v.shattered and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
           card_to_copy = v
 
           G.E_MANAGER:add_event(Event({
@@ -1353,6 +1352,8 @@ local sandslash={
               end
           }))
           playing_card_joker_effects({copy})
+          
+          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
       end
       if card_to_copy then

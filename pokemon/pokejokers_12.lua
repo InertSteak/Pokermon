@@ -50,7 +50,7 @@ local feebas={
 local milotic={
   name = "milotic",
   pos = {x = 8, y = 9},
-  config = {extra = {mult = 1,mult_mod = 1,retriggers = 1, active = false}},
+  config = {extra = {retriggers = 1, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
@@ -64,23 +64,11 @@ local milotic={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local suit = nil
+      if context.before and poke_same_suit(context.scoring_hand) then
         card.ability.extra.active = true
-        for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i].ability.name ~= "Wild Card" and not context.scoring_hand[i].debuff then
-            suit = context.scoring_hand[i].base.suit
-            break
-          end
-        end
-        if suit then
-          for i = 2, #context.scoring_hand do
-            if not context.scoring_hand[i]:is_suit(suit) then
-              card.ability.extra.active = false
-              break
-            end
-          end
-        end
+      end
+      if context.after and card.ability.extra.active then
+        card.ability.extra.active = false
       end
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play and card.ability.extra.active then

@@ -20,38 +20,55 @@ local jd_def = JokerDisplay.Definitions
 --	Vivillon
 --	Litleo
 jd_def["j_poke_litleo"] = {
-    text = {
-        { text = "+", colour = G.C.CHIPS},
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
-    },
-calc_function = function(card)
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+  text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local chips = 0
-    local mult = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
     end
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
+  end
 }
 
 --	Pyroar
 jd_def["j_poke_pyroar"] = {
-    text = {
-        { text = "+", colour = G.C.CHIPS},
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
-    },
-calc_function = function(card)
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+  text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " +", colour = HEX("FF7ABF")},
+    { ref_table = "card.joker_display_values", ref_value = "energy_card", retrigger_type = "mult", colour = HEX("FF7ABF") },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local chips = 0
-    local mult = 0
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local energy_card = 0
+    local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 12 or scoring_card:get_id() == 13 then
+          energy_card = 1
+        end
+      end
     end
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.energy_card = energy_card
+    card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
+  end
 }
 
 --	Flabébé

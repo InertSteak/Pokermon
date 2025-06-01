@@ -261,7 +261,7 @@ local jirachi_banker = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = true,
+  blueprint_compat = false,
   custom_pool_func = true,
   in_pool = function(self)
     return false
@@ -307,6 +307,7 @@ local jirachi_copy = {
   config = {extra = {energy_buff = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {card.ability.extra.energy_buff}}
   end,
   rarity = 4,
@@ -435,10 +436,10 @@ local jirachi_power = {
   name = "jirachi_power", 
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
-  config = {extra = {Xmult_multi = 2.4, every = 3, loyalty_remaining = 3}},
+  config = {extra = {Xmult_multi = 2.4, every = 3, loyalty_remaining = 2}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every, card.ability.extra.loyalty_remaining, }}
+    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every, localize{type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {card.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 4,
   cost = 20,
@@ -451,17 +452,15 @@ local jirachi_power = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        if card.ability.extra.loyalty_remaining > 0 then
-          card.ability.extra.loyalty_remaining = card.ability.extra.loyalty_remaining - 1
+      if context.after then
+        if card.ability.extra.loyalty_remaining == 0 then
+          card.ability.extra.loyalty_remaining = card.ability.extra.every
         end
-        if card.ability.extra.loyalty_remaining == 1 then
-          local eval = function(card) return (card.ability.extra.loyalty_remaining == 1) and not G.RESET_JIGGLES end
+        card.ability.extra.loyalty_remaining = card.ability.extra.loyalty_remaining - 1
+        if card.ability.extra.loyalty_remaining == 0 then
+          local eval = function(card) return (card.ability.extra.loyalty_remaining == 0) and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
         end
-      end
-      if context.after and card.ability.extra.loyalty_remaining == 0 then
-        card.ability.extra.loyalty_remaining = card.ability.extra.every
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then

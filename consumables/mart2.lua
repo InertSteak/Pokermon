@@ -207,8 +207,7 @@ local thunderstone = {
               center = G.P_CENTERS.m_gold}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
         playing_card_joker_effects({_card})
       end
-      
-      poke_unhighlight_cards()
+      poke_remove_card(selected, card)
       evo_item_use_total(self, card, area, copier)
     else
       highlighted_evo_item(self, card, area, copier)
@@ -372,6 +371,7 @@ local leftovers = {
     return {vars = {self.config.extra.joker_highlighted, self.config.extra.money_mod}}
   end,
   pos = { x = 7, y = 4 },
+  soul_pos = { x = 6, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -400,11 +400,13 @@ local leftovers = {
       func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
     end}))
     card.ability.extra.usable = false
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card.children.floating_sprite:set_sprite_pos({ x = 6, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
@@ -436,6 +438,7 @@ local leek = {
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds}}
   end,
   pos = { x = 8, y = 4 },
+  soul_pos = { x = 7, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -472,6 +475,7 @@ local leek = {
       return true end }))
     end
     card.ability.extra.usable = false
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and card.edition then
@@ -480,6 +484,7 @@ local leek = {
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card.children.floating_sprite:set_sprite_pos({ x = 7, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
@@ -498,10 +503,10 @@ local thickclub = {
   config = {max_highlighted = 1, bonus = 10, extra = {usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {vars = {self.config.max_highlighted, self.config.bonus}}
   end,
   pos = { x = 9, y = 4 },
+  soul_pos = { x = 8, y = 5 },
   atlas = "Mart",
   cost = 3,
   unlocked = true,
@@ -524,18 +529,17 @@ local thickclub = {
     local current_bonus = conv_card.ability.perma_bonus or 0
     juice_flip(card)
     conv_card.ability.perma_bonus = current_bonus + self.config.bonus
-    if current_bonus > 0 then
-      conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
-    end
     juice_flip(card, true)
     delay(0.5)
     poke_unhighlight_cards()
     card.ability.extra.usable = false
+    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card.children.floating_sprite:set_sprite_pos({ x = 8, y = 5 })
     end
   end,
   keep_on_use = function(self, card)
@@ -551,6 +555,7 @@ local teraorb = {
   key = "teraorb",
   set = "Item",
   loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Random Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
   end,
   pos = { x = 9, y = 2 },

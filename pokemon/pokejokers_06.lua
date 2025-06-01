@@ -623,7 +623,7 @@ local ledyba={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/5)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/4)
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/5)
         }
       end
     end
@@ -654,7 +654,7 @@ local ledian={
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * math.floor(#G.deck.cards/3)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/2)
+          mult_mod = card.ability.extra.mult * math.floor(#G.deck.cards/3)
         }
       end
     end
@@ -976,7 +976,7 @@ local togepi={
       r_mults[#r_mults+1] = string.format("%.2f", i/20)
     end
 
-    desc_nodes[#desc_nodes+1] = {{n=G.UIT.T, config={text = 'Baby', colour = G.C.FILTER, scale = 0.32}},{n=G.UIT.T, config={text = ', ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
+    desc_nodes[#desc_nodes+1] = {{n=G.UIT.T, config={text = localize('k_poke_baby'), colour = G.C.FILTER, scale = 0.32}},{n=G.UIT.T, config={text = ', ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},{n=G.UIT.C, config={align = "m", colour = G.C.MULT, r = 0.05, padding = 0.03, res = 0.15}, nodes={
       {n=G.UIT.T, config={text = 'X', colour = G.C.WHITE, scale = 0.32}},
       {n=G.UIT.O, config={object = DynaText({string = r_mults, colours = {G.C.WHITE},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
     }},

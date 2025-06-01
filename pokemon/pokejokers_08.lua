@@ -41,7 +41,7 @@ local qwilfish = {
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       return {
         message = localize('k_upgrade_ex'),
@@ -139,13 +139,244 @@ local scizor={
 }
 -- Shuckle 213
 -- Heracross 214
+local heracross = {
+  name = "heracross", 
+  pos = {x = 2, y = 6},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
+      if context.joker_main then
+        if G.hand and G.hand.cards then
+          local found_ranks = {}
+          for _, played_card in pairs(context.scoring_hand) do
+            found_ranks[played_card:get_id()] = true
+          end
+          for _, hand_card in pairs(G.hand.cards) do
+            if found_ranks[hand_card:get_id()] then return end
+          end
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Sneasel 215
+local sneasel = {
+  name = "sneasel",
+  pos = {x = 3, y = 6},
+  config = {extra = {money = 4}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
+    return {vars = {localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'), card.ability.extra.money}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  item_req = "duskstone",
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
+      context.full_hand[1].to_be_removed_by = card
+      ease_poke_dollars(card, "sneasel", card.ability.extra.money)
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
+    end
+    return item_evo(self, card, context, "j_poke_weavile")
+  end
+}
 -- Teddiursa 216
+local teddiursa={
+  name = "teddiursa",
+  pos = {x = 4, y = 6},
+  config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 16},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.skipping_booster and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult, 
+          card = card
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+}
 -- Ursaring 217
+local ursaring={
+  name = "ursaring",
+  pos = {x = 5, y = 6},
+  config = {extra = {mult = 0,mult_mod = 3,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  end,
+  rarity = 2,
+  cost = 8,
+  item_req = "moonstone",
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.skipping_booster then
+      if not context.blueprint then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+      end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult, 
+          card = card
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_ursaluna")
+  end,
+}
 -- Slugma 218
 -- Magcargo 219
 -- Swinub 220
+local swinub={
+  name = "swinub",
+  pos = {x = 8, y = 6},
+  config = {extra = {mult = 5,money = 3,odds = 2,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          return {
+            mult = card.ability.extra.mult * stoneglass,
+            card = card
+          }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_piloswine")
+  end,
+  calc_dollar_bonus = function(self, card)
+    if pseudorandom('swinub') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
+    end
+  end,
+}
 -- Piloswine 221
+local piloswine={
+  name = "piloswine",
+  pos = {x = 9, y = 6},
+  config = {extra = {mult = 10,money = 6,odds = 2,scored = 0,}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, 
+                    math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
+      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+        card.ability.extra.scored = card.ability.extra.scored + 1
+      end
+      if context.other_card == context.scoring_hand[1] then
+        local stoneglass = 0
+        for k, v in pairs(context.scoring_hand) do
+          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+            stoneglass = stoneglass + 1
+          end
+        end
+        
+        if stoneglass > 0 then
+          return {
+            mult = card.ability.extra.mult * stoneglass,
+            card = card
+          }
+        end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.scored, self.config.evo_rqmt)
+  end,
+  calc_dollar_bonus = function(self, card)
+    if pseudorandom('piloswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      return ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
+    end
+  end,
+}
 -- Corsola 222
 local corsola={
   name = "corsola", 
@@ -444,7 +675,129 @@ local skarmory = {
   end,
 }
 -- Houndour 228
+local houndour={
+  name = "houndour",
+  pos = {x = 6, y = 7},
+  config = {extra = {mult_mod = 1,rounds = 5, discards = 2, active = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.discards}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
+      if card.ability.extra.active then
+        card.ability.extra.active = false
+      elseif #context.full_hand > 3 then
+        card.ability.extra.active = true
+      end
+    end
+    if context.discard then
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
+    end
+    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
+      G.E_MANAGER:add_event(Event({func = function()
+        card.ability.extra.active = false
+        local targets = {}
+        local selected = nil
+        for i=1, #G.hand.cards do
+          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
+            table.insert(targets, G.hand.cards[i])
+          end
+        end
+        pseudoshuffle(targets, pseudoseed('houndour'))
+        if #targets > 0 then
+          for i = 1, math.min(#targets, card.ability.extra.discards) do
+              G.hand:add_to_highlighted(targets[i], true)
+              selected = true
+              play_sound('card1', 1)
+          end
+          if selected then 
+            delay(0.2)
+            G.FUNCS.discard_cards_from_highlighted(nil, true)
+          end
+          for i = 1, math.min(#targets, card.ability.extra.discards) do
+              G.hand:remove_from_highlighted(targets[i], true)
+              targets[i]:highlight(true)
+          end  
+        end
+      return true end }))
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.active = false
+    end
+    return level_evo(self, card, context, "j_poke_houndoom")
+  end,
+}
 -- Houndoom 229
+local houndoom={
+  name = "houndoom",
+  pos = {x = 7, y = 7},
+  config = {extra = {mult_mod = 2,rounds = 5, active = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
+      if card.ability.extra.active then
+        card.ability.extra.active = false
+      elseif #context.full_hand > 3 then
+        card.ability.extra.active = true
+      end
+    end
+    if context.discard then
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
+    end
+    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
+      G.E_MANAGER:add_event(Event({func = function()
+        card.ability.extra.active = false
+        local targets = {}
+        local selected = nil
+        for i=1, #G.hand.cards do
+          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
+            table.insert(targets, G.hand.cards[i])
+          end
+        end
+        if #targets > 0 then
+          for i = 1, #targets do
+              G.hand:add_to_highlighted(targets[i], true)
+              selected = true
+              play_sound('card1', 1)
+          end
+          if selected then 
+            delay(0.2)
+            G.FUNCS.discard_cards_from_highlighted(nil, true)
+          end
+          for i = 1, #targets do
+              G.hand:remove_from_highlighted(targets[i], true)
+              targets[i]:highlight(true)
+          end  
+        end
+      return true end }))
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.active = false
+    end
+  end,
+}
 -- Kingdra 230
 local kingdra={
   name = "kingdra", 
@@ -508,7 +861,7 @@ local phanpy={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        if #context.scoring_hand == 5 then
+        if #context.scoring_hand >= 5 and not context.blueprint then
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           return {
             message = localize('k_upgrade_ex'),
@@ -553,8 +906,8 @@ local donphan={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        if #context.scoring_hand == 5 then
+      if context.before and not context.blueprint then
+        if #context.scoring_hand >= 5 then
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           return {
             message = localize('k_upgrade_ex'),
@@ -1027,5 +1380,30 @@ local magby={
   end
 }
 return {name = "Pokemon Jokers 211-240", 
-        list = {qwilfish, scizor, corsola, remoraid, octillery, delibird, mantine, skarmory, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        init = function()
+            local game_init_object = Game.init_game_object;
+            function Game:init_game_object()
+                local game = game_init_object(self)
+                game.current_round.sneaselcard = {rank = 'Ace'}
+                return game
+            end
+            
+            local rmr = reset_mail_rank;
+            function reset_mail_rank()
+              rmr()
+              G.GAME.current_round.sneaselcard = {rank = 'Ace'}
+              local valid_sneasel_cards = {}
+              for k, v in ipairs(G.playing_cards) do
+                if v.ability.effect ~= 'Stone Card' then
+                  valid_sneasel_cards[#valid_sneasel_cards+1] = v
+                end
+              end
+              if valid_sneasel_cards[1] then
+                local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
+                G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
+                G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
+              end
+            end
+        end,
+        list = {qwilfish, scizor, heracross, sneasel, teddiursa, ursaring, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
