@@ -58,7 +58,7 @@ return {
                 text = {
                     "すべてのジョーカーは",
                     "ランダムな {C:pink}タイプ{} のステッカーや",
-                    "{C:pink}エネルギー{} {C:attention}+1{} 作成される"
+                    "{C:pink}エナジャイズ{} {C:attention}された{} 作成される"
                 }
             },
         },
@@ -91,67 +91,74 @@ return {
             c_poke_moonstone = {
                 name = "月の石",
                 text = {
+                    "{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "{C:green}#3#分の#2#{} の確率で",
                     "選択した {C:attention}ポーカーハンド{} の",
                     "レベルがアップグレードする",
-                    "{C:attention}進化カード{}",
                     "{C:inactive}(ハンド：{C:attention}#1#{Cinactive}){}"
                 },
             },
             c_poke_sunstone = {
                 name = "太陽の石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "選択した {C:attention}#1#{} 枚のカードを",
                     "ワイルドカードに強化して",
 					"ランクがランダムになる",
-                    "{C:attention}進化カード{}"
                 },
             },
             c_poke_waterstone = {
                 name = "水の石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "選択した {C:attention}#1#{} 枚のカードを",
                     "{C:attention}ボーナスカード{} に強化する",
 					"すでに {C:attention}ボーナスカード{} である場合は",
 					"チップの合計を {C:attention}2倍になります{}",
                     "{C:inactive}(最高 {C:chips}+#2#{C:inactive} チップ)",
-                    "{C:attention}進化カード{}"
                 },
             },
             c_poke_thunderstone = {
                 name = "雷の石",
                 text = {
-                    "選択した {C:attention}1{} 枚のカードの",
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
+                    "選択した {C:attention}1{} 枚のカードの破壊し",
                     "同じランク {C:attention}ゴールドカード{} を",
-					"{C:attention}2枚{} デッキに加えてハンドに {C:attention}1枚{} ドローする",
-                    "{C:attention}進化カード{}",
+					"{C:attention}2枚{} デッキに加えて手札に {C:attention}1枚{} ドローする",
                 },
             },
             c_poke_firestone = {
                 name = "炎の石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"選択した {C:attention}#1#{} 枚のカードを",
 					"{C:attention}倍率カード{} に強化すると",
 					"{C:attention}1枚{} をランダムに破壊する",
-                    "{C:attention}進化カード{}"
                 },
             },
             c_poke_leafstone = {
                 name = "リーフの石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"{C:green}#2#分の#1#{} の確率で",
                     "手札にある各カードを",
 					"{C:attention}ラッキーカード{} に強化する",
-                    "{C:attention}進化カード{}"
                 },
             },
             c_poke_linkcable = {
                 name = "つながりのヒモ",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"{C:attention}#1#{} 枚のカードを選択し",
                     "{C:attention}左{} のカードを {C:attention}1つ{} 大きい数字にして",
                     "{C:attention}右{} のカードを {C:attention}1つ{} 小さい数字にする",
-                    "{C:attention}進化カード{}"
                 },
             },
             c_poke_leftovers = {
@@ -180,30 +187,32 @@ return {
 					"{C:attention}再使用可能{}",
 					"選択した {C:attention}#1#{} 枚のカードを",
                     "永久的にチップ {C:chips}+#2#{} を与える",
-                    "すでに与えられたチップがある場合は",
-					"{C:attention}ストーンカード{} に強化する",
                     "{C:inactive}(ラウンドごとに1回使える){}"
                 }
             },
             c_poke_teraorb = {
                 name = "テラスタルオーブ",
                 text = {
-                    "選択したか一番左ジョーカーに",
-                    "{C:attention}+1{} {C:pink}エネルギー{} を与える",
-					"{C:attention}タイプチェンジャー{}"
+					"{C:attention}タイプチェンジャー{} {X:pink,C:white}ランダム{}",
+					"{br:2}ERROR - CONTACT STEAK",
+                    "選択したか一番左ジョーカーを",
+                    "{C:pink}エナジャイズ{} する",
                 },
             },
             c_poke_metalcoat = {
                 name = "メタルコート",
                 text = {
+					"{C:attention}タイプチェンジャー{} {X:metal,C:white}鋼{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "選択したカードの{C:attention}スチール{}コピーを",
 					"1枚作る",
-                    "{C:attention}タイプチェンジャー{}"
                 },
             },
             c_poke_dragonscale = {
                 name = "竜のウロコ",
                 text = {
+					"{C:attention}タイプチェンジャー{} {X:dragon,C:white}ドラゴン{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "ランダムな {C:item}アイテム{}か {C:pink}エネルギー{} カードを",
 					"最大 {C:attention}3{}枚まで作る",
 					"{C:attention}タイプチェンジャー{}",
@@ -213,45 +222,50 @@ return {
             c_poke_kingsrock = {
                 name = "王者の印",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"選択した {C:attention}#1#{} 枚のカードを",
                     "{C:attention}キング{} に変える",
-                    "{C:attention}進化カード{}",
                 },
             },
             c_poke_upgrade = {
                 name = "アップグレード",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "選択した {C:attention}#1#{} 枚のカードに",
                     "{C:attention}ストーン以外{}のランダムな {C:attention}強化{} を与える",
-                    "{C:attention}進化カード{}",
                 }
             },
 			c_poke_dubious_disc = {
                 name = "怪しいパッチ",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "手札にあるすべてのカードの {C:attention}強化{} を",
                     "解除かランダム強化する",
-                    "{C:attention}進化カード{}",
                     "{C:inactive}(強化なしのカードを同梱){}"
                 }
             },
             c_poke_icestone = {
                 name = "氷の石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
                     "選択した {C:attention}#1#{} 枚のカードを",
 					"{C:attention}グラスカード{} に強化する",
 					"各カードは{C:green}#3#分の#2#{}の確率で{C:attention}破壊される{}",
-                    "{C:attention}進化カード{}",
                 }
             },
             c_poke_shinystone = {
                 name = "光の石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"選択した {C:attention}#1#{} 枚のカードに",
 					"{C:dark_edition}フォイル{}、{C:dark_edition}ホログラム{}、{C:dark_edition}ポリクローム{} の",
                     "いずれかの効果を加えて",
 					"{C:attention}強化{}を解除する",
-                    "{C:attention}進化カード{}"
                 }
             },
             c_poke_twisted_spoon = {
@@ -266,29 +280,42 @@ return {
 			c_poke_prismscale = {
                 name = "綺麗なウロコ",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"手札にあるランダムなカード{C:attention}#2#{}枚を",
 					"選択した{C:attention}#1#{}枚のカードと同じスーツに変換する",
-					"{C:attention}進化カード{}"
                 }
             },
 			c_poke_duskstone = {
                 name = "闇の石",
                 text = {
-					"ジョーカー1枚につき{C:money}$#1#{}を与える",
-					"ジョーカーのバリューから{C:money}$1{} を {C:attention}ドレイン{}する",
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
+					"{C:attention}ドレインできる{} ジョーカー1枚につき{C:money}$#1#{}を与える",
+					"ジョーカーのセルバリューから{C:money}$1{} を {C:attention}ドレイン{}する",
 					"{C:attention}#2#{}ラウンド後に{C:attention}ドレイン{}しません {C:inactive}(ラウンド #3#)",
-                    "{C:attention}進化カード{}",
                     "{C:inactive}(現在 {C:money}$#4#{C:inactive}/$#5# 最高)"
                 }
             },
 			c_poke_dawnstone = {
                 name = "目覚め石",
                 text = {
+					"{C:attention}進化カード{}",
+					"{br:2}ERROR - CONTACT STEAK",
 					"{C:attention}#1#{}の{C:mult}倍率{}の2倍に",
 					"相当する{C:money}${}を得る",
                     "{C:inactive}#4#{}",
-                    "{C:attention}進化カード{}",
                     "{C:inactive}(現在 {C:money}$#2#{C:inactive}/$40 最高)",
+                }
+            },
+			c_poke_hardstone = {
+                name = "固い石",
+                text = {
+					"選択した {C:attention}#1#{} 枚のカードを",
+                    "{C:attention}ストーンカード{} に",
+                    "強化する",
+					"{X:earth,C:white}地面{} ジョーカーにつき",
+					"そのストーンカードはチップ {C:chips}+#2#{} を得る",
                 }
             },
         },
@@ -296,63 +323,56 @@ return {
             c_poke_grass_energy = {
                 name = "草エネルギー",
                 text = {
-					"可能であれば選択したか一番左 {C:attention}草{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+					"可能であれば選択したか一番左",
+					"{C:attention}草{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_fire_energy = {
                 name = "炎エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}炎{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}炎{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_water_energy = {
                 name = "水エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}水{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}水{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_lightning_energy = {
                 name = "雷エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}雷{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}雷{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_psychic_energy = {
                 name = "超エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}超{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}超{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_fighting_energy = {
                 name = "闘エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}闘{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}闘{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_colorless_energy = {
                 name = "無色エネルギー",
                 text = {
-                    "可能であれば選択したか一番左ジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"ジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:attention}無色{} ジョーカー以外では増加半減",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
@@ -360,27 +380,24 @@ return {
             c_poke_darkness_energy = {
                 name = "悪エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}悪{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}悪{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_metal_energy = {
                 name = "鋼エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}鋼{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}鋼{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_fairy_energy = {
                 name = "フェアリーエネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}フェアリー{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}フェアリー{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
@@ -388,18 +405,16 @@ return {
             c_poke_dragon_energy = {
                 name = "ドラゴンエネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}ドラゴン{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}ドラゴン{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
             c_poke_earth_energy = {
                 name = "地面エネルギー",
                 text = {
-                    "可能であれば選択したか一番左 {C:attention}地面{} タイプのジョーカーの",
-                    "{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
-					"永久的に増加させる",
+                    "可能であれば選択したか一番左",
+					"{C:attention}地面{} タイプのジョーカーを {C:pink}エナジャイズ{} する",
                     "{C:inactive}(ジョーカー1枚につき最大 {C:attention}#1#{}{C:inactive} 回まで増加)",
                 },
             },
@@ -427,7 +442,7 @@ return {
             -- HA HA! Not anymore!
 
             m_poke_hazard = {
-                name = "Hazard Card",
+                name = "ハザードカード",
                 text = {
                     "{C:attention}+1{} ハンドサイズ",
                     "ランクおよびスーツはない",
@@ -1965,8 +1980,8 @@ return {
                 name = 'ミュウツー',
                 text = {
 					"ショップ終了時に",
-					"一番左ジョーカーを{C:dark_edition}ポリクローム{}と{C:attention}+1{} {C:pink}エネルギー{}",
-					"{C:attention}複製{}する",
+					"一番左ジョーカーの{C:dark_edition}ポリクローム{}と {C:pink}エナジャイズ{} {C:attention}された{}",
+					"{C:attention}コピー{} を作成する",
 					"次に一番左ジョーカーを{C:attention}破壊{}する",
 					"{br:3}ERROR - CONTACT STEAK",
 					"それぞれの {C:dark_edition}ポリクローム{} ジョーカーが",
@@ -1983,7 +1998,7 @@ return {
 			j_poke_mega_mewtwo_y = {
                 name = "メガミュウツーY",
                 text = {
-					"ショップ終了時に一番左ジョーカーに {C:attention}+2{} {C:pink}エネルギー{} を与える",
+					"ショップ終了時に一番左ジョーカーを {C:attention}2回{} {C:pink}エナジャイズ{} する",
                     "{br:2}ERROR - CONTACT STEAK",
 					"{C:attention}ボスブラインド{} を倒した時",
 					"{C:pink}+1{} エネルギーMAXレベル",
@@ -2480,11 +2495,9 @@ return {
 			j_poke_snubbull = {
                 name = 'ブルー',
                 text = {
-					"最初のプレイされた",
-					"{C:attention}フェイス{} カードは {C:attention}クイーン{} 場合",
-                    "倍率 {X:mult,C:white}X#2#{} を与える",
-					"それ以外場合",
-                    "倍率 {X:mult,C:white}X#1#{} を与える",
+					"最初にプレイされた{C:attention}フェイス{} カードが",
+                    "スコアされた時",
+                    "倍率 {X:mult,C:white}X#1#{}",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}#3#{C:inactive,s:0.8} ラウンド後に進化)",
                 }
             },
@@ -2996,7 +3009,7 @@ return {
             j_poke_milotic = {
                 name = "ミロカロス",
                 text = {
-					"すべてのプレイされたカードが",
+					"すべてのスコアされたカードが",
 					"{C:attention}同じスーツ{} 場合",
 					"そのカードを再発動する",
                 }
@@ -3101,7 +3114,7 @@ return {
             j_poke_jirachi_copy = {
                 name = 'ジラーチ',
                 text = {
-					"右のジョーカーが {C:attention}+#1#{} {C:pink}エネルギー{} されたかのように",
+					"右のジョーカーが {C:pink}エナジャイズ{} されたかのように",
 					"その能力をコピーする",
                 }
             },
@@ -3423,7 +3436,6 @@ return {
 			j_poke_panpour = {
                 name = "ヒヤップ",
                 text = {
-                    "{C:attention}パレイドリア{} を適用する",
                     "{C:attention}パレイドリア{} を適用する",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}水の石{C:inactive,s:0.8} で進化)"
                 }
@@ -4035,7 +4047,7 @@ return {
 					"{C:attention}#1#{} ラウンド後に",
 					"{C:attention}たね{} か {C:attention}べいビィー{} ポケモンが",
 					"孵ります",
-					"可能であれば エネルギー {C:pink}+1{}",
+					"可能であれば {C:pink}エナジャイズ{} する",
                 }
             },
 			j_poke_billion_lions = {
@@ -4107,8 +4119,7 @@ return {
                 text = {
 					"選択したか一番左のポケモンを",
 					"{C:attention}最終進化{}させ、可能であれば",
-                    "エネルギー+1を得る",
-                    "{C:inactive}(ジョーカー{C:attention}#1#{}{C:inactive}枚につき最大3回まで増加)",
+                    "{C:pink}エナジャイズ{} する",
                 },
             },
 			c_poke_megastone = {
@@ -4354,6 +4365,14 @@ return {
 					"ポーカーハンドの{C:attention}#1#{}数に",
                     "基づく効果",
 					"{C:inactive}(効果は{C:attention}累積{C:inactive})",
+                }
+            },
+			energize = {
+                name = "エナジャイズ",
+                text = {
+					"ジョーカーの",
+					"{X:red,C:white}X倍率{}、{C:mult}倍率{}、{C:chips}チップ{}、{C:money}${}",
+					"永久的に増加させる",
                 }
             },
             eitem = {
@@ -4705,7 +4724,7 @@ return {
 					"{C:item}アイテム{} カードを作って, ディスカードされる",
                 }
             },
-            grass_sticker = {
+            --[[grass_sticker = {
                 name = "タイプ",
                 text = {
                     "{X:grass,C:white}草{}"
@@ -4777,6 +4796,7 @@ return {
                     "{X:earth,C:white}地面{}"
                 } 
             },
+			--]]
             --Since these are normally discovered by default these will probably not matter
             --But they COULD matter? Right? Right??????
             undiscovered_energy = {
@@ -4940,10 +4960,11 @@ return {
             poke_destroyed_ex = "破壊した！",
             poke_evolve_success = "進化した！",
             poke_evolve_level = "レベルアップ！",
+			poke_tera = "テラスタル",
             poke_tera_ex = "テラスタル！",
             poke_metal_ex = "鋼！",
             poke_dragon_ex = "ドラゴン！",
-			poke_energized_ex = "エナジャイズー！",
+			poke_energized_ex = "エナジャイズ！",
             poke_unlimited_energy = "無限",
 
             --Some infoqueue/variable stuff
@@ -4991,7 +5012,11 @@ return {
 			poke_faint_ex = "たおれた！",
 			poke_nido_ex = "ニド！",
 			poke_disguise_intact = "化けの皮身代わり！セーフ！",
-            poke_disguise_broken = "化けの皮剥がれた…"
+            poke_disguise_broken = "化けの皮剥がれた…",
+			
+            poke_none = "なし",
+            poke_dawn_info1 = "(次のプレイされるポーカーハンドはセットされる)",
+            poke_dawn_info2 = "(ポーカーハンドはセットされた！)",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
