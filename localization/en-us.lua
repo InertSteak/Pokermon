@@ -197,7 +197,7 @@ return {
             c_poke_teraorb = {
                 name = "Tera Orb",
                 text = {
-                    "{C:attention}Type Changer{}",
+                    "{C:attention}Type Changer:{} {X:pink,C:white}Random{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:pink}Energize{} leftmost or selected Joker{}",
                 },
@@ -205,7 +205,7 @@ return {
             c_poke_metalcoat = {
                 name = "Metal Coat",
                 text = {
-                    "{C:attention}Type Changer{}",
+                    "{C:attention}Type Changer:{} {X:metal,C:white}Metal{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Creates a {C:attention}Steel{} copy of",
                     "{C:attention}1{} selected card",
@@ -214,7 +214,7 @@ return {
             c_poke_dragonscale = {
                 name = "Dragon Scale",
                 text = {
-                    "{C:attention}Type Changer{}",
+                    "{C:attention}Type Changer:{} {X:dragon,C:white}Dragon{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Creates up to {C:attention}3{} random",
                     "{C:item}Item{} or {C:pink}Energy{} cards",
