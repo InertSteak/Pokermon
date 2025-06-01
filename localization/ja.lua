@@ -260,7 +260,7 @@ return {
             },
             c_poke_shinystone = {
                 name = "光の石",
-                text = {"{br:2}ERROR - CONTACT STEAK",
+                text = {
 					"{C:attention}進化カード{}",
 					"{br:2}ERROR - CONTACT STEAK",
 					"選択した {C:attention}#1#{} 枚のカードに",
@@ -1981,7 +1981,7 @@ return {
                 name = 'ミュウツー',
                 text = {
 					"ショップ終了時に",
-					"一番左ジョーカーの{C:dark_edition}ポリクローム{}と {C:pink}エナジャイズ{} C:attention}された{}",
+					"一番左ジョーカーの{C:dark_edition}ポリクローム{}と {C:pink}エナジャイズ{} {C:attention}された{}",
 					"{C:attention}コピー{} を作成する",
 					"次に一番左ジョーカーを{C:attention}破壊{}する",
 					"{br:3}ERROR - CONTACT STEAK",
