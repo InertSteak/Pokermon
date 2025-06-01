@@ -50,7 +50,7 @@ local feebas={
 local milotic={
   name = "milotic",
   pos = {x = 8, y = 9},
-  config = {extra = {mult = 1,mult_mod = 1,retriggers = 1, active = false}},
+  config = {extra = {retriggers = 1, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
   end,
