@@ -11,8 +11,9 @@ local pocket_tag = {
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_mega_1", specific_vars = { 2, 5, 1} }
     info_queue[#info_queue + 1] = G.P_CENTERS.c_poke_megastone
-    info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {25}}
-		return { vars = {} }
+		-- No idea how 25% is being set here so i'm just passing 25 manually
+		-- -gold_me
+		return { vars = {25} }
 	end,
 	apply = function(self, tag, context)
 		if context and context.type == "new_blind_choice" then
