@@ -199,7 +199,8 @@ return {
                 text = {
                     "{C:attention}Type Changer:{} {X:pink,C:white}Random{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{C:pink}Energize{} leftmost or selected Joker{}",
+                    "{C:pink}Energize{} leftmost",
+                    "or selected Joker{}",
                 },
             },
             c_poke_metalcoat = {
@@ -821,7 +822,7 @@ return {
                 text = {
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
-                    "{C:attention}Tarot{} card when scored",
+                    "{C:tarot}Tarot{} card when scored",
                     "{C:inactive,s:0.8}(Must have room)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Fire Stone{C:inactive,s:0.8})"
                 } 
@@ -829,10 +830,10 @@ return {
             j_poke_ninetales = {
                 name = "Ninetales",
                 text = {
-                    "{C:attention}Holding {C:dark_edition}Negative{} Medium{}",
+                    "{C:attention}Holding {C:dark_edition}Negative {C:spectral}Medium{}",
                     "{C:green}#1# in #2#{} chance for each",
                     "played {C:attention}9{} to create a",
-                    "{C:attention}Tarot{} card when scored",
+                    "{C:tarot}Tarot{} card when scored",
                     "{C:inactive,s:0.8}(Must have room)",
                 } 
             },
@@ -1249,7 +1250,7 @@ return {
             j_poke_farfetchd = {
                 name = 'Farfetch\'d',      
                 text = {
-                    "{C:attention}Holding Leek{}",
+                    "{C:attention}Holding {C:item}Leek{}",
                     "{C:green}#2# in #3#{} chance to earn {C:money}$#1#",
                     "when a {C:attention}Consumable{} is used",
                     "{C:money}${} guaranteed when using {C:attention}Leeks{}",
@@ -1388,7 +1389,7 @@ return {
             j_poke_hypno = {
                 name = 'Hypno',      
                 text = {
-                    "{C:attention}Holding Trance{}",
+                    "{C:attention}Holding {C:spectral}Trance{}",
                     "{X:mult,C:white}X#2#{} Mult per unique",
                     "{C:planet}Planet{} card used this run",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
@@ -1445,7 +1446,7 @@ return {
             j_poke_cubone = {
                 name = 'Cubone',
                 text = {
-                    "{C:attention}Holding Thick Club{}",
+                    "{C:attention}Holding {C:item}Thick Club{}",
                     "Gives {C:mult}+#1#{} Mult for",
                     "each {C:attention}held{} consumable",
                     "{C:inactive,s:0.8}({C:attention,s:0.8}Thick Clubs{C:inactive,s:0.8} count as double){}",
@@ -1838,7 +1839,7 @@ return {
             j_poke_snorlax = {
                 name = 'Snorlax',
                 text = {
-                    "{C:attention}Holding Leftovers{}",
+                    "{C:attention}Holding {C:item}Leftovers{}",
                     "At end of round gain {X:red,C:white}X#1#{} Mult",
                     "for each {C:attention}Leftovers{} you have",
                     "{C:inactive}(Currently {X:red,C:white} X#2# {C:inactive} Mult)"
@@ -2185,7 +2186,7 @@ return {
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
-                  "{C:attention}Type Changer Pokemon{}",
+                  "{C:attention}Type Changer: {X:grass,C:white}Grass{}",
                   "Played {C:attention}face{} cards give {C:mult}+#1#{} Mult when scored",
                   "{br:3.5}ERROR - CONTACT STEAK",
                   "Retrigger all played {C:attention}face{} cards if",
@@ -3826,10 +3827,11 @@ return {
             j_poke_treasure_eatery = {
                 name = "Treasure Eatery",
                 text = {
+                  "{C:attention}Type Changer{}",
+                  "{br:2}ERROR - CONTACT STEAK",
                   "Convert the leftmost Joker's {C:pink}type{}",
                   "into the rightmost Joker's {C:pink}type{}",
                   "when blind is selected",
-                  "{C:attention}Type Changer{}",
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }
             },
@@ -3954,6 +3956,7 @@ return {
                 name = "Mega Stone",
                 text = {
                     "{C:attention}Reusable{}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "{C:attention}Mega Evolves{} a Pokemon", 
                     "or {C:attention}devolves{} a Mega",
                     "{C:attention}Devolves{} Mega if sold",
@@ -4232,10 +4235,10 @@ return {
                 }
             },
             typechangerpoke = {
-                name = "Type Changer Pokemon",
+                name = "Type Changer",
                 text = {
                     "Applies a {V:1}#1#{} sticker",
-                    "to self"
+                    "to itself on creation"
                 }
             },
             basic = {
