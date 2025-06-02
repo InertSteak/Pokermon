@@ -703,7 +703,7 @@ return {
                     "{C:chips}+#1#{} Chips if played hand",
                     "contains a {C:attention}Straight{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Create a {C:attention}Tarot{} card if",
+                    "Create a {C:tarot}Tarot{} card if",
                     "it also contains an {C:attention}Ace{}"
                 } 
             },
