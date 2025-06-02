@@ -74,7 +74,7 @@ return {
         },
         Item = {
             c_poke_pokeball = {
-                name = "Pokéball",
+                name = "Poké Ball",
                 text = {
                     "Create a random",
                     "{C:attention}Basic Joker{} card",
@@ -82,7 +82,7 @@ return {
                 },
             },
             c_poke_greatball = {
-                name = "Greatball",
+                name = "Great Ball",
                 text = {
                     "Create a random",
                     "{C:attention}Stage 1 Joker{} card",
@@ -3926,7 +3926,7 @@ return {
         },
         Spectral = {
             c_poke_ultraball = {
-                name = "Ultraball",
+                name = "Ultra Ball",
                 text = {
                     "Create a random",
                     "{C:attention}Stage 2 Joker{} card",
@@ -3934,7 +3934,7 @@ return {
                 },
             },
             c_poke_masterball = {
-                name = "Masterball",
+                name = "Master Ball",
                 text = {
                     "Create a random",
                     "{C:attention}Legendary Pokemon Joker{} card",
