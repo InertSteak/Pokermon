@@ -6,12 +6,10 @@ local mew ={
   config = {extra = {percent = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
-    info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {center.ability.extra.percent}}
-    return {vars = {1}}
+    return {vars = {center.ability.extra.percent}}
   end,
   rarity = 4, 
   cost = 20, 

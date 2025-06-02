@@ -131,15 +131,14 @@ local haunter={
 local gengar={
   name = "gengar", 
   pos = {x = 2, y = 7}, 
-  config = {extra = {odds = 5}},
+  config = {extra = {odds = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    info_queue[#info_queue+1] = {key = 'percent_chance', set = 'Other', specific_vars = {20}}
-    return {vars = {1, center.ability.extra.odds}}
+    return {vars = {center.ability.extra.odds, 100}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -150,7 +149,7 @@ local gengar={
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     local eligible_card = nil
-    if pseudorandom('gengar') < 1/card.ability.extra.odds then
+    if pseudorandom('gengar') < card.ability.extra.odds/100 then
       if #G.jokers.cards > 0 then
         local eligible_jokers = {}
         for k, v in pairs(G.jokers.cards) do

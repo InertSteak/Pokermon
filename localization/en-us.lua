@@ -1352,10 +1352,10 @@ return {
             j_poke_gengar = {
                 name = 'Gengar',      
                 text = {
-                    "{C:green}Percent Chance{}",
-                    "Sometimes {C:attention}replaces{} the edition",
-                    "of a random {C:attention}Joker{} with",
+                    "{C:green}#1#%{} chance to {C:attention}replace{} the",
+                    "edition of a random {C:attention}Joker{} with",
                     "{C:dark_edition}Negative{} at end of round",
+                    "{C:inactive,s:0.8}(Odds can't be increased){}",
                     "{C:inactive,s:0.8}(Excludes Gengars){}",
                 } 
             },
@@ -1927,11 +1927,13 @@ return {
             j_poke_mew = {
                 name = 'Mew',
                 text = {
-                    "At end of shop, create",
-                    "a random {C:dark_edition}Negative{} {C:attention}Tarot{},",
+                    "At the end of the {C:attention}shop{},",
+                    "create a {C:dark_edition}Negative{} {C:tarot}Tarot{},",
                     "{C:spectral}Spectral{} or {C:item}Item{} card",
-                    "Sometimes creates a random",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:green}#1#%{} chance to create a",
                     "{C:dark_edition}Negative{} Joker {C:attention}instead{}",
+                    "{C:inactive,s:0.8}(Odds can't be increased){}",
                 } 
             },
             j_poke_chikorita = {
@@ -4028,8 +4030,9 @@ return {
                 name = "Pocket Tag",
                 text = {
                     "Gives a free {C:pink}Mega Pocket Pack",
-                    "{C:green}25%{} chance pack contains",
-                    "a {C:attention}Mega Stone{} on {C:attention}Ante 5+{}"
+                    "{C:green}#1#%{} chance pack contains",
+                    "a {C:attention}Mega Stone{} on {C:attention}Ante 5+{}",
+                    "{C:inactive,s:0.8}(Odds can't be increased){}",
                 }, 
             },
             tag_poke_shiny_tag = {
@@ -4387,14 +4390,6 @@ return {
                 "Creates a random Joker",
                 "with a certain quality",
               }
-            },
-            percent_chance = {
-                name = "Percent Chance",
-                text = {
-                  "{C:green}#1#%{} chance",
-                  "for {C:attention}effect{} to occur",
-                  "{C:inactive}(Odds can't be increased){}"
-                }
             },
             holding = {
                 name = "Holding",
