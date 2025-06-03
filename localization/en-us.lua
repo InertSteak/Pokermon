@@ -1922,7 +1922,8 @@ return {
                     "at end of shop",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:pink}+1{} Energy Limit when",
-                    "{C:attention}Boss Blind{} is defeated"
+                    "{C:attention}Boss Blind{} is defeated",
+                    "{C:inactive}(Can't {C:pink}Energize{C:inactive} self)",
                 } 
             },
             j_poke_mew = {
