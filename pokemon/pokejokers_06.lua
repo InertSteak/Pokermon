@@ -1129,9 +1129,94 @@ local xatu = {
   end,
 }
 -- Mareep 179
+local mareep={
+  name = "mareep",
+  pos = {x = 7, y = 2},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.1, Xmult_minus = 0.1}, evo_rqmt = 1.5},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.Xmult_minus, self.config.evo_rqmt}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.playing_card_added and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+    if context.remove_playing_cards and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}}})
+    end
+    return scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
+  end,
+}
 -- Flaaffy 180
+local flaaffy={
+  name = "flaaffy",
+  pos = {x = 8, y = 2},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.25, Xmult_minus = 0.1}, evo_rqmt = 2.5},
+  loc_txt = {
+    name = "Flaaffy",
+    text = {
+      "Gains {X:red,C:white}X#2#{} Mult when one or more",
+      "{C:attention}playing cards{} are {C:attention}added",
+      "{br:3}ERROR - CONTACT STEAK",
+      "Loses {X:red,C:white}X#3#{} Mult when one or more",
+      "{C:attention}playing cards{} are {C:attention}destroyed",
+      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} / X#4# Mult)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.Xmult_minus, self.config.evo_rqmt}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.playing_card_added and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+    if context.remove_playing_cards and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}}})
+    end
+    return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
+  end,
+}
 
 return {name = "Pokemon Jokers 151-180", 
         list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
-                 crobat, pichu, cleffa, igglybuff, natu, xatu, togepi, togetic},
+                 crobat, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
 }

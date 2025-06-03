@@ -200,13 +200,15 @@ local thunderstone = {
           table.insert(poss_cards, v)
         end
       end
+      local cards_added = {}
       for i = 1, 2 do
         local area = i == 1 and G.hand or G.deck
         local _card = create_playing_card({
               front = pseudorandom_element(poss_cards, pseudoseed('thunderstone')),
               center = G.P_CENTERS.m_gold}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
-        playing_card_joker_effects({_card})
+        cards_added[#cards_added] = _card
       end
+      playing_card_joker_effects(cards_added)
       poke_remove_card(selected, card)
       evo_item_use_total(self, card, area, copier)
     else

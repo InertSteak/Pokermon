@@ -2157,6 +2157,36 @@ return {
                     "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
                 }
             },
+            j_poke_mareep = {
+                name = "Mareep",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult when one or more",
+                  "{C:attention}playing cards{} are {C:attention}added{} to deck",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Loses {X:red,C:white}X#3#{} Mult when one or more",
+                  "{C:attention}playing cards{} are {C:attention}destroyed",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} / X#4# Mult)",
+                }
+            },
+            j_poke_flaaffy = {
+                name = "Flaaffy",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult when one or more",
+                  "{C:attention}playing cards{} are {C:attention}added{} to deck",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Loses {X:red,C:white}X#3#{} Mult when one or more",
+                  "{C:attention}playing cards{} are {C:attention}destroyed",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} / X#4# Mult)",
+                }
+            },
+            j_poke_ampharos = {
+                name = "Ampharos",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult when one or more",
+                  "{C:attention}playing cards{} are {C:attention}added{} to deck",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                }
+            },
             j_poke_azurill = {
                 name = 'Azurill',
                 text = {

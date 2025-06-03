@@ -1,4 +1,36 @@
 -- Ampharos 181
+local ampharos={
+  name = "ampharos",
+  pos = {x = 9, y = 2},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "Two",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.playing_card_added and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+  end,
+}
 -- Bellossom 182
 local bellossom={
   name = "bellossom",
@@ -1264,5 +1296,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

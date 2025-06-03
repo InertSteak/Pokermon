@@ -82,6 +82,7 @@ family = {
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
+    {"mareep", "flaaffy", "ampharos"},
     {"sneasel", "weavile"},
     {"teddiursa", "ursaring", "ursaluna"},
     {"remoraid", "octillery"},
