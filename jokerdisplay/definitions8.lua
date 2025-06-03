@@ -198,6 +198,12 @@ jd_def["j_poke_dragapult"] = {
 --	Calyrex
 --	Wyrdeer
 --	Kleavor
+jd_def["j_poke_kleavor"] = {
+  text = {
+    { text = "+",  colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+}
 
 --	Ursaluna
 jd_def["j_poke_ursaluna"] = {
