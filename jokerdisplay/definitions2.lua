@@ -397,8 +397,41 @@ jd_def["j_poke_togetic"] = {
 --	Natu
 --	Xatu
 --	Mareep
+jd_def["j_poke_mareep"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Flaaffy
+jd_def["j_poke_flaaffy"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Ampharos
+jd_def["j_poke_ampharos"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bellossom
 jd_def["j_poke_bellossom"] = {
     text = {
