@@ -573,11 +573,11 @@ local megastone = {
     if not card.ability.extra.usable then return false end
     local target = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and 
-       not G.jokers.highlighted[1].debuff then
+       not (G.jokers.highlighted[1].debuff and G.jokers.highlighted[1].config.center.megas) then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not (poke.debuff and poke.config.center.megas) then
           target = poke
           break
         end
@@ -591,11 +591,11 @@ local megastone = {
     local target = nil
     local forced_key = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and
-       not G.jokers.highlighted[1].debuff then
+       not (G.jokers.highlighted[1].debuff and G.jokers.highlighted[1].config.center.megas) then
       target = G.jokers.highlighted[1]
     else
       for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas or poke.config.center.rarity == "poke_mega" then
+        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not (poke.debuff and poke.config.center.megas) then
           target = poke
           break
         end

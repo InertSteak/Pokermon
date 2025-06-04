@@ -297,8 +297,9 @@ poke_backend_evolve = function(card, to_key)
   local old_key = card.config.center.key
 
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
-  if card.ability.perishable and card.config.center.rarity ~= "poke_mega" and not card.ability.extra.devolved and card.ability.perish_tally > 0 then
+  if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
     card.ability.perish_tally = G.GAME.perishable_rounds
+    card.debuff = false
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
