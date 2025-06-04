@@ -288,28 +288,24 @@ jd_def["j_poke_crobat"] = {
 --	Lanturn
 --	Pichu
 jd_def["j_poke_pichu"] = {
-    extra = {{
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
-            },
-        },
-    },},
-    text = {
-        {text = "$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
-    
+  extra = {{
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+      },
     },
-    reminder_text = {
-        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
-    },
-    calc_function = function(card)
-        local money
-        money = math.min(10, #G.jokers.cards * card.ability.extra.money)
-        card.joker_display_values.money = money
-        card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
-    end
+  },},
+  text = {
+    {text = "+$", colour = G.C.GOLD},
+    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
 }
 
 
