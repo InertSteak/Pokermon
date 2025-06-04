@@ -288,16 +288,14 @@ jd_def["j_poke_crobat"] = {
 --	Lanturn
 --	Pichu
 jd_def["j_poke_pichu"] = {
-  extra = {{
+  text = {
     {
       border_nodes = {
         { text = "X" },
         { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
       },
     },
-  },},
-  text = {
-    {text = "+$", colour = G.C.GOLD},
+    { text = " +$", colour = G.C.GOLD },
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
@@ -307,7 +305,6 @@ jd_def["j_poke_pichu"] = {
     card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
   end
 }
-
 
 --	Cleffa
 jd_def["j_poke_cleffa"] = {
