@@ -1382,6 +1382,7 @@ jd_def["j_poke_donphan"] = {
 
 --	Porygon2
 --	Stantler
+--[[
 jd_def["j_poke_stantler"] = { 
     text = {
         { text = "+" },
@@ -1415,7 +1416,7 @@ calc_function = function(card)
     end
     card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
 end
-}
+}--]]
 
 --	Smeargle
 --	Tyrogue

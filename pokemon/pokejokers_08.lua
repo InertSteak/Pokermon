@@ -988,13 +988,13 @@ local porygon2={
 local stantler={
   name = "stantler",
   pos = {x = 2, y = 8},
-  config = {extra = {chips = 10}},
+  config = {extra = {scry = 2, triggered = 0}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, }}
+    return {vars = {center.ability.extra.scry, math.max(0, self.config.evo_rqmt - center.ability.extra.triggered)}}
   end,
-  rarity = 2,
-  cost = 4,
+  rarity = 1,
+  cost = 5,
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex2",
@@ -1002,28 +1002,38 @@ local stantler={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and next(context.poker_hands['Pair']) then
-        local highest_rank = nil
-        for k, v in pairs(context.scoring_hand) do
-          if v.base.nominal and not highest_rank then
-            highest_rank = v.base.nominal
-          elseif v.base.nominal and highest_rank and v.base.nominal > highest_rank then
-            highest_rank = v.base.nominal
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+        local highest = nil
+        local highest_card = nil
+        for k, v in pairs(G.scry_view.cards) do
+          if not highest then highest = v.base.id; highest_card = v end
+          if v.base.id > highest then
+            highest = v.base.id
+            highest_card = v
           end
         end
-        local chips = card.ability.extra.chips * highest_rank
-        if G.GAME.current_round.hands_left == 0 then
-          chips = chips * 2
+        if context.other_card == highest_card then
+          if not context.blueprint then card.ability.extra.triggered = card.ability.extra.triggered + 1 end
+          local Mult = highest_card.base.nominal
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}},
+            message_card = context.other_card,
+            colour = G.C.MULT,
+            mult_mod = Mult,
+            card = card,
+          }
         end
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = chips
-        }
       end
     end
-  end
+    return scaling_evo(self, card, context, "j_poke_wyrdeer", card.ability.extra.triggered, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
 }
 -- Smeargle 235
 local smeargle={

@@ -2610,9 +2610,10 @@ return {
             j_poke_stantler = {
                 name = "Stantler",
                 text = {
-                  "Gives {C:chips}+#1#{} Chips times {C:attention}highest{} scoring",
-                  "rank if played hand contains a {C:attention}Pair{}",
-                  "Chips {C:attention}Doubled{} on {C:attention}final hand{} of round",
+                    "{C:purple}+#1# Foresight ",
+                    "Adds the rank of {C:attention}highest{}",
+                    "rank {C:attention}Foreseen{} card to Mult",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 }
             },
             j_poke_smeargle = {
@@ -3632,6 +3633,18 @@ return {
                     "{br:3}ERROR - CONTACT STEAK",
                     "{C:attention}Halve{} Chips after hand played",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                }
+            },
+            j_poke_wyrdeer = {
+                name = "Wyrdeer",
+                text = {
+                    "{C:purple}+#1# Foresight",
+                    "Adds {C:attention}double{} the rank of {C:attention}highest{}",
+                    "rank {C:attention}Foreseen{} card to Mult",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Gain {C:purple}+#2# Foresight{} when hand is played",
+                    "{C:inactive,s:0.8}(Resets at end of round)",
+                    
                 }
             },
             j_poke_kleavor = {

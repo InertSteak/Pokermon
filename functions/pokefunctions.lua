@@ -96,6 +96,7 @@ family = {
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"stantler", "wyrdeer"},
     {"sunkern", "sunflora"},
     {"houndour", "houndoom"},
     {"misdreavus", "mismagius"},
