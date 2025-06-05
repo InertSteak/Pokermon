@@ -187,7 +187,7 @@ jd_def["j_poke_blastoise"] = {
     },
 text_config = { colour = G.C.CHIPS },
 calc_function = function(card) 
-        card.joker_display_values.chip_mod = card.ability.extra.chips + (card.ability.extra.chip_mod * math.max((1 - G.GAME.current_round.hands_left),0))
+        card.joker_display_values.chip_mod = card.ability.extra.chips + (math.max(card.ability.extra.chip_mod * math.max((G.GAME.current_round.hands_left - 1)),0))
 
 end
 }
