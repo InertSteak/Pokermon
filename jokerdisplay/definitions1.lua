@@ -1446,13 +1446,13 @@ jd_def["j_poke_poliwrath"] = {
 
 jd_def["j_poke_abra"] = {
 text = {
-    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY }
 },
 extra = {
     {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-        { text = ")" },
+        { text = "(", colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+        { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
 calc_function = function(card)
@@ -1467,13 +1467,13 @@ end
 
 jd_def["j_poke_kadabra"] = {
 text = {
-    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+    {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY }
 },
 extra = {
     {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-        { text = ")" },
+        { text = "(", colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
+        { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
 calc_function = function(card)
@@ -1492,9 +1492,9 @@ text = {
 },
 extra = {
     {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-        { text = ")" },
+        { text = "(", colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+        { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
 calc_function = function(card)
@@ -1900,9 +1900,9 @@ jd_def["j_poke_seel"] = {
     },
     extra = {
         {
-            { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-            { text = ")" },
+            { text = "(", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
     },
     calc_function = function(card)
@@ -1957,9 +1957,9 @@ jd_def["j_poke_shellder"] = {
     },
     extra = {
         {
-            { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-            { text = ")" },
+            { text = "(", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
     },
 calc_function = function(card)
@@ -1989,9 +1989,9 @@ jd_def["j_poke_cloyster"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -2019,9 +2019,9 @@ jd_def["j_poke_cloyster"] = {
 jd_def["j_poke_gastly"] = {
 	extra = {
 		{
-			{ text = "(" },
+			{ text = "(", colour = G.C.GREEN, scale = 0.3 },
 			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-			{ text = ")" },
+			{ text = ")", colour = G.C.GREEN, scale = 0.3 },
 		},
 	},
 	calc_function = function(card)
@@ -2037,9 +2037,9 @@ jd_def["j_poke_gastly"] = {
 jd_def["j_poke_haunter"] = {
 	extra = {
 		{
-			{ text = "(" },
+			{ text = "(", colour = G.C.GREEN, scale = 0.3 },
 			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-			{ text = ")" },
+			{ text = ")", colour = G.C.GREEN, scale = 0.3 },
 		},
 	},
 	calc_function = function(card)
@@ -2310,9 +2310,9 @@ jd_def["j_poke_exeggutor"] = {
     },
     extra = {
         {
-            { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-            { text = ")" },
+            { text = "(", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
         {
             { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult",  colour = G.C.WHITE },

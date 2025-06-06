@@ -19,9 +19,9 @@ jd_def["j_poke_treecko"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -63,9 +63,9 @@ jd_def["j_poke_grovyle"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -331,9 +331,9 @@ jd_def["j_poke_zigzagoon"] = {
   },
   extra = {
     {
-      { text = "(" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
       { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -350,9 +350,9 @@ jd_def["j_poke_linoone"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   reminder_text = {

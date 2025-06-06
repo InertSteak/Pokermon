@@ -647,9 +647,9 @@ jd_def["j_poke_yanma"] = {
       {ref_table = "card.joker_display_values", ref_value = "mult2", colour = G.C.MULT },
     },
     {
-      { text = "(" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
       { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   reminder_text = {
@@ -1183,9 +1183,9 @@ jd_def["j_poke_swinub"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -1218,9 +1218,9 @@ jd_def["j_poke_piloswine"] = {
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)

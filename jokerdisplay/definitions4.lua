@@ -469,9 +469,9 @@ text = {
 },
 extra = {
   {
-    { text = "(" },
-    { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-    { text = ")" },
+    { text = "(", colour = G.C.GREEN, scale = 0.3 },
+    { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+    { text = ")", colour = G.C.GREEN, scale = 0.3 },
   },
 },
 reminder_text = {
@@ -506,9 +506,9 @@ end
 jd_def["j_poke_glaceon"] = {
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour=G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour=G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -577,9 +577,9 @@ jd_def["j_poke_mamoswine"] = {
       { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
     },
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
