@@ -357,20 +357,16 @@ jd_def["j_poke_togepi"] = {
 --	Togetic
 jd_def["j_poke_togetic"] = {
   text = {
-    { text = 'Max: ', colour = G.C.GREY, }, 
+    { text = 'Max: ', colour = G.C.GREY },
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "exp", colour = G.C.CHIPS },
+    { text = " " },
     {
       border_nodes = {
         { text = "X" },
         { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
       },
     },
-  },
-  extra = {
-    {
-      { text = "Max: ", colour = G.C.GREY, },
-      { text = "+", colour = G.C.CHIPS, },
-      { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "exp" , colour = G.C.CHIPS, },
-    }
   },
   calc_function = function(card)
     local count = 0
