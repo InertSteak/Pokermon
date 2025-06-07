@@ -2839,6 +2839,20 @@ jd_def["j_poke_lapras"] = {
     },
 }
 
+jd_def["j_poke_eevee"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money_mod", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    {text = "[", colour = G.C.GREY},
+    {ref_table ="card.ability.extra", ref_value = "limit", colour = G.C.ORANGE},
+    {text = "/", colour = G.C.GREY},
+    {ref_table ="card.ability.extra", ref_value = "max", colour = G.C.GREY},
+    {text = "]", colour = G.C.GREY},
+  },
+}
+
 jd_def["j_poke_vaporeon"] = {
     text = {
         { text = "+" ,
@@ -2846,6 +2860,22 @@ jd_def["j_poke_vaporeon"] = {
         { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", 
         colour = G.C.CHIPS},
     },
+}
+
+jd_def["j_poke_jolteon"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    {ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE},
+    { text = " [", colour = G.C.GREY},
+    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY},
+  },
+  calc_function = function(card)
+    card.joker_display_values.reroll_goal = 3
+  end
 }
 
 jd_def["j_poke_flareon"] = {
