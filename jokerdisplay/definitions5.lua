@@ -371,55 +371,59 @@ jd_def["j_poke_chandelure"] = {
 --	Mienshao
 --	Druddigon
 --	Golett
-jd_def["j_poke_golett"] = { 
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+jd_def["j_poke_golett"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-        local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
-
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
-    end 
+  },
+  calc_function = function(card)
+    local count = 0
+    local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
+      end
+    end
+    for k, playing_card in ipairs(cards_in_hand) do
+      if k % interval == 0 then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+      end
+    end
+    card.joker_display_values.Xmult = card.ability.extra.Xmult_multi ^ count
+  end
 }
 
 --	Golurk
-jd_def["j_poke_golurk"] = { 
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+jd_def["j_poke_golurk"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-        local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
-
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
-    end 
+  },
+  calc_function = function(card)
+    local count = 0
+    local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
+      end
+    end
+    for k, playing_card in ipairs(cards_in_hand) do
+      if k % interval == 0 then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+      end
+    end
+    card.joker_display_values.Xmult = card.ability.extra.Xmult_multi ^ count
+  end
 }
 
 --	Pawniard
