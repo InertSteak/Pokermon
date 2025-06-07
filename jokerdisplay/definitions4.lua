@@ -498,6 +498,13 @@ end
 }
 
 --	Leafeon
+jd_def["j_poke_leafeon"] = {
+  reminder_text = {
+    { text = "Rerolls: ", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE }
+  },
+}
+
 --	Glaceon
 jd_def["j_poke_glaceon"] = {
   extra = {

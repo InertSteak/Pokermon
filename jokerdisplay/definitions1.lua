@@ -2845,21 +2845,28 @@ jd_def["j_poke_eevee"] = {
     { ref_table = "card.ability.extra", ref_value = "money_mod", colour = G.C.GOLD },
   },
   reminder_text = {
-    {text = "[", colour = G.C.GREY},
-    {ref_table ="card.ability.extra", ref_value = "limit", colour = G.C.ORANGE},
-    {text = "/", colour = G.C.GREY},
-    {ref_table ="card.ability.extra", ref_value = "max", colour = G.C.GREY},
-    {text = "]", colour = G.C.GREY},
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "limit", colour = G.C.ORANGE },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "max", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY },
   },
 }
 
 jd_def["j_poke_vaporeon"] = {
-    text = {
-        { text = "+" ,
-        colour = G.C.CHIPS},
-        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", 
-        colour = G.C.CHIPS},
-    },
+  text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS},
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
+    { text = " [", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.reroll_goal = 3
+  end
 }
 
 jd_def["j_poke_jolteon"] = {
@@ -2868,10 +2875,10 @@ jd_def["j_poke_jolteon"] = {
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
-    {ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE},
-    { text = " [", colour = G.C.GREY},
+    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
+    { text = " [", colour = G.C.GREY },
     { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY},
+    { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
     card.joker_display_values.reroll_goal = 3
@@ -2879,14 +2886,23 @@ jd_def["j_poke_jolteon"] = {
 }
 
 jd_def["j_poke_flareon"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
     },
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
+    { text = " [", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.reroll_goal = 3
+  end
 }
 
 jd_def["j_poke_omanyte"] = {
