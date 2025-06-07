@@ -1164,7 +1164,29 @@ jd_def["j_poke_ursaring"] = {
 }
 
 --	Slugma
+jd_def["j_poke_slugma"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "Hands Remaining: ", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+  },
+}
+
 --	Magcargo
+jd_def["j_poke_magcargo"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "Hands Remaining: ", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+  },
+}
+
 --	Swinub
 jd_def["j_poke_swinub"] = {
   text = {
