@@ -1118,7 +1118,7 @@ jd_def["j_poke_heracross"] = {
 --	Sneasel
 jd_def["j_poke_sneasel"] = {
   text = {
-    { text = "$", colour = G.C.GOLD},
+    { text = "+$", colour = G.C.GOLD},
     { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
   },
   reminder_text = {
@@ -1170,7 +1170,7 @@ jd_def["j_poke_swinub"] = {
   text = {
     { text = "+", colour = G.C.MULT },
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
-    { text = " $", colour = G.C.GOLD},
+    { text = " +$", colour = G.C.GOLD},
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
@@ -1205,7 +1205,7 @@ jd_def["j_poke_piloswine"] = {
   text = {
     { text = "+", colour = G.C.MULT },
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
-    { text = " $", colour = G.C.GOLD},
+    { text = " +$", colour = G.C.GOLD},
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
@@ -1469,8 +1469,8 @@ jd_def["j_poke_magby"] = {
 --	Miltank
 jd_def["j_poke_miltank"] = {
     text = {
-        {text = "$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+        { text = "+$", colour = G.C.GOLD },
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
 
     },
     reminder_text = {

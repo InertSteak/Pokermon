@@ -521,7 +521,7 @@ jd_def["j_poke_arbok"] = {
 
 jd_def["j_poke_pikachu"] = {
     text = {
-        {text = "$", colour = G.C.GOLD},
+        {text = "+$", colour = G.C.GOLD},
         { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
 
     },
@@ -538,7 +538,7 @@ jd_def["j_poke_pikachu"] = {
 
 jd_def["j_poke_raichu"] = {
     text = {
-        {text = "$", colour = G.C.GOLD},
+        {text = "+$", colour = G.C.GOLD},
         { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
 
     },

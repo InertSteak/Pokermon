@@ -254,7 +254,7 @@ jd_def["j_poke_weavile"] = {
       },
     },
     { text = " "},
-    { text = "$", colour = G.C.GOLD},
+    { text = "+$", colour = G.C.GOLD},
     { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
   },
   reminder_text = {
