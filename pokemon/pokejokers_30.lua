@@ -273,6 +273,7 @@ local wyrdeer={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       G.GAME.scry_amount = math.max(card.ability.extra.scry, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      card.ability.extra.scry_added = 0
       return {
         message = localize('k_reset'),
         colour = G.C.PURPLE

@@ -104,6 +104,7 @@ family = {
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"gligar", "gliscor"},
+    {"slugma", "magcargo"},
     {"swinub", "piloswine", "mamoswine"},
     {"snubbull", "granbull"},
     {"mantyke", "mantine"},

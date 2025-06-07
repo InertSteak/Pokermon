@@ -755,7 +755,7 @@ local upgrade = {
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
-        G.hand.highlighted[i]:set_ability(enhancement, nil, true)
+        G.hand.highlighted[i]:set_ability(G.P_CENTERS[enhancement], nil, true)
       end
       juice_flip(card, true)
       poke_unhighlight_cards()
