@@ -2860,24 +2860,27 @@ return {
             j_poke_aron = {
                 name = 'Aron',
                 text = {
-                    "When a {C:attention}Steel{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
+                    "Gain {X:mult,C:white}X#2#{} Mult for each",
+                    "{C:attention}Steel{} card in poker hand,",
+                    "then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
             },
             j_poke_lairon = {
                 name = 'Lairon',
                 text = {
-                    "When a {C:attention}Steel{} or {C:attention}Stone{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
+                    "Gain {X:mult,C:white}X#2#{} Mult for each",
+                    "{C:attention}Steel{} and {C:attention}Stone{} card in",
+                    "poker hand, then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
             j_poke_aggron = {
                 name = 'Aggron',
                 text = {
-                    "When a {C:attention}Steel{}, {C:attention}Stone{} or {C:attention}Gold{} Card is scored,",
-                    "gain {X:mult,C:white}X#2#{} Mult and destroy it after scoring",
+                    "Gain {X:mult,C:white}X#2#{} Mult for each",
+                    "{C:attention}Steel{}, {C:attention}Stone{} and {C:attention}Gold{} card in",
+                    "poker hand, then destroy them",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
