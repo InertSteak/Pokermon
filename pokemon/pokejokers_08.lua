@@ -286,7 +286,110 @@ local ursaring={
   end,
 }
 -- Slugma 218
+local slugma={
+  name = "slugma",
+  pos = {x = 6, y = 6},
+  config = {extra = {chips = 0,chip_mod = 20, hands = 4, hand_reset = 4}, evo_rqmt = 80},
+  loc_txt = {
+    name = "Slugma",
+    text = {
+      "Every {C:attention}4{} {C:inactive}[#4#]{} hands played, destroy",
+      "first card held in hand and",
+      "this Joker gains {C:chips}+#2#{} Chips",
+      "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,self.config.evo_rqmt, center.ability.extra.hands}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.hands = card.ability.extra.hands - 1
+        if card.ability.extra.hands == 1 then
+          local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+        if card.ability.extra.hands == 0 then
+          if G.hand and G.hand.cards and G.hand.cards[1] then
+            poke_remove_card(G.hand.cards[1], card)
+          end
+          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          card.ability.extra.hands = card.ability.extra.hand_reset
+        end
+      end
+    end
+    if context.joker_main then
+      return{
+        message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+        colour = G.C.CHIPS,
+        chip_mod = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+}
 -- Magcargo 219
+local magcargo={
+  name = "magcargo",
+  pos = {x = 7, y = 6},
+  config = {extra = {chips = 0,chip_mod = 25, hands = 3, hand_reset = 3}},
+  loc_txt = {
+    name = "Magcargo",
+    text = {
+      "Every {C:attention}3{} {C:inactive}[#3#]{} hands played, destroy",
+      "first card held in hand and",
+      "this Joker gains {C:chips}+#2#{} Chips",
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.hands}}
+  end,
+  rarity = 3,
+  cost = 6,
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.hands = card.ability.extra.hands - 1
+        if card.ability.extra.hands == 1 then
+          local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+        if card.ability.extra.hands == 0 then
+          if G.hand and G.hand.cards and G.hand.cards[1] then
+            poke_remove_card(G.hand.cards[1], card)
+          end
+          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          card.ability.extra.hands = card.ability.extra.hand_reset
+        end
+      end
+    end
+    if context.joker_main then
+      return{
+        message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+        colour = G.C.CHIPS,
+        chip_mod = card.ability.extra.chips
+      }
+    end
+  end,
+}
 -- Swinub 220
 local swinub={
   name = "swinub",
@@ -299,7 +402,7 @@ local swinub={
   rarity = 2,
   cost = 6,
   stage = "Basic",
-  ptype = "Water",
+  ptype = "Earth",
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = true,
@@ -343,7 +446,7 @@ local piloswine={
   rarity = 3,
   cost = 8,
   stage = "One",
-  ptype = "Water",
+  ptype = "Earth",
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = true,
@@ -1415,5 +1518,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, heracross, sneasel, teddiursa, ursaring, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }
