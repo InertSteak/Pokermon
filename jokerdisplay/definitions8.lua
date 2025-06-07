@@ -197,6 +197,37 @@ jd_def["j_poke_dragapult"] = {
 --	Spectrier
 --	Calyrex
 --	Wyrdeer
+jd_def["j_poke_wyrdeer"] = {
+  text = {
+    { text = "+"},
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    local mult = 0
+    local highest = nil
+    local highest_card = nil
+
+    if G.scry_view then
+      for k, v in pairs(G.scry_view.cards) do
+        if not highest then highest = v.base.id; highest_card = v end
+        if v.base.id > highest then
+          highest = v.base.id
+          highest_card = v
+        end
+        if highest_card ~= nil then
+          if highest_card.debuff == false then
+            mult = highest_card.base.nominal * 2 * (highest_card:get_seal() == 'Red' and 2 or 1)
+          else
+            mult = 0
+          end
+        end
+      end
+    end
+    card.joker_display_values.mult = mult
+  end
+}
+
 --	Kleavor
 jd_def["j_poke_kleavor"] = {
   text = {

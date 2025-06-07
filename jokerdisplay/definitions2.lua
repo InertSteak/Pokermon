@@ -1378,41 +1378,36 @@ jd_def["j_poke_donphan"] = {
 
 --	Porygon2
 --	Stantler
---[[
-jd_def["j_poke_stantler"] = { 
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-    text_config = { colour = G.C.CHIPS },
-    reminder_text = {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
-      { text = ")" },
-    },
-calc_function = function(card)
-    local highest_rank = nil
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if poker_hands['Pair'] and next(poker_hands['Pair']) then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card.base.nominal and not highest_rank then
-            highest_rank = scoring_card.base.nominal
-            elseif scoring_card.base.nominal and highest_rank and scoring_card.base.nominal > highest_rank then
-            highest_rank = scoring_card.base.nominal
-            end
+jd_def["j_poke_stantler"] = {
+  text = {
+    { text = "+"},
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    local mult = 0
+    local highest = nil
+    local highest_card = nil
+
+    if G.scry_view then
+      for k, v in pairs(G.scry_view.cards) do
+        if not highest then highest = v.base.id; highest_card = v end
+        if v.base.id > highest then
+          highest = v.base.id
+          highest_card = v
         end
-        local chips = card.ability.extra.chips * highest_rank
-        if G.GAME.current_round.hands_left <= 1 then
-            card.joker_display_values.chips = chips * 2
-        else
-            card.joker_display_values.chips = chips
+        if highest_card ~= nil then
+          if highest_card.debuff == false then
+            mult = highest_card.base.nominal * (highest_card:get_seal() == 'Red' and 2 or 1)
+          else
+            mult = 0
+          end
         end
-    else card.joker_display_values.chips = 0
+      end
     end
-    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
-end
-}--]]
+    card.joker_display_values.mult = mult
+  end
+}
 
 --	Smeargle
 --	Tyrogue
