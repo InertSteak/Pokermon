@@ -2243,7 +2243,7 @@ jd_def["j_poke_electrode"] = {
             -- Set `x_mult` based on the condition
             if count + pos == #G.jokers.cards then
                 card.joker_display_values.x_mult = card.ability.extra.Xmult or 1
-                card.joker_display_values.money = card.ability.extra.money
+                card.joker_display_values.money = card.ability.extra.money or 0
             else
                 card.joker_display_values.x_mult = 1
                 card.joker_display_values.money = 0
@@ -2251,6 +2251,7 @@ jd_def["j_poke_electrode"] = {
         else
             -- Handle cases where there are not enough jokers
             card.joker_display_values.x_mult = card.ability.extra.Xmult
+            card.joker_display_values.money = card.ability.extra.money
         end
     
         -- Update `joker_display_values` with count and pos
