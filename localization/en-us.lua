@@ -97,7 +97,7 @@ return {
                     "{C:green}#2# in #3#{} chance to",
                     "upgrade level of",
                     "selected {C:attention}poker hand{}",
-                    "{C:inactive}(Hand: {C:attention}#1#{Cinactive}){}"
+                    "{C:inactive}(Hand: {C:attention}#1#{C:inactive}){}"
                 },
             },
             c_poke_sunstone = {
