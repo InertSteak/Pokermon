@@ -547,7 +547,6 @@ get_highest_evo = function(card)
     name = card.name or "bulbasaur"
   end
   local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
-  poke_debug(prefix_config)
   -- find the pokermon's family list
   local found_family = nil
   for _, v in ipairs(family) do
