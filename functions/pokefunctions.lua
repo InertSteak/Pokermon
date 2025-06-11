@@ -575,7 +575,7 @@ get_highest_evo = function(card)
 
   while max > 0 do
     local evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
-    if max_stage == G.P_CENTERS["j_poke_"..evo_name].stage then
+    if max_stage == G.P_CENTERS[prefix_config..evo_name].stage then
       table.insert(evos, evo_name)
       max = max - 1
     else
