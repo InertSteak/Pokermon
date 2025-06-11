@@ -546,7 +546,8 @@ get_highest_evo = function(card)
   else
     name = card.name or "bulbasaur"
   end
-
+  local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
+  poke_debug(prefix_config)
   -- find the pokermon's family list
   local found_family = nil
   for _, v in ipairs(family) do
@@ -562,13 +563,13 @@ get_highest_evo = function(card)
   -- Check for max evo in family list, ignoring megas and aux pokermons
   local max = #found_family
   local max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
-  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS["j_poke_"..max_evo_name].aux_poke) do
+  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS[prefix_config..max_evo_name].aux_poke) do
     max = max - 1
     max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
   end
-  local max_stage = G.P_CENTERS["j_poke_"..max_evo_name].stage
+  local max_stage = G.P_CENTERS[prefix_config..max_evo_name].stage
   -- if already at the max stage, return false
-  if G.P_CENTERS["j_poke_"..name].stage == max_stage then return false end
+  if G.P_CENTERS[prefix_config..name].stage == max_stage then return false end
 
   local evos = {max_evo_name}
   max = max - 1
