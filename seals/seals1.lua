@@ -56,7 +56,7 @@ local silver = {
 	atlas = "pinkseal",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
-		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) then
+		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) and not card.destroyed then
         card.ability.discarded = true
         G.E_MANAGER:add_event(Event({
           func = function()
