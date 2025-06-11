@@ -138,6 +138,12 @@ family = {
     {"gimmighoul", "gholdengo", "gimmighoulr"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
+    {{key = "unown", form = "A"},{key = "unown", form = "B"},{key = "unown", form = "C"}, {key = "unown", form = "D"}, {key = "unown", form = "E"}, {key = "unown", form = "F"},
+     {key = "unown", form = "G"}, {key = "unown", form = "H"}, {key = "unown", form = "I"}, {key = "unown", form = "J"}, {key = "unown", form = "K"}, {key = "unown", form = "L"},
+     {key = "unown", form = "M"}, {key = "unown", form = "N"}, {key = "unown", form = "O"}, {key = "unown", form = "P"}, {key = "unown", form = "Q"}, {key = "unown", form = "R"},
+     {key = "unown", form = "S"}, {key = "unown", form = "T"}, {key = "unown", form = "U"}, {key = "unown", form = "V"}, {key = "unown", form = "W"}, {key = "unown", form = "X"}, 
+     {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "Ex"}, {key = "unown", form = "Qu"}
+    },
 }
 
 extended_family = {

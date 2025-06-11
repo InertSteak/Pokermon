@@ -398,7 +398,7 @@ payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and n
 match_indent = true
 
 
-# Jirachi Double Payout
+# Jirachi Double Payout and DRE
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
@@ -409,6 +409,9 @@ local jirachis = find_joker('jirachi_banker')
 for i = 1, #jirachis do
   add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars, card = jirachis[i]})
   dollars = dollars + dollars
+end
+if G.GAME.modifiers.reset_no_interest then
+  G.GAME.modifiers.no_interest = nil
 end
 '''
 match_indent = true

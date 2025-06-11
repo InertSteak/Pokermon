@@ -491,6 +491,57 @@ local earth_energy = {
   end
 }
 
+local double_rainbow_energy = {
+  name = "double_rainbow_energy",
+  key = "double_rainbow_energy",
+  set = "Spectral",
+  config = {},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+  end,
+  pos = { x = 0, y = 0 },
+  atlas = "placeholder_item",
+  cost = 4,
+  etype = "Trans",
+  unlocked = true,
+  discovered = true,
+  can_use = function(self, card)
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    elseif G.jokers.cards and #G.jokers.cards > 0 then
+      choice = G.jokers.cards[1]
+    else
+      return false
+    end
+    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
+      return true
+    else
+      return false
+    end
+  end,
+  use = function(self, card, area, copier)
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+    for i = 1, 2 do
+      if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
+        energy_increase(choice, choice.ability.extra.ptype)
+      elseif type_sticker_applied(choice) then
+        energy_increase(choice, type_sticker_applied(choice))
+      end
+    end
+    if not G.GAME.modifiers.no_interest then
+      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.no_interest = true
+    end
+  end
+}
+
 local transformation = {
   name = "transformation",
   key = "transformation",
@@ -796,7 +847,7 @@ local emergy = {
 }
 
 local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, transformation, obituary, nightmare, revenant, megastone}
+        fairy_energy, dragon_energy, earth_energy, double_rainbow_energy, transformation, obituary, nightmare, revenant, megastone}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

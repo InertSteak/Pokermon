@@ -54,6 +54,12 @@ return {
                     "All cards have a {C:dark_edition}#1#{}",
                 } 
             },
+            b_poke_revenantdeck = {
+                name = "Revenant Deck",
+                text = {
+                    "All cards have a {C:dark_edition}#1#{}",
+                } 
+            },
             b_poke_luminousdeck = {
                 name = "Luminous Deck",
                 text = {
@@ -61,6 +67,15 @@ return {
                     "created {C:pink}Energized{} and",
                     "with random {C:pink}Type{} stickers"
                 }
+            },
+            b_poke_ampeddeck = {
+                name = "Amped Deck",
+                text = {
+                    "Start run with the",
+                    "{C:tarot,T:v_poke_energysearch}#1#{} voucher",
+                    "and a copy of",
+                    "{C:pink,T:c_poke_double_rainbow_energy}#2#"
+                } 
             },
         },
         Blind = {
@@ -4032,6 +4047,15 @@ return {
                     "to {C:attention}1{} selected card",
                 }
             },
+            c_poke_double_rainbow_energy = {
+                name = "Double Rainbow Energy",
+                text = {
+                    "{C:pink}Energize{} leftmost or selected",
+                    "Joker of any {C:pink}Type{} {C:red}t{C:attention}w{C:green}i{C:blue}c{C:purple}e{}",
+                    "Earn no interest this round",
+                    "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
+                },
+            },
             c_poke_fake_banker = {
                 name = 'Money Wish',
                 text = {
@@ -4293,7 +4317,7 @@ return {
                 text = {
                     "A Pokemon Joker",
                     "that hasn't {C:attention}Evolved{}",
-                    "{C:inactive}(Ignoring {C:attention}Baby{C:inactive} Pokemon)"
+                    "{C:inactive,s:0.8}(Ignoring {C:attention,s:0.8}Baby{C:inactive,s:0.8} and {C:purple,s:0.8}Legendary{C:inactive,s:0.8} Pokemon)"
                 }
             },
             stage1 = {
@@ -4827,7 +4851,8 @@ return {
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",
-            poke_settings_pokemon_aprilfools = "April Fools Content?",
+            poke_settings_pokemon_aprilfools = "Joke Content?",
+            poke_settings_pokemon_legacy = "Legacy Content?",
             poke_settings_pokemon_master = "Pokemon Master Mode?",
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
@@ -4861,7 +4886,9 @@ return {
             pokeball_variable = "Pokéball",
             goodrod_variable = "Good Rod",
             pinkseal_variable = "Pink Seal",
+            silverseal_variable = "Silver Seal",
             twisted_spoon_variable = "Twisted Spoon",
+            double_rainbow_energy_variable = "Double Rainbow Energy",
 
             --From Gastly Line
             poke_lick_ex = "Lick!",

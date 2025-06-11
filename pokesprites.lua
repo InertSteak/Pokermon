@@ -251,6 +251,13 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "placeholder_deck",
+    path = "placeholder_deck.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "unergy",
     path = "unergy.png",
     px = 71,
@@ -288,6 +295,20 @@ SMODS.Atlas({
 SMODS.Atlas({
     key = "shinyaltjirachi",
     path = "shinyaltjirachi.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "unown_dex",
+    path = "UnownDex.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "shiny_unown_dex",
+    path = "ShinyUnownDex.png",
     px = 71,
     py = 95
 }):register()
