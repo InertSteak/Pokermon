@@ -322,9 +322,10 @@ local mystery_egg = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
+      local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
       local poke_keys = {}
       for k, v in pairs(G.P_CENTERS) do
-        if string.sub(v.key,1,7) == "j_poke_" and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
+        if string.sub(v.key,1,string.len(prefix_config)) == prefix_config and get_gen_allowed(v.atlas) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
           if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
             table.insert(poke_keys, {key = v.key, rarity = v.rarity})
           end
