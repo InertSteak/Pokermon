@@ -96,7 +96,7 @@ return {
                     "{C:green}#3#分の#2#{} の確率で",
                     "選択した {C:attention}ポーカーハンド{} の",
                     "レベルがアップグレードする",
-                    "{C:inactive}(ハンド：{C:attention}#1#{Cinactive}){}"
+                    "{C:inactive}(ハンド：{C:attention}#1#{C:inactive}){}"
                 },
             },
             c_poke_sunstone = {

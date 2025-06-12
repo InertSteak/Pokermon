@@ -92,7 +92,7 @@ return {
                     "aumentare il livello della",
                     "{C:attention}mano di poker{} selezionata",
                     "{C:attention}Carta Evoluzione{}",
-                    "{C:inactive}(Mano: {C:attention}#1#{Cinactive}){}"
+                    "{C:inactive}(Mano: {C:attention}#1#{C:inactive}){}"
                 },
             },
             c_poke_sunstone = {
