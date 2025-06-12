@@ -28,6 +28,7 @@ local pokemondeck = {
 	pos = { x = 0, y = 0 },
 	atlas = "pokedeck",
 }
+
 local luminousdeck = {
 	name = "luminousdeck",
 	key = "luminousdeck",  
@@ -44,10 +45,11 @@ local luminousdeck = {
     G.GAME.modifiers.apply_type = true
   end
 }
+
 local obituarydeck = {
 	name = "obituarydeck",
 	key = "obituarydeck",  
-	order = 19,
+	order = 21,
   unlocked = true,
   discovered = true,
 	config = {},
@@ -61,10 +63,27 @@ local obituarydeck = {
   end,
 }
 
+local revenantdeck = {
+	name = "revenanteck",
+	key = "revenantdeck",  
+	order = 22,
+  unlocked = true,
+  discovered = true,
+	config = {},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {localize("silverseal_variable")}}
+  end,
+	pos = { x = 0, y = 0 },
+	atlas = "placeholder_deck",
+  apply = function(self)
+    G.GAME.modifiers.poke_force_seal = "poke_silver"
+  end,
+}
+
 local telekineticdeck = {
 	name = "telekineticdeck",
 	key = "telekineticdeck",  
-	order = 20,
+	order = 19,
   unlocked = true,
   discovered = true,
 	config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
@@ -75,10 +94,29 @@ local telekineticdeck = {
 	atlas = "pokedeck",
 } 
 
-local dList = {luminousdeck, obituarydeck, telekineticdeck}
+local ampeddeck = {
+	name = "ampeddeck",
+	key = "ampeddeck",  
+	order = 20,
+  unlocked = true,
+  discovered = true,
+	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
+  end,
+	pos = { x = 0, y = 0 },
+	atlas = "placeholder_deck",
+} 
+
+local dList = {luminousdeck, telekineticdeck, ampeddeck}
 
 if pokermon_config.pokeballs then
   table.insert(dList, 1, pokemondeck)
+end
+
+if pokermon_config.pokemon_legacy then
+  table.insert(dList, obituarydeck)
+  table.insert(dList, revenantdeck)
 end
 
 return {name = "Back",

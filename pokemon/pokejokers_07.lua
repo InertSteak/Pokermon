@@ -1,4 +1,36 @@
 -- Ampharos 181
+local ampharos={
+  name = "ampharos",
+  pos = {x = 9, y = 2},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "Two",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.playing_card_added and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    end
+  end,
+}
 -- Bellossom 182
 local bellossom={
   name = "bellossom",
@@ -841,6 +873,81 @@ local misdreavus = {
   end,
 }
 -- Unown 201
+local unown={
+  name = "unown",
+  pos = {x = 9, y = 4},
+  soul_pos = {x = 0, y = 0},
+  config = {extra = {mult = 4, form = "A"}},
+  loc_txt = {
+    name = "Unown",
+    text = {
+      "{C:mult}+#1#{} Mult",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local form = "A"
+      local forms = { "A", "B", "C", "D", "E", "F", "G",
+                      "H", "I", "J", "K", "L", "M", "N",
+                      "O", "P", "Q", "R", "S", "T", "U",
+                      "V", "W", "X", "Y", "Z", "Ex", "Qu"
+                    }
+      if G.jokers and G.jokers.cards then
+        for k, v in pairs(G.jokers.cards) do
+          if v.config.center.name == "unown" then
+            for i = 1, #forms do
+              if forms[i] == v.ability.extra.form then
+                table.remove(forms, i)
+                break
+              end
+            end
+          end
+        end
+      end
+      if #forms > 0 then
+        form = pseudorandom_element(forms, pseudoseed("unown"))
+      end
+      card.ability.extra.form = form
+      self:set_sprites(card)
+    end
+  end,
+  set_sprites = function(self, card, front)
+    card.children.center:set_sprite_pos({x = 9, y = 4})
+    if card.ability and card.ability.extra and card.ability.extra.form then
+      local forms = {A = {x = 0, y = 0}, B = {x = 1, y = 0}, C = {x = 2, y = 0}, D = {x = 3, y = 0}, E = {x = 4, y = 0}, F = {x = 5, y = 0}, G = {x = 6, y = 0},
+                     H = {x = 0, y = 1}, I = {x = 1, y = 1}, J = {x = 2, y = 1}, K = {x = 3, y = 1}, L = {x = 4, y = 1}, M = {x = 5, y = 1}, N = {x = 6, y = 1},
+                     O = {x = 0, y = 2}, P = {x = 1, y = 2}, Q = {x = 2, y = 2}, R = {x = 3, y = 2}, S = {x = 4, y = 2}, T = {x = 5, y = 2}, U = {x = 6, y = 2},
+                     V = {x = 0, y = 3}, W = {x = 1, y = 3}, X = {x = 2, y = 3}, Y = {x = 3, y = 3}, Z = {x = 4, y = 3}, Ex = {x = 5, y = 3}, Qu = {x = 6, y = 3}
+                    }
+      local unown_atlas = (card.edition and card.edition.poke_shiny) and "poke_shiny_unown_dex" or "poke_unown_dex"              
+      card.children.floating_sprite.atlas = G.ASSET_ATLAS[unown_atlas]
+      card.children.floating_sprite:set_sprite_pos(forms[card.ability.extra.form])
+    end
+  end,
+}
 -- Wobbuffet 202
 local wobbuffet={
   name = "wobbuffet",
@@ -1264,5 +1371,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

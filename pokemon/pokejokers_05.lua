@@ -129,20 +129,27 @@ local jynx={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.playing_card_added and not card.getting_sliced then
+    if context.playing_card_added and not card.getting_sliced and context.cards then
       if context.cards and type(context.cards) == "table" and #context.cards > 0 then
+        local cards_added = {}
         for k, v in ipairs(context.cards) do
           if type(v) == "table" then
-            local card_to_copy = v
-            local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-            copy:add_to_deck()
-            G.deck.config.card_limit = G.deck.config.card_limit + 1
-            table.insert(G.playing_cards, copy)
-            G.deck:emplace(copy)
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-            playing_card_joker_effects({true});
+            if v.jynx then
+              v.jynx = nil
+            else
+              local card_to_copy = v
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.deck:emplace(copy)
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+              copy.jynx = true
+              cards_added[#cards_added] = copy
+            end
           end
         end
+        if cards_added then playing_card_joker_effects(cards_added); poke_debug("cards added!") end
       end
     end
     if context.setting_blind then

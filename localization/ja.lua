@@ -1227,7 +1227,7 @@ return {
                     "プレイしたハンドに",
                     "{C:attention}ストレート{} が含まれる場合",
                     "チップ {C:chips}+#2#{}",
-                    "{C:inactive,s:0.8}(チップ {C:chips,s:0.8}+#1#{} / +60{C:inactive,s:0.8}で進化)"
+                    "{C:inactive,s:0.8}(チップ {C:chips,s:0.8}+#1#{C:inactive,s:0.8} / +60で進化)"
                 } 
             }, 
             j_poke_rapidash = {
@@ -1410,9 +1410,10 @@ return {
             j_poke_gengar = {
                 name = 'ゲンガー',      
                 text = {
-                    "{C:green}パーセントチャンス{}",
-                    "ラウンド終了時にランダムな {C:attention}ジョーカー{} に",
-                    "ときどき {C:dark_edition}ネガティブ{} を替える",
+                    "ラウンド終了時に{C:green}#1#%{}の確率で",
+					"ランダムな {C:attention}ジョーカー{} に",
+                    "{C:dark_edition}ネガティブ{} を替える",
+					"{C:inactive,s:0.8}(確率は変更できない)",
                     "{C:inactive,s:0.8}(ゲンガー除き){}"
                 } 
             },
@@ -1699,7 +1700,7 @@ return {
 					"{C:dark_edition}フォイル{}、 {C:dark_edition}ホログラム{}",
                     "{C:dark_edition}ポリクローム{} エディションのいずれかを得る",
                     "{C:inactive}(現在 倍率 {C:mult}+#1#{C:inactive}",
-                    "{C:inactive,s:0.8}({C:metal,s:0.8}鋼 {C:inactive,s:0.8}タイプ ステッカで進化)",
+                    "{C:inactive,s:0.8}({C:metal,s:0.8}鋼 {C:inactive,s:0.8}タイプ ステッカか {C:attention,s:0.8}固い石{C:inactive,s:0.8}で進化)",
                 } 
             },
             j_poke_jynx = {
@@ -1871,7 +1872,7 @@ return {
 					"{X:attention,C:white}1+{} : {C:tarot}タロット{} カードを作る",
                     "{X:attention,C:white}2+{} : {C:money}$#2#{} を得る",
                     "{X:attention,C:white}3+{} : {C:item}アイテム{} カードを作る",
-					"{C:inactive,s:0.8}(空きが必要)",
+					"{C:inactive,s:0.8}(空きバサギリが必要)",
                     "{X:attention,C:white}4+{} : ラウンドごとに1回 {C:attention}タグ{} を作る {C:inactive}#3#{}",
                 } 
             },
@@ -2008,10 +2009,11 @@ return {
                 name = 'ミュウ',
                 text = {
 					"ショップ終了時に",
-					"ランダムな {C:dark_edition}ネガティブ{} {C:attention}タロット{},",
+					"ランダムな {C:dark_edition}ネガティブ{} {C:tarot}タロット{},",
 					"{C:spectral}スペクトル{} か {C:item}アイテム{} カードを作る",
-					"ときどき {C:attention}代わり{} にランダムな {C:dark_edition}ネガティブ{} ジョーカーを作る",
-					"{C:green}パーセントチャンス{}",
+					"{C:green}#1#%{}の確率で {C:attention}代わり{} に",
+					"ラ{C:dark_edition}ネガティブ{} ジョーカーを作る",
+					"{C:inactive,s:0.8}(確率は変更できない)",
                 } 
             },
 			j_poke_chikorita = {
@@ -3782,6 +3784,19 @@ return {
 					"すべての手札にあるカードを {C:spades}#2#{} に変換する",
                 }
             },
+			j_poke_kleavor = {
+                name = 'バサギリ',      
+                text = {
+					"ブラインドが選択された時",
+					"右のジョーカーを破壊しと",
+					"倍率 {C:mult}+#2#{} を得る",
+					"ジョーカーが {C:green}アンコモン{} またはそれ以上の場合",
+					"デッキに {C:dark_edition}フォイル{}、 {C:dark_edition}ホログラム{}",
+                    "{C:dark_edition}ポリクローム{} エディションのいずれかの {C:attention}ストーンカード{} を加える",
+                    "{C:inactive}(現在 倍率 {C:mult}+#1#{C:inactive})",
+                } 
+            },
+			
 			j_poke_ursaluna = {
               name = "ガチグマ",
               text = {

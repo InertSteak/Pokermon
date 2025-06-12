@@ -225,6 +225,68 @@ local dreepy_dart={
 -- Spectrier 897
 -- Calyrex 898
 -- Wyrdeer 899
+local wyrdeer={
+  name = "wyrdeer",
+  pos = {x = 0, y = 8},
+  config = {extra = {scry = 2, scry_plus = 1, scry_added = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.scry, center.ability.extra.scry_plus}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex8",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry_plus
+        card.ability.extra.scry_added = card.ability.extra.scry_added + card.ability.extra.scry_plus
+      end
+    end
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+        local highest = nil
+        local highest_card = nil
+        for k, v in pairs(G.scry_view.cards) do
+          if not highest then highest = v.base.id; highest_card = v end
+          if v.base.id > highest then
+            highest = v.base.id
+            highest_card = v
+          end
+        end
+        if context.other_card == highest_card then
+          local Mult = 2 * highest_card.base.nominal
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}},
+            message_card = context.other_card,
+            colour = G.C.MULT,
+            mult_mod = Mult,
+            card = card,
+          }
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.GAME.scry_amount = math.max(card.ability.extra.scry, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      card.ability.extra.scry_added = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.PURPLE
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Kleavor 900
 local kleavor={
   name = "kleavor", 
@@ -284,5 +346,5 @@ local kleavor={
   end
 }
 return {name = "Pokemon Jokers 871-900", 
-        list = {dreepy, drakloak, dragapult, dreepy_dart, kleavor},
+        list = {dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

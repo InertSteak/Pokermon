@@ -82,6 +82,7 @@ family = {
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
+    {"mareep", "flaaffy", "ampharos"},
     {"sneasel", "weavile"},
     {"teddiursa", "ursaring", "ursaluna"},
     {"remoraid", "octillery"},
@@ -95,6 +96,7 @@ family = {
     {"murkrow", "honchkrow"},
     {"bonsly", "sudowoodo"},
     {"hoppip", "skiploom", "jumpluff"},
+    {"stantler", "wyrdeer"},
     {"sunkern", "sunflora"},
     {"houndour", "houndoom"},
     {"misdreavus", "mismagius"},
@@ -102,6 +104,7 @@ family = {
     {"pineco", "forretress"},
     {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
     {"gligar", "gliscor"},
+    {"slugma", "magcargo"},
     {"swinub", "piloswine", "mamoswine"},
     {"snubbull", "granbull"},
     {"mantyke", "mantine"},
@@ -135,6 +138,12 @@ family = {
     {"gimmighoul", "gholdengo", "gimmighoulr"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
+    {{key = "unown", form = "A"},{key = "unown", form = "B"},{key = "unown", form = "C"}, {key = "unown", form = "D"}, {key = "unown", form = "E"}, {key = "unown", form = "F"},
+     {key = "unown", form = "G"}, {key = "unown", form = "H"}, {key = "unown", form = "I"}, {key = "unown", form = "J"}, {key = "unown", form = "K"}, {key = "unown", form = "L"},
+     {key = "unown", form = "M"}, {key = "unown", form = "N"}, {key = "unown", form = "O"}, {key = "unown", form = "P"}, {key = "unown", form = "Q"}, {key = "unown", form = "R"},
+     {key = "unown", form = "S"}, {key = "unown", form = "T"}, {key = "unown", form = "U"}, {key = "unown", form = "V"}, {key = "unown", form = "W"}, {key = "unown", form = "X"}, 
+     {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "Ex"}, {key = "unown", form = "Qu"}
+    },
 }
 
 extended_family = {
@@ -296,8 +305,9 @@ poke_backend_evolve = function(card, to_key)
   local old_key = card.config.center.key
 
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
-  if card.ability.perishable and card.config.center.rarity ~= "poke_mega" and not card.ability.extra.devolved and card.ability.perish_tally > 0 then
+  if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
     card.ability.perish_tally = G.GAME.perishable_rounds
+    card.debuff = false
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
@@ -536,7 +546,7 @@ get_highest_evo = function(card)
   else
     name = card.name or "bulbasaur"
   end
-
+  local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
   -- find the pokermon's family list
   local found_family = nil
   for _, v in ipairs(family) do
@@ -552,20 +562,20 @@ get_highest_evo = function(card)
   -- Check for max evo in family list, ignoring megas and aux pokermons
   local max = #found_family
   local max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
-  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS["j_poke_"..max_evo_name].aux_poke) do
+  while max > 0 and (string.sub(max_evo_name,1,5) == "mega_" or G.P_CENTERS[prefix_config..max_evo_name].aux_poke) do
     max = max - 1
     max_evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
   end
-  local max_stage = G.P_CENTERS["j_poke_"..max_evo_name].stage
+  local max_stage = G.P_CENTERS[prefix_config..max_evo_name].stage
   -- if already at the max stage, return false
-  if G.P_CENTERS["j_poke_"..name].stage == max_stage then return false end
+  if G.P_CENTERS[prefix_config..name].stage == max_stage then return false end
 
   local evos = {max_evo_name}
   max = max - 1
 
   while max > 0 do
     local evo_name = (type(found_family[max]) == "table" and found_family[max].key) or found_family[max]
-    if max_stage == G.P_CENTERS["j_poke_"..evo_name].stage then
+    if max_stage == G.P_CENTERS[prefix_config..evo_name].stage then
       table.insert(evos, evo_name)
       max = max - 1
     else

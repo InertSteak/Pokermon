@@ -3,81 +3,77 @@ local jd_def = JokerDisplay.Definitions
 
 
 --	Chikorita
-jd_def["j_poke_chikorita"] = { 
-    text = {
-        {text = "+$", colour = G.C.GOLD},
-        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
-        },
-    reminder_text = {
-        {text = "End of Round"}
-    },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-        local interval = card.ability.extra.interval or 3
-
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    -- Check if the card is at the nth interval
-                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.money = card.ability.extra.money * count
-    end 
+jd_def["j_poke_chikorita"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    {text = "End of Round"}
+  },
+  calc_function = function(card)
+    local count = 0
+    local interval = card.ability.extra.interval or 3
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
+      end
+    end
+    for k, playing_card in ipairs(cards_in_hand) do
+      if k % interval == 0 then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+      end
+    end
+    card.joker_display_values.money = card.ability.extra.money * count
+  end
 }
 
 --	Bayleef
-jd_def["j_poke_bayleef"] = { 
-    text = {
-        {text = "+$", colour = G.C.GOLD},
-        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
-        },
-    reminder_text = {
-        {text = "End of Round"}
-    },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-        local interval = card.ability.extra.interval or 2
-
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    -- Check if the card is at the nth interval
-                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.money = card.ability.extra.money * count
-    end 
+jd_def["j_poke_bayleef"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    {text = "End of Round"}
+  },
+  calc_function = function(card)
+    local count = 0
+    local interval = card.ability.extra.interval or 2
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
+      end
+    end
+    for k, playing_card in ipairs(cards_in_hand) do
+      if k % interval == 0 then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+      end
+    end
+    card.joker_display_values.money = card.ability.extra.money * count
+  end
 }
 
 --	Meganium
-jd_def["j_poke_meganium"] = { 
-    text = {
-        {text = "+$", colour = G.C.GOLD},
-        {ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD}
-        },
-    reminder_text = {
-        {text = "End of Round"}
-    },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-        local interval = card.ability.extra.interval or 1
-
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    -- Check if the card is at the nth interval
-                    if (i % interval == 0) and not (playing_card.facing == 'back') and not playing_card.debuff  then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.money = card.ability.extra.money * count
-    end 
+jd_def["j_poke_meganium"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    {text = "End of Round"}
+  },
+  calc_function = function(card)
+    local count = 0
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+      end
+    end
+    card.joker_display_values.money = card.ability.extra.money * count
+  end
 }
 
 --	Cyndaquil
@@ -288,30 +284,23 @@ jd_def["j_poke_crobat"] = {
 --	Lanturn
 --	Pichu
 jd_def["j_poke_pichu"] = {
-    extra = {{
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
-            },
-        },
-    },},
-    text = {
-        {text = "$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
-    
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+      },
     },
-    reminder_text = {
-        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
-    },
-    calc_function = function(card)
-        local money
-        money = math.min(10, #G.jokers.cards * card.ability.extra.money)
-        card.joker_display_values.money = money
-        card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
-    end
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
 }
-
 
 --	Cleffa
 jd_def["j_poke_cleffa"] = {
@@ -364,20 +353,16 @@ jd_def["j_poke_togepi"] = {
 --	Togetic
 jd_def["j_poke_togetic"] = {
   text = {
-    { text = 'Max: ', colour = G.C.GREY, }, 
+    { text = 'Max: ', colour = G.C.GREY },
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "exp", colour = G.C.CHIPS },
+    { text = " " },
     {
       border_nodes = {
         { text = "X" },
         { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
       },
     },
-  },
-  extra = {
-    {
-      { text = "Max: ", colour = G.C.GREY, },
-      { text = "+", colour = G.C.CHIPS, },
-      { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "exp" , colour = G.C.CHIPS, },
-    }
   },
   calc_function = function(card)
     local count = 0
@@ -397,8 +382,41 @@ jd_def["j_poke_togetic"] = {
 --	Natu
 --	Xatu
 --	Mareep
+jd_def["j_poke_mareep"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Flaaffy
+jd_def["j_poke_flaaffy"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Ampharos
+jd_def["j_poke_ampharos"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bellossom
 jd_def["j_poke_bellossom"] = {
     text = {
@@ -621,9 +639,9 @@ jd_def["j_poke_yanma"] = {
       {ref_table = "card.joker_display_values", ref_value = "mult2", colour = G.C.MULT },
     },
     {
-      { text = "(" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
       { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   reminder_text = {
@@ -1100,7 +1118,7 @@ jd_def["j_poke_heracross"] = {
 --	Sneasel
 jd_def["j_poke_sneasel"] = {
   text = {
-    { text = "$", colour = G.C.GOLD},
+    { text = "+$", colour = G.C.GOLD},
     { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
   },
   reminder_text = {
@@ -1146,20 +1164,42 @@ jd_def["j_poke_ursaring"] = {
 }
 
 --	Slugma
+jd_def["j_poke_slugma"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "Hands Remaining: ", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+  },
+}
+
 --	Magcargo
+jd_def["j_poke_magcargo"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "Hands Remaining: ", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+  },
+}
+
 --	Swinub
 jd_def["j_poke_swinub"] = {
   text = {
     { text = "+", colour = G.C.MULT },
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
-    { text = " $", colour = G.C.GOLD},
+    { text = " +$", colour = G.C.GOLD},
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -1187,14 +1227,14 @@ jd_def["j_poke_piloswine"] = {
   text = {
     { text = "+", colour = G.C.MULT },
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
-    { text = " $", colour = G.C.GOLD},
+    { text = " +$", colour = G.C.GOLD},
     { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD  },
   },
   extra = {
     {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3  },
-      { text = ")" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
@@ -1356,39 +1396,35 @@ jd_def["j_poke_donphan"] = {
 
 --	Porygon2
 --	Stantler
-jd_def["j_poke_stantler"] = { 
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-    text_config = { colour = G.C.CHIPS },
-    reminder_text = {
-      { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
-      { text = ")" },
-    },
-calc_function = function(card)
-    local highest_rank = nil
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if poker_hands['Pair'] and next(poker_hands['Pair']) then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card.base.nominal and not highest_rank then
-            highest_rank = scoring_card.base.nominal
-            elseif scoring_card.base.nominal and highest_rank and scoring_card.base.nominal > highest_rank then
-            highest_rank = scoring_card.base.nominal
-            end
+jd_def["j_poke_stantler"] = {
+  text = {
+    { text = "+"},
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    local mult = 0
+    local highest = nil
+    local highest_card = nil
+
+    if G.scry_view then
+      for k, v in pairs(G.scry_view.cards) do
+        if not highest then highest = v.base.id; highest_card = v end
+        if v.base.id > highest then
+          highest = v.base.id
+          highest_card = v
         end
-        local chips = card.ability.extra.chips * highest_rank
-        if G.GAME.current_round.hands_left <= 1 then
-            card.joker_display_values.chips = chips * 2
-        else
-            card.joker_display_values.chips = chips
+        if highest_card ~= nil then
+          if highest_card.debuff == false then
+            mult = highest_card.base.nominal * (highest_card:get_seal() == 'Red' and 2 or 1)
+          else
+            mult = 0
+          end
         end
-    else card.joker_display_values.chips = 0
+      end
     end
-    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
-end
+    card.joker_display_values.mult = mult
+  end
 }
 
 --	Smeargle
@@ -1455,8 +1491,8 @@ jd_def["j_poke_magby"] = {
 --	Miltank
 jd_def["j_poke_miltank"] = {
     text = {
-        {text = "$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+        { text = "+$", colour = G.C.GOLD },
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
 
     },
     reminder_text = {
