@@ -1106,22 +1106,25 @@ local stantler={
   eternal_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.play and not context.other_card.debuff and G.scry_view and #G.scry_view.cards > 0 then
         local highest = nil
         local highest_card = nil
         for k, v in pairs(G.scry_view.cards) do
-          if not highest then highest = v.base.id; highest_card = v end
+          if not highest then 
+            highest = v.base.id
+            highest_card = v 
+          end
           if v.base.id > highest then
             highest = v.base.id
             highest_card = v
           end
         end
-        if context.other_card == highest_card then
+        if highest_card and not highest_card.debuff then
           if not context.blueprint then card.ability.extra.triggered = card.ability.extra.triggered + 1 end
-          local Mult = highest_card.base.nominal
+          local Mult = highest_card.base.id
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {Mult}},
-            message_card = context.other_card,
+            message_card = highest_card,
             colour = G.C.MULT,
             mult_mod = Mult,
             card = card,
