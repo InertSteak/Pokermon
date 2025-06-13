@@ -612,6 +612,35 @@ payload = "elseif _c.effect == 'Lucky Card' then loc_vars = {math.pow(3, #find_j
 match_indent = true
 overwrite = true
 
+# Shinx line card flipping
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "self:emplace(card, nil, stay_flipped)"
+position = "before"
+payload="""
+for i, pokemon in ipairs({"shinx", "luxio", "luxray"}) do
+  for j, joker in ipairs(find_joker(pokemon)) do
+    flip_num = joker.ability.extra.flip_num
+    flip_in = joker.ability.extra.flip_in
+    if pseudorandom(pseudoseed("shinx")) < G.GAME.probabilities.normal*flip_num/flip_in then
+      stay_flipped = true
+    end
+  end
+end
+"""
+match_indent = true
+
+# Luxray gleam eyes
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if backwards then"
+position = "at"
+payload = "if backwards and not next(find_joker('luxray')) then"
+overwrite = true
+match_indent = true
+
 # Controller support for reserving
 [[patches]]
 [patches.pattern]
