@@ -1407,20 +1407,19 @@ jd_def["j_poke_stantler"] = {
     local highest = nil
     local highest_card = nil
 
-    if G.scry_view then
+    if G.scry_view and #G.scry_view.cards > 0 then
       for k, v in pairs(G.scry_view.cards) do
-        if not highest then highest = v.base.id; highest_card = v end
-        if v.base.id > highest then
-          highest = v.base.id
+        if not highest then 
+          highest = v.base.nominal
+          highest_card = v 
+        end
+        if v.base.nominal > highest then
+          highest = v.base.nominal
           highest_card = v
         end
-        if highest_card ~= nil then
-          if highest_card.debuff == false then
-            mult = highest_card.base.nominal * (highest_card:get_seal() == 'Red' and 2 or 1)
-          else
-            mult = 0
-          end
-        end
+      end
+      if highest_card and not highest_card.debuff then
+        mult = highest_card.base.nominal * (highest_card:get_seal() == 'Red' and 2 or 1)
       end
     end
     card.joker_display_values.mult = mult
