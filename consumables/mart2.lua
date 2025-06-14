@@ -206,7 +206,7 @@ local thunderstone = {
         local _card = create_playing_card({
               front = pseudorandom_element(poss_cards, pseudoseed('thunderstone')),
               center = G.P_CENTERS.m_gold}, area, nil, nil, {G.C.SECONDARY_SET.Enhanced})
-        cards_added[#cards_added] = _card
+        cards_added[#cards_added + 1] = _card
       end
       playing_card_joker_effects(cards_added)
       poke_remove_card(selected, card)

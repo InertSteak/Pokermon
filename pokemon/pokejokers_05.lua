@@ -149,7 +149,7 @@ local jynx={
             end
           end
         end
-        if cards_added then playing_card_joker_effects(cards_added); poke_debug("cards added!") end
+        if cards_added then playing_card_joker_effects(cards_added); end
       end
     end
     if context.setting_blind then
