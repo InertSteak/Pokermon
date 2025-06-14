@@ -110,13 +110,17 @@ local zorua = {
       local temp_ability = card.ability
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
+      if not full_UI_table.name then
+        full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
+      end
       card.ability = temp_ability
-      local textDyna = full_UI_table.name[1].nodes.nodes and full_UI_table.name[1].nodes.nodes[1].nodes[1].config.object or full_UI_table.name[1].nodes[1].config.object
-      textDyna.string = textDyna.string .. localize("poke_illusion")
-      textDyna.config.string = {textDyna.string}
-      textDyna.strings = {}
-      textDyna:update_text(true)
+      local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
+      if textDyna then
+        textDyna.string = textDyna.string .. localize("poke_illusion")
+        textDyna.config.string = {textDyna.string}
+        textDyna.strings = {}
+        textDyna:update_text(true)
+      end
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
       local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
