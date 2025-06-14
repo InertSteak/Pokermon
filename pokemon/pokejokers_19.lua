@@ -114,8 +114,8 @@ local zorua = {
         full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
       end
       card.ability = temp_ability
-      local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
-      if textDyna then
+      if full_UI_table.name[1].nodes[1] then
+        local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
         textDyna.string = textDyna.string .. localize("poke_illusion")
         textDyna.config.string = {textDyna.string}
         textDyna.strings = {}
