@@ -313,6 +313,10 @@ local slugma={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.first_hand_drawn and card.ability.extra.hands == 1 then
+        local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
       if context.before and not context.blueprint then
         card.ability.extra.hands = card.ability.extra.hands - 1
         if card.ability.extra.hands == 1 then
@@ -366,6 +370,10 @@ local magcargo={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.first_hand_drawn and card.ability.extra.hands == 1 then
+        local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
       if context.before and not context.blueprint then
         card.ability.extra.hands = card.ability.extra.hands - 1
         if card.ability.extra.hands == 1 then
