@@ -877,34 +877,67 @@ local unown={
   name = "unown",
   pos = {x = 9, y = 4},
   soul_pos = {x = 0, y = 0},
-  config = {extra = {mult = 4, form = "A"}},
+  config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = "14"}}}},
   loc_txt = {
     name = "Unown",
     text = {
-      "{C:mult}+#1#{} Mult",
+      "{C:attention}Nature:{} {C:inactive}({C:attention}#2#{C:inactive})",
+      "{C:mult}+#1#{} Mult if scoring hand",
+      "contains a {C:attention}Nature{} card",
+      "{br:2}ERROR - CONTACT STEAK",
+      "{S:1.1,C:red,E:2}self destructs{} at end of round",
     }
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+    local card_vars = {center.ability.extra.mult}
+    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    return {vars = card_vars}
   end,
-  rarity = 1,
+  rarity = "poke_safari",
   cost = 5,
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
+        local score = nil
+        for k, v in pairs(context.scoring_hand) do
+          if v:get_id() == card.ability.extra.targets[1].id then
+            score = true
+          end
+        end
+        if score then
+          card.ability.extra.triggered = true
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        end
       end
+      if context.after and card.ability.extra.triggered and next(SMODS.find_card("j_poke_ruins_of_alph")) and not context.blueprint then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            remove(self, card, context)
+            return true
+          end
+        }))
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          remove(self, card, context)
+          return true
+        end
+      }))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_flees_ex")})
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
@@ -913,7 +946,7 @@ local unown={
       local forms = { "A", "B", "C", "D", "E", "F", "G",
                       "H", "I", "J", "K", "L", "M", "N",
                       "O", "P", "Q", "R", "S", "T", "U",
-                      "V", "W", "X", "Y", "Z", "Ex", "Qu"
+                      "V", "W", "X", "Y", "Z", "ZEx", "ZQu"
                     }
       if G.jokers and G.jokers.cards then
         for k, v in pairs(G.jokers.cards) do
@@ -925,6 +958,16 @@ local unown={
               end
             end
           end
+          if v.config.center.name == "ruins_of_alph" then
+            for i = #forms, 1, -1 do
+              for x, y in pairs(v.ability.extra.forms) do
+                if forms[i] == y then
+                  table.remove(forms, i)
+                  break
+                end
+              end
+            end
+          end
         end
       end
       if #forms > 0 then
@@ -932,6 +975,8 @@ local unown={
       end
       card.ability.extra.form = form
       self:set_sprites(card)
+      
+      card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
     end
   end,
   set_sprites = function(self, card, front)
@@ -940,7 +985,7 @@ local unown={
       local forms = {A = {x = 0, y = 0}, B = {x = 1, y = 0}, C = {x = 2, y = 0}, D = {x = 3, y = 0}, E = {x = 4, y = 0}, F = {x = 5, y = 0}, G = {x = 6, y = 0},
                      H = {x = 0, y = 1}, I = {x = 1, y = 1}, J = {x = 2, y = 1}, K = {x = 3, y = 1}, L = {x = 4, y = 1}, M = {x = 5, y = 1}, N = {x = 6, y = 1},
                      O = {x = 0, y = 2}, P = {x = 1, y = 2}, Q = {x = 2, y = 2}, R = {x = 3, y = 2}, S = {x = 4, y = 2}, T = {x = 5, y = 2}, U = {x = 6, y = 2},
-                     V = {x = 0, y = 3}, W = {x = 1, y = 3}, X = {x = 2, y = 3}, Y = {x = 3, y = 3}, Z = {x = 4, y = 3}, Ex = {x = 5, y = 3}, Qu = {x = 6, y = 3}
+                     V = {x = 0, y = 3}, W = {x = 1, y = 3}, X = {x = 2, y = 3}, Y = {x = 3, y = 3}, Z = {x = 4, y = 3}, ZEx = {x = 5, y = 3}, ZQu = {x = 6, y = 3}
                     }
       local unown_atlas = (card.edition and card.edition.poke_shiny) and "poke_shiny_unown_dex" or "poke_unown_dex"              
       card.children.floating_sprite.atlas = G.ASSET_ATLAS[unown_atlas]
@@ -1371,5 +1416,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

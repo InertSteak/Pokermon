@@ -62,7 +62,6 @@ payload = '''
   if not G.localization.misc.dictionary.ph_mr_bones_numbutils then
     G.localization.misc.dictionary.ph_mr_bones_numbutils = ""..G.localization.misc.dictionary.ph_mr_bones
   end
-  sendDebugMessage(tostring(G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name))
   G.localization.misc.dictionary.ph_mr_bones = G.localization.misc.dictionary.ph_mr_bones_numbutils:gsub("Mr. Bones", G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name)
   '''
   
@@ -234,7 +233,9 @@ local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*S
 '''
 position = "at"
 payload = '''
-local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.empty, G.P_CENTERS.j_poke_wobbuffet)
+local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.empty, G.P_CENTERS.j_poke_unown)
+replace_card.ability.extra.form = "R"
+G.P_CENTERS.j_poke_unown:set_sprites(replace_card)
 '''
 match_indent = true
 
@@ -324,14 +325,10 @@ pattern = "local edition = poll_edition('edi'..(key_append or '')..G.GAME.round_
 position = "after"
 payload = '''
 if edition and ((area == G.shop_jokers) or (area == G.pack_cards)) and next(SMODS.find_card('j_poke_mega_gengar')) and edition == "e_polychrome" then
-  sendDebugMessage(edition)
-  sendDebugMessage(inspect(edition))
   edition = {negative = true}
 end
 '''
 match_indent = true
-
-
 
 # Card Effect Divider
 [[patches]]

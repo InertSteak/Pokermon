@@ -2,7 +2,8 @@
 local restart_toggles_left = { 
                  {ref_value = "pokeballs", label = "poke_settings_pokeballs"},
                  {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"},
-                 {ref_value = "pokemon_aprilfools", label = "poke_settings_pokemon_aprilfools"}
+                 {ref_value = "pokemon_aprilfools", label = "poke_settings_pokemon_aprilfools"},
+                 {ref_value = "poke_enable_animations", label = "poke_settings_enable_animations"}
                 }
                 
 local restart_toggles_right = { 
@@ -12,7 +13,7 @@ local restart_toggles_right = {
 }
 
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
-                          {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}}
+                          {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}, }
  
 local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
                         {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"},}
@@ -602,7 +603,7 @@ G.FUNCS.your_collection_pokemon_page = function(args)
       local key = (type(akeys[j]) == "table" and akeys[j].key) or akeys[j]
       if not akeys[j] then break end
       local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(akeys[i]) == "table" then
+        if type(akeys[j]) == "table" then
           card.ability.extra.form = akeys[j].form
           G.P_CENTERS[key]:set_sprites(card)
         end
@@ -617,7 +618,6 @@ poke_joker_page = 1
 
 create_UIBox_pokedex_jokers = function(keys, previous_menu)
   local deck_tables = {}
-
   G.your_collection = {}
   if #keys > 4 and #keys < 13 then
     local rows = math.ceil(#keys/4)
@@ -637,7 +637,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
       for j = marker, lastcard do
         local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
         local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(keys[i]) == "table" then
+        if type(keys[j]) == "table" then
           card.ability.extra.form = keys[j].form
           G.P_CENTERS[key]:set_sprites(card)
         end
@@ -663,7 +663,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
       for j = marker, lastcard do
         local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
         local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(keys[i]) == "table" then
+        if type(keys[j]) == "table" then
           card.ability.extra.form = keys[j].form
           G.P_CENTERS[key]:set_sprites(card)
         end

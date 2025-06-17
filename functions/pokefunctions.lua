@@ -136,18 +136,20 @@ family = {
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},
+    {"ruins_of_alph"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
     {{key = "unown", form = "A"},{key = "unown", form = "B"},{key = "unown", form = "C"}, {key = "unown", form = "D"}, {key = "unown", form = "E"}, {key = "unown", form = "F"},
      {key = "unown", form = "G"}, {key = "unown", form = "H"}, {key = "unown", form = "I"}, {key = "unown", form = "J"}, {key = "unown", form = "K"}, {key = "unown", form = "L"},
      {key = "unown", form = "M"}, {key = "unown", form = "N"}, {key = "unown", form = "O"}, {key = "unown", form = "P"}, {key = "unown", form = "Q"}, {key = "unown", form = "R"},
      {key = "unown", form = "S"}, {key = "unown", form = "T"}, {key = "unown", form = "U"}, {key = "unown", form = "V"}, {key = "unown", form = "W"}, {key = "unown", form = "X"}, 
-     {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "Ex"}, {key = "unown", form = "Qu"}
+     {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "ZEx"}, {key = "unown", form = "ZQu"}
     },
 }
 
 extended_family = {
-  tauros = {"miltank"}
+  tauros = {"miltank"},
+  unown = {"ruins_of_alph", "unown_swarm"}
 }
 
 type_sticker_applied = function(card)
@@ -689,7 +691,14 @@ get_family_keys = function(cardname, custom_prefix, card)
     if card.ability.extra.copy_joker then
       table.insert(keys, card.ability.extra.copy_joker.config.center_key)
     end
+  end  
+  if cardname == "ruins_of_alph" then
+    for k, v in pairs(card.ability.extra.forms) do
+      local form = {key = "j_poke_unown", form = v}
+      table.insert(keys, form)
+    end
   end
+  
   return keys
 end
 
