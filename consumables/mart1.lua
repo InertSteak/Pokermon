@@ -500,8 +500,8 @@ local double_rainbow_energy = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
-  pos = { x = 0, y = 0 },
-  atlas = "placeholder_item",
+  pos = { x = 0, y = 6 },
+  atlas = "Mart",
   cost = 4,
   etype = "Trans",
   unlocked = true,

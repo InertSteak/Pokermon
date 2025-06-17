@@ -104,8 +104,8 @@ local ampeddeck = {
   loc_vars = function(self, info_queue, center)
     return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
   end,
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_deck",
+	pos = { x = 4, y = 0 },
+	atlas = "pokedeck",
 } 
 
 local dList = {luminousdeck, telekineticdeck, ampeddeck}
