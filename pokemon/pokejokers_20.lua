@@ -67,8 +67,8 @@ local zoroark = {
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
       card.ability = temp_ability
-      if full_UI_table.name then
-        local textDyna = full_UI_table.name[1].nodes[1].config.object
+      if full_UI_table.name[1].nodes[1] then
+        local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
         textDyna.string = textDyna.string .. localize("poke_illusion")
         textDyna.config.string = {textDyna.string}
         textDyna.strings = {}
