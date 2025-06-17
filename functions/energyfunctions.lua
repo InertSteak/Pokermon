@@ -217,7 +217,7 @@ energize = function(card, etype, evolving, silent)
     local chipss = {"Sly Joker", "Wily Joker", "Clever Joker", "Devious Joker", "Crafty Joker", "Stuntman"}
     local chip_mods = {"Banner", "Scary Face", "Odd Todd", "Runner", "Blue Joker", "Hiker", "Square Joker", "Stone Joker", "Bull", "Castle", "Arrowhead", "Wee Joker"}
     local Xmults = {"Loyalty Card", "Blackboard", "Cavendish", "Card Sharp", "Ramen", "Acrobat", "Flower Pot", "Seeing Double", "Driver's License"}
-    local Xmult_mods = {"Joker Stencil", "Steel Joker", "Constellation", "Madness", "Vampire", "Hologram", "Baron", "Obelisk", "Photograph", "Lucky Cat", "Baseball Card", "Everstone", "Ancient Joker",
+    local Xmult_mods = {"Steel Joker", "Constellation", "Madness", "Vampire", "Hologram", "Baron", "Obelisk", "Photograph", "Lucky Cat", "Baseball Card", "Everstone", "Ancient Joker",
                         "Campfire", "Throwback", "Bloodstone", "Glass Joker", "The Idol", "Hit the Road", "Canio", "Triboulet", "Yorick"}
     local monies = {"Delayed Gratification", "Egg", "Cloud 9", "Rocket", "Gift Card", "Reserved Parking", "Mail-In Rebate", "To the Moon", "Golden Joker", "Trading Card", "Golden Ticket", "Rough Gem",
                     "Satellite", "Matador"}
@@ -247,17 +247,17 @@ energize = function(card, etype, evolving, silent)
       if not card.ability.colorless_sticker and etype == "Colorless" then
         increase = increase/2
       end
-      if (card.ability.mult and card.ability.mult > 0) then
+      if (card.ability.mult and card.ability.mult > 0 and card.config.center.config and card.config.center.config.mult) then
         card.ability.mult = card.ability.mult + (card.config.center.config.mult * increase)
       end
-      if (card.ability.t_mult and card.ability.t_mult > 0) then
+      if (card.ability.t_mult and card.ability.t_mult > 0 and card.config.center.config and card.config.center.config.t_mult) then
         card.ability.t_mult = card.ability.t_mult + (card.config.center.config.t_mult * increase)
       end
-      if (card.ability.t_chips and card.ability.t_chips > 0) then
+      if (card.ability.t_chips and card.ability.t_chips > 0 and card.config.center.config and card.config.center.config.t_chips) then
         card.ability.t_chips = card.ability.t_chips + (card.config.center.config.t_chips * increase)
       end
-      if (card.ability.x_mult and card.ability.x_mult > 1) then
-        card.ability.x_mult = card.ability.x_mult + (card.config.center.config.Xmult * increase)
+      if (card.ability.x_mult and card.ability.x_mult > 1 and card.config.center.config and card.config.center.config.x_mult) then
+        card.ability.x_mult = card.ability.x_mult + (card.config.center.config.x_mult * increase)
       end
     end
   end
