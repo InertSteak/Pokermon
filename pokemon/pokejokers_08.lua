@@ -888,6 +888,8 @@ local houndoom={
           end
         end
         if #targets > 0 then
+          local old_limit = G.hand.config.highlighted_limit
+          G.hand.config.highlighted_limit = #targets
           for i = 1, #targets do
               G.hand:add_to_highlighted(targets[i], true)
               selected = true
@@ -900,7 +902,8 @@ local houndoom={
           for i = 1, #targets do
               G.hand:remove_from_highlighted(targets[i], true)
               targets[i]:highlight(true)
-          end  
+          end 
+          G.hand.config.highlighted_limit = old_limit
         end
       return true end }))
     end
