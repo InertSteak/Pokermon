@@ -164,7 +164,10 @@ match_indent = true
 target = "card.lua"
 pattern = "self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)"
 position = "after"
-payload = "if self.sell_cost < 1 then self.sell_cost = 1 end"
+payload = '''
+if self.sell_cost < 1 then self.sell_cost = 1 end
+if self.ability.name == "unown" then self.sell_cost = 0 end
+'''
 match_indent = true
 
 #Deck functionality
