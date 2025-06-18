@@ -516,7 +516,7 @@ local ruins_of_alph={
             added = true
           end
         end
-        if added then table.sort(card.ability.extra.forms); poke_debug(card.ability.extra.forms) end
+        if added then table.sort(card.ability.extra.forms) end
       end
     end
     if context.setting_blind and not context.blueprint then

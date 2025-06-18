@@ -787,12 +787,35 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "new_card:set_base(other.config.card)"
+pattern = '''
+new_card:set_base(other.config.card)
+'''
 position = "after"
 payload = '''
 if other.config.center.name == "smeargle" then
   other.ability.extra.copy_joker = nil
   other.ability.extra.copy_pos = 0
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+for k, v in pairs(other.ability) do
+    if type(v) == 'table' then 
+        new_card.ability[k] = copy_table(v)
+    else
+        new_card.ability[k] = v
+    end
+end
+'''
+position = "after"
+payload = '''
+if other.config.center.name == "ruins_of_alph" then
+  new_card.ability.extra.forms = {}
+  new_card.ability.extra.merged = 0
 end
 '''
 match_indent = true
