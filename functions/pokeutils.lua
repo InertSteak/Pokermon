@@ -148,7 +148,7 @@ poke_add_shop_card = function(add_card, card)
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
 end
 
-poke_remove_card = function(target, card)
+poke_remove_card = function(target, card, trigger)
       if target.ability.name == 'Glass Card' then 
           target.shattered = true
       else 
@@ -159,7 +159,7 @@ poke_remove_card = function(target, card)
         card:juice_up(0.3, 0.5)
         return true end }))
       G.E_MANAGER:add_event(Event({
-          trigger = 'after',
+          trigger = trigger and trigger or 'after',
           delay = 0.2,
           func = function() 
               if target.ability.name == 'Glass Card' then 

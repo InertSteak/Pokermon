@@ -294,8 +294,8 @@ local slugma={
     name = "Slugma",
     text = {
       "Every {C:attention}4{} {C:inactive}[#4#]{} hands played, destroy",
-      "first card held in hand and",
-      "this Joker gains {C:chips}+#2#{} Chips",
+      "first card {C:attention}held{} in hand after scoring",
+      "and this Joker gains {C:chips}+#2#{} Chips",
       "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
     }
   },
@@ -312,24 +312,28 @@ local slugma={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.first_hand_drawn and card.ability.extra.hands == 1 then
+      local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.first_hand_drawn and card.ability.extra.hands == 1 then
-        local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
       if context.before and not context.blueprint then
         card.ability.extra.hands = card.ability.extra.hands - 1
         if card.ability.extra.hands == 1 then
-          local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+          local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
         end
         if card.ability.extra.hands == 0 then
           if G.hand and G.hand.cards and G.hand.cards[1] then
-            poke_remove_card(G.hand.cards[1], card)
+            card.ability.extra.remove = true
           end
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
           card.ability.extra.hands = card.ability.extra.hand_reset
         end
+      end
+      if context.after and card.ability.extra.remove and not context.blueprint then
+        card.ability.extra.remove = false
+        poke_remove_card(G.hand.cards[1], card)
       end
     end
     if context.joker_main then
@@ -346,13 +350,13 @@ local slugma={
 local magcargo={
   name = "magcargo",
   pos = {x = 7, y = 6},
-  config = {extra = {chips = 0,chip_mod = 25, hands = 3, hand_reset = 3}},
+  config = {extra = {chips = 0,chip_mod = 25, hands = 3, hand_reset = 3, remove = false}},
   loc_txt = {
     name = "Magcargo",
     text = {
       "Every {C:attention}3{} {C:inactive}[#3#]{} hands played, destroy",
-      "first card held in hand and",
-      "this Joker gains {C:chips}+#2#{} Chips",
+      "first card {C:attention}held{} in hand after scoring",
+      "and this Joker gains {C:chips}+#2#{} Chips",
       "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
     }
   },
@@ -369,24 +373,28 @@ local magcargo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.first_hand_drawn and card.ability.extra.hands == 1 then
+      local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.first_hand_drawn and card.ability.extra.hands == 1 then
-        local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
       if context.before and not context.blueprint then
         card.ability.extra.hands = card.ability.extra.hands - 1
         if card.ability.extra.hands == 1 then
-          local eval = function(card) return card.ability.extra.hands == 1 and not G.RESET_JIGGLES end
+          local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
           juice_card_until(card, eval, true)
         end
         if card.ability.extra.hands == 0 then
           if G.hand and G.hand.cards and G.hand.cards[1] then
-            poke_remove_card(G.hand.cards[1], card)
+            card.ability.extra.remove = true
           end
           card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
           card.ability.extra.hands = card.ability.extra.hand_reset
         end
+      end
+      if context.after and card.ability.extra.remove and not context.blueprint then
+        card.ability.extra.remove = false
+        poke_remove_card(G.hand.cards[1], card)
       end
     end
     if context.joker_main then
