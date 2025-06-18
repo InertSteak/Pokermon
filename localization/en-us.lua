@@ -4415,7 +4415,8 @@ return {
                   "Removes card and adds it",
                   "to this Joker",
                   "Right click to view",
-                  "merged cards"
+                  "merged cards",
+                  "{C:inactive}(Merged Jokers can't be copied){}"
                 }
             },
             rewards_ruins_of_alph = {
