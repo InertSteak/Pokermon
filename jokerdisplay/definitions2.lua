@@ -1003,7 +1003,7 @@ jd_def["j_poke_snubbull"] = {
   },
   text_config = { colour = G.C.WHITE},
   calc_function = function(card)
-    local xmult = card.ability.extra.Xmult
+    local xmult = card.ability.extra.Xmult_multi
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     face_cards = {}
     if text ~= 'Unknown' then
@@ -1015,7 +1015,7 @@ jd_def["j_poke_snubbull"] = {
     end
     local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
     if first_face then
-      xmult = card.ability.extra.Xmult
+      xmult = card.ability.extra.Xmult_multi
     end
     card.joker_display_values.x_mult = math.max(first_face and (xmult ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1, 1)
   end
@@ -1033,7 +1033,7 @@ jd_def["j_poke_granbull"] = {
   },
   text_config = { colour = G.C.WHITE},
   calc_function = function(card)
-    local xmult = card.ability.extra.Xmult
+    local xmult = card.ability.extra.Xmult_multi
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     face_cards = {}
     if text ~= 'Unknown' then
@@ -1046,9 +1046,9 @@ jd_def["j_poke_granbull"] = {
     local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
     if first_face then
       if first_face:get_id() == 12 then
-        xmult = card.ability.extra.Xmult2
+        xmult = card.ability.extra.Xmult_multi2
       else
-        xmult = card.ability.extra.Xmult
+        xmult = card.ability.extra.Xmult_multi
       end
     end
     card.joker_display_values.x_mult = math.max(first_face and (xmult ^ JokerDisplay.calculate_card_triggers(first_face, scoring_hand)) or 1, 1)

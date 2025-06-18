@@ -570,7 +570,106 @@ local yanma={
   end,
 }
 -- Wooper 194
+local wooper={
+  name = "wooper",
+  pos = {x = 2, y = 4},
+  config = {extra = {mult = 15,mult_minus = 1, rounds = 4,}},
+  loc_txt = {
+    name = "Wooper",
+    text = {
+      "{C:mult}+#1#{} Mult",
+      "{C:mult}-#3#{} Mult for each {C:attention}face{}",
+      "card remaining in {C:attention}deck",
+      "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local mult_total = center.ability.extra.mult
+    if G.deck and G.deck.cards then
+      for k, v in pairs(G.deck.cards) do
+        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
+      end
+    end
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult_minus, mult_total}}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Mult = card.ability.extra.mult
+        for k, v in pairs(G.deck.cards) do
+          if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
+        end
+        
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+          colour = G.C.MULT,
+          mult_mod = Mult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_quagsire")
+  end,
+}
 -- Quagsire 195
+local quagsire={
+  name = "quagsire",
+  pos = {x = 3, y = 4},
+  config = {extra = {mult = 25, mult_minus = 1, rerolls = 1}},
+  loc_txt = {
+    name = "Quagsire",
+    text = {
+      "{C:mult}+#1#{} Mult",
+      "{C:mult}-#2#{} Mult for each {C:attention}face{}",
+      "card remaining in {C:attention}deck",
+      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local mult_total = center.ability.extra.mult
+    if G.deck and G.deck.cards then
+      for k, v in pairs(G.deck.cards) do
+        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
+      end
+    end
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_minus, mult_total, center.ability.extra.rerolls}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Mult = card.ability.extra.mult
+        for k, v in pairs(G.deck.cards) do
+          if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
+        end
+        
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+          colour = G.C.MULT,
+          mult_mod = Mult
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_quagsire")
+  end,
+}
 -- Espeon 196
 local espeon={
   name = "espeon", 
@@ -1324,10 +1423,10 @@ local steelix={
 local snubbull = {
   name = "snubbull",
   pos = {x = 7, y = 5},
-  config = {extra = {Xmult = 1.75, rounds = 4,}},
+  config = {extra = {Xmult_multi = 1.75, rounds = 4,}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult, card.ability.extra.rounds}}
+    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.rounds}}
   end,
   rarity = 1,
   cost = 5,
@@ -1345,7 +1444,7 @@ local snubbull = {
         end
       end
       if context.other_card == first_face then
-        local Xmult = card.ability.extra.Xmult
+        local Xmult = card.ability.extra.Xmult_multi
         return {
             x_mult = Xmult,
             colour = G.C.RED,
@@ -1359,10 +1458,10 @@ local snubbull = {
 local granbull = {
   name = "granbull",
   pos = {x = 8, y = 5},
-  config = {extra = {Xmult = 2.25, Xmult2 = 3}},
+  config = {extra = {Xmult_multi = 2.25, Xmult_multi2 = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult2}}
+    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult_multi2}}
   end,
   rarity = 2,
   cost = 6,
@@ -1382,9 +1481,9 @@ local granbull = {
       if context.other_card == first_face then
         local Xmult = nil
         if context.other_card:get_id() == 12 then
-          Xmult = card.ability.extra.Xmult2
+          Xmult = card.ability.extra.Xmult_multi2
         else
-          Xmult = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult_multi
         end
         return {
             x_mult = Xmult,
@@ -1416,5 +1515,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

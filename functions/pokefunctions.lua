@@ -83,6 +83,7 @@ family = {
     {"ledyba", "ledian"},
     {"spinarak", "ariados"},
     {"mareep", "flaaffy", "ampharos"},
+    {"wooper", "quagsire"},
     {"sneasel", "weavile"},
     {"teddiursa", "ursaring", "ursaluna"},
     {"remoraid", "octillery"},
