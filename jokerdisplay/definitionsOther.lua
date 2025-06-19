@@ -76,6 +76,61 @@ jd_def["j_poke_treasure_eatery"] = {
     text_config = {colour = G.C.UI.BACKGROUND_INACTIVE }
 }
 
+-- Ruins of Alph
+jd_def["j_poke_ruins_of_alph"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "merged", colour = G.C.ORANGE },
+    { text = " [", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "quest", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    local merged = card.ability.extra.merged
+    local quest1 = card.ability.extra.quest1
+    local quest2 = card.ability.extra.quest2
+    local quest3 = card.ability.extra.quest3
+    local quest4 = card.ability.extra.quest4
+    if merged < quest1 then
+      card.joker_display_values.quest = quest1
+    elseif merged < quest2 then
+      card.joker_display_values.quest = quest2
+    elseif merged < quest3 then
+      card.joker_display_values.quest = quest3
+    else
+      card.joker_display_values.quest = quest4
+    end
+  end
+}
+
+jd_def["j_poke_unown_swarm"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "count", colour = G.C.ORANGE },
+    { text = "x" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.PURPLE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    if G.jokers then
+      for _, joker_card in ipairs(G.jokers.cards) do
+        if joker_card.config.center.rarity and joker_card.config.center.rarity == 4 then
+          count = count + 1
+        end
+      end
+    end
+    card.joker_display_values.count = count
+    card.joker_display_values.localized_text = localize("k_legendary")
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = (card.config.center.rarity == 4 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil), mult = (card.config.center.rarity == 4 and mod_joker.ability.extra.mult * JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
+}
+
 -- Rival
 -- jd_def["j_poke_rival"] = {
 --     text = {
