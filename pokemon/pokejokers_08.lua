@@ -428,7 +428,7 @@ local swinub={
       if context.other_card == context.scoring_hand[1] then
         local stoneglass = 0
         for k, v in pairs(context.scoring_hand) do
-          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+          if SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_glass') then
             stoneglass = stoneglass + 1
           end
         end
@@ -469,13 +469,13 @@ local piloswine={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
-      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+      if SMODS.has_enhancement(context.other_card, 'm_stone') or SMODS.has_enhancement(context.other_card, 'm_glass') then
         card.ability.extra.scored = card.ability.extra.scored + 1
       end
       if context.other_card == context.scoring_hand[1] then
         local stoneglass = 0
         for k, v in pairs(context.scoring_hand) do
-          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+          if SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_glass') then
             stoneglass = stoneglass + 1
           end
         end
@@ -710,7 +710,7 @@ local mantine={
       end
     end
     if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
-      if context.other_card.ability.name == 'Gold Card' then 
+      if SMODS.has_enhancement(context.other_card, 'm_gold') then 
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
         if context.cardarea == G.play then
           return {
@@ -1511,6 +1511,7 @@ local magby={
     ease_discard(-card.ability.extra.d_size)
   end
 }
+
 return {name = "Pokemon Jokers 211-240", 
         init = function()
             local game_init_object = Game.init_game_object;

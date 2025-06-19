@@ -1,4 +1,6 @@
 --Code for pokemon jokers 61-90
+
+-- Poliwhirl 061
 local poliwhirl={
   name = "poliwhirl", 
   pos = {x = 8, y = 4}, 
@@ -50,6 +52,7 @@ local poliwhirl={
     return item_evo(self, card, context)
   end,
 }
+-- Poliwrath 062
 local poliwrath={
   name = "poliwrath", 
   pos = {x = 9, y = 4},
@@ -98,6 +101,7 @@ local poliwrath={
     end
   end,
 }
+-- Abra 063
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
@@ -140,6 +144,7 @@ local abra={
     return level_evo(self, card, context, "j_poke_kadabra")
   end,
 }
+-- Kadabra 064
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
@@ -187,6 +192,7 @@ local kadabra={
     return item_evo(self, card, context, "j_poke_alakazam")
   end,
 }
+-- Alakazam 065
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
@@ -245,6 +251,7 @@ local alakazam={
   end, 
   megas = {"mega_alakazam"}
 }
+-- Mega Alakazam 065-1
 local mega_alakazam={
   name = "mega_alakazam", 
   pos = {x = 12, y = 0},
@@ -287,6 +294,7 @@ local mega_alakazam={
       return true end }))
   end, 
 }
+-- Machop 066
 local machop={
   name = "machop", 
   pos = {x = 0, y = 5},
@@ -331,6 +339,7 @@ local machop={
     ease_discard(card.ability.extra.discards)
   end
 }
+-- Machoke 067
 local machoke={
   name = "machoke", 
   pos = {x = 1, y = 5},
@@ -377,6 +386,7 @@ local machoke={
     ease_discard(card.ability.extra.discards)
   end
 }
+-- Machamp 068
 local machamp={
   name = "machamp", 
   pos = {x = 2, y = 5},
@@ -420,6 +430,7 @@ local machamp={
     ease_discard(card.ability.extra.discards)
   end
 }
+-- Bellsprout 069
 local bellsprout={
   name = "bellsprout", 
   pos = {x = 3, y = 5},
@@ -450,6 +461,7 @@ local bellsprout={
     return level_evo(self, card, context, "j_poke_weepinbell")
   end
 }
+-- Weepinbell 070
 local weepinbell={
   name = "weepinbell", 
   pos = {x = 4, y = 5},
@@ -482,6 +494,7 @@ local weepinbell={
     return item_evo(self, card, context, "j_poke_victreebel")
   end
 }
+-- Victreebel 071
 local victreebel={
   name = "victreebel", 
   pos = {x = 5, y = 5},
@@ -524,6 +537,7 @@ local victreebel={
     end
   end
 }
+-- Tentacool 072
 local tentacool={
   name = "tentacool", 
   pos = {x = 6, y = 5},
@@ -548,6 +562,7 @@ local tentacool={
     return level_evo(self, card, context, "j_poke_tentacruel")
   end
 }
+-- Tentacruel 073
 local tentacruel={
   name = "tentacruel", 
   pos = {x = 7, y = 5}, 
@@ -571,6 +586,7 @@ local tentacruel={
     end
   end
 }
+-- Geodude 074
 local geodude={
   name = "geodude", 
   pos = {x = 8, y = 5}, 
@@ -604,6 +620,7 @@ local geodude={
     G.hand:change_size(card.ability.extra.h_size)
   end
 }
+-- Graveler 075
 local graveler={
   name = "graveler", 
   pos = {x = 9, y = 5},
@@ -639,6 +656,7 @@ local graveler={
     G.hand:change_size(card.ability.extra.h_size)
   end
 }
+-- Golem 076
 local golem={
   name = "golem", 
   pos = {x = 10, y = 5},
@@ -671,6 +689,7 @@ local golem={
     G.hand:change_size(card.ability.extra.h_size)
   end
 }
+-- Ponyta 077
 local ponyta={
   name = "ponyta", 
   pos = {x = 11, y = 5},
@@ -707,6 +726,7 @@ local ponyta={
     return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
+-- Rapidash 078
 local rapidash={
   name = "rapidash", 
   pos = {x = 12, y = 5},
@@ -743,6 +763,7 @@ local rapidash={
     end
   end,
 }
+-- Slowpoke 079
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
@@ -779,6 +800,7 @@ local slowpoke={
     return evo
   end
 }
+-- Slowpoke 2??? 079
 local slowpoke2={
   name = "slowpoke2", 
   pos = {x = 0, y = 6}, 
@@ -819,6 +841,7 @@ local slowpoke2={
     return evo
   end
 }
+-- Slowbro 080
 local slowbro={
   name = "slowbro", 
   pos = {x = 1, y = 6}, 
@@ -857,6 +880,7 @@ local slowbro={
   end,
   megas = {"mega_slowbro"}
 }
+-- Mega Slowbro 080-1
 local mega_slowbro={
   name = "mega_slowbro", 
   pos = {x = 14, y = 0},
@@ -893,6 +917,7 @@ local mega_slowbro={
     end
   end,
 }
+-- Magnemite 081
 local magnemite={
   name = "magnemite", 
   pos = {x = 2, y = 6}, 
@@ -911,7 +936,7 @@ local magnemite={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
-       context.other_card.ability.name == 'Steel Card' then
+       SMODS.has_enhancement(context.other_card, 'm_steel') then
         return {
           x_mult = card.ability.extra.Xmult_multi
         }
@@ -919,6 +944,7 @@ local magnemite={
     return level_evo(self, card, context, "j_poke_magneton")
   end
 }
+-- Magneton 082
 local magneton={
   name = "magneton", 
   pos = {x = 3, y = 6}, 
@@ -947,7 +973,7 @@ local magneton={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
-       context.other_card.ability.name == 'Steel Card' then
+       SMODS.has_enhancement(context.other_card, 'm_steel') then
         local adjacent = 0
         local adjacent_jokers = poke_get_adjacent_jokers(card)
         for i = 1, #adjacent_jokers do
@@ -961,6 +987,7 @@ local magneton={
     return item_evo(self, card, context, "j_poke_magnezone")
   end
 }
+-- Farfetch'd 083
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
@@ -996,6 +1023,7 @@ local farfetchd={
     end
   end
 }
+-- Doduo 084
 local doduo={
   name = "doduo", 
   pos = {x = 5, y = 6}, 
@@ -1039,6 +1067,7 @@ local doduo={
     return level_evo(self, card, context, "j_poke_dodrio")
   end
 }
+-- Dodrio 085
 local dodrio={
   name = "dodrio", 
   pos = {x = 6, y = 6}, 
@@ -1081,6 +1110,7 @@ local dodrio={
     end
   end
 }
+-- Seel 086
 local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
@@ -1119,6 +1149,7 @@ local seel={
     return deck_seal_evo(self, card, context, "j_poke_dewgong", nil, nil, card.ability.extra.seal_goal)
   end
 }
+-- Dewgong 087
 local dewgong={
   name = "dewgong", 
   pos = {x = 8, y = 6}, 
@@ -1144,6 +1175,7 @@ local dewgong={
     end
   end
 }
+-- Grimer 088
 local grimer={
   name = "grimer", 
   pos = {x = 9, y = 6}, 
@@ -1179,6 +1211,7 @@ local grimer={
     return level_evo(self, card, context, "j_poke_muk")
   end,
 }
+-- Muk 089
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
@@ -1233,6 +1266,7 @@ local muk={
     end
   end,
 }
+-- Shellder 090
 local shellder={
   name = "shellder", 
   pos = {x = 11, y = 6}, 

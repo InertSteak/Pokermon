@@ -25,7 +25,7 @@ local gimmighoul={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
       local earned = ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
       return {
         dollars = earned,
@@ -146,7 +146,7 @@ local gholdengo={
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
       if (SMODS.Mods["Talisman"] or {}).can_load then
         card.ability.extra.future_dollars = to_big(card.ability.extra.future_dollars) - to_big(card.ability.extra.money_minus)
         if to_big(card.ability.extra.future_dollars) >= to_big(0) then
