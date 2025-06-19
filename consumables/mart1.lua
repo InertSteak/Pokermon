@@ -528,6 +528,7 @@ local double_rainbow_energy = {
     else
       choice = G.jokers.cards[1]
     end
+    play_sound('poke_energy_use', 1, 0.5)
     for i = 1, 2 do
       if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
         energy_increase(choice, choice.ability.extra.ptype)

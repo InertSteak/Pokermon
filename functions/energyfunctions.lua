@@ -41,6 +41,7 @@ highlighted_energy_use = function(self, card, area, copier)
   else
     G.GAME.energies_used = 1
   end
+  play_sound('poke_energy_use', 1, 0.5)
   set_spoon_item(card)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
@@ -329,6 +330,7 @@ energy_use = function(self, card, area, copier)
   else
     G.GAME.energies_used = 1
   end
+  play_sound('poke_energy_use', 1, 0.5)
   set_spoon_item(card)
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then

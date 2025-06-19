@@ -340,6 +340,10 @@ SMODS.Sound({
 		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")
 	end,
 })
+SMODS.Sound({
+	key = "energy_use",
+	path = "energy_use.ogg",
+})
 
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
