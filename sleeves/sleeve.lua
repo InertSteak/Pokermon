@@ -62,7 +62,7 @@ end
 	end
 }
 
--- Pokemon Sleeve
+-- Telekinetic Sleeve
 	local telekineticsleeve = {
 		key = 'telekineticsleeve',
 		name = 'Telekinetic Sleeve',
@@ -73,9 +73,21 @@ end
 		loc_vars = function(self, info_queue, center)
 			return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
 		end,
-	}
+}
 
-local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve}
+local ampeddeck = {
+	name = "ampeddeck",
+	key = "ampeddeck",
+  refix_config = {},
+  pos = { x = 4, y = 0 },
+  atlas = "pokesleeves",
+	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
+  end,
+} 
+
+local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve, ampeddeck}
 
 return {Name = "Sleeve",
 				init = init,
