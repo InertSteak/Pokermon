@@ -75,10 +75,10 @@ end
 		end,
 }
 
-local ampeddeck = {
-	name = "ampeddeck",
-	key = "ampeddeck",
-  refix_config = {},
+local ampedsleeve = {
+	name = "ampedsleeve",
+	key = "ampedsleeve",
+  prefix_config = {},
   pos = { x = 4, y = 0 },
   atlas = "pokesleeves",
 	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
@@ -87,7 +87,7 @@ local ampeddeck = {
   end,
 } 
 
-local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve, ampeddeck}
+local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
 
 return {Name = "Sleeve",
 				init = init,
