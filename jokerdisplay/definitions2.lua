@@ -680,7 +680,7 @@ jd_def["j_poke_wooper"] = {
         face_cards_in_deck = face_cards_in_deck + 1
       end
     end
-  card.joker_display_values.mult = card.ability.extra.mult - face_cards_in_deck
+  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
   end
 }
 
@@ -697,7 +697,7 @@ jd_def["j_poke_quagsire"] = {
         face_cards_in_deck = face_cards_in_deck + 1
       end
     end
-  card.joker_display_values.mult = card.ability.extra.mult - face_cards_in_deck
+  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
   end
 }
 

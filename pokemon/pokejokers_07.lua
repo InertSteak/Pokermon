@@ -592,7 +592,7 @@ local wooper={
         if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
       end
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult_minus, mult_total}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult_minus, math.max(0, mult_total)}}
   end,
   rarity = 1,
   cost = 5,
@@ -609,12 +609,13 @@ local wooper={
         for k, v in pairs(G.deck.cards) do
           if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
         end
-        
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-          colour = G.C.MULT,
-          mult_mod = Mult
-        }
+        if Mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+            colour = G.C.MULT,
+            mult_mod = Mult
+          }
+        end
       end
     end
     return level_evo(self, card, context, "j_poke_quagsire")
@@ -642,7 +643,7 @@ local quagsire={
         if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
       end
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_minus, mult_total, center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_minus, math.max(0, mult_total), center.ability.extra.rerolls}}
   end,
   rarity = 2,
   cost = 5,
@@ -659,12 +660,13 @@ local quagsire={
         for k, v in pairs(G.deck.cards) do
           if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
         end
-        
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-          colour = G.C.MULT,
-          mult_mod = Mult
-        }
+        if Mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+            colour = G.C.MULT,
+            mult_mod = Mult
+          }
+        end
       end
     end
     return level_evo(self, card, context, "j_poke_quagsire")
