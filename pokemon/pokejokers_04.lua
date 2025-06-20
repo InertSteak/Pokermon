@@ -1,4 +1,6 @@
 --Code for pokemon jokers 91-120
+
+-- Cloyster 091
 local cloyster={
   name = "cloyster", 
   pos = {x = 12, y = 6},
@@ -27,6 +29,7 @@ local cloyster={
     end
   end,
 }
+-- Gastly 092
 local gastly={
   name = "gastly", 
   pos = {x = 0, y = 7}, 
@@ -76,6 +79,7 @@ local gastly={
     end
   end
 }
+-- Haunter 093
 local haunter={
   name = "haunter", 
   pos = {x = 1, y = 7}, 
@@ -128,6 +132,7 @@ local haunter={
     end
   end
 }
+-- Gengar 094
 local gengar={
   name = "gengar", 
   pos = {x = 2, y = 7}, 
@@ -185,6 +190,7 @@ local gengar={
   end,
   megas = {"mega_gengar"}
 }
+-- Mega Gengar 094-1
 local mega_gengar ={
   name = "mega_gengar", 
   pos = {x = 1, y = 1},
@@ -204,6 +210,7 @@ local mega_gengar ={
   eternal_compat = false,
   blueprint_compat = false,
 }
+-- Onix 095
 local onix={
   name = "onix", 
   pos = {x = 3, y = 7},
@@ -237,6 +244,7 @@ local onix={
     return type_evo(self, card, context, "j_poke_steelix", "metal")
   end
 }
+-- Drowzee 096
 local drowzee={
   name = "drowzee", 
   pos = {x = 4, y = 7}, 
@@ -276,6 +284,7 @@ local drowzee={
     end
   end,
 }
+-- Hypno 097
 local hypno={
   name = "hypno", 
   pos = {x = 5, y = 7},  
@@ -324,6 +333,7 @@ local hypno={
     end
   end
 }
+-- Krabby 098
 local krabby={
   name = "krabby", 
   pos = {x = 6, y = 7},  
@@ -350,6 +360,7 @@ local krabby={
     return level_evo(self, card, context, "j_poke_kingler")
   end
 }
+-- Kingler 099
 local kingler={
   name = "kingler", 
   pos = {x = 7, y = 7},
@@ -401,6 +412,7 @@ local kingler={
     end
   end
 }
+-- Voltorb 100
 local voltorb={
   name = "voltorb", 
   pos = {x = 8, y = 7}, 
@@ -437,6 +449,7 @@ local voltorb={
     return level_evo(self, card, context, "j_poke_electrode")
   end
 }
+-- Electrode 101
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
@@ -474,6 +487,7 @@ local electrode={
     end
   end
 }
+-- Exeggcute 102
 local exeggcute={
   name = "exeggcute", 
   pos = {x = 10, y = 7}, 
@@ -502,6 +516,7 @@ local exeggcute={
     return item_evo(self, card, context, "j_poke_exeggutor")
   end
 }
+-- Exeggutor 103
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
@@ -533,6 +548,7 @@ local exeggutor={
     end
   end
 }
+-- Cubone 104
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
@@ -578,6 +594,7 @@ local cubone={
     return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
 }
+-- Marowak 105
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
@@ -622,6 +639,7 @@ local marowak={
       return true end }))
   end, 
 }
+-- Hitmonlee 106
 local hitmonlee={
   name = "hitmonlee", 
   pos = {x = 1, y = 8},
@@ -651,6 +669,7 @@ local hitmonlee={
     end
   end,
 }
+-- Hitmonchan 107
 local hitmonchan={
   name = "hitmonchan", 
   pos = {x = 2, y = 8}, 
@@ -680,6 +699,7 @@ local hitmonchan={
     end
   end,
 }
+-- Lickitung 108
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
@@ -723,6 +743,7 @@ local lickitung={
     return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
   end
 }
+-- Koffing 109
 local koffing={
   name = "koffing", 
   pos = {x = 4, y = 8},
@@ -748,6 +769,7 @@ local koffing={
     return level_evo(self, card, context, "j_poke_weezing")
   end
 }
+-- Weezing 110
 local weezing={
   name = "weezing", 
   pos = {x = 5, y = 8}, 
@@ -772,6 +794,7 @@ local weezing={
     end
   end
 }
+-- Rhyhorn 111
 local rhyhorn={
   name = "rhyhorn", 
   pos = {x = 6, y = 8}, 
@@ -789,7 +812,7 @@ local rhyhorn={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_stone') then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips
       return {
@@ -801,6 +824,7 @@ local rhyhorn={
     return level_evo(self, card, context, "j_poke_rhydon")
   end
 }
+-- Rhydon 112
 local rhydon={
   name = "rhydon", 
   pos = {x = 7, y = 8},
@@ -820,7 +844,7 @@ local rhydon={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_stone') then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips
       return {
@@ -852,6 +876,7 @@ local rhydon={
     return item_evo(self, card, context, "j_poke_rhyperior")
   end
 }
+-- Chansey 113
 local chansey={
   name = "chansey", 
   pos = {x = 8, y = 8}, 
@@ -863,7 +888,7 @@ local chansey={
     if G.playing_cards then
       local enhance_count = 0
       for k, v in pairs(G.playing_cards) do
-        if v.ability.name == "Lucky Card" then enhance_count = enhance_count  + 1 end
+        if SMODS.has_enhancement(context.other_card, 'm_lucky') then enhance_count = enhance_count  + 1 end
       end
       deck_data = '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] '
     end
@@ -909,6 +934,7 @@ local chansey={
     return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
   end
 }
+-- Tangela 114
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
@@ -929,7 +955,7 @@ local tangela={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
-       context.other_card.ability.name == 'Wild Card' then
+       SMODS.has_enhancement(context.other_card, 'm_wild') then
         card.ability.extra.wilds_scored = card.ability.extra.wilds_scored + 1
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
@@ -970,6 +996,7 @@ local tangela={
     return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
 }
+-- Kangaskhan 115
 local kangaskhan={
   name = "kangaskhan", 
   pos = {x = 10, y = 8},
@@ -1008,6 +1035,7 @@ local kangaskhan={
   end, 
   megas = {"mega_kangaskhan"}
 }
+-- Mega Kangaskhan 115-1
 local mega_kangaskhan={
   name = "mega_kangaskhan", 
   pos = {x = 3, y = 1},
@@ -1053,6 +1081,7 @@ local mega_kangaskhan={
     end
   end,
 }
+-- Horsea 116
 local horsea={
   name = "horsea", 
   pos = {x = 11, y = 8},
@@ -1096,6 +1125,7 @@ local horsea={
     return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
+-- Seadra 117
 local seadra={
   name = "seadra", 
   pos = {x = 12, y = 8},
@@ -1138,6 +1168,7 @@ local seadra={
     return type_evo(self, card, context, "j_poke_kingdra", "dragon")
   end,
 }
+-- Goldeen 118
 local goldeen={
   name = "goldeen", 
   pos = {x = 0, y = 9},
@@ -1155,7 +1186,7 @@ local goldeen={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and SMODS.has_enhancement(context.other_card, 'm_gold') then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -1165,6 +1196,7 @@ local goldeen={
     return level_evo(self, card, context, "j_poke_seaking")
   end
 }
+-- Seaking 119
 local seaking={
   name = "seaking", 
   pos = {x = 1, y = 9},
@@ -1182,7 +1214,7 @@ local seaking={
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.ability.name == 'Gold Card' then
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and SMODS.has_enhancement(context.other_card, 'm_gold') then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -1191,6 +1223,7 @@ local seaking={
     end
   end
 }
+-- Staryu 120
 local staryu={
   name = "staryu", 
   pos = {x = 2, y = 9},
@@ -1221,5 +1254,5 @@ local staryu={
 }
 
 return {name = "Pokemon Jokers 91-120", 
-        list = { cloyster, gastly, haunter, gengar, mega_gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing,                 rhyhorn, rhydon, chansey, tangela, kangaskhan, mega_kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
+        list = { cloyster, gastly, haunter, gengar, mega_gengar, onix, drowzee, hypno, krabby, kingler, voltorb, electrode, exeggcute, exeggutor, cubone, marowak, hitmonlee, hitmonchan, lickitung, koffing, weezing, rhyhorn, rhydon, chansey, tangela, kangaskhan, mega_kangaskhan, horsea, seadra, goldeen, seaking, staryu, },
 }

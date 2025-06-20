@@ -1,3 +1,6 @@
+--Code for pokemon jokers 001-030
+
+-- Bulbasaur 001
 local bulbasaur={ 
   name = "bulbasaur",
   pos = {x = 0, y = 0},
@@ -47,7 +50,7 @@ local bulbasaur={
     G.hand:change_size(-card.ability.extra.h_size)
   end
 }
-
+-- Ivysaur 002
 local ivysaur={
   name = "ivysaur", 
   pos = {x = 1, y = 0}, 
@@ -102,7 +105,7 @@ local ivysaur={
     G.hand:change_size(-card.ability.extra.h_size)
   end
 }
-
+-- Venusaur 003
 local venusaur={
   name = "venusaur", 
   pos = {x = 2, y = 0}, 
@@ -152,7 +155,7 @@ local venusaur={
   end,
   megas = { "mega_venusaur" },
 }
-
+-- Mega Venusaur 003-1
 local mega_venusaur = {
   name = "mega_venusaur",
   pos = { x = 0, y = 0 },
@@ -186,7 +189,7 @@ local mega_venusaur = {
     G.hand:change_size(-card.ability.extra.h_size)
   end
 }
-
+-- Charmander 004
 local charmander={
   name = "charmander", 
   pos = {x = 3, y = 0}, 
@@ -231,7 +234,7 @@ local charmander={
     ease_discard(-card.ability.extra.d_size)
   end
 }
-
+-- Charmeleon 005
 local charmeleon={
   name = "charmeleon", 
   pos = {x = 4, y = 0}, 
@@ -276,7 +279,7 @@ local charmeleon={
     ease_discard(-card.ability.extra.d_size)
   end
 }
-
+-- Charizard 006
 local charizard={
   name = "charizard", 
   pos = {x = 5, y = 0}, 
@@ -337,6 +340,7 @@ local charizard={
     return mega
   end
 }
+-- Mega Charizard X 006-1
 local mega_charizard_x = {
   name = "mega_charizard_x", 
   pos = {x = 2, y = 0},
@@ -364,6 +368,7 @@ local mega_charizard_x = {
     end
   end
 }
+-- Mega Charizard Y 006-2
 local mega_charizard_y = {
   name = "mega_charizard_y", 
   pos = {x = 4, y = 0},
@@ -388,6 +393,7 @@ local mega_charizard_y = {
     ease_discard(-card.ability.extra.d_size)
   end
 }
+-- Squirtle 007
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
@@ -437,6 +443,7 @@ local squirtle={
     end
   end,
 }
+-- Wartortle 008
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
@@ -485,6 +492,7 @@ local wartortle={
     end
   end,
 }
+-- Blastoise 009
 local blastoise={
   name = "blastoise", 
   pos = {x = 8, y = 0},
@@ -526,6 +534,7 @@ local blastoise={
   end,
   megas = {"mega_blastoise"}
 }
+-- Mega Blastoise 009-1
 local mega_blastoise = {
   name = "mega_blastoise",
   pos = {x = 6, y = 0},
@@ -555,6 +564,7 @@ local mega_blastoise = {
     end
   end,
 }
+-- Caterpie 010
 local caterpie={
   name = "caterpie", 
   pos = {x = 9, y = 0},
@@ -582,6 +592,7 @@ local caterpie={
     return level_evo(self, card, context, "j_poke_metapod")
   end,
 }
+-- Metapod 011
 local metapod={
   name = "metapod",
   config = {extra = {mult = 4, rounds = 3}},
@@ -609,6 +620,7 @@ local metapod={
     return level_evo(self, card, context, "j_poke_butterfree")
   end,
 }
+-- Butterfree 012
 local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
@@ -636,6 +648,7 @@ local butterfree={
   end
 
 }
+-- Weedle 013
 local weedle={
   name = "weedle", 
   pos = {x = 12, y = 0},
@@ -663,6 +676,7 @@ local weedle={
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
 }
+-- Kakuna 014
 local kakuna={
   name = "kakuna", 
   pos = {x = 0, y = 1}, 
@@ -690,6 +704,7 @@ local kakuna={
     return level_evo(self, card, context, "j_poke_beedrill")
   end,
 }
+-- Beedrill 015
 local beedrill={
   name = "beedrill", 
   pos = {x = 1, y = 1}, 
@@ -718,6 +733,7 @@ local beedrill={
   end,
   megas = {"mega_beedrill"}
 }
+-- Mega Beedrill 015-1
 local mega_beedrill = {
   name = "mega_beedrill", 
   pos = { x = 8, y = 0 },
@@ -745,6 +761,7 @@ local mega_beedrill = {
     end
   end
 }
+-- Pidgey 016
 local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
@@ -794,6 +811,7 @@ local pidgey={
     return level_evo(self, card, context, "j_poke_pidgeotto")
   end,
 }
+-- Pidgeotto 017
 local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
@@ -843,6 +861,7 @@ local pidgeotto={
     return level_evo(self, card, context, "j_poke_pidgeot")
   end,
 }
+-- Pidgeot 018
 local pidgeot={
   name = "pidgeot", 
   pos = {x = 4, y = 1},
@@ -901,6 +920,7 @@ local pidgeot={
   end,
   megas = {"mega_pidgeot"}
 }
+-- Mega Pidgeot 018-1
 local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
@@ -962,6 +982,7 @@ local mega_pidgeot = {
     end
   end,
 }
+-- Rattata 019
 local rattata={
   name = "rattata", 
   pos = {x = 5, y = 1},
@@ -992,6 +1013,7 @@ local rattata={
     return pokemon_in_pool(self)
   end
 }
+-- Raticate 020
 local raticate={
   name = "raticate", 
   pos = {x = 6, y = 1}, 
@@ -1018,6 +1040,7 @@ local raticate={
     end
   end
 }
+-- Spearow 021
 local spearow={
   name = "spearow", 
   pos = {x = 7, y = 1},
@@ -1059,6 +1082,7 @@ local spearow={
     return level_evo(self, card, context, "j_poke_fearow")
   end,
 }
+-- Fearow 022
 local fearow={
   name = "fearow", 
   pos = {x = 8, y = 1}, 
@@ -1101,6 +1125,7 @@ local fearow={
     end
   end,
 }
+-- Ekans 023
 local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
@@ -1127,7 +1152,8 @@ local ekans={
     end
     return level_evo(self, card, context, "j_poke_arbok")
   end,
-  }
+}
+-- Arbok 024
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
@@ -1183,6 +1209,7 @@ local arbok={
     end
   end,
 }
+-- Pikachu 025
 local pikachu={
   name = "pikachu", 
   pos = {x = 11, y = 1},
@@ -1206,6 +1233,7 @@ local pikachu={
     return item_evo(self, card, context, "j_poke_raichu")
   end
 }
+-- Raichu 026
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
@@ -1238,6 +1266,7 @@ local raichu={
     return ease_poke_dollars(card, "raichu", math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money), true)
 	end,
 }
+-- Sandshrew 027
 local sandshrew={
   name = "sandshrew", 
   pos = {x = 0, y = 2},
@@ -1309,11 +1338,12 @@ local sandshrew={
     if G.STAGE == G.STAGES.RUN then
       card.ability.extra.sandshrew_tally = 0
       for k, v in pairs(G.playing_cards) do
-        if v.ability.name == 'Glass Card' then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
+        if SMODS.has_enhancement(v, 'm_glass') then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
       end
     end
   end
 }
+-- Sandslash 028
 local sandslash={
   name = "sandslash", 
   pos = {x = 1, y = 2},
@@ -1386,11 +1416,12 @@ local sandslash={
     if G.STAGE == G.STAGES.RUN then
       card.ability.extra.sandshrew_tally = 0
       for k, v in pairs(G.playing_cards) do
-        if v.ability.name == 'Glass Card' then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
+        if SMODS.has_enhancement(v, 'm_glass') then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
       end
     end
   end
 }
+-- Nidoran-F 029
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
@@ -1425,6 +1456,7 @@ local nidoranf={
     return level_evo(self, card, context, "j_poke_nidorina")
   end
 }
+-- Nidorina 030
 local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},

@@ -44,7 +44,7 @@ local tinkatink={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, card); end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
@@ -90,7 +90,7 @@ local tinkatuff={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, card) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
@@ -137,13 +137,13 @@ local tinkaton={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local add = function(v) return v.ability.name ~= 'Steel Card' end
+      local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, card) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card.ability.name == 'Steel Card' then
+      if SMODS.has_enhancement(context.other_card, 'm_steel') then
         return {
           x_mult = 2,
           mult = card.ability.extra.mult,
@@ -159,7 +159,7 @@ local tinkaton={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.after then
         for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i].ability.name == 'Steel Card' and not context.scoring_hand[i].debuff and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
+          if SMODS.has_enhancement(context.scoring_hand[i], 'm_steel') and not context.scoring_hand[i].debuff and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
             context.scoring_hand[i].shattered = true
             local destroyed = context.scoring_hand[i]
             G.E_MANAGER:add_event(Event({

@@ -20,7 +20,7 @@ local aron = {
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
-        if v.config.center == G.P_CENTERS.m_steel and not v.debuff then
+        if SMODS.has_enhancement(v, 'm_steel') and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           v.aron_target = true
@@ -39,7 +39,7 @@ local aron = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and context.destroying_card.config.center == G.P_CENTERS.m_steel and context.destroying_card.aron_target
+      return not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_steel') and context.destroying_card.aron_target
     end
     return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
   end
@@ -62,7 +62,7 @@ local lairon = {
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
-        if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone) and not v.debuff then
+        if (SMODS.has_enhancement(v, 'm_steel') or SMODS.has_enhancement(v, 'm_stone')) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           v.lairon_target = true
@@ -81,7 +81,7 @@ local lairon = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      return not context.blueprint and (context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone) 
+      return not context.blueprint and (SMODS.has_enhancement(context.destroying_card, 'm_steel') or SMODS.has_enhancement(context.destroying_card, 'm_stone')) 
              and context.destroying_card.lairon_target
     end
     return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
@@ -105,7 +105,7 @@ local aggron = {
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
-        if (v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_stone or v.config.center == G.P_CENTERS.m_gold) and not v.debuff then
+        if (SMODS.has_enhancement(v, 'm_steel') or SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_gold')) and not v.debuff then
           card.ability.extra.eaten = card.ability.extra.eaten + 1
           card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
           v.aggron_target = true
@@ -124,8 +124,8 @@ local aggron = {
         Xmult_mod = card.ability.extra.Xmult
       }
     elseif context.destroying_card then
-      local eat = context.destroying_card.config.center == G.P_CENTERS.m_steel or context.destroying_card.config.center == G.P_CENTERS.m_stone or
-                  context.destroying_card.config.center == G.P_CENTERS.m_gold
+      local eat = SMODS.has_enhancement(context.destroying_card, 'm_steel') or SMODS.has_enhancement(context.destroying_card, 'm_stone') or
+                  SMODS.has_enhancement(context.destroying_card, 'm_gold')
       return not context.blueprint and eat and context.destroying_card.aggron_target
     end
   end

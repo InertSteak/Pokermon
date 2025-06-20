@@ -176,7 +176,7 @@ local azumarill={
         local bonus = nil
         local unbonus = nil
         for k, v in pairs(context.scoring_hand) do
-          if v.ability.name == 'Bonus' then
+          if SMODS.has_enhancement(v, 'm_bonus') then
             bonus = true
           else
             unbonus = true
@@ -1296,7 +1296,7 @@ local forretress={
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and context.other_card.ability.name == 'Steel Card' then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, 'm_steel') then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
     end

@@ -36,7 +36,7 @@ local mantyke={
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
-      if context.other_card.ability.name == 'Gold Card' then 
+      if SMODS.has_enhancement(context.other_card, 'm_gold') then 
         if context.other_card.debuff then
           return {
             message = localize("k_debuffed"),
@@ -142,7 +142,7 @@ local magnezone={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
-       context.other_card.ability.name == 'Steel Card' then
+       SMODS.has_enhancement(context.other_card, 'm_steel') then
         local total = #find_pokemon_type("Metal")
         return {
           x_mult = card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2),
@@ -214,7 +214,7 @@ local rhyperior={
   atlas = "Pokedex4",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and context.other_card.ability.name == 'Stone Card' then
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_stone') then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips
       return {
@@ -223,7 +223,7 @@ local rhyperior={
           card = card
       }
     end
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_stone') then
       local rhytriggers = #find_pokemon_type("Earth")
       if rhytriggers > 0 then
         return {
@@ -254,7 +254,7 @@ local tangrowth={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
-       context.other_card.ability.name == 'Wild Card' then
+       SMODS.has_enhancement(context.other_card, 'm_wild') then
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
@@ -587,7 +587,7 @@ local mamoswine={
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
       local earn = false
-      if context.other_card.ability.name == 'Stone Card' or context.other_card.ability.name == 'Glass Card' then
+      if SMODS.has_enhancement(context.other_card, 'm_stone') or SMODS.has_enhancement(context.other_card, 'm_glass') then
         if pseudorandom('mamoswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
           earn = true
         end
@@ -595,7 +595,7 @@ local mamoswine={
       if context.other_card == context.scoring_hand[1] then
         local stoneglass = 0
         for k, v in pairs(context.scoring_hand) do
-          if v.ability.name == 'Stone Card' or v.ability.name == 'Glass Card' then
+          if SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_glass') then
             stoneglass = stoneglass + 1
           end
         end
@@ -686,7 +686,7 @@ local probopass={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Stone Card' then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_stone') then
       return {
           x_mult = card.ability.extra.Xmult_multi,
           colour = G.C.XMULT,

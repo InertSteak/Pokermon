@@ -1,4 +1,6 @@
 --Code for pokemon jokers 31-60
+
+-- Nidoqueen 031
 local nidoqueen={
   name = "nidoqueen", 
   pos = {x = 4, y = 2}, 
@@ -38,6 +40,7 @@ local nidoqueen={
     G.hand:change_size(-card.ability.extra.h_size)
   end
 }
+-- Nidoran-M 032
 local nidoranm={
   name = "nidoranm", 
   pos = {x = 5, y = 2}, 
@@ -70,6 +73,7 @@ local nidoranm={
     return level_evo(self, card, context, "j_poke_nidorino")
   end
 }
+-- Nidorino 033
 local nidorino={
   name = "nidorino", 
   pos = {x = 6, y = 2}, 
@@ -104,6 +108,7 @@ local nidorino={
     return item_evo(self, card, context, "j_poke_nidoking")
   end
 }
+-- Nidoking 034
 local nidoking={
   name = "nidoking", 
   pos = {x = 7, y = 2},
@@ -141,6 +146,7 @@ local nidoking={
     G.hand:change_size(-card.ability.extra.h_size)
   end
 }
+-- Clefairy 035
 local clefairy={
   name = "clefairy", 
   pos = {x = 8, y = 2},
@@ -169,6 +175,7 @@ local clefairy={
     return item_evo(self, card, context, "j_poke_clefable")
   end
 }
+-- Clefable 036
 local clefable={
   name = "clefable", 
   pos = {x = 9, y = 2},
@@ -210,6 +217,7 @@ local clefable={
     end
   end
 }
+-- Vulpix 037
 local vulpix={
   name = "vulpix", 
   pos = {x = 10, y = 2},
@@ -253,6 +261,7 @@ local vulpix={
     return item_evo(self, card, context, "j_poke_ninetales")
   end
 }
+-- Ninetales 038
 local ninetales={
   name = "ninetales", 
   pos = {x = 11, y = 2},
@@ -306,6 +315,7 @@ local ninetales={
     end
   end
 }
+-- Jigglypuff 039
 local jigglypuff={
   name = "jigglypuff", 
   pos = {x = 12, y = 2},
@@ -334,6 +344,7 @@ local jigglypuff={
     return item_evo(self, card, context, "j_poke_wigglytuff")
   end
 }
+-- Wigglytuff 040
 local wigglytuff={
   name = "wigglytuff", 
   pos = {x = 0, y = 3},
@@ -363,6 +374,7 @@ local wigglytuff={
     end
   end
 }
+-- Zubat 041
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
@@ -406,6 +418,7 @@ local zubat={
     return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
   end
 }
+-- Golbat 042
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
@@ -491,6 +504,7 @@ local golbat={
     end
 	end
 }
+-- Oddish 043
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
@@ -527,6 +541,7 @@ local oddish={
     return level_evo(self, card, context, "j_poke_gloom")
   end
 }
+-- Gloom 044
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
@@ -567,6 +582,7 @@ local gloom={
     return item_evo(self, card, context)
   end
 }
+-- Vileplume 045
 local vileplume={
   name = "vileplume",
   config = {extra = {Xmult_multi = 1.5, mult = 7}},
@@ -603,6 +619,7 @@ local vileplume={
     end
   end
 }
+-- Paras 046
 local paras={
   name = "paras", 
   pos = {x = 6, y = 3}, 
@@ -638,6 +655,7 @@ local paras={
     return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
   end
 }
+-- Parasect 047
 local parasect={
   name = "parasect", 
   pos = {x = 7, y = 3},
@@ -681,6 +699,7 @@ local parasect={
     end
   end
 }
+-- Venonat 048
 local venonat={
   name = "venonat", 
   pos = {x = 8, y = 3},
@@ -705,6 +724,7 @@ local venonat={
     G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end
 }
+-- Venomoth 049
 local venomoth={
   name = "venomoth", 
   pos = {x = 9, y = 3},
@@ -726,6 +746,7 @@ local venomoth={
     G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
   end
 }
+-- Diglett 050
 local diglett={
   name = "diglett", 
   pos = {x = 10, y = 3}, 
@@ -780,6 +801,7 @@ local diglett={
     return level_evo(self, card, context, "j_poke_dugtrio")
   end
 }
+-- Dugtrio 051
 local dugtrio={
   name = "dugtrio", 
   pos = {x = 11, y = 3},
@@ -833,6 +855,7 @@ local dugtrio={
     end
   end
 }
+-- Meowth 052
 local meowth={
   name = "meowth", 
   pos = {x = 12, y = 3},
@@ -854,6 +877,7 @@ local meowth={
     return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
 	end
 }
+-- Persian 053
 local persian={
   name = "persian", 
   pos = {x = 0, y = 4}, 
@@ -873,6 +897,7 @@ local persian={
     end
 	end
 }
+-- Psyduck 054
 local psyduck={
   name = "psyduck", 
   pos = {x = 1, y = 4},
@@ -898,6 +923,7 @@ local psyduck={
     return level_evo(self, card, context, "j_poke_golduck")
   end,
 }
+-- Golduck 055
 local golduck={
   name = "golduck", 
   pos = {x = 2, y = 4},
@@ -937,6 +963,7 @@ local golduck={
     end
   end,
 }
+-- Mankey 056
 local mankey={
   name = "mankey", 
   pos = {x = 3, y = 4},
@@ -967,6 +994,7 @@ local mankey={
     return level_evo(self, card, context, "j_poke_primeape")
   end
 }
+-- Primeape 057
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
@@ -999,6 +1027,7 @@ local primeape={
     return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
   end
 }
+-- Growlithe 058
 local growlithe={
   name = "growlithe", 
   pos = {x = 5, y = 4},
@@ -1028,6 +1057,7 @@ local growlithe={
     return item_evo(self, card, context, "j_poke_arcanine")
   end,
 }
+-- Arcanine 059
 local arcanine={
   name = "arcanine", 
   pos = {x = 6, y = 4},
@@ -1065,6 +1095,7 @@ local arcanine={
     end
   end,
 }
+-- Poliwag 060
 local poliwag={
   name = "poliwag", 
   pos = {x = 7, y = 4},
@@ -1114,7 +1145,6 @@ local poliwag={
   end,
 }
 
-
 return {name = "Pokemon Jokers 31-60", 
-        list = {  nidoqueen, nidoranm, nidorino, nidoking, clefairy, clefable, vulpix, ninetales, jigglypuff, wigglytuff, zubat, golbat, oddish, gloom, vileplume, paras, parasect, venonat, venomoth,                  diglett, dugtrio, meowth, persian, psyduck, golduck, mankey, primeape, growlithe, arcanine, poliwag,},
+        list = {  nidoqueen, nidoranm, nidorino, nidoking, clefairy, clefable, vulpix, ninetales, jigglypuff, wigglytuff, zubat, golbat, oddish, gloom, vileplume, paras, parasect, venonat, venomoth, diglett, dugtrio, meowth, persian, psyduck, golduck, mankey, primeape, growlithe, arcanine, poliwag,},
 }

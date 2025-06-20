@@ -1,4 +1,6 @@
 --Code for pokemon jokers 121-150
+
+-- Starmie 121
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
@@ -26,6 +28,7 @@ local starmie={
     end
   end
 }
+-- Mr Mime 122
 local mrmime={
   name = "mrmime", 
   pos = {x = 4, y = 9}, 
@@ -52,6 +55,7 @@ local mrmime={
     end
   end
 }
+-- Scyther 123
 local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
@@ -113,6 +117,7 @@ local scyther={
     if evo then return evo end
   end
 }
+-- Jynx 124
 local jynx={
   name = "jynx", 
   pos = {x = 6, y = 9}, 
@@ -161,6 +166,7 @@ local jynx={
     end
   end,
 }
+-- Electabuzz 125
 local electabuzz={
   name = "electabuzz", 
   pos = {x = 7, y = 9}, 
@@ -193,6 +199,7 @@ local electabuzz={
     return ease_poke_dollars(card, "electabuzz", earned, true)
 	end
 }
+-- Magmar 126
 local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
@@ -237,6 +244,7 @@ local magmar={
     return item_evo(self, card, context, "j_poke_magmortar")
   end
 }
+-- Pinsir 127
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
@@ -275,6 +283,7 @@ local pinsir={
   end,
   megas = {"mega_pinsir"}
 }
+-- Mega Pinsir 127-1
 local mega_pinsir={
   name = "mega_pinsir", 
   pos = {x = 5, y = 1},
@@ -299,6 +308,7 @@ local mega_pinsir={
     end
   end
 }
+-- Tauros 128
 local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
@@ -336,6 +346,7 @@ local tauros={
     end
   end
 }
+-- Tauros-Herd 128-1
 local taurosh={
   name = "taurosh",
   pos = {x = 11, y = 9},
@@ -364,6 +375,7 @@ local taurosh={
     end
   end
 }
+-- Magikarp 129
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
@@ -392,6 +404,7 @@ local magikarp={
     return level_evo(self, card, context, "j_poke_gyarados")
   end
 }
+-- Gyarados 130
 local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
@@ -420,6 +433,7 @@ local gyarados={
   end,
   megas = {"mega_gyarados"}
 }
+-- Mega Gyarados 130-1
 local mega_gyarados={
   name = "mega_gyarados", 
   pos = {x = 7, y = 1},
@@ -466,6 +480,7 @@ local mega_gyarados={
     end
   end
 }
+-- Lapras 131
 local lapras={
   name = "lapras", 
   pos = {x = 1, y = 10},
@@ -497,6 +512,7 @@ local lapras={
     end
   end
 }
+-- Ditto 132
 local ditto={
   name = "ditto", 
   pos = {x = 2, y = 10}, 
@@ -556,6 +572,7 @@ local ditto={
     return true
   end
 }
+-- Eevee 133
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
@@ -589,6 +606,7 @@ local eevee={
     return item_evo(self, card, context, nil)
   end
 }
+-- Vaporeon 134
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
@@ -631,6 +649,7 @@ local vaporeon={
     end
   end
 }
+-- Jolteon 135
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
@@ -662,6 +681,7 @@ local jolteon={
     end
   end
 }
+-- Flareon 136
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
@@ -704,6 +724,7 @@ local flareon={
     end
   end
 }
+-- Porygon 137
 local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
@@ -754,6 +775,7 @@ local porygon={
     end
   end
 }
+-- Omanyte 138
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
@@ -816,6 +838,7 @@ local omanyte={
   end,
   generate_ui = fossil_generate_ui,
 }
+-- Omastar 139
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
@@ -903,6 +926,7 @@ local omastar={
   end,
   generate_ui = fossil_generate_ui,
 }
+-- Kabuto 140
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
@@ -964,6 +988,7 @@ local kabuto={
   end,
   generate_ui = fossil_generate_ui,
 }
+-- Kabutops 141
 local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
@@ -1032,6 +1057,7 @@ local kabutops={
   end,
   generate_ui = fossil_generate_ui,
 }
+-- Aerodactyl 142
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
@@ -1127,6 +1153,7 @@ local aerodactyl={
   generate_ui = fossil_generate_ui,
   megas = {"mega_aerodactyl"}
 }
+-- Mega Aerodactyl 142-1
 local mega_aerodactyl={
   name = "mega_aerodactyl", 
   pos = {x = 9, y = 1},
@@ -1169,6 +1196,7 @@ local mega_aerodactyl={
     end
   end,
 }
+-- Snorlax 143
 local snorlax={
   name = "snorlax", 
   pos = {x = 0, y = 11},
@@ -1217,6 +1245,7 @@ local snorlax={
     end
   end
 }
+-- Articuno 144
 local articuno={
   name = "articuno", 
   pos = {x = pokermon_config.pokemon_altart and 7 or 1, y = pokermon_config.pokemon_altart and 12 or 11},
@@ -1239,6 +1268,7 @@ local articuno={
     end
   end
 }
+-- Zapdos 145
 local zapdos={
   name = "zapdos", 
   pos = {x = pokermon_config.pokemon_altart and 8 or 3, y = pokermon_config.pokemon_altart and 12 or 11},
@@ -1276,6 +1306,7 @@ local zapdos={
     end
   end
 }
+-- Moltres 146
 local moltres={
   name = "moltres", 
   pos = {x = pokermon_config.pokemon_altart and 9 or 5, y = pokermon_config.pokemon_altart and 12 or 11},
@@ -1303,6 +1334,7 @@ local moltres={
     end
   end
 }
+-- Dratini 147
 local dratini={
   name = "dratini", 
   pos = {x = 7, y = 11},
@@ -1334,6 +1366,7 @@ local dratini={
     return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
+-- Dragonair 148
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
@@ -1365,6 +1398,7 @@ local dragonair={
     return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
   end,
 }
+-- Dragonite 149
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
@@ -1398,6 +1432,7 @@ local dragonite={
     end
   end,
 }
+-- Mewtwo 150
 local mewtwo={
   name = "mewtwo", 
   pos = {x = pokermon_config.pokemon_altart and 10 or 10, y = pokermon_config.pokemon_altart and 12 or 11},
@@ -1482,7 +1517,7 @@ local mewtwo={
     return mega
   end
 }
-
+-- Mega Mewtwo X 150-1
 local mega_mewtwo_x = {
   name = "mega_mewtwo_x",
   pos = {x = 11, y = 1},
@@ -1508,7 +1543,7 @@ local mega_mewtwo_x = {
     end
   end
 }
-
+-- Mega Mewtwo Y 150-2
 local mega_mewtwo_y = {
   name = "mega_mewtwo_y",
   pos = {x = 13, y = 1},
@@ -1551,7 +1586,7 @@ local mega_mewtwo_y = {
     end
   end
 }
-
+----------------------
 return {name = "Pokemon Jokers 121-150", 
         list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, mega_pinsir, tauros, taurosh, magikarp, gyarados, mega_gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon,                 omanyte, omastar, kabuto, kabutops, aerodactyl, mega_aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }
