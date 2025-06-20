@@ -4057,7 +4057,7 @@ return {
                     "of {C:item,T:c_poke_twisted_spoon}#2#"
                 } 
             },
-            sleeve_poke_ampeddeck = {
+            sleeve_poke_ampedsleeve = {
                 name = "Amped Sleeve",
                 text = {
                     "Start run with the",
