@@ -146,6 +146,7 @@ family = {
      {key = "unown", form = "S"}, {key = "unown", form = "T"}, {key = "unown", form = "U"}, {key = "unown", form = "V"}, {key = "unown", form = "W"}, {key = "unown", form = "X"}, 
      {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "ZEx"}, {key = "unown", form = "ZQu"}
     },
+    {"berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mystery"}
 }
 
 extended_family = {
@@ -641,7 +642,9 @@ get_family_keys = function(cardname, custom_prefix, card)
   local keys = {}
   local line = nil
   local extra = nil
+  local initial_custom_prefix = custom_prefix
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
+  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_poke'..initial_custom_prefix..'_' or 'c_poke_' end
   for k, v in pairs(family) do
     for x, y in pairs(v) do
       if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end

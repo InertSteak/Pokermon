@@ -748,9 +748,10 @@ function Controller:queue_R_cursor_press(x, y)
     controller_queue_R_cursor_press_ref(self, x, y)
     local clicked = self.hovering.target or self.focused.target
     if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center and clicked.facing ~= 'back' then
-      if clicked.config.center.stage then
+      if clicked.config.center.stage or clicked.config.center.poke_multi_item then
         local menu = G.SETTINGS.paused and 'pokedex_back' or nil
         if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+        if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
         G.FUNCS.overlay_menu{
           definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
         }
@@ -764,9 +765,10 @@ function Controller:capture_focused_input(button, input_type, dt)
     local clicked = self.focused.target
     if input_type == 'press' and button == 'rightstick' then
       if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center and clicked.facing ~= 'back' then
-        if clicked.config.center.stage then
+        if clicked.config.center.stage or clicked.config.center.poke_multi_item then
           local menu = G.SETTINGS.paused and 'pokedex_back' or nil
           if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+          if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
           G.SETTINGS.paused = true
           G.FUNCS.overlay_menu{
             definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),

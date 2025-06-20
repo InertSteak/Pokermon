@@ -138,6 +138,50 @@ local scizor={
   end
 }
 -- Shuckle 213
+local shuckle={
+  name = "shuckle",
+  pos = {x = 1, y = 6},
+  config = {extra = {}},
+  loc_txt = {
+    name = "Shuckle",
+    text = {
+      "When {C:attention}Blind{} is selected, destroy",
+      "leftmost {C:attention}Consumable{} and",
+      "create a {C:item}Berry Juice{} card",
+      "{C:inactive}(Can't destroy {C:item}Berry Juice{C:inactive})"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_berry_juice
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced and not context.blueprint and G.consumeables and G.consumeables.cards and #G.consumeables.cards > 0 then
+      local sliced_card = G.consumeables.cards[1]
+      if not sliced_card.getting_sliced and not sliced_card.config.center.berry_juice then
+        sliced_card.getting_sliced = true
+        G.E_MANAGER:add_event(Event({func = function()
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+            play_sound('slice1', 0.96+math.random()*0.08)
+            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, pokermon.juice_list[sliced_card.config.center.set] or 'c_poke_berry_juice_mystery')
+            _card:add_to_deck()
+            G.consumeables:emplace(_card)
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
+        return true end }))
+      end
+    end
+  end,
+}
 -- Heracross 214
 local heracross = {
   name = "heracross", 
@@ -1538,5 +1582,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, shuckle, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

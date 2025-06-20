@@ -293,7 +293,8 @@ return {
                     "Creates the last",
                     "{C:item}Item{} card or {C:pink}Energy{} card",
                     "used during this run",
-                    "{s:0.8,C:item}Twisted Spoon and Reusables{s:0.8} excluded"
+                    "{s:0.8,C:item}Twisted Spoon, Reusables",
+                    "{s:0.8,C:item}and Berry Juices{s:0.8} excluded"
                 }
             },
             c_poke_prismscale = {
@@ -336,6 +337,59 @@ return {
                     "Enhances {C:attention}1{} selected card into a",
                     "{C:attention}Stone Card{} with {C:chips}+#2#{} extra Chips",
                     "for each {X:earth,C:white}Earth{} Joker you have"
+                }
+            },
+            c_poke_berry_juice = {
+                name = "Berry Juice",
+                text = {
+                    "Effect depends on",
+                    "{C:attention}Consumable{} destroyed"
+                }
+            },
+            c_poke_berry_juice_energy = {
+                name = "Energized Berry Juice",
+                text = {
+                    "{C:pink}Energize{} leftmost or selected",
+                    "Joker of any {C:pink}Type{}",
+                    "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
+                },
+            },
+            c_poke_berry_juice_spectral = {
+                name = "Ghostly Berry Juice",
+                text = {
+                    "Add a random {C:attention}seal{} and {C:dark_edition}Foil{}, ",
+                    "{C:dark_edition}Holographic{} or {C:dark_edition}Polychrome{} to",
+                    "{C:attention}1{} selected card in hand"
+                },
+            },
+            c_poke_berry_juice_planet = {
+                name = "Starry Berry Juice",
+                text = {
+                    "Upgrades highest level",
+                    "{C:attention}poker hand{} by one level",
+                },
+            },
+            c_poke_berry_juice_item = {
+                name = "Itemized Berry Juice",
+                text = {
+                    "Create a {C:item}Twisted Spoon{} card",
+                    "{C:green}#1# in #2#{} chance to",
+                    "create {C:attention}2{} instead",
+                    "{C:inactive}(Must have room){}"
+                },
+            },
+            c_poke_berry_juice_tarot = {
+                name = "Occult Berry Juice",
+                text = {
+                    "Create a {C:tarot}Fool{} card",
+                    "and earn {C:money}$#1#{}",
+                },
+            },
+            c_poke_berry_juice_mystery = {
+                name = "Mystery Berry Juice",
+                text = {
+                    "Creates a random",
+                    "{C:item}Berry Juice{} card"
                 }
             },
         },
