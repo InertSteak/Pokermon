@@ -668,9 +668,41 @@ jd_def["j_poke_yanma"] = {
 }
 
 --	Wooper
+jd_def["j_poke_wooper"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    local face_cards_in_deck = 0
+    for k, v in pairs(G.deck.cards) do
+      if v:is_face() then
+        face_cards_in_deck = face_cards_in_deck + 1
+      end
+    end
+  card.joker_display_values.mult = card.ability.extra.mult - face_cards_in_deck
+  end
+}
+
 --	Quagsire
+jd_def["j_poke_quagsire"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    local face_cards_in_deck = 0
+    for k, v in pairs(G.deck.cards) do
+      if v:is_face() then
+        face_cards_in_deck = face_cards_in_deck + 1
+      end
+    end
+  card.joker_display_values.mult = card.ability.extra.mult - face_cards_in_deck
+  end
+}
+
 --	Espeon
-jd_def["j_poke_espeon"] = { 
+jd_def["j_poke_espeon"] = {
     text = {
         {
             border_nodes = {
@@ -770,6 +802,22 @@ text_config = { colour = G.C.CHIPS },
 }
 
 --	Unown
+jd_def["j_poke_unown"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.MULT },
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1",},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+  end
+}
+
 --	Wobbuffet
 jd_def["j_poke_wobbuffet"] = {
 reminder_text = {
