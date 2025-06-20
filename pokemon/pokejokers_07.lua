@@ -999,6 +999,7 @@ local unown={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex2",
+  aux_poke = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = false,
