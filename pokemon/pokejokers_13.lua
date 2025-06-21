@@ -505,7 +505,8 @@ local jirachi_fixer = {
         end
       end
     end
-    if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card then
+    if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card and not card.ability.extra.triggered then
+      card.ability.extra.triggered = true
       return {
         delay = 0.45,
         remove = true,
@@ -514,8 +515,12 @@ local jirachi_fixer = {
     end
 
     if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return (G.GAME.current_round.hands_played == 0 or G.GAME.current_round.discards_used == 0) and not G.RESET_JIGGLES end
+      local eval = function(card) return (G.GAME.current_round.hands_played == 0 or G.GAME.current_round.discards_used == 0) and not G.RESET_JIGGLES and not card.ability.extra.triggered end
       juice_card_until(card, eval, true)
+    end
+    
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.triggered = nil
     end
   end,
   custom_pool_func = true,
