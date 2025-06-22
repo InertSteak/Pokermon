@@ -142,15 +142,6 @@ local shuckle={
   name = "shuckle",
   pos = {x = 1, y = 6},
   config = {extra = {}},
-  loc_txt = {
-    name = "Shuckle",
-    text = {
-      "When {C:attention}Blind{} is selected, destroy",
-      "leftmost {C:attention}Consumable{} and",
-      "create a {C:item}Berry Juice{} card",
-      "{C:inactive}(Can't destroy {C:item}Berry Juice{C:inactive})"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_berry_juice
@@ -334,15 +325,6 @@ local slugma={
   name = "slugma",
   pos = {x = 6, y = 6},
   config = {extra = {chips = 0,chip_mod = 20, hands = 4, hand_reset = 4}, evo_rqmt = 80},
-  loc_txt = {
-    name = "Slugma",
-    text = {
-      "Every {C:attention}4{} {C:inactive}[#4#]{} hands played, destroy",
-      "first card {C:attention}held{} in hand after scoring",
-      "and this Joker gains {C:chips}+#2#{} Chips",
-      "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,self.config.evo_rqmt, center.ability.extra.hands}}
@@ -395,15 +377,6 @@ local magcargo={
   name = "magcargo",
   pos = {x = 7, y = 6},
   config = {extra = {chips = 0,chip_mod = 25, hands = 3, hand_reset = 3, remove = false}},
-  loc_txt = {
-    name = "Magcargo",
-    text = {
-      "Every {C:attention}3{} {C:inactive}[#3#]{} hands played, destroy",
-      "first card {C:attention}held{} in hand after scoring",
-      "and this Joker gains {C:chips}+#2#{} Chips",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.hands}}

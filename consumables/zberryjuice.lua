@@ -12,6 +12,7 @@ local berry_juice = {
   pos = { x = 1, y = 6 },
   atlas = "Mart",
   cost = 12,
+  poke_always_unlocked = true,
   unlocked = true,
   discovered = true,
   in_pool = function(self)

@@ -2170,6 +2170,25 @@ return {
                     "{C:inactive}(Currently {C:chips}+#3#{}, {C:mult}+#1#{}, {X:mult,C:white}X#5#{}, {C:money}$#7#{C:inactive} end of round)"
                 } 
             },
+            j_poke_chinchou = {
+                name = "Chinchou",
+                text = {
+                  "Gives {C:chips}+#1#{} Chips and earns {C:money}$#2#{}",
+                  "if scoring hand contains a {C:attention}Pair",
+                  "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
+                }
+            },
+            j_poke_lanturn = {
+                name = "Lanturn",
+                text = {
+                  "Gives {C:chips}+#1#{} Chips and earns {C:money}$#2#{}",
+                  "if scoring hand contains a {C:attention}Pair",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "{C:chips}+#3#{} Chips extra per {X:water,C:white}Water{} Joker",
+                  "{C:money}$#4#{} extra per {X:lightning,C:black}Lightning{} Joker",
+                  "{C:inactive}(Currently {C:chips}+#6#{C:inactive} Chips and {C:money}$#5#{C:inactive})"
+                }
+            },
             j_poke_pichu = {
                 name = 'Pichu',
                 text = {
@@ -2358,6 +2377,25 @@ return {
                     "and at end of round"
                 }
             },
+            j_poke_wooper = {
+                name = "Wooper",
+                text = {
+                  "{C:mult}+#1#{} Mult",
+                  "{C:mult}-#3#{} Mult for each {C:attention}face{}",
+                  "card remaining in {C:attention}deck",
+                  "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_quagsire = {
+                name = "Quagsire",
+                text = {
+                  "{C:mult}+#1#{} Mult",
+                  "{C:mult}-#2#{} Mult for each {C:attention}face{}",
+                  "card remaining in {C:attention}deck",
+                  "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                }
+            },
             j_poke_yanma = {
               name = "Yanma",
               text = {
@@ -2414,6 +2452,16 @@ return {
                     "Gain lost Chips",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_unown = {
+                name = "Unown",
+                text = {
+                  "{C:attention}Nature:{} {C:inactive}({C:attention}#2#{C:inactive})",
+                  "{C:mult}+#1#{} Mult if scoring hand",
+                  "contains a {C:attention}Nature{} card",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{S:1.1,C:red,E:2}self destructs{} at end of round",
                 }
             },
             j_poke_wobbuffet = {
@@ -2520,6 +2568,15 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:mult,C:white}X#3#{} {C:inactive}Mult)"
                 } 
             },
+            j_poke_shuckle = {
+                name = "Shuckle",
+                text = {
+                  "When {C:attention}Blind{} is selected, destroy",
+                  "leftmost {C:attention}Consumable{} and",
+                  "create a {C:item}Berry Juice{} card",
+                  "{C:inactive}(Can't destroy {C:item}Berry Juice{C:inactive})"
+                }
+            },
             j_poke_sneasel = {
                 name = 'Sneasel',
                 text = {
@@ -2546,6 +2603,24 @@ return {
                 "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
               }
+            },
+            j_poke_slugma = {
+              name = "Slugma",
+              text = {
+                "Every {C:attention}4{} {C:inactive}[#4#]{} hands played, destroy",
+                "first card {C:attention}held{} in hand after scoring",
+                "and this Joker gains {C:chips}+#2#{} Chips",
+                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
+              }
+            },
+            j_poke_magcargo = {
+                name = "Magcargo",
+                text = {
+                  "Every {C:attention}3{} {C:inactive}[#3#]{} hands played, destroy",
+                  "first card {C:attention}held{} in hand after scoring",
+                  "and this Joker gains {C:chips}+#2#{} Chips",
+                  "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                }
             },
             j_poke_swinub = {
                 name = "Swinub",
@@ -3952,6 +4027,14 @@ return {
                   "Sell this for a {C:attention}reward{}", 
                   "based on Unown {C:attention}merged",
                   "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult and {C:attention}#2#{C:inactive} Unown)",
+                }
+            },
+            j_poke_unown_swarm = {
+                name = "Unown Swarm",
+                text = {
+                  "{C:attention}Holding{} {C:spectral}The Soul{}",
+                  "Each {C:purple}Legendary{} Joker gives",
+                  "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult"
                 }
             },
             j_poke_treasure_eatery = {

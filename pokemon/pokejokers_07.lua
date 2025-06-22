@@ -574,16 +574,6 @@ local wooper={
   name = "wooper",
   pos = {x = 2, y = 4},
   config = {extra = {mult = 15,mult_minus = 1, rounds = 4,}},
-  loc_txt = {
-    name = "Wooper",
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "{C:mult}-#3#{} Mult for each {C:attention}face{}",
-      "card remaining in {C:attention}deck",
-      "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-      "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local mult_total = center.ability.extra.mult
@@ -626,15 +616,6 @@ local quagsire={
   name = "quagsire",
   pos = {x = 3, y = 4},
   config = {extra = {mult = 25, mult_minus = 1, rerolls = 1}},
-  loc_txt = {
-    name = "Quagsire",
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "{C:mult}-#2#{} Mult for each {C:attention}face{}",
-      "card remaining in {C:attention}deck",
-      "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local mult_total = center.ability.extra.mult
@@ -979,16 +960,6 @@ local unown={
   pos = {x = 9, y = 4},
   soul_pos = {x = 0, y = 0},
   config = {extra = {mult = 6, form = "A", targets = {{value = "Ace", id = "14"}}}},
-  loc_txt = {
-    name = "Unown",
-    text = {
-      "{C:attention}Nature:{} {C:inactive}({C:attention}#2#{C:inactive})",
-      "{C:mult}+#1#{} Mult if scoring hand",
-      "contains a {C:attention}Nature{} card",
-      "{br:2}ERROR - CONTACT STEAK",
-      "{S:1.1,C:red,E:2}self destructs{} at end of round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}

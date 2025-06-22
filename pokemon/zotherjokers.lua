@@ -581,14 +581,6 @@ local unown_swarm={
       card.children.center.VT.w = card.T.w * 1.174
     end},
   config = {extra = {mult = 28,Xmult_multi = 2.8,}},
-  loc_txt = {
-    name = "Unown Swarm",
-    text = {
-      "{C:attention}Holding{} {C:spectral}The Soul{}",
-      "Each {C:purple}Legendary{} Joker gives",
-      "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Soul"}}

@@ -815,7 +815,72 @@ local crobat={
 	end
 }
 -- Chinchou 170
+local chinchou={
+  name = "chinchou",
+  pos = {x = 8, y = 1},
+  config = {extra = {chips = 40,money = 1,rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.money, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['Pair']) then
+        local earned = ease_poke_dollars(card, "chinchou", card.ability.extra.money, true)
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          dollars = earned,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_lanturn")
+  end,
+}
 -- Lanturn 171
+local lanturn={
+  name = "lanturn",
+  pos = {x = 9, y = 1},
+  config = {extra = {chips = 60, chip_mod = 20, money = 1, money_mod = 1,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local Money = center.ability.extra.money + (center.ability.extra.money_mod * #find_pokemon_type("Lightning"))
+    local Chips = center.ability.extra.chips + (center.ability.extra.chip_mod * #find_pokemon_type("Water"))
+    return {vars = {center.ability.extra.chips, center.ability.extra.money, center.ability.extra.chip_mod, center.ability.extra.money_mod, Money, Chips}}
+  end,
+  rarity = 2,
+  cost = 7,
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and next(context.poker_hands['Pair']) then
+        local Money = card.ability.extra.money + (card.ability.extra.money_mod * #find_pokemon_type("Lightning"))
+        local earned = ease_poke_dollars(card, "lanturn", Money, true)
+        local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #find_pokemon_type("Water"))
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {Chips}}, 
+          colour = G.C.CHIPS,
+          dollars = earned,
+          chip_mod = Chips
+        }
+      end
+    end
+  end,
+}
 -- Pichu 172
 local pichu={
   name = "pichu", 
@@ -1171,17 +1236,6 @@ local flaaffy={
   name = "flaaffy",
   pos = {x = 8, y = 2},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25, Xmult_minus = 0.1}, evo_rqmt = 2.5},
-  loc_txt = {
-    name = "Flaaffy",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult when one or more",
-      "{C:attention}playing cards{} are {C:attention}added",
-      "{br:3}ERROR - CONTACT STEAK",
-      "Loses {X:red,C:white}X#3#{} Mult when one or more",
-      "{C:attention}playing cards{} are {C:attention}destroyed",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} / X#4# Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.Xmult_minus, self.config.evo_rqmt}}
@@ -1218,5 +1272,5 @@ local flaaffy={
 
 return {name = "Pokemon Jokers 151-180", 
         list = { mew, chikorita, bayleef, meganium, cyndaquil, quilava, typhlosion, totodile, croconaw, feraligatr, sentret, furret, hoothoot, noctowl, ledyba, ledian, spinarak, ariados,
-                 crobat, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
+                 crobat, chinchou, lanturn, pichu, cleffa, igglybuff, togepi, togetic, natu, xatu, mareep,flaaffy},
 }

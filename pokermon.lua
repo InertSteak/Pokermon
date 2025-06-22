@@ -187,7 +187,7 @@ for _, file in ipairs(pfiles) do
           end
         end
         item.discovered = not pokermon_config.pokemon_discovery
-        if item.name == "wobbuffet" then item.discovered = true end
+        if item.name == "unown" then item.discovered = true end
         local prev_load = item.load
         item.load = function(self, card, card_table, other_card)
           card_table.ability.extra.juiced = nil
@@ -242,7 +242,9 @@ for _, file in ipairs(pconsumables) do
     
     for i, item in ipairs(curr_consumable.list) do
       if not (item.pokeball and not pokermon_config.pokeballs) then
-        item.discovered = not pokermon_config.pokemon_discovery
+        if not item.poke_always_unlocked  then
+          item.discovered = not pokermon_config.pokemon_discovery
+        end
         SMODS.Consumable(item)
       end
     end
