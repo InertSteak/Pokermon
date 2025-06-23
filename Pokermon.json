@@ -5,7 +5,7 @@
 	"description": "A full content Balatro mod where every joker is a Pokemon.",
 	"prefix": "poke",
 	"main_file": "pokermon.lua",
-	"priority": 0,
+	"priority": -1,
 	"badge_colour": "ED533A",
 	"badge_text_colour": "FFFFFF",
   "display_name": "Pokermon",

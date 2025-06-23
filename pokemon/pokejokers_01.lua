@@ -646,7 +646,6 @@ local butterfree={
       end
     end
   end
-
 }
 -- Weedle 013
 local weedle={

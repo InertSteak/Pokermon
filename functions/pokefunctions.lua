@@ -1,4 +1,4 @@
-family = {
+pokermon.family = {
     {"bulbasaur","ivysaur","venusaur","mega_venusaur"},
     {"charmander","charmeleon","charizard","mega_charizard_x","mega_charizard_y",},
     {"squirtle","wartortle","blastoise","mega_blastoise"},
@@ -554,7 +554,7 @@ get_highest_evo = function(card)
   local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
   -- find the pokermon's family list
   local found_family = nil
-  for _, v in ipairs(family) do
+  for _, v in ipairs(pokermon.family) do
     for _, y in ipairs(v) do
       if ((type(y) == "table" and y.key) or y) == name then
         found_family = v
@@ -611,7 +611,7 @@ get_previous_evo = function(card, full_key)
   else
     name = card.name or "bulbasaur"
   end
-  for k, v in ipairs(family) do
+  for k, v in ipairs(pokermon.family) do
     for x, y in ipairs(v) do
       local cur_name = (type(y) == "table" and y.key) or y
       if cur_name == name then
@@ -646,7 +646,7 @@ get_family_keys = function(cardname, custom_prefix, card)
   local initial_custom_prefix = custom_prefix
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
   if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_poke'..initial_custom_prefix..'_' or 'c_poke_' end
-  for k, v in pairs(family) do
+  for k, v in pairs(pokermon.family) do
     for x, y in pairs(v) do
       if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
     end
@@ -719,7 +719,7 @@ pokemon_in_pool = function (self)
   end
   local found_other
   local in_family
-  for k, v in ipairs(family) do
+  for k, v in ipairs(pokermon.family) do
     for l, p in ipairs(v) do
       local cur_name = (type(p) == "table" and p.key) or p
       if cur_name ~= name and next(find_joker(cur_name)) then
@@ -1220,7 +1220,7 @@ fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars,
 end
 
 poke_get_family_list = function(name)
-  for _, v in ipairs(family) do
+  for _, v in ipairs(pokermon.family) do
     for _, y in ipairs(v) do
       if ((type(y) == "table" and y.key) or y) == name then
         return v

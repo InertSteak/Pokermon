@@ -92,7 +92,7 @@ local shiny = ({
       end
       
       --support for custom additions
-      if card.config.center.atlas and card.config.center.poke_custom_prefix then
+      if card.config.center.atlas and card.config.center.poke_custom_prefix and not card.config.center.poke_no_custom_atlas then
         local prev_atlas = card.config.center.atlas
         local prelength = string.len(card.config.center.poke_custom_prefix) + 1 
         local noprefix_atlas = string.sub(prev_atlas, prelength)
