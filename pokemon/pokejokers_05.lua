@@ -1226,7 +1226,7 @@ local snorlax={
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.joker_main and card.ability.extra.Xmult > 1 then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,

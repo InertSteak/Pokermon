@@ -715,7 +715,7 @@ local ponyta={
             card = card
         }
       end
-      if context.joker_main then
+      if context.joker_main and card.ability.extra.chips > 0 then
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
@@ -753,7 +753,7 @@ local rapidash={
             card = card
         }
       end
-      if context.joker_main then
+      if context.joker_main and card.ability.extra.chips > 0 then
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,

@@ -562,12 +562,13 @@ local corsola={
             return true end }))
           end
         end
-      
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.corsola_tally}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult_mod * card.ability.extra.corsola_tally 
-        }
+        if card.ability.extra.corsola_tally > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * card.ability.extra.corsola_tally}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult_mod * card.ability.extra.corsola_tally 
+          }
+        end
       end
     end
   end
