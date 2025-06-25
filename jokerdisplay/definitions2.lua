@@ -281,7 +281,57 @@ jd_def["j_poke_crobat"] = {
 }
 
 --	Chinchou
+jd_def["j_poke_chinchou"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.chips = 0
+    card.joker_display_values.money = 0
+    local text, poker_hands, _ = JokerDisplay.evaluate_hand()
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      card.joker_display_values.chips = card.ability.extra.chips
+      card.joker_display_values.money = card.ability.extra.money
+    end
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Lanturn
+jd_def["j_poke_lanturn"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.chips = 0
+    card.joker_display_values.money = 0
+    local water_count = #find_pokemon_type("Water")
+    local lightning_count = #find_pokemon_type("Lightning")
+    local text, poker_hands, _ = JokerDisplay.evaluate_hand()
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      card.joker_display_values.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * water_count)
+      card.joker_display_values.money = card.ability.extra.money + (card.ability.extra.money_mod * lightning_count)
+    end
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Pichu
 jd_def["j_poke_pichu"] = {
   text = {
