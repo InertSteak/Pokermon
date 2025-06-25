@@ -737,7 +737,7 @@ end
 '''
 position = "after"
 payload = '''
-if self.ability and old_center and old_center.config.card_limit then
+if self.ability and old_center and old_center.config.card_limit and not self.from_quantum then
     if self.area == G.hand and not self.debuff then
       if G.hand.config.real_card_limit then
         G.hand.config.real_card_limit = G.hand.config.real_card_limit - self.ability.card_limit
