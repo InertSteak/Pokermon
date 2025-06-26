@@ -114,7 +114,7 @@ local larvitar={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and context.scoring_name == "Full House" then
+      if context.before and context.scoring_name == "Full House" and not context.blueprint then
         card.ability.extra.full_houses = card.ability.extra.full_houses + 1
       end
     end
@@ -158,7 +158,7 @@ local pupitar={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and context.scoring_name == "Full House" then
+      if context.before and context.scoring_name == "Full House" and not context.blueprint then
         card.ability.extra.full_houses = card.ability.extra.full_houses + 1
       end
     end
