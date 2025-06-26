@@ -410,7 +410,7 @@ jd_def["j_poke_togetic"] = {
     {
       border_nodes = {
         { text = "X" },
-        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult_multi", retrigger_type = "exp" },
       },
     },
   },
@@ -425,7 +425,7 @@ jd_def["j_poke_togetic"] = {
       end
     end
     card.joker_display_values.chips = card.ability.extra.chips * count
-    card.joker_display_values.Xmult = card.ability.extra.Xmult ^ count
+    card.joker_display_values.Xmult_multi = card.ability.extra.Xmult_multi ^ count
   end
 }
 

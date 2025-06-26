@@ -1051,11 +1051,11 @@ local togepi={
 local togetic={
   name = "togetic",
   pos = {x = 4, y = 2},
-  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult = 1.5}},
+  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
-    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips, card.ability.extra.Xmult}}
+    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 6,
@@ -1078,9 +1078,9 @@ local togetic={
       end
       if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
         local temp = {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult_multi
         }
         if ret then
           ret.extra = temp
