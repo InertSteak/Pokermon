@@ -108,6 +108,7 @@ local farigiraf={
   config = {extra = {Xmult_multi = 2.2, score = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Cryptid"}}
     info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
