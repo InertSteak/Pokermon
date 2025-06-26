@@ -2844,6 +2844,34 @@ return {
                     "your deck and draw it to {C:attention}Hand",
                 } 
             },
+            j_poke_larvitar = {
+                name = "Larvitar",
+                text = {
+                  "If played hand is a {C:attention}Full House{}",
+                  "every played card permanently ",
+                  "gains {C:chips}+#1#{} Chips when scored",
+                  "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2#{C:inactive,s:0.8} Full Houses)"
+                }
+            },
+            j_poke_pupitar = {
+                name = "Pupitar",
+                text = {
+                  "If played hand is a {C:attention}Full House{}",
+                  "every played card permanently ",
+                  "gains {C:chips}+#1#{} Chips when scored",
+                  "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2#{C:inactive,s:0.8} Full Houses)"
+                }
+            },
+            j_poke_tyranitar = {
+                name = "Tyranitar",
+                text = {
+                  "If played hand is a {C:attention}Full House{}",
+                  "When scored, every played card",
+                  "permanently loses up to {C:chips}+#1#{} Chips and",
+                  "permanently gains {X:mult,C:white}#2#X{} Mult if",
+                  "chips were lost"
+                }
+            },
             j_poke_celebi = {
                 name = "Celebi",
                 text = {

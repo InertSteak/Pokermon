@@ -91,15 +91,6 @@ local larvitar={
   name = "larvitar",
   pos = {x = 7, y = 9},
   config = {extra = {chip_mod = 8, full_houses = 0}, evo_rqmt = 6},
-  loc_txt = {
-    name = "Larvitar",
-    text = {
-      "If played hand is a {C:attention}Full House{}",
-      "every played card permanently ",
-      "gains {C:chips}+#1#{} Chips when scored",
-      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2#{C:inactive,s:0.8} Full Houses)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.full_houses)}}
@@ -135,15 +126,6 @@ local pupitar={
   name = "pupitar",
   pos = {x = 8, y = 9},
   config = {extra = {chip_mod = 12, full_houses = 0}, evo_rqmt = 8},
-  loc_txt = {
-    name = "Larvitar",
-    text = {
-      "If played hand is a {C:attention}Full House{}",
-      "every played card permanently ",
-      "gains {C:chips}+#1#{} Chips when scored",
-      "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2#{C:inactive,s:0.8} Full Houses)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.full_houses)}}
@@ -179,16 +161,6 @@ local tyranitar={
   name = "tyranitar",
   pos = {x = 9, y = 9},
   config = {extra = {chip_mod = 4, Xmult_multi = 0.04}},
-  loc_txt = {
-    name = "Tyranitar",
-    text = {
-      "If played hand is a {C:attention}Full House{}",
-      "When scored, every played card",
-      "permanently loses up to {C:chips}+#1#{} Chips and",
-      "permanently gains {X:mult,C:white}#2#X{} Mult if",
-      "chips were lost"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod, center.ability.extra.Xmult_multi}}
