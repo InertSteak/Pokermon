@@ -183,9 +183,10 @@ local tyranitar={
     name = "Tyranitar",
     text = {
       "If played hand is a {C:attention}Full House{}",
-      "every played card permanently loses",
-      "up to {C:chips}+#1#{} Chips and permanently",
-      "gains {X:mult,C:white}#2#X{} Mult when scored",
+      "When scored, every played card",
+      "permanently loses up to {C:chips}+#1#{} Chips and",
+      "permanently gains {X:mult,C:white}#2#X{} Mult if",
+      "chips were lost"
     }
   },
   loc_vars = function(self, info_queue, center)
