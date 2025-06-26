@@ -115,11 +115,10 @@ local larvitar={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and context.scoring_name == "Full House" then
-        card.ability.extra.triggered = true
         card.ability.extra.full_houses = card.ability.extra.full_houses + 1
       end
     end
-    if context.individual and context.cardarea == G.play and card.ability.extra.triggered then
+    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
       return {
@@ -127,9 +126,6 @@ local larvitar={
         colour = G.C.CHIPS,
         card = card
       }
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.triggered = nil
     end
     return scaling_evo(self, card, context, "j_poke_pupitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
@@ -163,11 +159,10 @@ local pupitar={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and context.scoring_name == "Full House" then
-        card.ability.extra.triggered = true
         card.ability.extra.full_houses = card.ability.extra.full_houses + 1
       end
     end
-    if context.individual and context.cardarea == G.play and card.ability.extra.triggered then
+    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
       context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod
       return {
@@ -175,9 +170,6 @@ local pupitar={
         colour = G.C.CHIPS,
         card = card
       }
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.triggered = nil
     end
     return scaling_evo(self, card, context, "j_poke_tyranitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
@@ -209,36 +201,27 @@ local tyranitar={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and context.scoring_name == "Full House" then
-        card.ability.extra.triggered = true
-      end
-    end
-    if context.individual and context.cardarea == G.play and card.ability.extra.triggered then
+    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
       context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-          local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
-          if drained_vals > 0 then
-            context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
-          end
-          local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
-          if drain_bonus > 0 then
-            context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
-            drained_vals = drained_vals + drain_bonus
-          end
-          if drained_vals > 0 then
-            card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex'), colour = G.C.CHIPS})
-            context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
-            context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi
-            card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.XMULT})
-          end
-      return {
-        extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
-        colour = G.C.CHIPS,
-        card = card
-      }
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.triggered = nil
+      local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+      if drained_vals > 0 then
+        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
+      end
+      local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
+      if drain_bonus > 0 then
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
+        drained_vals = drained_vals + drain_bonus
+      end
+      if drained_vals > 0 then
+        card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex'), colour = G.C.CHIPS})
+        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
+        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi
+        return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card
+        }
+      end
     end
   end,
 }
