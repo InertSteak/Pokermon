@@ -217,7 +217,7 @@ local tyranitar={
         context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
         context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi
         return {
-          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.XMULT},
           colour = G.C.CHIPS,
           card = card
         }
