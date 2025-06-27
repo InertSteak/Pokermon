@@ -58,7 +58,6 @@ pokermon.add_family = function(family)
 end
 
 pokermon.Pokemon = function(item, custom_prefix, custom_atlas)
-  table.insert(pokermon.family, family)
   if custom_prefix then
     item.poke_custom_prefix = custom_prefix
   end
