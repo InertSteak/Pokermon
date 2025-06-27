@@ -69,3 +69,11 @@ pokermon.Pokemon = function(item, custom_prefix, custom_atlas)
   end
   pokermon.load_pokemon(item)
 end
+
+pokermon.Juice = function(item, custom_prefix, set)
+  item.berry_juice = true
+  local prefix = custom_prefix and 'c_'..custom_prefix..'_' or 'c_'
+  local key = item.key or item.name
+  pokermon.juice_list[set] = prefix..key
+  SMODS.Consumable(item)
+end
