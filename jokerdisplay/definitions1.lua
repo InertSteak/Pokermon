@@ -3209,7 +3209,7 @@ end,
 mod_function = function(card, mod_joker) --Polychrome Jokers
 			return {
 				x_mult = (card ~= mod_joker and card.edition and card.edition.polychrome == true)
-						and mod_joker.ability.extra.Xmult_mod ^ JokerDisplay.calculate_joker_triggers(mod_joker)
+						and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker)
 					or nil,
 			}
 		end,

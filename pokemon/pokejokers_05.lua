@@ -1437,7 +1437,7 @@ local mewtwo={
   name = "mewtwo", 
   pos = {x = pokermon_config.pokemon_altart and 10 or 10, y = pokermon_config.pokemon_altart and 12 or 11},
   soul_pos = { x = 11, y = 11},
-  config = {extra = {Xmult_mod = 1.2}},
+  config = {extra = {Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -1448,7 +1448,7 @@ local mewtwo={
       info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
     end
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    return {vars = {center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 4, 
   cost = 20, 
@@ -1495,9 +1495,9 @@ local mewtwo={
           end
         })) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_mod
+          Xmult_mod = card.ability.extra.Xmult_multi
         }
     end
   end,
