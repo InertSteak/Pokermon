@@ -2867,8 +2867,8 @@ return {
                 text = {
                   "If played hand is a {C:attention}Full House{}",
                   "When scored, every played card",
-                  "permanently loses up to {C:chips}+#1#{} Chips and",
-                  "permanently gains {X:mult,C:white}#2#X{} Mult if",
+                  "permanently loses up to {C:chips}#1#{} Chips and",
+                  "permanently gains {X:mult,C:white}X#2#{} Mult if",
                   "chips were lost"
                 }
             },
