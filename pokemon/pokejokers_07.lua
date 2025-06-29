@@ -317,7 +317,7 @@ local hoppip={
   ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = false,
-  perishable_compat = false,
+  perishable_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
@@ -358,7 +358,7 @@ local skiploom={
   ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = false,
-  perishable_compat = false,
+  perishable_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
@@ -399,7 +399,7 @@ local jumpluff={
   ptype = "Grass",
   atlas = "Pokedex2",
   blueprint_compat = false,
-  perishable_compat = false,
+  perishable_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
