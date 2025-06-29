@@ -249,21 +249,24 @@ local wyrdeer={
       end
     end
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.play and not context.other_card.debuff and G.scry_view and #G.scry_view.cards > 0 then
         local highest = nil
         local highest_card = nil
         for k, v in pairs(G.scry_view.cards) do
-          if not highest then highest = v.base.id; highest_card = v end
+          if not highest then 
+            highest = v.base.id
+            highest_card = v 
+          end
           if v.base.id > highest then
             highest = v.base.id
             highest_card = v
           end
         end
-        if context.other_card == highest_card then
-          local Mult = 2 * highest_card.base.nominal
+        if highest_card and not highest_card.debuff then
+          local Mult = 2 * highest_card.base.id
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {Mult}},
-            message_card = context.other_card,
+            message_card = highest_card,
             colour = G.C.MULT,
             mult_mod = Mult,
             card = card,
