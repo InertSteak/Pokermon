@@ -193,6 +193,20 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "Gmax",
+    path = "Gmax.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "ShinyGmax",
+    path = "ShinyGmax.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "others",
     path = "others.png",
     px = 71,

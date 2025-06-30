@@ -2844,6 +2844,31 @@ return {
                     "your deck and draw it to {C:attention}Hand",
                 } 
             },
+            j_poke_raikou = {
+                name = "Raikou",
+                text = {
+                  "If first played hand is {C:attention}1{} card,",
+                  "turns {C:attention}3{} cards {C:attention}held{} in hand",
+                  "to its {C:attention}rank{} and earn {C:money}$#1#{}",
+                }
+            },
+            j_poke_entei = {
+                name = "Entei",
+                text = {
+                  "If {C:attention}first{} discard is exactly",
+                  "{C:attention}4{} cards, destroy one of them",
+                  "and gain {X:red,C:white}X#2#{} Mult",
+                  "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+                }
+            },
+            j_poke_suicune = {
+                name = "Suicune",
+                text = {
+                  "{C:attention}Doubles{} the total chips of",
+                  "each card in played hand",
+                  "{C:inactive}(Max of {C:chips}+#1#{C:inactive} Chips)",
+                }
+            },
             j_poke_larvitar = {
                 name = "Larvitar",
                 text = {

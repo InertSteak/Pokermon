@@ -89,14 +89,6 @@ local raikou={
   pos = {x = 1, y = 9},
   soul_pos = {x = 2, y = 9},
   config = {extra = {money = 9,}},
-  loc_txt = {
-    name = "Raikou",
-    text = {
-      "If first played hand is {C:attention}1{} card,",
-      "turns {C:attention}3{} cards {C:attention}held{} in hand",
-      "to its {C:attention}rank{} and earn {C:money}$#1#{}",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, }}
@@ -154,15 +146,6 @@ local entei={
   pos = {x = 3, y = 9},
   soul_pos = {x = 4, y = 9},
   config = {extra = {Xmult = 1,Xmult_mod = 0.4,}},
-  loc_txt = {
-    name = "Entei",
-    text = {
-      "If {C:attention}first{} discard is exactly",
-      "{C:attention}4{} cards, destroy one of them",
-      "and gain {X:red,C:white}X#2#{} Mult",
-      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
@@ -211,14 +194,6 @@ local suicune={
   pos = {x = 5, y = 9},
   soul_pos = {x = 6, y = 9},
   config = {extra = {chips_max = 50}},
-  loc_txt = {
-    name = "Suicune",
-    text = {
-      "{C:attention}Doubles{} the total chips of",
-      "each card in played hand",
-      "{C:inactive}(Max of {C:chips}+#1#{C:inactive} Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips_max}}

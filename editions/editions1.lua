@@ -69,6 +69,11 @@ local shiny = ({
         card:set_sprites(card.config.center)
         card.config.center.atlas = "poke_Megas"
       end
+      if card.config.center.atlas == "poke_Gmax" then
+        card.config.center.atlas = "poke_ShinyGmax"
+        card:set_sprites(card.config.center)
+        card.config.center.atlas = "poke_Gmax"
+      end
       if card.config.center.atlas == "poke_Regionals" then
         card.config.center.atlas = "poke_ShinyRegionals"
         card:set_sprites(card.config.center)
