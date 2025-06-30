@@ -918,10 +918,6 @@ apply_type_sticker = function(card, sticker_type)
     end
   end
   
-  if card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype then
-    card.ability.extra.ptype = apply_type 
-  end
-  
   if card.config and type(card.config) == "table" and card.config.center and type(card.config.center) == "table" and not card.config.center.stage 
      and not G.P_CENTERS[card.config.center_key].taken_ownership then
     if G.P_CENTERS[card.config.center_key].loc_vars and type(G.P_CENTERS[card.config.center_key].loc_vars) == "function" then
