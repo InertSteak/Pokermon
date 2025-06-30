@@ -509,3 +509,14 @@ function poke_same_suit(hand)
   end
   return false
 end
+
+function poke_get_rank(card)
+  local id = card.base.id
+  local rank = nil
+  if id == 14 then rank = "Ace"
+  elseif id == 13 then rank = "King"
+  elseif id == 12 then rank = "Queen"
+  elseif id == 11 then rank = "Jack"
+  else rank = ""..id end
+  return rank
+end

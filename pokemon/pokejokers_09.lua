@@ -84,8 +84,170 @@ local blissey={
   end
 }
 -- Raikou 243
+local raikou={
+  name = "raikou",
+  pos = {x = 1, y = 9},
+  soul_pos = {x = 2, y = 9},
+  config = {extra = {money = 9,}},
+  loc_txt = {
+    name = "Raikou",
+    text = {
+      "If first played hand is {C:attention}1{} card,",
+      "turns {C:attention}3{} cards {C:attention}held{} in hand",
+      "to its {C:attention}rank{} and earn {C:money}$#1#{}",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money, }}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Lightning",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
+      if context.before and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 and G.hand and #G.hand.cards > 0 then
+        local rank = poke_get_rank(context.scoring_hand[1])
+        local hand_cards = {}
+        local conv_cards = {}
+        for k, v in pairs(G.hand.cards) do
+          hand_cards[#hand_cards + 1] = v
+        end
+        pseudoshuffle(hand_cards, pseudoseed('raikou'))
+        local limit = math.min(3, #hand_cards)
+        for i = 1, limit do
+         conv_cards[#conv_cards + 1] = hand_cards[i]
+        end
+        juice_flip_table(card, conv_cards, false, limit)
+        for i = 1, limit do
+          G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                SMODS.change_base(conv_cards[i], nil, rank)
+                return true
+            end
+          }))
+        end
+        juice_flip_table(card, conv_cards, true, limit)
+        local earned = ease_poke_dollars(card, "raikou", card.ability.extra.money, true)
+        return {
+          dollars = earned,
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Entei 244
+local entei={
+  name = "entei",
+  pos = {x = 3, y = 9},
+  soul_pos = {x = 4, y = 9},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.4,}},
+  loc_txt = {
+    name = "Entei",
+    text = {
+      "If {C:attention}first{} discard is exactly",
+      "{C:attention}4{} cards, destroy one of them",
+      "and gain {X:red,C:white}X#2#{} Mult",
+      "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.pre_discard and #context.full_hand == 4 and G.GAME.current_round.discards_used == 0 and not context.blueprint then
+      local target = pseudorandom_element(context.full_hand, pseudoseed('entei'))
+      target.entei_destroy = true
+      target:juice_up()
+      delay(0.6)
+    end
+    if context.discard and context.other_card.entei_destroy and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
+      return {
+          remove = true
+      }
+    end
+  end,
+}
 -- Suicune 245
+local suicune={
+  name = "suicune",
+  pos = {x = 5, y = 9},
+  soul_pos = {x = 6, y = 9},
+  config = {extra = {chips_max = 50}},
+  loc_txt = {
+    name = "Suicune",
+    text = {
+      "{C:attention}Doubles{} the total chips of",
+      "each card in played hand",
+      "{C:inactive}(Max of {C:chips}+#1#{C:inactive} Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips_max}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Water",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        for k, v in pairs(context.scoring_hand) do
+          v.ability.perma_bonus = v.ability.perma_bonus or 0
+          v.ability.perma_bonus = v.ability.perma_bonus + math.min(card.ability.extra.chips_max, poke_total_chips(v))
+        end
+        
+        return {
+          extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+          colour = G.C.CHIPS,
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Larvitar 246
 local larvitar={
   name = "larvitar",
@@ -904,5 +1066,5 @@ local linoone={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {miltank, blissey, larvitar, pupitar, tyranitar, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
+        list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
 }
