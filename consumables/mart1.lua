@@ -780,7 +780,7 @@ local nightmare = {
     local selected = G.jokers.highlighted[1]
     local energy = matching_energy(selected)
     local context = {}
-    remove(selected, selected, context)
+    remove(self, selected, context)
     for i= 1, 2 do
       local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
       local edition = {negative = true}
