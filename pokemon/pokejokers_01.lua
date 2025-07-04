@@ -685,7 +685,7 @@ local kakuna={
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 3, 
+  cost = 4, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Grass",
