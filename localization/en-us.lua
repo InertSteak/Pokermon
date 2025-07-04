@@ -134,7 +134,7 @@ return {
                     "into a {C:attention}Bonus{} card",
                     "If already a {C:attention}Bonus{} card",
                     "{C:attention}Doubles{} its total chips",
-                    "{C:inactive}(Max of {C:chips}+#2#{C:inactive} Chips)",
+                    "{C:inactive}(Up to {C:chips}+#2#{C:inactive} Chips per increase)",
                 },
             },
             c_poke_thunderstone = {
@@ -2864,9 +2864,9 @@ return {
             j_poke_suicune = {
                 name = "Suicune",
                 text = {
-                  "{C:attention}Doubles{} the total chips of",
-                  "each card in played hand",
-                  "{C:inactive}(Max of {C:chips}+#1#{C:inactive} Chips)",
+                  "Permanently {C:attention}doubles{} the total chips",
+                  "of each card in played hand",
+                  "{C:inactive}(Up to {C:chips}+#1#{C:inactive} Chips per increase)",
                 }
             },
             j_poke_larvitar = {
@@ -2895,6 +2895,23 @@ return {
                   "permanently loses up to {C:chips}#1#{} Chips and",
                   "permanently gains {X:mult,C:white}X#2#{} Mult if",
                   "chips were lost"
+                }
+            },
+            j_poke_lugia = {
+              name = "Lugia",
+              text = {
+                "Gains {X:mult,C:white} X#2# {} Mult for",
+                "every {C:attention}#3#{} {C:inactive}[#4#]{} cards",
+                "drawn during {C:attention}Blinds{}",
+                "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}"
+              }
+            },
+            j_poke_ho_oh = {
+                name = "Ho-Oh",
+                text = {
+                  "The first time a {C:attention}Consumable{}",
+                  "is used each round create",
+                  "a {C:dark_edition}Polychrome{} copy of it"
                 }
             },
             j_poke_celebi = {

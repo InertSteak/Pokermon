@@ -336,7 +336,90 @@ local tyranitar={
   end,
 }
 -- Lugia 249
+local lugia={
+  name = "lugia",
+  pos = {x = 0, y = 10},
+  soul_pos = {x = 1, y = 10},
+  config = {extra = {Xmult = 1, Xmult_mod = 1, to_draw = 40, drawn = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.to_draw, math.max(0, center.ability.extra.to_draw - center.ability.extra.drawn)}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Psychic",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+        card.ability.extra.drawn = card.ability.extra.drawn - card.ability.extra.to_draw
+        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.XMULT
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if card.ability.extra.Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = card.ability.extra.Xmult
+          }
+        end
+      end
+    end
+  end,
+}
 -- Ho-oh 250
+local ho_oh={
+  name = "ho_oh",
+  pos = {x = 2, y = 10},
+  soul_pos = {x = 3, y = 10},
+  config = {extra = {limit = 1, used = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if not center.edition or (center.edition and not center.edition.polychrome) then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    end
+    return {vars = {center.ability.extra.limit, center.ability.extra.limit - center.ability.extra.used}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Fire",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.using_consumeable and (card.ability.extra.used < card.ability.extra.limit) and not context.blueprint then
+      card.ability.extra.used = card.ability.extra.used + 1
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.E_MANAGER:add_event(Event({
+          func = function() 
+            local copy = copy_card(context.consumeable)
+            local edition = {polychrome = true}
+            copy:set_edition(edition)
+            copy:add_to_deck()
+            G.consumeables:emplace(copy) 
+            return true
+        end}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.used = 0
+    end
+  end,
+}
 -- Celebi 251
 local celebi = {
   name = "celebi", 
@@ -1041,5 +1124,6 @@ local linoone={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, celebi, treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
+        list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, lugia, ho_oh, celebi, 
+                treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
 }

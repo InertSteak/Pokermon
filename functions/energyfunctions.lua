@@ -5,13 +5,12 @@ energy_values = {
 
 energy_max = 3
 
-
 highlighted_energy_can_use = function(self, card)
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
   if energy_matches(choice, self.etype, true) then
     if type(choice.ability.extra) == "table" then
-      if (pokermon_config.unlimited_energy or ((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if can_increase_energy(choice) then
         for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             return true
@@ -19,12 +18,12 @@ highlighted_energy_can_use = function(self, card)
         end
       end
     elseif type(choice.ability.extra) == "number" then
-      if (pokermon_config.unlimited_energy) or (((choice.ability.energy_count or 0) + (choice.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if can_increase_energy(choice) then
         return true
       end
     elseif (choice.ability.mult and choice.ability.mult > 0) or (choice.ability.t_mult and choice.ability.t_mult > 0) or (choice.ability.t_chips and choice.ability.t_chips > 0)
           or (choice.ability.x_mult and choice.ability.x_mult > 1) then
-      if (pokermon_config.unlimited_energy) or (((choice.ability.energy_count or 0) + (choice.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if can_increase_energy(choice) then
         return true
       end
     end
@@ -45,7 +44,7 @@ highlighted_energy_use = function(self, card, area, copier)
   set_spoon_item(card)
   if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
     if type(choice.ability.extra) == "table" then
-      if (pokermon_config.unlimited_energy) or (((choice.ability.extra.energy_count or 0) + (choice.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if can_increase_energy(choice) then
         for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
             viable = true
@@ -54,7 +53,7 @@ highlighted_energy_use = function(self, card, area, copier)
       end
     elseif (type(choice.ability.extra) == "number" or (choice.ability.mult and choice.ability.mult > 0) or (choice.ability.t_mult and choice.ability.t_mult > 0) or
       (choice.ability.t_chips and choice.ability.t_chips > 0) or (choice.ability.x_mult and choice.ability.x_mult > 1)) then
-      if (pokermon_config.unlimited_energy) or (((choice.ability.energy_count or 0) + (choice.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+      if can_increase_energy(choice) then
         viable = true
       end
     end
@@ -281,7 +280,7 @@ get_total_energy = function(card)
 end
 
 can_increase_energy = function(card)
-  if pokermon_config.unlimited_energy then return true end
+  if pokermon_config.unlimited_energy or card.config.center.no_energy_limit then return true end
   return get_total_energy(card) < energy_max + (G.GAME.energy_plus or 0)
 end
 
@@ -366,7 +365,7 @@ energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
     if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
-        if (pokermon_config.unlimited_energy or ((v.ability.extra.energy_count or 0) + (v.ability.extra.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+        if can_increase_energy(v) then
           for name, _ in pairs(energy_values) do
             local data = v.ability.extra[name]
             if type(data) == "number" then
@@ -375,12 +374,12 @@ energy_can_use = function(self, card)
           end
         end
       elseif type(v.ability.extra) == "number" then
-        if (pokermon_config.unlimited_energy) or (((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+        if can_increase_energy(v) then
           return true
         end
       elseif (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or (v.ability.t_chips and v.ability.t_chips > 0)
             or (v.ability.x_mult and v.ability.x_mult > 1) then
-        if (pokermon_config.unlimited_energy) or (((v.ability.energy_count or 0) + (v.ability.c_energy_count or 0)) < energy_max + (G.GAME.energy_plus or 0)) then
+        if can_increase_energy(v) then
           return true
         end
       end
