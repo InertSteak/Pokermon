@@ -2911,7 +2911,8 @@ return {
                 text = {
                   "The first time a {C:attention}Consumable{}",
                   "is used each round create",
-                  "a {C:dark_edition}Polychrome{} copy of it"
+                  "a {C:dark_edition}Polychrome{} copy of it",
+                  "{C:inactive}(Must have room)",
                 }
             },
             j_poke_celebi = {
