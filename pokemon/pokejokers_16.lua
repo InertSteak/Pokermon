@@ -308,7 +308,7 @@ local electivire={
   stage = "One",
   ptype = "Lightning",
   atlas = "Pokedex4",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
       card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
