@@ -651,13 +651,13 @@ local butterfree={
 local weedle={
   name = "weedle", 
   pos = {x = 12, y = 0},
-  config = {extra = {chips = 16, rounds = 2}},
+  config = {extra = {chips = 20, rounds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 3, 
+  cost = 2, 
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Grass",
@@ -679,7 +679,7 @@ local weedle={
 local kakuna={
   name = "kakuna", 
   pos = {x = 0, y = 1}, 
-  config = {extra = {chips = 32, rounds = 3}},
+  config = {extra = {chips = 40, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
