@@ -397,11 +397,13 @@ local ho_oh={
   ptype = "Fire",
   atlas = "Pokedex2",
   perishable_compat = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and (card.ability.extra.used < card.ability.extra.limit) and not context.blueprint then
-      card.ability.extra.used = card.ability.extra.used + 1
+    if context.using_consumeable and (card.ability.extra.used < card.ability.extra.limit) and not context.consumeable.config.center.jirachi_item then
+      if not context.blueprint then
+        card.ability.extra.used = card.ability.extra.used + 1
+      end
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         G.E_MANAGER:add_event(Event({
           func = function() 
@@ -415,7 +417,7 @@ local ho_oh={
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       card.ability.extra.used = 0
     end
   end,

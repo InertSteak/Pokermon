@@ -12,6 +12,7 @@ local fake_banker = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -42,6 +43,7 @@ local fake_booster = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -72,6 +74,7 @@ local fake_power = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -101,6 +104,7 @@ local fake_negging = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -131,6 +135,7 @@ local fake_copy = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -161,6 +166,7 @@ local fake_fixer = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
@@ -191,6 +197,7 @@ local fake_masterball = {
    unlocked = true,
    discovered = true,
    no_collection = true,
+   jirachi_item = true,
    can_use = function(self, card)
      return true
    end,
