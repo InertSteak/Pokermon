@@ -415,7 +415,7 @@ local kingler={
 -- Voltorb 100
 local voltorb={
   name = "voltorb", 
-  pos = {x = 8, y = 7}, 
+  pos = {x = 0, y = 0}, 
   config = {extra = {Xmult = 2, rounds = 3, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -426,7 +426,7 @@ local voltorb={
   cost = 3, 
   stage = "Basic", 
   ptype = "Lightning",
-  atlas = "Pokedex1",
+  atlas = "j_poke_voltorb",
   volatile = true,
   blueprint_compat = false,
   calculate = function(self, card, context)

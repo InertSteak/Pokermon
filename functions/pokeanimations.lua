@@ -3,6 +3,7 @@
 AnimatedPokemon = {
    --j_poke_ludicolo = { frames_per_row = 10, frames = 10, fps = 11.25 } --135 bpm = 2.25 beats per second / Two beats per frame cycle / 11.25 fps
    j_poke_unown_swarm = { frames_per_row = 12, frames = 36, fps = 12, soul = true, size = {x = 290, y = 285} },
+   j_poke_voltorb = { frames_per_row = 11, frames = 11, fps = 12},
 }
 AnimatedSingles = {}
 
