@@ -1424,7 +1424,7 @@ local sandslash={
 local nidoranf={
   name = "nidoranf", 
   pos = {x = 2, y = 2},
-  config = {extra = {chips = 35, rounds = 4}},
+  config = {extra = {chips = 50, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
@@ -1459,7 +1459,7 @@ local nidoranf={
 local nidorina={
   name = "nidorina", 
   pos = {x = 3, y = 2},
-  config = {extra = {chips = 70}},
+  config = {extra = {chips = 75}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
