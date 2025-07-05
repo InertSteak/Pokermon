@@ -568,13 +568,13 @@ local mega_blastoise = {
 local caterpie={
   name = "caterpie", 
   pos = {x = 9, y = 0},
-  config = {extra = {mult = 2, rounds = 2}},
+  config = {extra = {mult = 3, rounds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 3, 
+  cost = 2, 
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1", 
@@ -595,7 +595,7 @@ local caterpie={
 -- Metapod 011
 local metapod={
   name = "metapod",
-  config = {extra = {mult = 4, rounds = 3}},
+  config = {extra = {mult = 6, rounds = 3}},
   pos = {x = 10, y = 0}, 
   rarity = 1, 
   cost = 4, 
@@ -624,7 +624,7 @@ local metapod={
 local butterfree={
   name = "butterfree", 
   pos = {x = 11, y = 0},
-  config = {extra = {mult = 10}},
+  config = {extra = {mult = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult}}
