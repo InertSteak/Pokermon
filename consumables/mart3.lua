@@ -70,7 +70,7 @@ local duskstone = {
         joker_count = joker_count + 1
       end
     end
-    return {vars = {card_info.money, card_info.rounds, card_info.round_on_add + card_info.rounds, math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
+    return {vars = {card_info.money, card_info.rounds, math.max(0, card_info.round_on_add + card_info.rounds - G.GAME.round), math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
   atlas = "Mart",

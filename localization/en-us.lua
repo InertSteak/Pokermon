@@ -311,9 +311,11 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Earn {C:money}$#1#{} for each {C:attention}Drainable{} Joker",
-                    "you have and {C:attention}Drain {C:money}$1{} from them",
-                    "No {C:attention}Drain{} after {C:attention}#2#{} Rounds {C:inactive}(Round #3#)",
+                    "Earn {C:money}$#1#{} for each {C:attention}Drainable{} ",
+                    "Joker, then {C:attention}Drain {C:money}$1{} from them",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "After {C:attention}#2#{} {C:inactive}[#3#]{} Rounds, earn",
+                    "{C:money}$#1#{} for each Joker instead",
                     "{C:inactive}(Currently {C:money}$#4#{C:inactive}/$#5# Max)"
                 }
             },
@@ -5137,6 +5139,7 @@ return {
             poke_metal_ex = "Metal!",
             poke_dragon_ex = "Dragon!",
             poke_energized_ex = "Energized!",
+            poke_round_plus_ex = "Round Passed!",
             poke_unlimited_energy = "Infinity",
 
             --Some infoqueue/variable stuff
