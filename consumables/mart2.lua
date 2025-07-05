@@ -793,17 +793,7 @@ local dubious_disc = {
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
-        local enhancement_type = pseudorandom(pseudoseed('dubious'))
-        local enhancement = nil
-        if enhancement_type > .89 then enhancement = G.P_CENTERS.m_bonus
-        elseif enhancement_type > .78 then enhancement = G.P_CENTERS.m_mult
-        elseif enhancement_type > .67 then enhancement = G.P_CENTERS.m_wild
-        elseif enhancement_type > .56 then enhancement = G.P_CENTERS.m_glass
-        elseif enhancement_type > .45 then enhancement = G.P_CENTERS.m_steel
-        elseif enhancement_type > .34 then enhancement = G.P_CENTERS.m_stone
-        elseif enhancement_type > .23 then enhancement = G.P_CENTERS.m_gold
-        elseif enhancement_type > .12 then enhancement = G.P_CENTERS.m_lucky
-        else enhancement = G.P_CENTERS.c_base end
+        local enhancement = SMODS.poll_enhancement({guaranteed = true})
         G.hand.cards[i]:set_ability(enhancement, nil, true)
       end
       juice_flip_hand(card, true)

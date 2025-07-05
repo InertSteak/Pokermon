@@ -260,9 +260,8 @@ return {
                 text = {
                     "{C:attention}Evolution Card{}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Randomizes or removes {C:attention}enhancements{}",
-                    "of all cards held in hand",
-                    "{C:inactive}(Includes cards without enhancements){}"
+                    "{C:attention}Enhances{} all cards",
+                    "{C:attention}held{} in hand randomly",
                 }
             },
             c_poke_icestone = {
@@ -4511,9 +4510,10 @@ return {
             eitem = {
                 name = "Evolution Card",
                 text = {
-                    "When consumed, evolves leftmost",
-                    "or selected {C:attention}eligible{} Joker",
-                    "at end of next round",
+                    "When consumed, evolves",
+                    "leftmost or selected",
+                    "{C:attention}eligible{} Joker at",
+                    "end of next round",
                 }
             },
             --Infoqueue used by some Consumables
