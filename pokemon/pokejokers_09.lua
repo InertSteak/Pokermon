@@ -2,7 +2,7 @@
 local miltank={
   name = "miltank",
   pos = {x = 9, y = 8},
-  config = {extra = {money = 5,}},
+  config = {extra = {money = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.money * #find_pokemon_type("Colorless")}}
