@@ -207,6 +207,7 @@ local dudunsparce={
     SMODS.change_booster_limit(card.ability.extra.pack_slots)
     SMODS.change_voucher_limit(card.ability.extra.voucher_slots)
     if card.ability.extra.form == 1 then
+      self:set_sprites(card)
       G.E_MANAGER:add_event(Event({
         func = (function()
             add_tag(Tag('tag_coupon'))
