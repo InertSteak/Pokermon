@@ -693,7 +693,7 @@ local golem={
 local ponyta={
   name = "ponyta", 
   pos = {x = 11, y = 5},
-  config = {extra = {chips = 0, chip_mod = 10}, evo_rqmt = 60},
+  config = {extra = {chips = 0, chip_mod = 12}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
