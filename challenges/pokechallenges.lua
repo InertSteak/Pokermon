@@ -244,6 +244,7 @@ local hammertime = {
       type = 'Challenge Deck',
     },
 }
+
 local lonesome = {
     object_type = "Challenge",
     key = 'lonesome',
@@ -253,12 +254,12 @@ local lonesome = {
         },
         modifiers = {
             { id = 'joker_slots', value = 1 },
-	    { id = 'consumable_slots', value = 20 },
+			{ id = 'consumable_slots', value = 20 },
         }
     },
     jokers = {
         { id = 'j_poke_cubone', eternal = true},
-	}
+	},
     restrictions = {
         banned_cards = {
             {id = 'c_judgement'},
@@ -268,7 +269,7 @@ local lonesome = {
             {id = 'c_poke_greatball'},
             {id = 'c_poke_ultraball'},
             {id = 'c_poke_masterball'},
-	    {id = 'v_blank'},
+			{id = 'v_blank'},
             {id = 'v_antimatter'},
             {id = 'p_buffoon_normal_1', ids = {
                 'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',
