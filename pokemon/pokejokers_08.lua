@@ -1374,7 +1374,7 @@ local tyrogue={
 local hitmontop={
   name = "hitmontop", 
   pos = {x = 5, y = 8},
-  config = {extra = {Xmult = 1.5, Xmult_mod = .1}},
+  config = {extra = {Xmult = 1.5, Xmult_mod = .15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.GAME.starting_deck_size, center.ability.extra.Xmult_mod}}
