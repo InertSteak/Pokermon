@@ -569,7 +569,7 @@ local transformation = {
     else
       return false
     end
-    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
+    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype and not choice.config.center.aux_poke then
       return true
     else
       return false
