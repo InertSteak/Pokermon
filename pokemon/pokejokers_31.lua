@@ -356,7 +356,7 @@ local fidough={
 local dachsbun={
   name = "dachsbun",
   pos = {x = 9, y = 1},
-  config = {extra = {chips = 0,chip_mod = 12, rank = "2", id = 2}},
+  config = {extra = {chips = 0,chip_mod = 10, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
