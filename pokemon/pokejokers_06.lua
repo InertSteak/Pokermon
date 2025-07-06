@@ -1059,7 +1059,7 @@ local togetic={
   end,
   rarity = "poke_safari",
   cost = 6,
-  stage = "One",
+  stage = "Basic",
   ptype = "Fairy",
   atlas = "Pokedex2",
   item_req = "shinystone",

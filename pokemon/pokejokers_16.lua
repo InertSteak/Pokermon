@@ -390,7 +390,7 @@ local togekiss={
   end,
   rarity = "poke_safari",
   cost = 10,
-  stage = "Two",
+  stage = "One",
   ptype = "Fairy",
   atlas = "Pokedex4",
   perishable_compat = true,
