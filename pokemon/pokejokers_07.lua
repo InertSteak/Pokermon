@@ -1432,7 +1432,7 @@ local snubbull = {
 local granbull = {
   name = "granbull",
   pos = {x = 8, y = 5},
-  config = {extra = {Xmult_multi = 2.25, Xmult_multi2 = 3}},
+  config = {extra = {Xmult_multi = 2.25, Xmult_multi2 = 2.5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult_multi2}}
