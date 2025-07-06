@@ -273,7 +273,6 @@ local lonesome = {
             {id = 'p_buffoon_normal_1', ids = {
                 'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',
             }},
-            },
         },
         banned_tags = {
             {id = 'tag_rare'},
@@ -294,7 +293,6 @@ local lonesome = {
             { id = 'bl_final_acorn', type = 'blind' },
         }
     }
-}
 }
 
 
