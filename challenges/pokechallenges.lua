@@ -294,7 +294,7 @@ local lonesome = {
             { id = 'bl_final_acorn', type = 'blind' },
         }
     }
-}
+
 
 
 
