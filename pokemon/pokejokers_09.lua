@@ -297,10 +297,10 @@ local pupitar={
 local tyranitar={
   name = "tyranitar",
   pos = {x = 9, y = 9},
-  config = {extra = {chip_mod = 4, Xmult_multi = 0.04}},
+  config = {extra = {chip_mod_minus = 4, Xmult_multi = 0.04}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chip_mod, center.ability.extra.Xmult_multi}}
+    return {vars = {center.ability.extra.chip_mod_minus, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -313,11 +313,11 @@ local tyranitar={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
       context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-      local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
+      local drained_vals = math.min(card.ability.extra.chip_mod_minus, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
       if drained_vals > 0 then
         context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
       end
-      local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
+      local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod_minus- drained_vals)
       if drain_bonus > 0 then
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
         drained_vals = drained_vals + drain_bonus
