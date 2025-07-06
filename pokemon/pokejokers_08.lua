@@ -324,7 +324,7 @@ local ursaring={
 local slugma={
   name = "slugma",
   pos = {x = 6, y = 6},
-  config = {extra = {chips = 0,chip_mod = 20, hands = 4, hand_reset = 4}, evo_rqmt = 80},
+  config = {extra = {chips = 0,chip_mod = 12, hands = 4, hand_reset = 4}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,self.config.evo_rqmt, center.ability.extra.hands}}
@@ -376,7 +376,7 @@ local slugma={
 local magcargo={
   name = "magcargo",
   pos = {x = 7, y = 6},
-  config = {extra = {chips = 0,chip_mod = 25, hands = 3, hand_reset = 3, remove = false}},
+  config = {extra = {chips = 0,chip_mod = 15, hands = 3, hand_reset = 3, remove = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.hands}}
