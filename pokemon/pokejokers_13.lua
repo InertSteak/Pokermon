@@ -8,7 +8,7 @@ local snorunt={
     return {vars = {center.ability.extra.debt, center.ability.extra.rounds}}
   end,
   rarity = 1,
-  cost = 4,
+  cost = 2,
   item_req = "dawnstone",
   stage = "Basic",
   ptype = "Water",
