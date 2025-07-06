@@ -1099,7 +1099,7 @@ local arcanine={
 local poliwag={
   name = "poliwag", 
   pos = {x = 7, y = 4},
-  config = {extra = {mult = 3, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
+  config = {extra = {mult = 4, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
