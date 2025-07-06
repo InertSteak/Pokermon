@@ -703,7 +703,7 @@ local hitmonchan={
 local lickitung={
   name = "lickitung", 
   pos = {x = 3, y = 8}, 
-  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}, evo_rqmt = 20},
+  config = {extra = {Xmult_multi = 1.5, jacks_played = 0}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local jacks_left = math.max(0, self.config.evo_rqmt - card.ability.extra.jacks_played)
