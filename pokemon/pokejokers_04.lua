@@ -643,7 +643,7 @@ local marowak={
 local hitmonlee={
   name = "hitmonlee", 
   pos = {x = 1, y = 8},
-  config = {extra = {Xmult_mod = 0.1}},
+  config = {extra = {Xmult_mod = 0.15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0) * center.ability.extra.Xmult_mod)}}
@@ -673,7 +673,7 @@ local hitmonlee={
 local hitmonchan={
   name = "hitmonchan", 
   pos = {x = 2, y = 8}, 
-  config = {extra = {Xmult_mod = 0.2}},
+  config = {extra = {Xmult_mod = 0.15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_mod, G.GAME.starting_deck_size, math.max(1, 1 + (G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.Xmult_mod)}}
