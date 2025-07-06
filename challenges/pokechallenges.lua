@@ -254,7 +254,7 @@ local lonesome = {
         },
         modifiers = {
             { id = 'joker_slots', value = 1 },
-			{ id = 'consumable_slots', value = 20 },
+			{ id = 'consumable_slots', value = 10 },
         }
     },
     jokers = {
