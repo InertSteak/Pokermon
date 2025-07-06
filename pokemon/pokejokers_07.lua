@@ -484,7 +484,7 @@ local sunkern={
     return {vars = {card.ability.extra.money}}
   end,
   rarity = 1,
-  cost = 4,
+  cost = 5,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex2",
