@@ -1031,7 +1031,7 @@ local phanpy={
 local donphan={
   name = "donphan",
   pos = {x = 0, y = 8},
-  config = {extra = {Xmult = 1, Xmult_mod = 0.2, Xmult2 = 1}},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.15, Xmult2 = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod,}}
