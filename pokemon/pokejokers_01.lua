@@ -1247,7 +1247,7 @@ local raichu={
   end,
   rarity = "poke_safari", 
   cost = 8, 
-  stage = "Two", 
+  stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex1", 
   blueprint_compat = false,
