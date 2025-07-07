@@ -73,8 +73,8 @@ local revenantdeck = {
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("silverseal_variable")}}
   end,
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_deck",
+	pos = { x = 5, y = 0 },
+	atlas = "pokedeck",
   apply = function(self)
     G.GAME.modifiers.poke_force_seal = "poke_silver"
   end,

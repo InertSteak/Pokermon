@@ -4201,6 +4201,12 @@ return {
                     "All cards have a {C:dark_edition}#1#{}",
                 },
             },
+            sleeve_poke_revenantsleeve = {
+                name = "Revenant Sleeve",
+                text = {
+                    "All cards have a {C:dark_edition}#1#{}",
+                },
+            },
             sleeve_poke_luminoussleeve = {
                 name = "Luminous Sleeve",
                 text = {

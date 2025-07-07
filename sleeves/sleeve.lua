@@ -42,6 +42,22 @@ end
 			G.GAME.modifiers.poke_force_seal = "poke_pink_seal"
 		end
 	}
+  
+  --- Revenant Sleeve
+	local revenantsleeve = {
+		key = 'revenantsleeve',
+		name = 'Revenant Sleeve',
+		prefix_config = {},
+		atlas = "pokesleeves",
+		pos = { x = 5, y = 0 },
+		config = {},
+		loc_vars = function(self, info_queue, center)
+		  return {vars = {localize("silverseal_variable")}}
+		end,
+		apply = function(self)
+			G.GAME.modifiers.poke_force_seal = "poke_silver"
+		end
+	}
 
 --- Luminous Sleeve 
 	local luminoussleeve = {
@@ -87,7 +103,7 @@ local ampedsleeve = {
   end,
 } 
 
-local slist = {pokemonsleeve, obituarysleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
+local slist = {pokemonsleeve, obituarysleeve, revenantsleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
 
 return {Name = "Sleeve",
 				init = init,
