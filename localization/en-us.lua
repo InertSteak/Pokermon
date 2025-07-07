@@ -5081,7 +5081,8 @@ return {
             c_poke_goodasgold = "Good As Gold",
             c_poke_parenthood = "Parenthood",
             c_poke_littlecup = "Little Cup",
-            c_poke_hammertime = "Hammertime"
+            c_poke_hammertime = "Hammertime",
+            c_poke_lonesome = "Lonesome",
         },
         dictionary = {
             k_energy = "Energy",
