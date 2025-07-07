@@ -416,14 +416,14 @@ local kingler={
 local voltorb={
   name = "voltorb", 
   pos = {x = 8, y = 7}, 
-  config = {extra = {Xmult = 2, rounds = 3, volatile = 'right'}},
+  config = {extra = {Xmult = 2, rounds = 4, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 3, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Lightning",
   atlas = "Pokedex1",
@@ -491,11 +491,12 @@ local electrode={
 local exeggcute={
   name = "exeggcute", 
   pos = {x = 10, y = 7}, 
-  config = {extra = {mult = 2, suit = "Hearts"}},
+  config = {extra = {mult = 2, suit = "Hearts", mult2 = 6, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult2, 
+                    ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 1, 
   cost = 4,
@@ -507,8 +508,12 @@ local exeggcute={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        local Mult = card.ability.extra.mult
+        if pseudorandom('exeggcute') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          Mult = card.ability.extra.mult2
+        end
         return {
-          mult = card.ability.extra.mult ,
+          mult = Mult ,
           card = card
         }
       end
@@ -537,9 +542,14 @@ local exeggutor={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         if pseudorandom('exeggutor') < G.GAME.probabilities.normal/card.ability.extra.odds then
           return {
+            colour = G.C.MULT,
+            mult = card.ability.extra.mult_mod,
+            card = card
+          }
+        else
+          return {
             message = localize("poke_solar_ex"),
             colour = G.C.XMULT,
-            mult = card.ability.extra.mult_mod, 
             x_mult = card.ability.extra.Xmult_multi,
             card = card
           }
@@ -552,7 +562,7 @@ local exeggutor={
 local cubone={
   name = "cubone", 
   pos = {x = 12, y = 7},  
-  config = {extra = {mult = 6, consumables_used = 0}, evo_rqmt = 28},
+  config = {extra = {mult = 5, consumables_used = 0}, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Thick Club"}}
@@ -1227,11 +1237,11 @@ local seaking={
 local staryu={
   name = "staryu", 
   pos = {x = 2, y = 9},
-  config = {extra = {mult = 2, suit = "Diamonds"}},
+  config = {extra = {mult = 1, money_mod = 1, suit = "Diamonds"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.money_mod}}
   end,
   rarity = 1, 
   cost = 4,
@@ -1243,8 +1253,10 @@ local staryu={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult,
+          dollars = earned,
           card = card
         }
       end

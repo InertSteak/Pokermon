@@ -343,7 +343,7 @@ local machop={
 local machoke={
   name = "machoke", 
   pos = {x = 1, y = 5},
-  config = {extra = {hands = 2, discards = 2, mult = 12}},
+  config = {extra = {hands = 2, discards = 2, mult = 10}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
@@ -390,7 +390,7 @@ local machoke={
 local machamp={
   name = "machamp", 
   pos = {x = 2, y = 5},
-  config = {extra = {hands = 4, discards = 4, mult = 24}},
+  config = {extra = {hands = 4, discards = 4, mult = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}

@@ -150,7 +150,7 @@ local nidoking={
 local clefairy={
   name = "clefairy", 
   pos = {x = 8, y = 2},
-  config = {extra = {mult = 2, suit = "Clubs"}},
+  config = {extra = {mult = 3, suit = "Clubs"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
@@ -319,11 +319,11 @@ local ninetales={
 local jigglypuff={
   name = "jigglypuff", 
   pos = {x = 12, y = 2},
-  config = {extra = {mult = 2, suit = "Spades"}},
+  config = {extra = {mult = 2, chips = 10, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.chips}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -336,7 +336,10 @@ local jigglypuff={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         return {
+          message = "Tuff!", 
+          colour = G.C.MULT,
           mult = card.ability.extra.mult,
+          chips = card.ability.extra.chips,
           card = card
         }
       end

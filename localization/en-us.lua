@@ -872,8 +872,8 @@ return {
             j_poke_clefairy = {
                 name = "Clefairy",
                 text = {
-                    "Played {C:clubs}#2#{} cards",
-                    "give {C:mult}+#1#{} Mult when scored",
+                    "Played {C:clubs}#2#{} cards give",
+                    "{C:mult}+#1#{} Mult when scored",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})"
                 } 
             },
@@ -910,8 +910,9 @@ return {
             j_poke_jigglypuff = {
                 name = "Jigglypuff",
                 text = {
-                    "Played {C:spades}#2#{} cards",
-                    "give {C:mult}+#1#{} Mult when scored",
+                    "Played {C:spades}#2#{} cards give",
+                    "{C:mult}+#1#{} Mult and {C:chips}+#3#{} Chips",
+                    "when scored",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})"
                 } 
             },
@@ -1502,15 +1503,18 @@ return {
                 text = {
                     "Played {C:hearts}#2#{} cards give",
                     "{C:mult}+#1#{} Mult when scored",
+                    "{C:green}#4# in #5#{} chance for",
+                    "{C:mult}+#3#{} Mult instead",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8})"
                 } 
             },
             j_poke_exeggutor = {
                 name = 'Exeggutor',      
                 text = {
-                    "{C:green}#4# in #5#{} chance for played",
-                    "{C:hearts}#3#{} cards to give {C:mult}+#1#{} Mult",
-                    "and {X:mult,C:white}X#2#{} Mult when scored",
+                    "Played {C:hearts}#3#{} cards give",
+                    "{C:mult}+#1#{} Mult when scored",
+                    "{C:green}#4# in #5#{} chance for",
+                    "{X:mult,C:white}X#2#{} Mult instead",
                 } 
             },
             j_poke_cubone = {
@@ -1667,7 +1671,7 @@ return {
                 name = 'Staryu',      
                 text = {
                     "Played {C:diamonds}#2#{} cards give",
-                    "{C:mult}+#1#{} Mult when scored",
+                    "{C:mult}+#1#{} Mult and {C:money}$#3#{} when scored",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8})"
                 } 
             },
