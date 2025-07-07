@@ -1627,9 +1627,9 @@ jd_def["j_poke_raikou"] = {
     { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
-    { text = "(" },
-    { ref_table = "card.joker_display_values", ref_value = "active" },
-    { text = ")" },
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
   },
   calc_function = function(card)
     local money = 0
@@ -1688,10 +1688,10 @@ jd_def["j_poke_lugia"] = {
 
 --	Ho-oh
 jd_def["j_poke_ho_oh"] = {
-  reminder_text = {
-    { text = "(" },
-    { ref_table = "card.joker_display_values", ref_value = "active" },
-    { text = ")" },
+  text = {
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
   },
   calc_function = function(card)
     if card.ability.extra.used < card.ability.extra.limit then
