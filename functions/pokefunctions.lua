@@ -258,7 +258,7 @@ remove = function(self, card, context, check_shiny)
   return true
 end
 
-poke_evolve = function(card, to_key, immediate)
+poke_evolve = function(card, to_key, immediate, evolve_message)
   if immediate then
     poke_backend_evolve(card, to_key)
   else
@@ -292,7 +292,7 @@ poke_evolve = function(card, to_key, immediate)
           func = function()
             card.evolution_timer = nil
             play_sound('tarot1')
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
             return true
           end
         }))
@@ -337,7 +337,7 @@ poke_backend_evolve = function(card, to_key)
     values_to_keep.cards_scored = values_to_keep.cards_scored - 15
   end
 
-  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas], new_card.pos)
+  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.pos)
   card.children.center.states.hover = card.states.hover
   card.children.center.states.click = card.states.click
   card.children.center.states.drag = card.states.drag
@@ -360,7 +360,7 @@ poke_backend_evolve = function(card, to_key)
   end
 
   if new_card.soul_pos then
-    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas], new_card.soul_pos)
+    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.soul_pos)
     card.children.floating_sprite.role.draw_major = card
     card.children.floating_sprite.states.hover.can = false
     card.children.floating_sprite.states.click.can = false

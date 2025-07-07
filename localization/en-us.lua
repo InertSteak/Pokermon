@@ -1620,7 +1620,7 @@ return {
                 name = 'Kangaskhan',      
                 text = {
                     "{C:attention}+#1#{} consumable slots",
-                    "{C:chips}-#2#{} hands",
+                    "{C:mult}-$#2#{} interest cap",
                 } 
             },
             j_poke_mega_kangaskhan = {
@@ -1798,10 +1798,11 @@ return {
             j_poke_ditto = {
                 name = 'Ditto',
                 text = {
-                    "Sell this to duplicate the leftmost",
-                    "Joker with {C:attention}Perishable{} and",
-                    "a {C:colorless}Colorless{} sticker",
-                    "{C:inactive,s:0.8}(removes Eternal, excludes Dittos)",
+                    "{C:attention}Transforms{} into leftmost",
+                    "Joker with {C:attention}Perishable{}",
+                    "and a {C:colorless}Colorless{} sticker",
+                    "at end of shop",
+                    "{C:inactive,s:0.8}(Excludes Dittos)",
                 } 
             },
             j_poke_eevee = {
@@ -5138,6 +5139,7 @@ return {
             poke_plus_shop = "+1 Shop Card",
             poke_destroyed_ex = "Destroyed!",
             poke_evolve_success = "Evolved!",
+            poke_transform_success = "Transformed!",
             poke_evolve_level = "Level up!",
             poke_tera = "Tera",
             poke_tera_ex = "Tera!",

@@ -1010,11 +1010,11 @@ local tangela={
 local kangaskhan={
   name = "kangaskhan", 
   pos = {x = 10, y = 8},
-  config = {extra = {card_limit = 2, hands = 1}},
+  config = {extra = {card_limit = 2, interest_cap = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-		return {vars = {center.ability.extra.card_limit, center.ability.extra.hands}}
+		return {vars = {center.ability.extra.card_limit, center.ability.extra.interest_cap/5}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -1027,21 +1027,15 @@ local kangaskhan={
     G.E_MANAGER:add_event(Event({func = function()
       G.consumeables.config.card_limit = G.consumeables.config.card_limit + add
       return true end }))
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
-    if to_decrease > 0 then
-      ease_hands_played(-to_decrease)
-    end
+    poke_debug(G.GAME.interest_cap)
+    G.GAME.interest_cap = G.GAME.interest_cap - card.ability.extra.interest_cap
   end,
   remove_from_deck = function(self, card, from_debuff)
     local remove = card.ability.extra.card_limit
     G.E_MANAGER:add_event(Event({func = function()
       G.consumeables.config.card_limit = G.consumeables.config.card_limit - remove
       return true end }))
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    if not from_debuff then
-      ease_hands_played(card.ability.extra.hands)
-    end
+    G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest_cap
   end, 
   megas = {"mega_kangaskhan"}
 }

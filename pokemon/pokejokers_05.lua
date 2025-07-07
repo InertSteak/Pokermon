@@ -530,9 +530,7 @@ local ditto={
   eternal_compat = false,
   custom_pool_func = true, 
   calculate = function(self, card, context) --mostly copied from how invisible joker works
-    if context.selling_self and not context.blueprint then
-      local eval = function(card) return (card.ability.loyalty_remaining == 0) and not G.RESET_JIGGLES end
-                    juice_card_until(card, eval, true)
+    if context.ending_shop and not context.blueprint then
       local jokers = {}
       for i=1, #G.jokers.cards do 
           if G.jokers.cards[i] ~= card and G.jokers.cards[i].ability.name ~= "ditto" then
@@ -541,23 +539,15 @@ local ditto={
       end
       
       if #jokers > 0 then 
-          if #G.jokers.cards + G.GAME.joker_buffer <= G.jokers.config.card_limit then 
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
-              local chosen_joker = jokers[1]
-              
-              local card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
-              card:set_eternal(false)
-              --Setting it directly to overrule perishiable compatibility
-              card.ability.perishable = true
-              card.ability.perish_tally = G.GAME.perishable_rounds
-              apply_type_sticker(card, "Colorless")
-              card:add_to_deck()
-              G.jokers:emplace(card)
-          else
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
-          end
+        local chosen_joker_key = jokers[1].config.center.key
+        card.ability.perishable = true
+        card.ability.perish_tally = G.GAME.perishable_rounds
+        apply_type_sticker(card, "Colorless")
+        return {
+          message = poke_evolve(card, chosen_joker_key, nil, localize("poke_transform_success"))
+        }
       else
-          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
       end
     end
   end,
