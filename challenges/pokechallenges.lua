@@ -271,9 +271,7 @@ local lonesome = {
             {id = 'c_poke_masterball'},
 			{id = 'v_blank'},
             {id = 'v_antimatter'},
-            {id = 'p_buffoon_normal_1', ids = {
-                'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',
-            }},
+            {id = 'p_buffoon_normal_1', ids = {'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',}},
         },
         banned_tags = {
             {id = 'tag_rare'},
