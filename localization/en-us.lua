@@ -2305,12 +2305,18 @@ return {
             j_poke_sudowoodo = {
                 name = "Sudowoodo",
                 text = {
+                  "Retrigger all {C:attention}played{} and",
+                  "{C:attention}held{} {C:attention}face{} cards",
+                }
+            },
+            j_poke_weird_tree = {
+                name = "Weird Tree",
+                text = {
                   "{C:attention}Type Changer: {X:grass,C:white}Grass{}",
-                  "Played {C:attention}face{} cards give {C:mult}+#1#{} Mult when scored",
-                  "{br:3.5}ERROR - CONTACT STEAK",
-                  "Retrigger all played {C:attention}face{} cards if",
-                  "this Joker isn't {X:grass,C:white}Grass{} or",
-                  "you have a {X:water,C:white}Water{} Joker"
+                  "{C:}Transforms{} at end of round",
+                  "if this Joker isn't",
+                  "a {X:grass,C:white}Grass{} type or you",
+                  "have a {X:water,C:white}Water{} type"
                 }
             },
             j_poke_bellossom = {

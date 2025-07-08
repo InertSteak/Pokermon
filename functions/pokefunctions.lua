@@ -95,7 +95,7 @@ pokermon.family = {
     {"phanpy", "donphan"},
     {"girafarig", "farigiraf"},
     {"murkrow", "honchkrow"},
-    {"bonsly", "sudowoodo"},
+    {"bonsly", "sudowoodo", "weird_tree"},
     {"hoppip", "skiploom", "jumpluff"},
     {"stantler", "wyrdeer"},
     {"sunkern", "sunflora"},
@@ -307,9 +307,9 @@ end
 poke_backend_evolve = function(card, to_key)
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
-
+  
   local old_key = card.config.center.key
-
+  
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
     card.ability.perish_tally = G.GAME.perishable_rounds
@@ -336,7 +336,7 @@ poke_backend_evolve = function(card, to_key)
     values_to_keep.upgrade = true
     values_to_keep.cards_scored = values_to_keep.cards_scored - 15
   end
-
+  
   card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.pos)
   card.children.center.states.hover = card.states.hover
   card.children.center.states.click = card.states.click
@@ -457,14 +457,14 @@ item_evo = function(self, card, context, forced_key)
     end
 end
 
-scaling_evo = function (self, card, context, forced_key, current, target)
+scaling_evo = function (self, card, context, forced_key, current, target, evo_message)
   if (SMODS.Mods["Talisman"] or {}).can_load then
     current = to_big(current)
     target = to_big(target)
   end
   if can_evolve(self, card, context, forced_key) and current >= target then
     return {
-      message = poke_evolve(card, forced_key)
+      message = poke_evolve(card, forced_key, nil, evo_message)
     }
   end
   if can_evolve(self, card, context, forced_key, true) and current >= target then

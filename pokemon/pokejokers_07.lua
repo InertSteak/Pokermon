@@ -198,14 +198,13 @@ local azumarill={
 local sudowoodo={
   name = "sudowoodo",
   pos = {x = 3, y = 3},
-  config = {extra = {mult = 5, retriggers = 1}},
+  config = {extra = {retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {G.ARGS.LOC_COLOURS.grass}}}
-    return {vars = {center.ability.extra.mult, }}
+    return {vars = {}}
   end,
-  rarity = 2,
-  cost = 6,
+  rarity = "poke_safari",
+  cost = 8,
   stage = "Basic",
   ptype = "Earth",
   atlas = "Pokedex2",
@@ -213,14 +212,8 @@ local sudowoodo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
-      return {
-        mult = card.ability.extra.mult, 
-        card = card
-      }
-    end
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card:is_face() then
-      if (not is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0  then
+    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+      if context.other_card:is_face() or context.other_card.config.center ~= G.P_CENTERS.c_base then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
@@ -228,11 +221,47 @@ local sudowoodo={
         }
       end
     end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.config.center ~= G.P_CENTERS.c_base then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+}
+
+local weird_tree={
+  name = "weird_tree",
+  pos = {x = 6, y = 10},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {G.ARGS.LOC_COLOURS.grass}}}
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex2",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_poke = true,
+  no_collection = true,
+  custom_pool_func = true,
+  calculate = function(self, card, context)
+    return scaling_evo(self, card, context, "j_poke_sudowoodo", 
+                      ((not is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0) and 1, 1, localize("poke_transform_success"))
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if initial and not G.SETTINGS.paused then
+    if initial then
       apply_type_sticker(card, "Grass")
     end
+  end,
+  in_pool = function(self)
+    return not (next(SMODS.find_card('j_poke_sudowoodo')) or next(SMODS.find_card('j_poke_bonsly')))
   end
 }
 -- Politoed 186
@@ -1489,5 +1518,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {ampharos, bellossom, marill, azumarill, sudowoodo, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, weird_tree, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
 }

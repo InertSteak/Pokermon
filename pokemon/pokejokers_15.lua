@@ -129,13 +129,13 @@ local honchkrow={
 local bonsly={
   name = "bonsly",
   pos = {x = 9, y = 3},
-  config = {extra = {Xmult_minus = 0.75, rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.75, rounds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 4,
   stage = "Baby",
   ptype = "Earth",

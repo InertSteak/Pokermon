@@ -574,6 +574,7 @@ jd_def["j_poke_azumarill"] = {
 }
 
 --	Sudowoodo
+--[[
 jd_def["j_poke_sudowoodo"] = {
     text = {            
     { text = "+" },
@@ -608,6 +609,7 @@ retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_ca
         joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 end
 end
 }
+]]--
 
 --	Politoed
 jd_def["j_poke_politoed"] = {
