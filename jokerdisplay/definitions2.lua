@@ -1687,6 +1687,21 @@ jd_def["j_poke_lugia"] = {
 }
 
 --	Ho-oh
+jd_def["j_poke_ho_oh"] = {
+  text = {
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    if card.ability.extra.used < card.ability.extra.limit then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end
+}
+
 --	Celebi
 jd_def["j_poke_celebi"] = {
     text = {
