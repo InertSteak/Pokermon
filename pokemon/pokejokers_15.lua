@@ -158,7 +158,8 @@ local bonsly={
       local rank = pseudorandom_element({'J', 'Q', 'K'}, pseudoseed('familiar_create'))
       local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('familiar_create'))
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
-      create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE})
+      local created_card = create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE})
+      playing_card_joker_effects({created_card})
     end
     return level_evo(self, card, context, "j_poke_sudowoodo")
   end

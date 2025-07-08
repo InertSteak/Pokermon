@@ -170,7 +170,7 @@ local mega_venusaur = {
   stage = "Mega",
   ptype = "Grass",
   atlas = "Megas",
-  blueprint_compat = true,
+  blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
     if not from_debuff and G.hand and G.hand.cards and #G.hand.cards > 0 then
@@ -383,7 +383,7 @@ local mega_charizard_y = {
   stage = "Mega", 
   ptype = "Fire",
   atlas = "Megas",
-  blueprint_compat = true,
+  blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
     ease_discard(card.ability.extra.d_size)
