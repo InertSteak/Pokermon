@@ -3137,14 +3137,12 @@ jd_def["j_poke_zapdos"] = {
 }
 
 jd_def["j_poke_moltres"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
-    },
-    calc_function = function(card)
-        local status = "Not Active!"
-        if G.GAME and G.GAME.current_round.discards_used == 0 then status = "Active!" end
-        card.joker_display_values.status = status
-    end
+  text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
+  },
+  calc_function = function(card)
+    card.joker_display_values.active = (G.GAME and G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.discards_left > 0 and localize("jdis_active") or localize("jdis_inactive"))
+  end
 }
 
 jd_def["j_poke_dratini"] = {
