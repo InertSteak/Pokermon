@@ -520,6 +520,8 @@ local lapras={
           G.GAME.shop_d6ed = nil
           G.STATE_COMPLETE = false
           G.GAME.current_round.used_packs = {}
+          G.GAME.current_round.reroll_cost_increase = 0
+          calculate_reroll_cost(true)
           return true
         end,
       }))
