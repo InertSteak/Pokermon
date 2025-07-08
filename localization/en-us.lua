@@ -1792,6 +1792,9 @@ return {
                 text = {
                     "{C:chips}+#2#{} Chips for each",
                     "{C:attention}Blind{} skipped this run",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Visit the {C:attention}shop{}",
+                    "after skipping",
                     "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
                 } 
             },

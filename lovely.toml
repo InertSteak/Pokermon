@@ -864,3 +864,12 @@ if not hook then
 end
 '''
 match_indent = true
+
+#Lapras fix
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if G.shop and not G.shop.alignment.offset.py then"
+position = "after"
+payload = "if G.GAME.lapras_skip then G.shop.alignment.offset.y = -5.3 end"
+match_indent = true

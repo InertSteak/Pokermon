@@ -482,14 +482,14 @@ local mega_gyarados={
 }
 -- Lapras 131
 local lapras={
-  name = "lapras", 
+  name = "lapras",
   pos = {x = 1, y = 10},
-  config = {extra = {chips = 0, chip_mod = 80}},
+  config = {extra = {chips = 0, chip_mod = 25}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 5, 
   stage = "Basic", 
   ptype = "Water",
@@ -504,6 +504,28 @@ local lapras={
           chip_mod = card.ability.extra.chips
         }
       end
+    end
+    if context.skip_blind and not context.blueprint and not G.GAME.lapras_skip then
+      G.GAME.lapras_skip = true
+      G.E_MANAGER:add_event(Event({
+        trigger = "immediate",
+        func = function()
+          G.blind_select:remove()
+          G.blind_prompt_box:remove()
+          G.blind_select = nil
+          delay(0.2)
+          G.GAME.current_round.jokers_purchased = 0
+          G.STATE = G.STATES.SHOP
+          G.GAME.shop_free = nil
+          G.GAME.shop_d6ed = nil
+          G.STATE_COMPLETE = false
+          G.GAME.current_round.used_packs = {}
+          return true
+        end,
+      }))
+    end
+    if context.ending_shop and not context.blueprint then
+      G.GAME.lapras_skip = nil
     end
   end,
   update = function(self, card, dt)
