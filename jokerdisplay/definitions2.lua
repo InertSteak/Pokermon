@@ -1623,13 +1623,87 @@ jd_def["j_poke_blissey"] = {
 }
 
 --	Raikou
+jd_def["j_poke_raikou"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    local money = 0
+    local status = false
+    if G.GAME and G.GAME.current_round.hands_played == 0 then
+      status = true
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      status = false
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+    if #JokerDisplay.current_hand == 1 and status == true then
+      money = 9
+    end
+    card.joker_display_values.money = money
+  end
+}
+
 --	Entei
+jd_def["j_poke_entei"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Suicune
 --	Larvitar
 --	Pupitar
 --	Tyranitar
 --	Lugia
+jd_def["j_poke_lugia"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  reminder_text = {
+    { text = " (", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "drawn", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "to_draw", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.drawn = card.ability.extra.to_draw - card.ability.extra.drawn
+  end
+}
+
 --	Ho-oh
+jd_def["j_poke_ho_oh"] = {
+  text = {
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    if card.ability.extra.used < card.ability.extra.limit then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end
+}
+
 --	Celebi
 jd_def["j_poke_celebi"] = {
     text = {
