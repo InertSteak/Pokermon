@@ -617,11 +617,13 @@ local porygonz={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = Xmult
-        }
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Energy' then
