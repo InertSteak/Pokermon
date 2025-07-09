@@ -574,42 +574,19 @@ jd_def["j_poke_azumarill"] = {
 }
 
 --	Sudowoodo
---[[
 jd_def["j_poke_sudowoodo"] = {
-    text = {            
-    { text = "+" },
-    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-},
-text_config = { colour = G.C.MULT },
-reminder_text = {
+  reminder_text = {
     { text = "(" },
     { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
     { text = ")" },
-},
-calc_function = function(card)
-    local mult = 0
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-                mult = mult +
-                    card.ability.extra.mult *
-                    JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-        end
-    end
-    card.joker_display_values.mult = mult
+  },
+  calc_function = function(card)
     card.joker_display_values.localized_text = localize("k_face_cards")
-end,
-retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-    local total = #find_pokemon_type("Water")
-    if held_in_hand then return 0 end
-    if not is_type(joker_card, "Grass") or total > 0 then
-    return playing_card:is_face() and
-        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 end
-end
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    return playing_card:is_face() and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+  end
 }
-]]--
 
 --	Politoed
 jd_def["j_poke_politoed"] = {
