@@ -1114,21 +1114,13 @@ local dodrio={
 local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
-  config = {extra = {odds = 3, seal_goal = 5}},
+  config = {extra = {odds = 2, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local seal_count = 0
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if v.seal then
-          seal_count = seal_count + 1
-        end
-      end
-    end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.seal_goal, seal_count}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.rounds}}
   end,
   rarity = 2, 
-  cost = 7, 
+  cost = 6, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
@@ -1146,7 +1138,7 @@ local seel={
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    return deck_seal_evo(self, card, context, "j_poke_dewgong", nil, nil, card.ability.extra.seal_goal)
+    return level_evo(self, card, context, "j_poke_dewgong")
   end
 }
 -- Dewgong 087

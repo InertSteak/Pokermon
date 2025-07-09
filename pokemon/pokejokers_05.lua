@@ -944,7 +944,7 @@ local omastar={
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 20, chips2 = 2, chips3 = 60, third_times = 0}, evo_rqmt = 5},
+  config = {extra = {rank = "2", chips1 = 50, chips2 = 5, chips3 = 50, third_times = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
    type_tooltip(self, info_queue, card)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
@@ -1006,7 +1006,7 @@ local kabuto={
 local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 40, chips2 = 4, chips3 = 80, retriggers = 1}},
+  config = {extra = {rank = "2", chips1 = 70, chips2 = 5, chips3 = 70, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -1060,7 +1060,7 @@ local kabutops={
       end
     end
     if context.repetition and context.cardarea == G.play and card.ability.extra.fourth_level then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) then
+      if context.other_card:get_id() == 2 then
         return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,

@@ -1351,10 +1351,10 @@ return {
             j_poke_seel = {
                 name = 'Seel',      
                 text = {
-                    "{C:green}#1# in #2#{} chance to add a random {C:attention}seal{}",
-                    "to the leftmost scoring card",
+                    "{C:green}#1# in #2#{} chance to add a random",
+                    "{C:attention}seal{} to first scoring card",
                     "on {C:attention}first hand{} of round",
-                    "{C:inactive,s:0.8}(Evolves when your deck has {C:attention,s:0.8}#4#{C:inactive,s:0.8} / #3# {C:attention,s:0.8}seals{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 } 
             },
             j_poke_dewgong = {
@@ -1856,8 +1856,8 @@ return {
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
                     "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
+                    "{C:inactive,s:0.8}(Trigger {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)",
                     "{C:inactive,s:0.8}(Must have room)",
-                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_omastar = {
@@ -1877,8 +1877,7 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : {C:chips}+#2#{} Chips",
                     "{X:attention,C:white}2+{} : {}Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-                    "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips",
-                    "{C:inactive,s:0.8}(Evolves after triggering third level {C:attention,s:0.8}#5#{C:inactive,s:0.8} times)"
+                    "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips {C:inactive,s:0.8}(Trigger {C:attention,s:0.8}#5#{C:inactive,s:0.8} times to evolve)",
                 } 
             },
             j_poke_kabutops = {
@@ -1888,8 +1887,7 @@ return {
                     "{X:attention,C:white}1+{} : {C:chips}+#2#{} Chips",
                     "{X:attention,C:white}2+{} : {}Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
                     "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips",
-                    "{X:attention,C:white}4+{} : {}Retrigger {C:attention}first{} and {C:attention}second{}",
-                    "played cards {C:attention}#5#{} additional time"
+                    "{X:attention,C:white}4+{} : {}Retrigger all played {C:attention}#1#s{}",
                 } 
             },
             j_poke_aerodactyl = {
@@ -2510,11 +2508,10 @@ return {
             j_poke_forretress = {
               name = "Forretress",
               text = {
-                "Gains {C:chips}+#2#{} Chips when",
-                "a {C:attention}held{} {C:attention}Steel{} card triggers",
-                "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Volatile Left{}",
                 "{C:chips}+#1#{} Chips and debuff self",
+                "Gives {C:attention}Double{} Chips if a",
+                "{C:attention}Steel{} card is {C:attention}held{} in hand",
               }
             },
             j_poke_dunsparce = {

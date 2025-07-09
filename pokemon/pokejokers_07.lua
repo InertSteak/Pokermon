@@ -602,16 +602,16 @@ local yanma={
 local wooper={
   name = "wooper",
   pos = {x = 2, y = 4},
-  config = {extra = {mult = 15,mult_minus = 1, rounds = 4,}},
+  config = {extra = {mult = 15,mult_mod = 1, rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local mult_total = center.ability.extra.mult
     if G.deck and G.deck.cards then
       for k, v in pairs(G.deck.cards) do
-        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
+        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_mod end
       end
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult_minus, math.max(0, mult_total)}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult_mod, math.max(0, mult_total)}}
   end,
   rarity = 1,
   cost = 5,
@@ -626,7 +626,7 @@ local wooper={
       if context.joker_main then
         local Mult = card.ability.extra.mult
         for k, v in pairs(G.deck.cards) do
-          if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
+          if v:is_face() then Mult = Mult - card.ability.extra.mult_mod end
         end
         if Mult > 0 then
           return {
@@ -644,16 +644,16 @@ local wooper={
 local quagsire={
   name = "quagsire",
   pos = {x = 3, y = 4},
-  config = {extra = {mult = 25, mult_minus = 1, rerolls = 1}},
+  config = {extra = {mult = 25, mult_mod = 1, rerolls = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local mult_total = center.ability.extra.mult
     if G.deck and G.deck.cards then
       for k, v in pairs(G.deck.cards) do
-        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_minus end
+        if v:is_face() then mult_total = mult_total - center.ability.extra.mult_mod end
       end
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_minus, math.max(0, mult_total), center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, math.max(0, mult_total), center.ability.extra.rerolls}}
   end,
   rarity = 2,
   cost = 5,
@@ -668,7 +668,7 @@ local quagsire={
       if context.joker_main then
         local Mult = card.ability.extra.mult
         for k, v in pairs(G.deck.cards) do
-          if v:is_face() then Mult = Mult - card.ability.extra.mult_minus end
+          if v:is_face() then Mult = Mult - card.ability.extra.mult_mod end
         end
         if Mult > 0 then
           return {
@@ -1227,7 +1227,7 @@ local girafarig={
 local pineco={
   name = "pineco",
   pos = {x = 2, y = 5},
-  config = {extra = {chips = 80,rounds = 3, volatile = 'left'}},
+  config = {extra = {chips = 120,rounds = 3, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
@@ -1266,7 +1266,7 @@ local pineco={
 local forretress={
   name = "forretress",
   pos = {x = 3, y = 5},
-  config = {extra = {chips = 120, chip_mod = 5, volatile = 'left'}},
+  config = {extra = {chips = 150, chip_mod = 5, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
@@ -1284,6 +1284,13 @@ local forretress={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        local multiplier = 1
+        for k, v in pairs(G.hand.cards) do
+          if SMODS.has_enhancement(v, 'm_steel') then
+            multiplier = 2
+            break
+          end
+        end
         G.E_MANAGER:add_event(Event({
           func = function()
               card.ability.fainted = G.GAME.round
@@ -1294,13 +1301,9 @@ local forretress={
         return {
           message = localize("poke_explosion_ex"),
           colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          chip_mod = card.ability.extra.chips * multiplier
         }
       end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, 'm_steel') then
-      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
     end
   end,
 }
