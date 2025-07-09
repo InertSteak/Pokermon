@@ -985,13 +985,13 @@ local mega_pidgeot = {
 local rattata={
   name = "rattata", 
   pos = {x = 5, y = 1},
-  config = {extra = {retriggers = 1, rounds = 4}},
+  config = {extra = {retriggers = 1, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 5, 
   stage = "Basic", 
   atlas = "Pokedex1",
   ptype = "Colorless",
@@ -1022,7 +1022,7 @@ local raticate={
     return {vars = {center.ability.extra.retriggers}}
   end,
   rarity = 2, 
-  cost = 6, 
+  cost = 7, 
   stage = "One", 
   atlas = "Pokedex1",
   ptype = "Colorless",

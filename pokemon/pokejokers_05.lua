@@ -203,7 +203,7 @@ local electabuzz={
 local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
-  config = {extra = {mult = 0, mult_mod = 3}},
+  config = {extra = {mult = 0, mult_mod = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
@@ -1352,10 +1352,10 @@ local moltres={
 local dratini={
   name = "dratini", 
   pos = {x = 7, y = 11},
-  config = {extra = {mult = 0, mult_mod = 1, size = 3}, evo_rqmt = 10},
+  config = {extra = {mult = 0, mult_mod = 1, size = 3}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -1384,10 +1384,10 @@ local dratini={
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
-  config = {extra = {mult = 0, mult_mod = 1, size = 2}, evo_rqmt = 30},
+  config = {extra = {mult = 0, mult_mod = 2, size = 2}, evo_rqmt = 55},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -1416,7 +1416,7 @@ local dragonair={
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
-  config = {extra = {mult = 30, retriggers = 5}},
+  config = {extra = {mult = 55, retriggers = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 

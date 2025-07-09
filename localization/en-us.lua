@@ -1951,7 +1951,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +10 Mult)",
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#4# Mult)",
                 } 
             },
             j_poke_dragonair = {
@@ -1960,7 +1960,7 @@ return {
                     "Gains {C:mult}+#2#{} Mult",
                     "if played hand has",
                     "{C:attention}#3#{} or fewer cards",
-                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +30 Mult)",
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#4# Mult)",
                 } 
             },
             j_poke_dragonite = {
@@ -3319,11 +3319,8 @@ return {
                 name = "Mantyke",
                 text = {
                   "{C:attention}Baby{}, {X:mult,C:white}X#2#{} Mult",
-                  "At end of round, a random",
-                  "card in {C:attention}deck{} becomes {C:attention}Gold{}",
-                  "{br:2}ERROR - CONTACT STEAK",
-                  "{C:attention}Gold{} cards {C:attention}held{} in hand",
-                  "give {C:chips}+#1#{} Chips",
+                  "Creates a {C:dark_edition}Negative{} copy of",
+                  "{C:attention}The Devil{} at end of round",
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -3394,7 +3391,8 @@ return {
                     "If {C:attention}first discard{} of round has only",
                     "{C:attention}1{} card, destroy it and gain {C:mult}+#2#{} Mult",
                     "{br:4}ERROR - CONTACT STEAK",
-                    "Gains {X:mult,C:white}X#4#{} Mult for each card discarded",
+                    "Gains {X:mult,C:white}X#4#{} Mult when",
+                    "you use a discard",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult, {X:mult,C:white}X#3#{C:inactive} Mult)",
                 } 
             },
@@ -3462,6 +3460,9 @@ return {
                     "{C:pink}+3{} Energy Limit",
                     "{X:mult,C:white} X#2# {} Mult per {C:pink}Energy{}",
                     "card used this {C:attention}run{}",
+                    "{br:2}text needs to be here to work",
+                    "Creates an {C:pink}Energy",
+                    "when you use an {C:pink}Energy",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
                 } 
             },

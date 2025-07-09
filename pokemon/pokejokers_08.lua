@@ -245,7 +245,7 @@ local sneasel = {
 local teddiursa={
   name = "teddiursa",
   pos = {x = 4, y = 6},
-  config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 16},
+  config = {extra = {mult = 0,mult_mod = 2,},evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
@@ -702,7 +702,7 @@ local delibird={
 local mantine={
   name = "mantine",
   pos = {x = 4, y = 7},
-  config = {extra = {chips = 0, chip_mod = 5,}},
+  config = {extra = {chips = 0, chip_mod = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
@@ -1493,7 +1493,7 @@ local elekid ={
 local magby={
   name = "magby",
   pos = {x = 8, y = 8},
-  config = {extra = {Xmult_minus = 0.75, d_size = 2, rounds = 2,}},
+  config = {extra = {Xmult_minus = 0.75, d_size = 1, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}

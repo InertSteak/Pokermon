@@ -218,9 +218,6 @@ jd_def["j_poke_riolu"] = {
 --	Mantyke
 jd_def["j_poke_mantyke"] = { 
     text = {
-        {text = "+", colour = G.C.CHIPS},
-        {ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS},
-        {text = " "},
         {
             border_nodes = {
                 { text = "X" },
@@ -228,18 +225,6 @@ jd_def["j_poke_mantyke"] = {
             },
         },
     },
-    calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card.ability.effect and playing_card.ability.effect == "Gold Card" then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.chips = card.ability.extra.chips * count
-    end
 }
 
 --	Snover
