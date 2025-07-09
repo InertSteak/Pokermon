@@ -4218,6 +4218,7 @@ return {
                 text = {
                     "All Jokers are created",
                     "with random {C:pink}Type{} stickers",
+                    "and are {C:pink}Energized{} once",
                 },
             },
             sleeve_poke_telekineticsleeve = {
