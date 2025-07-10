@@ -703,13 +703,13 @@ jd_def["j_poke_wooper"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    local face_cards_in_deck = 0
+    local negative_mult = 0
     for k, v in pairs(G.deck.cards) do
       if v:is_face() then
-        face_cards_in_deck = face_cards_in_deck + 1
+        negative_mult = negative_mult + card.ability.extra.mult_mod
       end
     end
-  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
+    card.joker_display_values.mult = math.max(0, card.ability.extra.mult - negative_mult)
   end
 }
 
@@ -720,13 +720,13 @@ jd_def["j_poke_quagsire"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    local face_cards_in_deck = 0
+    local negative_mult = 0
     for k, v in pairs(G.deck.cards) do
       if v:is_face() then
-        face_cards_in_deck = face_cards_in_deck + 1
+        negative_mult = negative_mult + card.ability.extra.mult_mod
       end
     end
-  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
+    card.joker_display_values.mult = math.max(0, card.ability.extra.mult - negative_mult)
   end
 }
 
