@@ -2965,6 +2965,7 @@ calc_function = function(card)
     card.joker_display_values.localized_text = "(".."3"..")"
 end
 }
+
 -- Kabuto
 jd_def["j_poke_kabuto"] = {
     text = {
@@ -2995,65 +2996,56 @@ calc_function = function(card)
     card.joker_display_values.localized_text = "(".."2"..")"
 end
 }
+
 -- Kabutops
 jd_def["j_poke_kabutops"] = {
-    text = {
-
-        { text = "+",                              colour = G.C.CHIPS , },
-        {ref_table = "card.joker_display_values",    ref_value = "chips", colour = G.C.CHIPS,   }
-    },
-    reminder_text = {
-        { ref_table = "card.joker_display_values", ref_value = "localized_text" }
-},
-calc_function = function(card)
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS }
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
     local count = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 2 then 
-                count = count + 1
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 2 then
+          count = count + 1
         end
+      end
     end
     if count >= 1 and count < 3 then
-        card.joker_display_values.chips = card.ability.extra.chips1
+      card.joker_display_values.chips = card.ability.extra.chips1
     elseif count >= 3 then
-        card.joker_display_values.chips = card.ability.extra.chips1 + card.ability.extra.chips3
+      card.joker_display_values.chips = card.ability.extra.chips1 + card.ability.extra.chips3
     else
-        card.joker_display_values.chips = 0
+      card.joker_display_values.chips = 0
     end
     card.joker_display_values.localized_text = "(".."2"..")"
-end,
-retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
     local count = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-
     -- Count the number of 2's in the scoring hand
     if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 2 then
-                count = count + 1
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 2 then
+          count = count + 1
         end
+      end
     end
-
     -- Only proceed if at least 4 2's have been played
-    if count < 4 then
-        return 0
+    if count >= 4 then
+      return (playing_card:get_id() == 2) and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)
+    else
+      return 0
     end
-
-    -- Check for retrigger conditions
-    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
-    local second_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[2]
-
-    if playing_card == first_card or playing_card == second_card then
-        return joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)
-    end
-
-    return 0
-end
-
+  end
 }
+
 -- Aerodactyl
 jd_def["j_poke_aerodactyl"] = {
   text = {
