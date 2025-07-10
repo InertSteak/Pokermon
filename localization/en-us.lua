@@ -621,8 +621,8 @@ return {
                 name = "Squirtle",
                 text = {
                     "{C:chips}+#2#{} hands",
-                    "Gains Chips equal to",
-                    "remaining {C:attention}hands{} when",
+                    "Gains {C:chips}+#4#{} Chips for each",
+                    "remaining {C:attention}hand{} when",
                     "hand is played",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
                 } 
@@ -631,9 +631,9 @@ return {
                 name = "Wartortle",
                 text = {
                     "{C:chips}+#2#{} hands",
-                    "Gains Chips equal to",
-                    "{C:attention}twice{} the remaining {C:attention}hands",
-                    "when hand is played",
+                    "Gains {C:chips}+#4#{} Chips for each",
+                    "remaining {C:attention}hand{} when",
+                    "hand is played",
                     "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
                 } 
             },

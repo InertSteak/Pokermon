@@ -397,23 +397,22 @@ local mega_charizard_y = {
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, hands = 1}, evo_rqmt = 40},
+  config = {extra = {chips = 0, chip_mod = 1, hands = 1}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt, center.ability.extra.chip_mod}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1",
-  copy_scaled = true,
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + G.GAME.current_round.hands_left
+        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
       if context.joker_main then
@@ -444,10 +443,10 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 40, hands = 1}, evo_rqmt = 120},
+  config = {extra = {chips = 40, chip_mod = 2, hands = 1}, evo_rqmt = 120},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt, center.ability.extra.chip_mod}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
