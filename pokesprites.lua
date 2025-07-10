@@ -403,3 +403,169 @@ if (SMODS.Mods["malverk"] or {}).can_load then
       }
     })
 end
+
+--Deck Skins
+--RBY sprites skins by GAME FREAK, arranged by Catzzadilla
+local spades = SMODS.Atlas{
+    key = 'collab_RBY_Spades_atlas',
+    path = 'Collab_RBY_Spades.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local clubs = SMODS.Atlas{
+    key = 'collab_RBY_Clubs_atlas',
+    path = 'Collab_RBY_Clubs.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local hearts = SMODS.Atlas{
+    key = 'collab_RBY_Hearts_atlas',
+    path = 'Collab_RBY_Hearts.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local diamonds = SMODS.Atlas{
+    key = 'collab_RBY_Diamonds_atlas',
+    path = 'Collab_RBY_Diamonds.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local spadesHC = SMODS.Atlas{
+    key = 'collab_RBY_Spades_HC_atlas',
+    path = 'Collab_RBY_Spades_HC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local clubsHC = SMODS.Atlas{
+    key = 'collab_RBY_Clubs_HC_atlas',
+    path = 'Collab_RBY_Clubs_HC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local heartsHC = SMODS.Atlas{
+    key = 'collab_RBY_Hearts_HC_atlas',
+    path = 'Collab_RBY_Hearts_HC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local diamondsHC = SMODS.Atlas{
+    key = 'collab_RBY_Diamonds_HC_atlas',
+    path = 'Collab_RBY_Diamonds_HC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+SMODS.DeckSkin {
+	key = "Collab_RBY_Spades",
+	suit = "Spades",
+	loc_txt = {
+        ['en-us'] = 'RBY Sprites'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = spades.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = spadesHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "Collab_RBY_Clubs",
+	suit = "Clubs",
+	loc_txt = {
+        ['en-us'] = 'RBY Sprites'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = clubs.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = clubsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "Collab_RBY_Hearts",
+	suit = "Hearts",
+	loc_txt = {
+        ['en-us'] = 'RBY Sprites'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = hearts.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = heartsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "Collab_RBY_Diamonds",
+	suit = "Diamonds",
+	loc_txt = {
+        ['en-us'] = 'RBY Sprites'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = diamonds.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = diamondsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
