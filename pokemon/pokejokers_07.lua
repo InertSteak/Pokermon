@@ -221,7 +221,7 @@ local sudowoodo={
         }
       end
     end
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.config.center ~= G.P_CENTERS.c_base then
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card:is_face() then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
