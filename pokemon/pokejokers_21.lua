@@ -180,11 +180,11 @@ local beheeyem={
 local litwick={
   name = "litwick",
   pos = {x = 1, y = 8},
-  config = {extra = {money_minus = 1}, evo_rqmt = 13},
+  config = {extra = {mult = 3, money_minus = 1, sell_goal = 7}, evo_rqmt = 13},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
-    return {vars = {center.ability.extra.money_minus, self.config.evo_rqmt, center.sell_cost}}
+    return {vars = {center.ability.extra.money_minus, self.config.evo_rqmt, center.sell_cost, center.ability.extra.mult, center.ability.extra.sell_goal}}
   end,
   rarity = 2,
   cost = 6,
@@ -197,10 +197,14 @@ local litwick={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
+        local Mult = card.ability.extra.mult
+        if card.sell_cost >= card.ability.extra.sell_goal then
+          Mult = 3 * card.ability.extra.mult
+        end
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
           colour = G.C.MULT,
-          mult_mod = card.sell_cost
+          mult_mod = Mult
         }
       end
     end
@@ -221,7 +225,7 @@ local lampent={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
-    return {vars = {center.ability.extra.money_minus, 2 * center.sell_cost}}
+    return {vars = {center.ability.extra.money_minus, center.sell_cost}}
   end,
   rarity = 3,
   cost = 8,
@@ -236,9 +240,9 @@ local lampent={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {2 * card.sell_cost}},
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}},
           colour = G.C.MULT,
-          mult_mod = 2 * card.sell_cost
+          mult_mod = card.sell_cost
         }
       end
     end
@@ -257,10 +261,10 @@ local lampent={
 local chandelure={
   name = "chandelure",
   pos = {x = 3, y = 8},
-  config = {extra = {money = 1, Xmult_multi = 1.3}},
+  config = {extra = {Xmult_multi = 1.3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money, 3 * center.sell_cost}}
+    return {vars = {center.ability.extra.Xmult_multi, center.sell_cost}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -274,14 +278,13 @@ local chandelure={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {3 * card.sell_cost}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}}, 
           colour = G.C.MULT,
-          mult_mod = 3 * card.sell_cost
+          mult_mod = card.sell_cost
         }
       end
     end
     if context.other_joker and context.other_joker.config and context.other_joker.sell_cost == 1 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
-       ease_poke_dollars(context.other_joker, "chandelure", card.ability.extra.money)
         G.E_MANAGER:add_event(Event({
           func = function()
               context.other_joker:juice_up(0.5, 0.5)

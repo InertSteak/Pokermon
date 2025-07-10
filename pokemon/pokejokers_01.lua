@@ -397,20 +397,25 @@ local mega_charizard_y = {
 local squirtle={
   name = "squirtle", 
   pos = {x = 6, y = 0}, 
-  config = {extra = {chips = 0, chip_mod = 2, hands = 1}, evo_rqmt = 32},
+  config = {extra = {chips = 0, hands = 1}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex1",
+  copy_scaled = true,
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + G.GAME.current_round.hands_left
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      end
       if context.joker_main then
         return{
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
@@ -419,15 +424,7 @@ local squirtle={
         }
       end
     end
-    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-      local evolved = scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
-      if evolved then
-        return evolved
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-    end
+    return scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -447,19 +444,24 @@ local squirtle={
 local wartortle={
   name = "wartortle", 
   pos = {x = 7, y = 0},
-  config = {extra = {chips = 0, chip_mod = 4, hands = 1}, evo_rqmt = 72},
+  config = {extra = {chips = 40, hands = 1}, evo_rqmt = 120},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.hands, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
   stage = "One",
   ptype = "Water",
   atlas = "Pokedex1",
+  copy_scaled = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + (2 * G.GAME.current_round.hands_left)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      end
       if context.joker_main then
         return{
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
@@ -468,15 +470,7 @@ local wartortle={
         }
       end
     end
-    if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-      local evolved = scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
-      if evolved then
-        return evolved
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-    end
+    return scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -496,7 +490,7 @@ local wartortle={
 local blastoise={
   name = "blastoise", 
   pos = {x = 8, y = 0},
-  config = {extra = {chips = 72, chip_mod = 32, hands = 1}},
+  config = {extra = {chips = 120, chip_mod = 25, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}

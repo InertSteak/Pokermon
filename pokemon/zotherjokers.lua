@@ -540,8 +540,12 @@ local ruins_of_alph={
       if card.ability.extra.merged >= 28 then
         temp_card = {set = "Joker", area = G.jokers, key = "j_poke_unown_swarm"}
         reward_card = SMODS.create_card(temp_card)
+        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_soul')
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
       elseif card.ability.extra.merged >= 20 then
-        temp_card = {set = "Joker", area = G.jokers, key = "j_blueprint"}
+        temp_card = {set = "Joker", area = G.jokers, key = "j_brainstorm"}
         reward_card = SMODS.create_card(temp_card)
       elseif card.ability.extra.merged >= 10 then
         local jokers = {}
@@ -552,7 +556,7 @@ local ruins_of_alph={
         end
         if #jokers > 0 then
           local chosen_joker = pseudorandom_element(jokers, 'alph')
-          reward_card = copy_card(chosen_joker)
+          reward_card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         else
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
@@ -583,8 +587,6 @@ local unown_swarm={
   config = {extra = {mult = 28,Xmult_multi = 2.8,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Soul"}}
-    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_soul'}
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult_multi, }}
   end,
   rarity = "poke_safari",
@@ -610,14 +612,6 @@ local unown_swarm={
         Xmult_mod = card.ability.extra.Xmult_multi,
         mult_mod = card.ability.extra.mult
       }
-    end
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_soul')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
   end,
   set_sprites = function(self, card, front)

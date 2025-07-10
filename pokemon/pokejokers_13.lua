@@ -90,10 +90,10 @@ local glalie={
 local beldum={
   name = "beldum", 
   pos = {x = 5, y = 12},
-  config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 64},
+  config = {extra = {chips = 0, chip_mod = 4, size = 4}, evo_rqmt = 50},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -133,10 +133,10 @@ local beldum={
 local metang={
   name = "metang", 
   pos = {x = 6, y = 12},
-  config = {extra = {chips = 0, chip_mod = 16, size = 4}, evo_rqmt = 256},
+  config = {extra = {chips = 0, chip_mod = 8, size = 4}, evo_rqmt = 200},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -176,7 +176,7 @@ local metang={
 local metagross={
   name = "metagross", 
   pos = {x = 7, y = 12},
-  config = {extra = {chips = 256,}},
+  config = {extra = {chips = 200,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}
@@ -201,7 +201,7 @@ local metagross={
     end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.scoring_name and context.scoring_name == "Four of a Kind" then
       local total_chips = poke_total_chips(context.other_card)
-      local Xmult = (total_chips)^(1/3)
+      local Xmult = (total_chips)^(1/4)
       if Xmult > 0 then
         return {
           x_mult = Xmult,

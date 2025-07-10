@@ -620,19 +620,21 @@ return {
             j_poke_squirtle = {
                 name = "Squirtle",
                 text = {
-                    "{C:chips}+#3#{} hands",
-                    "Gains {C:chips}+#2#{} Chips for each hand",
-                    "remaining at end of round",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +32 Chips)",
+                    "{C:chips}+#2#{} hands",
+                    "Gains Chips equal to",
+                    "remaining {C:attention}hands{} when",
+                    "hand is played",
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
                 } 
             },
             j_poke_wartortle = {
                 name = "Wartortle",
                 text = {
-                    "{C:chips}+#3#{} hands",
-                    "Gains {C:chips}+#2#{} Chips for each hand",
-                    "remaining at end of round",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +72 Chips)",
+                    "{C:chips}+#2#{} hands",
+                    "Gains Chips equal to",
+                    "{C:attention}twice{} the remaining {C:attention}hands",
+                    "when hand is played",
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
                 } 
             },
             j_poke_blastoise = {
@@ -1976,7 +1978,7 @@ return {
             j_poke_mewtwo = {
                 name = 'Mewtwo',
                 text = {
-                    "At end of shop, create a",
+                    "When {C:attention}Boss Blind{} is defeated, create a",
                     "{C:dark_edition}Polychrome{} {C:attention}duplicate{} of leftmost",
                     "{C:attention}Joker{} and {C:pink}Energize{} the {C:attention}duplicate{}",
                     "then destroy leftmost {C:attention}Joker{}",
@@ -2451,9 +2453,10 @@ return {
             j_poke_slowking = {
                 name = 'Slowking',
                 text = {
-                    "Played {C:attention}Kings{} give {X:mult,C:white}X#1#{} Mult when scored",
+                    "Played {C:attention}Kings{} give",
+                    "{X:mult,C:white}X#1#{} Mult when scored",
                     "Increases by {X:mult,C:white}X#2#{} Mult",
-                    "per hand played beyond the first",
+                    "when hand is played",
                     "{C:inactive,s:0.8}(Resets at end of round)",
                 }
             },
@@ -3159,7 +3162,7 @@ return {
                     "is a {C:attention}Four of a Kind{}",
                     "Gains {C:chips}+#2#{} Chips if scoring hand",
                     "contains an {C:attention}Ace",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +64 Chips)",
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
                 } 
             },
             j_poke_metang = {
@@ -3169,7 +3172,7 @@ return {
                     "is a {C:attention}Four of a Kind{}",
                     "Gains {C:chips}+#2#{} Chips if scoring hand",
                     "contains {C:attention}2+{} {C:attention}Aces",
-                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +256 Chips)",
+                    "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
                 } 
             },
             j_poke_metagross = {
@@ -3179,7 +3182,7 @@ return {
                     "{br:3}ERROR - CONTACT STEAK",
                     "If played hand is a {C:attention}Four of a Kind{}",
                     "each played card gives {X:mult,C:white}X{} Mult",
-                    "equal to the {C:attention}cube root{} ",
+                    "equal to the {C:attention}fourth root{} ",
                     "of that card's total chips",
                 } 
             },
@@ -3651,21 +3654,22 @@ return {
             j_poke_litwick = {
                 name = "Litwick",
                 text = {
+                    "{C:mult}+#4#{} Mult",
+                    "{C:attention}Tripled{} if this Joker has",
+                    "{C:money}$#5#{} or more sell value",
+                    "{br:3.5}ERROR - CONTACT STEAK",
                     "{C:attention}Drain {C:money}$#1#{} from adjacent",
                     "Jokers at end of round",
-                    "{br:3.5}ERROR - CONTACT STEAK",
-                    "Adds this Joker's sell value to Mult",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
-                    "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#2#{C:inactive,s:0.8} Sell Value)"
+                    "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
                 }
             },
             j_poke_lampent = {
               name = "Lampent",
               text = {
+                "Adds this Joker's sell value to Mult",
+                "{br:3.5}ERROR - CONTACT STEAK",
                 "{C:attention}Drain {C:money}$#1#{} from all other",
                 "Jokers at end of round",
-                "{br:3.5}ERROR - CONTACT STEAK",
-                "Adds {C:attention}double{} this Joker's sell value to Mult",
                 "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})"
               }
@@ -3673,11 +3677,11 @@ return {
             j_poke_chandelure = {
                 name = "Chandelure",
                 text = {
-                    "Each Joker with {C:money}1${} sell value",
-                    "gives {X:mult,C:white} X#1# {} Mult and earns {C:money}$#2#{}",
+                    "Adds this Joker's sell value to Mult",
                     "{br:3.5}ERROR - CONTACT STEAK",
-                    "Adds {C:attention}triple{} this Joker's sell value to Mult",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult){}",
+                    "Each Joker with {C:money}1${} sell",
+                    "value gives {X:mult,C:white} X#1# {} Mult",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 }
             },
             j_poke_golett = {
@@ -4116,7 +4120,6 @@ return {
             j_poke_unown_swarm = {
                 name = "Unown Swarm",
                 text = {
-                  "{C:attention}Holding{} {C:spectral}The Soul{}",
                   "Each {C:purple}Legendary{} Joker gives",
                   "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult"
                 }
@@ -4662,8 +4665,8 @@ return {
                 text = {
                   "{C:attention}#1#{} - {C:attention}Safari{} Joker",
                   "{C:attention}#2#{} - {C:attention}Duplicate{} a random Joker",
-                  "{C:attention}#3#{} - {C:attention}Blueprint{}",
-                  "{C:attention}#4#{} - {C:attention}Unown Swarm",
+                  "{C:attention}#3#{} - {C:attention}Brainstorm{}",
+                  "{C:attention}#4#{} - {C:attention}Unown Swarm and The Soul",
                   "{C:inactive}(Rewards are not cumulative){}"
                 }
             },
