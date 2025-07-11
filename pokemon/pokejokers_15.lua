@@ -5,10 +5,10 @@
 local ambipom={
   name = "ambipom",
   pos = {x = 9, y = 2},
-  config = {extra = {}},
+  config = {extra = {limit = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {}}
+    return {vars = {center.ability.extra.limit}}
   end,
   rarity = "poke_safari",
   cost = 9,

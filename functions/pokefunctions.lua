@@ -1269,6 +1269,37 @@ poke_draw_one = function()
   }))
 end
 
+generate_pickup_item_key = function(seed)
+  local item_key = 'c_poke_transformation'
+  local item_chance = pseudorandom(seed)
+  if item_chance < .34 then item_key = nil
+  elseif item_chance < .59 then item_key = 'evo'
+  elseif item_chance < .79 then item_key = 'c_poke_leftovers'
+  elseif item_chance < .99 then item_key = 'c_poke_twisted_spoon'
+  end
+  
+  if item_key == "evo" then
+    local evo_item_keys = {}
+    for k, v in pairs(G.jokers.cards) do
+      if v.config.center.item_req then
+        if type(v.config.center.item_req) == "table" then
+          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
+        else
+          item_key = "c_poke_"..v.config.center.item_req
+        end
+        table.insert(evo_item_keys, item_key)
+      end
+    end
+    if #evo_item_keys > 0 then
+      item_key = pseudorandom_element(evo_item_keys, pseudoseed(seed))
+    else
+      item_key = nil
+    end
+  end
+  
+  return item_key
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570

@@ -1426,19 +1426,18 @@ return {
             j_poke_gengar = {
                 name = 'Gengar',      
                 text = {
-                    "{C:green}#1#%{} chance to {C:attention}replace{} the",
-                    "edition of a random {C:attention}Joker{} with",
-                    "{C:dark_edition}Negative{} at end of round",
-                    "{C:inactive,s:0.8}(Odds can't be increased){}",
+                    "{C:attention}Replace{} the edition of a",
+                    "random {C:attention}Joker{} with",
+                    "{C:dark_edition}Negative{} in {C:dark_edition}#1#{} rounds",
+                    "{C:inactive,s:0.8}(Gengar picks a new number!){}",
                     "{C:inactive,s:0.8}(Excludes Gengars){}",
                 } 
             },
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "{C:dark_edition}Polychrome{} Jokers that would appear",
-                    "in the {C:attention}Shop{} and {C:attention}Booster Packs{}",
-                    "are {C:dark_edition}Negative{} instead",
+                    "Creates a {C:dark_edition}Negative{} {C:attention}tag{} when",
+                    "{C:attention}Small Blind{} or {C:attention}Big Blind{} is selected",
                 } 
             },
             j_poke_onix = {
@@ -2020,8 +2019,9 @@ return {
                 name = 'Chikorita',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "Every {C:attention}third{} card {C:attention}held in hand{}",
-                    "earns {C:money}$#2#{} at end of round",
+                    "Every card {C:attention}held{} in hand",
+                    "beyond the {C:attention}fourth{} earns",
+                    "{C:money}$#2#{} at end of round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -2029,8 +2029,9 @@ return {
                 name = 'Bayleef',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "Every {C:attention}other{} card {C:attention}held in hand{}",
-                    "earns {C:money}$#2#{} at end of round",
+                    "Every card {C:attention}held{} in hand",
+                    "beyond the {C:attention}second{} earns",
+                    "{C:money}$#2#{} at end of round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -2369,7 +2370,9 @@ return {
             j_poke_aipom = {
               name = "Aipom",
               text = {
-                "{C:chips}-#3#{} hand",
+                "{C:attention}-#3#{} card selection limit",
+                "{C:inactive}(play/discard limits)",
+                "{br:2}ERROR - CONTACT STEAK",
                 "All {C:attention}Flushes{} and {C:attention}Straights{} can",
                 "be made with {C:attention}3{} cards",
                 "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1#{C:inactive,s:0.8} Straights and {C:attention,s:0.8}#2#{C:inactive,s:0.8} Flushes){}"
@@ -2682,16 +2685,18 @@ return {
             j_poke_remoraid = {
               name = "Remoraid",
               text = {
-                "Retrigger the first {C:attention}#3#{} {C:inactive}[#4#]{}",
-                "cards scored each round",
+                "Retrigger all cards",
+                "in first played hand",
                 "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
               }
             },
             j_poke_octillery = {
               name = "Octillery",
               text = {
-                "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
-                "cards scored each round",
+                "Retrigger all cards played",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Debuffs self if scoring",
+                "hand doesn't contain an {C:attention}8{}"
               }
             },
             j_poke_delibird = {
@@ -2962,13 +2967,12 @@ return {
             j_poke_sceptile = {
                 name = "Sceptile",
                 text = {
-                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#5#, #6#, #7#{C:inactive}){}",
-                    "Played {C:attention}Nature{} cards earn {C:money}$#1#{} when scored",
-                    "{br:5}ERROR - CONTACT STEAK",
-                    "Earn {C:money}$#1#{} at end of round for",
-                    "each other {X:grass,C:white}Grass{} card you have",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards earn {C:money}$#1#{}",
+                    "plus {C:money}$#5#{} for each other {X:grass,C:white}Grass{}",
+                    "card you have when scored",
                     "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {C:money}$#4#{C:inactive}, Max of {C:money}$14{C:inactive}){}"
+                    "{C:inactive}(Currently {C:money}$#4#{C:inactive} total){}"
                 } 
             },
             j_poke_torchic = {
@@ -3037,9 +3041,8 @@ return {
             j_poke_zigzagoon = {
               name = "Zigzagoon",
               text = {
-                "{C:attention}Holding Pickup{} {C:item}Item{}",
-                "{C:green}#1# in #2#{} chance to create an",
-                "{C:item}Item{} when hand is played",
+                "{C:green}#1# in #2#{} chance to create a",
+                "{C:attention}Pickup{} {C:item}Item{} when hand is played",
                 "{C:inactive}(Must have room)",
                 "{C:inactive,s:0.8}(Evolves after {C:attention}#3#{C:inactive,s:0.8} rounds)",
               }
@@ -3047,8 +3050,8 @@ return {
             j_poke_linoone = {
               name = "Linoone",
               text = {
-                "{C:green}#1# in #2#{} chance to create an",
-                "{C:item}Item{} when hand is played",
+                "{C:green}#1# in #2#{} chance to create a",
+                "{C:attention}Pickup{} {C:item}Item{} when hand is played",
                 "Guaranteed if hand",
                 "contains a {C:attention}Straight{}",
                 "{C:inactive}(Must have room)"
@@ -3259,7 +3262,7 @@ return {
               name = "Ambipom",
               text = {
                 "All {C:attention}Flushes{} and {C:attention}Straights{} can",
-                "be made with {C:attention}3{} cards",
+                "be made with {C:attention}exactly 3{} cards",
               }
             },
             j_poke_mismagius = {
@@ -4726,11 +4729,11 @@ return {
             pickup = {
               name = "Pickup",
               text = {
-                "{C:green}34%{} - {C:item}Item{} {C:attention}Card",
-                "{C:green}25%{} - {C:attention}Leftovers",
-                "{C:green}25%{} - {C:attention}Poke Ball",
-                "{C:green}15%{} - {C:attention}Great Ball",
-                "{C:green}1%{} - {C:attention}Ultra Ball",
+                "{C:green}34%{} - {C:item}Item{}",
+                "{C:green}25%{} - {C:item}Evolution Item",
+                "{C:green}20%{} - {C:item}Leftovers",
+                "{C:green}20%{} - {C:item}Twisted Spoon",
+                "{C:green}1%{} - {C:spectral}Transformation",
               }
             },
             pokeballs_group = {
@@ -5238,7 +5241,8 @@ return {
             poke_reload_ex = "Reload!",
             poke_shadow_tag_ex = "Shadow Tag!",
             poke_flees_ex = "Flees!",
-            poke_hidden_power_ex = "Hidden Power!"
+            poke_hidden_power_ex = "Hidden Power!",
+            poke_nasty_plot_ex = "Nasty Plot!"
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

@@ -1370,6 +1370,7 @@ end
 }
 
 --	Remoraid
+--[[
 jd_def["j_poke_remoraid"] = {
     text = {
         { ref_table = "card.joker_display_values", ref_value = "status", retrigger_type = "mult" },
@@ -1415,6 +1416,7 @@ jd_def["j_poke_octillery"] = {
         return 0
     end,
 }
+--]]
 --	Delibird
 --	Mantine
 jd_def["j_poke_mantine"] = { 

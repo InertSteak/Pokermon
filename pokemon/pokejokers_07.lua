@@ -459,12 +459,12 @@ local jumpluff={
 local aipom={
   name = "aipom",
   pos = {x = 8, y = 3},
-  config = {extra = {straights_played = 0, flushes_played = 0, hands = 1}, straight_rqmt = 5, flush_rqmt = 5},
+  config = {extra = {straights_played = 0, flushes_played = 0, limit = 2}, straight_rqmt = 5, flush_rqmt = 5},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local straights_remaining = math.max(0, self.config.straight_rqmt - center.ability.extra.straights_played)
     local flushes_remaining = math.max(0, self.config.flush_rqmt - center.ability.extra.flushes_played)
-    return {vars = {straights_remaining, flushes_remaining, center.ability.extra.hands}}
+    return {vars = {straights_remaining, flushes_remaining, center.ability.extra.limit}}
   end,
   rarity = 3,
   cost = 7,
@@ -473,7 +473,7 @@ local aipom={
   atlas = "Pokedex2",
   perishable_compat = true,
   blueprint_compat = false,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -489,17 +489,15 @@ local aipom={
                        math.min(self.config.straight_rqmt, card.ability.extra.flushes_played), self.config.straight_rqmt + self.config.flush_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
-    if to_decrease > 0 then
-      ease_hands_played(-to_decrease)
-    end
+		SMODS.change_play_limit(-card.ability.extra.limit)
+		SMODS.change_discard_limit(-card.ability.extra.limit)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
-    if not from_debuff then
-      ease_hands_played(card.ability.extra.hands)
-    end
+		SMODS.change_play_limit(card.ability.extra.limit)
+		SMODS.change_discard_limit(card.ability.extra.limit)
+		if not G.GAME.before_play_buffer then
+			G.hand:unhighlight_all()
+		end
   end, 
 }
 -- Sunkern 191

@@ -481,7 +481,7 @@ SMODS.PokerHandPart:take_ownership('_straight',
       func = function(hand) 
         local max = 5
         if next(SMODS.find_card('j_four_fingers')) then max = 4 end
-        if (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) then max = 3 end
+        if (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) then max = 3 end
         return get_straight(hand, max, not not next(SMODS.find_card('j_shortcut'))) 
       end
     },
@@ -493,7 +493,7 @@ function get_flush(hand)
   local ret = prev_flush(hand)
   if #ret <= 0 then
     ret = {}
-    local aipom = (next(SMODS.find_card('j_poke_aipom')) or next(SMODS.find_card('j_poke_ambipom'))) 
+    local aipom = (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) 
     local suits = SMODS.Suit.obj_buffer
     if #hand < (5 - (aipom and 2 or 0)) then return ret else
       for j = 1, #suits do

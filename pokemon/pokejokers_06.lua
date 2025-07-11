@@ -60,14 +60,14 @@ local chikorita = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and context.individual and context.cardarea == G.hand then
-      local third = false
+      local beyond = false
       for k, v in ipairs(G.hand.cards) do
-        if k % 3 == 0 and v == context.other_card then
-          third = true
+        if k > 4 and v == context.other_card then
+          beyond = true
           break
         end
       end
-      if third then
+      if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
         local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
@@ -103,14 +103,14 @@ local bayleef = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and context.individual and context.cardarea == G.hand then
-      local second = false
+      local beyond = false
       for k, v in ipairs(G.hand.cards) do
-        if k % 2 == 0 and v == context.other_card then
-          second = true
+        if k > 2 and v == context.other_card then
+          beyond = true
           break
         end
       end
-      if second then
+      if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
         local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)

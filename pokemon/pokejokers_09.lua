@@ -581,12 +581,12 @@ local grovyle={
 local sceptile={
   name = "sceptile",
   pos = {x = 2, y = 0},
-  config = {extra = {money_mod = 2, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
+  config = {extra = {money_mod = 2, money2 = 1, money_earned = 0, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}, h_size = 1, odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, 
-                       math.min(14, find_other_poke_or_energy_type(center, "Grass") * center.ability.extra.money_mod)}
+                       center.ability.extra.money_mod + (find_other_poke_or_energy_type(center, "Grass") * center.ability.extra.money2), center.ability.extra.money2}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -602,7 +602,7 @@ local sceptile={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod, true)
+            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money2), true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
               dollars = earned,
@@ -612,9 +612,6 @@ local sceptile={
       end
     end
   end,
-  calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "sceptile", math.min(14, find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money_mod), true) 
-	end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
   end,
@@ -1017,12 +1014,10 @@ local swampert={
 local zigzagoon={
   name = "zigzagoon",
   pos = {x = 1, y = 1},
-  config = {extra = {odds = 6,rounds = 5,}},
+  config = {extra = {odds = 4,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'pokeballs_group'}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -1044,8 +1039,7 @@ local zigzagoon={
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  local card_type = 'Item'
-                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  local _card = create_card('Item',G.consumeables, nil, nil, nil, nil, generate_pickup_item_key('zigzag'))
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0
@@ -1059,30 +1053,15 @@ local zigzagoon={
     end
     return level_evo(self, card, context, "j_poke_linoone")
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local item_key = 'c_poke_ultraball'
-      local item_chance = pseudorandom('zigzag')
-      if item_chance < .34 then item_key = nil
-      elseif item_chance < .59 then item_key = 'c_poke_leftovers'
-      elseif item_chance < .84 then item_key = 'c_poke_pokeball'
-      elseif item_chance < .99 then item_key = 'c_poke_greatball'
-      end
-      local _card = create_card('Item',G.consumeables, nil, nil, nil, nil, item_key)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card:juice_up()
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink})
-    end
-  end,
 }
 -- Linoone 264
 local linoone={
   name = "linoone",
   pos = {x = 2, y = 1},
-  config = {extra = {odds = 4,rounds = 5,}},
+  config = {extra = {odds = 3,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
   end,
   rarity = 2,
@@ -1105,7 +1084,7 @@ local linoone={
                 delay = 0.0,
                 func = function()
                   local card_type = 'Item'
-                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, generate_pickup_item_key('linoone'))
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0

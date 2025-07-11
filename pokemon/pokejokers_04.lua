@@ -136,14 +136,14 @@ local haunter={
 local gengar={
   name = "gengar", 
   pos = {x = 2, y = 7}, 
-  config = {extra = {odds = 20}},
+  config = {extra = {gengar_rounds = 5, trigger = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if not center.edition or (center.edition and not center.edition.negative) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_negative
     end
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    return {vars = {center.ability.extra.odds, 100}}
+    return {vars = {center.ability.extra.gengar_rounds}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -152,9 +152,44 @@ local gengar={
   atlas = "Pokedex1",
   eternal_compat = false,
   blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.gengar_rounds = card.ability.extra.gengar_rounds - 1
+      if card.ability.extra.gengar_rounds ~= 0 then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_nasty_plot_ex"), colour = G.C.PURPLE})
+      end
+      if card.ability.extra.gengar_rounds == 0 then
+        card.ability.extra.trigger = true
+        
+        local gengar_chance = pseudorandom('gengar')
+        if gengar_chance < .05 then card.ability.extra.gengar_rounds = 2
+        elseif gengar_chance < .15 then card.ability.extra.gengar_rounds = 3
+        elseif gengar_chance < .35 then card.ability.extra.gengar_rounds = 4
+        elseif gengar_chance < .65 then card.ability.extra.gengar_rounds = 5
+        elseif gengar_chance < .85 then card.ability.extra.gengar_rounds = 6
+        elseif gengar_chance < .95 then card.ability.extra.gengar_rounds = 7
+        else card.ability.extra.gengar_rounds = 8
+        end
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local gengar_chance = pseudorandom('gengar')
+      if gengar_chance < .05 then card.ability.extra.gengar_rounds = 2
+      elseif gengar_chance < .15 then card.ability.extra.gengar_rounds = 3
+      elseif gengar_chance < .35 then card.ability.extra.gengar_rounds = 4
+      elseif gengar_chance < .65 then card.ability.extra.gengar_rounds = 5
+      elseif gengar_chance < .85 then card.ability.extra.gengar_rounds = 6
+      elseif gengar_chance < .95 then card.ability.extra.gengar_rounds = 7
+      else card.ability.extra.gengar_rounds = 8
+      end
+    end
+  end,
   calc_dollar_bonus = function(self, card)
     local eligible_card = nil
-    if pseudorandom('gengar') < card.ability.extra.odds/100 then
+    if card.ability.extra.trigger then
+      card.ability.extra.trigger = false
       if #G.jokers.cards > 0 then
         local eligible_jokers = {}
         for k, v in pairs(G.jokers.cards) do
@@ -169,23 +204,6 @@ local gengar={
           card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
         end
       end
-    else
-      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-          attention_text({
-              text = localize('k_nope_ex'),
-              scale = 1.3, 
-              hold = 1.4,
-              major = card,
-              backdrop_colour = G.C.SECONDARY_SET.Tarot,
-              align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
-              offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
-              silent = true
-              })
-              G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
-                  play_sound('tarot2', 0.76, 0.4);return true end}))
-              play_sound('tarot2', 1, 0.4)
-              card:juice_up(0.3, 0.5)
-      return true end }))
     end
   end,
   megas = {"mega_gengar"}
@@ -209,6 +227,18 @@ local mega_gengar ={
   atlas = "Megas",
   eternal_compat = false,
   blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blind.boss then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            add_tag(Tag('tag_negative'))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
+    end
+  end,
 }
 -- Onix 095
 local onix={
