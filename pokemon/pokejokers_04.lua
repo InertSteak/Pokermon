@@ -153,7 +153,7 @@ local gengar={
   eternal_compat = false,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       card.ability.extra.gengar_rounds = card.ability.extra.gengar_rounds - 1
       if card.ability.extra.gengar_rounds ~= 0 then
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_nasty_plot_ex"), colour = G.C.PURPLE})
