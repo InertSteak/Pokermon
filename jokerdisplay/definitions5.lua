@@ -324,38 +324,45 @@ jd_def["j_poke_vanilluxe"] = {
 --	Beheeyem
 --	Litwick
 jd_def["j_poke_litwick"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-    },
-    text_config = { colour = G.C.MULT },
-    calc_function = function(card)
-        card.joker_display_values.mult = card.sell_cost * 1
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    if card.sell_cost >= 7 then
+      card.joker_display_values.mult = card.ability.extra.mult * 3
+    else
+      card.joker_display_values.mult = card.ability.extra.mult
     end
+  end
 }
 
 --	Lampent
 jd_def["j_poke_lampent"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-    },
-    text_config = { colour = G.C.MULT },
-    calc_function = function(card)
-        card.joker_display_values.mult = card.sell_cost * 2
-    end
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    card.joker_display_values.mult = card.sell_cost
+  end
 }
 
 --	Chandelure
 jd_def["j_poke_chandelure"] = {
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-    },
-    text_config = { colour = G.C.MULT },
-    calc_function = function(card)
-        card.joker_display_values.mult = card.sell_cost * 3
-    end
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    card.joker_display_values.mult = card.sell_cost
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = (card.sell_cost == 1 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
 }
 
 --	Axew
