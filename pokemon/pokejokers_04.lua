@@ -572,15 +572,15 @@ local exeggutor={
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         if pseudorandom('exeggutor') < G.GAME.probabilities.normal/card.ability.extra.odds then
           return {
-            colour = G.C.MULT,
-            mult = card.ability.extra.mult_mod,
+            message = localize("poke_solar_ex"),
+            colour = G.C.XMULT,
+            x_mult = card.ability.extra.Xmult_multi,
             card = card
           }
         else
           return {
-            message = localize("poke_solar_ex"),
-            colour = G.C.XMULT,
-            x_mult = card.ability.extra.Xmult_multi,
+            colour = G.C.MULT,
+            mult = card.ability.extra.mult_mod,
             card = card
           }
         end
