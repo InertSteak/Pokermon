@@ -12,16 +12,17 @@ jd_def["j_poke_chikorita"] = {
     {text = "End of Round"}
   },
   calc_function = function(card)
+    -- beyond_start is a hard coded number and if changed will need to be updated here.
+    local beyond_start = 4
     local count = 0
-    local interval = card.ability.extra.interval or 3
     local cards_in_hand = {}
     for i, playing_card in ipairs(G.hand.cards) do
-      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+      if not playing_card.highlighted then
         table.insert(cards_in_hand, playing_card)
       end
     end
     for k, playing_card in ipairs(cards_in_hand) do
-      if k % interval == 0 then
+      if k > beyond_start and not playing_card.debuff and not (playing_card.facing == 'back') then
         count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
       end
     end
@@ -39,16 +40,17 @@ jd_def["j_poke_bayleef"] = {
     {text = "End of Round"}
   },
   calc_function = function(card)
+    -- beyond_start is a hard coded number and if changed will need to be updated here.
+    local beyond_start = 2
     local count = 0
-    local interval = card.ability.extra.interval or 2
     local cards_in_hand = {}
     for i, playing_card in ipairs(G.hand.cards) do
-      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
+      if not playing_card.highlighted then
         table.insert(cards_in_hand, playing_card)
       end
     end
     for k, playing_card in ipairs(cards_in_hand) do
-      if k % interval == 0 then
+      if k > beyond_start and not playing_card.debuff and not (playing_card.facing == 'back') then
         count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
       end
     end
@@ -1360,53 +1362,37 @@ end
 }
 
 --	Remoraid
---[[
 jd_def["j_poke_remoraid"] = {
-    text = {
-        { ref_table = "card.joker_display_values", ref_value = "status", retrigger_type = "mult" },
-        { text = " Left" },
-    },
-    text_config = { colour = G.C.GREY },
-    calc_function = function(card)
-        card.joker_display_values.status = card.ability.extra.card_max - card.ability.extra.cards
-    end,
-    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-        if held_in_hand then return 0 end
-        local remaining = joker_card.ability.extra.card_max - joker_card.ability.extra.cards
-        if remaining >= #scoring_hand then return 1 end
-
-        for i = 1, remaining do
-            if playing_card == scoring_hand[i] then
-                return 1
-            end
-        end
-        return 0
-    end,
+  text = {
+    { text = "(", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY },
+    { text = ")", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    if G.GAME and G.GAME.current_round.hands_played == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if G.GAME and G.GAME.current_round.hands_played == 0 then
+      return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    else
+      return 0
+    end
+  end
 }
+
 --	Octillery
 jd_def["j_poke_octillery"] = {
-    text = {
-        { ref_table = "card.joker_display_values", ref_value = "status", retrigger_type = "mult" },
-        { text = " Left" },
-    },
-    text_config = { colour = G.C.GREY },
-    calc_function = function(card)
-        card.joker_display_values.status = card.ability.extra.card_max - card.ability.extra.cards
-    end,
-    retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-        if held_in_hand then return 0 end
-        local remaining = joker_card.ability.extra.card_max - joker_card.ability.extra.cards
-        if remaining >= #scoring_hand then return 1 end
-
-        for i = 1, remaining do
-            if playing_card == scoring_hand[i] then
-                return 1
-            end
-        end
-        return 0
-    end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+  end
 }
---]]
+
 --	Delibird
 --	Mantine
 jd_def["j_poke_mantine"] = { 
