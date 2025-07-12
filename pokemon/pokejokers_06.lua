@@ -1055,7 +1055,7 @@ local togetic={
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
-    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 6,
@@ -1069,14 +1069,14 @@ local togetic={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
       local ret = nil
-      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+      if pseudorandom('togekiss') <  (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
         ret = {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
       end
-      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
         local temp = {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,

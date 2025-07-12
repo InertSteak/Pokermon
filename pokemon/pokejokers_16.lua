@@ -181,7 +181,7 @@ local rhyperior={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-    return {vars = {center.ability.extra.chips, #find_pokemon_type("Earth")}}
+    return {vars = {center.ability.extra.chips, 1 + math.floor(#find_pokemon_type("Earth")/3)}}
   end,
   rarity = "poke_safari", 
   cost = 10,
@@ -201,14 +201,12 @@ local rhyperior={
       }
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_stone') then
-      local rhytriggers = #find_pokemon_type("Earth")
-      if rhytriggers > 0 then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = rhytriggers,
-          card = card
-        }
-      end
+      local rhytriggers = 1 + math.floor(#find_pokemon_type("Earth")/3)
+      return {
+        message = localize('k_again_ex'),
+        repetitions = rhytriggers,
+        card = card
+      }
     end
   end
 }
@@ -356,10 +354,10 @@ local magmortar={
 local togekiss={
   name = "togekiss",
   pos = {x = 11, y = 5},
-  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult_multi = 1.5}},
+  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult_multi = 1.5, plus_odds = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {''..(math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1)), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi}}
+    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi, card.ability.extra.plus_odds}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -372,14 +370,14 @@ local togekiss={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
       local ret = nil
-      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
         ret = {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
       end
-      if pseudorandom('togekiss') < math.pow(3, #find_joker('togekiss')) * (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
         local temp = {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,
@@ -395,6 +393,12 @@ local togekiss={
       return ret
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
+  end
 }
 -- Yanmega 469
 local yanmega={

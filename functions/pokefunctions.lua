@@ -1300,6 +1300,18 @@ generate_pickup_item_key = function(seed)
   return item_key
 end
 
+create_holding_item = function(key, edition, has_evolved)
+  if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or edition.negative) and not has_evolved then
+    local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, key)
+    if edition then
+      _card:set_edition(edition, true)
+    end
+    _card:add_to_deck()
+    G.consumeables:emplace(_card)
+    card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+  end
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570

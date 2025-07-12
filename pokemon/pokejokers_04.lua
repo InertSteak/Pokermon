@@ -638,7 +638,7 @@ local cubone={
 local marowak={
   name = "marowak", 
   pos = {x = 0, y = 8},  
-  config = {extra = {Xmult_mod = 0.5, card_limit = 1}},
+  config = {extra = {Xmult_mod = 0.4, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub

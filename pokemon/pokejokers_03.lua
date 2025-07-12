@@ -1027,41 +1027,37 @@ local farfetchd={
 local doduo={
   name = "doduo", 
   pos = {x = 5, y = 6}, 
-  config = {extra = {mult = 8, rounds = 4}},
+  config = {extra = {mult = 6, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
-  cost = 5, 
+  cost = 4, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local full_house = false
-        local face_count = 0
-        if next(context.poker_hands['Full House']) then full_house = true end
-        for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i]:is_face() then
-            face_count = face_count + 1
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local first_face = nil
+      local second_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          if not first_face then
+            first_face = context.scoring_hand[i];
+          elseif not second_face then
+            second_face = context.scoring_hand[i];
+            break
           end
         end
-        if face_count > 1 and full_house then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * 2}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * 2
-          }
-        elseif face_count > 1 or full_house then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
+      end
+      if context.other_card == first_face or context.other_card == second_face then
+        return {
+            mult = card.ability.extra.mult,
+            colour = G.C.RED,
+            card = card
+        }
       end
     end
     return level_evo(self, card, context, "j_poke_dodrio")
@@ -1071,12 +1067,12 @@ local doduo={
 local dodrio={
   name = "dodrio", 
   pos = {x = 6, y = 6}, 
-  config = {extra = {mult = 16}},
+  config = {extra = {mult = 7, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.h_size}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   ptype = "Colorless",
@@ -1084,28 +1080,44 @@ local dodrio={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local full_house = false
-        local face_count = 0
-        if next(context.poker_hands['Full House']) then full_house = true end
-        for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i]:is_face() then
-            face_count = face_count + 1
+      if context.joker_main and #context.scoring_hand == 3 then
+        local faces = 0
+        for k, v in ipairs(context.scoring_hand) do
+          if v:is_face() then
+            faces = faces + 1
           end
         end
-        if face_count > 2 and full_house then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * 2}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * 2
-          }
-        elseif face_count > 2 or full_house then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
+        if faces == 3 then
+          G.hand:change_size(card.ability.extra.h_size)
+          G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
         end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local first_face = nil
+      local second_face = nil
+      local third_face = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_face() then
+          if not first_face then
+            first_face = context.scoring_hand[i];
+          elseif not second_face then
+            second_face = context.scoring_hand[i];
+          elseif not third_face then
+            third_face = context.scoring_hand[i];
+            break
+          end
+        end
+      end
+      poke_debug(first_face)
+      poke_debug(second_face)
+      poke_debug(third_face)
+      if context.other_card == first_face or context.other_card == second_face or context.other_card == third_face then
+        return {
+            mult = card.ability.extra.mult,
+            colour = G.C.RED,
+            card = card
+        }
       end
     end
   end

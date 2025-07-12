@@ -83,6 +83,11 @@ local scizor={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.ending_shop then
+      card.ability.extra.selected = false
+      local eval = function() return not card.ability.extra.selected end
+      juice_card_until(card, eval, true)
+    end
     if context.setting_blind and not card.getting_sliced and not context.blueprint then
       local my_pos = nil
       for i = 1, #G.jokers.cards do
@@ -123,6 +128,7 @@ local scizor={
           return true end }))
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED, no_juice = true})
       end
+      card.ability.extra.selected = true
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
