@@ -1839,57 +1839,55 @@ end
 -- Farfetch'd
 
 jd_def["j_poke_doduo"] = {
-    text = {
-        { text = "+", colour = G.C.MULT },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
-    },
-calc_function = function(card)
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  calc_function = function(card)
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    local face = 0
-    local facecount = 0
-    local hand = 0
-    local mult = 0
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-    if poker_hands['Full House'] and next(poker_hands['Full House']) then
-        hand = card.ability.extra.mult
-    end
+    local face_count = 0
+    local triggers = 0
+    local face_cards = {}
     if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-                facecount = facecount + 1
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          table.insert(face_cards, scoring_card)
+          face_count = face_count + 1
+          triggers = triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+          if face_count >= 2 then
+            break
+          end
         end
+      end
     end
-    if facecount >= 2 then face = card.ability.extra.mult end
-    card.joker_display_values.mult = face + hand 
-end
+    card.joker_display_values.mult = card.ability.extra.mult * triggers
+  end
 }
 
 jd_def["j_poke_dodrio"] = {
-    text = {
-        { text = "+", colour = G.C.MULT },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
-    },
-calc_function = function(card)
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  calc_function = function(card)
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    local face = 0
-    local facecount = 0
-    local hand = 0
-    local mult = 0
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
-    if poker_hands['Full House'] and next(poker_hands['Full House']) then
-        hand = card.ability.extra.mult
-    end
+    local face_count = 0
+    local triggers = 0
+    local face_cards = {}
     if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-                facecount = facecount + 1
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          table.insert(face_cards, scoring_card)
+          face_count = face_count + 1
+          triggers = triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+          if face_count >= 3 then
+            break
+          end
         end
+      end
     end
-    if facecount >= 3 then face = card.ability.extra.mult end
-    card.joker_display_values.mult = face + hand 
-end
+    card.joker_display_values.mult = card.ability.extra.mult * triggers
+  end
 }
 
 jd_def["j_poke_seel"] = {
