@@ -574,42 +574,19 @@ jd_def["j_poke_azumarill"] = {
 }
 
 --	Sudowoodo
---[[
 jd_def["j_poke_sudowoodo"] = {
-    text = {            
-    { text = "+" },
-    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
-},
-text_config = { colour = G.C.MULT },
-reminder_text = {
+  reminder_text = {
     { text = "(" },
     { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
     { text = ")" },
-},
-calc_function = function(card)
-    local mult = 0
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-    if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:is_face() then
-                mult = mult +
-                    card.ability.extra.mult *
-                    JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-        end
-    end
-    card.joker_display_values.mult = mult
+  },
+  calc_function = function(card)
     card.joker_display_values.localized_text = localize("k_face_cards")
-end,
-retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-    local total = #find_pokemon_type("Water")
-    if held_in_hand then return 0 end
-    if not is_type(joker_card, "Grass") or total > 0 then
-    return playing_card:is_face() and
-        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 end
-end
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    return playing_card:is_face() and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+  end
 }
-]]--
 
 --	Politoed
 jd_def["j_poke_politoed"] = {
@@ -726,13 +703,13 @@ jd_def["j_poke_wooper"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    local face_cards_in_deck = 0
+    local negative_mult = 0
     for k, v in pairs(G.deck.cards) do
       if v:is_face() then
-        face_cards_in_deck = face_cards_in_deck + 1
+        negative_mult = negative_mult + card.ability.extra.mult_mod
       end
     end
-  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
+    card.joker_display_values.mult = math.max(0, card.ability.extra.mult - negative_mult)
   end
 }
 
@@ -743,13 +720,13 @@ jd_def["j_poke_quagsire"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    local face_cards_in_deck = 0
+    local negative_mult = 0
     for k, v in pairs(G.deck.cards) do
       if v:is_face() then
-        face_cards_in_deck = face_cards_in_deck + 1
+        negative_mult = negative_mult + card.ability.extra.mult_mod
       end
     end
-  card.joker_display_values.mult = math.max(0, card.ability.extra.mult - face_cards_in_deck)
+    card.joker_display_values.mult = math.max(0, card.ability.extra.mult - negative_mult)
   end
 }
 
@@ -983,52 +960,65 @@ end
 
 --	Forretress
 jd_def["j_poke_forretress"] = { 
-    text = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
-    },
-text_config = { colour = G.C.CHIPS },
-calc_function = function(card)
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS },
+  calc_function = function(card)
+    local chips = 0
     local count = 0
     local pos = 0
 
     -- Check if `G.jokers.cards` exists and has more than one card
     if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
-        -- Find the position of the card
-        for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] == card then
-                pos = i
-                break
-            end
+      -- Find the position of the card
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then
+          pos = i
+          break
         end
+      end
 
-        -- Count the cards matching the specific conditions before `pos`
-        for i = 1, pos - 1 do
-            local joker_card = G.jokers.cards[i]
-            if joker_card and joker_card.config and joker_card.config.center and
-               joker_card.config.center.volatile and
-               joker_card.config.center.config and joker_card.config.center.config.extra and
-               joker_card.config.center.config.extra.volatile == 'left' then
-                count = count + 1
-            end
+      -- Count the cards matching the specific conditions before `pos`
+      for i = 1, pos - 1 do
+        local joker_card = G.jokers.cards[i]
+        if joker_card and joker_card.config and joker_card.config.center and
+          joker_card.config.center.volatile and
+          joker_card.config.center.config and joker_card.config.center.config.extra and
+          joker_card.config.center.config.extra.volatile == 'left' then
+          count = count + 1
         end
+      end
 
-        -- Set `x_mult` based on the condition
-        if count == pos - 1 then
-            card.joker_display_values.chips = card.ability.extra.chips or 1
-        else
-            card.joker_display_values.chips = 0
-        end
+      -- Set chips based on the condition
+      if count == pos - 1 then
+        chips = card.ability.extra.chips or 1
+      end
     else
-        -- Handle cases where there are not enough jokers
-        card.joker_display_values.chips = card.ability.extra.chips
+      -- Handle cases where there are not enough jokers
+      chips = card.ability.extra.chips
     end
 
-    -- Update `joker_display_values` with count and pos
+    local playing_hand = next(G.play.cards)
+    local steel_found = false
+    for _, playing_card in ipairs(G.hand.cards) do
+      if playing_hand or not playing_card.highlighted then
+        if playing_card.facing and not (playing_card.facing == 'back') and SMODS.has_enhancement(playing_card, "m_steel") then
+          steel_found = true
+        end
+      end
+    end
+
+    -- Update `joker_display_values` with count and pos and chips
+    if steel_found == true then
+      card.joker_display_values.chips = chips * 2
+    else
+      card.joker_display_values.chips = chips
+    end
     card.joker_display_values.count = count
     card.joker_display_values.pos = pos
 end
-
 }
 
 --	Dunsparce
