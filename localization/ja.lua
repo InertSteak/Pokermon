@@ -2842,7 +2842,7 @@ return {
                 name = "ジュカイン",
                 text = {
                     "ハンドサイズ {C:attention}+#3#{}, {C:attention}性格{}",
-                    "プレイされた {C:attention}#5#, #6#, #7#{} カードがスコアされた時",
+                    "プレイされた {C:attention}#6#, #7#, #8#{} カードがスコアされた時",
                     "{C:money}$#1#{} を与える",
                     "{br:5}ERROR - CONTACT STEAK",
 					"ラウンド終了時に",
@@ -2855,7 +2855,7 @@ return {
                 name = "アチャモ",
                 text = {
                     "ディスカード {C:mult}+#3#{}, {C:attention}性格{}",
-					"このラウンドで {C:attention}#5#, #6# or #7#{} カードが",
+					"このラウンドで {C:attention}#5#, #6#, #7#{} カードが",
 					"ディスカードされるたびに倍率 {C:mult}+#1#{} を得る",
 					"他の {X:fire,C:white}炎{} か {X:earth,C:white}闘{} カードを有する場合",
 					"倍率は2倍になる",
@@ -2868,7 +2868,7 @@ return {
                 name = "ワカシャモ",
                 text = {
                     "ディスカード {C:mult}+#3#{}, {C:attention}性格{}",
-					"このラウンドで {C:attention}#5#, #6# or #7#{} カードが",
+					"このラウンドで {C:attention}#5#, #6#, #7#{} カードが",
 					"ディスカードされるたびに倍率 {C:mult}+#1#{} を得る",
 					"他の {X:fire,C:white}炎{} か {X:earth,C:white}闘{} カードを有する場合",
 					"倍率は2倍になる",
@@ -2881,7 +2881,7 @@ return {
                 name = "バシャーモ",
                 text = {
                     "ディスカード {C:mult}+#3#{}, {C:attention}性格{}",
-					"このラウンドで {C:attention}#4#, #5#, #6#{} カードが",
+					"このラウンドで {C:attention}#6#, #7#, #8#{} カードが",
 					"ディスカードされるたびに, 他の {X:fire,C:white}炎{} か {X:earth,C:white}闘{} カード1枚につき",
 					"倍率 {C:mult}+#4#{}, {X:red,C:white} X#1# {} を得る",
                     "{C:inactive,s:0.8}(ジョーカかエネルギー){}",
