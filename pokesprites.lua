@@ -406,89 +406,89 @@ end
 
 --Deck Skins
 --RBY sprites skins by GAME FREAK, arranged by Catzzadilla
-local spades = SMODS.Atlas{
-    key = 'collab_RBY_Spades_atlas',
-    path = 'Collab_RBY_Spades.png',
+local RBYspades = SMODS.Atlas{
+    key = 'RBY_Spades_atlas',
+    path = 'DeckskinRBYSpades.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local clubs = SMODS.Atlas{
-    key = 'collab_RBY_Clubs_atlas',
-    path = 'Collab_RBY_Clubs.png',
+local RBYclubs = SMODS.Atlas{
+    key = 'RBY_Clubs_atlas',
+    path = 'DeckskinRBYClubs.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local hearts = SMODS.Atlas{
-    key = 'collab_RBY_Hearts_atlas',
-    path = 'Collab_RBY_Hearts.png',
+local RBYhearts = SMODS.Atlas{
+    key = 'RBY_Hearts_atlas',
+    path = 'DeckskinRBYHearts.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local diamonds = SMODS.Atlas{
-    key = 'collab_RBY_Diamonds_atlas',
-    path = 'Collab_RBY_Diamonds.png',
+local RBYdiamonds = SMODS.Atlas{
+    key = 'RBY_Diamonds_atlas',
+    path = 'DeckskinRBYDiamonds.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local spadesHC = SMODS.Atlas{
-    key = 'collab_RBY_Spades_HC_atlas',
-    path = 'Collab_RBY_Spades_HC.png',
+local RBYspadesHC = SMODS.Atlas{
+    key = 'RBY_Spades_HC_atlas',
+    path = 'DeckskinRBYSpadesHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local clubsHC = SMODS.Atlas{
-    key = 'collab_RBY_Clubs_HC_atlas',
-    path = 'Collab_RBY_Clubs_HC.png',
+local RBYclubsHC = SMODS.Atlas{
+    key = 'RBY_Clubs_HC_atlas',
+    path = 'DeckskinRBYClubsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local heartsHC = SMODS.Atlas{
-    key = 'collab_RBY_Hearts_HC_atlas',
-    path = 'Collab_RBY_Hearts_HC.png',
+local RBYheartsHC = SMODS.Atlas{
+    key = 'RBY_Hearts_HC_atlas',
+    path = 'DeckskinRBYHeartsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
-local diamondsHC = SMODS.Atlas{
-    key = 'collab_RBY_Diamonds_HC_atlas',
-    path = 'Collab_RBY_Diamonds_HC.png',
+local RBYdiamondsHC = SMODS.Atlas{
+    key = 'RBY_Diamonds_HC_atlas',
+    path = 'DeckskinRBYDiamondsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
 }
 
 SMODS.DeckSkin {
-	key = "Collab_RBY_Spades",
+	key = "RBY_Spades_Skins",
 	suit = "Spades",
 	loc_txt = {
-        ['en-us'] = 'RBY Sprites'
+        ['en-us'] = 'RBY Sprites: Ghost Trio'
     },
 	palettes = {
 		{
 			key = 'lc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = spades.key,
+			atlas = RBYspades.key,
 			pos_style = 'collab',
 		},
 		{
 			key = 'hc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = spadesHC.key,
+			atlas = RBYspadesHC.key,
 			pos_style = 'collab',
 			hc_default = true,
 		},
@@ -496,24 +496,24 @@ SMODS.DeckSkin {
 }
 
 SMODS.DeckSkin {
-	key = "Collab_RBY_Clubs",
+	key = "RBY_Clubs_Skins",
 	suit = "Clubs",
 	loc_txt = {
-        ['en-us'] = 'RBY Sprites'
+        ['en-us'] = 'RBY Sprites: Fossil Trio'
     },
 	palettes = {
 		{
 			key = 'lc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = clubs.key,
+			atlas = RBYclubs.key,
 			pos_style = 'collab',
 		},
 		{
 			key = 'hc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = clubsHC.key,
+			atlas = RBYclubsHC.key,
 			pos_style = 'collab',
 			hc_default = true,
 		},
@@ -521,24 +521,24 @@ SMODS.DeckSkin {
 }
 
 SMODS.DeckSkin {
-	key = "Collab_RBY_Hearts",
+	key = "RBY_Hearts_Skins",
 	suit = "Hearts",
 	loc_txt = {
-        ['en-us'] = 'RBY Sprites'
+        ['en-us'] = 'RBY Sprites: Eeveelution Trio'
     },
 	palettes = {
 		{
 			key = 'lc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = hearts.key,
+			atlas = RBYhearts.key,
 			pos_style = 'collab',
 		},
 		{
 			key = 'hc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = heartsHC.key,
+			atlas = RBYheartsHC.key,
 			pos_style = 'collab',
 			hc_default = true,
 		},
@@ -546,24 +546,233 @@ SMODS.DeckSkin {
 }
 
 SMODS.DeckSkin {
-	key = "Collab_RBY_Diamonds",
+	key = "RBY_Diamonds_Skins",
 	suit = "Diamonds",
 	loc_txt = {
-        ['en-us'] = 'RBY Sprites'
+        ['en-us'] = 'RBY Sprites: Dragon Trio'
     },
 	palettes = {
 		{
 			key = 'lc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = diamonds.key,
+			atlas = RBYdiamonds.key,
 			pos_style = 'collab',
 		},
 		{
 			key = 'hc',
 			ranks = {'Jack', 'Queen', "King",},
 			display_ranks = {"King", "Queen", "Jack"},
-			atlas = diamondsHC.key,
+			atlas = RBYdiamondsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+-- GSC Sprites Skins by GAME FREAK, arranged by Catzzadilla
+
+local GSCmorning = SMODS.Atlas{
+    key = 'GSC_morning_atlas',
+    path = 'DeckskinGSCSpadesMorning.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCevening = SMODS.Atlas{
+    key = 'GSC_evening_atlas',
+    path = 'DeckskinGSCSpadesEvening.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCclubs = SMODS.Atlas{
+    key = 'GSC_clubs_atlas',
+    path = 'DeckskinGSCClubs.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSChearts = SMODS.Atlas{
+    key = 'GSC_Hearts_atlas',
+    path = 'DeckskinGSCHearts.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCdiamonds = SMODS.Atlas{
+    key = 'GSC_Diamonds_atlas',
+    path = 'DeckskinGSCDiamonds.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCmorningHC = SMODS.Atlas{
+    key = 'GSC_morning_HC_atlas',
+    path = 'DeckskinGSCSpadesMorningHC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCeveningHC = SMODS.Atlas{
+    key = 'GSC_evening_HC_atlas',
+    path = 'DeckskinGSCSpadesEveningHC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCclubsHC = SMODS.Atlas{
+    key = 'GSCClubs_HC_atlas',
+    path = 'DeckskinGSCClubsHC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCheartsHC = SMODS.Atlas{
+    key = 'GSC_Hearts_HC_atlas',
+    path = 'DeckskinGSCHeartsHC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+local GSCdiamondsHC = SMODS.Atlas{
+    key = 'GSCDiamonds_HC_atlas',
+    path = 'DeckskinGSCDiamondsHC.png',
+    px = 71,
+    py = 95,
+    atlas_table = 'ASSET_ATLAS'
+}
+
+SMODS.DeckSkin {
+	key = "GSC_Spades_Skins",
+	suit = "Spades",
+	loc_txt = {
+        ['en-us'] = 'GSC Sprites: Day and Night'
+    },
+	palettes = {
+		{
+			key = 'morninglc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCmorning.key,
+			loc_txt = {
+        		['en-us'] = 'Morning'
+    		},
+			pos_style = 'collab',
+		},
+		{
+			key = 'eveninglc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCevening.key,
+			loc_txt = {
+        		['en-us'] = 'Evening'
+    		},
+			pos_style = 'collab',
+		},
+		{
+			key = 'morninghc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCmorningHC.key,
+			loc_txt = {
+        		['en-us'] = 'Morning (High Contrast)'
+    		},
+			pos_style = 'collab',
+			hc_default = true,
+		},
+		{
+			key = 'eveninghc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCeveningHC.key,
+			loc_txt = {
+        		['en-us'] = 'Evening (High Contrast)'
+    		},
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "GSC_Clubs_skins",
+	suit = "Clubs",
+	loc_txt = {
+        ['en-us'] = 'GSC Sprites: Mystic Mons'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCclubs.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCclubsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "GSC_Hearts_Skins",
+	suit = "Hearts",
+	loc_txt = {
+        ['en-us'] = 'GSC Sprites: Allies of Ash'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSChearts.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCheartsHC.key,
+			pos_style = 'collab',
+			hc_default = true,
+		},
+	},
+}
+
+SMODS.DeckSkin {
+	key = "GSC_Diamonds_Skins",
+	suit = "Diamonds",
+	loc_txt = {
+        ['en-us'] = 'GSC Sprites: Johto Giants'
+    },
+	palettes = {
+		{
+			key = 'lc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCdiamonds.key,
+			pos_style = 'collab',
+		},
+		{
+			key = 'hc',
+			ranks = {'Jack', 'Queen', "King",},
+			display_ranks = {"King", "Queen", "Jack"},
+			atlas = GSCdiamondsHC.key,
 			pos_style = 'collab',
 			hc_default = true,
 		},
