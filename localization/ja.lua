@@ -4082,7 +4082,7 @@ return {
         },
         Sleeve = {
             sleeve_poke_pokemonsleeve = {
-                name = "トレーナースレーブ",
+                name = "トレーナースリーブ",
                 text = {
                     "{C:tarot,T:v_poke_goodrod}#1#{} のバウチャーと",
                     "{C:tarot,T:c_poke_pokeball}#2#{} カードが",
@@ -4090,20 +4090,20 @@ return {
                 },
             },
             sleeve_poke_obituarysleeve = {
-                name = "訃報スレーブ",
+                name = "訃報スリーブ",
                 text = {
                     "すべてのカードは {C:dark_edition}#1#{} 有する",
                 },
             },
             sleeve_poke_luminoussleeve = {
-                name = "ステラスレーブ",
+                name = "ステラスリーブ",
                 text = {
                     "すべてのジョーカーは",
                     "ランダムな {C:pink}タイプ{} のステッカー作成され",
                 },
             },
 			sleeve_poke_telekineticsleeve = {
-                name = "テレキネシススレーブ",
+                name = "テレキネシススリーブ",
                 text = {
                     "{C:tarot,T:v_crystal_ball}#1#{} のバウチャーと",
                     "{C:item,T:c_poke_twisted_spoon}#2#{} の",
