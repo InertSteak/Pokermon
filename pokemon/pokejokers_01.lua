@@ -757,13 +757,13 @@ local mega_beedrill = {
 local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
-  config = {extra = {mult = 8, rounds = 4}},
+  config = {extra = {mult = 2, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
   rarity = 1, 
-  cost = 4, 
+  cost = 5, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
@@ -771,31 +771,31 @@ local pidgey={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local first_rank = nil
-        local second_rank = nil
-        local first_suit = nil
-        local second_suit = nil
-        local has_wild = nil
-        for k, v in pairs(context.scoring_hand) do
-          if not first_rank and v:get_id() > 0 then
-            first_rank = v:get_id()
-          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
-            second_rank = v:get_id()
+        local ranks = 0
+        local suits = 0
+        
+        for k, v in pairs(SMODS.Suits) do
+          for x, y in pairs(context.scoring_hand) do
+            if y:is_suit(v.key) then
+              suits = suits + 1
+              break
+            end
           end
-
-          if not first_suit and not SMODS.has_no_suit(v) then
-            first_suit = v.base.suit
-          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
-            second_suit = v.base.suit
-          end
-          
-          if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
+
+        for k, v in pairs(SMODS.Ranks) do
+          for x, y in pairs(context.scoring_hand) do
+            if v.id == y:get_id() then
+              ranks = ranks + 1
+              break
+            end
+          end
+        end
+        if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
+            mult_mod = card.ability.extra.mult * (ranks + suits)
           }
         end
       end
@@ -807,13 +807,13 @@ local pidgey={
 local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
-  config = {extra = {mult = 12, rounds = 4}},
+  config = {extra = {mult = 3, rounds = 4}},
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Colorless",
@@ -821,31 +821,31 @@ local pidgeotto={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local first_rank = nil
-        local second_rank = nil
-        local first_suit = nil
-        local second_suit = nil
-        local has_wild = nil
-        for k, v in pairs(context.scoring_hand) do
-          if not first_rank and v:get_id() > 0 then
-            first_rank = v:get_id()
-          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
-            second_rank = v:get_id()
+        local ranks = 0
+        local suits = 0
+        
+        for k, v in pairs(SMODS.Suits) do
+          for x, y in pairs(context.scoring_hand) do
+            if y:is_suit(v.key) then
+              suits = suits + 1
+              break
+            end
           end
-
-          if not first_suit and not SMODS.has_no_suit(v) then
-            first_suit = v.base.suit
-          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
-            second_suit = v.base.suit
-          end
-          
-          if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
+
+        for k, v in pairs(SMODS.Ranks) do
+          for x, y in pairs(context.scoring_hand) do
+            if v.id == y:get_id() then
+              ranks = ranks + 1
+              break
+            end
+          end
+        end
+        if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
+            mult_mod = card.ability.extra.mult * (ranks + suits)
           }
         end
       end
@@ -857,7 +857,7 @@ local pidgeotto={
 local pidgeot={
   name = "pidgeot", 
   pos = {x = 4, y = 1},
-  config = {extra = {mult = 20}}, 
+  config = {extra = {mult = 5}}, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
@@ -870,41 +870,33 @@ local pidgeot={
   ptype = "Colorless",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.PLANET})
-      end
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local first_rank = nil
-        local second_rank = nil
-        local first_suit = nil
-        local second_suit = nil
-        local has_wild = nil
-        for k, v in pairs(context.scoring_hand) do
-          if not first_rank and v:get_id() > 0 then
-            first_rank = v:get_id()
-          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
-            second_rank = v:get_id()
+        local ranks = 0
+        local suits = 0
+        
+        for k, v in pairs(SMODS.Suits) do
+          for x, y in pairs(context.scoring_hand) do
+            if y:is_suit(v.key) then
+              suits = suits + 1
+              break
+            end
           end
-
-          if not first_suit and not SMODS.has_no_suit(v) then
-            first_suit = v.base.suit
-          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
-            second_suit = v.base.suit
-          end
-          
-          if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
+
+        for k, v in pairs(SMODS.Ranks) do
+          for x, y in pairs(context.scoring_hand) do
+            if v.id == y:get_id() then
+              ranks = ranks + 1
+              break
+            end
+          end
+        end
+        if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
+            mult_mod = card.ability.extra.mult * (ranks + suits)
           }
         end
       end
@@ -917,10 +909,10 @@ local mega_pidgeot = {
   name = "mega_pidgeot", 
   pos = { x = 10, y = 0 },
   soul_pos = { x = 11, y = 0 },
-  config = {extra = {discards_lost = 0, score = false}},
+  config = {extra = {Xmult_multi = 0.75}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {math.max(1, center.ability.extra.discards_lost)}}
+		return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -929,48 +921,36 @@ local mega_pidgeot = {
   atlas = "Megas",
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.setting_blind and G.GAME.current_round.discards_left > 0 then
-      card.ability.extra.discards_lost = G.GAME.current_round.discards_left
-      ease_discard(-G.GAME.current_round.discards_left, nil, true)
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.discards_lost = 0
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local first_rank = nil
-        local second_rank = nil
-        local first_suit = nil
-        local second_suit = nil
-        local has_wild = nil
-        for k, v in pairs(context.scoring_hand) do
-          if not first_rank and v:get_id() > 0 then
-            first_rank = v:get_id()
-          elseif not second_rank and v:get_id() > 0 and v:get_id() ~= first_rank then
-            second_rank = v:get_id()
+      if context.joker_main then
+        local ranks = 0
+        local suits = 0
+        
+        for k, v in pairs(SMODS.Suits) do
+          for x, y in pairs(context.scoring_hand) do
+            if y:is_suit(v.key) then
+              suits = suits + 1
+              break
+            end
           end
+        end
 
-          if not first_suit and not SMODS.has_no_suit(v) then
-            first_suit = v.base.suit
-          elseif not second_suit and not SMODS.has_no_suit(v) and v.base.suit ~= first_suit then
-            second_suit = v.base.suit
+        for k, v in pairs(SMODS.Ranks) do
+          for x, y in pairs(context.scoring_hand) do
+            if v.id == y:get_id() then
+              ranks = ranks + 1
+              break
+            end
           end
-          
-          if v.ability.effect == 'Wild Card' then has_wild = true end
         end
-        if first_rank and second_rank and (has_wild or (first_suit and second_suit) and #context.scoring_hand > 1) then
-          card.ability.extra.score = true
+        if (ranks + suits) > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult_multi * (ranks + suits)}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = 1 + card.ability.extra.Xmult_multi * (ranks + suits)
+          }
         end
       end
-      if context.after then
-        card.ability.extra.score = false
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.discards_lost > 1 and card.ability.extra.score then
-      return {
-        x_mult = card.ability.extra.discards_lost,
-        card = card
-      }
     end
   end,
 }
@@ -1121,10 +1101,10 @@ local fearow={
 local ekans={
   name = "ekans", 
   pos = {x = 9, y = 1}, 
-  config = {extra = {chips = 80, rounds = 4}},
+  config = {extra = {mult = 10, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -1136,9 +1116,9 @@ local ekans={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
         }
       end
     end
@@ -1149,10 +1129,10 @@ local ekans={
 local arbok={
   name = "arbok", 
   pos = {x = 10, y = 1}, 
-  config = {extra = {chips = 110, rounds = 4}},
+  config = {extra = {mult = 15, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips}}
+    return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1172,8 +1152,8 @@ local arbok={
         if aces > 0 then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
             extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
@@ -1188,13 +1168,13 @@ local arbok={
                 end
               }))
             end},
-            chip_mod = card.ability.extra.chips
+            mult_mod = card.ability.extra.mult
           }
         else
           return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            chip_mod = card.ability.extra.mult
           }
         end
       end

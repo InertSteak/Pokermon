@@ -297,7 +297,7 @@ local pupitar={
 local tyranitar={
   name = "tyranitar",
   pos = {x = 9, y = 9},
-  config = {extra = {chip_mod_minus = 4, Xmult_multi = 0.04}},
+  config = {extra = {chip_mod_minus = 4, Xmult_multi = 0.1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod_minus, center.ability.extra.Xmult_multi}}

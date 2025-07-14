@@ -544,7 +544,7 @@ local sunflora={
   atlas = "Pokedex2",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind or context.joker_main or context.pre_discard or context.using_consumeable or context.selling_card then
+    if context.setting_blind or context.joker_main or context.pre_discard or context.using_consumeable then
       local earned = ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
       return {
         dollars = earned,

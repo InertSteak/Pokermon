@@ -142,7 +142,7 @@ local fake_copy = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_copy")
+            poke_evolve(jirachi, "j_poke_jirachi_invis")
             return
          end
       end

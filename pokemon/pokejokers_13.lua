@@ -300,6 +300,41 @@ local jirachi_booster = {
   end
 }
 
+local jirachi_invis = {
+  name = "jirachi_invis", 
+  pos = { x = 2, y = 1 },
+  soul_pos = { x = 3, y = 1 },
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {}}
+  end,
+  rarity = 4,
+  cost = 20,
+  stage = "Legendary",
+  ptype = "Metal",
+  atlas = pokermon_config.pokemon_altart and "jirachi" or "altjirachi",
+  perishable_compat = false,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local other_joker = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i+1] end
+      end
+      if other_joker then
+        local copy = copy_card(other_joker, nil, nil, nil, other_joker.edition and other_joker.edition.negative)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+        copy:add_to_deck()
+        G.jokers:emplace(copy)
+        copy:start_materialize()
+        
+        remove(self, card, context)
+      end
+    end
+  end,
+}
+
 local jirachi_copy = {
   name = "jirachi_copy", 
   pos = { x = 2, y = 1 },
@@ -436,7 +471,7 @@ local jirachi_power = {
   name = "jirachi_power", 
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
-  config = {extra = {Xmult_multi = 2.4, every = 3, loyalty_remaining = 2}},
+  config = {extra = {Xmult_multi = 2, every = 3, loyalty_remaining = 2}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every, localize{type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {card.ability.extra.loyalty_remaining}}}}
@@ -535,5 +570,5 @@ local jirachi_fixer = {
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_copy, jirachi_fixer},
+        list = {snorunt, glalie, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, jirachi_fixer},
 }

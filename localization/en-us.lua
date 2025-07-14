@@ -699,37 +699,35 @@ return {
             j_poke_pidgey = {
                 name = "Pidgey",
                 text = {
-                    "{C:mult}+#2#{} Mult if scoring hand contains",
-                    "multiple ranks and multiple suits",
+                    "Gives {C:mult}+#2#{} Mult for each",
+                    "different {C:attention}rank{} and {C:attention}suit",
+                    "in scoring hand",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeotto = {
                 name = "Pidgeotto",
                 text = {
-                    "{C:mult}+#2#{} Mult if scoring hand contains",
-                    "multiple ranks and multiple suits",
+                    "Gives {C:mult}+#2#{} Mult for each",
+                    "different {C:attention}rank{} and {C:attention}suit",
+                    "in scoring hand",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
             },
             j_poke_pidgeot = {
                 name = "Pidgeot",
                 text = {
-                    "Create a {C:planet}Planet{} card when {C:attention}Blind{} is selected",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "{C:mult}+#1#{} Mult if scoring hand contains",
-                    "multiple ranks and multiple suits",
+                    "Gives {C:mult}+#1#{} Mult for each",
+                    "different {C:attention}rank{} and {C:attention}suit",
+                    "in scoring hand",
                 } 
             },
             j_poke_mega_pidgeot = {
                 name = "Mega Pidgeot",
                 text = {
-                    "When {C:attention}Blind{} is selected {C:attention}lose all discards{}",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "Each played card gives {X:mult,C:white}X{} Mult",
-                    "equal to {C:attention}discards lost{} if scoring hand",
-                    "contains multiple ranks and multiple suits",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
+                    "Gives {X:mult,C:white} X#1# {} Mult for each",
+                    "different {C:attention}rank{} and {C:attention}suit",
+                    "in scoring hand",
                 } 
             },
             j_poke_rattata = {
@@ -765,7 +763,7 @@ return {
             j_poke_ekans = {
                 name = "Ekans",
                 text = {
-                    "{C:chips}+#1#{} Chips if played hand",
+                    "{C:mult}+#1#{} Mult if played hand",
                     "contains a {C:attention}Straight{}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
                 } 
@@ -773,7 +771,7 @@ return {
             j_poke_arbok = {
                 name = "Arbok",
                 text = {
-                    "{C:chips}+#1#{} Chips if played hand",
+                    "{C:mult}+#1#{} Mult if played hand",
                     "contains a {C:attention}Straight{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Create a {C:tarot}Tarot{} card if",
@@ -2391,8 +2389,7 @@ return {
                 text = {
                     "Earn {C:money}$#1#{} when {C:attention}Blind{} is selected,",
                     "hand is {C:attention}played{}, hand is {C:attention}discarded{},",
-                    "consumable is {C:attention}used{}, card is {C:attention}sold{},",
-                    "and at end of round"
+                    "consumable is {C:attention}used{} and at end of round",
                 }
             },
             j_poke_wooper = {
@@ -3226,6 +3223,16 @@ return {
                 text = {
                     "{C:blue}+2{} Joker slots",
                     "{C:dark_edition}Negative{} cards appear {C:attention}2X{} more often",
+                }
+            },
+            j_poke_jirachi_invis = {
+                name = 'Jirachi',
+                text = {
+                    "When {C:attention}Blind{} is selected",
+                    "create a {C:attention}copy{} of",
+                    "{C:attention}Joker{} to the right",
+                    "then {S:1.1,C:red,E:2}self destructs{}",
+                    "{C:inactive}(removes Negative)"
                 }
             },
             j_poke_jirachi_copy = {
@@ -5247,7 +5254,21 @@ return {
             poke_shadow_tag_ex = "Shadow Tag!",
             poke_flees_ex = "Flees!",
             poke_hidden_power_ex = "Hidden Power!",
-            poke_nasty_plot_ex = "Nasty Plot!"
+            poke_nasty_plot_ex = "Nasty Plot!",
+            
+            poke_grass_badge = "Grass",
+            poke_fire_badge = "Fire",
+            poke_water_badge = "Water",
+            poke_lightning_badge = "Lightning",
+            poke_psychic_badge = "Psychic",
+            poke_fighting_badge = "Fighting",
+            poke_colorless_badge = "Colorless",
+            poke_dark_badge = "Dark",
+            poke_metal_badge = "Metal",
+            poke_fairy_badge = "Fairy",
+            poke_dragon_badge = "Dragon",
+            poke_earth_badge = "Earth",
+            
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!

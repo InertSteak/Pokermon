@@ -358,7 +358,7 @@ calc_function = function(card)
     card.joker_display_values.mult = mult
 end
 }
-
+--[[
 jd_def["j_poke_mega_pidgeot"] = {
     text = {
         {
@@ -411,7 +411,7 @@ jd_def["j_poke_mega_pidgeot"] = {
         card.joker_display_values.Xmult = Xmult
     end
     }
-
+--]]
 jd_def["j_poke_rattata"] = {
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
         if held_in_hand then return 0 end

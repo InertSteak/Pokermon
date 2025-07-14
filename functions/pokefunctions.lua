@@ -77,7 +77,7 @@ pokermon.family = {
     {"snorunt", "glalie", "froslass"},
     {"nosepass", "probopass"},
     {"beldum", "metang", "metagross"},
-    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
+    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_invis", "jirachi_fixer"},
     {"sentret", "furret"},
     {"hoothoot", "noctowl"},
     {"ledyba", "ledian"},
@@ -893,6 +893,7 @@ poke_set_type_badge = function(self, card, badges)
     if ptype == "Lightning" then
       text_colour = G.C.BLACK
     end
+    ptype = localize('poke_'..lower_ptype..'_badge')
     if type_sticker_applied(card) then
       ptype = ptype.." "..localize("poke_tera")
     end
