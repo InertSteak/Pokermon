@@ -316,6 +316,7 @@ local jirachi_invis = {
   atlas = pokermon_config.pokemon_altart and "jirachi" or "altjirachi",
   perishable_compat = false,
   blueprint_compat = false,
+  no_collection = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       local other_joker = nil
@@ -333,6 +334,10 @@ local jirachi_invis = {
       end
     end
   end,
+  custom_pool_func = true,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local jirachi_copy = {
