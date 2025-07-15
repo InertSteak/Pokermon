@@ -2547,6 +2547,17 @@ return {
                     "{C:attention}Stone{} cards {C:attention}held in hand{} become {C:attention}Steel{}"
                 } 
             },
+            j_poke_mega_steelix = {
+                name = "Mega Steelix",
+                text = {
+                  "Earn {C:money}$#1#{} for each {C:diamonds}#2#{} in your",
+                  "{C:attention}full deck{} at end of round",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "non-{C:diamonds}#2#{} {C:attention}Steel{} cards",
+                  "{C:attention}held{} in hand become {C:diamonds}#3#{}",
+                  "then lose their {C:attention}enhancement{}",
+                }
+            },
             j_poke_snubbull = {
                 name = 'Snubbull',
                 text = {
@@ -2584,6 +2595,15 @@ return {
                     "{C:inactive,s:0.8}(Matches destroyed Joker's edition if able){}",
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult, {C:chips}+#2#{} {C:inactive}Chips, {X:mult,C:white}X#3#{} {C:inactive}Mult)"
                 } 
+            },
+            j_poke_mega_scizor = {
+                name = "Mega Scizor",
+                text = {
+                  "{C:blue}Common{} Jokers give {X:mult,C:white} X#1# {} Mult",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Destroy all {C:blue}Common{} Jokers",
+                  "at end of round"
+                }
             },
             j_poke_shuckle = {
                 name = "Shuckle",
@@ -2694,8 +2714,8 @@ return {
               text = {
                 "Retrigger all cards played",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Debuffs self this round if scoring",
-                "hand doesn't contain an {C:attention}8{}"
+                "Debuffs self this round after scoring",
+                "if scoring hand doesn't contain an {C:attention}8{}"
               }
             },
             j_poke_delibird = {
@@ -2914,6 +2934,15 @@ return {
                   "permanently loses up to {C:chips}#1#{} Chips and",
                   "permanently gains {X:mult,C:white}X#2#{} Mult if",
                   "chips were lost"
+                }
+            },
+            j_poke_mega_tyranitar = {
+                name = "Mega Tyranitar",
+                text = {
+                  "If played hand is a {C:attention}Full House{}",
+                  "upgrade its level, then played",
+                  "cards permanently gains Chips",
+                  "equal to level of {C:attention}Full House{}"
                 }
             },
             j_poke_lugia = {
@@ -5255,6 +5284,8 @@ return {
             poke_flees_ex = "Flees!",
             poke_hidden_power_ex = "Hidden Power!",
             poke_nasty_plot_ex = "Nasty Plot!",
+            poke_iron_tail_ex = "Iron Tail!",
+            poke_autotomize_ex = "Autotomize!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",

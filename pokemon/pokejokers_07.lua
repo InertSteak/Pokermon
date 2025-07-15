@@ -30,6 +30,7 @@ local ampharos={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
   end,
+  --megas = { "mega_ampharos" },
 }
 -- Bellossom 182
 local bellossom={
@@ -1394,6 +1395,7 @@ local steelix={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -1418,9 +1420,54 @@ local steelix={
         })) 
       end
     end
-    if context.individual and context.cardarea == G.hand and context.other_card.ability.name == 'Stone Card' and not context.blueprint then
+    if context.individual and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_stone") and not context.blueprint then
       context.other_card:set_ability(G.P_CENTERS.m_steel, nil, true)
+      return
+      {
+        message = localize('poke_iron_tail_ex'),
+        colour = G.ARGS.LOC_COLOURS.metal,
+        card = card
+      }
     end
+  end,
+  megas = { "mega_steelix" },
+}
+local mega_steelix={
+  name = "mega_steelix",
+  pos = {x = 2, y = 2},
+  soul_pos = {x = 3, y = 2},
+  config = {extra = {money = 1, suit = "Diamonds"}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_singular'), localize(center.ability.extra.suit, 'suits_plural')}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Metal",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_steel") 
+       and not context.other_card:is_suit(card.ability.extra.suit) and not context.blueprint then
+      context.other_card:change_suit(card.ability.extra.suit)
+      context.other_card:set_ability(G.P_CENTERS.c_base, nil, true)
+      return
+        {
+          message = localize('poke_autotomize_ex'),
+          colour = G.ARGS.LOC_COLOURS.metal,
+          card = card
+        }
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+      local diamond_tally = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+          if playing_card:is_suit(card.ability.extra.suit) then diamond_tally = diamond_tally + 1 end
+      end
+      return diamond_tally > 0 and card.ability.extra.money * diamond_tally or nil
   end
 }
 -- Snubbull 209
@@ -1519,5 +1566,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {ampharos, bellossom, marill, azumarill, sudowoodo, weird_tree, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, snubbull, granbull},
+        list = {ampharos, bellossom, marill, azumarill, sudowoodo, weird_tree, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, mega_steelix, snubbull, granbull},
 }

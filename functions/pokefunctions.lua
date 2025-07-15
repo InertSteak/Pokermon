@@ -38,7 +38,7 @@ pokermon.family = {
     {"grimer","muk"},
     {"shellder","cloyster"},
     {"gastly","haunter","gengar","mega_gengar",},
-    {"onix","steelix"},
+    {"onix","steelix", "mega_steelix"},
     {"drowzee","hypno"},
     {"krabby","kingler"},
     {"voltorb","electrode"},
@@ -49,7 +49,7 @@ pokermon.family = {
     {"horsea","seadra", "kingdra"},
     {"goldeen","seaking"},
     {"staryu","starmie"},
-    {"scyther", "scizor", "kleavor"},
+    {"scyther", "scizor", "mega_scizor", "kleavor"},
     {"mimejr", "mrmime"},
     {"tauros", "taurosh"},
     {"kangaskhan", "mega_kangaskhan"},
@@ -110,7 +110,7 @@ pokermon.family = {
     {"swinub", "piloswine", "mamoswine"},
     {"snubbull", "granbull"},
     {"mantyke", "mantine"},
-    {"larvitar", "pupitar", "tyranitar"},
+    {"larvitar", "pupitar", "tyranitar", "mega_tyranitar"},
     {"treecko", "grovyle", "sceptile"},
     {"torchic", "combusken", "blaziken"},
     {"mudkip", "marshtomp", "swampert"},
@@ -305,6 +305,8 @@ end
 -- Stolen from Cardsauce
 -- Based on code from Ortalab
 poke_backend_evolve = function(card, to_key)
+  local custom_values_to_keep = {}
+  local has_custom_values_to_keep = nil
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
   
@@ -337,6 +339,13 @@ poke_backend_evolve = function(card, to_key)
     values_to_keep.cards_scored = values_to_keep.cards_scored - 15
   end
   
+  if card.config.center.poke_custom_values_to_keep then
+    for k, v in pairs(card.config.center.poke_custom_values_to_keep) do
+      custom_values_to_keep[v] = card.ability.extra[v]
+    end
+    has_custom_values_to_keep = true
+  end
+  
   card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.pos)
   card.children.center.states.hover = card.states.hover
   card.children.center.states.click = card.states.click
@@ -356,6 +365,12 @@ poke_backend_evolve = function(card, to_key)
     end
     if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
       energize(card, nil, true, true)
+    end
+  end
+  
+  if has_custom_values_to_keep then
+    for k, v in pairs(custom_values_to_keep) do
+      card.ability.extra[k] = v 
     end
   end
 
@@ -595,6 +610,14 @@ get_highest_evo = function(card)
   return pseudorandom_element(evos, pseudoseed('highest'))
 end
 
+get_previous_from_mega = function(name, prefix, full_key)
+  local prev = string.sub(name,6,-1)
+  if full_key then
+    prev = "j_"..prefix.."_"..prev 
+  end
+  return prev
+end
+
 get_previous_evo = function(card, full_key)
   local name = nil
   local found = nil
@@ -612,6 +635,7 @@ get_previous_evo = function(card, full_key)
   else
     name = card.name or "bulbasaur"
   end
+  if string.sub(name,1,5) == "mega_" then return get_previous_from_mega(name, prefix, full_key) end
   for k, v in ipairs(pokermon.family) do
     for x, y in ipairs(v) do
       local cur_name = (type(y) == "table" and y.key) or y

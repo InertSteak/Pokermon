@@ -61,6 +61,7 @@ local scizor={
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
     info_queue[#info_queue+1] = G.P_CENTERS.e_holo
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     local emult = 0 
     local echips = 0 
     local eXmult = 1
@@ -82,6 +83,7 @@ local scizor={
   atlas = "Pokedex2",
   perishable_compat = false,
   blueprint_compat = true,
+  poke_custom_values_to_keep = {"mult", "scizor_chips", "scizor_Xmult", "mult_mod"},
   calculate = function(self, card, context)
     if context.ending_shop then
       card.ability.extra.selected = false
@@ -141,7 +143,52 @@ local scizor={
         }
       end
     end
-  end
+  end,
+  megas = { "mega_scizor" },
+}
+
+local mega_scizor={
+  name = "mega_scizor",
+  pos = {x = 4, y = 2},
+  soul_pos = {x = 5, y = 2},
+  config = {extra = {Xmult_multi = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Grass",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  poke_custom_values_to_keep = {"mult", "scizor_chips", "scizor_Xmult", "mult_mod"},
+  calculate = function(self, card, context)
+    if context.other_joker and context.other_joker.config.center.rarity == 1 then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            context.other_joker:juice_up(0.5, 0.5)
+            return true
+        end
+      })) 
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
+        colour = G.C.XMULT,
+        Xmult_mod = card.ability.extra.Xmult_multi
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card:juice_up()
+      for k, v in pairs(G.jokers.cards) do
+        if v.config.center.rarity == 1 then
+          v:start_dissolve({HEX("57ecab")}, nil, 1.6)
+          play_sound('slice1', 0.96+math.random()*0.08)
+        end
+      end
+    end
+  end,
 }
 -- Shuckle 213
 local shuckle={
@@ -214,6 +261,7 @@ local heracross = {
       end
     end
   end,
+  --megas = { "mega_heracross" },
 }
 -- Sneasel 215
 local sneasel = {
@@ -954,6 +1002,7 @@ local houndoom={
       card.ability.extra.active = false
     end
   end,
+  --megas = { "mega_houndoom" },
 }
 -- Kingdra 230
 local kingdra={
@@ -1573,5 +1622,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, shuckle, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, mega_scizor, shuckle, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

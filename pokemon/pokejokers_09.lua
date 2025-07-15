@@ -300,6 +300,7 @@ local tyranitar={
   config = {extra = {chip_mod_minus = 4, Xmult_multi = 0.1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.chip_mod_minus, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -332,6 +333,46 @@ local tyranitar={
           card = card
         }
       end
+    end
+  end,
+  megas = { "mega_tyranitar" },
+}
+local mega_tyranitar={
+  name = "mega_tyranitar",
+  pos = {x = 10, y = 2},
+  soul_pos = {x = 11, y = 2},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Dark",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and context.main_eval and context.scoring_hand and context.scoring_name == "Full House" then
+        return {
+            level_up = true,
+            message = localize('k_level_up_ex')
+        }
+    end
+    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
+      local level = G.GAME.hands[context.scoring_name].level
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        level = to_number(level)
+      end
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
+      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + level
+      return {
+        extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
+        colour = G.C.CHIPS,
+        card = card
+      }
     end
   end,
 }
@@ -1105,6 +1146,6 @@ local linoone={
 -- Dustox 269
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
-        list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, lugia, ho_oh, celebi, 
+        list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, mega_tyranitar, lugia, ho_oh, celebi, 
                 treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
 }
