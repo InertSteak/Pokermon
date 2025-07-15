@@ -226,7 +226,7 @@ local mega_gengar ={
   ptype = "Psychic",
   atlas = "Megas",
   eternal_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind and not context.blind.boss then
       G.E_MANAGER:add_event(Event({
