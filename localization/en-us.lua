@@ -1854,8 +1854,7 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
-                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
-                    "{C:inactive,s:0.8}(Trigger {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card {C:inactive,s:0.7}(Trigger {C:attention,s:0.7}#3#{C:inactive,s:0.7} times to evolve)",
                     "{C:inactive,s:0.8}(Must have room)",
                 } 
             },
@@ -2941,7 +2940,7 @@ return {
                 text = {
                   "If played hand is a {C:attention}Full House{}",
                   "upgrade its level, then played",
-                  "cards permanently gains Chips",
+                  "cards permanently gain Chips",
                   "equal to level of {C:attention}Full House{}"
                 }
             },
