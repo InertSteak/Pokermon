@@ -757,10 +757,10 @@ local mega_beedrill = {
 local pidgey={
   name = "pidgey", 
   pos = {x = 2, y = 1},
-  config = {extra = {mult = 2, rounds = 4}},
+  config = {extra = {mult_mod = 2, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.mult_mod}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -793,9 +793,9 @@ local pidgey={
         end
         if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * (ranks + suits)
+            mult_mod = card.ability.extra.mult_mod * (ranks + suits)
           }
         end
       end
@@ -807,11 +807,11 @@ local pidgey={
 local pidgeotto={
   name = "pidgeotto", 
   pos = {x = 3, y = 1},
-  config = {extra = {mult = 3, rounds = 4}},
+  config = {extra = {mult_mod = 3, rounds = 4}},
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.rounds, center.ability.extra.mult}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 6, 
@@ -843,9 +843,9 @@ local pidgeotto={
         end
         if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * (ranks + suits)
+            mult_mod = card.ability.extra.mult_mod * (ranks + suits)
           }
         end
       end
@@ -857,11 +857,11 @@ local pidgeotto={
 local pidgeot={
   name = "pidgeot", 
   pos = {x = 4, y = 1},
-  config = {extra = {mult = 5}}, 
+  config = {extra = {mult_mod = 5}}, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-		return {vars = {center.ability.extra.mult}}
+		return {vars = {center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -894,9 +894,9 @@ local pidgeot={
         end
         if (ranks + suits) > 0 then
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (ranks + suits)}}, 
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * (ranks + suits)}}, 
             colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult * (ranks + suits)
+            mult_mod = card.ability.extra.mult_mod * (ranks + suits)
           }
         end
       end

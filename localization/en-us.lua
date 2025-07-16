@@ -1702,13 +1702,12 @@ return {
             j_poke_jynx = {
                 name = 'Jynx',      
                 text = {
-                    "When {C:attention}Blind{} is selected, gain {C:attention}+#1#{} hand size",
-                    "if deck size is {C:attention}#2#{} or greater",
+                    "When {C:attention}Blind{} is selected,",
+                    "gain {C:attention}+#1#{} hand size if",
+                    "deck size >= {C:attention}#2#{}",
                     "{br:4}ERROR - CONTACT STEAK",
-                    "{C:attention}Playing cards{} added to your",
-                    "deck from the {C:attention}Shop{}, {C:attention}Standard{} packs,",
-                    "{C:spectral}Cryptid{}, {C:item}Items{} and certain Jokers",
-                    "are {C:attention}duplicated{}"
+                    "{C:attention}Playing cards{} added to",
+                    "your deck are {C:attention}duplicated{}",
                 } 
             },
             j_poke_electabuzz = {

@@ -5,6 +5,7 @@ local ampharos={
   config = {extra = {Xmult = 1,Xmult_mod = 0.3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",
@@ -30,7 +31,54 @@ local ampharos={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
     end
   end,
-  --megas = { "mega_ampharos" },
+  megas = { "mega_ampharos" },
+}
+local mega_ampharos={
+  name = "mega_ampharos",
+  pos = {x = 0, y = 2},
+  soul_pos = {x = 1, y = 2},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.3}},
+  loc_txt = {
+    name = "Mega Ampharos",
+    text = {
+      "{X:mult,C:white} X#1# {} Mult",
+      "When Blind is selected, set",
+      "hand size to {C:attention}half{} your",
+      "deck size then lose all",
+      "discards and all but {C:attention}1{} hand",
+      "{C:inactive}(rounded up, currently {C:attention}#2#{C:inactive})"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, math.ceil(#G.deck.cards/2)}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Dragon",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      if G.hand.config.card_limit < math.ceil(#G.deck.cards/2) then
+        local increase = math.ceil(#G.deck.cards/2) - G.hand.config.card_limit
+        G.hand:change_size(increase)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + increase
+      end
+      ease_discard(-G.GAME.current_round.discards_left, nil, true)
+      ease_hands_played(-G.GAME.round_resets.hands + 1)
+    end
+    if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1  then
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+        colour = G.C.XMULT,
+        Xmult_mod = card.ability.extra.Xmult
+      }
+    end
+  end,
 }
 -- Bellossom 182
 local bellossom={
@@ -1566,5 +1614,5 @@ return {name = "Pokemon Jokers 181-210",
             G.GAME.current_round.gligar_suit = gligar_card
           end
         end,
-        list = {ampharos, bellossom, marill, azumarill, sudowoodo, weird_tree, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, mega_steelix, snubbull, granbull},
+        list = {ampharos, mega_ampharos, bellossom, marill, azumarill, sudowoodo, weird_tree, politoed, hoppip, skiploom, jumpluff, aipom, sunkern, sunflora, yanma, wooper, quagsire, espeon, umbreon, murkrow, slowking, misdreavus, unown, wobbuffet, girafarig, pineco, forretress, dunsparce, gligar, steelix, mega_steelix, snubbull, granbull},
 }

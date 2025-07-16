@@ -130,7 +130,6 @@ local jynx={
   config = {extra = {h_size = 2, deck_size = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid
     return {vars = {center.ability.extra.h_size, G.GAME.starting_deck_size + center.ability.extra.deck_size}}
   end,
   rarity = 3, 

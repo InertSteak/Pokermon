@@ -159,7 +159,7 @@ local mega_scizor={
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",
-  ptype = "Grass",
+  ptype = "Metal",
   atlas = "Megas",
   perishable_compat = true,
   blueprint_compat = true,
@@ -233,6 +233,7 @@ local heracross = {
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2,
@@ -261,7 +262,71 @@ local heracross = {
       end
     end
   end,
-  --megas = { "mega_heracross" },
+  megas = { "mega_heracross" },
+}
+local mega_heracross={
+  name = "mega_heracross",
+  pos = {x = 6, y = 2},
+  soul_pos = {x = 7, y = 2},
+  config = {extra = {retriggers = 2}},
+  loc_txt = {
+    name = "Mega Heracross",
+    text = {
+      "Retrigger all played cards {C:attention}twice{}",
+      "{br:2}ERROR - CONTACT STEAK",
+      "Debuffs self this round",
+      "if you play or discard",
+      "less than {C:attention}5{} cards",
+      "{C:inactive}(debuffs before scoring)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Grass",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      card.ability.extra.no_score = nil
+    end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and not card.ability.extra.no_score then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
+      if context.before and #context.full_hand < 5 then
+        card.ability.extra.no_score = true
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card:juice_up()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+      end
+    end
+    if context.pre_discard and #G.hand.highlighted < 5 and not context.hook and not context.blueprint then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card:juice_up()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+    end
+  end,
 }
 -- Sneasel 215
 local sneasel = {
@@ -946,6 +1011,7 @@ local houndoom={
   config = {extra = {mult_mod = 2,rounds = 5, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.mult_mod}}
   end,
   rarity = 3,
@@ -1002,7 +1068,96 @@ local houndoom={
       card.ability.extra.active = false
     end
   end,
-  --megas = { "mega_houndoom" },
+  megas = { "mega_houndoom" },
+}
+
+local mega_houndoom={
+  name = "mega_houndoom",
+  pos = {x = 8, y = 2},
+  soul_pos = {x = 9, y = 2},
+  config = {extra = {Xmult = 1, Xmult_mod = 2, oXmult = 1}},
+  loc_txt = {
+    name = "Mega Houndoom",
+    text = {
+      "Discarding also discards",
+      "{C:attention}all{} cards {C:attention}held{} in hand",
+      "{br:2}ERROR - CONTACT STEAK",
+      "Gains {X:mult,C:white} X#2# {} Mult whenever",
+      "cards are discarded",
+      "resets at end of round",
+      "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Fire",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.pre_discard and not context.hook and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.XMULT
+        }
+    end
+    if context.post_discard and not context.recursive and not context.blueprint then
+      G.E_MANAGER:add_event(Event({func = function()
+        card.ability.extra.active = false
+        local targets = {}
+        local selected = nil
+        for i=1, #G.hand.cards do
+          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
+            table.insert(targets, G.hand.cards[i])
+          end
+        end
+        if #targets > 0 then
+          local old_limit = G.hand.config.highlighted_limit
+          G.hand.config.highlighted_limit = #targets
+          for i = 1, #targets do
+              G.hand:add_to_highlighted(targets[i], true)
+              selected = true
+              play_sound('card1', 1)
+          end
+          if selected then 
+            delay(0.2)
+            G.FUNCS.discard_cards_from_highlighted(nil, true)
+          end
+          for i = 1, #targets do
+              G.hand:remove_from_highlighted(targets[i], true)
+              targets[i]:highlight(true)
+          end 
+          G.hand.config.highlighted_limit = old_limit
+        end
+      return true end }))
+    end
+    if context.first_hand_drawn then
+      card.ability.extra.oXmult = card.ability.extra.Xmult
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.oXmult
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
 }
 -- Kingdra 230
 local kingdra={
@@ -1622,5 +1777,5 @@ return {name = "Pokemon Jokers 211-240",
               end
             end
         end,
-        list = {qwilfish, scizor, mega_scizor, shuckle, heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
+        list = {qwilfish, scizor, mega_scizor, shuckle, heracross, mega_heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, mega_houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

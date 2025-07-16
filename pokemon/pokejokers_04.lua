@@ -1057,7 +1057,6 @@ local kangaskhan={
     G.E_MANAGER:add_event(Event({func = function()
       G.consumeables.config.card_limit = G.consumeables.config.card_limit + add
       return true end }))
-    poke_debug(G.GAME.interest_cap)
     G.GAME.interest_cap = G.GAME.interest_cap - card.ability.extra.interest_cap
   end,
   remove_from_deck = function(self, card, from_debuff)
