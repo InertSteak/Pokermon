@@ -862,19 +862,28 @@ local dugtrio={
 local meowth={
   name = "meowth", 
   pos = {x = 12, y = 3},
-  config = {extra = {money = 3, rounds = 5}},
+  config = {extra = {money = 1, money_mod = 2, limit = 1, triggers = 0}, evo_rqmt = 9},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.money, center.ability.extra.money_mod, self.config.evo_rqmt}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 5, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
+  enhancement_gate = 'm_lucky',
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_persian")
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
+      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MONEY})
+    end
+    if not context.repetition and not context.individual and context.end_of_round then
+      card.ability.extra.triggers = 0
+    end
+    return scaling_evo(self, card, context, "j_poke_persian", card.ability.extra.money, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
@@ -884,20 +893,34 @@ local meowth={
 local persian={
   name = "persian", 
   pos = {x = 0, y = 4}, 
+  config = {extra = {money = 1, money_mod = 2, limit = 1, triggers = 0, odds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[1] and G.jokers.cards[1] ~= center and math.min(G.jokers.cards[1].sell_cost*2, 15)) or 0}}
+		return {vars = {center.ability.extra.money, center.ability.extra.money_mod, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 9, 
   stage = "One", 
   ptype = "Colorless",
   atlas = "Pokedex1",
+  enhancement_gate = 'm_lucky',
   blueprint_compat = false,
-  calc_dollar_bonus = function(self, card)
-    if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-			return ease_poke_dollars(card, "persian", math.min(G.jokers.cards[1].sell_cost*2, 15), true)
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
+      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MONEY})
     end
+    if not context.repetition and not context.individual and context.end_of_round then
+      card.ability.extra.triggers = 0
+    end
+  end,
+  calc_dollar_bonus = function(self, card)
+    local payout = card.ability.extra.money
+    if pseudorandom('persian') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      payout = payout * 2
+    end
+    return ease_poke_dollars(card, "persian", payout, true)
 	end
 }
 -- Psyduck 054

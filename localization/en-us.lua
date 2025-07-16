@@ -1028,19 +1028,23 @@ return {
             j_poke_meowth = {
                 name = "Meowth",
                 text = {
-                    "Earn {C:money}$#1#{} at",
-                    "end of round",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
+                    "Earn {C:money}$#1#{} at end of round",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "The first {C:green}successful{} {C:attention}Lucky{} card",
+                    "trigger each round increases",
+                    "payout by {C:money}$#2#{}",
+                    "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#1#{C:inactive,s:0.8} / $#3# payout)"
                 } 
             },
             j_poke_persian = {
                 name = "Persian",
                 text = {
-                    "Earn {C:money}${} at end of round",
-                    "equal to {C:attention}double{} the sell value", 
-                    "of the leftmost {C:attention}Joker{}",
-                    "{C:inactive,s:0.8}(Except itself)",
-                    "{C:inactive}(Currently {C:money}$#1#{C:inactive}, Max of {C:money}$15{C:inactive})",
+                    "Earn {C:money}$#1#{} at end of round",
+                    "{C:green}#3# in #4#{} chance to earn {C:attention}double{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "The first {C:green}successful{} {C:attention}Lucky{} card",
+                    "trigger each round increases",
+                    "payout by {C:money}$#2#{}",
                 } 
             },
             j_poke_psyduck = {
@@ -3833,6 +3837,24 @@ return {
                   "at least {C:attention}50%{} of required chips",
                   "{C:inactive}(#3#){}"
                 }
+            },
+            j_poke_nickit = {
+                name = "Nickit",
+                text = {
+                    "Earn {C:money}$#1#{} at",
+                    "end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_thievul = {
+                name = "Thievul",
+                text = {
+                    "Earn {C:money}${} at end of round",
+                    "equal to {C:attention}double{} the sell value", 
+                    "of the leftmost {C:attention}Joker{}",
+                    "{C:inactive,s:0.8}(Except itself)",
+                    "{C:inactive}(Currently {C:money}$#1#{C:inactive}, Max of {C:money}$15{C:inactive})",
+                } 
             },
             j_poke_yamper = {
                 name = 'Yamper',

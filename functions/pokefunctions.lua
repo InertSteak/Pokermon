@@ -134,6 +134,7 @@ pokermon.family = {
     {"grubbin", "charjabug", "vikavolt"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"hisuian_qwilfish", "overqwil"},
+    {"nickit", "thievul"},
     {"yamper","boltund"},
     {"tarountula", "spidops"},
     {"fidough", "dachsbun"},
