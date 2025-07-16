@@ -51,7 +51,7 @@ local mega_ampharos={
   },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, math.ceil(#G.deck.cards/2)}}
+    return {vars = {center.ability.extra.Xmult, G.deck and math.ceil(#G.deck.cards/2) or 0}}
   end,
   rarity = "poke_mega",
   cost = 12,
