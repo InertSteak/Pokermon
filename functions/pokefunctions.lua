@@ -923,6 +923,9 @@ poke_set_type_badge = function(self, card, badges)
     if type_sticker_applied(card) then
       ptype = ptype.." "..localize("poke_tera")
     end
+    if lower_ptype == "bird" then
+      if math.random(0,5) == 5 then ptype = nil end
+    end
     badges[#badges+1] = create_badge(ptype, G.ARGS.LOC_COLOURS[lower_ptype], text_colour, 1.2 )
   end
 end
