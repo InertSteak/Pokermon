@@ -600,6 +600,7 @@ local megastone = {
   name = "megastone",
   key = "megastone",
   set = "Spectral",
+  helditem = true,
   config = {extra = {usable = true, used_on = nil}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }

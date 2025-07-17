@@ -441,7 +441,7 @@ local ho_oh={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and (card.ability.extra.used < card.ability.extra.limit) and not context.consumeable.config.center.jirachi_item then
+    if context.using_consumeable and (card.ability.extra.used < card.ability.extra.limit) and not context.consumeable.config.center.jirachi_item and not context.consumeable.config.center.helditem then
       if not context.blueprint then
         card.ability.extra.used = card.ability.extra.used + 1
       end
