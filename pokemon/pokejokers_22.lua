@@ -108,8 +108,10 @@ local hydreigon={
         }
     end]]--
     if context.remove_playing_cards and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      for _, removed_card in ipairs(context.removed) do
+        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      end
     end
   end
 }
