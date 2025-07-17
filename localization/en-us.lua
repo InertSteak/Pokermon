@@ -5319,6 +5319,7 @@ return {
             poke_fairy_badge = "Fairy",
             poke_dragon_badge = "Dragon",
             poke_earth_badge = "Earth",
+            poke_bird_badge = "Bird",
             
         },
         --These are the Labels
