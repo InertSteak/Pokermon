@@ -996,7 +996,9 @@ local tangela={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
        SMODS.has_enhancement(context.other_card, 'm_wild') then
-        card.ability.extra.wilds_scored = card.ability.extra.wilds_scored + 1
+        if not context.blueprint then
+          card.ability.extra.wilds_scored = card.ability.extra.wilds_scored + 1
+        end
         if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
