@@ -1174,7 +1174,7 @@ local arbok={
           return {
             message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.mult}}, 
             colour = G.C.MULT,
-            chip_mod = card.ability.extra.mult
+            mult_mod = card.ability.extra.mult
           }
         end
       end

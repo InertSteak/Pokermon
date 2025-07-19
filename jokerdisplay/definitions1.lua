@@ -467,29 +467,29 @@ jd_def["j_poke_fearow"] = {
 jd_def["j_poke_ekans"] = {
   text = {
     { text = "+" },
-    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
   },
   reminder_text = {
     { text = "(" },
     { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
     { text = ")" },
   },
-  text_config = { colour = G.C.CHIPS },
+  text_config = { colour = G.C.MULT },
   calc_function = function(card)
-    local chips = 0
+    local mult = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then
-      chips = card.ability.extra.chips
+      mult = card.ability.extra.mult
     end
-    card.joker_display_values.chips = chips
+    card.joker_display_values.mult = mult
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
   end
 }
 
 jd_def["j_poke_arbok"] = {
   text = {
-    { text = "+", colour = G.C.CHIPS },
-    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
     { text = " +", colour = G.C.SECONDARY_SET.Tarot },
     { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Tarot },
   },
@@ -501,18 +501,18 @@ jd_def["j_poke_arbok"] = {
     { text = ")" },
   },
   calc_function = function(card)
-    local chips = 0
+    local mult = 0
     local count = 0
     local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then
-      chips = card.ability.extra.chips
+      mult = card.ability.extra.mult
       for _, scoring_card in pairs(scoring_hand) do
           if scoring_card:get_id() == 14 then
               count = 1
           end
       end
     end
-    card.joker_display_values.chips = chips
+    card.joker_display_values.mult = mult
     card.joker_display_values.count = count
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
     card.joker_display_values.localized_text_ace = localize("Ace", "ranks")
