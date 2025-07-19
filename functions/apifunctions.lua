@@ -11,6 +11,7 @@ pokermon.load_pokemon = function(item)
   if not item.config then
     item.config = {}
   end
+  poke_load_sprites(item)
   if item.ptype then
     if item.config and item.config.extra then
       item.config.extra.ptype = item.ptype

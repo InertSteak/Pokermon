@@ -127,6 +127,14 @@ else
   api()
 end
 
+--Load Sprites Load
+local sprite, load_error = SMODS.load_file("functions/pokespriteload.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  sprite()
+end
+
 --Load Sprites file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then
@@ -134,9 +142,6 @@ if load_error then
 else
   sprite()
 end
-
---Commenting this out for now since it doesn't work 100% of the time
---check_for_needed_config()
 
 --Load UI file
 local UI, load_error = SMODS.load_file("pokeui.lua")

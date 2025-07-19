@@ -1267,7 +1267,7 @@ local snorlax={
 -- Articuno 144
 local articuno={
   name = "articuno", 
-  pos = {x = pokermon_config.pokemon_altart and 7 or 1, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 1, y = 11},
   soul_pos = { x = 2, y = 11},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -1290,7 +1290,7 @@ local articuno={
 -- Zapdos 145
 local zapdos={
   name = "zapdos", 
-  pos = {x = pokermon_config.pokemon_altart and 8 or 3, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
   config = {extra = {Xmult = 0.08, money_threshold = 2}},
   loc_vars = function(self, info_queue, center)
@@ -1328,7 +1328,7 @@ local zapdos={
 -- Moltres 146
 local moltres={
   name = "moltres", 
-  pos = {x = pokermon_config.pokemon_altart and 9 or 5, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 5, y = 11},
   soul_pos = { x = 6, y = 11},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -1454,7 +1454,7 @@ local dragonite={
 -- Mewtwo 150
 local mewtwo={
   name = "mewtwo", 
-  pos = {x = pokermon_config.pokemon_altart and 10 or 10, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 10, y = 11},
   soul_pos = { x = 11, y = 11},
   config = {extra = {Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
