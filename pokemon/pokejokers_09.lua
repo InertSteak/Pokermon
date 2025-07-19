@@ -395,7 +395,7 @@ local lugia={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards then
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
         card.ability.extra.drawn = card.ability.extra.drawn - card.ability.extra.to_draw
