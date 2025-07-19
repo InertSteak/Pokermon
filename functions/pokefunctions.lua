@@ -617,7 +617,7 @@ get_previous_from_mega = function(name, prefix, full_key)
   if full_key then
     prev = "j_"..prefix.."_"..prev 
   end
-  return prev
+  return G.P_CENTERS[prev] and prev or nil
 end
 
 get_previous_evo = function(card, full_key)
@@ -626,6 +626,7 @@ get_previous_evo = function(card, full_key)
   local prev = nil
   local max = nil
   local choice = nil
+  local mega = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
     else
@@ -637,7 +638,8 @@ get_previous_evo = function(card, full_key)
   else
     name = card.name or "bulbasaur"
   end
-  if string.sub(name,1,5) == "mega_" then return get_previous_from_mega(name, prefix, full_key) end
+  if string.sub(name,1,5) == "mega_" then mega = get_previous_from_mega(name, prefix, full_key) end
+  if mega then return mega end
   for k, v in ipairs(pokermon.family) do
     for x, y in ipairs(v) do
       local cur_name = (type(y) == "table" and y.key) or y
