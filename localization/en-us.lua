@@ -4889,6 +4889,13 @@ return {
                 "Sketch resets when Joker is copied"
               }
             },
+            unlimited_energy_tooltip = {
+              name = "Unlimited Energy",
+              text = {
+                "Jokers can have {C:pink}Energy{} used",
+                "on them any number of times"
+              }
+            },
             precise_energy_tooltip = {
                 name = "Precise Energy Scaling",
                 text = {
@@ -4912,6 +4919,67 @@ return {
                 "{C:red}Discovering all objects can't be undone{}"
               }
             }, 
+            pokemononly_tooltip = {
+              name = "Pokemon Only",
+              text = {
+                "Only {C:attention}Pokemon{} Jokers will appear",
+              }
+            },
+            gen1_tooltip = {
+              name = "Gen 1 Only",
+              text = {
+                "Only {C:attention}Pokemon{} Jokers from the first",
+                "generation will appear"
+              }
+            },
+            shinyplayingcard_tooltip = {
+              name = "Shiny on Playing Cards",
+              text = {
+                "Allows {C:attention}playing cards{} to",
+                "have the {C:dark_edition}Shiny{} edition"
+              }
+            },
+            legacycontent_tooltip = {
+              name = "Legacy Content",
+              text = {
+                "Enable content that",
+                "has been removed"
+              }
+            },
+            jokecontent_tooltip = {
+              name = "Joke Content",
+              text = {
+                "Enable content that is",
+                "meant to be humorous"
+              }
+            },
+            splashcard_tooltip = {
+              name = "Pokemon Splash Card",
+              text = {
+                "Replaces the usual splash card",
+                "with a random Pokemon Joker",
+              }
+            },
+            altart_tooltip = {
+              name = "Alt Art",
+              text = {
+                "Uses alternate sprites for",
+                "certain Pokemon Jokers",
+              }
+            },
+            animation_tooltip = {
+              name = "Enable Animations",
+              text = {
+                "Enables animated sprites for",
+                "certain Pokemon Jokers",
+              }
+            },
+            allowpokeballs_tooltip = {
+              name = "Allow Pokeballs",
+              text = {
+                "Allow Pokeball {C:item}items{} to appear",
+              }
+            },
             pokemaster_tooltip = {
               name = "Pokemon Master Mode",
               text = {
@@ -5187,12 +5255,12 @@ return {
             --Mod Menu stuff
             poke_settings_header_required = "Restart Required:",
             poke_settings_header_norequired = "No Restart Required:",
-            poke_settings_pokemon_only = "Pokemon only?",
+            poke_settings_pokemon_only = "Pokemon Only?",
             poke_settings_unlimited_energy = "Unlmited Energy?",
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",
-            poke_settings_pokeballs = "Pokéballs?",
+            poke_settings_pokeballs = "Allow Pokéballs?",
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
             poke_settings_pokemon_gen_one = "Gen 1 Only?",

@@ -15,8 +15,35 @@ local restart_toggles_right = {
 local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
                           {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one"}, }
  
-local energy_toggles = {{ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy"}, 
-                        {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy"},}
+local energy_toggles = {
+  {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy", tooltip = {set = 'Other', key = 'unlimited_energy_tooltip'}}, 
+  {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy", tooltip = {set = 'Other', key = 'precise_energy_tooltip'}},
+}
+
+local joker_pool_toggles = {
+  {ref_value = "pokemon_only", label = "poke_settings_pokemon_only", tooltip = {set = 'Other', key = 'pokemononly_tooltip'}},
+  {ref_value = "gen_one", label = "poke_settings_pokemon_gen_one", tooltip = {set = 'Other', key = 'gen1_tooltip'}}
+}
+
+local misc_no_restart_toggles = {
+  {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards", tooltip = {set = 'Other', key = 'shinyplayingcard_tooltip'}}
+}
+
+local content_toggles = {
+  {ref_value = "pokemon_legacy", label = "poke_settings_pokemon_legacy", tooltip = {set = 'Other', key = 'legacycontent_tooltip'}},
+  {ref_value = "pokemon_aprilfools", label = "poke_settings_pokemon_aprilfools", tooltip = {set = 'Other', key = 'jokecontent_tooltip'}},
+}
+
+local visual_toggles = {
+  {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash", tooltip = {set = 'Other', key = 'splashcard_tooltip'}},
+  {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart", tooltip = {set = 'Other', key = 'altart_tooltip'}},
+  {ref_value = "poke_enable_animations", label = "poke_settings_enable_animations", tooltip = {set = 'Other', key = 'animation_tooltip'}}
+}
+
+local misc_restart_toggles = {
+  {ref_value = "pokeballs", label = "poke_settings_pokeballs", tooltip = {set = 'Other', key = 'allowpokeballs_tooltip'}},
+  {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}},
+}
  
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do
@@ -49,7 +76,7 @@ pokemonconfig = function()
     {
       n = G.UIT.R,
       config = {
-        padding = 0,
+        padding = 0.25,
         align = "cm"
       },
       nodes = {
@@ -64,17 +91,28 @@ pokemonconfig = function()
         }
       },
     },
-    no_restart_settings,
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("ED533A"),
+      button = "pokermon_joker_pool",
+      label = {"Joker Pool Options"}
+    }),
     UIBox_button({
       minw = 3.85,
       colour = HEX("FF7ABF"),
       button = "pokermon_energy",
       label = {"Energy Options"}
     }),
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("9AA4B7"),
+      button = "pokermon_misc_no_restart",
+      label = {"Misc Options"}
+    }),
     {
       n = G.UIT.R,
       config = {
-        padding = 0,
+        padding = 0.25,
         align = "cm"
       },
       nodes = {
@@ -89,14 +127,24 @@ pokemonconfig = function()
         }
       },
     },
-    {
-      n = G.UIT.R,
-      config = {
-        padding = 0,
-        align = "tm"
-      },
-      nodes = {restart_left_settings, restart_right_settings},
-    },
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("38b8f8"),
+      button = "pokermon_content",
+      label = {"Content Options"}
+    }),
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("c135ff"),
+      button = "pokermon_visual",
+      label = {"Visual Options"}
+    }),
+    UIBox_button({
+      minw = 3.85,
+      colour = HEX("9AA4B7"),
+      button = "pokermon_misc_restart",
+      label = {"Misc Options"}
+    }),
   }
   return config_nodes
 end
@@ -501,11 +549,56 @@ function G.FUNCS.pokermon_discord(e)
 end
 function G.FUNCS.pokermon_energy(e)
   local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
-  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR, detailed_tooltip = ttip}, nodes = {}}
+  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
   create_menu_toggles(energy_settings, energy_toggles)
   
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
       contents = {energy_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_joker_pool(e)
+  local joker_pool_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(joker_pool_settings, joker_pool_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {joker_pool_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_misc_no_restart(e)
+  local misc_no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(misc_no_restart_settings, misc_no_restart_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {misc_no_restart_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_content(e)
+  local content_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(content_settings, content_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {content_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_visual(e)
+  local visual_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(visual_settings, visual_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {visual_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_misc_restart(e)
+  local misc_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(misc_restart_settings, misc_restart_toggles)
+  
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {misc_restart_settings}
   })
   G.FUNCS.overlay_menu{definition = t}
 end
