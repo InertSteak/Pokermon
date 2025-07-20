@@ -28,6 +28,7 @@ local nickit={
   stage = "Basic",
   ptype = "Dark",
   atlas = "Pokedex8",
+  gen = 8,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_thievul")
@@ -49,6 +50,7 @@ local thievul={
   stage = "One", 
   ptype = "Dark",
   atlas = "Pokedex8",
+  gen = 8,
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
@@ -76,6 +78,7 @@ local yamper={
   stage = "Basic", 
   ptype = "Lightning",
   atlas = "Pokedex8",
+  gen = 8,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -105,6 +108,7 @@ local boltund={
   stage = "One", 
   ptype = "Lightning",
   atlas = "Pokedex8",
+  gen = 8,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

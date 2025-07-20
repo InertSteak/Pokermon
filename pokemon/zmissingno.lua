@@ -148,6 +148,7 @@ local missingno ={
   stage = "Legendary",
   ptype = "Bird",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then

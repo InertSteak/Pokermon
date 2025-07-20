@@ -22,6 +22,7 @@ local sylveon={
   stage = "One",
   ptype = "Fairy",
   atlas = "Pokedex6",
+  gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint and not (G.HUD_tags and #G.HUD_tags >= 2) then

@@ -1001,7 +1001,7 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
   end
   
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v.atlas)
+    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
        and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and not exclude_keys[v.key] then
       local no_dup = true
       if G.jokers and G.jokers.cards and not next(find_joker("Showman")) then
@@ -1033,10 +1033,21 @@ create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   return SMODS.create_card(create_args)
 end
 
-get_gen_allowed = function(atlas)
-  local gen_allowed = true
-  if pokermon_config.gen_one and atlas ~= "poke_Pokedex1" and atlas ~= "poke_others" then
-    gen_allowed = false
+get_gen_allowed = function(card)
+  local gen_allowed = false
+  if card.gen then
+    local gen = card.gen
+    if gen == 1 and pokermon_config.gen_one then gen_allowed = true end
+    if gen == 2 and pokermon_config.gen_two then gen_allowed = true end
+    if gen == 3 and pokermon_config.gen_three then gen_allowed = true end
+    if gen == 4 and pokermon_config.gen_four then gen_allowed = true end
+    if gen == 5 and pokermon_config.gen_five then gen_allowed = true end
+    if gen == 6 and pokermon_config.gen_six then gen_allowed = true end
+    if gen == 7 and pokermon_config.gen_seven then gen_allowed = true end
+    if gen == 8 and pokermon_config.gen_eight then gen_allowed = true end
+    if gen == 9 and pokermon_config.gen_nine then gen_allowed = true end
+  else
+    gen_allowed = true
   end
   return gen_allowed
 end

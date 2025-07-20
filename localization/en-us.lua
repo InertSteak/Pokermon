@@ -4926,9 +4926,65 @@ return {
               }
             },
             gen1_tooltip = {
-              name = "Gen 1 Only",
+              name = "Gen 1 Allowed",
               text = {
-                "Only {C:attention}Pokemon{} Jokers from the first",
+                "{C:attention}Pokemon{} Jokers from the first",
+                "generation will appear"
+              }
+            },
+            gen2_tooltip = {
+              name = "Gen 2 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the second",
+                "generation will appear"
+              }
+            },
+            gen3_tooltip = {
+              name = "Gen 3 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the third",
+                "generation will appear"
+              }
+            },
+            gen4_tooltip = {
+              name = "Gen 4 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the fourth",
+                "generation will appear"
+              }
+            },
+            gen5_tooltip = {
+              name = "Gen 5 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the fifth",
+                "generation will appear"
+              }
+            },
+            gen6_tooltip = {
+              name = "Gen 6 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the sixth",
+                "generation will appear"
+              }
+            },
+            gen7_tooltip = {
+              name = "Gen 7 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the seventh",
+                "generation will appear"
+              }
+            },
+            gen8_tooltip = {
+              name = "Gen 8 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the eighth",
+                "generation will appear"
+              }
+            },
+            gen9_tooltip = {
+              name = "Gen 9 Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers from the ninth",
                 "generation will appear"
               }
             },
@@ -5263,7 +5319,15 @@ return {
             poke_settings_pokeballs = "Allow Pokéballs?",
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
-            poke_settings_pokemon_gen_one = "Gen 1 Only?",
+            poke_settings_pokemon_gen_one = "Gen 1 Allowed?",
+            poke_settings_pokemon_gen_two = "Gen 2 Allowed?",
+            poke_settings_pokemon_gen_three = "Gen 3 Allowed?",
+            poke_settings_pokemon_gen_four = "Gen 4 Allowed?",
+            poke_settings_pokemon_gen_five = "Gen 5 Allowed?",
+            poke_settings_pokemon_gen_six = "Gen 6 Allowed?",
+            poke_settings_pokemon_gen_seven = "Gen 7 Allowed?",
+            poke_settings_pokemon_gen_eight = "Gen 8 Allowed?",
+            poke_settings_pokemon_gen_nine = "Gen 9 Allowed?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",

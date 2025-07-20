@@ -38,6 +38,7 @@ local zorua = {
   stage = "Basic",
   ptype = "Dark",
   atlas = "Pokedex5",
+  gen = 5,
   blueprint_compat = true,
   rental_compat = false,
   calculate = function(self, card, context)

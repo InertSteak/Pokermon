@@ -41,6 +41,7 @@ local mimikyu={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex7",
+  gen = 7,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

@@ -1,1 +1,25 @@
-return {["shiny_playing_cards"]=false,["precise_energy"]=true,["pokeballs"]=true,["no_evos"]=false,["pokemon_only"]=true,["pokemon_splash"]=true,["pokemon_num"]=true,["unlimited_energy"]=false,["jokers_only"]=false,["gen_one"]=false,["pokemon_discovery"]=true,["pokemon_altart"]=true,["poke_enable_animations"]=true,["pokemon_aprilfools"]=false,["pokemon_legacy"]=false}
+return {
+  ["shiny_playing_cards"]=false,
+  ["precise_energy"]=true,
+  ["pokeballs"]=true,
+  ["no_evos"]=false,
+  ["pokemon_only"]=true,
+  ["pokemon_splash"]=true,
+  ["pokemon_num"]=true,
+  ["unlimited_energy"]=false,
+  ["jokers_only"]=false,
+  ["gen_one"]=true,
+  ["gen_two"]=true,
+  ["gen_three"]=true,
+  ["gen_four"]=true,
+  ["gen_five"]=true,
+  ["gen_six"]=true,
+  ["gen_seven"]=true,
+  ["gen_eight"]=true,
+  ["gen_nine"]=true,
+  ["pokemon_discovery"]=true,
+  ["pokemon_altart"]=true,
+  ["poke_enable_animations"]=true,
+  ["pokemon_aprilfools"]=false,
+  ["pokemon_legacy"]=false
+}
