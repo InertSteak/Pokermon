@@ -28,6 +28,7 @@ local qwilfish = {
   ptype = "Water",
   atlas = "Pokedex2",
   gen = 2,
+  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
@@ -932,6 +933,7 @@ local skarmory = {
   ptype = "Metal",
   atlas = "Pokedex2",
   gen = 2,
+  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then

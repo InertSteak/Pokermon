@@ -4988,6 +4988,13 @@ return {
                 "generation will appear"
               }
             },
+            hazards_on_tooltip = {
+              name = "Hazards Allowed",
+              text = {
+                "{C:attention}Pokemon{} Jokers with",
+                "{C:purple}Hazards{} will appear"
+              }
+            },
             shinyplayingcard_tooltip = {
               name = "Shiny on Playing Cards",
               text = {
@@ -5328,6 +5335,7 @@ return {
             poke_settings_pokemon_gen_seven = "Gen 7 Allowed?",
             poke_settings_pokemon_gen_eight = "Gen 8 Allowed?",
             poke_settings_pokemon_gen_nine = "Gen 9 Allowed?",
+            poke_settings_pokemon_hazards_on = "Hazards Allowed?",
             poke_settings_pokemon_precise_energy = "Use Precise Energy Scaling?",
             poke_settings_pokemon_discovery = "! Discovery?",
             poke_settings_pokemon_altart = "Alt Art?",

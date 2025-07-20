@@ -218,6 +218,7 @@ local tarountula = {
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
+  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
@@ -276,6 +277,7 @@ local spidops = {
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
+  hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then

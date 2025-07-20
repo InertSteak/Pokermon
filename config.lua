@@ -17,6 +17,7 @@ return {
   ["gen_seven"]=true,
   ["gen_eight"]=true,
   ["gen_nine"]=true,
+  ["hazards_on"]=true,
   ["pokemon_discovery"]=true,
   ["pokemon_altart"]=true,
   ["poke_enable_animations"]=true,

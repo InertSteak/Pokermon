@@ -350,6 +350,7 @@ local golett={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  hazard_poke = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       poke_add_hazards(card.ability.extra.hazard_ratio)
@@ -411,6 +412,7 @@ local golurk={
   ptype = "Psychic",
   atlas = "Pokedex5",
   gen = 5,
+  hazard_poke = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

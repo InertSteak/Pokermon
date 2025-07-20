@@ -31,6 +31,7 @@ local joker_pool_toggles = {
   {ref_value = "gen_seven", label = "poke_settings_pokemon_gen_seven", tooltip = {set = 'Other', key = 'gen7_tooltip'}},
   {ref_value = "gen_eight", label = "poke_settings_pokemon_gen_eight", tooltip = {set = 'Other', key = 'gen8_tooltip'}},
   {ref_value = "gen_nine", label = "poke_settings_pokemon_gen_nine", tooltip = {set = 'Other', key = 'gen9_tooltip'}},
+  {ref_value = "hazards_on", label = "poke_settings_pokemon_hazards_on", tooltip = {set = 'Other', key = 'hazards_on_tooltip'}},
 }
 
 local misc_no_restart_toggles = {
