@@ -45,6 +45,7 @@ local content_toggles = {
 
 local visual_toggles = {
   {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash", tooltip = {set = 'Other', key = 'splashcard_tooltip'}},
+  {ref_value = "pokemon_title", label = "poke_settings_pokemon_title", tooltip = {set = 'Other', key = 'title_tooltip'}},
   {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart", tooltip = {set = 'Other', key = 'altart_tooltip'}},
   {ref_value = "poke_enable_animations", label = "poke_settings_enable_animations", tooltip = {set = 'Other', key = 'animation_tooltip'}}
 }

@@ -5,6 +5,7 @@ return {
   ["no_evos"]=false,
   ["pokemon_only"]=true,
   ["pokemon_splash"]=true,
+  ["pokemon_title"]=true,
   ["pokemon_num"]=true,
   ["unlimited_energy"]=false,
   ["jokers_only"]=false,

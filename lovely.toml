@@ -216,19 +216,21 @@ G.SPLASH_LOGO = Sprite(0, 0,
     13*SC_scale*(G.ASSET_ATLAS["balatro"].py/G.ASSET_ATLAS["balatro"].px),
     G.ASSET_ATLAS["balatro"], {x=0,y=0})
 '''
-position = "at"
+position = "after"
 payload = '''
-    local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "poke_logo"
-    G.SPLASH_LOGO = Sprite(0, 0, 
-        13/333*389*SC_scale, 
-        13/333*389*SC_scale*(G.ASSET_ATLAS[poke_logo].py/G.ASSET_ATLAS[poke_logo].px),
-        G.ASSET_ATLAS[poke_logo], {x=0.0,y=0})
+    if pokermon_config.pokemon_title then
+      local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "poke_logo"
+      G.SPLASH_LOGO = Sprite(0, 0, 
+          13/333*389*SC_scale, 
+          13/333*389*SC_scale*(G.ASSET_ATLAS[poke_logo].py/G.ASSET_ATLAS[poke_logo].px),
+          G.ASSET_ATLAS[poke_logo], {x=0.0,y=0})
+    end
 '''
 match_indent = true
 overwrite = true
 
 
-# Replace start menu card with wobbuffet
+# Replace start menu card with unown
 [[patches]]
 [patches.pattern]
 target = "game.lua"
@@ -237,9 +239,14 @@ local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*S
 '''
 position = "at"
 payload = '''
-local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.empty, G.P_CENTERS.j_poke_unown)
-replace_card.ability.extra.form = "R"
-G.P_CENTERS.j_poke_unown:set_sprites(replace_card)
+local replace_card = nil
+if pokermon_config.pokemon_title then
+  replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.empty, G.P_CENTERS.j_poke_unown)
+  replace_card.ability.extra.form = "R"
+  G.P_CENTERS.j_poke_unown:set_sprites(replace_card)
+else
+  replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)
+end
 '''
 match_indent = true
 
@@ -248,7 +255,11 @@ match_indent = true
 target = "game.lua"
 pattern = "replace_card.states.visible = false"
 position = "after"
-payload = "replace_card.seal = nil"
+payload = '''
+if pokermon_config.pokemon_title then
+  replace_card.seal = nil
+end
+'''
 match_indent = true
 
 # Description functionality, a little hacky but it works

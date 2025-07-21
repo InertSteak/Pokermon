@@ -5023,6 +5023,13 @@ return {
                 "with a random Pokemon Joker",
               }
             },
+            title_tooltip = {
+              name = "Pokemon Title Screen",
+              text = {
+                "Replaces the usual title screen",
+                "with the Pokermon version",
+              }
+            },
             altart_tooltip = {
               name = "Alt Art",
               text = {
@@ -5326,6 +5333,7 @@ return {
             poke_settings_pokeballs = "Allow Pokéballs?",
             poke_settings_pokedex_number = "Pokedex Numbers?",
             poke_settings_pokemon_splash = "Pokémon Splash Card?",
+            poke_settings_pokemon_title = "Pokemon Title?",
             poke_settings_pokemon_gen_one = "Gen 1 Allowed?",
             poke_settings_pokemon_gen_two = "Gen 2 Allowed?",
             poke_settings_pokemon_gen_three = "Gen 3 Allowed?",
