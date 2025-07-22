@@ -1037,7 +1037,7 @@ get_gen_allowed = function(card)
   local gen_allowed = false
   if card.gen then
     local gen = card.gen
-    if gen == 1 and pokermon_config.gen_one then gen_allowed = true end
+    if gen == 1 and pokermon_config.gen_oneb then gen_allowed = true end
     if gen == 2 and pokermon_config.gen_two then gen_allowed = true end
     if gen == 3 and pokermon_config.gen_three then gen_allowed = true end
     if gen == 4 and pokermon_config.gen_four then gen_allowed = true end

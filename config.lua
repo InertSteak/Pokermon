@@ -10,6 +10,7 @@ return {
   ["unlimited_energy"]=false,
   ["jokers_only"]=false,
   ["gen_one"]=true,
+  ["gen_oneb"]=true,
   ["gen_two"]=true,
   ["gen_three"]=true,
   ["gen_four"]=true,
