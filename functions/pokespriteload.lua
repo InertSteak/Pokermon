@@ -5,6 +5,7 @@ PokemonSprites = {
   mewtwo    = {normal = {pos = {x = 10, y = 11}, soul_pos = {x = 11, y = 11}}, alt = {pos = {x = 10, y = 12}, soul_pos = {x = 11, y = 11}}},
   mew       = {normal = {pos = {x = 12, y = 11}, soul_pos = {x = 0, y = 12}}, alt = {pos = {x = 11, y = 12}, soul_pos = {x = 0, y = 12}}},
   missingno = {normal = {pos = {x = 1, y = 12}, soul_pos = {x = 2, y = 12}}, alt = {pos = {x = 12, y = 12}, soul_pos = {x = 2, y = 12}}},
+  entei     = {normal = {pos = {x = 3, y = 9}, soul_pos = {x = 4, y = 9}}, alt = {pos = {x = 8, y = 10}, soul_pos = {x = 4, y = 9}}},
 } 
 
 poke_load_sprites = function(item)
