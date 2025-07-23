@@ -47,8 +47,25 @@ pokermon.load_pokemon = function(item)
         end
       }))
     end
+    poke_load_individual_sprite(self, card, card_table, other_card)
     if prev_load then
       prev_load(self, card, card_table, other_card)
+    end
+  end
+  if item.poke_multi_sprite then
+    local prev_set_sprites = item.set_sprites
+    item.set_sprites = function(self, card, front)
+      poke_set_sprites(self, card, front)
+      if prev_set_sprites then
+        prev_set_sprites(self, card, front)
+      end
+    end
+    local prev_set_ability = item.set_ability
+    item.set_ability = function(self, card, initial, delay_sprites)
+      if prev_set_ability then
+        prev_set_ability(self, card, initial, delay_sprites)
+      end
+      poke_set_sprite_ability(self, card, initial, delay_sprites)
     end
   end
   SMODS.Joker(item)

@@ -15,7 +15,11 @@ poke_load_sprites = function(item)
   if sprite_info then
     sprite = pokermon_config.pokemon_altart and sprite_info.alt or sprite_info.normal
 
-    local position = sprite.pos.x and sprite.pos or sprite.pos[math.random(#sprite.pos)]
+    local position = sprite.pos.x and sprite.pos or nil
+    if not position then
+      position = sprite.pos[math.random(#sprite.pos)]
+      item.poke_multi_sprite = true
+    end
     local soul_position = sprite.soul_pos
     
     if position then item.pos = position end

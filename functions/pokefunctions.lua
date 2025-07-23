@@ -1355,6 +1355,27 @@ create_holding_item = function(key, edition, has_evolved)
   end
 end
 
+poke_set_sprites = function(self, card, front)
+  if card and card.ability and card.ability.extra then
+    if not card.ability.extra.loaded_pos and card.ability.extra.loaded_sprite then
+      card.ability.extra.loaded_pos = card.config.center.pos
+    end
+    card.children.center:set_sprite_pos(card.ability.extra.loaded_pos)
+  end
+end
+
+poke_set_sprite_ability = function(self, card, initial, delay_sprites)
+  if initial and card and card.ability and card.ability.extra and not card.ability.extra.loaded_pos then
+    card.ability.extra.loaded_pos = card.config.center.pos
+  end
+end
+
+poke_load_individual_sprite = function(self, card, card_table, other_card)
+  if card and card.ability and card.ability.extra then
+    card.ability.extra.loaded_sprite = true
+  end
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570
