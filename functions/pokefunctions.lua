@@ -155,7 +155,9 @@ pokermon.family = {
 
 extended_family = {
   tauros = {"miltank"},
-  unown = {"ruins_of_alph", "unown_swarm"}
+  unown = {"ruins_of_alph", "unown_swarm"},
+  shuckle = {{item = true, name = "berry_juice"}, {item = true, name = "berry_juice_tarot"}, {item = true, name = "berry_juice_planet"}, {item = true, name = "berry_juice_spectral"}, 
+             {item = true, name = "berry_juice_item"}, {item = true, name = "berry_juice_energy"}, {item = true, name = "berry_juice_mystery"}}
 }
 
 type_sticker_applied = function(card)
@@ -701,7 +703,16 @@ get_family_keys = function(cardname, custom_prefix, card)
   for k, v in pairs(extended_family) do
     if k == cardname then
       for x, y in pairs(v) do
-        table.insert(keys, custom_prefix..y)
+        if type(y) == "table" then
+          if y.item then
+            local item_prefix = y.custom_prefix or "c_poke_"
+            table.insert(keys, item_prefix..y.name)
+          else
+            table.insert(keys, custom_prefix..y.name)
+          end
+        else
+          table.insert(keys, custom_prefix..y)
+        end
       end
     end
   end
