@@ -1448,6 +1448,18 @@ jd_def["j_poke_skarmory"] = {
 
 --	Houndour
 --	Houndoom
+--	Mega Houndoom
+jd_def["j_poke_mega_houndoom"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Kingdra
 jd_def["j_poke_kingdra"] = { 
     text = {
