@@ -469,6 +469,18 @@ jd_def["j_poke_ampharos"] = {
   },
 }
 
+--	Mega Ampharos
+jd_def["j_poke_mega_ampharos"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bellossom
 jd_def["j_poke_bellossom"] = {
     text = {
