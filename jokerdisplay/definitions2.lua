@@ -1083,6 +1083,25 @@ jd_def["j_poke_steelix"] = {
     end
 }
 
+jd_def["j_poke_mega_steelix"] = {
+    text = {
+      { text = "+$", colour = G.C.GOLD },
+      { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+    },
+    reminder_text = {
+      { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+      local diamond_tally = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+        if playing_card:is_suit(card.ability.extra.suit) then diamond_tally = diamond_tally + 1 end
+      end
+
+      card.joker_display_values.money = diamond_tally
+      card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+    end
+}
+
 --	Snubbull
 jd_def["j_poke_snubbull"] = {
   text = {
