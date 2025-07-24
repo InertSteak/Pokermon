@@ -1238,6 +1238,16 @@ jd_def["j_poke_heracross"] = {
   end
 }
 
+-- Mega Heracross
+jd_def["j_poke_mega_heracross"] = {
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if #JokerDisplay.current_hand >= 5 then
+      return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    end
+  end
+}
+
 --	Sneasel
 jd_def["j_poke_sneasel"] = {
   text = {
