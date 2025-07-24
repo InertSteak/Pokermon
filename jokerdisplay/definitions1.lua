@@ -1197,19 +1197,31 @@ jd_def["j_poke_dugtrio"] = {
 }
 
 jd_def["j_poke_meowth"] = {
-    text = {
-        { text = "+$" },
-        { ref_table = "card.ability.extra", ref_value = "money" },
-    },
-    text_config = { colour = G.C.GOLD },
+  text = {
+    { text = "+$" },
+    { ref_table = "card.ability.extra", ref_value = "money" },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  text_config = { colour = G.C.GOLD },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
 }
 
 jd_def["j_poke_persian"] = {
-    text = {
-        { text = "+$" },
-        { ref_table = "card.ability.extra", ref_value = "money" },
-    },
-    text_config = { colour = G.C.GOLD },
+  text = {
+    { text = "+$" },
+    { ref_table = "card.ability.extra", ref_value = "money" },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  text_config = { colour = G.C.GOLD },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
 }
 
 jd_def["j_poke_psyduck"] = {
