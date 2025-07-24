@@ -1,3 +1,10 @@
+// === GLSL Fix Log ===
+// 修复时间: Mon Jul 21 14:15:41 CST 2025
+// 文件来源: zorua.fs
+// 共修改 1 行
+// 第 140 行："return transform_projection * vertex_position + vec4(0,0,0,scale);" → "return transform_projection * vertex_position + vec4(0.0,0.0,0.0,scale);"
+// =====================
+
 #if defined(VERTEX) || __VERSION__ > 100 || defined(GL_FRAGMENT_PRECISION_HIGH)
 	#define MY_HIGHP_OR_MEDIUMP highp
 #else
@@ -137,6 +144,6 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
     float scale = 0.2*(-0.03 - 0.3*max(0., 0.3-mid_dist))
                 *hovering*(length(mouse_offset)*length(mouse_offset))/(2. -mid_dist);
 
-    return transform_projection * vertex_position + vec4(0,0,0,scale);
+    return transform_projection * vertex_position + vec4(0.0,0.0,0.0,scale);
 }
 #endif
