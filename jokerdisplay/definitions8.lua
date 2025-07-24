@@ -19,7 +19,40 @@ local jd_def = JokerDisplay.Definitions
 --	Dottler
 --	Orbeetle
 --	Nickit
+jd_def["j_poke_nickit"] = {
+  text = {
+    { text = "+$" },
+    { ref_table = "card.ability.extra", ref_value = "money" },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  text_config = { colour = G.C.GOLD },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
+}
+
 --	Thievul
+jd_def["j_poke_thievul"] = {
+  text = {
+    { text = "+$" },
+    { ref_table = "card.joker_display_values", ref_value = "money" },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  text_config = { colour = G.C.GOLD },
+  calc_function = function(card)
+    if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
+      card.joker_display_values.money = math.min(G.jokers.cards[1].sell_cost*2, 15)
+    else
+      card.joker_display_values.money = 0
+    end
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
+}
+
 --	Gossifleur
 --	Eldegoss
 --	Wooloo
