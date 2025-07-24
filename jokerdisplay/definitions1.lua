@@ -1207,16 +1207,9 @@ jd_def["j_poke_meowth"] = {
 jd_def["j_poke_persian"] = {
     text = {
         { text = "+$" },
-        { ref_table = "card.joker_display_values", ref_value = "money" },
+        { ref_table = "card.ability.extra", ref_value = "money" },
     },
     text_config = { colour = G.C.GOLD },
-    calc_function = function(card)
-        if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-            card.joker_display_values.money = math.min(G.jokers.cards[1].sell_cost*2, 15)
-        else
-            card.joker_display_values.money = 0
-        end
-    end
 }
 
 jd_def["j_poke_psyduck"] = {
