@@ -469,6 +469,18 @@ jd_def["j_poke_ampharos"] = {
   },
 }
 
+--	Mega Ampharos
+jd_def["j_poke_mega_ampharos"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bellossom
 jd_def["j_poke_bellossom"] = {
     text = {
@@ -1083,6 +1095,25 @@ jd_def["j_poke_steelix"] = {
     end
 }
 
+jd_def["j_poke_mega_steelix"] = {
+    text = {
+      { text = "+$", colour = G.C.GOLD },
+      { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+    },
+    reminder_text = {
+      { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+      local diamond_tally = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+        if playing_card:is_suit(card.ability.extra.suit) then diamond_tally = diamond_tally + 1 end
+      end
+
+      card.joker_display_values.money = diamond_tally
+      card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+    end
+}
+
 --	Snubbull
 jd_def["j_poke_snubbull"] = {
   text = {
@@ -1171,7 +1202,32 @@ jd_def["j_poke_scizor"] = {
             },
         },
     },
+}
 
+--	Mega Scizor
+jd_def["j_poke_mega_scizor"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "count", colour = G.C.ORANGE },
+    { text = "x" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.BLUE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    if G.jokers then
+      for _, joker_card in ipairs(G.jokers.cards) do
+        if joker_card.config.center.rarity and joker_card.config.center.rarity == 1 then
+          count = count + 1
+        end
+      end
+    end
+    card.joker_display_values.count = count
+    card.joker_display_values.localized_text = localize("k_common")
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = (card.config.center.rarity == 1 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
 }
 
 --	Shuckle
@@ -1203,6 +1259,16 @@ jd_def["j_poke_heracross"] = {
         card.joker_display_values.Xmult = card.ability.extra.Xmult
     else
         card.joker_display_values.Xmult = 1
+    end
+  end
+}
+
+-- Mega Heracross
+jd_def["j_poke_mega_heracross"] = {
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    if #JokerDisplay.current_hand >= 5 then
+      return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
     end
   end
 }
@@ -1429,6 +1495,18 @@ jd_def["j_poke_skarmory"] = {
 
 --	Houndour
 --	Houndoom
+--	Mega Houndoom
+jd_def["j_poke_mega_houndoom"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Kingdra
 jd_def["j_poke_kingdra"] = { 
     text = {
