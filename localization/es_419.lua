@@ -1,28 +1,5 @@
--- Welcome to es-419.lua!
+-- Welcome to es_419.lua!
 -- Me gustan los gatonejos
---[[
-Decks: Yes
-Jokers: Yes
-Settings/Mod: Yes
-Items: Yes
-Energy: Yes
-Deck Sleeves (requires Decksleeves Mod): Yes
-Boss Blinds: Yes
-Challenges: Yes
-Spectrals: Yes
-Tarots: Yes (there aren't any lmao)
-Stickers: Yes
-Planets: Yes (there aren't any lmao)
-Dictonary: Yes
-Editions: Yes
-Vouchers: Yes
-Tags: Yes
-Misc Infoqueues (ancient, baby, eitem, Type, etc): Yes
-Other (packs, stickers, etc): Yes
-Misc: Yes
-]]--
-
-
 return {
     descriptions = {
         Back = {
@@ -3359,7 +3336,7 @@ return {
             discovery_tooltip = {
               name = "Descubrir",
               text = {
-                "Todo el contenido de Pokermon no está descubierto","por defecto. Desactivar esta configuración hará que","descubras todo el contenido del mod","{C:red}Discovering all objects can't be undone{}"
+                "Todo el contenido de Pokermon no está descubierto","por defecto. Desactivar esta configuración hará que","descubras todo el contenido del mod","{C:red}Descubrir todo el contenido no puede deshacerse{}"
               }
             }, 
             pokemaster_tooltip = {
@@ -3414,6 +3391,82 @@ return {
                   "Crea una carta de {C:item}Objeto{}","y es {C:attention}descartada{} si está en","{C:attention}en tu mano{} cuando anotas fichas"
                 }
             },
+            --[[
+            grass_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:grass,C:white}Planta{}"
+                } 
+            },
+            fire_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:fire,C:white}Fuego{}"
+                } 
+            },
+            water_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:water,C:white}Agua{}"
+                } 
+            },
+            lightning_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:lightning,C:white}Eléctrico{}"
+                } 
+            },
+            psychic_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:psychic,C:white}Psíquico{}"
+                } 
+            },
+            fighting_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:fighting,C:white}Lucha{}"
+                } 
+            },
+            colorless_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:colorless,C:white}Incoloro{}"
+                } 
+            },
+            dark_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:dark,C:white}Oscuro{}"
+                } 
+            },
+            metal_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:metal,C:white}Metal{}"
+                } 
+            },
+            fairy_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:fairy,C:white}Hada{}"
+                } 
+            },
+            dragon_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:dragon,C:white}Dragón{}"
+                } 
+            },
+            earth_sticker = {
+                name = "Tipo",
+                text = {
+                    "{X:earth,C:white}Tierra{}"
+                } 
+            },
+            --]]
+            --Since these are normally discovered by default these will probably not matter
+            --But they COULD matter? Right? Right??????
             undiscovered_energy = {
                 name = "No se descubrió",
                 text = {
@@ -3655,6 +3708,8 @@ return {
             poke_earth_badge = "Tierra",
             
         },
+        --These are the Labels
+        --You know how things like seals and editions have those badges at the bottom? That's what this is for!
         labels = {
             poke_pink_seal_seal = "Sello Rosado",
             poke_silver_seal = "Sello Plateado",
@@ -3691,3 +3746,4 @@ return {
         },
     }
 }
+--Fioreboba
