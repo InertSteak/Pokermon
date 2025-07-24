@@ -263,9 +263,6 @@ jd_def["j_poke_pidgey"] = {
     for _, scoring_card in pairs(scoring_hand) do
       local rank_found = false
       local suit_found = false
-      if scoring_card.ability.effect == 'Stone Card' then
-        goto continue
-      end
 
       for _, v in pairs(ranks) do
         if v == scoring_card:get_id() then
@@ -282,11 +279,11 @@ jd_def["j_poke_pidgey"] = {
         end
       end
 
-      if rank_found == false then
+      if rank_found == false and (not SMODS.has_no_rank(scoring_card)) and not scoring_card.debuff then
         table.insert(ranks, scoring_card:get_id())
         num_ranks = num_ranks + 1
       end
-      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) then
+      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) and not scoring_card.debuff then
         table.insert(suits, scoring_card.base.suit)
         num_suits = num_suits + 1
       end
@@ -295,7 +292,6 @@ jd_def["j_poke_pidgey"] = {
       num_suits = 4
     end
     card.joker_display_values.mult = (num_ranks + num_suits) * card.ability.extra.mult_mod
-    ::continue::
   end
 }
 
@@ -314,9 +310,6 @@ jd_def["j_poke_pidgeotto"] = {
     for _, scoring_card in pairs(scoring_hand) do
       local rank_found = false
       local suit_found = false
-      if scoring_card.ability.effect == 'Stone Card' then
-        goto continue
-      end
 
       for _, v in pairs(ranks) do
         if v == scoring_card:get_id() then
@@ -333,11 +326,11 @@ jd_def["j_poke_pidgeotto"] = {
         end
       end
 
-      if rank_found == false then
+      if rank_found == false and (not SMODS.has_no_rank(scoring_card)) and not scoring_card.debuff then
         table.insert(ranks, scoring_card:get_id())
         num_ranks = num_ranks + 1
       end
-      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) then
+      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) and not scoring_card.debuff then
         table.insert(suits, scoring_card.base.suit)
         num_suits = num_suits + 1
       end
@@ -346,7 +339,6 @@ jd_def["j_poke_pidgeotto"] = {
       num_suits = 4
     end
     card.joker_display_values.mult = (num_ranks + num_suits) * card.ability.extra.mult_mod
-    ::continue::
   end
 }
 
@@ -365,9 +357,6 @@ jd_def["j_poke_pidgeot"] = {
     for _, scoring_card in pairs(scoring_hand) do
       local rank_found = false
       local suit_found = false
-      if scoring_card.ability.effect == 'Stone Card' then
-        goto continue
-      end
 
       for _, v in pairs(ranks) do
         if v == scoring_card:get_id() then
@@ -384,11 +373,11 @@ jd_def["j_poke_pidgeot"] = {
         end
       end
 
-      if rank_found == false then
+      if rank_found == false and (not SMODS.has_no_rank(scoring_card)) and not scoring_card.debuff then
         table.insert(ranks, scoring_card:get_id())
         num_ranks = num_ranks + 1
       end
-      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) then
+      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) and not scoring_card.debuff then
         table.insert(suits, scoring_card.base.suit)
         num_suits = num_suits + 1
       end
@@ -397,7 +386,6 @@ jd_def["j_poke_pidgeot"] = {
       num_suits = 4
     end
     card.joker_display_values.mult = (num_ranks + num_suits) * card.ability.extra.mult_mod
-    ::continue::
   end
 
 }
@@ -440,11 +428,11 @@ jd_def["j_poke_mega_pidgeot"] = {
         end
       end
 
-      if rank_found == false then
+      if rank_found == false and (not SMODS.has_no_rank(scoring_card)) and not scoring_card.debuff then
         table.insert(ranks, scoring_card:get_id())
         num_ranks = num_ranks + 1
       end
-      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) then
+      if suit_found == false and (not SMODS.has_no_suit(scoring_card)) and not scoring_card.debuff then
         table.insert(suits, scoring_card.base.suit)
         num_suits = num_suits + 1
       end
@@ -453,7 +441,6 @@ jd_def["j_poke_mega_pidgeot"] = {
       num_suits = 4
     end
     card.joker_display_values.Xmult = 1 + ((num_ranks + num_suits) * card.ability.extra.Xmult_multi)
-    ::continue::
   end
 
 }
