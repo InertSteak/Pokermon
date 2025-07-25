@@ -1371,7 +1371,9 @@ poke_set_sprites = function(self, card, front)
     if not card.ability.extra.loaded_pos and card.ability.extra.loaded_sprite then
       card.ability.extra.loaded_pos = card.config.center.pos
     end
-    card.children.center:set_sprite_pos(card.ability.extra.loaded_pos)
+    if card.ability.extra.loaded_pos then 
+      card.children.center:set_sprite_pos(card.ability.extra.loaded_pos) 
+    end
   end
 end
 
