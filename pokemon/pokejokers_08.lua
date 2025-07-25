@@ -987,7 +987,7 @@ local houndour={
         card.ability.extra.active = true
       end
     end
-    if context.discard then
+    if context.discard and context.other_card then
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
     end
@@ -1052,7 +1052,7 @@ local houndoom={
         card.ability.extra.active = true
       end
     end
-    if context.discard then
+    if context.discard and context.other_card then
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
     end
