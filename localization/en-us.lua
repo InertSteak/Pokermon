@@ -5512,7 +5512,7 @@ return {
           },
         },
         v_dictionary = {
-            
+          poke_discards = "+#1# Discards",
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},

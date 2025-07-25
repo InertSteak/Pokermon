@@ -34,10 +34,13 @@ local shroomish={
     if context.setting_blind then
       local bonus = pseudorandom('shroomish')
       if bonus > .66 then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_hands', vars = {card.ability.extra.hands}}, colour = G.C.CHIPS})
         ease_hands_played(card.ability.extra.hands)
       elseif bonus > .33 then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'poke_discards', vars = {card.ability.extra.d_size}}, colour = G.C.MULT})
         ease_discard(card.ability.extra.d_size)
       else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
       end
@@ -76,10 +79,13 @@ local breloom={
     if context.setting_blind then
       local bonus = pseudorandom('shroomish')
       if bonus > .66 then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_hands', vars = {card.ability.extra.hands}}, colour = G.C.CHIPS})
         ease_hands_played(card.ability.extra.hands)
       elseif bonus > .33 then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'poke_discards', vars = {card.ability.extra.d_size}}, colour = G.C.MULT})
         ease_discard(card.ability.extra.d_size)
       else
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
       end
