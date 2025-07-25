@@ -39,17 +39,6 @@ local mega_ampharos={
   pos = {x = 0, y = 2},
   soul_pos = {x = 1, y = 2},
   config = {extra = {Xmult = 1, Xmult_mod = 0.3}},
-  loc_txt = {
-    name = "Mega Ampharos",
-    text = {
-      "{X:mult,C:white} X#1# {} Mult",
-      "When Blind is selected, set",
-      "hand size to {C:attention}half{} your",
-      "deck size then lose all",
-      "discards and all but {C:attention}1{} hand",
-      "{C:inactive}(rounded up, currently {C:attention}#2#{C:inactive})"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, G.deck and math.ceil(#G.deck.cards/2) or 0}}

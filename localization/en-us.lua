@@ -2285,6 +2285,17 @@ return {
                   "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
                 }
             },
+            j_poke_mega_ampharos = {
+                name = "Mega Ampharos",
+                text = {
+                  "{X:mult,C:white} X#1# {} Mult",
+                  "When Blind is selected, increase",
+                  "hand size to {C:attention}half{} your",
+                  "deck size then lose all",
+                  "discards and all but {C:attention}1{} hand",
+                  "{C:inactive}(rounded up, currently {C:attention}#2#{C:inactive})"
+                }
+            },
             j_poke_marill = {
                 name = 'Marill',
                 text = {
