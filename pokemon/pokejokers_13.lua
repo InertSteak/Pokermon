@@ -323,6 +323,7 @@ local jirachi_invis = {
   perishable_compat = false,
   blueprint_compat = false,
   no_collection = true,
+  aux_poke = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       local other_joker = nil
