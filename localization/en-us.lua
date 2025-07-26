@@ -4156,7 +4156,7 @@ return {
             j_poke_everstone = {
                 name = 'Everstone',
                 text = {
-                    "Pokemon {C:attention}can't{} evolve",
+                    "Pokemon {C:attention}can't{} evolve or transform",
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "{C:attention}Basic{} and {C:attention}Baby{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
                 } 
