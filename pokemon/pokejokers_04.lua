@@ -154,7 +154,7 @@ local gengar={
   ptype = "Psychic",
   atlas = "Pokedex1",
   gen = 1,
-  eternal_compat = false,
+  eternal_compat = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
