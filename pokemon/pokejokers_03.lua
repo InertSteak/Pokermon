@@ -1137,9 +1137,6 @@ local dodrio={
           end
         end
       end
-      poke_debug(first_face)
-      poke_debug(second_face)
-      poke_debug(third_face)
       if context.other_card == first_face or context.other_card == second_face or context.other_card == third_face then
         return {
             mult = card.ability.extra.mult,
