@@ -743,7 +743,20 @@ get_family_keys = function(cardname, custom_prefix, card)
       table.insert(keys, form)
     end
   end
-  
+    
+  if card and card.config and card.config.center and card.config.center.item_req then
+    local item_key = nil
+    if type(card.config.center.item_req) == "table" then
+      for i = 1, #card.config.center.item_req do
+        item_key = 'c_'..(initial_custom_prefix or 'poke')..'_'..card.config.center.item_req[i]
+        table.insert(keys, item_key)
+      end
+    else
+      item_key = 'c_'..(initial_custom_prefix or 'poke')..'_'..card.config.center.item_req
+      table.insert(keys, item_key)
+    end
+  end
+    
   return keys
 end
 
