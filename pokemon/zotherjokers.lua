@@ -448,7 +448,7 @@ local rival = {
         
         G.E_MANAGER:add_event(Event({
           func = function()
-            remove(self, card, context)
+            remove(self, card, context, true)
             return true
           end
         }))
