@@ -320,7 +320,7 @@ return {
             c_poke_emergy = {
                 name = "Emergía",
                 text = {
-                    "Crea {C:attention}1{} {C:green}Energía{} al azar","con {C:dark_edition}negativo{} por cada","{C:attention}Jolly Joker{} o {C:legendary}M Joker{}"
+                    "Crea {C:attention}1{} {C:green}Energía{} al azar","con {C:dark_edition}negativo{} por cada","{C:attention}Comodín alegre{} o {C:legendary}comodín M{}"
                 },
             },
         },
@@ -338,7 +338,7 @@ return {
             -- HA HA! Not anymore!
 
             m_poke_hazard = {
-                name = "Carta Trampa",
+                name = "Carta trampa",
                 text = {
                     "{C:attention}+1{} tamaño de mano","No tiene categoría o palo y","es removida de tu baraja","al final de la ronda",
                 },
@@ -706,13 +706,13 @@ return {
             j_poke_meowth = {
                 name = "Meowth",
                 text = {
-                    "Gana {C:money}$#1#{} al","final de la ronda","{C:inactive,s:0.8}(Evoluciona tras {C:attention,s:0.8}#2#{C:inactive,s:0.8} rondas)"
+                    "Gana {C:money}$#1#{} al final de la ronda","{br:2}ERROR - CONTACT STEAK","La primera carta de la {C:attention}suerte{}","que se activa {C:green}con éxito{} en cada","ronda aumenta el pago en {C:money}$#2#{}","{C:inactive,s:0.8}(Evoluciona cuando tiene","{C:money,s:0.8}$#1#{C:inactive,s:0.8} / $#3# de pago)"
                 } 
             },
             j_poke_persian = {
                 name = "Persian",
                 text = {
-                    "Gana {C:money}${} igual al {C:attention}doble{} del valor","de venta del {C:attention}comodín{} más a la","izquierda al final de la ronda","{C:inactive,s:0.8}(Excepto a sí mismo)","{C:inactive}(Actual {C:money}$#1#{C:inactive}, Máximo de {C:money}$15{C:inactive})",
+                    "Gana {C:money}$#1#{} al final de la ronda","{C:green}#3# en #4#{} probabilidades de ganar el {C:attention}doble{}","{br:2}ERROR - CONTACT STEAK","La primera carta de la {C:attention}suerte{} que se","activa {C:green}con éxito{} en cada ronda aumenta","el pago en {C:money}$#2#{}",
                 } 
             },
             j_poke_psyduck = {
@@ -1554,6 +1554,12 @@ return {
                   "Obtiene {X:mult,C:white}X#2#{} Multi por cada {C:attention}carta de","{C:attention}juego{} que es {C:attention}agregada{} a tu baraja","{C:inactive}(Actual {X:mult,C:white}X#1#{C:inactive} Multi)",
                 }
             },
+            j_poke_mega_ampharos = {
+                name = "Mega Ampharos",
+                text = {
+                  "{X:mult,C:white} X#1# {} Multi","Cuando se selecciona la {C:attention}ciega{}, aumenta","el tamaño de mano a la {C:attention}mitad{} del","tamaño de tu baraja, pierdes todos los","descartes y juegas solo {C:attention}1{} mano","{C:inactive}(Aproximado, actualmente {C:attention}#2#{C:inactive})"
+                }
+            },
             j_poke_marill = {
                 name = 'Marill',
                 text = {
@@ -1797,13 +1803,13 @@ return {
             j_poke_swinub = {
                 name = "Swinub",
                 text = {
-                  "La primera carta jugada otorga {C:mult}+#1#{} Multi por cada","{C:attention}carta de piedra{} y {C:attention}de vidrio{} en la mano jugada","{br:2}text needs to be here to work","{C:green}#3# en #4#{} probabilidades de ganar {C:money}$#2#{}","al final de la ronda","{C:inactive,s:0.8}(Evoluciona tras {C:attention,s:0.8}#5#{C:inactive,s:0.8} rondas)",
+                  "La primera carta jugada otorga","{C:mult}+#1#{} Multi por cada {C:attention}carta {C:attention}de piedra{}","y {C:attention}de vidrio{} en la mano jugada","{br:2}text needs to be here to work","{C:green}#3# en #4#{} probabilidades de ganar {C:money}$#2#{}","al final de la ronda","{C:inactive,s:0.8}(Evoluciona tras {C:attention,s:0.8}#5#{C:inactive,s:0.8} rondas)",
                 }
             },
             j_poke_piloswine = {
               name = "Piloswine",
               text = {
-                "La primera carta jugada otorga {C:mult}+#1#{} Multi por cada","{C:attention}carta de piedra{} y {C:attention}de vidrio{} en la mano jugada","{br:2}text needs to be here to work","{C:green}#3# en #4#{} probabilidades de ganar {C:money}$#2#{}","al final de la ronda","{C:inactive,s:0.8}(Evoluciona tras jugar {C:attention,s:0.8}#5#{C:inactive,s:0.8} cartas de piedra o vidrio)",
+                "La primera carta jugada otorga","{C:mult}+#1#{} Multi por cada {C:attention}carta {C:attention}de piedra{}","y {C:attention}de vidrio{} en la mano jugada","{br:2}text needs to be here to work","{C:green}#3# en #4#{} probabilidades de ganar {C:money}$#2#{}","al final de la ronda","{C:inactive,s:0.8}(Evoluciona tras jugar {C:attention,s:0.8}#5#{C:inactive,s:0.8} cartas de piedra o vidrio)",
               }
             },
             j_poke_heracross = {
@@ -2193,7 +2199,7 @@ return {
             j_poke_jirachi_copy = {
                 name = 'Jirachi',
                 text = {
-                    "Copies ability of {C:attention}Joker{} to the right","as if it was {C:pink}Energized{} an extra time",
+                    "Copia la habilidad del {C:attention}comodín{} a la","derecha como si estuviera {C:pink}Energizado{} una vez adicional",
                 }
             },
             j_poke_jirachi_fixer = {
@@ -2562,6 +2568,18 @@ return {
                   "{C:chips}+#1#{} Fichas si la mano","jugada no tiene {C:hearts}#2#{} que anotan","{br:3}ERROR - CONTACT STEAK","Evita la muerte si las fichas obtenidas","son al menos un {C:attention}50%{} de lo requerido","{C:inactive}(#3#){}"
                 }
             },
+            j_poke_nickit = {
+                name = "Nickit",
+                text = {
+                    "Gana {C:money}$#1#{} al","final de la ronda","{C:inactive,s:0.8}(Evoluciona tras {C:attention,s:0.8}#2#{C:inactive,s:0.8} rondas)"
+                } 
+            },
+            j_poke_thievul = {
+                name = "Thievul",
+                text = {
+                    "Gana {C:money}${} igual al {C:attention}doble{} del valor","de venta del {C:attention}comodín{} más a la","izquierda al final de la ronda","{C:inactive,s:0.8}(Excepto a sí mismo)","{C:inactive}(Actual {C:money}$#1#{C:inactive}, Máximo de {C:money}$15{C:inactive})",
+                } 
+            },
             j_poke_yamper = {
                 name = 'Yamper',
                 text = {
@@ -2644,13 +2662,13 @@ return {
             j_poke_fidough = {
                 name = "Fidough",
                 text = {
-                  "Obtiene {C:chips}+#2#{} Fichas si la mano","jugada contiene un(a) {C:attention}#3#{}","La {C:attention}categoría{} requerida aumenta","cada que se activa","{C:inactive,s:0.8}(Cuando la categoría es la más alta,","{C:inactive,s:0.8}se vuelve la menor)","{C:inactive}(Actual {C:chips}+#1#{C:inactive} Fichas)","{C:inactive,s:0.8}(Evoluciona cuando tienes un","{C:inactive,s:0.8}comodín tipo {X:fire,C:white,s:0.8}Fuego{C:inactive,s:0.8})",
+                  "Obtiene {C:chips}+#2#{} Fichas si la mano","jugada contiene un(a) {C:attention}#3#{}","La {C:attention}categoría{} requerida aumenta","cada que se activa","{C:inactive,s:0.8}(Cuando es la más alta, se vuelve la menor)","{C:inactive}(Actual {C:chips}+#1#{C:inactive} Fichas)","{C:inactive,s:0.8}(Evoluciona cuando tienes un","{C:inactive,s:0.8}comodín tipo {X:fire,C:white,s:0.8}Fuego{C:inactive,s:0.8})",
                 }
             },
             j_poke_dachsbun = {
                 name = "Dachsbun",
                 text = {
-                  "Obtiene {C:chips}+#2#{} Fichas si la mano","jugada contiene un(a) {C:attention}#3#{}","La {C:attention}categoría{} requerida aumenta","cada que se activa","{br:4}ERROR - CONTACT STEAK","Aumenta las fichas ganadas en {C:chips}+2{} por","cada comodín tipo {X:fire,C:white}Fuego{} que tengas","{C:inactive,s:0.8}(Cuando la categoría es la más alta,","{C:inactive,s:0.8}se vuelve la menor)","{C:inactive}(Actual {C:chips}+#1#{C:inactive} Fichas)",
+                  "Obtiene {C:chips}+#2#{} Fichas si la mano","jugada contiene un(a) {C:attention}#3#{}","La {C:attention}categoría{} requerida aumenta","cada que se activa","{br:4}ERROR - CONTACT STEAK","Aumenta las fichas ganadas en {C:chips}+2{} por","cada comodín tipo {X:fire,C:white}Fuego{} que tengas","{C:inactive,s:0.8}(Cuando es la más alta, se vuelve la menor)","{C:inactive}(Actual {C:chips}+#1#{C:inactive} Fichas)",
                 }
             },
             j_poke_tinkatink = {
@@ -3327,6 +3345,12 @@ return {
                 "Copia a un comodín hasta que es vendido,","destruido o copias otra habilidad","La copia aparece en una ventana adicional","y cuando haces clic derecho en Smeargle","Se restablece cuando copias uno nuevo"
               }
             },
+            unlimited_energy_tooltip = {
+              name = "Energía ilimitada",
+              text = {
+                "Puedes usar {C:pink}Energías{} en comodines","cuantas veces quieras"
+              }
+            },
             precise_energy_tooltip = {
                 name = "Escalado Preciso de Energía",
                 text = {
@@ -3339,10 +3363,124 @@ return {
                 "Todo el contenido de Pokermon no está descubierto","por defecto. Desactivar esta configuración hará que","descubras todo el contenido del mod","{C:red}Descubrir todo el contenido no puede deshacerse{}"
               }
             }, 
-            pokemaster_tooltip = {
-              name = "Pokemon Master Mode",
+            pokemononly_tooltip = {
+              name = "Solo Pokémons",
               text = {
-                "Pokemon Only setting applied","Additional Stakes are available"
+                "Solo los comodines {C:attention}Pokémon{} aparecerán",
+              }
+            },
+            gen1_tooltip = {
+              name = "Generación 1 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la primera","generación aparecerán"
+              }
+            },
+            gen2_tooltip = {
+              name = "Generación 2 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la segunda","generación aparecerán"
+              }
+            },
+            gen3_tooltip = {
+              name = "Generación 3 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la tercera","generación aparecerán"
+              }
+            },
+            gen4_tooltip = {
+              name = "Generación 4 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la cuarta","generación aparecerán"
+              }
+            },
+            gen5_tooltip = {
+              name = "Generación 5 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la quinta","generación aparecerán"
+              }
+            },
+            gen6_tooltip = {
+              name = "Generación 6 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la sexta","generación aparecerán"
+              }
+            },
+            gen7_tooltip = {
+              name = "Generación 7 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la séptima","generación aparecerán"
+              }
+            },
+            gen8_tooltip = {
+              name = "Generación 8 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la octava","generación aparecerán"
+              }
+            },
+            gen9_tooltip = {
+              name = "Generación 9 permitida",
+              text = {
+                "Comodines {C:attention}Pokémon{} de la novena","generación aparecerán"
+              }
+            },
+            hazards_on_tooltip = {
+              name = "Cartas trampa permitidas",
+              text = {
+                "Comodines {C:attention}Pokémon{} que agreguen","{C:purple}cartas trampa{} aparecerán"
+              }
+            },
+            shinyplayingcard_tooltip = {
+              name = "Variocolor en las cartas de juego",
+              text = {
+                "Permite que las {C:attention}cartas de juego{}","puedan tener la edición {C:dark_edition}variocolor{}"
+              }
+            },
+            legacycontent_tooltip = {
+              name = "Contenido antiguo",
+              text = {
+                "Permite contenido que ha","sido removido"
+              }
+            },
+            jokecontent_tooltip = {
+              name = "Contenido de broma",
+              text = {
+                "Permite contenido que se","creó de broma"
+              }
+            },
+            splashcard_tooltip = {
+              name = "Carta de Pokémon al inicio",
+              text = {
+                "Reemplaza la carta cuando entras al juego","con un comodín Pokémon al azar",
+              }
+            },
+            title_tooltip = {
+              name = "Pantalla de título Pokémon",
+              text = {
+                "Reemplaza la pantalla de título normal","con una versión de Pokermon",
+              }
+            },
+            altart_tooltip = {
+              name = "Arte alternativo",
+              text = {
+                "Usa sprites alternativos para","ciertos comodines Pokémon",
+              }
+            },
+            animation_tooltip = {
+              name = "Habilitar animaciones",
+              text = {
+                "Habilita sprites animados para","ciertos comodines Pokémon",
+              }
+            },
+            allowpokeballs_tooltip = {
+              name = "Permitir Poké Balls",
+              text = {
+                "Permite que los {C:item}objetos{} de Poké Balls aparezcan",
+              }
+            },
+            pokemaster_tooltip = {
+              name = "Modo Maestro Pokémon",
+              text = {
+                "Se habilitó Solo Pokémon","Pozos adicionales están disponibles"
               }
             },
             designed_by = {
@@ -3579,10 +3717,20 @@ return {
             poke_settings_shiny_playing_cards = "¿Variocolor en las cartas de juego?",
             poke_settings_jokers_only = "¿Solo comodines?",
             poke_settings_no_evolutions = "¿No evoluciones?",
-            poke_settings_pokeballs = "¿Poké Balls?",
+            poke_settings_pokeballs = "¿Permitir Poké Balls?",
             poke_settings_pokedex_number = "¿Números de la Pokédex?",
             poke_settings_pokemon_splash = "¿Carta de Pokémon cuando inicias?",
-            poke_settings_pokemon_gen_one = "¿Solo la gen. 1?",
+            poke_settings_pokemon_title = "¿Pantalla de título de Pokermon?",
+            poke_settings_pokemon_gen_one = "¿Permitir la generación 1?",
+            poke_settings_pokemon_gen_two = "¿Permitir la generación 2?",
+            poke_settings_pokemon_gen_three = "¿Permitir la generación 3?",
+            poke_settings_pokemon_gen_four = "¿Permitir la generación 4?",
+            poke_settings_pokemon_gen_five = "¿Permitir la generación 5?",
+            poke_settings_pokemon_gen_six = "¿Permitir la generación 6?",
+            poke_settings_pokemon_gen_seven = "¿Permitir la generación 7?",
+            poke_settings_pokemon_gen_eight = "¿Permitir la generación 8?",
+            poke_settings_pokemon_gen_nine = "¿Permitir la generación 9?",
+            poke_settings_pokemon_hazards_on = "¿Permitir cartas trampa?",
             poke_settings_pokemon_precise_energy = "¿Usar el escalado preciso de energía?",
             poke_settings_pokemon_discovery = "¿! Descubrimientos?",
             poke_settings_pokemon_altart = "¿Arte alternativo?",
@@ -3600,7 +3748,7 @@ return {
             poke_credits_community_manager = "Community Managers: ",
             poke_credits_special_thanks = "Agradecimientos Especiales A: ",
             poke_credits_localization = "Localización: ",
-            poke_credits_sound = "Audio: ",
+            poke_credits_sound = "Ingeniero de Audio: ",
 
             poke_plus_pokeitem = "+1 Objeto",
             poke_plus_energy = "+1 Energía",
@@ -3706,6 +3854,7 @@ return {
             poke_fairy_badge = "Hada",
             poke_dragon_badge = "Dragón",
             poke_earth_badge = "Tierra",
+            poke_bird_badge = "¿Pájaro?",
             
         },
         --These are the Labels
@@ -3738,7 +3887,7 @@ return {
           },
         },
         v_dictionary = {
-            
+            poke_discards = "+#1# Descartes",
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} ranura de comodín cuando la ciega jefe es derrotada {C:inactive}(hasta 5)"},
