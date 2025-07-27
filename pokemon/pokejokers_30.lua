@@ -121,8 +121,10 @@ local dragapult={
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.negative) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    if pokermon_config.detailed_tooltips then
+      if not center.edition or (center.edition and not center.edition.negative) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+      end
     end
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult, 1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
@@ -301,10 +303,12 @@ local kleavor={
   config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
-    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
-    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 

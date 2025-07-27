@@ -110,8 +110,10 @@ local farigiraf={
   config = {extra = {Xmult_multi = 2.2, score = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Cryptid"}}
-    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Cryptid"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
+    end
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -177,8 +179,10 @@ local dudunsparce={
     local alt_key = nil
     if center.ability.extra.form == 1 then
       alt_key = "j_poke_dudunsparce2"
-      info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
-      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Coupon Tag"}}
+      if pokermon_config.detailed_tooltips then
+        info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
+        info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Coupon Tag"}}
+      end
     end
     return {vars = {center.ability.extra.card_slots, center.ability.extra.pack_slots, center.ability.extra.voucher_slots}, key = alt_key}
   end,

@@ -135,7 +135,9 @@ local bonsly={
   config = {extra = {Xmult_minus = 0.75, rounds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -175,9 +177,11 @@ local mimejr={
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    info_queue[#info_queue+1] = {key = 'red_seal', set = 'Other'}
-    info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+      info_queue[#info_queue+1] = {key = 'red_seal', set = 'Other'}
+      info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
+    end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 2,
@@ -219,8 +223,10 @@ local happiny={
   config = {extra = {Xmult_minus = 0.5,rounds = 2, odds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+      info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
+    end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2,
@@ -271,8 +277,10 @@ local munchlax={
   config = {extra = {Xmult_minus = 0.5,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 2,

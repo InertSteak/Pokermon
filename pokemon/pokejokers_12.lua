@@ -23,7 +23,9 @@ local feebas={
   config = {extra = {mult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
+    end
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 3, 
@@ -98,9 +100,11 @@ local wynaut={
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+      info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+    end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   rarity = 3,

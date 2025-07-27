@@ -31,7 +31,9 @@ local tinkatink={
   config = {extra = {mult = 5,rounds = 5, cards_debuffed = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
   end,
   rarity = 3,
@@ -78,7 +80,9 @@ local tinkatuff={
   config = {extra = {mult = 10,rounds = 5, cards_debuffed = 16}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
   end,
   rarity = "poke_safari",
@@ -125,8 +129,10 @@ local tinkaton={
   config = {extra = {mult = 15,rounds = 5, cards_debuffed = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.cards_debuffed}}
   end,
   rarity = "poke_safari",

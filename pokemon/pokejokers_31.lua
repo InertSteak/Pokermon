@@ -5,8 +5,10 @@ local ursaluna={
   config = {extra = {mult = 0,mult_mod = 3,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.polychrome) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    if pokermon_config.detailed_tooltips then
+      if not center.edition or (center.edition and not center.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
     end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
@@ -257,7 +259,9 @@ local spidops = {
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-    info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
+    end
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
     if G.playing_cards then

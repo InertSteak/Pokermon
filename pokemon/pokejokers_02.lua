@@ -82,7 +82,9 @@ local nidorino={
   config = {extra = {mult = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    end
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 2, 
@@ -157,7 +159,9 @@ local clefairy={
   config = {extra = {mult = 3, suit = "Clubs"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    end
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular')}}
   end,
   rarity = 1, 
@@ -238,7 +242,9 @@ local vulpix={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   calculate = function(self, card, context)
@@ -275,9 +281,11 @@ local ninetales={
   config = {extra = {odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
-    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
-    info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
+      info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari", 
@@ -330,7 +338,9 @@ local jigglypuff={
   config = {extra = {mult = 2, chips = 10, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_moonstone
+    end
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.chips}}
   end,
   rarity = 1, 
@@ -564,8 +574,10 @@ local gloom={
   config = {extra = {mult = 3, mult2 = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
+    end
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
   end,
   rarity = 2,
@@ -1087,7 +1099,9 @@ local growlithe={
   config = {extra = {mult = 8}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_firestone
+    end
     return {vars = {center.ability.extra.mult}}
   end,
   rarity = 1, 
@@ -1118,7 +1132,9 @@ local arcanine={
   config = {extra = {Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+    end
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 

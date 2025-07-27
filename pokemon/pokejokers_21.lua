@@ -9,7 +9,9 @@ local elgyem={
   config = {extra = {top_planets = 5,  current_planet_count = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    end
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
     return {vars = {card.ability.extra.top_planets, card.ability.extra.current_planet_count, self.config.evo_rqmt}}
   end,
@@ -87,7 +89,9 @@ local beheeyem={
   config = {extra = {top_planets = 3, boosters_to_open = 9}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    end
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
     return {vars = {center.ability.extra.top_planets, center.ability.extra.boosters_to_open}}
   end,
@@ -185,7 +189,9 @@ local litwick={
   config = {extra = {mult = 3, money_minus = 1, sell_goal = 7}, evo_rqmt = 13},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    end
     return {vars = {center.ability.extra.money_minus, self.config.evo_rqmt, center.sell_cost, center.ability.extra.mult, center.ability.extra.sell_goal}}
   end,
   rarity = 2,
@@ -227,7 +233,9 @@ local lampent={
   config = {extra = {money_minus = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    end
     return {vars = {center.ability.extra.money_minus, center.sell_cost}}
   end,
   rarity = 3,

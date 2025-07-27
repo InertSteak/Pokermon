@@ -16,6 +16,9 @@ local aron = {
   enhancement_gate = 'm_steel',
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    end
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
@@ -59,6 +62,10 @@ local lairon = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)
@@ -103,6 +110,11 @@ local aggron = {
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+      info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+    end
     return { vars = { center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.eaten } }
   end,
   calculate = function(self, card, context)

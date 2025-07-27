@@ -14,7 +14,9 @@ local sylveon={
   config = {extra = {Xmult_multi = 1.2, rerolls = 0, reroll_goal = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Charm', 'Juggle'}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Charm', 'Juggle'}}
+    end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rerolls, center.ability.extra.reroll_goal}}
   end,
   rarity = "poke_safari", 

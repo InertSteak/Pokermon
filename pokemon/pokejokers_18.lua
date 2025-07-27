@@ -285,7 +285,9 @@ local boldore = {
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
 
     local to_add = math.floor(52 / abbr.hazard_ratio)
     if G.playing_cards then

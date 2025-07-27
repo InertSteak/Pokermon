@@ -7,8 +7,10 @@ local poliwhirl={
   config = {extra = {mult = 6, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
+    end
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
                     colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
@@ -154,8 +156,10 @@ local kadabra={
   config = {extra = {odds = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 3, 
@@ -203,9 +207,11 @@ local alakazam={
   config = {extra = {odds = 2, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
+      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
   end,
   rarity = "poke_safari", 
@@ -264,7 +270,9 @@ local mega_alakazam={
   config = {extra = {Xmult_multi2 = 2, Xmult_multi = 1.5, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+    end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.card_limit}}
   end,
   rarity = "poke_mega",
@@ -353,7 +361,9 @@ local machoke={
   config = {extra = {hands = 2, discards = 2, mult = 10}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
   rarity = 3, 
@@ -478,7 +488,9 @@ local weepinbell={
   config = {extra = {chips = 32}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
+    end
 		return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2, 
@@ -642,7 +654,9 @@ local graveler={
   config = {extra = {chips = 175, h_size = 2, rounds = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
   rarity = 3, 
@@ -827,7 +841,9 @@ local slowpoke2={
   config = {extra = {Xmult = 2, rounds = 5, odds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
+    end
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 1, 
@@ -869,7 +885,9 @@ local slowbro={
   config = {extra = {Xmult_mod = 0.4, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    end
     local xmult_total = center.ability.extra.Xmult
     if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.PLAY_TAROT then
       xmult_total = xmult_total + G.GAME.current_round.hands_played * center.ability.extra.Xmult_mod
@@ -947,7 +965,9 @@ local magnemite={
   config = {extra = {Xmult_multi = 1.5, rounds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+    end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rounds}}
   end,
   rarity = 2, 
@@ -975,8 +995,10 @@ local magneton={
   config = {extra = {Xmult_multi = 1.5, Xmult_multi2 = 0.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
+    end
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
@@ -1019,8 +1041,10 @@ local farfetchd={
   config = {extra = {money = 4, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
+    end
     return {vars = {center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 
@@ -1306,7 +1330,9 @@ local shellder={
   config = {extra = {retriggers = 1, odds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
+    end
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 2, 

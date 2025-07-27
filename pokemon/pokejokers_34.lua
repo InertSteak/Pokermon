@@ -13,6 +13,9 @@ local gimmighoul={
   config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+    end
     return {vars = {center.ability.extra.money, center.ability.extra.money_seen, center.ability.extra.money_goal}}
   end,
   rarity = 3,

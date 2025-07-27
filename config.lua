@@ -1,5 +1,6 @@
 return {
   ["shiny_playing_cards"]=false,
+  ["detailed_tooltips"]=true,
   ["precise_energy"]=true,
   ["pokeballs"]=true,
   ["no_evos"]=false,

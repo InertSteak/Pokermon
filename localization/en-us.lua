@@ -5013,6 +5013,14 @@ return {
                 "have the {C:dark_edition}Shiny{} edition"
               }
             },
+            detailed_tooltips_tooltip = {
+              name = "Detailed Tooltips",
+              text = {
+                "All tooltips will be displayed",
+                "Turning this off will remove most",
+                "tooltips from Pokemon Jokers",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {
@@ -5339,6 +5347,7 @@ return {
             poke_settings_pokemon_only = "Pokemon Only?",
             poke_settings_unlimited_energy = "Unlmited Energy?",
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",
+            poke_settings_pokemon_detailed_tooltips = "Detailed Tooltips?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",
             poke_settings_pokeballs = "Allow Pokéballs?",
