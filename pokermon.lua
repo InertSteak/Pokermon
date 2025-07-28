@@ -171,6 +171,8 @@ for _, file in ipairs(pfiles) do
   end
 end
 
+--This is a new comment
+
 --Load consumable types
 local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
 
