@@ -387,7 +387,6 @@ jd_def["j_poke_pidgeot"] = {
     end
     card.joker_display_values.mult = (num_ranks + num_suits) * card.ability.extra.mult_mod
   end
-
 }
 
 jd_def["j_poke_mega_pidgeot"] = {
@@ -409,9 +408,6 @@ jd_def["j_poke_mega_pidgeot"] = {
     for _, scoring_card in pairs(scoring_hand) do
       local rank_found = false
       local suit_found = false
-      if scoring_card.ability.effect == 'Stone Card' then
-        goto continue
-      end
 
       for _, v in pairs(ranks) do
         if v == scoring_card:get_id() then
