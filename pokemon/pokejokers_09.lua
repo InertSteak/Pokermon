@@ -394,7 +394,7 @@ local lugia={
   config = {extra = {Xmult = 1, Xmult_mod = 1, to_draw = 40, drawn = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.to_draw, math.max(0, center.ability.extra.to_draw - center.ability.extra.drawn)}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.to_draw, center.ability.extra.to_draw - (center.ability.extra.drawn % center.ability.extra.to_draw)}}
   end,
   rarity = 4,
   cost = 20,
@@ -409,8 +409,8 @@ local lugia={
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-        card.ability.extra.drawn = card.ability.extra.drawn - card.ability.extra.to_draw
-        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        card.ability.extra.Xmult = card.ability.extra.Xmult + (card.ability.extra.Xmult_mod * math.floor(card.ability.extra.drawn/card.ability.extra.to_draw))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
         return {
           message = localize('k_upgrade_ex'),
           colour = G.C.XMULT
