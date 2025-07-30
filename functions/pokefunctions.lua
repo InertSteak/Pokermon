@@ -263,6 +263,9 @@ remove = function(self, card, context, check_shiny)
 end
 
 poke_evolve = function(card, to_key, immediate, evolve_message)
+  if G.GAME.modifiers.apply_randomizer then
+    to_key = get_random_poke_key('randomizer')
+  end
   if immediate then
     poke_backend_evolve(card, to_key)
   else
@@ -1023,10 +1026,10 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
     if string.lower(pokerarity) == "uncommon" then pokerarity = 2 end
     if string.lower(pokerarity) == "rare" then pokerarity = 3 end
   end
-  
+    
   for k, v in pairs(G.P_CENTERS) do
     if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and not exclude_keys[v.key] then
+       and not (poketype and poketype ~= v.ptype) and pokemon_in_pool(v) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key] then
       local no_dup = true
       if G.jokers and G.jokers.cards and not next(find_joker("Showman")) then
         for l, m in pairs(G.jokers.cards) do

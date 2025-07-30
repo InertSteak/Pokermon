@@ -294,10 +294,31 @@ local lonesome = {
     }
 }
 
-
+local randomizer = {
+    object_type = "Challenge",
+    key = "randomizer",
+    rules = {
+        custom = {
+            { id = 'apply_randomizer' },
+        },
+    },
+    jokers = {
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+}
 
 
 
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer}
 }

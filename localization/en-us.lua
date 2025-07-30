@@ -5326,6 +5326,7 @@ return {
             c_poke_littlecup = "Little Cup",
             c_poke_hammertime = "Hammertime",
             c_poke_lonesome = "Lonesome",
+            c_poke_randomizer = "Randomizer"
         },
         dictionary = {
             k_energy = "Energy",
@@ -5526,6 +5527,7 @@ return {
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
            ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
+           ch_c_apply_randomizer = {"Pokemon Jokers evolve into random Pokemon Jokers"},
         },
     }
 }
