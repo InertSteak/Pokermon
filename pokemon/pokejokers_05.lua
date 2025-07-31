@@ -602,7 +602,7 @@ local ditto={
         card.ability.perish_tally = G.GAME.perishable_rounds
         apply_type_sticker(card, "Colorless")
         return {
-          message = poke_evolve(card, chosen_joker_key, nil, localize("poke_transform_success"))
+          message = poke_evolve(card, chosen_joker_key, nil, localize("poke_transform_success"), true)
         }
       else
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})

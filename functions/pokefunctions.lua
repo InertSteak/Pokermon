@@ -262,8 +262,8 @@ remove = function(self, card, context, check_shiny)
   return true
 end
 
-poke_evolve = function(card, to_key, immediate, evolve_message)
-  if G.GAME.modifiers.apply_randomizer then
+poke_evolve = function(card, to_key, immediate, evolve_message, transformation)
+  if G.GAME.modifiers.apply_randomizer and not transformation then
     to_key = get_random_poke_key('randomizer')
   end
   if immediate then
