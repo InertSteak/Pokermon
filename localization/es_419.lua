@@ -1557,7 +1557,7 @@ return {
             j_poke_mega_ampharos = {
                 name = "Mega Ampharos",
                 text = {
-                  "{X:mult,C:white} X#1# {} multi","Cuando se selecciona la {C:attention}ciega{}, aumenta","el tamaño de mano a la {C:attention}mitad{} del","tamaño de tu baraja, pierdes todos los","descartes y juegas solo {C:attention}1{} mano","{C:inactive}(Aproximado, actualmente {C:attention}#2#{C:inactive})"
+                  "{X:mult,C:white} X#1# {} multi","Cuando se selecciona la {C:attention}ciega{}, cambia","el tamaño de mano a la {C:attention}mitad{} del","tamaño de tu baraja, pierdes todos los","descartes y juegas solo {C:attention}1{} mano","{C:inactive}(Aproximado, actualmente {C:attention}#2#{C:inactive})"
                 }
             },
             j_poke_marill = {
@@ -2794,25 +2794,25 @@ return {
             j_poke_rival = {
                 name = "Rival",
                 text = {
-                    "{C:mult}+#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
+                    "{C:mult}+#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega,","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
                 }
             },
             j_poke_bitter_rival = {
                 name = "Rival amargo",
                 text = {
-                    "{C:mult}+#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
+                    "{C:mult}+#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega,","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
                 }
             },
             j_poke_champion = {
                 name = "Campeón",
                 text = {
-                    "{X:mult,C:white}X#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
+                    "{X:mult,C:white}X#1#{} multi","Si tu puntuación es {C:attention}>#3#X{} de","lo requerido por la ciega,","{S:1.1,C:red,E:2}se autodestruye{} y gana {C:money}$#2#",
                 }
             },
             j_poke_mystery_egg = {
                 name = "Huevo misterioso",
                 text = {
-                  "Eclosiona en un Pokémon {C:attention}Básico{} o","{C:attention}Bebé{} tras {C:attention}#1#{} rondas","{C:pink}energizado{} si está disponible"
+                  "Eclosiona en un Pokémon {C:attention}Básico{} o","{C:attention}Bebé{} tras {C:attention}#1#{} rondas y","{C:pink}energizado{} una vez si se puede"
                 }
             },
             j_poke_billion_lions = {
@@ -3172,7 +3172,7 @@ return {
                 }
             },
             energy = {
-                name = "Energía Usada",
+                name = "Energía usada",
                 text = {
                     "{C:attention}#1#{}/#2#",
                 }
@@ -3702,6 +3702,7 @@ return {
             c_poke_littlecup = "Little Cup",
             c_poke_hammertime = "Hammertime",
             c_poke_lonesome = "Solitario",
+			c_poke_randomizer = "Randomizado"
         },
         dictionary = {
             k_energy = "Energía",
@@ -3748,15 +3749,15 @@ return {
             poke_settings_pokemon_master = "¿Modo maestro Pokémon?",
             poke_credits_actualcredits = "Créditos",
             poke_credits_thanks = "Gracias a",
-            poke_credits_lead = "Desarrollador Principal: ",
-            poke_credits_graphics = "Diseño Gráfico: ",
-            poke_credits_quality_assurance_main = "Control de Calidad: ",
+            poke_credits_lead = "Desarrollador principal: ",
+            poke_credits_graphics = "Diseño gráfico: ",
+            poke_credits_quality_assurance_main = "Control de calidad: ",
             poke_credits_developer = "Desarrolladores: ",
-            poke_credits_designer = "Asistentes de Diseño: ",
-            poke_credits_community_manager = "Community Managers: ",
-            poke_credits_special_thanks = "Agradecimientos Especiales A: ",
+            poke_credits_designer = "Asistentes de diseño: ",
+            poke_credits_community_manager = "Community managers: ",
+            poke_credits_special_thanks = "Agradecimientos especiales a: ",
             poke_credits_localization = "Localización: ",
-            poke_credits_sound = "Ingeniero de Audio: ",
+            poke_credits_sound = "Ingeniero de audio: ",
 
             poke_plus_pokeitem = "+1 Objeto",
             poke_plus_energy = "+1 Energía",
@@ -3771,7 +3772,7 @@ return {
             poke_dragon_ex = "¡Dragón!",
             poke_energized_ex = "¡Energizado!",
             poke_round_plus_ex = "¡Ronda completada!",
-            poke_unlimited_energy = "Infinito",
+            poke_unlimited_energy = "Ilimitado",
 
             --Some infoqueue/variable stuff
             farfetchd_infoqueue = "Farfetch\'d",
@@ -3900,6 +3901,7 @@ return {
         v_text = {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} ranura de comodín cuando la ciega jefe es derrotada {C:inactive}(hasta 5)"},
            ch_c_poke_nuzlocke = {"La primera tienda en cada apuesta contiene un {C:attention}Paquete de Bufón"},
+		   ch_c_apply_randomizer = {"Los comodines Pokémon evolucionan en otros Pokémon aleatorios"},
         },
     }
 }
