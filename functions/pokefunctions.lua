@@ -679,7 +679,7 @@ get_family_keys = function(cardname, custom_prefix, card)
   local extra = nil
   local initial_custom_prefix = custom_prefix
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
-  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_poke'..initial_custom_prefix..'_' or 'c_poke_' end
+  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_'..initial_custom_prefix..'_' or 'c_poke_' end
   for k, v in pairs(pokermon.family) do
     for x, y in pairs(v) do
       if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
@@ -763,7 +763,7 @@ get_family_keys = function(cardname, custom_prefix, card)
             evo_item_prefix = 'poke'
             break
           else
-            evo_item_prefix = custom_prefix
+            evo_item_prefix = initial_custom_prefix
           end 
         end
       item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
@@ -775,7 +775,7 @@ get_family_keys = function(cardname, custom_prefix, card)
           evo_item_prefix = 'poke'
           break
         else
-          evo_item_prefix = custom_prefix
+          evo_item_prefix = initial_custom_prefix
         end
       end
       item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req
