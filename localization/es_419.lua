@@ -3446,13 +3446,13 @@ return {
             legacycontent_tooltip = {
               name = "Contenido antiguo",
               text = {
-                "Permite contenido que ha","sido removido"
+                "Habilita contenido que ha","sido removido"
               }
             },
             jokecontent_tooltip = {
               name = "Contenido de broma",
               text = {
-                "Permite contenido que se","creó de broma"
+                "Habilita contenido que se","creó de broma"
               }
             },
             splashcard_tooltip = {
@@ -3724,6 +3724,7 @@ return {
             poke_settings_pokemon_only = "¿Solo Pokémons?",
             poke_settings_unlimited_energy = "¿Energía ilimitada?",
             poke_settings_shiny_playing_cards = "¿Variocolor en las cartas de juego?",
+			poke_settings_pokemon_detailed_tooltips = "¿Información detallada?",
             poke_settings_jokers_only = "¿Solo comodines?",
             poke_settings_no_evolutions = "¿No evoluciones?",
             poke_settings_pokeballs = "¿Permitir Poké Balls?",
