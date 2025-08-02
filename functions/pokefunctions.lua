@@ -679,7 +679,7 @@ get_family_keys = function(cardname, custom_prefix, card)
   local extra = nil
   local initial_custom_prefix = custom_prefix
   custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
-  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_poke'..initial_custom_prefix..'_' or 'c_poke_' end
+  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_'..initial_custom_prefix..'_' or 'c_poke_' end
   for k, v in pairs(pokermon.family) do
     for x, y in pairs(v) do
       if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
@@ -749,13 +749,36 @@ get_family_keys = function(cardname, custom_prefix, card)
     
   if card and card.config and card.config.center and card.config.center.item_req then
     local item_key = nil
+    local evo_item_prefix = nil
+    local native_evo_items = {
+      "firestone", "waterstone", "leafstone", "thunderstone", 
+      "dawnstone", "shinystone", "moonstone", "duskstone", 
+      "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc", 
+      "linkcable", "kingsrock", "dragonscale", "hardstone",
+    }
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
-        item_key = 'c_'..(initial_custom_prefix or 'poke')..'_'..card.config.center.item_req[i]
-        table.insert(keys, item_key)
+        for k, v in pairs(native_evo_items) do
+          if v == card.config.center.item_req[i] then
+            evo_item_prefix = 'poke'
+            break
+          else
+            evo_item_prefix = initial_custom_prefix
+          end 
+        end
+      item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
+      table.insert(keys, item_key)
       end
     else
-      item_key = 'c_'..(initial_custom_prefix or 'poke')..'_'..card.config.center.item_req
+      for k, v in pairs(native_evo_items) do
+        if v == card.config.center.item_req then
+          evo_item_prefix = 'poke'
+          break
+        else
+          evo_item_prefix = initial_custom_prefix
+        end
+      end
+      item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req
       table.insert(keys, item_key)
     end
   end
