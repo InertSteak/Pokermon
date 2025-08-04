@@ -185,7 +185,7 @@ return {
             c_poke_duskstone = {
                 name = "Piedra Noche",
                 text = {
-                    "Es una {C:attention}carta evolutiva{}","{br:2}ERROR - CONTACT STEAK","Gana {C:money}$#1#{} por cada comodín","{C:attention}Drenable{} y {C:attention}drena {C:money}$1{} de","sus valores de venta","{br:2}ERROR - CONTACT STEAK","Después de {C:attention}#2#{} {C:inactive}[#3#]{} rondas, no {C:attention}drena{}","y solo gana {C:money}$#1#{} por cada comodín","{C:inactive}(Actual {C:money}$#4#{C:inactive}/$#5# Máximo)"
+                    "Es una {C:attention}carta evolutiva{}","{br:2}ERROR - CONTACT STEAK","Gana {C:money}$#1#{} por cada comodín","{C:attention}drenable{} y {C:attention}drena {C:money}$1{} de","sus valores de venta","{br:2}ERROR - CONTACT STEAK","Después de {C:attention}#2#{} {C:inactive}[#3#]{} rondas, no {C:attention}drena{}","y solo gana {C:money}$#1#{} por cada comodín","{C:inactive}(Actual {C:money}$#4#{C:inactive}/$#5# Máximo)"
                 }
             },
             c_poke_dawnstone = {
@@ -209,7 +209,7 @@ return {
             c_poke_berry_juice_energy = {
                 name = "Zumo de Baya Energizado",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado de cualquier {C:pink}tipo{}","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado de cualquier {C:pink}tipo{}","{C:inactive}(Máximo de {C:attention}#1# {C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_berry_juice_spectral = {
@@ -239,7 +239,7 @@ return {
             c_poke_berry_juice_mystery = {
                 name = "Zumo de Baya Misterioso",
                 text = {
-                    "Crea un {C:item}Zumo de Baya{}","al azar"
+                    "Crea un {C:item}Zumo de Baya{} al azar"
                 }
             },
         },
@@ -247,74 +247,74 @@ return {
             c_poke_grass_energy = {
                 name = "Energía Planta",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:grass,C:white}Planta{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:grass,C:white}Planta{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_fire_energy = {
                 name = "Energía Fuego",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fire,C:white}Fuego{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fire,C:white}Fuego{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_water_energy = {
                 name = "Energía Agua",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:water,C:white}Agua{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:water,C:white}Agua{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_lightning_energy = {
                 name = "Energía Rayo",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:lightning,C:black}Rayo{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:lightning,C:black}Rayo{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_psychic_energy = {
                 name = "Energía Psíquica",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:psychic,C:white}Psíquico{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:psychic,C:white}Psíquico{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_fighting_energy = {
                 name = "Energía Lucha",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fighting,C:white}Lucha{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fighting,C:white}Lucha{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_colorless_energy = {
                 name = "Energía Incolora",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:colorless,C:white}Incoloro{} disponible","Tiene la mitad de efectividad con","comodines que no son de tipo {X:colorless,C:white}Incoloro{}","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)"
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:colorless,C:white}Incoloro{} disponible","Tiene la mitad de efectividad con","comodines que no son de tipo {X:colorless,C:white}Incoloro{}","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)"
                 },
             },
             c_poke_darkness_energy = {
                 name = "Energía Oscura",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:dark,C:white}Oscuro{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:dark,C:white}Oscuro{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_metal_energy = {
                 name = "Energía Metal",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:Metal,C:white}Metal{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:Metal,C:white}Metal{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_fairy_energy = {
                 name = "Energía Hada",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fairy,C:white}Hada{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:fairy,C:white}Hada{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             --Dragon deez
             c_poke_dragon_energy = {
                 name = "Energía Dragón",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:dragon,C:white}Dragón{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:dragon,C:white}Dragón{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_earth_energy = {
                 name = "Energía Tierra",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:earth,C:white}Tierra{} disponible","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:earth,C:white}Tierra{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_emergy = {
@@ -2916,7 +2916,7 @@ return {
             c_poke_double_rainbow_energy = {
                 name = "Doble Energía Arcoíris",
                 text = {
-                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado de cualquier","{C:pink}tipo{} {C:red}d{C:attention}o{C:green}s{} {C:red}v{C:attention}e{C:green}c{C:blue}e{C:purple}s{}","No ganas interés esta ronda","{C:inactive}(Máximo de {C:attention}#1#{C:inactive} aumentos por comodín)",
+                    "{C:pink}Energiza{} al comodín más a la","izquierda o seleccionado de cualquier","{C:pink}tipo{} {C:red}d{C:attention}o{C:green}s{} {C:red}v{C:attention}e{C:green}c{C:blue}e{C:purple}s{}","No ganas interés esta ronda","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_fake_banker = {
@@ -3250,7 +3250,7 @@ return {
                 }
             },
             mega_used_on = {
-                name = "Usado En",
+                name = "Usado en",
                 text = {
                     "{C:attention}#1#{}",
                 }
@@ -3366,67 +3366,67 @@ return {
             pokemononly_tooltip = {
               name = "Solo Pokémons",
               text = {
-                "Solo los comodines {C:attention}Pokémon{} aparecerán",
+                "Aparecerán solo los comodines {C:attention}Pokémon{}",
               }
             },
             gen1_tooltip = {
               name = "Generación 1 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la primera","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la primera generación"
               }
             },
             gen2_tooltip = {
               name = "Generación 2 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la segunda","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la segunda generación"
               }
             },
             gen3_tooltip = {
               name = "Generación 3 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la tercera","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la tercera generación"
               }
             },
             gen4_tooltip = {
               name = "Generación 4 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la cuarta","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la cuarta generación"
               }
             },
             gen5_tooltip = {
               name = "Generación 5 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la quinta","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la quinta generación"
               }
             },
             gen6_tooltip = {
               name = "Generación 6 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la sexta","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la sexta generación"
               }
             },
             gen7_tooltip = {
               name = "Generación 7 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la séptima","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la séptima generación"
               }
             },
             gen8_tooltip = {
               name = "Generación 8 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la octava","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la octava generación"
               }
             },
             gen9_tooltip = {
               name = "Generación 9 permitida",
               text = {
-                "Comodines {C:attention}Pokémon{} de la novena","generación aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","de la novena generación"
               }
             },
             hazards_on_tooltip = {
               name = "Cartas trampa permitidas",
               text = {
-                "Comodines {C:attention}Pokémon{} que agreguen","{C:purple}cartas trampa{} aparecerán"
+                "Aparecerán comodines {C:attention}Pokémon{}","que agreguen {C:purple}cartas trampa{}"
               }
             },
             shinyplayingcard_tooltip = {
@@ -3697,7 +3697,7 @@ return {
         challenge_names = {
             c_poke_poke_master = "Maestro Pokémon",
             c_poke_nuzlocke = "Nuzlocke",
-            c_poke_goodasgold = "Bueno como el Oro",
+            c_poke_goodasgold = "Tan bueno como el oro",
             c_poke_parenthood = "Paternidad",
             c_poke_littlecup = "Little Cup",
             c_poke_hammertime = "Hammertime",
@@ -3708,7 +3708,7 @@ return {
             k_energy = "Energía",
             k_item = "Objeto",
             k_poke_pocket_pack = "Paquete Pokémon",
-            k_poke_wish_pack = "Paquete de deseo",
+            k_poke_wish_pack = "Paquete de deseos",
             
             k_poke_baby = "Bebé",
             k_poke_safari = "Safari",
@@ -3773,7 +3773,7 @@ return {
             poke_dragon_ex = "¡Dragón!",
             poke_energized_ex = "¡Energizado!",
             poke_round_plus_ex = "¡Ronda completada!",
-            poke_unlimited_energy = "Ilimitado",
+            poke_unlimited_energy = "ilimitados",
 
             --Some infoqueue/variable stuff
             farfetchd_infoqueue = "Farfetch\'d",
