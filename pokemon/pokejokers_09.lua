@@ -185,7 +185,7 @@ local entei={
       target:juice_up()
       delay(0.6)
     end
-    if context.discard and context.other_card.entei_destroy and not context.blueprint then
+    if context.discard and context.other_card and context.other_card.entei_destroy and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
       return {
