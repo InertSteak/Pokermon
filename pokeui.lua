@@ -465,7 +465,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio",
+                  text = "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
