@@ -4134,6 +4134,22 @@ return {
                   "{C:inactive,s:0.8}(Resets at end of round)",
                 }
             },
+            j_poke_terapagos = {
+                name = 'Terapagos',
+                text = {
+                    "Create a {C:dark_edition}Negative{} {C:item}Tera Orb{}",
+                    "card when blind is selected",
+                    "{C:inactive,s:0.8}(Changes form with a {C:stellar,s:0.8}Stellar{C:inactive,s:0.8} sticker)",
+                }
+            },
+            j_poke_terapagost = {
+                name = 'Terapagos',
+                text = {
+                    "Create a {C:dark_edition}Negative{}",
+                    "{C:spectral}Double Rainbow Energy{}",
+                    "card when blind is selected",
+                }
+            },
             j_poke_missingno = {
                 name = 'Missingno.',
                 text = {
@@ -4586,6 +4602,12 @@ return {
                 name = "Type",
                 text = {
                   "{X:bird,C:white}Bird{}",
+                }
+            },
+            Stellar = {
+                name = "Type",
+                text = {
+                    "{C:stellar}Stellar{}",
                 }
             },
             --infoqueue used for things like kabuto and omanyte
@@ -5489,6 +5511,7 @@ return {
             poke_dragon_badge = "Dragon",
             poke_earth_badge = "Earth",
             poke_bird_badge = "Bird",
+            poke_stellar_badge = "Stellar",
             
         },
         --These are the Labels
