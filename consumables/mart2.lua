@@ -4,7 +4,7 @@ local moonstone = {
   name = "moonstone",
   key = "moonstone",
   set = "Item",
-  config = {max_highlighted = 5, min_highlighted = 1, odds = 2},
+  config = {min_highlighted = 1, odds = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     local handtext = localize('poke_none')
@@ -24,7 +24,7 @@ local moonstone = {
     if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
-    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
       return true
     end
     return false
