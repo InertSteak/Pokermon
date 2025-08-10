@@ -121,6 +121,7 @@ pokermon.family = {
     {"buizel", "floatzel"},
     {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
+    {"frillish", "jellicent"},
     {"elgyem", "beheeyem"},
     {"litwick", "lampent", "chandelure"},
     {"pansage", "simisage"},
