@@ -499,7 +499,7 @@ local frillish = {
 local jellicent = {
 	name = "jellicent", 
 	pos = {x = 1, y = 7},
-	config = {extra = {chips = 40, chip_mod = 5}},
+	config = {extra = {chips = 60, chip_mod = 5}},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Hwang2760"}}
