@@ -60,7 +60,9 @@ local mega_ampharos={
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + increase
       end
       ease_discard(-G.GAME.current_round.discards_left, nil, true)
-      ease_hands_played(-G.GAME.round_resets.hands + 1)
+      if G.GAME.blind.name ~= "The Needle" then
+        ease_hands_played(-G.GAME.current_round.hands_left + 1)
+      end
     end
     if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1  then
       return {
