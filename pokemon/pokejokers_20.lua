@@ -456,7 +456,7 @@ local vanilluxe={
 local frillish = {
 	name = "frillish", 
 	pos = {x = 0, y = 7},
-	config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 50},
+	config = {extra = {chips = 0, chip_mod = 3}, evo_rqmt = 60},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
