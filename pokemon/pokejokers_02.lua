@@ -1170,11 +1170,11 @@ local arcanine={
 local poliwag={
   name = "poliwag", 
   pos = {x = 7, y = 4},
-  config = {extra = {mult = 4, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1, rounds = 5}},
+  config = {extra = {mult = 4, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, localize(center.ability.extra.suits[center.ability.extra.indice],'suits_singular'),  
-                    colours = {G.C.SUITS[center.ability.extra.suits[center.ability.extra.indice]]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, localize(G.GAME.poke_poli_suit or "Spades",'suits_singular'),  
+                    colours = {G.C.SUITS[G.GAME.poke_poli_suit or "Spades"]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
   rarity = 1, 
@@ -1188,16 +1188,16 @@ local poliwag={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if not context.blueprint then
-          if card.ability.extra.indice == 4 then
-            card.ability.extra.indice = 1
-          else
-            card.ability.extra.indice = card.ability.extra.indice + 1
-          end
+          poke_change_poli_suit()
+          G.GAME.poke_poli_suit_change_triggered = true
         end
+      end
+      if context.after and G.GAME.poke_poli_suit_change_triggered then
+        G.GAME.poke_poli_suit_change_triggered = false
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play then
-      local scoring_suit = card.ability.extra.suits[card.ability.extra.indice]
+      local scoring_suit = G.GAME.poke_poli_suit or "Spades"
       if context.other_card:is_suit(scoring_suit) then
         if context.other_card.debuff then
           return {

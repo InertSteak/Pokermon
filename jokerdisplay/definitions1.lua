@@ -1382,7 +1382,7 @@ jd_def["j_poke_poliwag"] = {
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
         local count = 0
-        local suit = card.ability.extra.suits[card.ability.extra.indice]
+        local suit = G.GAME.poke_poli_suit or "Spades"
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then
@@ -1415,7 +1415,7 @@ jd_def["j_poke_poliwhirl"] = {
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
         local count = 0
-        local suit = card.ability.extra.suits[card.ability.extra.indice]
+        local suit = G.GAME.poke_poli_suit or "Spades"
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then
@@ -1456,7 +1456,7 @@ jd_def["j_poke_poliwrath"] = {
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
         local count = 0
-        local suit = card.ability.extra.suits[card.ability.extra.indice]
+        local suit = G.GAME.poke_poli_suit or "Spades"
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then

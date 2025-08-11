@@ -1433,6 +1433,26 @@ poke_load_individual_sprite = function(self, card, card_table, other_card)
   end
 end
 
+poke_change_poli_suit = function()
+  if not G.GAME.poke_poli_suit_change_triggered then
+    local suits = {"Spades", "Hearts", "Clubs", "Diamonds"}
+    if G.GAME.poke_poli_suit then
+      for i = 1, #suits do
+        if suits[i] == G.GAME.poke_poli_suit then
+          if i == #suits then
+            G.GAME.poke_poli_suit = suits[1]
+          else
+            G.GAME.poke_poli_suit = suits[i+1]
+          end
+          break
+        end
+      end
+    else
+      G.GAME.poke_poli_suit = "Hearts"
+    end
+  end
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570
