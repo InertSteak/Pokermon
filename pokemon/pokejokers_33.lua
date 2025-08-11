@@ -216,15 +216,17 @@ local dudunsparce={
     SMODS.change_voucher_limit(card.ability.extra.voucher_slots)
     if card.ability.extra.form == 1 then
       self:set_sprites(card)
-      G.E_MANAGER:add_event(Event({
-        func = (function()
-            add_tag(Tag('tag_coupon'))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
-        end)
-      }))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_wowthree')})
+      if not from_debuff then
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_coupon'))
+              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+              return true
+          end)
+        }))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_wowthree')})
+      end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
