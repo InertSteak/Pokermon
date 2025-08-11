@@ -1312,21 +1312,20 @@ local sandshrew={
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
         if v.shattered and card.ability.extra.glass_restored <= 0 then
-          card_to_copy = v
 
           G.E_MANAGER:add_event(Event({
               func = function()
-                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  local copy = copy_card(v, nil, nil, G.playing_card)
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
                   G.hand:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
+                  playing_card_joker_effects({copy})
                   return true
               end
           }))
-          playing_card_joker_effects({copy})
           
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
@@ -1393,21 +1392,19 @@ local sandslash={
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
         if v.shattered and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
-          card_to_copy = v
-
           G.E_MANAGER:add_event(Event({
               func = function()
-                  local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+                  local copy = copy_card(v, nil, nil, G.playing_card)
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
                   G.hand:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
+                  playing_card_joker_effects({copy})
                   return true
               end
           }))
-          playing_card_joker_effects({copy})
           
           card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
         end
