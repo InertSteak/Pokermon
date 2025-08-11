@@ -459,6 +459,7 @@ local frillish = {
 	config = {extra = {chips = 0, chip_mod = 3}, evo_rqmt = 60},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Hwang2760"}}
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
 	end,
 	rarity = 2,
@@ -501,6 +502,7 @@ local jellicent = {
 	config = {extra = {chips = 40, chip_mod = 5}},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Hwang2760"}}
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
 	end,
 	rarity = "poke_safari", 
