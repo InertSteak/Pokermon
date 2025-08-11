@@ -179,7 +179,7 @@ local zorua = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if not type_sticker_applied(card) then
+    if not type_sticker_applied(card) and not poke_is_in_collection(card) and not G.SETTINGS.paused then
       apply_type_sticker(card, "Dark")
     end
     if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
