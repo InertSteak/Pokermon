@@ -73,6 +73,8 @@ pokermon.family = {
     {"cyndaquil", "quilava", "typhlosion"},
     {"totodile", "croconaw", "feraligatr"},
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
+    {"poochyena", "mightyena"},
+    {"numel", "camerupt"},
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
     {"nosepass", "probopass"},
@@ -119,9 +121,11 @@ pokermon.family = {
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
+    {"buneary", "lopunny"},
     {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
     {"elgyem", "beheeyem"},
+    {"trubbish", "garbodor"},
     {"litwick", "lampent", "chandelure"},
     {"pansage", "simisage"},
     {"pansear", "simisear"},
@@ -341,7 +345,7 @@ poke_backend_evolve = function(card, to_key)
     values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
   end
 
-  if values_to_keep.cards_scored and values_to_keep.cards_scored >= 15 then
+  if values_to_keep.cards_scored and values_to_keep.cards_scored >= 15 and card.config.center.name == "spearow" then
     values_to_keep.upgrade = true
     values_to_keep.cards_scored = values_to_keep.cards_scored - 15
   end

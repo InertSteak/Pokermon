@@ -23,7 +23,116 @@ local ambipom={
 -- Drifloon 425
 -- Drifblim 426
 -- Buneary 427
+local buneary={
+  name = "buneary",
+  pos = {x = 12, y = 2},
+  config = {extra = {mult = 3,rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"King_Alloy"}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
+        if Mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+            colour = G.C.MULT,
+            mult_mod = Mult
+          }
+        end
+      end
+    end
+    return level_evo(self, card, context, "j_poke_lopunny")
+  end,
+}
 -- Lopunny 428
+local lopunny={
+  name = "lopunny",
+  pos = {x = 13, y = 2},
+  config = {extra = {mult = 5, Xmult = 2,scry = 2}},
+  loc_txt = {
+    name = "Lopunny",
+    text = {
+      "{C:purple}+#3# Foresight",
+      "{C:mult}+#1#{} Mult for",
+      "each unscored card",
+      "in played hand",
+      "{br:2}ERROR - CONTACT STEAK",
+      "{X:mult,C:white} X#2# {} Mult if an unscored",
+      "card has the {C:attention}same rank{}",
+      "as a {C:attention}Foreseen{} card"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"King_Alloy"}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.scry}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Mult = card.ability.extra.mult * math.abs(#context.scoring_hand - #context.full_hand)
+        local score_xmult = nil
+        local found_ranks = {}
+        for _,unscored_card in pairs(context.full_hand) do
+          if not SMODS.in_scoring(unscored_card, context.scoring_hand) then
+            found_ranks[unscored_card:get_id()] = true
+          end
+        end
+        for _,scry_card in pairs(G.scry_view.cards) do
+          if found_ranks[scry_card:get_id()] then
+            score_xmult = true
+            break
+          end
+        end
+        if Mult > 0 then
+          if score_xmult then
+            poke_debug("scoring Xmult")
+            return {
+              message = localize("poke_highjumpkick_ex"), 
+              colour = G.C.XMULT,
+              mult_mod = Mult,
+              Xmult_mod = card.ability.extra.Xmult
+            }
+          else
+            return {
+              message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+              colour = G.C.MULT,
+              mult_mod = Mult
+            }
+          end
+        end
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Mismagius 429
 local mismagius = {
   name = "mismagius",
@@ -319,5 +428,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
+        list = {ambipom, buneary, lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
 }

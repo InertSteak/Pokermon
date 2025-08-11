@@ -3079,6 +3079,26 @@ return {
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} total)"
                 } 
             },
+            j_poke_poochyena = {
+              name = "Poochyena",
+              text = {
+                "Gains {C:mult}+#2#{} Mult for each",
+                "card {C:attention}sold{} or {C:attention}destroyed",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_mightyena = {
+              name = "Mightyena",
+              text = {
+                "Gains {C:mult}+#2#{} Mult for each",
+                "card {C:attention}sold{} or {C:attention}destroyed",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gain increased by {C:mult}+#3#{} Mult",
+                "for each {X:dark,C:white}Dark{} Joker you have",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
+            },
             j_poke_zigzagoon = {
               name = "Zigzagoon",
               text = {
@@ -3159,6 +3179,25 @@ return {
                     "poker hand, then destroy them",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
+            },
+            j_poke_numel = {
+                name = "Numel",
+                text = {
+                  "{X:red,C:white}X#1#{} Mult every",
+                  "{C:attention}#3#{} cards scored",
+                  "{C:inactive}#4# remaining{}",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_camerupt = {
+              name = "Camerupt",
+              text = {
+                "{X:red,C:white}X#1#{} Mult every",
+                "{C:attention}#2#{} cards scored,",
+                "with {C:attention}Mult{} cards",
+                "counted twice",
+                "{C:inactive}#3# remaining{}",
+              }
             },
             j_poke_feebas = {
                 name = 'Feebas',
@@ -3317,6 +3356,28 @@ return {
                 "All {C:attention}Flushes{} and {C:attention}Straights{} can",
                 "be made with {C:attention}exactly 3{} cards",
               }
+            },
+            j_poke_buneary = {
+              name = "Buneary",
+              text = {
+                "{C:mult}+#1#{} Mult for",
+                "each unscored card",
+                "in played hand",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_lopunny = {
+                name = "Lopunny",
+                text = {
+                  "{C:purple}+#3# Foresight",
+                  "{C:mult}+#1#{} Mult for",
+                  "each unscored card",
+                  "in played hand",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{X:mult,C:white} X#2# {} Mult if an unscored",
+                  "card has the {C:attention}same rank{}",
+                  "as a {C:attention}Foreseen{} card"
+                }
             },
             j_poke_mismagius = {
                 name = 'Mismagius',
@@ -3616,6 +3677,30 @@ return {
                     "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
                     "Each {C:attention}Hazard Card held{} in hand",
                     "gives {C:mult}+#3#{} Mult and retriggers",
+                }
+            },
+            j_poke_trubbish = {
+              name = "Trubbish",
+              text = {
+                "Gains {C:chips}+#2#{} Chips and earns",
+                "{C:money}$#3#{} per discard if no",
+                "discards are used by",
+                "the end of the round",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)"
+              }
+            },
+            j_poke_garbodor = {
+                name = "Garbodor",
+                text = {
+                  "Gains {C:chips}+#2#{} Chips per discard",
+                  "if no discards are used",
+                  "by the end of the round",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Creates a {C:attention}Garbage Tag{} if",
+                  "no discards are used",
+                  "by the end of the ante",
+                  "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
             j_poke_zorua = {
@@ -5475,6 +5560,7 @@ return {
             poke_nasty_plot_ex = "Nasty Plot!",
             poke_iron_tail_ex = "Iron Tail!",
             poke_autotomize_ex = "Autotomize!",
+            poke_highjumpkick_ex = "High Jump Kick!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",

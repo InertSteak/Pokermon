@@ -1092,7 +1092,88 @@ local swampert={
   end
 }
 -- Poochyena 261
+local poochyena={
+  name = "poochyena",
+  pos = {x = 9, y = 0},
+  config = {extra = {mult = 0,mult_mod = 2,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.selling_card and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+    end
+    if context.remove_playing_cards and not context.blueprint then
+      for _, removed_card in ipairs(context.removed) do
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+      end
+    end
+    return level_evo(self, card, context, "j_poke_mightyena")
+  end,
+}
 -- Mightyena 262
+local mightyena={
+  name = "mightyena",
+  pos = {x = 0, y = 1},
+  config = {extra = {mult = 0,mult_mod = 2,mult_mod2 = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2, }}
+  end,
+  rarity = 2,
+  cost = 5,
+  gen = 3,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.mult > 0 then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.selling_card and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_mod2 * #find_pokemon_type("Dark")))
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+    end
+    if context.remove_playing_cards and not context.blueprint then
+      for _, removed_card in ipairs(context.removed) do
+        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_mod2 * #find_pokemon_type("Dark")))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+      end
+    end
+  end,
+}
 -- Zigzagoon 263
 local zigzagoon={
   name = "zigzagoon",
@@ -1191,5 +1272,5 @@ local linoone={
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
         list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, mega_tyranitar, lugia, ho_oh, celebi, 
-                treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, zigzagoon, linoone},
+                treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, poochyena, mightyena, zigzagoon, linoone},
 }

@@ -161,7 +161,95 @@ local aggron = {
 -- Wailmer 320
 -- Wailord 321
 -- Numel 322
+local numel={
+  name = "numel",
+  pos = {x = 0, y = 7},
+  config = {extra = {Xmult = 3, rounds = 4, cards_scored = 0, score_goal = 20}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and card.ability.extra.active then
+        card.ability.extra.cards_scored = 0
+      end
+      if context.joker_main and card.ability.extra.active then
+        card.ability.extra.active = false
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+      if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+        card.ability.extra.active = true
+        local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint then
+      card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
+    end
+    return level_evo(self, card, context, "j_poke_camerupt")
+  end,
+}
 -- Camerupt 323
+local camerupt={
+  name = "camerupt",
+  pos = {x = 1, y = 7},
+  config = {extra = {Xmult = 4, cards_scored = 0, score_goal = 20}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  gen = 3,
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and card.ability.extra.active then
+        card.ability.extra.cards_scored = 0
+      end
+      if context.joker_main and card.ability.extra.active then
+        card.ability.extra.active = false
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+      if context.after and card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+        card.ability.extra.active = true
+        local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint then
+      card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
+      if SMODS.has_enhancement(context.other_card, 'm_mult') then
+        card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
+      end
+    end
+  end,
+}
 -- Torkoal 324
 -- Spoink 325
 -- Grumpig 326
@@ -171,5 +259,5 @@ local aggron = {
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {aron, lairon, aggron},
+  list = {aron, lairon, aggron, numel, camerupt},
 }

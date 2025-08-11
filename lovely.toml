@@ -923,3 +923,24 @@ payload = '''
     end
 '''
 match_indent = false
+
+# Garbodor functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "G.GAME.current_round.discards_used = G.GAME.current_round.discards_used + 1"
+position = "after"
+payload = '''
+G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "G.GAME.round_resets.ante = G.GAME.round_resets.ante + mod"
+position = "after"
+payload = '''
+G.GAME.poke_ante_discards_used = 0
+'''
+match_indent = true
