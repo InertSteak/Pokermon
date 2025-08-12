@@ -144,7 +144,7 @@ local dawnstone = {
       message = localize('poke_dawn_info1')
     end
   
-    return {vars = {hand_played or localize('poke_none'), math.min(money_limit, money), money_limit, message}}
+    return {vars = {hand_played and localize(hand_played, 'poker_hands') or localize('poke_none'), math.min(money_limit, money), money_limit, message}}
   end,
   pos = { x = 4, y = 4 },
   atlas = "Mart",

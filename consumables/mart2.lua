@@ -10,8 +10,15 @@ local moonstone = {
     local handtext = localize('poke_none')
     if G.hand and G.hand.highlighted and #G.hand.highlighted > 0 then
       local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-      handtext = text
+      handtext = localize(text, 'poker_hands') or localize('poke_none')
+      for k, v in pairs(G.hand.highlighted) do
+        if v.facing == "back" then
+          handtext = "????"
+          break
+        end
+      end
     end
+    
     return {vars = {handtext, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
   end,
   pos = { x = 8, y = 3 },
