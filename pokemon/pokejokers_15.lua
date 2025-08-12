@@ -62,19 +62,6 @@ local lopunny={
   name = "lopunny",
   pos = {x = 13, y = 2},
   config = {extra = {mult = 5, Xmult = 2,scry = 2}},
-  loc_txt = {
-    name = "Lopunny",
-    text = {
-      "{C:purple}+#3# Foresight",
-      "{C:mult}+#1#{} Mult for",
-      "each unscored card",
-      "in played hand",
-      "{br:2}ERROR - CONTACT STEAK",
-      "{X:mult,C:white} X#2# {} Mult if an unscored",
-      "card has the {C:attention}same rank{}",
-      "as a {C:attention}Foreseen{} card"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"King_Alloy"}}
@@ -139,16 +126,6 @@ local mega_lopunny={
   pos = {x = 13, y = 5},
   soul_pos = {x = 14, y = 5},
   config = {extra = {scry = 5}},
-  loc_txt = {
-    name = "Mega Lopunny",
-    text = {
-      "{C:purple}+#1# Foresight",
-      "Gives {X:mult,C:white}X{} Mult",
-      "equal to the {C:attention}level",
-      "of {C:attention}Foreseen hand",
-      "{C:inactive}(Foreseen hand: {C:attention}#2#{C:inactive})",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"King_Alloy"}}

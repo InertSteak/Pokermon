@@ -2702,6 +2702,17 @@ return {
                     "a card {C:attention}held in hand{}"
                 }
             },
+            j_poke_mega_heracross = {
+                name = "Mega Heracross",
+                text = {
+                  "Retrigger all played cards {C:attention}twice{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Debuffs self this round",
+                  "if you play or discard",
+                  "less than {C:attention}5{} cards",
+                  "{C:inactive}(debuffs before scoring)"
+                }
+            },
             j_poke_corsola = {
               name = 'Corsola',
               text = {
@@ -2878,6 +2889,18 @@ return {
                 "{br:2}ERROR - CONTACT STEAK",
                 "Discarded cards permanently gain {C:mult}+#1#{} Mult",
               }
+            },
+            j_poke_mega_houndoom = {
+                name = "Mega Houndoom",
+                text = {
+                  "Discarding also discards",
+                  "{C:attention}all{} cards {C:attention}held{} in hand",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Gains {X:mult,C:white} X#2# {} Mult whenever",
+                  "cards are discarded",
+                  "resets at end of round",
+                  "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+                }
             },
             j_poke_miltank = {
                 name = "Miltank",
@@ -3199,6 +3222,15 @@ return {
                 "{C:inactive}#3# remaining{}",
               }
             },
+            j_poke_mega_camerupt = {
+              name = "Mega Camerupt",
+              text = {
+                "Gains {X:mult,C:white} X#2# {} Mult when",
+                "a {C:attention}Mult{} card is scored",
+                "resets at end of round",
+                "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+              }
+            },
             j_poke_feebas = {
                 name = 'Feebas',
                 text = {
@@ -3377,6 +3409,16 @@ return {
                   "{X:mult,C:white} X#2# {} Mult if an unscored",
                   "card has the {C:attention}same rank{}",
                   "as a {C:attention}Foreseen{} card"
+                }
+            },
+            j_poke_mega_lopunny = {
+                name = "Mega Lopunny",
+                text = {
+                  "{C:purple}+#1# Foresight",
+                  "Gives {X:mult,C:white}X{} Mult",
+                  "equal to the {C:attention}level",
+                  "of {C:attention}Foreseen hand",
+                  "{C:inactive}(Foreseen hand: {C:attention}#2#{C:inactive})",
                 }
             },
             j_poke_mismagius = {
@@ -5476,6 +5518,10 @@ return {
             poke_settings_pokemon_legacy = "Legacy Content?",
             poke_settings_enable_animations = "Enable Animations?",
             poke_settings_pokemon_master = "Pokemon Master Mode?",
+            poke_settings_pokemon_spritesheet = "Default Sprite Sheet",
+            poke_settings_pokemon_spritesheet_classic = "Classic",
+            poke_settings_pokemon_spritesheet_seriesa = "Series A",
+            
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
             poke_credits_lead = "Lead Developer: ",

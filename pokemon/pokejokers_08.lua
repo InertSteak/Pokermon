@@ -278,17 +278,6 @@ local mega_heracross={
   pos = {x = 6, y = 2},
   soul_pos = {x = 7, y = 2},
   config = {extra = {retriggers = 2}},
-  loc_txt = {
-    name = "Mega Heracross",
-    text = {
-      "Retrigger all played cards {C:attention}twice{}",
-      "{br:2}ERROR - CONTACT STEAK",
-      "Debuffs self this round",
-      "if you play or discard",
-      "less than {C:attention}5{} cards",
-      "{C:inactive}(debuffs before scoring)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {}}
@@ -1110,18 +1099,6 @@ local mega_houndoom={
   pos = {x = 8, y = 2},
   soul_pos = {x = 9, y = 2},
   config = {extra = {Xmult = 1, Xmult_mod = 2, oXmult = 1}},
-  loc_txt = {
-    name = "Mega Houndoom",
-    text = {
-      "Discarding also discards",
-      "{C:attention}all{} cards {C:attention}held{} in hand",
-      "{br:2}ERROR - CONTACT STEAK",
-      "Gains {X:mult,C:white} X#2# {} Mult whenever",
-      "cards are discarded",
-      "resets at end of round",
-      "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}

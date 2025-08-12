@@ -262,15 +262,6 @@ local mega_camerupt={
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_multi}}
   end,
-  loc_txt = {
-    name = "Mega Camerupt",
-    text = {
-      "Gains {X:mult,C:white} X#2# {} Mult when",
-      "a {C:attention}Mult{} card is scored",
-      "resets at end of round",
-      "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
-    }
-  },
   rarity = "poke_mega",
   cost = 12,
   gen = 3,
