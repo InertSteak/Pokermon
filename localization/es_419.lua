@@ -1818,6 +1818,18 @@ return {
                     "{X:mult,C:white} X#1# {} multi si ninguna carta que anota","tiene la {C:attention}misma categoría{} de","cualquier carta {C:attention}en tu mano{}"
                 }
             },
+			j_poke_mega_heracross = {
+                name = "Mega Heracross",
+                text = {
+                  "Reactiva todas las",
+				  "cartas jugadas {C:attention}dos veces",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Se debilita a sí mismo por",
+				  "esa ronda si juegas o descartas",
+				  "menos de {C:attention}5{} cartas",
+                  "{C:inactive}(Se debilita antes de anotar fichas)"
+                }
+            },
             j_poke_corsola = {
               name = 'Corsola',
               text = {
@@ -1931,6 +1943,18 @@ return {
               text = {
                 "Descartar más de {C:attention}3{} cartas también"," descarta {C:attention}todas{} las cartas {C:attention}en tu mano{}","{br:2}ERROR - CONTACT STEAK","Las cartas descartadas","ganan para siempre {C:mult}+#1#{} multi",
               }
+            },
+			j_poke_mega_houndoom = {
+                name = "Mega Houndoom",
+                text = {
+                  "Descartar también descarta",
+                  "{C:attention}todas{} las cartas {C:attention}en tu mano{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Obtiene {X:mult,C:white} X#2# {} multi",
+                  "cuando descartas",
+                  "{C:inactive,s:0.8}(Se restablece al final de la ronda)",
+                  "{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
+                }
             },
             j_poke_miltank = {
                 name = "Miltank",
@@ -2151,6 +2175,15 @@ return {
                 "{C:inactive}Faltan #3#{}",
               }
             },
+			j_poke_mega_camerupt = {
+              name = "Mega Camerupt",
+              text = {
+                "Obtiene {X:mult,C:white} X#2# {} multi cuando",
+                "una carta {C:attention}multi{} anota",
+                "{C:inactive,s:0.8}(Se restablece al final de la ronda)",
+                "{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
+              }
+            },
             j_poke_feebas = {
                 name = 'Feebas',
                 text = {
@@ -2278,12 +2311,21 @@ return {
                 name = "Lopunny",
                 text = {
                   "{C:purple}+#3# Profecía",
-                  "{C:mult}+#1#{} multi por cada carta que ",
+                  "{C:mult}+#1#{} multi por cada carta que",
                   "no anota en la mano jugada",
                   "{br:2}ERROR - CONTACT STEAK",
                   "{X:mult,C:white} X#2# {} multi si una carta que no",
                   "anota tiene la {C:attention}misma categoría{}",
                   "que una carta {C:attention}profetizada{}"
+                }
+            },
+			j_poke_mega_lopunny = {
+                name = "Mega Lopunny",
+                text = {
+                  "{C:purple}+#1# Profecía",
+                  "Otorga {X:mult,C:white}X{} multi igual al {C:attention}nivel{} de",
+                  "la {C:attention}mano de póker profetizada",
+                  "{C:inactive}(Mano profetizada: {C:attention}#2#{C:inactive})",
                 }
             },
             j_poke_mismagius = {
@@ -2643,7 +2685,7 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Crea una {C:attention}etiqueta{} por cada {C:attention}#3# {C:inactive}[#2#]{}","{C:green}cambios en la tienda{} si tienes {C:attention}< 2{} etiquetas","{br:2.5}ERROR - CONTACT STEAK","Cada carta con {C:attention}edición{} {C:attention}en tu{}","{C:attention}mano{} otorga {X:mult,C:white} X#1# {} multi",
+                    "Crea una {C:attention}etiqueta{} por cada","{C:attention}#3# {C:inactive}[#2#]{} {C:green}cambios en la tienda{}","si tienes {C:attention}< 2{} etiquetas","{br:2.5}ERROR - CONTACT STEAK","Cada carta con {C:attention}edición{} {C:attention}en tu{}","{C:attention}mano{} otorga {X:mult,C:white} X#1# {} multi",
                 } 
             },
             j_poke_grubbin = {
@@ -3850,6 +3892,10 @@ return {
             poke_settings_pokemon_legacy = "¿Contenido antiguo?",
             poke_settings_enable_animations = "¿Habilitar animaciones?",
             poke_settings_pokemon_master = "¿Modo maestro Pokémon?",
+			poke_settings_pokemon_spritesheet = "Sprite sheet por defecto",
+            poke_settings_pokemon_spritesheet_classic = "Clásico",
+            poke_settings_pokemon_spritesheet_seriesa = "Serie A",
+			
             poke_credits_actualcredits = "Créditos",
             poke_credits_thanks = "Gracias a",
             poke_credits_lead = "Desarrollador principal: ",
