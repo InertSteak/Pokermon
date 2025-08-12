@@ -249,6 +249,60 @@ local camerupt={
       end
     end
   end,
+  megas = { "mega_camerupt" },
+}
+-- Mega Camerupt 323-1
+local mega_camerupt={
+  name = "mega_camerupt",
+  pos = {x = 6, y = 4},
+  soul_pos = {x = 7, y = 4},
+  config = {extra = {Xmult = 1, Xmult2 = 1, Xmult_multi = 0.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_multi}}
+  end,
+  loc_txt = {
+    name = "Mega Camerupt",
+    text = {
+      "Gains {X:mult,C:white} X#2# {} Mult when",
+      "a {C:attention}Mult{} card is scored",
+      "resets at end of round",
+      "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+    }
+  },
+  rarity = "poke_mega",
+  cost = 12,
+  gen = 3,
+  stage = "Mega",
+  ptype = "Fire",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint and SMODS.has_enhancement(context.other_card, 'm_mult') then
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_multi
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
 }
 -- Torkoal 324
 -- Spoink 325
@@ -259,5 +313,5 @@ local camerupt={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {aron, lairon, aggron, numel, camerupt},
+  list = {aron, lairon, aggron, numel, camerupt, mega_camerupt},
 }

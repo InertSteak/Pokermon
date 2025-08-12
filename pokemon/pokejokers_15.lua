@@ -108,7 +108,6 @@ local lopunny={
         end
         if Mult > 0 then
           if score_xmult then
-            poke_debug("scoring Xmult")
             return {
               message = localize("poke_highjumpkick_ex"), 
               colour = G.C.XMULT,
@@ -132,7 +131,70 @@ local lopunny={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  megas = { "mega_lopunny" },
 }
+-- Mega Lopunny 428-1
+local mega_lopunny={
+  name = "mega_lopunny",
+  pos = {x = 13, y = 5},
+  soul_pos = {x = 14, y = 5},
+  config = {extra = {scry = 5}},
+  loc_txt = {
+    name = "Mega Lopunny",
+    text = {
+      "{C:purple}+#1# Foresight",
+      "Gives {X:mult,C:white}X{} Mult",
+      "equal to the {C:attention}level",
+      "of {C:attention}Foreseen hand",
+      "{C:inactive}(Foreseen hand: {C:attention}#2#{C:inactive})",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"King_Alloy"}}
+    local hand = localize('poke_none')
+    if G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
+      local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
+      hand = text
+    end
+    return {vars = {center.ability.extra.scry, hand}}
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  gen = 4,
+  stage = "Mega",
+  ptype = "Colorless",
+  atlas = "Megas",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
+        local Xmult = nil
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          Xmult = to_number(G.GAME.hands[text].level)
+        else
+          Xmult = G.GAME.hands[text].level
+        end
+        poke_debug(to_number(G.GAME.hands[text].level))
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = Xmult
+        }
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
+
 -- Mismagius 429
 local mismagius = {
   name = "mismagius",
@@ -428,5 +490,5 @@ local munchlax={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
 }
