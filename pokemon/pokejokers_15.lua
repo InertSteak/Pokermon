@@ -155,7 +155,6 @@ local mega_lopunny={
         else
           Xmult = G.GAME.hands[text].level
         end
-        poke_debug(to_number(G.GAME.hands[text].level))
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.XMULT,
