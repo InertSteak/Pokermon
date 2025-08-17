@@ -1235,7 +1235,7 @@ local pikachu={
     end
     return {vars = {center.ability.extra.money}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 6,
   item_req = "thunderstone",
   stage = "Basic", 
@@ -1522,31 +1522,5 @@ local nidorina={
 }
 
 return {name = "Pokemon Jokers 01-30",
-        init = function()
-            local game_init_object = Game.init_game_object;
-            function Game:init_game_object()
-                local game = game_init_object(self)
-                game.current_round.bulb1card = {rank = 'Ace'}
-                return game
-            end
-            
-            local rmr = reset_mail_rank;
-            function reset_mail_rank()
-              rmr()
-              G.GAME.current_round.bulb1card = {rank = 'Ace'}
-              local valid_bulb_cards = {}
-              for k, v in ipairs(G.playing_cards) do
-                if v.ability.effect ~= 'Stone Card' and not SMODS.has_no_rank(v) then
-                  valid_bulb_cards[#valid_bulb_cards+1] = v
-                end
-              end
-              if valid_bulb_cards[1] then
-                local bulb_card = pseudorandom_element(valid_bulb_cards, pseudoseed('bulb'..G.GAME.round_resets.ante))
-                G.GAME.current_round.bulb1card.rank = bulb_card.base.value
-                G.GAME.current_round.bulb1card.id = bulb_card.base.id
-              end
-            end
-              
-        end,
         list = { bulbasaur, ivysaur, venusaur, mega_venusaur, charmander, charmeleon, charizard, mega_charizard_x, mega_charizard_y, squirtle, wartortle, blastoise, mega_blastoise, caterpie, metapod, butterfree, weedle, kakuna, beedrill, mega_beedrill, pidgey, pidgeotto, pidgeot, mega_pidgeot, rattata, raticate, spearow, fearow, ekans, arbok, pikachu, raichu, sandshrew, sandslash, nidoranf, nidorina, },
 }

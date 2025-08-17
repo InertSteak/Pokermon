@@ -624,16 +624,16 @@ local ditto={
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
-  config = {extra = {money_mod = 2, limit = 0, max = 5}},
+  config = {extra = {Xmult = 1.33}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
     end
-    return {vars = {center.ability.extra.money_mod, center.ability.extra.limit, center.ability.extra.max}}
+    return {vars = {center.ability.extra.Xmult}}
   end,
-  rarity = 2, 
-  cost = 4,
+  rarity = 1, 
+  cost = 3,
   item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   evo_list = {waterstone = "j_poke_vaporeon", thunderstone = "j_poke_jolteon", firestone = "j_poke_flareon", sunstone = "j_poke_espeon", moonstone = "j_poke_umbreon", 
               leafstone = "j_poke_leafeon", icestone = "j_poke_glaceon", shinystone = "j_poke_sylveon"},
@@ -643,16 +643,14 @@ local eevee={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and card.ability.extra.limit < 5 then
-      card.ability.extra.limit = card.ability.extra.limit + 1
-      ease_poke_dollars(card, "eevee", card.ability.extra.money_mod)
-      return {
-          message = localize('$')..card.ability.extra.money_mod,
-          colour = G.C.MONEY
-      }
-    end
-    if context.ending_shop and not context.blueprint then
-      card.ability.extra.limit = 0
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
     end
     return item_evo(self, card, context, nil)
   end
@@ -661,10 +659,10 @@ local eevee={
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 32, rerolls = 0}},
+  config = {extra = {chips = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.chips}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -675,29 +673,16 @@ local vaporeon={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.CHIPS})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
+    if context.individual and context.cardarea == G.play then
+        local bonus = card.ability.extra.chips
+        if SMODS.has_enhancement(context.other_card, 'm_bonus') then
+          bonus = bonus * 2
         end
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.CHIPS})
-        card.ability.extra.rerolls = 0
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+        context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + bonus
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS
         }
-      end
     end
   end
 }
@@ -705,10 +690,13 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 8, rerolls = 0}},
+  config = {extra = {money = 6}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.rerolls}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+    end
+    return {vars = {center.ability.extra.money}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -718,19 +706,20 @@ local jolteon={
   gen = 1,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.MONEY})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        ease_poke_dollars(card, "jolteon", card.ability.extra.money)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.MONEY})
-        card.ability.extra.rerolls = 0
-      end
+    if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      local earned = ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+      return {
+          dollars = earned,
+          func = function() -- This is for timing purposes, it runs after the dollar manipulation
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      G.GAME.dollar_buffer = 0
+                      return true
+                  end
+              }))
+          end
+      }
     end
   end
 }
@@ -738,11 +727,11 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}}, 
+  config = {extra = {Xmult_multi = 3}}, 
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -752,28 +741,27 @@ local flareon={
   gen = 1,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.XMULT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
+      local first_mult = nil
+      for i=1, #G.hand.cards do
+        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
+          first_mult = G.hand.cards[i]
+          break
         end
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.XMULT})
-        card.ability.extra.rerolls = 0
-        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
       end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+      if context.other_card == first_mult then
+        if context.other_card.debuff then
+            return {
+                message = localize('k_debuffed'),
+                colour = G.C.RED,
+                card = card,
+            }
+        else
+            return {
+                x_mult = card.ability.extra.Xmult_multi,
+                card = card
+            }
+        end
       end
     end
   end

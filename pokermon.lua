@@ -521,6 +521,14 @@ function get_flush(hand)
     return ret
   end
 end
+
+function SMODS.current_mod.reset_game_globals(run_start)
+  reset_bulba_rank()
+  reset_espeon_card()
+  reset_gligar_suit()
+  reset_sneasel_rank()
+end
+
 --Tutorial WIP
 --[[
 local gu = Game.update

@@ -482,9 +482,13 @@ end
 --	Leafeon
 jd_def["j_poke_leafeon"] = {
   reminder_text = {
-    { text = "Rerolls: ", colour = G.C.GREY },
-    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE }
+      { text = "(" },
+      { ref_table = "card.ability.extra",        ref_value = "h_size" },
+      { text = "/" },
+      { ref_table = "card.ability.extra", ref_value = "h_size_limit" },
+      { text = ")" },
   },
+  reminder_text_config = { scale = 0.35 },
 }
 
 --	Glaceon

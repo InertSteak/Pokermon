@@ -464,10 +464,10 @@ local yanmega={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {chip_mod = 5, rerolls = 0}},
+  config = {extra = {h_size = 7, h_mod = 1, h_size_limit = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.rerolls, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.rerolls}}
+    return {vars = {center.ability.extra.h_size, center.ability.extra.h_mod, center.ability.extra.h_size_limit}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -475,31 +475,39 @@ local leafeon={
   ptype = "Grass",
   atlas = "Pokedex4",
   gen = 4,
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        card.ability.extra.h_size = card.ability.extra.h_size - card.ability.extra.h_mod
+        G.hand:change_size(-card.ability.extra.h_mod)
+        return {
+            message = localize { type = 'variable', key = 'a_handsize_minus', vars = { card.ability.extra.h_mod } },
+            colour = G.C.FILTER
+        }
+      end
     end
-    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.rerolls > 0 then
-      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-      context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chip_mod * card.ability.extra.rerolls
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit then
+      card.ability.extra.h_size = card.ability.extra.h_size + card.ability.extra.h_mod
+      G.hand:change_size(card.ability.extra.h_mod)
       return {
-        extra = {message = localize('k_upgrade_ex'), colour = G.C.CHIPS},
-        colour = G.C.CHIPS,
-        card = card
+          message = localize { type = 'variable', key = 'a_handsize', vars = { card.ability.extra.h_mod } },
+          colour = G.C.FILTER
       }
     end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.rerolls = 0
-    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
   end
 }
 -- Glaceon 471
 local glaceon={
   name = "glaceon", 
   pos = {x = 0, y = 6},
-  config = {extra = {odds = 5}},
+  config = {extra = {odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}

@@ -1813,33 +1813,32 @@ return {
             j_poke_eevee = {
                 name = 'Eevee',
                 text = {
-                    "Earn {C:money}$#1#{} for the",
-                    "first {C:attention}5{} {C:green}rerolls{}",
-                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#3#)",
+                    "{X:mult,C:white} X#1# {} Mult",
                     "{C:inactive,s:0.8}(Evolves with...a lot)",
                 } 
             },
             j_poke_vaporeon = {
                 name = 'Vaporeon',
                 text = {
-                    "Gains {C:chips}+#2#{} Chips for",
-                    "every {C:attention}3{C:inactive} [#3#] {C:green}rerolls{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                    "Every played {C:attention}card{}",
+                    "permanently gains",
+                    "{C:chips}+#1#{} Chips when scored",
+                    "{C:attention}Doubled{} for {C:attention}Bonus{} cards"
                 } 
             },
             j_poke_jolteon = {
                 name = 'Jolteon',
                 text = {
-                    "Earn {C:money}$#1#{} for",
-                    "every {C:attention}3{C:inactive} [#2#] {C:green}rerolls{}",
+                    "Earn {C:money}$#1#{} for each",
+                    "discarded {C:attention}Gold{} card",
                 } 
             },
             j_poke_flareon = {
                 name = 'Flareon',
                 text = {
-                    "Gains {X:mult,C:white} X#2# {} Mult for",
-                    "every {C:attention}3{C:inactive} [#3#] {C:green}rerolls{}",
-                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+                    "First {C:attention}Mult{} card",
+                    "{C:attention}held{} in hand", 
+                    "gives {X:mult,C:white} X#1# {} Mult"
                 } 
             },
             j_poke_porygon = {
@@ -2441,17 +2440,17 @@ return {
                     "{br:3}ERROR - CONTACT STEAK",
                     "Each scored {V:1}#4#{} card",
                     "gives {X:mult,C:white}X#2#{} Mult",
-                    "{C:inactive,s:0.8}({C:attention,s:0.8}Rank{C:inactive,s:0.8}/{C:attention,s:0.8}Suit{C:inactive,s:0.8} are {C:attention,s:0.8}randomized{C:inactive,s:0.8} on each {C:green,s:0.8}Reroll{C:inactive,s:0.8})"
+                    "{C:inactive,s:0.7}Rank and Suit change every round{}"
                 } 
             },
             j_poke_umbreon = {
                 name = 'Umbreon',
                 text = {
-                    "Decrease level of played {C:attention}#1#{}",
-                    "{br:4}ERROR - CONTACT STEAK",
-                    "For every {C:attention}#2# {C:inactive}[#3#]{} decreases,",
-                    "create an {C:attention}Orbital Tag{} or {C:dark_edition}Negative Tag{}",
-                    "{C:inactive,s:0.8}(Required hand {C:attention,s:0.8}cycles{C:inactive,s:0.8} on each {C:green,s:0.8}Reroll{C:inactive,s:0.8})",
+                    "Decrease level of",
+                    "discarded {C:attention}#1#{}",
+                    "and add it to most",
+                    "played {C:attention}poker hand",
+                    "{C:inactive,s:0.7}Hand changes every round{}"
                 } 
             },
             j_poke_murkrow = {
@@ -3583,10 +3582,14 @@ return {
             j_poke_leafeon = {
                 name = 'Leafeon',
                 text = {
-                    "When a {C:attention}Lucky{} card triggers",
-                    "it permanently gains {C:chips}+#2#{} Chips",
-                    "per {C:green}Reroll{} used in last shop",
-                    "{C:inactive}(Currently #1# {C:green}Rerolls{C:inactive} used)"
+                    "{C:attention}+#1#{} hand size",
+                    "reduces by {C:red}#2#{}",
+                    "every hand played",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Gain {C:attention}+#2#{} hand size",
+                    "when a {C:attention}Lucky{} card",
+                    "{C:green}successfully{} triggers",
+                    "{C:inactive}(Max of {C:attention}+#3#{C:inactive} hand size){}"
                 } 
             },
             j_poke_glaceon = {
@@ -3950,11 +3953,10 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "Create a {C:attention}tag{} every {C:attention}#3# {C:inactive}[#2#]{} {C:green}rerolls{} ",
-                    "if you have {C:attention}< 2{} tags",
-                    "{br:2.5}ERROR - CONTACT STEAK",
-                    "Each {C:attention}editioned{} card {C:attention}held{}",
-                    "in hand gives {X:mult,C:white} X#1# {} Mult",
+                    "If {C:attention}first hand{} has",
+                    "exactly {C:attention}1{} unenhanced card,",
+                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
+                    "or {C:dark_edition}Polychrome{} to it",
                 } 
             },
             j_poke_grubbin = {

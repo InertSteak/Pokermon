@@ -1788,31 +1788,6 @@ local magby={
   end
 }
 
-return {name = "Pokemon Jokers 211-240", 
-        init = function()
-            local game_init_object = Game.init_game_object;
-            function Game:init_game_object()
-                local game = game_init_object(self)
-                game.current_round.sneaselcard = {rank = 'Ace'}
-                return game
-            end
-            
-            local rmr = reset_mail_rank;
-            function reset_mail_rank()
-              rmr()
-              G.GAME.current_round.sneaselcard = {rank = 'Ace'}
-              local valid_sneasel_cards = {}
-              for k, v in ipairs(G.playing_cards) do
-                if v.ability.effect ~= 'Stone Card' then
-                  valid_sneasel_cards[#valid_sneasel_cards+1] = v
-                end
-              end
-              if valid_sneasel_cards[1] then
-                local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
-                G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
-                G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
-              end
-            end
-        end,
+return {name = "Pokemon Jokers 211-240",
         list = {qwilfish, scizor, mega_scizor, shuckle, heracross, mega_heracross, sneasel, teddiursa, ursaring, slugma, magcargo, swinub, piloswine, corsola, remoraid, octillery, delibird, mantine, skarmory, houndour, houndoom, mega_houndoom, kingdra, phanpy, donphan, porygon2, stantler, smeargle, tyrogue, hitmontop, smoochum, elekid, magby},
 }

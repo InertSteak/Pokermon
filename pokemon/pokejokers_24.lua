@@ -11,13 +11,21 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 8, y = 3},
-  config = {extra = {Xmult_multi = 1.2, rerolls = 0, reroll_goal = 4}},
+  config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'sylveon_tag_pool', vars = {'Standard', 'Charm', 'Juggle'}}
+      if not center.edition or (center.edition and not center.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
+      if not center.edition or (center.edition and not center.edition.foil) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      end
+      if not center.edition or (center.edition and not center.edition.holo) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      end
     end
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.rerolls, center.ability.extra.reroll_goal}}
+    return {vars = {}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -27,42 +35,16 @@ local sylveon={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint and not (G.HUD_tags and #G.HUD_tags >= 2) then
-      if card.ability.extra.rerolls < card.ability.extra.reroll_goal - 1 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/"..card.ability.extra.reroll_goal, colour = G.C.MONEY})
-        if card.ability.extra.rerolls == card.ability.extra.reroll_goal - 1 then
-          local eval = function() return card.ability.extra.rerolls == card.ability.extra.reroll_goal - 1 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        local tag = ''
-        local tag_choice = pseudorandom('sylveon')
-        if tag_choice < 1/3 then
-          tag = 'tag_standard'
-        elseif tag_choice < 2/3 then
-          tag = 'tag_charm'
-        else
-          tag = 'tag_juggle'
-        end
-        add_tag(Tag(tag))
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.reroll_goal.."/"..card.ability.extra.reroll_goal, colour = G.C.MONEY})
-        card.ability.extra.rerolls = 0
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      local _card = context.scoring_hand[1]
+      if _card.config.center == G.P_CENTERS.c_base then
+        local edition = poll_edition('aura', nil, true, true)
+        _card:set_edition(edition, true, true)
       end
     end
-    if context.individual and context.cardarea == G.hand and context.other_card.edition and not context.end_of_round then
-      if context.other_card.debuff then
-          return {
-              message = localize('k_debuffed'),
-              colour = G.C.RED,
-              card = card,
-          }
-      else
-          return {
-              x_mult = card.ability.extra.Xmult_multi,
-              card = card
-          }
-      end
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end
 }
