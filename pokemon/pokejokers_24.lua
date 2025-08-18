@@ -35,7 +35,7 @@ local sylveon={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
       local _card = context.scoring_hand[1]
       if _card.config.center == G.P_CENTERS.c_base then
         local edition = poll_edition('aura', nil, true, true)
