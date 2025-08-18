@@ -326,7 +326,21 @@ jd_def["j_poke_swampert"] = {
 }
 
 --	Poochyena
+jd_def["j_poke_poochyena"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT},
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT},
+  },
+}
+
 --	Mightyena
+jd_def["j_poke_mightyena"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT},
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT},
+  },
+}
+
 --	Zigzagoon
 jd_def["j_poke_zigzagoon"] = {
   text = {
