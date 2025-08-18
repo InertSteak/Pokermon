@@ -148,7 +148,27 @@ jd_def["j_poke_gigalith"] = {
 --	Archen
 --	Archeops
 --	Trubbish
+jd_def["j_poke_trubbish"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " " },
+    { text = "+$",  colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  calc_function = function(card)
+    card.joker_display_values.money = (G.GAME and G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and G.GAME.current_round.discards_left * card.ability.extra.money or 0)
+  end
+}
+
 --	Garbodor
+jd_def["j_poke_garbodor"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+}
+
 --	Zorua
 jd_def["j_poke_zorua"] = {
     reminder_text = {
