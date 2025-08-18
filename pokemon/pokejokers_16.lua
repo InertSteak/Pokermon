@@ -478,7 +478,7 @@ local leafeon={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
+      if context.before and card.ability.extra.h_size > 0 then
         card.ability.extra.h_size = card.ability.extra.h_size - card.ability.extra.h_mod
         G.hand:change_size(-card.ability.extra.h_mod)
         return {
