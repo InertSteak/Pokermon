@@ -328,7 +328,23 @@ jd_def["j_poke_vanilluxe"] = {
 --	Foongus
 --	Amoonguss
 --	Frillish
+jd_def["j_poke_frillish"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS }
+}
+
 --	Jellicent
+jd_def["j_poke_jellicent"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS }
+}
+
 --	Alomomola
 --	Joltik
 --	Galvantula
