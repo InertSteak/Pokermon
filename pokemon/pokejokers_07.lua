@@ -771,28 +771,6 @@ local espeon={
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if not G.GAME.current_round.espeon_triggered then
-        local rank_ids = {{rank = '2', id = 2},{rank = '3', id = 3},{rank = '4', id = 4},{rank = '5', id = 5},{rank = '6', id = 6},{rank = '7', id = 7},{rank = '8', id = 8},
-                          {rank = '9', id = 9},{rank = '10', id = 10},{rank = 'Jack', id = 11},{rank = 'Queen', id = 12},{rank = 'King', id =13},{rank = 'Ace', id = 14},}
-        local rank_id = pseudorandom_element(rank_ids, pseudoseed('espeon'..G.GAME.round))
-        G.GAME.current_round.espeon_rank = rank_id.rank
-        G.GAME.current_round.espeon_id = rank_id.id
-        local suits = {'Spades','Hearts','Diamonds','Clubs'}
-        G.GAME.current_round.espeon_suit = pseudorandom_element(suits, pseudoseed('espeon'..G.GAME.round))
-        
-        G.GAME.current_round.espeon_triggered = true
-        G.E_MANAGER:add_event(Event({
-          trigger = 'immediate',
-          func = function()
-            G.GAME.current_round.espeon_triggered = false
-            return true
-          end
-        }))
-      end
-      card:juice_up()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize(G.GAME.current_round.espeon_rank or "2", 'ranks').."s and "..localize(G.GAME.current_round.espeon_suit, 'suits_plural')})
-    end
     if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.espeon_suit) then
       return {
         x_mult = card.ability.extra.Xmult_multi,
