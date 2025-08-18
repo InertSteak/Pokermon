@@ -3953,7 +3953,7 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "If {C:attention}first hand{} has",
+                    "If {C:attention}first hand{} is",
                     "exactly {C:attention}1{} unenhanced card,",
                     "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
                     "or {C:dark_edition}Polychrome{} to it",
