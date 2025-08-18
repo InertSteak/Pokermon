@@ -456,7 +456,7 @@ local vanilluxe={
 local frillish = {
 	name = "frillish", 
 	pos = {x = 0, y = 7},
-	config = {extra = {chips = 0, chip_mod = 3}, evo_rqmt = 60},
+	config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Hwang2760"}}
@@ -499,7 +499,7 @@ local frillish = {
 local jellicent = {
 	name = "jellicent", 
 	pos = {x = 1, y = 7},
-	config = {extra = {chips = 60, chip_mod = 5}},
+	config = {extra = {chips = 60, chip_mod = 4}},
 	loc_vars = function(self, info_queue, center)
 		type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Hwang2760"}}
@@ -520,7 +520,7 @@ local jellicent = {
 					local card_id = context.other_card:get_id() 
 
 					if card_id == 12 or card_id == 13 then
-						card.ability.extra.chips = card.ability.extra.chips + poke_total_chips(context.other_card)
+						card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * 2)
 					else
 						card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
 					end

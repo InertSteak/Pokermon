@@ -1095,7 +1095,7 @@ local swampert={
 local poochyena={
   name = "poochyena",
   pos = {x = 9, y = 0},
-  config = {extra = {mult = 0,mult_mod = 2,rounds = 5,}},
+  config = {extra = {mult = 0,mult_mod = 1,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
@@ -1137,11 +1137,11 @@ local poochyena={
 local mightyena={
   name = "mightyena",
   pos = {x = 0, y = 1},
-  config = {extra = {mult = 0,mult_mod = 2,mult_mod2 = 1}},
+  config = {extra = {mult = 0,mult_mod = 1,mult_scaling_mod = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_mod2, }}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_scaling_mod, }}
   end,
   rarity = 2,
   cost = 5,
@@ -1163,12 +1163,12 @@ local mightyena={
       end
     end
     if context.selling_card and not context.blueprint then
-      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_mod2 * #find_pokemon_type("Dark")))
+      card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_scaling_mod * #find_pokemon_type("Dark")))
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_mod2 * #find_pokemon_type("Dark")))
+        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_scaling_mod * #find_pokemon_type("Dark")))
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
       end
     end

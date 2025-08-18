@@ -3828,13 +3828,13 @@ return {
             },
             j_poke_jellicent = {
                 name = "Jellicent",
-				text = {
-                    "Gains {C:chips}+#2#{} Chips for each",
-                    "discarded {C:attention}face card{}",
-					"{br:3}ERROR - CONTACT STEAK",
-					"Gains the card's total chips",
-					"instead if it is a {C:attention}King{} or {C:attention}Queen{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                text = {
+                  "Gains {C:chips}+#2#{} Chips for each",
+                  "discarded {C:attention}face card{}",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Gain {C:attention}doubled{} if it",
+                  "is a {C:attention}King{} or {C:attention}Queen{}",
+                  "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
             j_poke_elgyem = {
