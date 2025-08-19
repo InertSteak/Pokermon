@@ -100,7 +100,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
+pattern = "booster_obj = self.config.center"
 position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
