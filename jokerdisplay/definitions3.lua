@@ -511,7 +511,65 @@ jd_def["j_poke_aggron"] = {
 --	Wailmer
 --	Wailord
 --	Numel
+jd_def["j_poke_numel"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  reminder_text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
+  },
+  calc_function = function(card)
+    if card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.Xmult = 1
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end
+}
+
 --	Camerupt
+jd_def["j_poke_camerupt"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  reminder_text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
+  },
+  calc_function = function(card)
+    if card.ability.extra.cards_scored >= card.ability.extra.score_goal then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.Xmult = 1
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end
+}
+
+--	Mega Camerupt
+jd_def["j_poke_mega_camerupt"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Torkoal
 --	Spoink
 --	Grumpig
