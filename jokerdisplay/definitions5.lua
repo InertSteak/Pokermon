@@ -361,7 +361,7 @@ jd_def["j_poke_chandelure"] = {
     card.joker_display_values.mult = card.sell_cost
   end,
   mod_function = function(card, mod_joker)
-    return { x_mult = (card.sell_cost == 1 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+    return { x_mult = (card.sell_cost < 2 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
   end
 }
 
