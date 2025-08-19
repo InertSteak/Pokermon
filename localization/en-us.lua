@@ -3104,8 +3104,8 @@ return {
             j_poke_poochyena = {
               name = "Poochyena",
               text = {
-                "Gains {C:mult}+#2#{} Mult for each",
-                "card {C:attention}sold{} or {C:attention}destroyed",
+                "Gains {C:mult}+#2#{} Mult when",
+                "a card is destroyed",
                 "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
               }
@@ -3113,8 +3113,8 @@ return {
             j_poke_mightyena = {
               name = "Mightyena",
               text = {
-                "Gains {C:mult}+#2#{} Mult for each",
-                "card {C:attention}sold{} or {C:attention}destroyed",
+                "Gains {C:mult}+#2#{} Mult when",
+                "a card is destroyed",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Gain increased by {C:mult}+#3#{} Mult",
                 "for each {X:dark,C:white}Dark{} Joker you have",
