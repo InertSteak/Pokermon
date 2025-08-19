@@ -325,7 +325,7 @@ local jirachi_invis = {
   no_collection = true,
   aux_poke = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
+    if context.setting_blind and not context.blueprint then
       local other_joker = nil
       for i = 1, #G.jokers.cards do
         if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i+1] end
