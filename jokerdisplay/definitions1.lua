@@ -2888,26 +2888,23 @@ jd_def["j_poke_eevee"] = {
 }
 
 jd_def["j_poke_vaporeon"] = {
-  text = {
-    { text = "+", colour = G.C.CHIPS},
-    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS},
-  },
-  reminder_text = {
-    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
-    { text = " [", colour = G.C.GREY },
-    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY },
-  },
-  calc_function = function(card)
-    card.joker_display_values.reroll_goal = 3
-  end
 }
 
 jd_def["j_poke_jolteon"] = {
   text = {
     { text = "+$", colour = G.C.GOLD },
-    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
-  }
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  calc_function = function(card)
+    local money = 0
+    local hand = G.hand.highlighted
+    for _, playing_card in pairs(hand) do
+      if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card.ability.effect and playing_card.ability.effect == "Gold Card" then
+        money = money + card.ability.extra.money
+      end
+    end
+    card.joker_display_values.money = G.GAME.current_round.discards_left > 0 and money or 0
+  end
 }
 
 jd_def["j_poke_flareon"] = {
