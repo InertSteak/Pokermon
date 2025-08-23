@@ -147,7 +147,7 @@ local mega_lopunny={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.joker_main and G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
         local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
         local Xmult = nil
         if (SMODS.Mods["Talisman"] or {}).can_load then
@@ -155,7 +155,6 @@ local mega_lopunny={
         else
           Xmult = G.GAME.hands[text].level
         end
-        poke_debug(to_number(G.GAME.hands[text].level))
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
           colour = G.C.XMULT,

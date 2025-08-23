@@ -297,7 +297,7 @@ local chandelure={
         }
       end
     end
-    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost == 1 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
+    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost < 2 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
         G.E_MANAGER:add_event(Event({
           func = function()
               context.other_joker:juice_up(0.5, 0.5)

@@ -148,7 +148,27 @@ jd_def["j_poke_gigalith"] = {
 --	Archen
 --	Archeops
 --	Trubbish
+jd_def["j_poke_trubbish"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " " },
+    { text = "+$",  colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  calc_function = function(card)
+    card.joker_display_values.money = (G.GAME and G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and G.GAME.current_round.discards_left * card.ability.extra.money or 0)
+  end
+}
+
 --	Garbodor
+jd_def["j_poke_garbodor"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+}
+
 --	Zorua
 jd_def["j_poke_zorua"] = {
     reminder_text = {
@@ -308,7 +328,23 @@ jd_def["j_poke_vanilluxe"] = {
 --	Foongus
 --	Amoonguss
 --	Frillish
+jd_def["j_poke_frillish"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS }
+}
+
 --	Jellicent
+jd_def["j_poke_jellicent"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.CHIPS }
+}
+
 --	Alomomola
 --	Joltik
 --	Galvantula
@@ -361,7 +397,7 @@ jd_def["j_poke_chandelure"] = {
     card.joker_display_values.mult = card.sell_cost
   end,
   mod_function = function(card, mod_joker)
-    return { x_mult = (card.sell_cost == 1 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+    return { x_mult = (card.sell_cost < 2 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
   end
 }
 

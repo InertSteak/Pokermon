@@ -100,7 +100,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1"
+pattern = "booster_obj = self.config.center"
 position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
@@ -396,6 +396,17 @@ position = "at"
 payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
 match_indent = true
 
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.ability.perish_tally = 0"
+position = "after"
+payload = '''
+if self.edition and self.edition.poke_shiny then
+  SMODS.change_booster_limit(-1)
+end
+'''
+match_indent = true
 
 # Jirachi Double Payout and DRE
 [[patches]]

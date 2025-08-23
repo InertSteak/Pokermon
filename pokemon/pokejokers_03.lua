@@ -1190,7 +1190,7 @@ local seel={
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
       if pseudorandom('seel') < G.GAME.probabilities.normal/card.ability.extra.odds then
-        _card = context.scoring_hand[1]
+        local _card = context.scoring_hand[1]
         local args = {guaranteed = true}
         local seal_type = SMODS.poll_seal(args)
         _card:set_seal(seal_type, true)
@@ -1219,7 +1219,7 @@ local dewgong={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-      _card = context.scoring_hand[1]
+      local _card = context.scoring_hand[1]
       local args = {guaranteed = true}
       local seal_type = SMODS.poll_seal(args)
       _card:set_seal(seal_type, true)

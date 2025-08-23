@@ -2877,68 +2877,63 @@ jd_def["j_poke_lapras"] = {
 }
 
 jd_def["j_poke_eevee"] = {
-  text = {
-    { text = "+$", colour = G.C.GOLD },
-    { ref_table = "card.ability.extra", ref_value = "money_mod", colour = G.C.GOLD },
-  },
-  reminder_text = {
-    { text = "[", colour = G.C.GREY },
-    { ref_table ="card.ability.extra", ref_value = "limit", colour = G.C.ORANGE },
-    { text = "/", colour = G.C.GREY },
-    { ref_table ="card.ability.extra", ref_value = "max", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY },
-  },
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
 }
 
 jd_def["j_poke_vaporeon"] = {
-  text = {
-    { text = "+", colour = G.C.CHIPS},
-    { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS},
-  },
-  reminder_text = {
-    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
-    { text = " [", colour = G.C.GREY },
-    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY },
-  },
-  calc_function = function(card)
-    card.joker_display_values.reroll_goal = 3
-  end
 }
 
 jd_def["j_poke_jolteon"] = {
   text = {
     { text = "+$", colour = G.C.GOLD },
-    { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
-  },
-  reminder_text = {
-    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
-    { text = " [", colour = G.C.GREY },
-    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   calc_function = function(card)
-    card.joker_display_values.reroll_goal = 3
+    local money = 0
+    local hand = G.hand.highlighted
+    for _, playing_card in pairs(hand) do
+      if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card.ability.effect and playing_card.ability.effect == "Gold Card" then
+        money = money + card.ability.extra.money
+      end
+    end
+    card.joker_display_values.money = G.GAME.current_round.discards_left > 0 and money or 0
   end
 }
 
 jd_def["j_poke_flareon"] = {
   text = {
-    {
-      border_nodes = {
-        { text = "X" },
-        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
-      },
-    },
-  },
-  reminder_text = {
-    { ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE },
-    { text = " [", colour = G.C.GREY },
-    { ref_table = "card.joker_display_values", ref_value = "reroll_goal", colour = G.C.GREY },
-    { text = "]", colour = G.C.GREY },
+      {
+          border_nodes = {
+              { text = "X" },
+              { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+          }
+      }
   },
   calc_function = function(card)
-    card.joker_display_values.reroll_goal = 3
+      local playing_hand = next(G.play.cards)
+      local count = 0
+      local first_mult = nil
+      for i=1, #G.hand.cards do
+        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
+          first_mult = G.hand.cards[i]
+          break
+        end
+      end
+      for _, playing_card in ipairs(G.hand.cards) do
+          if playing_hand or not playing_card.highlighted then
+              if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card == first_mult then
+                  count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+              end
+          end
+      end
+      card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
   end
 }
 

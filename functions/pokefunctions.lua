@@ -1453,6 +1453,64 @@ poke_change_poli_suit = function()
   end
 end
 
+reset_bulba_rank = function()
+  G.GAME.current_round.bulb1card = {rank = 'Ace'}
+  local valid_bulb_cards = {}
+  for k, v in ipairs(G.playing_cards) do
+    if v.ability.effect ~= 'Stone Card' and not SMODS.has_no_rank(v) then
+      valid_bulb_cards[#valid_bulb_cards+1] = v
+    end
+  end
+  if valid_bulb_cards[1] then
+    local bulb_card = pseudorandom_element(valid_bulb_cards, pseudoseed('bulb'..G.GAME.round_resets.ante))
+    G.GAME.current_round.bulb1card.rank = bulb_card.base.value
+    G.GAME.current_round.bulb1card.id = bulb_card.base.id
+  end
+end
+
+reset_espeon_card = function()
+  G.GAME.current_round.espeon_rank = 'Ace'
+  G.GAME.current_round.espeon_id = 14
+  G.GAME.current_round.espeon_suit = 'Spades'
+  
+  local valid_espeon_cards = {}
+  for _, playing_card in ipairs(G.playing_cards) do
+    if not SMODS.has_no_suit(playing_card) and not SMODS.has_no_rank(playing_card) then
+      valid_espeon_cards[#valid_espeon_cards + 1] = playing_card
+    end
+  end
+  local espeon_card = pseudorandom_element(valid_espeon_cards, 'espeon' .. G.GAME.round_resets.ante)
+  if espeon_card then
+    G.GAME.current_round.espeon_rank = espeon_card.base.value
+    G.GAME.current_round.espeon_id = espeon_card.base.id
+    G.GAME.current_round.espeon_suit = espeon_card.base.suit
+  end
+end
+
+reset_gligar_suit = function()
+  local gligar_suits = {}
+  for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+      if v ~= G.GAME.current_round.gligar_suit then gligar_suits[#gligar_suits + 1] = v end
+  end
+  local gligar_card = pseudorandom_element(gligar_suits, pseudoseed('gligar'..G.GAME.round_resets.ante))
+  G.GAME.current_round.gligar_suit = gligar_card
+end
+
+reset_sneasel_rank = function()
+  G.GAME.current_round.sneaselcard = {rank = 'Ace'}
+  local valid_sneasel_cards = {}
+  for k, v in ipairs(G.playing_cards) do
+    if v.ability.effect ~= 'Stone Card' then
+      valid_sneasel_cards[#valid_sneasel_cards+1] = v
+    end
+  end
+  if valid_sneasel_cards[1] then
+    local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
+    G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
+    G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
+  end
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570

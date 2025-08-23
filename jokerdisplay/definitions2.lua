@@ -793,16 +793,6 @@ jd_def["j_poke_umbreon"] = {
     text = {
         {ref_table = "card.joker_display_values", ref_value = "hand", colour = G.C.GREY}
 },
-    reminder_text = {
-        {ref_table = "card.ability.extra", ref_value = "decreases", colour = G.C.ORANGE},
-        {text = " "},
-        {text = "["},
-        {ref_table = "card.ability.extra", ref_value = "decrease_goal"},
-        {text = "]"},
-
-
-
-    },
     calc_function = function(card)
         card.joker_display_values.hand = localize(card.ability.extra.hand_played, 'poker_hands')
 end
