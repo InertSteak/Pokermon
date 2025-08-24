@@ -328,7 +328,7 @@ local chandelure={
 local golett={
   name = "golett",
   pos = {x = 2, y = 9},
-  config = {extra = {hazards = 4, Xmult_multi = 1.4, rounds = 5, odds = 4}},
+  config = {extra = {hazards = 4, Xmult_multi = 1.2, rounds = 5, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
@@ -375,7 +375,7 @@ local golett={
 local golurk={
   name = "golurk",
   pos = {x = 3, y = 9},
-  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.6, odds = 3}},
+  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.4, odds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
