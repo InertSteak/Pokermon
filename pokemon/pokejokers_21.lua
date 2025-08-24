@@ -328,26 +328,15 @@ local chandelure={
 local golett={
   name = "golett",
   pos = {x = 2, y = 9},
-  config = {extra = {hazard_ratio = 10, interval = 4, Xmult_multi = 1.4, rounds = 5}},
+  config = {extra = {hazards = 4, Xmult_multi = 1.4, rounds = 5, odds = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
-    end
-    
-    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_multi, abbr.rounds}}
+    return {vars = {abbr.hazards, abbr.Xmult_multi, abbr.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = 3,
   cost = 7,
@@ -361,17 +350,10 @@ local golett={
   hazard_poke = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      poke_set_hazards(card.ability.extra.hazards)
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and #G.hand.cards >= card.ability.extra.interval then
-      local score = nil
-      for i = card.ability.extra.interval, #G.hand.cards, card.ability.extra.interval do
-        if G.hand.cards[i] == context.other_card then
-          score = true
-          break
-        end
-      end
-      if score then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand then
+      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or pseudorandom('golett') < G.GAME.probabilities.normal/card.ability.extra.odds then
         if context.other_card.debuff then
             return {
                 message = localize('k_debuffed'),
@@ -393,26 +375,15 @@ local golett={
 local golurk={
   name = "golurk",
   pos = {x = 3, y = 9},
-  config = {extra = {hazard_ratio = 10, interval = 3, Xmult_multi = 1.6}},
+  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.6, odds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
-    end
-    
-    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_multi}}
+    return {vars = {abbr.hazards, abbr.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -426,17 +397,10 @@ local golurk={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      poke_set_hazards(card.ability.extra.hazards)
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and #G.hand.cards >= card.ability.extra.interval then
-      local score = nil
-      for i = card.ability.extra.interval, #G.hand.cards, card.ability.extra.interval do
-        if G.hand.cards[i] == context.other_card then
-          score = true
-          break
-        end
-      end
-      if score then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand then
+      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or pseudorandom('golurk') < G.GAME.probabilities.normal/card.ability.extra.odds then
         if context.other_card.debuff then
             return {
                 message = localize('k_debuffed'),

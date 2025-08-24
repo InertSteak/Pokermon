@@ -465,7 +465,7 @@ G.FUNCS.evaluate_round = function()
       for i = #G.deck.cards, 1, -1 do
         local card = G.deck.cards[i]
         if SMODS.has_enhancement(card, "m_poke_hazard") then
-          card:remove()
+          card:set_ability(G.P_CENTERS.c_base, nil, true)
         end
       end
       return true
@@ -492,6 +492,21 @@ poke_add_hazards = function(ratio, flat)
     SMODS.recalc_debuff(hazards[#hazards])
   end
   playing_card_joker_effects(hazards)
+end
+
+poke_set_hazards = function(amount)
+  for i = 1, amount do
+    local valid = {}
+    for k, v in pairs(G.deck.cards) do
+      if v.config.center == G.P_CENTERS.c_base then
+        valid[#valid + 1] = v
+      end
+    end
+    if #valid > 0 then
+      local card = pseudorandom_element(valid, pseudoseed('hazard'))
+      card:set_ability(G.P_CENTERS.m_poke_hazard, nil, true)
+    end
+  end
 end
 
 function poke_same_suit(hand)

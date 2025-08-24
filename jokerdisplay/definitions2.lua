@@ -1474,7 +1474,7 @@ jd_def["j_poke_skarmory"] = {
         local count = 0
         for _, playing_card in ipairs(G.hand.cards) do
             if playing_hand or not playing_card.highlighted then
-                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and (SMODS.has_enhancement(playing_card, "m_poke_hazard") or SMODS.has_enhancement(playing_card, "m_steel") ) then
                     count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
                 end
             end

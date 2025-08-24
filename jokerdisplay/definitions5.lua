@@ -54,7 +54,7 @@ jd_def["j_poke_roggenrola"] = {
         local count = 0
         for _, playing_card in ipairs(G.hand.cards) do
             if playing_hand or not playing_card.highlighted then
-                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_no_rank(playing_card) then
                     count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
                 end
             end
@@ -74,7 +74,7 @@ jd_def["j_poke_boldore"] = {
         local count = 0
         for _, playing_card in ipairs(G.hand.cards) do
             if playing_hand or not playing_card.highlighted then
-                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_no_rank(playing_card) then
                     count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
                 end
             end
@@ -94,7 +94,7 @@ jd_def["j_poke_gigalith"] = {
         local count = 0
         for _, playing_card in ipairs(G.hand.cards) do
             if playing_hand or not playing_card.highlighted then
-                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
+                if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and SMODS.has_no_rank(playing_card) then
                     count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
                 end
             end
