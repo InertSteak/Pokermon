@@ -151,6 +151,14 @@ else
   UI()
 end
 
+--Load quip file
+local quip, load_error = SMODS.load_file("pokequips.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  quip()
+end
+
 --Load pokemon file
 local pfiles = NFS.getDirectoryItems(mod_dir.."pokemon")
 
