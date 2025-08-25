@@ -106,8 +106,17 @@ local earth_sticker = {
   pos = { x = 2, y = 1 },
 }
 
+local stellar_sticker = {
+  key = "stellar_sticker",
+  badge_colour = SMODS.Gradients["poke_grad_stellar"],
+  prefix_config = {key = false},
+  rate = 0.0,
+  atlas = "pinkseal",
+  pos = { x = 5, y = 1 },
+}
+
 return
 {
   name = "Stickers",
-  list = {grass_sticker, fire_sticker, water_sticker, lightning_sticker, psychic_sticker, fighting_sticker, colorless_sticker, dark_sticker, metal_sticker, fairy_sticker, dragon_sticker, earth_sticker}
+  list = {grass_sticker, fire_sticker, water_sticker, lightning_sticker, psychic_sticker, fighting_sticker, colorless_sticker, dark_sticker, metal_sticker, fairy_sticker, dragon_sticker, earth_sticker, stellar_sticker}
 }
