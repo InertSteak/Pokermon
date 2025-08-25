@@ -3634,6 +3634,7 @@ return {
                     "{br:2}text needs to be here to work",
                     "Creates an {C:pink}Energy",
                     "when you use an {C:pink}Energy",
+                    "{C:inactive}(Must have room)",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
                 } 
             },
