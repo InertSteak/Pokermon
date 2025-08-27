@@ -462,9 +462,103 @@ local munchlax={
   end,
 }
 -- Riolu 447
+local riolu={
+  name = "riolu",
+  pos = {x = 4, y = 4},
+  config = {extra = {Xmult_minus = 0.9,rounds = 2,}},
+  loc_txt = {
+    name = "Riolu",
+    text = {
+      "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
+      "Creates a copy of {C:attention}Aura{}",
+      "at end of round",
+      "{C:inactive}(Must have room)",
+      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_aura
+    end
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+  end,
+  rarity = 3,
+  cost = 6,
+  gen = 4,
+  stage = "Baby",
+  ptype = "Fighting",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_aura')
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
+    end
+    return level_evo(self, card, context, "j_poke_lucario")
+  end,
+}
 -- Lucario 448
+local lucario={
+  name = "lucario",
+  pos = {x = 5, y = 4},
+  config = {extra = {Xmult_multi = 1.3,}},
+  loc_txt = {
+    name = "Lucario",
+    text = {
+       "Each {C:attention}editioned{} card",
+       "{C:attention}held{} in hand",
+       "gives {X:mult,C:white} X#1# {} Mult",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, }}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and context.other_card.edition and not context.end_of_round then
+      if context.other_card.debuff then
+          return {
+              message = localize('k_debuffed'),
+              colour = G.C.RED,
+              card = card,
+          }
+      else
+          return {
+              x_mult = card.ability.extra.Xmult_multi,
+              card = card
+          }
+      end
+    end
+  end,
+}
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax, riolu, lucario},
 }

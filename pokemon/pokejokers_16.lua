@@ -663,7 +663,7 @@ local porygonz={
         end
       end
     end
-    if context.using_consumeable and context.consumeable.ability.set == 'Energy' then
+    if context.using_consumeable and context.consumeable.ability.set == 'Energy' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       G.E_MANAGER:add_event(Event({
           trigger = 'immediate',
           delay = 0.0,
@@ -671,6 +671,7 @@ local porygonz={
                   local _card = create_card('Energy', G.consumeables, nil, nil, nil, nil, nil, 'pory')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
               return true
           end)}))
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})

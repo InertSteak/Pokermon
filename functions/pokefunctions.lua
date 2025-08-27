@@ -122,6 +122,7 @@ pokermon.family = {
     {"aron","lairon","aggron"},
     {"buizel", "floatzel"},
     {"buneary", "lopunny", "mega_lopunny"},
+    {"riolu", "lucario"},
     {"gothita", "gothorita", "gothitelle"},
     {"vanillite", "vanillish", "vanilluxe"},
     {"frillish", "jellicent"},

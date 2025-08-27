@@ -194,25 +194,15 @@ local overqwil = {
 local tarountula = {
   name = "tarountula",
   pos = {x = 12, y = 0},
-  config = {extra = {hazard_ratio = 10, rounds = 3, hazards_held = 3}},
+  config = {extra = {hazards = 4, rounds = 3, h_size = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
-    end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.rounds, abbr.hazards_held}}
+    return {vars = {abbr.hazards, abbr.rounds, abbr.h_size}}
   end,
   rarity = 1,
   cost = 5,
@@ -224,56 +214,30 @@ local tarountula = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-        local hazard_count = 0
-        if G.hand and G.hand.cards and #G.hand.cards > 0 then
-          for i=1, #G.hand.cards do
-            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
-              hazard_count = hazard_count + 1
-            end
-          end 
-        end
-        local count = math.floor(hazard_count/card.ability.extra.hazards_held)
-        for i = 1, count do
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil)
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
-          end
-        end
+      poke_set_hazards(card.ability.extra.hazards)
     end
     return level_evo(self, card, context, "j_poke_spidops")
   end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
 }
 -- Spidops 918
 local spidops = {
   name = "spidops",
   pos = {x = 13, y = 0},
-  config = {extra = {hazard_ratio = 10}},
+  config = {extra = {hazards = 4, h_size = 1, h_max = 8, h_total = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'}
-    end
-
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
-    end
-    return {vars = {to_add, abbr.hazard_ratio}}
+    
+    return {vars = {abbr.hazards, abbr.h_size, abbr.h_max, abbr.h_total}}
   end,
   rarity = 2,
   cost = 7,
@@ -285,22 +249,33 @@ local spidops = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      poke_set_hazards(card.ability.extra.hazards)
     end
-    if context.end_of_round and not context.individual and not context.repetition then
-      local hazard_count = 0
-      if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        for i=1, #G.hand.cards do
-          if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
-            hazard_count = hazard_count + 1
-            if hazard_count % 3 == 0 then
-              G.hand.cards[i]:set_seal("Blue", nil, true)
-            end
-          end
+    if context.joker_main and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      local all_hazards = true
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.has_enhancement(v, "m_poke_hazard") then
+          all_hazards = false
         end
       end
+      if all_hazards then
+        local size_up = card.ability.extra.h_size * #context.scoring_hand
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={size_up}}})
+        G.hand:change_size(size_up)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + size_up
+      end
+    end
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
 }
 -- Nymble 919
 -- Lokix 920

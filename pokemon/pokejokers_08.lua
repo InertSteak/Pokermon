@@ -2,25 +2,15 @@
 local qwilfish = {
   name = "qwilfish", 
   pos = {x = 9, y = 5},
-  config = {extra = {hazard_ratio = 10, chips = 0, chip_mod = 3}},
+  config = {extra = {hazards = 4, chips = 0, chip_mod = 25}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
-    end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.chip_mod, abbr.chips}}
+    
+    return {vars = {abbr.hazards, abbr.chip_mod, abbr.chips}}
   end,
   rarity = 2,
   cost = 7,
@@ -32,7 +22,7 @@ local qwilfish = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      poke_set_hazards(card.ability.extra.hazards)
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -43,13 +33,13 @@ local qwilfish = {
         }
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
-      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-      return {
-        message = localize('k_upgrade_ex'),
-        colour = G.C.CHIPS,
-        card = card
-      }
+    if context.remove_playing_cards and not context.blueprint then
+      for _, removed_card in ipairs(context.removed) do
+        if removed_card.config.center ~= G.P_CENTERS.c_base then
+          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+        end
+      end
     end
   end,
 }
@@ -900,33 +890,26 @@ local mantine={
 local skarmory = {
   name = "skarmory", 
   pos = {x = 5, y = 7},
-  config = {extra = {hazard_ratio = 10, Xmult_mod = 0.40}},
+  config = {extra = {hazards = 4, Xmult_mod = 0.50}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-
-    local to_add = math.floor(52 / abbr.hazard_ratio)
-    if G.playing_cards then
-      local count = #G.playing_cards
-      for _, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, "m_poke_hazard") then
-          count = count - 1
-        end
-      end
-      to_add = math.floor(count / abbr.hazard_ratio)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
+
     local hazard_count = 0
     if G.hand and G.hand.cards and #G.hand.cards > 0 then
       for i=1, #G.hand.cards do
-        if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+        if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") or SMODS.has_enhancement(G.hand.cards[i], "m_steel") then
           hazard_count = hazard_count + 1
         end
       end 
     end
-    return {vars = {to_add, abbr.hazard_ratio, abbr.Xmult_mod, 1 + abbr.Xmult_mod * hazard_count}}
+    return {vars = {abbr.hazards, abbr.Xmult_mod, 1 + abbr.Xmult_mod * hazard_count}}
   end,
   rarity = 3,
   cost = 7,
@@ -938,14 +921,14 @@ local skarmory = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      poke_set_hazards(card.ability.extra.hazards)
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local hazard_count = 0
         if G.hand and G.hand.cards and #G.hand.cards > 0 then
           for i=1, #G.hand.cards do
-            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+            if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") or SMODS.has_enhancement(G.hand.cards[i], "m_steel")  then
               hazard_count = hazard_count + 1
             end
           end 

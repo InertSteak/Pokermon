@@ -520,9 +520,13 @@ return {
             m_poke_hazard = {
                 name = "Hazard Card",
                 text = {
-                    "{C:attention}+1{} hand size",
                     "no rank or suit",
-                    "removed at end of round",
+                    "remove {C:attention}enhancement{}",
+                    "at end of round",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:green}#1# in #2#{} chance to",
+                    "be destroyed if {C:attention}held{} in",
+                    "hand at end of round"
                 },
             }
         },
@@ -2589,11 +2593,11 @@ return {
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Gain {C:chips}+#3#{} Chips for each",
-                    "{C:attention}Hazard Card held{} in hand",
-                    "when hand is played",
-                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
+                    "{C:purple}+#1# Hazards",
+                    "Gain {C:chips}+#2#{} Chips when",
+                    "an {C:attention}enhanced{} card",
+                    "is destroyed",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                 }
             },
             j_poke_scizor = {
@@ -2760,10 +2764,11 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "{X:mult,C:white}X#3#{} Mult for each",
-                    "{C:attention}Hazard Card held{} in hand",
-                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
+                    "{C:purple}+#1# Hazards",
+                    "{X:mult,C:white}X#2#{} Mult for each",
+                    "{C:attention}Hazard{} or {C:attention}Steel{} card",
+                    "{C:attention}held{} in hand",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {
@@ -3629,6 +3634,7 @@ return {
                     "{br:2}text needs to be here to work",
                     "Creates an {C:pink}Energy",
                     "when you use an {C:pink}Energy",
+                    "{C:inactive}(Must have room)",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
                 } 
             },
@@ -3701,27 +3707,28 @@ return {
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Each {C:attention}Hazard Card held{} in hand",
-                    "gives {C:mult}+#3#{} Mult",
-                    "{C:inactive,s:0.8}(Evolves after triggering Hazard Cards {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)",
+                    "{C:purple}+#1# Hazards",
+                    "Each card with {C:attention}no rank{}",
+                    "{C:attention}held{} in hand gives {C:mult}+#2#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
                 }
             },
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Each {C:attention}Hazard Card held{} in hand",
-                    "gives {C:mult}+#3#{} Mult",
+                    "{C:purple}+#1# Hazards",
+                    "Each card with {C:attention}no rank{}",
+                    "{C:attention}held{} in hand gives {C:mult}+#2#{} Mult",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 }
             },
             j_poke_gigalith = {
                 name = "Gigalith",
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Each {C:attention}Hazard Card held{} in hand",
-                    "gives {C:mult}+#3#{} Mult and retriggers",
+                    "{C:purple}+#1# Hazards",
+                    "Each card with {C:attention}no rank{}",
+                    "{C:attention}held{} in hand gives {C:mult}+#2#{} Mult",
+                    "and retriggers"
                 }
             },
             j_poke_trubbish = {
@@ -3893,18 +3900,20 @@ return {
             j_poke_golett = {
                 name = "Golett",
                 text = {
-                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                  "Every {C:attention}fourth{} card {C:attention}held{} in hand",
-                  "gives {X:mult,C:white}X#3#{} Mult",
-                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)"
+                  "{C:purple}+#1# Hazards",
+                  "{C:green}#4# in #5#{} chance for cards {C:attention}held{}",
+                  "in hand to give {X:mult,C:white}X#2#{} Mult",
+                  "Guaranteed for {C:attention}Hazard{} cards",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)"
                 }
             },
             j_poke_golurk = {
                 name = "Golurk",
                 text = {
-                  "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                  "Every {C:attention}third{} card {C:attention}held{} in hand",
-                  "gives {X:mult,C:white}X#3#{} Mult",
+                  "{C:purple}+#1# Hazards",
+                  "{C:green}#3# in #4#{} chance for cards {C:attention}held{}",
+                  "in hand to give {X:mult,C:white}X#2#{} Mult", 
+                  "Guaranteed for {C:attention}Hazard{} cards",
                 }
             },
             j_poke_zweilous = {
@@ -4129,21 +4138,18 @@ return {
             j_poke_tarountula = {
                 name = "Tarountula",
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Create a {C:planet}Planet{} card for every",
-                    "{C:attention}#4# Hazard Cards held{} in hand",
-                    "at end of round",
-                    "{C:inactive}(Must have room)",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+                    "{C:purple}+#1# Hazards{}, {C:attention}+#3#{} hand size",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_spidops = {
                 name = "Spidops",
                 text = {
-                    "{C:purple}+#1# Hazards {C:inactive}(1 per #2# cards)",
-                    "Adds a {C:chips}Blue{} seal to every third",
-                    "{C:attention}Hazard Card held{} in hand",
-                    "at end of round",
+                    "{C:purple}+#1# Hazards, {C:attention}+#2#{} hand size",
+                    "If first played hand is",
+                    "all {C:attention}Hazard{} cards, gain",
+                    "{C:attention}+#2#{} hand size this round for",
+                    "each card in that hand"
                 }
             },
             j_poke_fidough = {
@@ -5454,8 +5460,8 @@ return {
                 name = "Hazards",
                 text = {
                     "When {C:attention}Blind{} is selected,",
-                    "add {C:attention}Hazard Cards{} to deck",
-                    "based on deck size",
+                    "{C:attention}#1#{} unenhanced cards in deck",
+                    "become {C:attention}Hazard Cards{}",
                 },
             },
         },
@@ -5668,6 +5674,28 @@ return {
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
+        },
+        quips = {
+          poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},
+          poke_lose_quip2 = {"You looked like a", "Magikarp out of water!",},
+          poke_lose_quip3 = {"Did you forget", "to study your", "type matchups?",},
+          poke_lose_quip4 = {"Oh no, we're", "blasting off again!",},
+          poke_lose_quip5 = {"Looks like that", "blind was super effective!",},
+          poke_lose_quip6 = {"That run turned to ash...",},
+          poke_lose_quip7 = {"It's more important", "to master the cards", "you're holding than", "to complain about the", "ones you weren't dealt!",},
+          poke_lose_quip8 = {"Better hurry to", "a Pokémon center!",},
+          poke_lose_quip9 = {"Need a Revive?",},
+          poke_lose_quip10 = {"I get half of","your Poké Dollars!",},
+          poke_win_quip1 = {"A real Pokermon Master!",},
+          poke_win_quip2 = {"Truly skilled trainers", "win with their", "favorites!",},
+          poke_win_quip3 = {"What's next, trainer?",},
+          poke_win_quip4 = {"I wouldn't want", "to face you", "in the arena!",},
+          poke_win_quip5 = {"With your luck,", "our next stop", "should be the", "game corner!",},
+          poke_win_quip6 = {"Your skills have evolved!",},
+          poke_win_quip7 = {"Welcome to the", "Hall of Fame!",},
+          poke_win_quip8 = {"What a champion", "time we had!",},
+          poke_win_quip9 = {"A truly Legendary performance!",},
+          poke_win_quip10 = {"That run was Mythical!",},
         },
         tutorial = {
           poke_intro_1 = {
