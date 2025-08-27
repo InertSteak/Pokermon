@@ -694,7 +694,7 @@ local professor={
   atlas = "others",
   perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
       G.E_MANAGER:add_event(Event({
