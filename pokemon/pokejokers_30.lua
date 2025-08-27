@@ -28,6 +28,7 @@ local dreepy={
   ptype = "Psychic",
   atlas = "Pokedex8",
   gen = 8,
+  pseudol = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = false,

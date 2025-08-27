@@ -103,6 +103,7 @@ local beldum={
   ptype = "Metal",
   atlas = "Pokedex3",
   gen = 3,
+  pseudol = true,
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)

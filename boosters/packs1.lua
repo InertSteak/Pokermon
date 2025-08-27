@@ -354,7 +354,72 @@ local wish_pack = {
 	group_key = "k_poke_wish_pack",
 }
 
-local pack_list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack}
+local starter_pack = {
+	name = "Starter Pack",
+	key = "pokepack_starter_pack",
+	kind = "Spectral",
+	atlas = "pokepack",
+	pos = { x = 4, y = 1 },
+	config = { extra = 4, choose = 1 },
+	cost = 6,
+	order = 5,
+	weight = 0,
+  draw_hand = false,
+  unlocked = true,
+  discovered = true,
+  no_collection = true,
+	create_card = function(self, card, i)
+    local grass_starters = {}
+    local fire_starters = {}
+    local water_starters = {}
+    local pseudo_starters = {}
+    local pack_key = nil
+    for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+      if v.starter and v.ptype == "Grass" then
+        grass_starters[#grass_starters + 1] = v.key
+      end
+      if v.starter and v.ptype == "Fire" then
+        fire_starters[#fire_starters + 1] = v.key
+      end
+      if v.starter and v.ptype == "Water" then
+        water_starters[#water_starters + 1] = v.key
+      end
+      if v.pseudol then
+        pseudo_starters[#pseudo_starters + 1] = v.key
+      end
+    end
+    
+    if i == 1 then
+      pack_key = pseudorandom_element(grass_starters, pseudoseed('grass'))
+    elseif i == 2 then
+      pack_key = pseudorandom_element(fire_starters, pseudoseed('fire'))
+    elseif i == 3 then
+      pack_key = pseudorandom_element(water_starters, pseudoseed('water'))
+    elseif i == 4 then
+      if pseudorandom('starter') < .50 then
+        pack_key = 'j_poke_pikachu'
+      else
+        pack_key = 'j_poke_eevee'
+      end
+    elseif i == 5 then
+      pack_key = pseudorandom_element(pseudo_starters, pseudoseed('pseudo'))
+    else
+      pack_key = 'j_poke_caterpie'
+    end
+    
+    local temp_card = {area = G.pack_cards, key = pack_key, no_edition = true, skip_materialize = true}
+    return SMODS.create_card(temp_card)
+	end,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.config.center.config.choose, card.ability.extra} }
+	end,
+  in_pool = function(self)
+    return false
+  end,
+	group_key = "k_poke_starter_pack",
+}
+
+local pack_list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack, starter_pack}
 
 for k, v in pairs(pack_list) do
   if not v.ease_background_colour then

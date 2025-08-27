@@ -1408,6 +1408,7 @@ local dratini={
   ptype = "Dragon",
   atlas = "Pokedex1",
   gen = 1,
+  pseudol = true, 
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
