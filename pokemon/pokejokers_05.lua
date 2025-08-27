@@ -108,7 +108,7 @@ local scyther={
               sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
               play_sound('slice1', 0.96+math.random()*0.08)
           return true end }))
-          card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, colour = G.C.RED, no_juice = true})
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, colour = G.C.RED, no_juice = true})
       end
       card.ability.extra.selected = true
     end
