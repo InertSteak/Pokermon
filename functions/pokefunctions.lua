@@ -162,6 +162,7 @@ pokermon.family = {
 extended_family = {
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
+  luvdisc = {{item = true, name = "heartscale"}},
   shuckle = {{item = true, name = "berry_juice"}, {item = true, name = "berry_juice_tarot"}, {item = true, name = "berry_juice_planet"}, {item = true, name = "berry_juice_spectral"}, 
              {item = true, name = "berry_juice_item"}, {item = true, name = "berry_juice_energy"}, {item = true, name = "berry_juice_mystery"}}
 }

@@ -39,7 +39,7 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if next(find_joker('Splash')) then"
 position = "at"
-payload = "if next(find_joker('Splash')) or next(SMODS.find_card('j_poke_magikarp')) or next(SMODS.find_card('j_poke_feebas')) then"
+payload = "if next(find_joker('Splash')) or applies_splash() then"
 match_indent = true
 
 # Magikarp functionality better calc
@@ -48,7 +48,9 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash'))"
 position = "at"
-payload = "local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash')) or next(SMODS.find_card('j_poke_magikarp')) or next(SMODS.find_card('j_poke_feebas'))"
+payload = '''
+local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash')) or applies_splash()
+'''
 match_indent = true
 
 # Mimikyu Localization Functionality

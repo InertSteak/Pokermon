@@ -340,6 +340,16 @@ return {
                     "for each {X:earth,C:white}Earth{} Joker you have"
                 }
             },
+            c_poke_heartscale = {
+                name = "Heart Scale",
+                text = {
+                    "Select {C:attention}#1#{} cards,",
+                    "convert the {C:attention}left{} card",
+                    "into the {C:attention}right{} card and",
+                    "both cards into {C:hearts}#2#{}",
+                    "{C:inactive}(Drag to rearrange)",
+                }
+            },
             c_poke_berry_juice = {
                 name = "Berry Juice",
                 text = {
@@ -3275,6 +3285,13 @@ return {
                   "At end of round,",
                   "sets money to {C:money}$0"
                 }
+            },
+            j_poke_luvdisc = {
+              name = "Luvdisc",
+              text = {
+                "{C:attention}Holding {C:hearts}Heart Scale",
+                "Applies {C:attention}Splash",
+              }
             },
             j_poke_beldum = {
                 name = 'Beldum',

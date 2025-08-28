@@ -535,3 +535,9 @@ function poke_get_rank(card)
   else rank = ""..id end
   return rank
 end
+
+function applies_splash()
+  return next(SMODS.find_card('j_poke_magikarp')) or
+  next(SMODS.find_card('j_poke_feebas')) or
+  next(SMODS.find_card('j_poke_luvdisc'))
+end
