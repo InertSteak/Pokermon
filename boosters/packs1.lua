@@ -415,6 +415,22 @@ local starter_pack = {
   in_pool = function(self)
     return false
   end,
+  ease_background_colour = function(self)
+     ease_background_colour{new_colour = HEX('FFFFFF'), contrast = 3}
+  end,
+  particles = function(self)
+    G.booster_pack_stars = Particles(1, 1, 0,0, {
+      timer = 0.07,
+      scale = 0.1,
+      initialize = true,
+      lifespan = 15,
+      speed = 0.1,
+      padding = -4,
+      attach = G.ROOM_ATTACH,
+      colours = {G.C.RED, G.C.BLUE, G.C.GREEN},
+      fill = true
+    })
+	end,
 	group_key = "k_poke_starter_pack",
 }
 
