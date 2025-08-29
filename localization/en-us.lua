@@ -340,6 +340,16 @@ return {
                     "for each {X:earth,C:white}Earth{} Joker you have"
                 }
             },
+            c_poke_heartscale = {
+                name = "Heart Scale",
+                text = {
+                    "Select {C:attention}#1#{} cards,",
+                    "convert the {C:attention}left{} card",
+                    "into the {C:attention}right{} card and",
+                    "both cards into {C:hearts}#2#{}",
+                    "{C:inactive}(Drag to rearrange)",
+                }
+            },
             c_poke_berry_juice = {
                 name = "Berry Juice",
                 text = {
@@ -3276,6 +3286,13 @@ return {
                   "sets money to {C:money}$0"
                 }
             },
+            j_poke_luvdisc = {
+              name = "Luvdisc",
+              text = {
+                "{C:attention}Holding {C:hearts}Heart Scale",
+                "Applies {C:attention}Splash",
+              }
+            },
             j_poke_beldum = {
                 name = 'Beldum',
                 text = {
@@ -4389,6 +4406,14 @@ return {
                     "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
                 }
             },
+            j_poke_professor = {
+                name = "Professor",
+                text = {
+                    "After {C:attention}#1#{} round, sell this card",
+                    "to create a {C:attention}Starter{} tag",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+                }
+            },
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
                 text = {
@@ -4613,6 +4638,12 @@ return {
                 text = {
                     "Shop has a free",
                     "{C:safari}Safari{} Joker",
+                }, 
+            },
+            tag_poke_starter_tag = {
+                name = "Starter Tag",
+                text = {
+                    "Gives a free {C:attention}Starter Pack",
                 }, 
             },
         },
@@ -5456,6 +5487,13 @@ return {
                     "{C:dark_edition}Make a Wish!{}",
                 },
             },
+            p_poke_pokepack_starter_pack = {
+                name = "Starter Pack",
+                text = {
+                    "Choose {C:attention}#1# Starter{}",
+                    "from among {C:attention}#2#{} Cards"
+                },
+            },
             poke_hazards = {
                 name = "Hazards",
                 text = {
@@ -5488,6 +5526,7 @@ return {
             k_item = "Item",
             k_poke_pocket_pack = "Pocket Pack",
             k_poke_wish_pack = "Wish Pack",
+            k_poke_starter_pack = "Starter Pack",
             
             k_poke_baby = "Baby",
             k_poke_safari = "Safari",

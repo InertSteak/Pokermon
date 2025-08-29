@@ -61,6 +61,7 @@ local chikorita = {
   ptype = "Grass",
   atlas = "Pokedex2",
   gen = 2,
+  starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and context.individual and context.cardarea == G.hand then
@@ -183,6 +184,7 @@ local cyndaquil = {
   ptype = "Fire",
   atlas = "Pokedex2",
   gen = 2,
+  starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -295,6 +297,7 @@ local totodile = {
   ptype = "Water",
   atlas = "Pokedex2",
   gen = 2,
+  starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

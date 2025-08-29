@@ -680,12 +680,54 @@ local billion_lions = {
   end
 }
 
+local professor={
+  name = "professor",
+  pos = {x = 0, y = 1},
+  config = {extra = {rounds_total = 1, rounds_current = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
+  end,
+  rarity = 1,
+  cost = 6,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
+      G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_poke_starter_tag'))
+              play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+              return true
+          end)
+      }))
+    end
+    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+      card.ability.extra.rounds_current = card.ability.extra.rounds_current + 1
+      if card.ability.extra.rounds_current == card.ability.extra.rounds_total then
+          local eval = function(card) return not card.REMOVED end
+          juice_card_until(card, eval, true)
+      end
+      return {
+          message = (card.ability.extra.rounds_current < card.ability.extra.rounds_total) and
+              (card.ability.extra.rounds_current .. '/' .. card.ability.extra.rounds_total) or
+              localize('k_active_ex'),
+          colour = G.C.FILTER
+      }
+    end
+  end
+}
+
 if pokermon_config.pokemon_aprilfools then
   return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, billion_lions}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, billion_lions}
   }
 else
   return {name = "Other Jokers",
-        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm}
+        list = {pokedex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor}
   }
 end

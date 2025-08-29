@@ -250,6 +250,59 @@ local hardstone = {
   end
 }
 
+local heartscale = {
+  name = "heartscale",
+  key = "heartscale",
+  set = "Item",
+  config = {max_highlighted = 2, min_highlighted = 2, suit = "Hearts"},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {self.config.max_highlighted, localize(self.config.suit, 'suits_plural')}}
+  end,
+  pos = { x = 0, y = 0 },
+  atlas = "placeholder_item",
+  cost = 2,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card, area, copier)
+    set_spoon_item(card)
+    juice_flip(card)
+    local rightmost = G.hand.highlighted[1]
+    for i = 1, #G.hand.highlighted do
+      if G.hand.highlighted[i].T.x > rightmost.T.x then
+          rightmost = G.hand.highlighted[i]
+      end
+    end
+    for i = 1, #G.hand.highlighted do
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.1,
+          func = function()
+              if G.hand.highlighted[i] ~= rightmost then
+                  copy_card(rightmost, G.hand.highlighted[i])
+              end
+              return true
+          end
+      }))
+    end
+    for i = 1, #G.hand.highlighted do
+      G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.1,
+          func = function()
+            G.hand.highlighted[i]:change_suit(self.config.suit)
+            return true
+          end
+      }))
+    end
+    juice_flip(card, true)
+    delay(0.5)
+    poke_unhighlight_cards()
+  end,
+  in_pool = function(self)
+    return false
+  end
+}
+
 return {name = "Items 3",
-        list = {prismscale, dawnstone,duskstone, hardstone}
+        list = {prismscale, dawnstone,duskstone, hardstone, heartscale}
 }

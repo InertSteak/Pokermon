@@ -15,6 +15,7 @@ local deino={
   ptype = "Dark",
   atlas = "Pokedex5",
   gen = 5,
+  pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
