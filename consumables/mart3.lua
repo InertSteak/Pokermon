@@ -258,8 +258,8 @@ local heartscale = {
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.max_highlighted, localize(self.config.suit, 'suits_plural')}}
   end,
-  pos = { x = 0, y = 0 },
-  atlas = "placeholder_item",
+  pos = { x = 7, y = 6 },
+  atlas = "Mart",
   cost = 2,
   unlocked = true,
   discovered = true,
