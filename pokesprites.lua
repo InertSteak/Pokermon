@@ -351,7 +351,7 @@ SMODS.Sound({
 	key = "pocket_music_high",
 	path = "pocket_music_high.ogg",
 	select_music_track = function()
-		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Pocket") or SMODS.OPENED_BOOSTER.label:find("Starter"))
 	end,
 })
 SMODS.Sound({

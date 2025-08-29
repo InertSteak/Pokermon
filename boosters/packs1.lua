@@ -367,7 +367,6 @@ local starter_pack = {
   draw_hand = false,
   unlocked = true,
   discovered = true,
-  no_collection = true,
 	create_card = function(self, card, i)
     local grass_starters = {}
     local fire_starters = {}
