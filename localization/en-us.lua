@@ -5490,7 +5490,7 @@ return {
             p_poke_pokepack_starter_pack = {
                 name = "Starter Pack",
                 text = {
-                    "Choose {C:attention}#1# Starter{}",
+                    "Choose {C:attention}#1# Starter Pokemon{}",
                     "from among {C:attention}#2#{} Cards"
                 },
             },

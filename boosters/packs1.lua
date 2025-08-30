@@ -374,33 +374,37 @@ local starter_pack = {
     local pseudo_starters = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if v.starter and v.ptype == "Grass" then
-        grass_starters[#grass_starters + 1] = v.key
-      end
-      if v.starter and v.ptype == "Fire" then
-        fire_starters[#fire_starters + 1] = v.key
-      end
-      if v.starter and v.ptype == "Water" then
-        water_starters[#water_starters + 1] = v.key
-      end
-      if v.pseudol then
-        pseudo_starters[#pseudo_starters + 1] = v.key
+      if not next(SMODS.find_card(v.key)) then
+        if v.starter and v.ptype == "Grass" then
+          grass_starters[#grass_starters + 1] = v.key
+        end
+        if v.starter and v.ptype == "Fire" then
+          fire_starters[#fire_starters + 1] = v.key
+        end
+        if v.starter and v.ptype == "Water" then
+          water_starters[#water_starters + 1] = v.key
+        end
+        if v.pseudol then
+          pseudo_starters[#pseudo_starters + 1] = v.key
+        end
       end
     end
     
-    if i == 1 then
+    if i == 1 and #grass_starters > 0 then
       pack_key = pseudorandom_element(grass_starters, pseudoseed('grass'))
-    elseif i == 2 then
+    elseif i == 2 and #fire_starters > 0 then
       pack_key = pseudorandom_element(fire_starters, pseudoseed('fire'))
-    elseif i == 3 then
+    elseif i == 3 and #water_starters > 0 then
       pack_key = pseudorandom_element(water_starters, pseudoseed('water'))
     elseif i == 4 then
-      if pseudorandom('starter') < .50 then
+      if (pseudorandom('starter') < .50 or next(SMODS.find_card('j_poke_eevee'))) and not next(SMODS.find_card('j_poke_pikachu')) then
         pack_key = 'j_poke_pikachu'
-      else
+      elseif not next(SMODS.find_card('j_poke_eevee')) then
         pack_key = 'j_poke_eevee'
+      else
+        pack_key = 'j_poke_caterpie'
       end
-    elseif i == 5 then
+    elseif i == 5 and #pseudo_starters > 0 then
       pack_key = pseudorandom_element(pseudo_starters, pseudoseed('pseudo'))
     else
       pack_key = 'j_poke_caterpie'
