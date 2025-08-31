@@ -544,10 +544,11 @@ local magcargo={
 local swinub={
   name = "swinub",
   pos = {x = 8, y = 6},
-  config = {extra = {mult = 5,money = 3,odds = 2,rounds = 5,}},
+  config = {extra = {mult = 5,money = 3,num = 1, dem = 2,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, }}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'swinub')
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem, center.ability.extra.rounds, }}
   end,
   rarity = 2,
   cost = 6,
@@ -579,7 +580,7 @@ local swinub={
     return level_evo(self, card, context, "j_poke_piloswine")
   end,
   calc_dollar_bonus = function(self, card)
-    if pseudorandom('swinub') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if SMODS.pseudorandom_probability(card, 'swinub', card.ability.extra.num, card.ability.extra.dem, 'swinub') then
       return ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
     end
   end,
@@ -588,11 +589,11 @@ local swinub={
 local piloswine={
   name = "piloswine",
   pos = {x = 9, y = 6},
-  config = {extra = {mult = 10,money = 6,odds = 2,scored = 0,}, evo_rqmt = 15},
+  config = {extra = {mult = 10,money = 6,num = 1, dem = 2,scored = 0,}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, 
-                    math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'piloswine')
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
   end,
   rarity = 3,
   cost = 8,
@@ -627,7 +628,7 @@ local piloswine={
     return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.scored, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
-    if pseudorandom('piloswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if SMODS.pseudorandom_probability(card, 'piloswine', card.ability.extra.num, card.ability.extra.dem, 'piloswine') then
       return ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
     end
   end,

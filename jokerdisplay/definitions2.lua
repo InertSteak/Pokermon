@@ -683,7 +683,7 @@ jd_def["j_poke_yanma"] = {
     },
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
@@ -705,7 +705,8 @@ jd_def["j_poke_yanma"] = {
       card.joker_display_values.mult = count * card.ability.extra.mult
       card.joker_display_values.chips2 = count * card.ability.extra.chips2
       card.joker_display_values.mult2 = count * card.ability.extra.mult2
-      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+      local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'yanma')
+      card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
       card.joker_display_values.localized_text = "(3,6)"
   end
 }
@@ -1346,7 +1347,7 @@ jd_def["j_poke_swinub"] = {
   extra = {
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
@@ -1366,7 +1367,8 @@ jd_def["j_poke_swinub"] = {
       end
     end
     card.joker_display_values.mult = card.ability.extra.mult * count * first_card_triggers
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'swinub')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
   end
 }
 
@@ -1381,7 +1383,7 @@ jd_def["j_poke_piloswine"] = {
   extra = {
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
@@ -1401,7 +1403,8 @@ jd_def["j_poke_piloswine"] = {
       end
     end
     card.joker_display_values.mult = card.ability.extra.mult * count * first_card_triggers
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'piloswine')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
   end
 }
 

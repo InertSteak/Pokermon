@@ -820,7 +820,7 @@ jd_def["j_poke_vulpix"] = {
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "dem" },
             { text = ")" },
         }
     },
@@ -837,7 +837,8 @@ jd_def["j_poke_vulpix"] = {
             end
         end
         card.joker_display_values.count = count
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'vulpix')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     end
 }
 
@@ -850,7 +851,7 @@ jd_def["j_poke_ninetales"] = {
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "dem" },
             { text = ")" },
         }
     },
@@ -867,7 +868,8 @@ jd_def["j_poke_ninetales"] = {
             end
         end
         card.joker_display_values.count = count
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'ninetales')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     end
 }
 
@@ -1483,7 +1485,7 @@ text = {
 extra = {
     {
         { text = "(", colour = G.C.GREEN, scale = 0.3 },
-        { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
         { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
@@ -1493,7 +1495,8 @@ calc_function = function(card)
     local is_card_sharp_hand = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text] and
         G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
     card.joker_display_values.status = is_card_sharp_hand and "Active!" or "Not Active!"
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'abra')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = {num, dem} }
 end
 }
 
@@ -1504,7 +1507,7 @@ text = {
 extra = {
     {
         { text = "(", colour = G.C.GREEN, scale = 0.3 },
-        { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "dem",colour = G.C.GREEN, scale = 0.3 },
         { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
@@ -1514,7 +1517,8 @@ calc_function = function(card)
     local is_card_sharp_hand = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text] and
         G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
     card.joker_display_values.status = is_card_sharp_hand and "Active!" or "Not Active!"
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'kadabra')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
 end
 }
 
@@ -1525,7 +1529,7 @@ text = {
 extra = {
     {
         { text = "(", colour = G.C.GREEN, scale = 0.3 },
-        { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+        { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
         { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
 },
@@ -1535,7 +1539,8 @@ calc_function = function(card)
     local is_card_sharp_hand = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text] and
         G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
     card.joker_display_values.status = is_card_sharp_hand and "Active!" or "Not Active!"
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'alakazam')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
 end
 }
 
@@ -1931,7 +1936,7 @@ jd_def["j_poke_seel"] = {
     extra = {
         {
             { text = "(", colour = G.C.GREEN, scale = 0.3 },
-            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
             { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
     },
@@ -1939,7 +1944,8 @@ jd_def["j_poke_seel"] = {
         local status = "Not Active!"
         if G.GAME.current_round.hands_played == 0 then status = "Active!" end
         card.joker_display_values.status = status
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'seel')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     end
 }
 
@@ -1988,7 +1994,7 @@ jd_def["j_poke_shellder"] = {
     extra = {
         {
             { text = "(", colour = G.C.GREEN, scale = 0.3 },
-            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
             { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
     },
@@ -2001,11 +2007,12 @@ calc_function = function(card)
         status = "Not Active!"
     end
         card.joker_display_values.status = status
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'shellder')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
 end,
 retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
   if held_in_hand then return 0 end
-  if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+  if joker_card.ability.extra.num >= joker_card.ability.extra.dem then
     if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
       return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
     end
@@ -2020,7 +2027,7 @@ jd_def["j_poke_cloyster"] = {
   extra = {
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
@@ -2033,11 +2040,12 @@ jd_def["j_poke_cloyster"] = {
         status = "Not Active!"
       end
         card.joker_display_values.status = status
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'cloyster')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
   end,
   retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
     if held_in_hand then return 0 end
-    if G.GAME.probabilities.normal >= joker_card.ability.extra.odds then
+    if joker_card.ability.extra.num >= joker_card.ability.extra.dem then
       if scoring_hand and #scoring_hand > 0 and #scoring_hand == 5 then
         return (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
       end
@@ -2050,7 +2058,7 @@ jd_def["j_poke_gastly"] = {
 	extra = {
 		{
 			{ text = "(", colour = G.C.GREEN, scale = 0.3 },
-			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
 			{ text = ")", colour = G.C.GREEN, scale = 0.3 },
 		},
 	},
@@ -2058,7 +2066,8 @@ jd_def["j_poke_gastly"] = {
 		card.joker_display_values.odds = localize({
 			type = "variable",
 			key = "jdis_odds",
-			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+      local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gastly')
+			vars = { num, dem },
 		})
 	end,
 }
@@ -2068,15 +2077,16 @@ jd_def["j_poke_haunter"] = {
 	extra = {
 		{
 			{ text = "(", colour = G.C.GREEN, scale = 0.3 },
-			{ ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+			{ ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
 			{ text = ")", colour = G.C.GREEN, scale = 0.3 },
 		},
 	},
 	calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'haunter')
 		card.joker_display_values.odds = localize({
 			type = "variable",
 			key = "jdis_odds",
-			vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds },
+			vars = { num, dem },
 		})
 	end,
 }
@@ -2308,7 +2318,7 @@ jd_def["j_poke_exeggcute"] = {
   extra = {
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
@@ -2327,7 +2337,8 @@ jd_def["j_poke_exeggcute"] = {
     card.joker_display_values.mult = count * card.ability.extra.mult
     card.joker_display_values.mult2 = count * card.ability.extra.mult2
     card.joker_display_values.localized_text = localize("Hearts", 'suits_plural')
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'exeggcute')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     end
 }
 
@@ -2350,7 +2361,7 @@ jd_def["j_poke_exeggutor"] = {
     extra = {
         {
             { text = "(", colour = G.C.GREEN, scale = 0.3 },
-            { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+            { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
             { text = ")", colour = G.C.GREEN, scale = 0.3 },
         },
         {
@@ -2378,7 +2389,8 @@ jd_def["j_poke_exeggutor"] = {
             count = 3
         end
         card.joker_display_values.count = count
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'exeggutor')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
         card.joker_display_values.localized_text = localize("Hearts", 'suits_plural')
     end
 }
@@ -2573,7 +2585,7 @@ jd_def["j_poke_tangela"] = {
     calc_function = function(card)
         local count = 0
         local playing_hand = next(G.play.cards)
-        local chance = math.min((G.GAME.probabilities.normal / card.ability.extra.odds),1)
+        local chance = math.min((card.ability.extra.num / card.ability.extra.dem),1)
         local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
         local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
         if text ~= "Unknown" then

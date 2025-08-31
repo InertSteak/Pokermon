@@ -148,10 +148,11 @@ local berry_juice_item = {
   name = "berry_juice_item",
   key = "berry_juice_item",
   set = "Item",
-  config = {odds = 2},
+  config = {num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
-   return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
+   local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'berry_juice_item')
+   return {vars = {num, dem}}
   end,
   berry_juice = true,
   poke_multi_item = true,
@@ -169,7 +170,7 @@ local berry_juice_item = {
   end,
   use = function(self, card, area, copier)
     local max = 1
-    if pseudorandom('berry') < G.GAME.probabilities.normal/self.config.odds then
+    if SMODS.pseudorandom_probability(card, 'berry_juice_item', self.config.num, self.config.dem, 'berry_juice_item') then
       max = max + 1
     end
     for i = 1, max do

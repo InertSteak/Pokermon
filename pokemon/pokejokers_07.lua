@@ -630,11 +630,12 @@ local sunflora={
 local yanma={
   name = "yanma",
   pos = {x = 1, y = 4},
-  config = {extra = {mult = 3,chips = 6, mult2 = 6, chips2 = 12, odds = 3, scored = 0}, evo_rqmt = 36},
+  config = {extra = {mult = 3,chips = 6, mult2 = 6, chips2 = 12, num = 1, dem = 3, scored = 0}, evo_rqmt = 36},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'yanma')
     return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult2, center.ability.extra.chips2, 
-                    ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
+                    num, dem, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
   end,
   rarity = 1,
   cost = 4,
@@ -653,7 +654,7 @@ local yanma={
         end
         local Mult = card.ability.extra.mult
         local Chips = card.ability.extra.chips
-        if pseudorandom('yanma') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'yanma', card.ability.extra.num, card.ability.extra.dem, 'yanma') then
           Mult = card.ability.extra.mult2
           Chips = card.ability.extra.chips2
         end

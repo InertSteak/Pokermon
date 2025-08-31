@@ -333,10 +333,11 @@ local mega_pinsir={
 local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
-  config = {extra = {Xmult_multi = 1.75, odds = 15}},
+  config = {extra = {Xmult_multi = 1.75, num = 1, dem = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'tauros')
+    return {vars = {center.ability.extra.Xmult_multi, num, dem}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -360,7 +361,7 @@ local tauros={
         }
     end
     if context.reroll_shop and not context.blueprint then
-      if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'tauros', card.ability.extra.num, card.ability.extra.dem, 'tauros') then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
         local add_card = SMODS.create_card(temp_card)
         poke_add_shop_card(add_card, card)
@@ -1210,11 +1211,11 @@ local mega_aerodactyl={
   name = "mega_aerodactyl", 
   pos = {x = 9, y = 1},
   soul_pos = { x = 10, y = 1 },
-  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 4}},
+  config = {extra = {rank = "Ace", Xmult_multi = 1, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, 
-                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'mega_aerodactyl')
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, num, dem}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
@@ -1225,8 +1226,6 @@ local mega_aerodactyl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 14 then
-      if pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
-      end
       return { 
         x_mult = card.ability.extra.Xmult_multi * card.ability.extra.aces,
         card = card
@@ -1244,7 +1243,7 @@ local mega_aerodactyl={
         card.ability.extra.aces = 0
       end
     end
-    if context.destroying_card and pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if context.destroying_card and SMODS.pseudorandom_probability(card, 'mega_aerodactyl', card.ability.extra.num, card.ability.extra.dem, 'mega_aerodactyl') then
       return not context.blueprint and context.destroying_card:get_id() == 14
     end
   end,

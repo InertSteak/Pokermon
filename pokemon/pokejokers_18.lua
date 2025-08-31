@@ -25,12 +25,13 @@ local pansage = {
 local simisage = {
   name = "simisage",
   pos = { x = 4, y = 1 },
-  config = { extra = { odds = 3 } },
+  config = { extra = { num = 1, dem = 3 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_shortcut', config = {} }
     info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
-    return { vars = { '' .. (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'simisage')
+    return { vars = { num, dem } }
   end,
   rarity = 'poke_safari',
   cost = 8,
@@ -44,7 +45,7 @@ local simisage = {
       local stall_for_effects = false
       for _, v in ipairs(context.full_hand) do
         if v.config.center == G.P_CENTERS.c_base then
-          if pseudorandom('simisage') < G.GAME.probabilities.normal / card.ability.extra.odds then
+          if SMODS.pseudorandom_probability(card, 'simisage', card.ability.extra.num, card.ability.extra.dem, 'simisage') then
             stall_for_effects = true
             v:set_ability(G.P_CENTERS.m_lucky, nil, true)
             G.E_MANAGER:add_event(Event({

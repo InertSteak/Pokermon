@@ -152,37 +152,14 @@ local tinkaton={
       pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      if SMODS.has_enhancement(context.other_card, 'm_steel') then
-        return {
-          x_mult = 2,
-          mult = card.ability.extra.mult,
-          card = card
-        }
-      else
-        return {
-          mult = card.ability.extra.mult,
-          card = card
-        }
-      end
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after then
-        for i = 1, #context.scoring_hand do
-          if SMODS.has_enhancement(context.scoring_hand[i], 'm_steel') and not context.scoring_hand[i].debuff and pseudorandom('tinkaton') < G.GAME.probabilities.normal/4 then
-            context.scoring_hand[i].shattered = true
-            local destroyed = context.scoring_hand[i]
-            G.E_MANAGER:add_event(Event({
-              trigger = 'after',
-              delay = 0.2,
-              func = function() 
-                context.scoring_hand[i]:shatter()
-              return true end }))
-            delay(0.3)
-            for i = 1, #G.jokers.cards do
-              G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {destroyed}})
-            end
-          end
-        end
+    if context.check_enhancement then
+      if context.other_card.config.center.key == "m_steel" then
+          return {m_glass = true}
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then

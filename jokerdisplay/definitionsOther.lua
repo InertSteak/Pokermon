@@ -46,13 +46,14 @@ jd_def["j_poke_tall_grass"] = {
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "dem" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+        local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'tall_grass')
+        card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     end
 }
 

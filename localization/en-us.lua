@@ -4219,7 +4219,7 @@ return {
                   "When {C:attention}Blind{} is selected, debuff",
                   "{C:attention}#3#{} non-{C:attention}Steel{} cards in your deck",
                   "{br:4}ERROR - CONTACT STEAK",
-                  "Played {C:attention}Steel{} cards behave like {C:attention}Glass{} cards"
+                  "{C:attention}Steel{} cards are also {C:attention}Glass{} cards"
                 }
             },
             j_poke_wiglett = {

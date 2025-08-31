@@ -4,9 +4,10 @@ local hazard = {
    key = "hazard",
    atlas = "Mart",
    pos = { x = 9, y = 5 },
-   config = {odds = 6},
+   config = {num = 1, dem = 6},
    loc_vars = function(self, info_queue, center)
-     return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
+     local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'hazard')
+     return {vars = {num, dem}}
    end,
    no_rank = true,
    no_suit = true,
@@ -16,7 +17,7 @@ local hazard = {
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
-      if pseudorandom('hazard') < G.GAME.probabilities.normal/self.config.odds then
+      if SMODS.pseudorandom_probability(card, 'hazard', self.config.num, self.config.dem, 'hazard') then
         poke_remove_card(card, card)
       end
     end

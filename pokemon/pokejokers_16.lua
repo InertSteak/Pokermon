@@ -225,13 +225,14 @@ local rhyperior={
 local tangrowth={
   name = "tangrowth", 
   pos = {x = 8, y = 5},
-  config = {extra = {mult = 15, chips = 75, money_mod = 3, odds = 4}},
+  config = {extra = {mult = 15, chips = 75, money_mod = 3, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod,''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'tangrowth')
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips,center.ability.extra.money_mod, num, dem}}
   end,
   rarity = "poke_safari", 
   cost = 10,
@@ -244,7 +245,7 @@ local tangrowth={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.end_of_round and
        SMODS.has_enhancement(context.other_card, 'm_wild') then
-        if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'tangrowth', card.ability.extra.num, card.ability.extra.dem, 'tangrowth') then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
           return {
@@ -372,10 +373,12 @@ local magmortar={
 local togekiss={
   name = "togekiss",
   pos = {x = 11, y = 5},
-  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult_multi = 1.5, plus_odds = 1}},
+  config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5, plus_odds = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi, card.ability.extra.plus_odds}}
+    local num, chip_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss')
+    local _, Xmult_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss')
+    return {vars = {num, chip_dem, Xmult_dem, card.ability.extra.chips, card.ability.extra.Xmult_multi, card.ability.extra.plus_odds}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -389,14 +392,14 @@ local togekiss={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
       local ret = nil
-      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+      if SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss') then
         ret = {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
       end
-      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+      if SMODS.pseudorandom_probability(card, 'togekiss', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss') then
         local temp = {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,
@@ -411,22 +414,23 @@ local togekiss={
 
       return ret
     end
+    if context.mod_probability and not context.blueprint then
+      return 
+      {
+        numerator = context.numerator + card.ability.extra.plus_odds
+      }
+    end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal + card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal - card.ability.extra.plus_odds * math.max(1, (2 ^ #find_joker('Oops! All 6s')))
-  end
 }
 -- Yanmega 469
 local yanmega={
   name = "yanmega",
   pos = {x = 12, y = 5},
-  config = {extra = {mult = 6,chips = 12, odds = 3, retriggers = 1}},
+  config = {extra = {mult = 6,chips = 12, num = 1, dem = 3, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'yanmega')
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -449,7 +453,7 @@ local yanmega={
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play then
       if context.other_card:get_id() == 3 or context.other_card:get_id() == 6 then
-        if pseudorandom('yanmega') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'yanmega', card.ability.extra.num, card.ability.extra.dem, 'yanmega') then
           return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
@@ -507,10 +511,11 @@ local leafeon={
 local glaceon={
   name = "glaceon", 
   pos = {x = 0, y = 6},
-  config = {extra = {odds = 4}},
+  config = {extra = {num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'glaceon')
+    return {vars = {num, dem}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -521,7 +526,7 @@ local glaceon={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.reroll_shop and not context.blueprint then
-      if pseudorandom('glaceon') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'glaceon', card.ability.extra.num, card.ability.extra.dem, 'glaceon') then
         local card_to_copy = pseudorandom_element(G.deck.cards, pseudoseed('deckglaceon'))
         local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
         copy:set_ability(G.P_CENTERS.m_glass, nil, true)
@@ -579,10 +584,11 @@ local gliscor = {
 local mamoswine={
   name = "mamoswine",
   pos = {x = 2, y = 6},
-  config = {extra = {mult = 15,money = 4,odds = 2,}},
+  config = {extra = {mult = 15,money = 4,num = 1, dem = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds,}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'mamoswine')
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -597,7 +603,7 @@ local mamoswine={
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand then
       local earn = false
       if SMODS.has_enhancement(context.other_card, 'm_stone') or SMODS.has_enhancement(context.other_card, 'm_glass') then
-        if pseudorandom('mamoswine') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'mamoswine', card.ability.extra.num, card.ability.extra.dem, 'mamoswine') then
           earn = true
         end
       end

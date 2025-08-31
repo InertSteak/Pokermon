@@ -109,10 +109,11 @@ local poliwrath={
 local abra={
   name = "abra", 
   pos = {x = 10, y = 4}, 
-  config = {extra = {odds = 2, rounds = 5}},
+  config = {extra = {num = 1, dem = 2, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'abra')
+    return {vars = {num, dem, center.ability.extra.rounds}}
   end,
   rarity = 1, 
   cost = 6, 
@@ -125,7 +126,7 @@ local abra={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          if pseudorandom('abra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+          if SMODS.pseudorandom_probability(card, 'abra', card.ability.extra.num, card.ability.extra.dem, 'abra') then
             local set = nil
             local message = nil
             local colour = nil
@@ -153,14 +154,15 @@ local abra={
 local kadabra={
   name = "kadabra", 
   pos = {x = 11, y = 4},
-  config = {extra = {odds = 2}},
+  config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kadabra')
+    return {vars = {num, dem}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -173,7 +175,7 @@ local kadabra={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
-        if pseudorandom('kadabra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'kadabra', card.ability.extra.num, card.ability.extra.dem, 'kadabra') then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local set = nil
             local message = nil
@@ -204,7 +206,7 @@ local kadabra={
 local alakazam={
   name = "alakazam", 
   pos = {x = 12, y = 4}, 
-  config = {extra = {odds = 2, card_limit = 1}},
+  config = {extra = {num = 1, dem = 2, card_limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -212,7 +214,8 @@ local alakazam={
       info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.card_limit}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'alakazam')
+    return {vars = {num, dem, center.ability.extra.card_limit}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -224,7 +227,7 @@ local alakazam={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
-        if pseudorandom('alakazam') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'alakazam', card.ability.extra.num, card.ability.extra.dem, 'alakazam') then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local set = nil
             local message = nil
@@ -834,50 +837,6 @@ local slowpoke={
     return evo
   end
 }
--- Slowpoke 2??? 079
-local slowpoke2={
-  name = "slowpoke2", 
-  pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, rounds = 5, odds = 5}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_kingsrock
-    end
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
-  end,
-  rarity = 1, 
-  cost = 6, 
-  item_req = "kingsrock",
-  stage = "Basic", 
-  ptype = "Water",
-  atlas = "Pokedex1",
-  gen = 1, 
-  blueprint_compat = true,
-  calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and G.GAME.current_round.hands_left == 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    end
-    if not context.repetition and not context.individual and context.end_of_round then
-      if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) and (pseudorandom('slowpoke') < G.GAME.probabilities.normal/card.ability.extra.odds) then
-        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, "c_poke_kingsrock")
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-      end
-    end
-    local evo = item_evo(self, card, context, "j_poke_slowking")
-    if not evo then
-      evo = level_evo(self, card, context, "j_poke_slowbro")
-    end
-    return evo
-  end
-}
 -- Slowbro 080
 local slowbro={
   name = "slowbro", 
@@ -1038,14 +997,15 @@ local magneton={
 local farfetchd={
   name = "farfetchd", 
   pos = {x = 4, y = 6}, 
-  config = {extra = {money = 4, odds = 4}},
+  config = {extra = {money = 4, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leek
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leek"}}
     end
-    return {vars = {center.ability.extra.money, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num or 1, center.ability.extra.dem, 'farfetchd')
+    return {vars = {center.ability.extra.money, num, dem}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -1066,7 +1026,7 @@ local farfetchd={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable then
-      if (pseudorandom('farfet') < G.GAME.probabilities.normal/card.ability.extra.odds) or context.consumeable.ability.name == "leek" then
+      if SMODS.pseudorandom_probability(card, 'farfetchd', card.ability.extra.num, card.ability.extra.dem, 'farfetchd') or context.consumeable.ability.name == "leek" then
         card:juice_up()
         ease_poke_dollars(card, "farfet", card.ability.extra.money)
       end
@@ -1175,10 +1135,11 @@ local dodrio={
 local seel={
   name = "seel", 
   pos = {x = 7, y = 6}, 
-  config = {extra = {odds = 2, rounds = 5}},
+  config = {extra = {num = 1, dem = 2, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.rounds}}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'seel')
+    return {vars = {num, dem, card.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -1189,7 +1150,7 @@ local seel={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-      if pseudorandom('seel') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'seel', card.ability.extra.num, card.ability.extra.dem, 'seel') then
         local _card = context.scoring_hand[1]
         local args = {guaranteed = true}
         local seal_type = SMODS.poll_seal(args)
@@ -1327,13 +1288,14 @@ local muk={
 local shellder={
   name = "shellder", 
   pos = {x = 11, y = 6}, 
-  config = {extra = {retriggers = 1, odds = 3}},
+  config = {extra = {retriggers = 1, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_waterstone
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'shellder')
+    return {vars = {num, dem}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -1346,7 +1308,7 @@ local shellder={
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play and #context.scoring_hand == 5 then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        if pseudorandom('shellder') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'shellder', card.ability.extra.num, card.ability.extra.dem, 'shellder') then
           return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,

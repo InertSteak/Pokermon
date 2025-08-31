@@ -6,6 +6,7 @@ if SMODS.current_mod then
 end
 
 pokermon = {}
+SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
 --This can probably have a better integration or just be removed altogether since everything is discovered anyways

@@ -175,10 +175,11 @@ local mega_lopunny={
 local mismagius = {
   name = "mismagius",
   pos = {x = 0, y = 3},
-  config = {extra = {chip_mod = 5, chips = 0, chips2 = 20, chip_odds = 4}},
+  config = {extra = {chip_mod = 5, chips = 0, chips2 = 20, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.chips2, }}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'mismagius')
+    return {vars = {card.ability.extra.chip_mod, card.ability.extra.chips, num, dem, card.ability.extra.chips2, }}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -194,7 +195,7 @@ local mismagius = {
       if not context.other_card.debuff and context.other_card:is_face() then
         context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-        if pseudorandom('mismagius') < G.GAME.probabilities.normal / card.ability.extra.chip_odds then
+        if SMODS.pseudorandom_probability(card, 'mismagius', card.ability.extra.num, card.ability.extra.dem, 'mismagius') then
           context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
           return {
             message = localize('k_upgrade_ex'),
@@ -367,14 +368,15 @@ local mimejr={
 local happiny={
   name = "happiny",
   pos = {x = 11, y = 3},
-  config = {extra = {Xmult_minus = 0.5,rounds = 2, odds = 3}},
+  config = {extra = {Xmult_minus = 0.5,rounds = 2, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     end
-    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'happiny')
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, num, dem}}
   end,
   rarity = 2,
   cost = 4,
@@ -398,7 +400,7 @@ local happiny={
     end
     if context.end_of_round and not context.individual and not context.repetition and not context.post_trigger and not card.debuff then
       local max = 1
-      if pseudorandom('happiny') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'happiny', card.ability.extra.num, card.ability.extra.dem, 'happiny') then
         max = max + 1
       end
       for i = 1, max do

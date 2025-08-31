@@ -4,10 +4,11 @@
 local cloyster={
   name = "cloyster", 
   pos = {x = 12, y = 6},
-  config = {extra = {retriggers = 1, odds = 2}},
+  config = {extra = {retriggers = 1, num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'cloyster')
+    return {vars = {num, dem}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -19,7 +20,7 @@ local cloyster={
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.play and #context.scoring_hand == 5 then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        if pseudorandom('cloyster') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'cloyster', card.ability.extra.num, card.ability.extra.dem, 'cloyster') then
           return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
@@ -34,7 +35,7 @@ local cloyster={
 local gastly={
   name = "gastly", 
   pos = {x = 0, y = 7}, 
-  config = {extra = {odds = 6, rounds = 3}},
+  config = {extra = {num = 1, dem = 6, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -42,7 +43,8 @@ local gastly={
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'gastly')
+    return {vars = {num, dem, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 7, 
@@ -59,7 +61,7 @@ local gastly={
   end,
   calc_dollar_bonus = function(self, card)
     local eligible_card = nil
-    if pseudorandom('gastly') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if SMODS.pseudorandom_probability(card, 'gastly', card.ability.extra.num, card.ability.extra.dem, 'gastly') then
       if #G.jokers.cards > 0 then
         local eligible_editionless_jokers = {}
         for k, v in pairs(G.jokers.cards) do
@@ -87,7 +89,7 @@ local gastly={
 local haunter={
   name = "haunter", 
   pos = {x = 1, y = 7}, 
-  config = {extra = {odds = 4}},
+  config = {extra = {num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -98,7 +100,8 @@ local haunter={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'haunter')
+    return {vars = {num, dem}}
   end,
   rarity = 3, 
   cost = 9,
@@ -116,7 +119,7 @@ local haunter={
   end,
   calc_dollar_bonus = function(self, card)
     local eligible_card = nil
-    if pseudorandom('haunter') < G.GAME.probabilities.normal/card.ability.extra.odds and not card.ability.extra.evolve then
+    if SMODS.pseudorandom_probability(card, 'haunter', card.ability.extra.num, card.ability.extra.dem, 'haunter') and not card.ability.extra.evolve then
       if #G.jokers.cards > 0 then
         local eligible_editionless_jokers = {}
         for k, v in pairs(G.jokers.cards) do
@@ -557,14 +560,14 @@ local electrode={
 local exeggcute={
   name = "exeggcute", 
   pos = {x = 10, y = 7}, 
-  config = {extra = {mult = 2, suit = "Hearts", mult2 = 6, odds = 4}},
+  config = {extra = {mult = 2, suit = "Hearts", mult2 = 6, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
         info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
     end
-    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult2, 
-                    ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'exeggcute')
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.suit, 'suits_singular'), center.ability.extra.mult2, num, dem}}
   end,
   rarity = 1, 
   cost = 4,
@@ -578,7 +581,7 @@ local exeggcute={
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
         local Mult = card.ability.extra.mult
-        if pseudorandom('exeggcute') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'exeggcute', card.ability.extra.num, card.ability.extra.dem, 'exeggcute') then
           Mult = card.ability.extra.mult2
         end
         return {
@@ -594,11 +597,11 @@ local exeggcute={
 local exeggutor={
   name = "exeggutor", 
   pos = {x = 11, y = 7}, 
-  config = {extra = {mult_mod = 2, Xmult_multi = 1.4, suit = "Hearts", odds = 2}},
+  config = {extra = {mult_mod = 2, Xmult_multi = 1.4, suit = "Hearts", num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), 
-                    ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'exeggutor')
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, localize(center.ability.extra.suit, 'suits_singular'), num, dem}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -610,7 +613,7 @@ local exeggutor={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        if pseudorandom('exeggutor') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'exeggutor', card.ability.extra.num, card.ability.extra.dem, 'exeggutor') then
           return {
             message = localize("poke_solar_ex"),
             colour = G.C.XMULT,
@@ -1038,15 +1041,15 @@ local chansey={
 local tangela={
   name = "tangela", 
   pos = {x = 9, y = 8},
-  config = {extra = {mult = 10, chips = 50, money_mod = 3, odds = 4, wilds_scored = 0}, evo_rqmt = 10},
+  config = {extra = {mult = 10, chips = 50, money_mod = 3, num = 1, dem = 4, wilds_scored = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
     local wild_left = math.max(0, self.config.evo_rqmt - card.ability.extra.wilds_scored)
-    return {vars = {card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.money_mod,
-                    ''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, wild_left}}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'tangela')
+    return {vars = {card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.money_mod, num, dem, wild_left}}
   end,
   rarity = 2, 
   cost = 6,
@@ -1062,7 +1065,7 @@ local tangela={
         if not context.blueprint then
           card.ability.extra.wilds_scored = card.ability.extra.wilds_scored + 1
         end
-        if pseudorandom('tangela') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'tangela', card.ability.extra.num, card.ability.extra.dem, 'tangela') then
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
           G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
           return {

@@ -683,10 +683,11 @@ local ledian={
 local spinarak={
   name = "spinarak",
   pos = {x = 5, y = 1},
-  config = {extra = {chips = 40, chips2 = 90, odds = 3,rounds = 4,}},
+  config = {extra = {chips = 40, chips2 = 90, num = 1, dem = 3,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.rounds, center.ability.extra.chips2}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'spinarak')
+    return {vars = {center.ability.extra.chips, num, dem, center.ability.extra.rounds, center.ability.extra.chips2}}
   end,
   rarity = 1,
   cost = 4,
@@ -701,7 +702,7 @@ local spinarak={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local chips = card.ability.extra.chips
-        if pseudorandom('spinarak') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'spinarak', card.ability.extra.num, card.ability.extra.dem, 'spinarak') then
           chips = card.ability.extra.chips2
         end
         return {
@@ -718,10 +719,11 @@ local spinarak={
 local ariados={
   name = "ariados",
   pos = {x = 6, y = 1},
-  config = {extra = {chips = 60, chips2 = 135, odds = 3,}},
+  config = {extra = {chips = 60, chips2 = 135, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, center.ability.extra.chips2}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'ariados')
+    return {vars = {center.ability.extra.chips, num, dem, center.ability.extra.chips2}}
   end,
   rarity = 2,
   cost = 5,
@@ -736,7 +738,7 @@ local ariados={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local chips = card.ability.extra.chips
-        if pseudorandom('spinarak') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'ariados', card.ability.extra.num, card.ability.extra.dem, 'ariados') then
           chips = card.ability.extra.chips2
         end
         return {
@@ -1085,13 +1087,15 @@ local togepi={
 local togetic={
   name = "togetic",
   pos = {x = 4, y = 2},
-  config = {extra = {chip_odds = 5, Xmult_odds = 10, chips = 100, Xmult_multi = 1.5}},
+  config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.chip_odds, card.ability.extra.Xmult_odds, card.ability.extra.chips,                    card.ability.extra.Xmult_multi}}
+    local num, chip_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.chip_dem, 'togetic_chips')
+    local _, Xmult_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.Xmult_dem, 'togetic_Xmult')
+    return {vars = {num, chip_dem, Xmult_dem, card.ability.extra.chips, card.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
   cost = 6,
@@ -1106,14 +1110,14 @@ local togetic={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card and context.other_card.ability.effect == "Lucky Card" then
       local ret = nil
-      if pseudorandom('togekiss') <  (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.chip_odds then
+      if SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.chip_dem, 'togetic_chips') then
         ret = {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chips
         }
       end
-      if pseudorandom('togekiss') < (G.GAME and G.GAME.probabilities.normal or 1) / card.ability.extra.Xmult_odds then
+      if SMODS.pseudorandom_probability(card, 'togetic', card.ability.extra.num, card.ability.extra.Xmult_dem, 'togetic_Xmult') then
         local temp = {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}},
           colour = G.C.XMULT,

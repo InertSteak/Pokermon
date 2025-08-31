@@ -4,7 +4,7 @@ local moonstone = {
   name = "moonstone",
   key = "moonstone",
   set = "Item",
-  config = {min_highlighted = 1, odds = 2},
+  config = {min_highlighted = 1, num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     local handtext = localize('poke_none')
@@ -18,8 +18,8 @@ local moonstone = {
         end
       end
     end
-    
-    return {vars = {handtext, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
+    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'moonstone')
+    return {vars = {handtext, num, dem}}
   end,
   pos = { x = 8, y = 3 },
   atlas = "Mart",
@@ -39,7 +39,7 @@ local moonstone = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
-      if pseudorandom('moonstone') < G.GAME.probabilities.normal/self.config.odds then
+      if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
         local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
 
         level_up_hand(card, text)
@@ -279,11 +279,12 @@ local leafstone = {
   name = "leafstone",
   key = "leafstone",
   set = "Item",
-  config = {odds = 3},
+  config = {num = 1, dem = 3},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds,}}
+    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'leafstone')
+    return {vars = {num, dem}}
   end,
   pos = { x = 7, y = 3 },
   atlas = "Mart",
@@ -302,7 +303,7 @@ local leafstone = {
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
-        if pseudorandom('leafstone') < G.GAME.probabilities.normal/self.config.odds then
+        if SMODS.pseudorandom_probability(card, 'leafstone', self.config.num, self.config.dem, 'leafstone') then
           G.hand.cards[i]:set_ability(G.P_CENTERS.m_lucky, nil, true)
         end
       end
@@ -431,7 +432,7 @@ local leek = {
   key = "leek",
   set = "Item",
   helditem = true,
-  config = {extra = {odds = 2, usable = true}},
+  config = {extra = {num = 1, dem = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
     local card = center or self
@@ -444,7 +445,8 @@ local leek = {
     if not card.edition or (card.edition and not card.edition.polychrome) then
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     end
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), card.ability and card.ability.extra.odds or card.config.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, card.ability.extra.num, card.ability.extra.dem, 'leek')
+    return {vars = {num, dem}}
   end,
   pos = { x = 8, y = 4 },
   soul_pos = { x = 7, y = 5 },
@@ -459,10 +461,9 @@ local leek = {
     return card.ability.extra.usable
   end,
   use = function(self, card, area, copier)
-    local item_chance = pseudorandom('leek')
     local removed = nil
     
-    if item_chance < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if SMODS.pseudorandom_probability(card, 'leek', card.ability.extra.num, card.ability.extra.dem, 'leek') then
       local edition = poll_edition('wheel_of_fortune', nil, true, true)
       card:set_edition(edition, true)
     else
@@ -818,11 +819,12 @@ local icestone = {
   name = "icestone",
   key = "icestone",
   set = "Item",
-  config = {max_highlighted = 2, min_highlighted = 1, odds = 4},
+  config = {max_highlighted = 2, min_highlighted = 1, num = 1, dem = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
-    return {vars = {self.config.max_highlighted, ''..(G.GAME and G.GAME.probabilities.normal or 1), self.config.odds}}
+    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'icestone')
+    return {vars = {self.config.max_highlighted, num, dem}}
   end,
   pos = { x = 5, y = 4 },
   atlas = "Mart",
@@ -848,7 +850,7 @@ local icestone = {
       end
       juice_flip(card, true)
       for i = 1, #G.hand.highlighted do
-        if pseudorandom(pseudoseed('icestone')) <  G.GAME.probabilities.normal/self.config.odds then
+        if SMODS.pseudorandom_probability(card, 'icestone', self.config.num, self.config.dem, 'icestone') then
           poke_remove_card(G.hand.highlighted[i], card)
         end
       end

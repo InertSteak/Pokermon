@@ -328,7 +328,7 @@ local chandelure={
 local golett={
   name = "golett",
   pos = {x = 2, y = 9},
-  config = {extra = {hazards = 4, Xmult_multi = 1.2, rounds = 5, odds = 4}},
+  config = {extra = {hazards = 4, Xmult_multi = 1.2, rounds = 5, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
@@ -336,7 +336,8 @@ local golett={
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    return {vars = {abbr.hazards, abbr.Xmult_multi, abbr.rounds, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golett')
+    return {vars = {abbr.hazards, abbr.Xmult_multi, abbr.rounds, num, dem}}
   end,
   rarity = 3,
   cost = 7,
@@ -353,7 +354,7 @@ local golett={
       poke_set_hazards(card.ability.extra.hazards)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
-      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or pseudorandom('golett') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or SMODS.pseudorandom_probability(card, 'golett', card.ability.extra.num, card.ability.extra.dem, 'golett') then
         if context.other_card.debuff then
             return {
                 message = localize('k_debuffed'),
@@ -375,7 +376,7 @@ local golett={
 local golurk={
   name = "golurk",
   pos = {x = 3, y = 9},
-  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.4, odds = 3}},
+  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.4, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
@@ -383,7 +384,8 @@ local golurk={
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    return {vars = {abbr.hazards, abbr.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golurk')
+    return {vars = {abbr.hazards, abbr.Xmult_multi, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -400,7 +402,7 @@ local golurk={
       poke_set_hazards(card.ability.extra.hazards)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
-      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or pseudorandom('golurk') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or SMODS.pseudorandom_probability(card, 'golurk', card.ability.extra.num, card.ability.extra.dem, 'golurk') then
         if context.other_card.debuff then
             return {
                 message = localize('k_debuffed'),

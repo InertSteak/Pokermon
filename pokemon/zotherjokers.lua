@@ -70,10 +70,11 @@ local everstone={
 local tall_grass={
   name = "tall_grass",
   pos = {x = 2, y = 0},
-  config = {extra = {odds = 2,}},
+  config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds, }}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'tall_grass')
+    return {vars = {num, dem }}
   end,
   rarity = 1,
   cost = 6,
@@ -93,7 +94,7 @@ local tall_grass={
           end
         end
         
-        if has_wild or pseudorandom('tallgrass') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if has_wild or SMODS.pseudorandom_probability(card, 'tall_grass', card.ability.extra.num, card.ability.extra.dem, 'tall_grass') then
           G.GAME.joker_buffer = G.GAME.joker_buffer + 1
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             G.GAME.joker_buffer = 0
