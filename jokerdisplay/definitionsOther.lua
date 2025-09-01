@@ -46,7 +46,7 @@ jd_def["j_poke_tall_grass"] = {
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "dem" },
+            { ref_table = "card.joker_display_values", ref_value = "odds" },
             { text = ")" },
         }
     },

@@ -186,7 +186,7 @@ jd_def["j_poke_mismagius"] = {
   extra = {
     {
       { text = "(" },
-      { ref_table = "card.joker_display_values", ref_value = "dem",colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
       { text = ")" },
     },
   },
@@ -537,7 +537,7 @@ text = {
 extra = {
   {
     { text = "(", colour = G.C.GREEN, scale = 0.3 },
-    { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
+    { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
     { text = ")", colour = G.C.GREEN, scale = 0.3 },
   },
 },
@@ -586,7 +586,7 @@ jd_def["j_poke_glaceon"] = {
   extra = {
     {
       { text = "(", colour=G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "dem", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour=G.C.GREEN, scale = 0.3 },
     },
   },
@@ -658,7 +658,7 @@ jd_def["j_poke_mamoswine"] = {
     },
     {
       { text = "(", colour = G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "dem",colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
       { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
