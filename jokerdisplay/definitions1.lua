@@ -2063,10 +2063,10 @@ jd_def["j_poke_gastly"] = {
 		},
 	},
 	calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gastly')
 		card.joker_display_values.odds = localize({
 			type = "variable",
 			key = "jdis_odds",
-      local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gastly')
 			vars = { num, dem },
 		})
 	end,
