@@ -359,6 +359,26 @@ SMODS.Sound({
 	path = "energy_use.ogg",
 })
 
+SMODS.Gradient({
+    key = "grad_stellar",
+    cycle = 20,
+    colours = {
+        HEX("F7B58C"),
+        G.C.BLACK,
+        HEX("289830"),
+        HEX("888080"),
+        HEX("c135ff"),
+        HEX("c8c0f8"),
+        HEX("b85838"),
+        HEX("ff3db6"),
+        HEX("e97333"),
+        HEX("38b8f8"),
+        HEX("f81020"),
+        HEX("c8c0f8"),
+        HEX("0086a5"),
+    },
+})
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)
@@ -378,6 +398,7 @@ function loc_colour(_c, _default)
   G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
   G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
   G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
+  G.ARGS.LOC_COLOURS["stellar"] = SMODS.Gradients['poke_grad_stellar']
   G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
   G.ARGS.LOC_COLOURS["item"] = HEX("9AA4B7")
   G.ARGS.LOC_COLOURS["safari"] = HEX("F2C74E")

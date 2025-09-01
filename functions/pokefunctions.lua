@@ -148,6 +148,7 @@ pokermon.family = {
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},
+    {'terapagos', 'terapagost'},
     {"ruins_of_alph"},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
     {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
@@ -194,6 +195,8 @@ type_sticker_applied = function(card)
     return "Dragon"
   elseif card.ability.earth_sticker then
     return "Earth"
+  elseif card.ability.stellar_sticker then
+    return "Stellar"
   else
     return false
   end
@@ -204,7 +207,7 @@ find_pokemon_type = function(target_type)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
-      if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) then
+      if is_type(v, target_type) then
         table.insert(found, v)
       end
     end
@@ -213,7 +216,7 @@ find_pokemon_type = function(target_type)
 end
 
 is_type = function(card, target_type)
-  if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
+  if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"] or card.ability["stellar_sticker"]) then
     return true
   else
     return false
@@ -991,7 +994,7 @@ poke_set_type_badge = function(self, card, badges)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth", "Stellar"}
   local apply_type = nil
   
   if sticker_type then
