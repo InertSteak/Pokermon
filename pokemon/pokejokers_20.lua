@@ -547,9 +547,105 @@ local jellicent = {
 -- Joltik 595
 -- Galvantula 596
 -- Ferroseed 597
+local ferroseed={
+  name = "ferroseed",
+  pos = {x = 5, y = 7},
+  config = {extra = {rounds = 5}},
+  loc_txt = {
+    name = "Ferroseed",
+    text = {
+      "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
+      "are also {C:attention}Steel{} cards",
+      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    end
+    return {vars = {center.ability.extra.rounds}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.check_enhancement then
+      if context.other_card.config.center.key == "m_wild" or context.other_card.config.center.key == "m_poke_hazard" then
+          return {m_steel = true}
+      end
+    end
+    return level_evo(self, card, context, "j_poke_ferrothorn")
+  end,
+}
 -- Ferrothorn 598
+local ferrothorn={
+  name = "ferrothorn",
+  pos = {x = 6, y = 7},
+  config = {extra = {retriggers = 1}},
+  loc_txt = {
+    name = "Ferrothorn",
+    text = {
+      "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
+      "are also {C:attention}Steel{} cards",
+      "{br:2}ERROR - CONTACT STEAK",
+      "If played hand contains",
+      "a {C:attention}Flush{}, retrigger all",
+      "{C:attention}Steel{} cards {C:attention}held{} in hand",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    end
+    return {vars = {}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 5,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.check_enhancement then
+      if context.other_card.config.center.key == "m_wild" or context.other_card.config.center.key == "m_poke_hazard" then
+          return {m_steel = true}
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and next(context.poker_hands['Flush']) then
+        card.ability.extra.retrigger_hand = true
+      end
+      if context.after and card.ability.extra.retrigger_hand then
+        card.ability.extra.retrigger_hand = nil
+      end
+    end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and card.ability.extra.retrigger_hand 
+       and SMODS.has_enhancement(context.other_card, 'm_steel') then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+}
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
 }

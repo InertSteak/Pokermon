@@ -134,6 +134,7 @@ pokermon.family = {
     {"panpour", "simipour"},
     {"golett", "golurk"},
     {"roggenrola", "boldore", "gigalith"},
+    {"ferroseed", "ferrothorn"},
     {"zorua", "zoroark"},
     {"deino", "zweilous", "hydreigon"},
     {"litleo", "pyroar"},
