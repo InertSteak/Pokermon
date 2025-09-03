@@ -1262,7 +1262,6 @@ return {
                 name = 'Eevee',
                 text = {
                     "{X:mult,C:white} X#1# {} multi",
-					"{C:inactive}(Actual {C:attention}#2#{C:inactive}/#3#)",
 					"{C:inactive,s:0.8}(Evoluciona con...un montón)",
                 } 
             },
@@ -3939,8 +3938,8 @@ return {
                 name = "Trampas",
                 text = {
                     "Cuando se selecciona la {C:attention}ciega{},",
-					"{C:attention}#1#{} carta sin mejora en tu baraja",
-                    "se vuelve {C:attention}carta trampa{}",
+					"{C:attention}#1#{} cartas sin mejora en tu baraja",
+                    "se vuelven {C:attention}cartas trampa{}",
                 },
             },
         },
