@@ -156,6 +156,7 @@ local mega_scizor={
   stage = "Mega",
   ptype = "Metal",
   atlas = "Megas",
+  gen = 2,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

@@ -205,9 +205,9 @@ local dudunsparce={
   end,
   set_sprites = function(self, card, front)
     if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-      card.children.center:set_sprite_pos({x = 6, y = 6})
+      card.children.center:set_sprite_pos({x = 8, y = 3})
     else
-      card.children.center:set_sprite_pos({x = 5, y = 6})
+      card.children.center:set_sprite_pos({x = 6, y = 3})
     end
   end,
   add_to_deck = function(self, card, from_debuff)

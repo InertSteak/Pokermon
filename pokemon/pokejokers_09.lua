@@ -362,6 +362,7 @@ local mega_tyranitar={
   stage = "Mega",
   ptype = "Dark",
   atlas = "Megas",
+  gen = 2,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

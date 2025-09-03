@@ -22,7 +22,7 @@ local moonstone = {
     return {vars = {handtext, num, dem}}
   end,
   pos = { x = 8, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -89,7 +89,7 @@ local sunstone = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 9, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -134,7 +134,7 @@ local waterstone = {
     return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
   pos = { x = 5, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -183,7 +183,7 @@ local thunderstone = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -238,7 +238,7 @@ local firestone = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 4, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -287,7 +287,7 @@ local leafstone = {
     return {vars = {num, dem}}
   end,
   pos = { x = 7, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -329,7 +329,7 @@ local linkcable = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -382,7 +382,7 @@ local leftovers = {
   end,
   pos = { x = 7, y = 4 },
   soul_pos = { x = 6, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -450,7 +450,7 @@ local leek = {
   end,
   pos = { x = 8, y = 4 },
   soul_pos = { x = 7, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -517,7 +517,7 @@ local thickclub = {
   end,
   pos = { x = 9, y = 4 },
   soul_pos = { x = 8, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -569,7 +569,7 @@ local teraorb = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Random Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
   end,
   pos = { x = 9, y = 2 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -605,7 +605,7 @@ local metalcoat = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 2 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   unlocked = true,
   discovered = true,
@@ -641,7 +641,7 @@ local dragonscale = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {G.ARGS.LOC_COLOURS.dragon}}}
   end,
   pos = { x = 7, y = 2 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -692,7 +692,7 @@ local kingsrock = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 5, y = 2 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -743,7 +743,7 @@ local upgrade = {
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 8, y = 2 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -785,7 +785,7 @@ local dubious_disc = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
   pos = { x = 0, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -827,7 +827,7 @@ local icestone = {
     return {vars = {self.config.max_highlighted, num, dem}}
   end,
   pos = { x = 5, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -878,7 +878,7 @@ local shinystone = {
     return {vars = {self.config.max_highlighted, self.config.drain_amt}}
   end,
   pos = { x = 2, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -919,7 +919,7 @@ local twisted_spoon = {
   key = "twisted_spoon",
   set = "Item",
   pos = { x = 1, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   unlocked = true,
   discovered = true,
