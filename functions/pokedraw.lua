@@ -14,7 +14,7 @@ SMODS.DrawStep({
       local center = card.config.center
       local prev_atlas = card.children.center.atlas
       local prev_pos = card.children.center.sprite_pos
-      local new_atlas = (card.edition and card.edition.poke_shiny) and 'poke_Shinydex5' or 'poke_Pokedex5'
+      local new_atlas = (card.edition and card.edition.poke_shiny) and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"
 
       card.children.center.atlas = G.ASSET_ATLAS[new_atlas]
       card.children.center:set_sprite_pos(center.pos)
