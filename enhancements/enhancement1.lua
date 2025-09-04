@@ -2,8 +2,8 @@
 
 local hazard = {
    key = "hazard",
-   atlas = "Mart",
-   pos = { x = 9, y = 5 },
+   atlas = "AtlasEnhancementsBasic",
+   pos = { x = 0, y = 0 },
    config = {num = 1, dem = 6},
    loc_vars = function(self, info_queue, center)
      local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'hazard')

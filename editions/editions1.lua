@@ -45,6 +45,12 @@ local shiny = ({
       SMODS.change_booster_limit(-1)
     end,
     on_load = function(card)
+      if G.ASSET_ATLAS[card.config.center.atlas..'Shiny'] then
+        local old_atlas = card.config.center.atlas
+        card.config.center.atlas = card.config.center.atlas..'Shiny'
+        card:set_sprites(card.config.center)
+        card.config.center.atlas = old_atlas
+      end
       for i = 1, 9 do
         if card.config.center.atlas == "poke_Pokedex"..i then
           card.config.center.atlas = "poke_Shinydex"..i
@@ -89,8 +95,8 @@ local shiny = ({
         card:set_sprites(card.config.center)
         card.config.center.atlas = "poke_altjirachi"
       end
-      if card.children.center.atlas.name == "Joker" and G.ASSET_ATLAS["poke_shinyjoker"] then
-        SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_shinyjoker", discovered = true, unlocked = true}, true)
+      if card.children.center.atlas.name == "Joker" and G.ASSET_ATLAS["poke_AtlasJokersVanillaShiny"] then
+        SMODS.Joker:take_ownership(card.config.center_key, {atlas = "poke_AtlasJokersVanillaShiny", discovered = true, unlocked = true}, true)
         card.config.center.shiny = true
         card:set_sprites(card.config.center)
         card.config.center.atlas = "Joker"

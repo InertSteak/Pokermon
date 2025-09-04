@@ -193,7 +193,7 @@ local fake_masterball = {
    loc_vars = function(self, info_queue, center)
      return {vars = {}}
    end,
-   atlas = "Mart",
+   atlas = "AtlasConsumablesBasic",
    unlocked = true,
    discovered = true,
    no_collection = true,

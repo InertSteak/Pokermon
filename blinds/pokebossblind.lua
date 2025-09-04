@@ -50,7 +50,7 @@ local cgoose={
   boss = { showdown = true, min = 8, max = 80 },
   boss_colour = HEX("7A9616"),
   pos = { x = 0, y = 0 },
-  atlas = "pokeboss",
+  atlas = "AtlasBossblinds",
   discovered = true,
   debuff = {},
   config = {disabled = false},

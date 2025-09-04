@@ -6,7 +6,7 @@ local pokeball = {
    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
   end,
   pos = { x = 0, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   pokeball = true,
   unlocked = true,
@@ -38,7 +38,7 @@ local greatball = {
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
   end,
   pos = { x = 1, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   pokeball = true,
   hidden = true,
@@ -73,7 +73,7 @@ local ultraball = {
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage2'}
   end,
   pos = { x = 2, y = 3 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   pokeball = true,
   hidden = true,
@@ -105,7 +105,7 @@ local masterball = {
   set = "Spectral",
   pos = { x = 3, y = 3 },
   soul_pos = { x = 4, y = 2},
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   pokeball = true,
   hidden = true,
@@ -140,7 +140,7 @@ local grass_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Grass",
   unlocked = true,
@@ -170,7 +170,7 @@ local fire_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 1, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Fire",
   unlocked = true,
@@ -200,7 +200,7 @@ local water_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 2, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Water",
   unlocked = true,
@@ -230,7 +230,7 @@ local lightning_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 3, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Lightning",
   unlocked = true,
@@ -260,7 +260,7 @@ local psychic_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 4, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Psychic",
   unlocked = true,
@@ -290,7 +290,7 @@ local fighting_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 5, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Fighting",
   unlocked = true,
@@ -320,7 +320,7 @@ local colorless_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 6, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Colorless",
   unlocked = true,
@@ -350,7 +350,7 @@ local darkness_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 7, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Dark",
   unlocked = true,
@@ -380,7 +380,7 @@ local metal_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 8, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Metal",
   unlocked = true,
@@ -410,7 +410,7 @@ local fairy_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 9, y = 0 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Fairy",
   unlocked = true,
@@ -440,7 +440,7 @@ local dragon_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 1 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Dragon",
   unlocked = true,
@@ -470,7 +470,7 @@ local earth_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 1, y = 1 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Earth",
   unlocked = true,
@@ -501,7 +501,7 @@ local double_rainbow_energy = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 6 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Trans",
   unlocked = true,
@@ -552,7 +552,7 @@ local transformation = {
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 2, y = 1 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   etype = "Trans",
   hidden = true,
@@ -610,7 +610,7 @@ local megastone = {
     end
   end,
   pos = { x = 4, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   hidden = true,
   soul_set = "Item",
@@ -718,7 +718,7 @@ local obituary = {
     info_queue[#info_queue+1] = {key = 'poke_pink_seal_seal', set = 'Other'}
   end,
   pos = { x = 1, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   unlocked = true,
   discovered = true,
@@ -746,7 +746,7 @@ local revenant = {
     info_queue[#info_queue+1] = {key = 'poke_silver_seal', set = 'Other'}
   end,
   pos = { x = 2, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   unlocked = true,
   discovered = true,
@@ -773,7 +773,7 @@ local nightmare = {
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
   pos = { x = 0, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   unlocked = true,
   discovered = true,
@@ -803,7 +803,7 @@ local emergy = {
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
   pos = { x = 3, y = 1 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   hidden = true,
   soul_set = "Energy",
@@ -855,6 +855,6 @@ if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)
 end
 
-return {name = "Mart 1",
+return {name = "AtlasConsumablesBasic 1",
         list = list
 }

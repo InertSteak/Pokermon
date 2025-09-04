@@ -11,6 +11,7 @@ pokermon.load_pokemon = function(item)
   if not item.config then
     item.config = {}
   end
+  poke_load_atlas(item)
   poke_load_sprites(item)
   if item.ptype then
     if item.config and item.config.extra then
@@ -68,6 +69,7 @@ pokermon.load_pokemon = function(item)
       poke_set_sprite_ability(self, card, initial, delay_sprites)
     end
   end
+  if item.name == "articuno" then poke_debug(item.atlas) end
   SMODS.Joker(item)
 end
 
@@ -83,6 +85,8 @@ pokermon.Pokemon = function(item, custom_prefix, custom_atlas)
     item.atlas = 'poke_'..item.atlas
     item.poke_no_custom_atlas = true
     item.prefix_config = {atlas = false}
+  else
+    item.poke_custom_atlas = true
   end
   pokermon.load_pokemon(item)
 end

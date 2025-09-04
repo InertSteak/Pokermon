@@ -10,7 +10,7 @@ local pink_seal = {
 	name = "pink_seal",
 	key = "pink_seal",
 	badge_colour = HEX("FF7ABF"), --pink
-	atlas = "pinkseal",
+	atlas = "AtlasStickersBasic",
   pos = {x = 0, y = 0},
 	calculate = function(self, card, context)
 		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and G.GAME.current_round.hands_played == 0 then
@@ -53,7 +53,7 @@ local silver = {
   loc_vars = function(self, info_queue)
       return { vars = {self.config.match_amount, } }
   end,
-	atlas = "pinkseal",
+	atlas = "AtlasStickersBasic",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
 		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) and not card.destroyed then

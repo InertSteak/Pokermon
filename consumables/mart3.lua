@@ -8,7 +8,7 @@ local prismscale = {
     return {vars = {self.config.max_highlighted, self.config.converted}}
   end,
   pos = { x = 3, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -73,7 +73,7 @@ local duskstone = {
     return {vars = {card_info.money, card_info.rounds, math.max(0, card_info.round_on_add + card_info.rounds - G.GAME.round), math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   evo_item = true,
   unlocked = true,
@@ -147,7 +147,7 @@ local dawnstone = {
     return {vars = {hand_played and localize(hand_played, 'poker_hands') or localize('poke_none'), math.min(money_limit, money), money_limit, message}}
   end,
   pos = { x = 4, y = 4 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 3,
   evo_item = true,
   unlocked = true,
@@ -212,7 +212,7 @@ local hardstone = {
     return {vars = {self.config.max_highlighted, self.config.max_chips}}
   end,
   pos = { x = 5, y = 5 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 4,
   evo_item = true,
   unlocked = true,
@@ -259,7 +259,7 @@ local heartscale = {
     return {vars = {self.config.max_highlighted, localize(self.config.suit, 'suits_plural')}}
   end,
   pos = { x = 7, y = 6 },
-  atlas = "Mart",
+  atlas = "AtlasConsumablesBasic",
   cost = 2,
   unlocked = true,
   discovered = true,

@@ -26,7 +26,7 @@ local pokemondeck = {
     return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
   end,
 	pos = { x = 0, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
 }
 
 local luminousdeck = {
@@ -40,7 +40,7 @@ local luminousdeck = {
     return {vars = {}}
   end,
 	pos = { x = 1, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.GAME.modifiers.apply_type = true
   end
@@ -57,7 +57,7 @@ local obituarydeck = {
     return {vars = {localize("pinkseal_variable")}}
   end,
 	pos = { x = 2, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.GAME.modifiers.poke_force_seal = "poke_pink_seal"
   end,
@@ -74,7 +74,7 @@ local revenantdeck = {
     return {vars = {localize("silverseal_variable")}}
   end,
 	pos = { x = 5, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.GAME.modifiers.poke_force_seal = "poke_silver"
   end,
@@ -91,7 +91,7 @@ local telekineticdeck = {
     return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
   end,
 	pos = { x = 3, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
 } 
 
 local ampeddeck = {
@@ -105,7 +105,7 @@ local ampeddeck = {
     return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
   end,
 	pos = { x = 4, y = 0 },
-	atlas = "pokedeck",
+	atlas = "AtlasDecksBasic",
 } 
 
 local dList = {luminousdeck, telekineticdeck, ampeddeck}

@@ -3,7 +3,7 @@ local grass_sticker = {
   badge_colour = HEX("289830"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 1, y = 0 },
 }
 
@@ -12,7 +12,7 @@ local fire_sticker = {
   badge_colour = HEX("f81020"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 2, y = 0 },
 }
 
@@ -21,7 +21,7 @@ local water_sticker = {
   badge_colour = HEX("38b8f8"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 3, y = 0 },
 }
 
@@ -30,7 +30,7 @@ local lightning_sticker = {
   badge_colour = HEX("f8f800"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 4, y = 0 },
 }
 
@@ -39,7 +39,7 @@ local psychic_sticker = {
   badge_colour = HEX("c135ff"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 5, y = 0 },
 }
 
@@ -48,7 +48,7 @@ local fighting_sticker = {
   badge_colour = HEX("b85838"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 6, y = 0 },
 }
 
@@ -57,7 +57,7 @@ local colorless_sticker = {
   badge_colour = HEX("c8c0f8"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 7, y = 0 },
 }
 
@@ -66,7 +66,7 @@ local dark_sticker = {
   badge_colour = HEX("0086a5"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 8, y = 0 },
 }
 
@@ -75,7 +75,7 @@ local metal_sticker = {
   badge_colour = HEX("888080"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 9, y = 0 },
 }
 
@@ -84,7 +84,7 @@ local fairy_sticker = {
   badge_colour = HEX("ff3db6"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 0, y = 1 },
 }
 
@@ -93,7 +93,7 @@ local dragon_sticker = {
   badge_colour = HEX("c8a800"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 1, y = 1 },
 }
 
@@ -102,7 +102,7 @@ local earth_sticker = {
   badge_colour = HEX("e97333"),
   prefix_config = {key = false},
   rate = 0.0,
-  atlas = "pinkseal",
+  atlas = "AtlasStickersBasic",
   pos = { x = 2, y = 1 },
 }
 

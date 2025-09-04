@@ -3,6 +3,93 @@
 local lovely = require("lovely")
 
 --Load all Atlas
+local joker_basic_atlases = {"Gen01", "Gen02", "Gen03", "Gen04", "Gen05", "Gen06", "Gen07", "Gen08", "Gen09", "Natdex", "Others"}
+local basic_prefix = "AtlasJokersBasic"
+
+for i = 1, #joker_basic_atlases do
+  local atlas_base = basic_prefix..joker_basic_atlases[i]
+  local atlas_shiny = atlas_base.."Shiny"
+  --load normal and shiny atlas
+  SMODS.Atlas({
+    key = atlas_base,
+    path = atlas_base..".png",
+    px = 71,
+    py = 95
+  }):register()
+
+  SMODS.Atlas({
+    key = atlas_shiny,
+    path = atlas_shiny..".png",
+    px = 71,
+    py = 95
+  }):register()
+end
+
+SMODS.Atlas({
+    key = "AtlasBoosterpacksBasic",
+    path = "AtlasBoosterpacksBasic.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasBossblinds",
+    atlas_table = "ANIMATION_ATLAS",
+    path = "AtlasBossblinds.png",
+    px = 34,
+    py = 34,
+    frames = 21,
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasConsumablesBasic",
+    path = "AtlasConsumablesBasic.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasDecksBasic",
+    path = "AtlasDecksBasic.png",
+    px = 71,
+    py = 95,
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasEnhancementsBasic",
+    path = "AtlasEnhancementsBasic.png",
+    px = 71,
+    py = 95,
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasJokersVanillaShiny",
+    path = "AtlasJokersVanillaShiny.png",
+    px = 71,
+    py = 95,
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasStickersBasic",
+    path = "AtlasStickersBasic.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasTags",
+    path = "AtlasTags.png",
+    px = 34,
+    py = 34,
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasVouchersBasic",
+    path = "AtlasVouchersBasic.png",
+    px = 71,
+    py = 95
+}):register()
+
 SMODS.Atlas({
     key = "modicon",
     path = "icon.png",

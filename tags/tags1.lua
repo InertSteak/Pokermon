@@ -1,6 +1,6 @@
 local pocket_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "pocket_tag",
 	order = 25,
 	pos = { x = 0, y = 0 },
@@ -46,7 +46,7 @@ local pocket_tag = {
 
 local shiny_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "shiny_tag",
 	order = 26,
 	pos = { x = 1, y = 0 },
@@ -82,7 +82,7 @@ local shiny_tag = {
 
 local stage_one_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "stage_one_tag",
 	order = 27,
 	pos = { x = 2, y = 0 },
@@ -116,7 +116,7 @@ local stage_one_tag = {
 
 local safari_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "safari_tag",
 	order = 27,
 	pos = { x = 3, y = 0 },
@@ -149,7 +149,7 @@ local safari_tag = {
 
 local jirachi_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "jirachi_tag",
 	order = 999,
 	pos = { x = 4, y = 0 },
@@ -213,7 +213,7 @@ local jirachi_tag = {
 
 local starter_tag = {
 	object_type = "Tag",
-	atlas = "poketag",
+	atlas = "AtlasTags",
 	name = "starter_tag",
 	order = 28,
 	pos = { x = 4, y = 0 },
