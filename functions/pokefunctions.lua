@@ -928,6 +928,7 @@ end
 
 type_tooltip = function(self, info_queue, center)
   local percent
+  if self.artist then info_queue[#info_queue+1] = {set = 'Other', key = 'poke_artist', vars = {self.artist, colours = self.artist_colours or {G.C.FILTER}}} end
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
