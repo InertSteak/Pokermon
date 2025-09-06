@@ -152,6 +152,35 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "JokerSeriesAVoltorb",
+    path = "Series A/JokerSeriesAVoltorb.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "JokerSeriesAVoltorbShiny",
+    path = "Series A/JokerSeriesAVoltorbShiny.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "JokerSeriesAElectrode",
+    path = "Series A/JokerSeriesAElectrode.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "JokerSeriesAElectrodeShiny",
+    path = "Series A/JokerSeriesAElectrodeShiny.png",
+    px = 71,
+    py = 95
+}):register()
+
+
+SMODS.Atlas({
     key = "modicon",
     path = "icon.png",
     px = 32,

@@ -107,8 +107,8 @@ drowzee = {base = {pos = {x = 10, y = 6}},},
 hypno = {base = {pos = {x = 12, y = 6}},},
 krabby = {base = {pos = {x = 14, y = 6}},},
 kingler = {base = {pos = {x = 16, y = 6}},},
-voltorb = {base = {pos = {x = 18, y = 6}},},
-electrode = {base = {pos = {x = 20, y = 6}},},
+voltorb = {base = {pos = {x = 18, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "JokerSeriesAVoltorb"}}},
+electrode = {base = {pos = {x = 20, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "JokerSeriesAElectrode"}}},
 exeggcute = {base = {pos = {x = 22, y = 6}},},
 exeggutor = {base = {pos = {x = 24, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude YT', artist_colours = {HEX("4428BC")}}}},
 cubone = {base = {pos = {x = 26, y = 6}},},
@@ -1109,19 +1109,26 @@ poke_load_atlas = function(item)
       if sprite_info.alts[atlas_prefix].soul_pos then
         item.soul_pos = sprite_info.alts[atlas_prefix].soul_pos
       end
-    end
-    if sprite_info.gen_atlas and item.gen then
-      local gen_string = nil
-      if item.gen < 10 then
-        gen_string = 'Gen0'..item.gen 
-      else
-        gen_string = 'Gen'..item.gen
+      if sprite_info.alts[atlas_prefix].anim_atlas then
+        item.animated = true
+        item.atlas = sprite_info.alts[atlas_prefix].anim_atlas
+        item.pos = {x = 0, y = 0}
       end
-      item.atlas = atlas_prefix..gen_string
-    elseif sprite_info.others_atlas then
-      item.atlas = atlas_prefix.."Others"
-    else
-      item.atlas = atlas_prefix.."Natdex"
+    end
+    if not item.animated then
+      if sprite_info.gen_atlas and item.gen then
+        local gen_string = nil
+        if item.gen < 10 then
+          gen_string = 'Gen0'..item.gen 
+        else
+          gen_string = 'Gen'..item.gen
+        end
+        item.atlas = atlas_prefix..gen_string
+      elseif sprite_info.others_atlas then
+        item.atlas = atlas_prefix.."Others"
+      else
+        item.atlas = atlas_prefix.."Natdex"
+      end
     end
   end
 end
