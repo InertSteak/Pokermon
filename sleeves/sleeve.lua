@@ -20,7 +20,7 @@ end
 		key = 'pokemonsleeve',
 		name = 'Trainer Sleeve',
 		prefix_config = {},
-		atlas = "AtlasDecksBasics",
+		atlas = "AtlasDecksBasic",
 		pos = { x = 0, y = 1 },
 		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
 		loc_vars = function(self, info_queue, center)
@@ -103,7 +103,12 @@ local ampedsleeve = {
   end,
 } 
 
-local slist = {pokemonsleeve, obituarysleeve, revenantsleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
+local slist = nil
+if pokermon_config.pokemon_legacy then
+  slist = {pokemonsleeve, obituarysleeve, revenantsleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
+else
+  slist = {pokemonsleeve, luminoussleeve, telekineticsleeve, ampedsleeve}
+end
 
 return {Name = "Sleeve",
 				init = init,
