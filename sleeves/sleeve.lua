@@ -20,8 +20,8 @@ end
 		key = 'pokemonsleeve',
 		name = 'Trainer Sleeve',
 		prefix_config = {},
-		atlas = "pokesleeves",
-		pos = { x = 0, y = 0 },
+		atlas = "AtlasDecksBasics",
+		pos = { x = 0, y = 1 },
 		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
 		loc_vars = function(self, info_queue, center)
 			return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
@@ -32,8 +32,8 @@ end
 		key = 'obituarysleeve',
 		name = 'Obituary Sleeve',
 		prefix_config = {},
-		atlas = "pokesleeves",
-		pos = { x = 2, y = 0 },
+		atlas = "AtlasDecksBasic",
+		pos = { x = 2, y = 1 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
 		  return {vars = {localize("pinkseal_variable")}}
@@ -48,8 +48,8 @@ end
 		key = 'revenantsleeve',
 		name = 'Revenant Sleeve',
 		prefix_config = {},
-		atlas = "pokesleeves",
-		pos = { x = 5, y = 0 },
+		atlas = "AtlasDecksBasic",
+		pos = { x = 5, y = 1 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
 		  return {vars = {localize("silverseal_variable")}}
@@ -64,8 +64,8 @@ end
 		key = 'luminoussleeve',
 		name = 'Luminous Sleeve',
 		prefix_config = {},
-		atlas = "pokesleeves",
-		pos = { x = 1, y = 0 },
+		atlas = "AtlasDecksBasic",
+		pos = { x = 1, y = 1 },
 		config = {},
 		loc_vars = function(self, info_queue, center)
 			return {
@@ -83,8 +83,8 @@ end
 		key = 'telekineticsleeve',
 		name = 'Telekinetic Sleeve',
 		prefix_config = {},
-		atlas = "pokesleeves",
-		pos = { x = 3, y = 0 },
+		atlas = "AtlasDecksBasic",
+		pos = { x = 3, y = 1 },
 		config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
 		loc_vars = function(self, info_queue, center)
 			return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
@@ -95,8 +95,8 @@ local ampedsleeve = {
 	name = "ampedsleeve",
 	key = "ampedsleeve",
   prefix_config = {},
-  pos = { x = 4, y = 0 },
-  atlas = "pokesleeves",
+  pos = { x = 4, y = 1 },
+  atlas = "AtlasDecksBasic",
 	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
