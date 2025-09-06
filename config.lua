@@ -25,5 +25,8 @@ return {
   ["pokemon_altart"]=true,
   ["poke_enable_animations"]=true,
   ["pokemon_aprilfools"]=false,
-  ["pokemon_legacy"]=false
+  ["pokemon_legacy"]=false,
+  ["pokemon_spritesheet_id"]=1,
+  ["pokemon_spritesheet_atlas"]="Classic",
+  ["pokemon_spritesheet_overrides"] = {}
 }

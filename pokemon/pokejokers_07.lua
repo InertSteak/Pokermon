@@ -1109,15 +1109,13 @@ local unown={
     end
   end,
   set_sprites = function(self, card, front)
-    card.children.center:set_sprite_pos({x = 9, y = 4})
+    card.children.center:set_sprite_pos({x = 0, y = 0})
     if card.ability and card.ability.extra and card.ability.extra.form then
-      local forms = {A = {x = 0, y = 0}, B = {x = 1, y = 0}, C = {x = 2, y = 0}, D = {x = 3, y = 0}, E = {x = 4, y = 0}, F = {x = 5, y = 0}, G = {x = 6, y = 0},
-                     H = {x = 0, y = 1}, I = {x = 1, y = 1}, J = {x = 2, y = 1}, K = {x = 3, y = 1}, L = {x = 4, y = 1}, M = {x = 5, y = 1}, N = {x = 6, y = 1},
-                     O = {x = 0, y = 2}, P = {x = 1, y = 2}, Q = {x = 2, y = 2}, R = {x = 3, y = 2}, S = {x = 4, y = 2}, T = {x = 5, y = 2}, U = {x = 6, y = 2},
-                     V = {x = 0, y = 3}, W = {x = 1, y = 3}, X = {x = 2, y = 3}, Y = {x = 3, y = 3}, Z = {x = 4, y = 3}, ZEx = {x = 5, y = 3}, ZQu = {x = 6, y = 3}
+      local forms = {A = {x = 1, y = 0}, B = {x = 2, y = 0}, C = {x = 3, y = 0}, D = {x = 4, y = 0}, E = {x = 5, y = 0}, F = {x = 6, y = 0}, G = {x = 7, y = 0},
+                     H = {x = 8, y = 0}, I = {x = 9, y = 0}, J = {x = 0, y = 1}, K = {x = 1, y = 1}, L = {x = 2, y = 1}, M = {x = 3, y = 1}, N = {x = 4, y = 1},
+                     O = {x = 5, y = 1}, P = {x = 6, y = 1}, Q = {x = 7, y = 1}, R = {x = 8, y = 1}, S = {x = 9, y = 1}, T = {x = 0, y = 2}, U = {x = 1, y = 2},
+                     V = {x = 2, y = 2}, W = {x = 3, y = 2}, X = {x = 4, y = 2}, Y = {x = 5, y = 2}, Z = {x = 6, y = 2}, ZEx = {x = 7, y = 2}, ZQu = {x = 8, y = 2}
                     }
-      local unown_atlas = (card.edition and card.edition.poke_shiny) and "poke_shiny_unown_dex" or "poke_unown_dex"              
-      card.children.floating_sprite.atlas = G.ASSET_ATLAS[unown_atlas]
       card.children.floating_sprite:set_sprite_pos(forms[card.ability.extra.form])
     end
   end,
