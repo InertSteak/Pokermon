@@ -4994,6 +4994,12 @@ return {
                 "{C:green}1%{} - {C:spectral}Transformation",
               }
             },
+            poke_artist = {
+              name = "Artist",
+              text = {
+                "{V:1}#1#"
+              }
+            },
             pokeballs_group = {
               name = "Pokeballs",
               text = {
@@ -5566,7 +5572,7 @@ return {
             poke_settings_pokemon_legacy = "Legacy Content?",
             poke_settings_enable_animations = "Enable Animations?",
             poke_settings_pokemon_master = "Pokemon Master Mode?",
-            poke_settings_pokemon_spritesheet = "Default Sprite Sheet",
+            poke_settings_pokemon_spritesheet = "Default Sprite Sheet (Resets Individual)",
             poke_settings_pokemon_spritesheet_classic = "Classic",
             poke_settings_pokemon_spritesheet_seriesa = "Series A",
             

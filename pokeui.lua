@@ -580,7 +580,7 @@ end
 function G.FUNCS.pokermon_misc_no_restart(e)
   local misc_no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
   create_menu_toggles(misc_no_restart_settings, misc_no_restart_toggles)
-  
+    
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
       contents = {misc_no_restart_settings}
   })
@@ -598,6 +598,23 @@ end
 function G.FUNCS.pokermon_visual(e)
   local visual_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
   create_menu_toggles(visual_settings, visual_toggles)
+  
+  visual_settings.nodes[#visual_settings.nodes + 1] = 
+    create_option_cycle({
+      label = localize("poke_settings_pokemon_spritesheet"),
+      scale = 0.8,
+      w = 6,
+      options = {localize("poke_settings_pokemon_spritesheet_classic"), localize("poke_settings_pokemon_spritesheet_seriesa"),},
+      opt_callback = 'pokermon_upd_sprite_setting',
+      current_option = pokermon_config.pokemon_spritesheet_id,
+    })
+  
+  visual_settings.nodes[#visual_settings.nodes + 1] = 
+    UIBox_button({
+      minw = 3.85,
+      button = "pokermon_individual_sprites",
+      label = {"Individual Sprites"}
+    })
   
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
       contents = {visual_settings}
@@ -691,6 +708,88 @@ local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
         }))
     end
 
+G.FUNCS.pokermon_upd_sprite_setting = function(e)
+  local atlas = {"AtlasJokersBasic", "AtlasJokersSeriesA"}
+  pokermon_config.pokemon_spritesheet_atlas = atlas[e.to_key]
+  pokermon_config.pokemon_spritesheet_id = e.to_key
+  pokermon_config.pokemon_spritesheet_overrides = {}
+  NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+end
+
+G.FUNCS.pokermon_individual_sprites = function(e)
+  local keys = {}
+  for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+    local sprite_info = PokemonSprites[v.name]
+    if v.stage and v.rarity ~= "poke_mega" and v.stage ~= "Other" and sprite_info and sprite_info.alts and sprite_info.alts["AtlasJokersSeriesA"] and not v.poke_custom_prefix then
+      keys[#keys + 1] = v
+    end
+  end
+  
+  G.your_collection = {}
+  local deck_tables = {}
+  local rows = 3
+  local marker = 1
+  for i = 1, rows do
+    G.your_collection[i] = CardArea(
+    G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+    4*G.CARD_W,
+    0.95*G.CARD_H, 
+    {card_limit = 4, type = 'title', highlight_limit = 0, collection = true})
+  table.insert(deck_tables, 
+  {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
+    {n=G.UIT.O, config={object = G.your_collection[i]}}
+  }}
+)
+    local lastcard = math.min(marker + 3, #keys)
+    for j = marker, lastcard do
+      local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
+      local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
+      card.poke_change_sprite = true
+      G.your_collection[i]:emplace(card)
+    end
+    marker = marker + 4
+  end
+  
+  local joker_options = {}
+  for i = 1, math.ceil(#keys/(4*#G.your_collection)) do
+    table.insert(joker_options, 'Right Click to Change'..' '..tostring(i)..'/'..tostring(math.ceil(#keys/(4*#G.your_collection))))
+  end
+  
+  local t =  create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
+        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
+        {n=G.UIT.R, config={align = "cm"}, nodes={
+          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'your_collection_pokemon_sprite_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true,        focus_args = {          snap_to = true, nav = 'wide'}})
+        }}
+    }})
+  
+  G.FUNCS.overlay_menu{
+    definition = t,
+  }
+end
+
+G.FUNCS.your_collection_pokemon_sprite_page = function(args)
+  if not args or not args.cycle_config then return end
+  for j = 1, #G.your_collection do
+    for i = #G.your_collection[j].cards,1, -1 do
+      local c = G.your_collection[j]:remove_card(G.your_collection[j].cards[i])
+      c:remove()
+      c = nil
+    end
+  end
+  local row_start = 1 + (12 * (args.cycle_config.current_option - 1))
+  for i = 1, 3 do
+    for j = row_start, row_start + 3 do
+      local akeys = args.cycle_config.keys
+      local key = (type(akeys[j]) == "table" and akeys[j].key) or akeys[j]
+      if not akeys[j] then break end
+      local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
+      card.poke_change_sprite = true
+      G.your_collection[i]:emplace(card)
+    end
+    row_start = row_start + 4
+  end
+end
+
 G.FUNCS.your_collection_pokemon_page = function(args)
   if not args or not args.cycle_config then return end
   for j = 1, #G.your_collection do
@@ -767,7 +866,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
       for j = marker, lastcard do
         local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
         local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(keys[j]) == "table" then
+        if type(keys[j]) == "table" and G.P_CENTERS[key].set_sprites then
           card.ability.extra.form = keys[j].form
           G.P_CENTERS[key]:set_sprites(card)
         end
@@ -847,18 +946,47 @@ SMODS.Keybind({
     end
 })
 
+G.FUNCS.pokemon_toggle_sprite = function(card)
+  local sprite_info = PokemonSprites[card.config.center.name]
+  if sprite_info.alts and sprite_info.alts["AtlasJokersSeriesA"] and not card.config.center.poke_custom_prefix then
+    local atlas = card.config.center.atlas
+    local atlas_prefix = nil
+    
+    local _, found = string.find(atlas, "AtlasJokersBasic")
+    if found then
+      atlas_prefix = "AtlasJokersSeriesA"
+    else
+      _, found = string.find(atlas, "AtlasJokersSeriesA")
+      atlas_prefix = "AtlasJokersBasic"
+    end
+    
+    if found then
+      local stub = string.sub(atlas, found + 1)
+      card.config.center.atlas = 'poke_'..atlas_prefix..stub
+      card:set_sprites(card.config.center)
+      
+      pokermon_config.pokemon_spritesheet_overrides[card.config.center.name] = atlas_prefix
+      NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
+    end
+  end
+end
+
 local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
     controller_queue_R_cursor_press_ref(self, x, y)
     local clicked = self.hovering.target or self.focused.target
     if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center and clicked.facing ~= 'back' then
-      if clicked.config.center.stage or clicked.config.center.poke_multi_item then
-        local menu = G.SETTINGS.paused and 'pokedex_back' or nil
-        if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
-        if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
-        G.FUNCS.overlay_menu{
-          definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
-        }
+      if not clicked.poke_change_sprite then
+        if clicked.config.center.stage or clicked.config.center.poke_multi_item then
+          local menu = G.SETTINGS.paused and 'pokedex_back' or nil
+          if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+          if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
+          G.FUNCS.overlay_menu{
+            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
+          }
+        end
+      else
+        G.FUNCS.pokemon_toggle_sprite(clicked)
       end
     end
 end
@@ -891,15 +1019,19 @@ function Controller:capture_focused_input(button, input_type, dt)
     local clicked = self.focused.target
     if input_type == 'press' and button == 'rightstick' then
       if clicked and type(clicked) == 'table' and clicked.config and type(clicked.config) == 'table' and clicked.config.center and clicked.facing ~= 'back' then
-        if clicked.config.center.stage or clicked.config.center.poke_multi_item then
-          local menu = G.SETTINGS.paused and 'pokedex_back' or nil
-          if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
-          if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
-          G.SETTINGS.paused = true
-          G.FUNCS.overlay_menu{
-            definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
-          }
-          self:update_focus()
+        if not clicked.poke_change_sprite then
+          if clicked.config.center.stage or clicked.config.center.poke_multi_item then
+            local menu = G.SETTINGS.paused and 'pokedex_back' or nil
+            if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+            if menu and clicked.config.center.poke_multi_item then menu = 'your_collection_consumables' end
+            G.SETTINGS.paused = true
+            G.FUNCS.overlay_menu{
+              definition = create_UIBox_pokedex_jokers(get_family_keys(clicked.config.center.name, clicked.config.center.poke_custom_prefix, clicked), menu),
+            }
+            self:update_focus()
+          end
+        else
+          G.FUNCS.pokemon_toggle_sprite(clicked)
         end
       end
     end
