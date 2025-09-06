@@ -5,7 +5,7 @@ end
 
 local shiny = ({
     key = "shiny",
-    atlas = "Shinydex1",
+    atlas = "AtlasJokersBasicNatdexShiny",
     -- Stop shadow from being rendered under the card
     disable_shadow = false,
     -- Stop extra layer from being rendered below the card.
