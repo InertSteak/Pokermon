@@ -107,8 +107,11 @@ drowzee = {base = {pos = {x = 10, y = 6}},},
 hypno = {base = {pos = {x = 12, y = 6}},},
 krabby = {base = {pos = {x = 14, y = 6}},},
 kingler = {base = {pos = {x = 16, y = 6}},},
-voltorb = {base = {pos = {x = 18, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "JokerSeriesAVoltorb"}}},
-electrode = {base = {pos = {x = 20, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "JokerSeriesAElectrode"}}},
+voltorb = {base = {pos = {x = 18, y = 6}},alts = {
+    AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "AtlasJokersSeriesAVoltorb"},
+    AtlasJokersSeriesB = {artist = 'MyDude YT', artist_colours = {HEX("4428BC")}}
+}},
+electrode = {base = {pos = {x = 20, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', artist_colours = {HEX("EA6F22")},anim_atlas = "AtlasJokersSeriesAElectrode"}}},
 exeggcute = {base = {pos = {x = 22, y = 6}},},
 exeggutor = {base = {pos = {x = 24, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude YT', artist_colours = {HEX("4428BC")}}}},
 cubone = {base = {pos = {x = 26, y = 6}},},
@@ -148,7 +151,10 @@ eevee = {base = {pos = {x = 24, y = 8}},alts = {AtlasJokersSeriesA = {artist = '
 vaporeon = {base = {pos = {x = 26, y = 8}},},
 jolteon = {base = {pos = {x = 28, y = 8}},},
 flareon = {base = {pos = {x = 0, y = 9}},alts = {AtlasJokersSeriesA = {artist = 'Dudelings', artist_colours = {HEX("F0493A")}}}},
-porygon = {base = {pos = {x = 2, y = 9}},alts = {AtlasJokersSeriesA = {artist = 'Captain Slime', artist_colours = {HEX("F7C429")}}}},
+porygon = {base = {pos = {x = 2, y = 9}},alts = {
+    AtlasJokersSeriesA = {artist = 'Captain Slime', artist_colours = {HEX("F7C429")}}, 
+    AtlasJokersSeriesB = {artist = 'MyDude YT', artist_colours = {HEX("4428BC")}}
+}},
 omanyte = {base = {pos = {x = 4, y = 9}},},
 omastar = {base = {pos = {x = 6, y = 9}},},
 kabuto = {base = {pos = {x = 8, y = 9}},},
@@ -1072,16 +1078,22 @@ billion_lions = {base = {pos = {x = 4, y = 3}, soul_pos = {x = 5, y = 3}}, other
 poke_load_sprites = function(item)
   local sprite_info = PokemonSprites[item.name]
   local sprite = nil
+  local new_pos = {}
   if sprite_info then
     sprite = pokermon_config.pokemon_altart and sprite_info.alt or sprite_info.base
     local position = sprite.pos.x and sprite.pos or nil
     if not position then
       position = sprite.pos[math.random(#sprite.pos)]
+      new_pos.x = position.x
+      new_pos.y = position.y
       item.poke_multi_sprite = true
+    else
+      new_pos.x = position.x
+      new_pos.y = position.y
     end
     local soul_position = sprite.soul_pos
     
-    if position then item.pos = position end
+    if position then item.pos = new_pos end
     if soul_position then item.soul_pos = soul_position end
   end
 end

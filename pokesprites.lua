@@ -45,6 +45,20 @@ for i = 1, #joker_basic_atlases do
 end
 
 SMODS.Atlas({
+    key = "AtlasJokersSeriesBNatdex",
+    path = "Series B/AtlasJokersSeriesBNatdex.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesBNatdexShiny",
+    path = "Series B/AtlasJokersSeriesBNatdexShiny.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "AtlasBoosterpacksBasic",
     path = "Basic Series/AtlasBoosterpacksBasic.png",
     px = 71,
@@ -152,29 +166,29 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
-    key = "JokerSeriesAVoltorb",
-    path = "Series A/JokerSeriesAVoltorb.png",
+    key = "AtlasJokersSeriesAVoltorb",
+    path = "Series A/AtlasJokersSeriesAVoltorb.png",
     px = 71,
     py = 95
 }):register()
 
 SMODS.Atlas({
-    key = "JokerSeriesAVoltorbShiny",
-    path = "Series A/JokerSeriesAVoltorbShiny.png",
+    key = "AtlasJokersSeriesAVoltorbShiny",
+    path = "Series A/AtlasJokersSeriesAVoltorbShiny.png",
     px = 71,
     py = 95
 }):register()
 
 SMODS.Atlas({
-    key = "JokerSeriesAElectrode",
-    path = "Series A/JokerSeriesAElectrode.png",
+    key = "AtlasJokersSeriesAElectrode",
+    path = "Series A/AtlasJokersSeriesAElectrode.png",
     px = 71,
     py = 95
 }):register()
 
 SMODS.Atlas({
-    key = "JokerSeriesAElectrodeShiny",
-    path = "Series A/JokerSeriesAElectrodeShiny.png",
+    key = "AtlasJokersSeriesAElectrodeShiny",
+    path = "Series A/AtlasJokersSeriesAElectrodeShiny.png",
     px = 71,
     py = 95
 }):register()

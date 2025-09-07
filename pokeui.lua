@@ -948,22 +948,59 @@ SMODS.Keybind({
 
 G.FUNCS.pokemon_toggle_sprite = function(card)
   local sprite_info = PokemonSprites[card.config.center.name]
-  if sprite_info.alts and sprite_info.alts["AtlasJokersSeriesA"] and not card.config.center.poke_custom_prefix then
+  if sprite_info.alts and not card.config.center.poke_custom_prefix then
     local atlas = card.config.center.atlas
     local atlas_prefix = nil
+    local atlas_find = nil
     
-    local _, found = string.find(atlas, "AtlasJokersBasic")
-    if found then
-      atlas_prefix = "AtlasJokersSeriesA"
-    else
-      _, found = string.find(atlas, "AtlasJokersSeriesA")
-      atlas_prefix = "AtlasJokersBasic"
+    local series_atlas_prefixes = {"AtlasJokersSeriesA", "AtlasJokersSeriesB"}
+    local availible_atlas_prefixes = {"AtlasJokersBasic"}
+    for i = 1, #series_atlas_prefixes do
+      if sprite_info.alts[series_atlas_prefixes[i]] then
+        availible_atlas_prefixes[#availible_atlas_prefixes + 1] = series_atlas_prefixes[i]
+      end
+    end
+    for j = 1, #availible_atlas_prefixes do
+      local _, found = string.find(atlas, availible_atlas_prefixes[j])
+      if found then
+        atlas_find = found
+        if j == #availible_atlas_prefixes then
+          atlas_prefix = availible_atlas_prefixes[1]
+        else
+          atlas_prefix = availible_atlas_prefixes[j + 1]
+        end
+        break
+      end
     end
     
-    if found then
-      local stub = string.sub(atlas, found + 1)
-      card.config.center.atlas = 'poke_'..atlas_prefix..stub
+    if sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].anim_atlas then
+      card.config.center.atlas = 'poke_'..sprite_info.alts[atlas_prefix].anim_atlas
+      card.config.center.pos = {x = 0, y = 0}
+      card.config.center.animated = true
       card:set_sprites(card.config.center)
+    else
+      card.config.center.animated = nil
+      local base_pos = {}
+      base_pos.x = sprite_info.base.pos.x
+      base_pos.y = sprite_info.base.pos.y
+      poke_debug(sprite_info.base.pos)
+      card.config.center.pos = base_pos
+    end
+    
+    if sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].soul_pos then
+      card.config.center.soul_pos = sprite_info.alts[atlas_prefix].soul_pos
+    end
+    
+    if atlas_prefix then
+      if not card.config.center.animated then
+        local stub = string.sub(atlas, atlas_find + 1)
+        if G.ASSET_ATLAS['poke_'..atlas_prefix..stub] then
+          card.config.center.atlas = 'poke_'..atlas_prefix..stub
+        else
+          card.config.center.atlas = 'poke_'..atlas_prefix..'Natdex'
+        end
+        card:set_sprites(card.config.center)
+      end
       
       pokermon_config.pokemon_spritesheet_overrides[card.config.center.name] = atlas_prefix
       NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
