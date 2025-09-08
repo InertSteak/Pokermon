@@ -474,8 +474,12 @@ local ho_oh={
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+    if context.setting_blind and not context.blueprint then
       card.ability.extra.used = 0
+    end
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function(card) return card.ability.extra.used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
   end,
 }
