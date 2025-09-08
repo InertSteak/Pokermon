@@ -1035,7 +1035,7 @@ function G.FUNCS.check_double_click_trigger()
     local target_card = G.double_clicked_card
 
     -- 执行查看图鉴的逻辑
-    if target_card and target_card.config.center and (target_card.config.center.stage or target_card.config.center.poke_multi_item) then
+    if target_card and target_card.config.center and (target_card.config.center.stage or target_card.config.center.poke_multi_item) and target_card.facing ~= 'back' then
       local menu = G.SETTINGS.paused and 'pokedex_back' or nil
       if menu and G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
       if menu and target_card.config.center.poke_multi_item then menu = 'your_collection_consumables' end
