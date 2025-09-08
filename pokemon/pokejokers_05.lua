@@ -671,7 +671,7 @@ local vaporeon={
   ptype = "Water",
   atlas = "Pokedex1",
   gen = 1,
-  perishable_compat = false,
+  perishable_compat = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play then
@@ -740,7 +740,7 @@ local flareon={
   ptype = "Fire",
   atlas = "Pokedex1",
   gen = 1,
-  perishable_compat = false,
+  perishable_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and not context.end_of_round then
       local first_mult = nil
