@@ -19,9 +19,9 @@ local dreepy={
   config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
+  designer = "Lemmanade",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -67,10 +67,10 @@ local drakloak={
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -127,9 +127,9 @@ local dragapult={
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
     end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult, 1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
@@ -183,9 +183,9 @@ local dreepy_dart={
   no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 6,
   stage = "Basic",

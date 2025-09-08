@@ -1076,3 +1076,69 @@ function Controller:capture_focused_input(button, input_type, dt)
   
   return poke_capture_focused_input(self, button, input_type, dt)
 end
+
+function poke_artist_credit(artist_name, artist_colour)
+    local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
+        {n=G.UIT.T, config={
+            text = localize('poke_credits_artist'),
+            shadow = true,
+            colour = G.C.UI.BACKGROUND_WHITE,
+            scale = 0.27}}
+    }}
+    
+    local artist_node = {n=G.UIT.O, config={
+            object = DynaText({string = artist_name,
+            colours = artist_colour,
+            bump = true,
+            silent = true,
+            pop_in = 0,
+            pop_in_rate = 4,
+            shadow = true,
+            y_offset = -0.6,
+            scale =  0.27
+            })
+        }}
+    
+    table.insert(artist_credit.nodes, artist_node)
+    return artist_credit
+end
+
+function poke_designer_credit(designer_name)
+    local designer_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
+        {n=G.UIT.T, config={
+            text = localize('poke_credits_designer'),
+            shadow = true,
+            colour = G.C.UI.BACKGROUND_WHITE,
+            scale = 0.27}}
+    }}
+    
+    local designer_node = {n=G.UIT.O, config={
+            object = DynaText({string = designer_name,
+            colours = {G.C.FILTER},
+            bump = true,
+            silent = true,
+            pop_in = 0,
+            pop_in_rate = 4,
+            shadow = true,
+            y_offset = -0.6,
+            scale =  0.27
+            })
+        }}
+    
+    table.insert(designer_credit.nodes, designer_node)
+    return designer_credit
+end
+
+local prev_card_h_popup = G.UIDEF.card_h_popup
+function G.UIDEF.card_h_popup(card)
+  local ret_val =prev_card_h_popup(card)
+  local center = (card and card.config) and card.config.center or nil
+  if center and center.artist then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}))
+  end
+  if center and center.designer then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
+  end
+  
+  return ret_val
+end

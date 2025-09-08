@@ -12,7 +12,6 @@ local mantyke={
   config = {extra = {Xmult_minus = 0.75, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -20,6 +19,7 @@ local mantyke={
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
+  designer = "FlamingRok",
   rarity = 2,
   cost = 6,
   stage = "Baby",

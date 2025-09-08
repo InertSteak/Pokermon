@@ -12,9 +12,9 @@ local elgyem={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
     return {vars = {card.ability.extra.top_planets, card.ability.extra.current_planet_count, self.config.evo_rqmt}}
   end,
+  designer = "bayleef0909",
   rarity = 3,
   cost = 7,
   stage = "Basic",
@@ -92,9 +92,9 @@ local beheeyem={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bayleef0909"}}
     return {vars = {center.ability.extra.top_planets, center.ability.extra.boosters_to_open}}
   end,
+  designer = "bayleef0909",
   rarity = "poke_safari",
   cost = 10,
   stage = "One",

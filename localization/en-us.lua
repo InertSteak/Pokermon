@@ -5587,6 +5587,8 @@ return {
             poke_credits_special_thanks = "Special Thanks: ",
             poke_credits_localization = "Localization: ",
             poke_credits_sound = "Audio Engineer: ",
+            poke_credits_artist = "Artist: ",
+            poke_credits_designer = "Designer: ",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",

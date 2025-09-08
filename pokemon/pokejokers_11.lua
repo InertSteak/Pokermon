@@ -167,9 +167,9 @@ local numel={
   config = {extra = {Xmult = 3, rounds = 4, cards_scored = 0, score_goal = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
   end,
+  designer = "xtremepolymath",
   rarity = 2,
   cost = 6,
   gen = 3,
@@ -211,9 +211,9 @@ local camerupt={
   config = {extra = {Xmult = 4, cards_scored = 0, score_goal = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
   end,
+  designer = "xtremepolymath",
   rarity = "poke_safari",
   cost = 9,
   gen = 3,
@@ -259,9 +259,9 @@ local mega_camerupt={
   config = {extra = {Xmult = 1, Xmult2 = 1, Xmult_multi = 0.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"xtremepolymath"}}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_multi}}
   end,
+  designer = "xtremepolymath",
   rarity = "poke_mega",
   cost = 12,
   gen = 3,

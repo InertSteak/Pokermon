@@ -32,9 +32,9 @@ local trubbish={
   config = {extra = {chips = 0,chip_mod = 3,money = 2,triggers = 0}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bt"}}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money, math.max(0, self.config.evo_rqmt - center.ability.extra.triggers)}}
   end,
+  designer = "bt",
   rarity = 1,
   cost = 5,
   gen = 5,
@@ -75,12 +75,12 @@ local garbodor={
   config = {extra = {chips = 0,chip_mod = 5,triggers = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"bt"}}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'tag_garbage', set = 'Tag', specific_vars = {1, G.GAME.unused_discards or 0}}
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money}}
   end,
+  designer = "bt",
   rarity = "poke_safari",
   cost = 8,
   gen = 5,

@@ -845,9 +845,9 @@ local mantine={
   config = {extra = {chips = 0, chip_mod = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"FlamingRok"}}
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,}}
   end,
+  designer = "FlamingRok",
   rarity = 3,
   cost = 8,
   enhancement_gate = "m_gold",

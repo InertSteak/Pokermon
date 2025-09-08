@@ -1109,9 +1109,9 @@ local poochyena={
   config = {extra = {mult = 0,mult_mod = 2,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
   end,
+  designer = "18themxxn_",
   rarity = 1,
   cost = 5,
   gen = 3,
@@ -1147,9 +1147,9 @@ local mightyena={
   config = {extra = {mult = 0,mult_mod = 2,mult_scaling_mod = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"18themxxn_"}}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.mult_scaling_mod, }}
   end,
+  designer = "18themxxn_",
   rarity = 2,
   cost = 5,
   gen = 3,
