@@ -178,7 +178,7 @@ local mega_scizor={
     if context.end_of_round and not context.individual and not context.repetition then
       card:juice_up()
       for k, v in pairs(G.jokers.cards) do
-        if v.config.center.rarity == 1 then
+        if v.config.center.rarity == 1 and not v.ability.eternal then
           v:start_dissolve({HEX("57ecab")}, nil, 1.6)
           play_sound('slice1', 0.96+math.random()*0.08)
         end
