@@ -705,7 +705,7 @@ local jolteon={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
       local earned = ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
