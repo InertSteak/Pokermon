@@ -220,6 +220,7 @@ local starter_tag = {
 	config = { type = "new_blind_choice" },
 	key = "starter_tag",
   discovered = true,
+  min_ante = 2,
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_starter_pack", specific_vars = {1, 4} }
 	end,
