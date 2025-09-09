@@ -684,7 +684,7 @@ local billion_lions = {
 local professor={
   name = "professor",
   pos = {x = 0, y = 1},
-  config = {extra = {rounds_total = 1, rounds_current = 0}},
+  config = {extra = {rounds_total = 2, rounds_current = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
