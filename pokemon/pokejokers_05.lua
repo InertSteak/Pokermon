@@ -691,7 +691,7 @@ local vaporeon={
 local jolteon={
   name = "jolteon", 
   pos = {x = 5, y = 10},
-  config = {extra = {money = 6}},
+  config = {extra = {money = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
