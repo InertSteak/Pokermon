@@ -3,8 +3,166 @@
 -- Naclstack 933
 -- Garganacl 934
 -- Charcadet 935
+local charcadet={
+  name = "charcadet",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 5, mult_original = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dawnstone
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
+    end
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 9,
+  item_req = {"dawnstone", "duskstone"},
+  evo_list = {dawnstone = "j_poke_armarouge", duskstone = 'j_poke_ceruledge'},
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+      if context.after and not context.blueprint then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult_original
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
+    end
+    return item_evo(self, card, context)
+  end,
+}
 -- Armarouge 936
+local armarouge={
+  name = "armarouge",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 3, Xmult_minus = 1, Xmult2 = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_minus, }}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 9,
+  stage = "One",
+  ptype = "Fire",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+      if context.after and not context.blueprint then
+        local starting_Xmult = card.ability.extra.Xmult
+        if card.ability.extra.Xmult >= 2 then
+          card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
+        else
+          card.ability.extra.Xmult = 1
+        end
+        if card.ability.extra.Xmult ~= starting_Xmult then 
+          return {
+            message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}},
+            colour = G.C.RED,
+            card = card
+          }
+        end
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
+}
 -- Ceruledge 937
+local ceruledge={
+  name = "ceruledge",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.75, Xmult2 = 1, money_minus = 1,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
+    end
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.money_minus}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 9,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+      if context.after and not context.blueprint then
+        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              local drain_jokers = {}
+              for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] ~= card and G.jokers.cards[i].sell_cost > 1 then
+                  drain_jokers[#drain_jokers + 1] = G.jokers.cards[i]
+                end
+              end
+              if #drain_jokers > 0 then
+                poke_drain(card, pseudorandom_element(G.jokers.cards, 'ceruledge'), card.ability.extra.money_minus)
+              end
+              return true
+          end
+        })) 
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT
+        }
+      end
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+  end,
+}
 -- Tadbulb 938
 -- Bellibolt 939
 -- Wattrel 940
@@ -233,5 +391,5 @@ local wiglett={
   end
 }
 return {name = "Pokemon Jokers 931-960", 
-        list = {tinkatink, tinkatuff, tinkaton, wiglett},
+        list = {charcadet, armarouge, ceruledge, tinkatink, tinkatuff, tinkaton, wiglett},
 }

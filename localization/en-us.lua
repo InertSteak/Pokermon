@@ -3260,6 +3260,15 @@ return {
                   "scoring hand is {C:attention}mono-suit{}"
                 }
             },
+            j_poke_absol = {
+                name = "Absol",
+                text = {
+                  "{X:red,C:white}X#1#{} Mult",
+                  "All {C:attention}listed{} {C:green,E:1,S:1.1}probabilities{}", 
+                  "are always {C:attention}0{}",
+                  "{C:inactive}(ex: {C:green}1 in 6{C:inactive} -> {C:green}0 in 6{C:inactive})",
+                }
+            },
             j_poke_wynaut = {
                 name = 'Wynaut',
                 text = {
@@ -4190,6 +4199,35 @@ return {
                   "{C:inactive,s:0.8}(If rank is highest, it becomes lowest)",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
+            },
+            j_poke_charcadet = {
+              name = "Charcadet",
+              text = {
+                "Gains {C:mult}+#2#{} Mult after scoring",
+                "played hand",
+                "{C:inactive,s:0.8}(Resets at end of round)",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8} or {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
+            },
+            j_poke_armarouge = {
+              name = "Armarouge",
+              text = {
+                "{X:mult,C:white} X#1# {} Mult",
+                "Loses {X:mult,C:white} X#2# {} Mult after scoring",
+                "played hand",
+                "{C:inactive,s:0.8}(Resets at end of round)",
+              }
+            },
+            j_poke_ceruledge = {
+              name = "Ceruledge",
+              text = {
+                "Gains {X:mult,C:white} X#2# {} Mult after scoring",
+                "played hand and drains {C:money}$#3#{}",
+                "from another random Joker",
+                "{C:inactive,s:0.8}(Resets at end of round)",
+                "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+              }
             },
             j_poke_tinkatink = {
                 name = "Tinkatink",

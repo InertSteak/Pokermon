@@ -145,6 +145,7 @@ pokermon.family = {
     {"yamper","boltund"},
     {"tarountula", "spidops"},
     {"fidough", "dachsbun"},
+    {"charcadet", "armarouge", "ceruledge"},
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},

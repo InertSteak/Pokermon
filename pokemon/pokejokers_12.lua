@@ -93,6 +93,40 @@ local milotic={
 -- Tropius 357
 -- Chimecho 358
 -- Absol 359
+local absol={
+  name = "absol",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.scry}}
+  end,
+  rarity = 3,
+  cost = 8,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.fix_probability and not context.blueprint then
+      return {
+        numerator = 0,
+      }
+    end
+  end,
+}
 -- Wynaut 360
 local wynaut={
   name = "wynaut",
@@ -138,5 +172,5 @@ local wynaut={
   end,
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {feebas, milotic, wynaut},
+        list = {feebas, milotic, absol, wynaut},
 }
