@@ -720,7 +720,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   local keys = {}
   for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
     local sprite_info = PokemonSprites[v.name]
-    if v.stage and v.rarity ~= "poke_mega" and v.stage ~= "Other" and sprite_info and sprite_info.alts and sprite_info.alts["AtlasJokersSeriesA"] and not v.poke_custom_prefix then
+    if v.stage and sprite_info and sprite_info.alts and sprite_info.alts["AtlasJokersSeriesA"] and not v.poke_custom_prefix then
       keys[#keys + 1] = v
     end
   end
