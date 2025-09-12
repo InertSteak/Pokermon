@@ -983,7 +983,6 @@ G.FUNCS.pokemon_toggle_sprite = function(card)
       local base_pos = {}
       base_pos.x = sprite_info.base.pos.x
       base_pos.y = sprite_info.base.pos.y
-      poke_debug(sprite_info.base.pos)
       card.config.center.pos = base_pos
     end
     
