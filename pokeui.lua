@@ -1076,7 +1076,7 @@ function Controller:capture_focused_input(button, input_type, dt)
   return poke_capture_focused_input(self, button, input_type, dt)
 end
 
-function poke_artist_credit(artist_name, artist_colour)
+function poke_artist_credit(artist_name, artist_colour, artist_highlight_colour)
     local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
         {n=G.UIT.T, config={
             text = localize('poke_credits_artist'),
@@ -1084,6 +1084,8 @@ function poke_artist_credit(artist_name, artist_colour)
             colour = G.C.UI.BACKGROUND_WHITE,
             scale = 0.27}}
     }}
+    
+    local outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
     
     local artist_node = {n=G.UIT.O, config={
             object = DynaText({string = artist_name,
@@ -1098,7 +1100,9 @@ function poke_artist_credit(artist_name, artist_colour)
             })
         }}
     
-    table.insert(artist_credit.nodes, artist_node)
+    table.insert(outline_node.nodes, artist_node)
+    
+    table.insert(artist_credit.nodes, outline_node)
     return artist_credit
 end
 
@@ -1133,7 +1137,7 @@ function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
   local center = (card and card.config) and card.config.center or nil
   if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}, center.artist_highlight_colour))
   end
   if center and center.designer then
     table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
