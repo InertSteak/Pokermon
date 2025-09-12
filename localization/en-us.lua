@@ -1732,7 +1732,7 @@ return {
                 name = 'Electabuzz',      
                 text = {
                     "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
-                    "is sold and at end of round",
+                    "is {C:attention}sold{} and at end of round",
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "Earn {C:attention}#2#%{} of this Joker's sell value",
                     "at end of round {C:inactive}(rounded up){}",
