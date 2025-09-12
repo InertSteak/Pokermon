@@ -3571,8 +3571,8 @@ return {
             j_poke_electivire = {
                 name = 'Electivire',
                 text = {
-                    "Gains {C:money}$#1#{} of {C:attention}sell value{} at end of",
-                    "round and when a card is {C:attention}sold{}",
+                    "Gains {C:money}$#1#{} of {C:attention}sell value{} when a card",
+                    "is {C:attention}sold{} and at end of round",
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "Gives {X:mult,C:white}X#2#{} Mult for each dollar",
                     "of sell value this Joker has",
@@ -4447,7 +4447,7 @@ return {
             j_poke_professor = {
                 name = "Professor",
                 text = {
-                    "After {C:attention}#1#{} round, sell this card",
+                    "After {C:attention}#1#{} rounds, sell this card",
                     "to create a {C:attention}Starter{} tag",
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
