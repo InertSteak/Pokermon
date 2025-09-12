@@ -120,6 +120,7 @@ pokermon.family = {
     {"zigzagoon", "linoone"},
     {"shroomish", "breloom"},
     {"aron","lairon","aggron"},
+    {"kricketot", "kricketune"},
     {"buizel", "floatzel"},
     {"buneary", "lopunny", "mega_lopunny"},
     {"riolu", "lucario"},

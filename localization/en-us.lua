@@ -3395,6 +3395,26 @@ return {
                     "{C:attention}destroy{} it",
                 }
             },
+            j_poke_kricketot = {
+              name = "Kricketot",
+              text = {
+                "Earn {C:money}$#1#{} if played hand is",
+                "exactly {C:attention}4{} cards and has",
+                "at least {C:attention}4{} different {C:attention}suits{}",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_kricketune = {
+              name = "Kricketune",
+              text = {
+                "Earn {C:money}$#1#{} if played hand is",
+                "exactly {C:attention}4{} cards and has",
+                "at least {C:attention}4{} different {C:attention}suits{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:green}#2# in #3#{} chance to create",
+                "a {C:tarot}Tarot{} card as well"
+              }
+            },
             j_poke_buizel = {
                 name = 'Buizel',
                 text = {
