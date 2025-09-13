@@ -143,7 +143,7 @@ local ceruledge={
                 end
               end
               if #drain_jokers > 0 then
-                poke_drain(card, pseudorandom_element(G.jokers.cards, 'ceruledge'), card.ability.extra.money_minus)
+                poke_drain(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
               end
               return true
           end
