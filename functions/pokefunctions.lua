@@ -329,6 +329,12 @@ poke_backend_evolve = function(card, to_key)
   
   local old_key = card.config.center.key
   
+  --turn off multisprite on evolution
+  if card.config.center.poke_multi_sprite and card.ability and card.ability.extra then
+    card.ability.extra.loaded_pos = nil
+    card.ability.extra.loaded_sprite = nil
+  end
+  
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
     card.ability.perish_tally = G.GAME.perishable_rounds
