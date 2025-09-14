@@ -1084,25 +1084,59 @@ function poke_artist_credit(artist_name, artist_colour, artist_highlight_colour)
             colour = G.C.UI.BACKGROUND_WHITE,
             scale = 0.27}}
     }}
-    
-    local outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
-    
-    local artist_node = {n=G.UIT.O, config={
-            object = DynaText({string = artist_name,
-            colours = artist_colour,
-            bump = true,
-            silent = true,
-            pop_in = 0,
-            pop_in_rate = 4,
-            shadow = true,
-            y_offset = -0.6,
-            scale =  0.27
-            })
+    local outline_nodes = {}
+    local outline_node = nil
+    local artist_node = nil
+    if type(artist_name) == 'string' then
+      outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
+      
+      artist_node = {n=G.UIT.O, config={
+          object = DynaText({string = artist_name,
+          colours = artist_colour,
+          bump = true,
+          silent = true,
+          pop_in = 0,
+          pop_in_rate = 4,
+          shadow = true,
+          y_offset = -0.6,
+          scale =  0.27
+          })
+      }}
+      table.insert(outline_node.nodes, artist_node)
+      outline_nodes[1] = outline_node
+    else
+      for i = 1, #artist_name do
+        outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour and artist_highlight_colour[i] or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
+        
+        artist_node = {n=G.UIT.O, config={
+          object = DynaText({string = artist_name[i],
+          colours = {artist_colour[i]},
+          bump = true,
+          silent = true,
+          pop_in = 0,
+          pop_in_rate = 4,
+          shadow = true,
+          y_offset = -0.6,
+          scale =  0.27
+          })
         }}
+        table.insert(outline_node.nodes, artist_node)
+                
+        outline_nodes[#outline_nodes + 1] = outline_node
+      end
+    end
     
-    table.insert(outline_node.nodes, artist_node)
-    
-    table.insert(artist_credit.nodes, outline_node)
+    for j = 1, #outline_nodes do
+      table.insert(artist_credit.nodes, outline_nodes[j])
+      if #outline_nodes > 1 and j ~= #outline_nodes then
+        local amp_node = {n=G.UIT.T, config={
+          text = ' & ',
+          shadow = true,
+          colour = G.C.UI.BACKGROUND_WHITE,
+          scale = 0.27}}
+        table.insert(artist_credit.nodes, amp_node)
+      end
+    end
     return artist_credit
 end
 
@@ -1137,7 +1171,7 @@ function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
   local center = (card and card.config) and card.config.center or nil
   if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}, center.artist_highlight_colour))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}, center.artist_highlight_colours))
   end
   if center and center.designer then
     table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
