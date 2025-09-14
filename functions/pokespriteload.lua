@@ -1086,7 +1086,7 @@ local poke_artist_info = {
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A")},
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
-  MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("4428BC"),highlight_colour = G.C.WHITE},
+  MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("4428BC")},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("C91610")},
   RibbonOnline = {display_name = 'RibbonOnline', artist_colour = HEX("F11250")},
