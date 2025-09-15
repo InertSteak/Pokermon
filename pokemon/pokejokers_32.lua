@@ -54,10 +54,10 @@ local charcadet={
 local armarouge={
   name = "armarouge",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult = 3, Xmult_minus = 1, Xmult2 = 3}},
+  config = {extra = {Xmult = 3, Xmult_mod = 1, Xmult2 = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_minus, }}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -80,13 +80,13 @@ local armarouge={
       if context.after and not context.blueprint then
         local starting_Xmult = card.ability.extra.Xmult
         if card.ability.extra.Xmult >= 2 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
+          card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_mod
         else
           card.ability.extra.Xmult = 1
         end
         if card.ability.extra.Xmult ~= starting_Xmult then 
           return {
-            message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}},
+            message = localize{type='variable',key='a_Xmult_mod',vars={card.ability.extra.Xmult_mod}},
             colour = G.C.RED,
             card = card
           }
