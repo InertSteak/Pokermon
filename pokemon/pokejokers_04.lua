@@ -434,7 +434,7 @@ local kingler={
   ptype = "Water",
   atlas = "Pokedex1",
   gen = 1, 
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       local faces = {}

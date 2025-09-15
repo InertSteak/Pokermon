@@ -405,7 +405,11 @@ local starter_pack = {
     elseif i == 5 and #pseudo_starters > 0 then
       pack_key = pseudorandom_element(pseudo_starters, pseudoseed('pseudo'))
     else
-      pack_key = 'j_poke_caterpie'
+      if G.P_CENTERS['j_poke_caterpie'] then
+        pack_key = 'j_poke_caterpie'
+      else
+        pack_key = nil
+      end
     end
     
     local temp_card = {area = G.pack_cards, key = pack_key, no_edition = true, skip_materialize = true}
