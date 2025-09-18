@@ -409,7 +409,7 @@ return {
                   "Gain {C:attention}+#1#{} discard this round",
                   "if used during the {C:attention}Blind",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost or",
+                  "Transforms leftmost",
                   "or selected {C:attention}Rotom"
                 }
             },
@@ -419,7 +419,7 @@ return {
                   "Gain {C:attention}+#1#{} hand this round",
                   "if used during the {C:attention}Blind",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost or",
+                  "Transforms leftmost",
                   "or selected {C:attention}Rotom"
                 }
             },
@@ -429,7 +429,7 @@ return {
                   "Create {C:attention}2{} random {C:attention}Consumables",
                   "{C:inactive}(Must have room)",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost or",
+                  "Transforms leftmost",
                   "or selected {C:attention}Rotom"
                 }
             },
@@ -440,7 +440,7 @@ return {
                   "{C:blue}Common{} Jokers",
                   "{C:inactive}(Must have room)",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost or",
+                  "Transforms leftmost",
                   "or selected {C:attention}Rotom"
                 }
             },
@@ -450,7 +450,7 @@ return {
                   "Gain {C:attention}+#1#{} hand size this round",
                   "if used during the {C:attention}Blind",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost or",
+                  "Transforms leftmost",
                   "or selected {C:attention}Rotom"
                 }
             },
@@ -3763,7 +3763,7 @@ return {
                   "{C:inactive}(Must have room){}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "{C:attention}Booster Packs{} cost {C:money}$1{} less",
-                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
             },
             j_poke_rotomh = {
@@ -3777,7 +3777,7 @@ return {
                   "If first discard is",
                   "exactly {C:attention}2{} cards enhance",
                   "both to {C:attention}Mult{} cards",
-                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
             },
             j_poke_rotomw = {
@@ -3791,7 +3791,7 @@ return {
                   "Earn {C:money}$#3#{} per scoring",
                   "{C:attention}Enhanced{} card played",
                   "removes card {C:attention}Enhancement",
-                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
             },
             j_poke_rotomf = {
@@ -3805,7 +3805,7 @@ return {
                 "When blind is selected, create",
                 "a random {C:attention}Consumable{} with",
                 "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
-                "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
               }
             },
             j_poke_rotomfan = {
@@ -3819,7 +3819,7 @@ return {
                   "When blind is selected,",
                   "destroy Joker to the",
                   "right and create a {C:attention}Tag",
-                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
             },
             j_poke_rotomm = {
