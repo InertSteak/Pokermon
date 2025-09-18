@@ -3775,7 +3775,7 @@ return {
                   "{C:inactive}(Must have room){}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "If first discard is",
-                  "exactly {C:attention}2{} cards enhance",
+                  "exactly {C:attention}2{} cards, enhance",
                   "both to {C:attention}Mult{} cards",
                   "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
