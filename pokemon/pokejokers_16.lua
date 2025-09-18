@@ -771,7 +771,344 @@ local froslass={
   end,
 }
 -- Rotom 479
+local rotom={
+  name = "rotom",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
+local rotomh={
+  name = "rotomh",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_joker = true, 
+  no_collection = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and context.full_hand and #context.full_hand == 2 and G.GAME.current_round.discards_used == 0 and not context.hook and not context.blueprint then
+      local target = {context.full_hand[1],context.full_hand[2]}
+      poke_convert_cards_to(target, {mod_conv = 'm_mult'})
+    end
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
+local rotomw={
+  name = "rotomw",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2, money = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem, center.ability.extra.money}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_joker = true, 
+  no_collection = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
+      local enhanced = {}
+      for k, v in ipairs(context.scoring_hand) do
+        enhanced[#enhanced+1] = v
+        if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
+          v.vampired = true
+          v:set_ability(G.P_CENTERS.c_base, nil, true)
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  v:juice_up()
+                  v.vampired = nil
+                  return true
+              end
+          })) 
+        end
+      end
+      if #enhanced > 0 then
+        ease_poke_dollars(card, "rotomw", card.ability.extra.money * #enhanced)
+      end
+    end
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
+local rotomf={
+  name = "rotomf",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      if not center.edition or (center.edition and not center.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
+      if not center.edition or (center.edition and not center.edition.foil) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      end
+      if not center.edition or (center.edition and not center.edition.holo) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      end
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_joker = true, 
+  no_collection = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local set = pseudorandom_element(SMODS.ConsumableTypes, pseudoseed('rotomf'))
+      local _card = create_card(set.key, G.consumeables, nil, nil, nil, nil, nil, 'rotomf')
+      local edition = poll_edition('aura', nil, true, true)
+      _card:set_edition(edition)
+      _card:add_to_deck()
+      G.consumeables:emplace(_card)
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_consumable'), colour = G.C.FILTER})
+    end
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
+local rotomfan={
+  name = "rotomfan",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_joker = true, 
+  no_collection = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+          if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
+          local sliced_card = G.jokers.cards[my_pos+1]
+          sliced_card.getting_sliced = true
+          
+          G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+          G.E_MANAGER:add_event(Event({func = function()
+              G.GAME.joker_buffer = 0
+              card:juice_up(0.8, 0.8)
+              sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+              play_sound('slice1', 0.96+math.random()*0.08)
+          return true end }))
+    
+          G.E_MANAGER:add_event(Event({
+            func = (function()
+                local tags = {}
+                for k, v in pairs(G.P_TAGS) do
+                  if v.key ~= "tag_boss" then
+                    tags[#tags + 1] = v
+                  end
+                end
+                local temp_tag = pseudorandom_element(tags, pseudoseed('rotomfan'))
+                local tag = Tag(temp_tag.key)
+                if tag.key == "tag_orbital" then 
+                  local _poker_hands = {}
+                  for k, v in pairs(G.GAME.hands) do
+                    if v.visible then
+                      _poker_hands[#_poker_hands + 1] = k
+                    end
+                  end
+                  tag.ability.orbital_hand = pseudorandom_element(_poker_hands, pseudoseed('rotomfan'))
+                end
+                add_tag(tag)
+                play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+                return true
+            end)
+          }))
+      end
+    end
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
+local rotomm={
+  name = "rotomm",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
+    return {vars = {num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  aux_joker = true,
+  no_collection = true,
+  calculate = function(self, card, context)
+    if context.end_of_round and not context.individual and not context.repetition then
+      local targets = {G.hand.cards[1], G.hand.cards[2]}
+      juice_flip_table(card, targets, false, 2)
+      for i = 1, #targets do
+        poke_vary_rank(G.hand.cards[i], true)
+      end
+      juice_flip_table(card, targets, true, 2)
+      delay(0.5)
+    end
+    if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                    local card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil, 'rotom')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+      end
+    end
+  end,
+}
+
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, froslass},
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, froslass, rotom,
+          rotomh, rotomw, rotomf, rotomfan, rotomm
+        },
 }

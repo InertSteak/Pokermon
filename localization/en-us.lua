@@ -403,6 +403,57 @@ return {
                     "{C:item}Berry Juice{} card"
                 }
             },
+            c_poke_oven = {
+                name = "Microwave",
+                text = {
+                  "Gain {C:attention}+#1#{} discard this round",
+                  "if used during the {C:attention}Blind",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or",
+                  "or selected {C:attention}Rotom"
+                }
+            },
+            c_poke_washing_machine = {
+                name = "Washing Machine",
+                text = {
+                  "Gain {C:attention}+#1#{} hand this round",
+                  "if used during the {C:attention}Blind",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or",
+                  "or selected {C:attention}Rotom"
+                }
+            },
+            c_poke_fridge = {
+                name = "Fridge",
+                text = {
+                  "Create {C:attention}2{} random {C:attention}Consumables",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or",
+                  "or selected {C:attention}Rotom"
+                }
+            },
+            c_poke_fan = {
+                name = "Fan",
+                text = {
+                  "Create up to {C:attention}2{}",
+                  "{C:blue}Common{} Jokers",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or",
+                  "or selected {C:attention}Rotom"
+                }
+            },
+            c_poke_lawn_mower = {
+                name = "Lawn Mower",
+                text = {
+                  "Gain {C:attention}+#1#{} hand size this round",
+                  "if used during the {C:attention}Blind",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or",
+                  "or selected {C:attention}Rotom"
+                }
+            },
         },
         Energy = {
             c_poke_grass_energy = {
@@ -3703,6 +3754,88 @@ return {
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
+            j_poke_rotom = {
+                name = "Rotom",
+                text = {
+                  "{C:green}#1# in #2#{} chance to create",
+                  "an {C:item}Item{} card when any",
+                  "{C:attention}Booster Pack{} is opened",
+                  "{C:inactive}(Must have room){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:attention}Booster Packs{} cost {C:money}$1{} less",
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                }
+            },
+            j_poke_rotomh = {
+                name = "Rotom (Heat)",
+                text = {
+                  "{C:green}#1# in #2#{} chance to create",
+                  "an {C:item}Item{} card when any",
+                  "{C:attention}Booster Pack{} is opened",
+                  "{C:inactive}(Must have room){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "If first discard is",
+                  "exactly {C:attention}2{} cards enhance",
+                  "both to {C:attention}Mult{} cards",
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                }
+            },
+            j_poke_rotomw = {
+                name = "Rotom (Wash)",
+                text = {
+                  "{C:green}#1# in #2#{} chance to create",
+                  "an {C:item}Item{} card when any",
+                  "{C:attention}Booster Pack{} is opened",
+                  "{C:inactive}(Must have room){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Earn {C:money}$#3#{} per scoring",
+                  "{C:attention}Enhanced{} card played",
+                  "removes card {C:attention}Enhancement",
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                }
+            },
+            j_poke_rotomf = {
+              name = "Rotom (Frost)",
+              text = {
+                "{C:green}#1# in #2#{} chance to create",
+                "an {C:item}Item{} card when any",
+                "{C:attention}Booster Pack{} is opened",
+                "{C:inactive}(Must have room){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "When blind is selected, create",
+                "a random {C:attention}Consumable{} with",
+                "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
+                "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+              }
+            },
+            j_poke_rotomfan = {
+                name = "Rotom (Fan)",
+                text = {
+                  "{C:green}#1# in #2#{} chance to create",
+                  "an {C:item}Item{} card when any",
+                  "{C:attention}Booster Pack{} is opened",
+                  "{C:inactive}(Must have room){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "When blind is selected,",
+                  "destroy Joker to the",
+                  "right and create a {C:attention}Tag",
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                }
+            },
+            j_poke_rotomm = {
+                name = "Rotom (Mow)",
+                text = {
+                  "{C:green}#1# in #2#{} chance to create",
+                  "an {C:item}Item{} card when any",
+                  "{C:attention}Booster Pack{} is opened",
+                  "{C:inactive}(Must have room){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:attention}Decrease{} rank of",
+                  "first {C:attention}2{} cards {C:attention}held{} in",
+                  "hand at end of round",
+                  "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
+                }
+            },
             j_poke_pansage = {
                 name = "Pansage",
                 text = {
@@ -5650,6 +5783,7 @@ return {
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
+            poke_plus_consumable = "+1 Consumable",
             poke_plus_shop = "+1 Shop Card",
             poke_destroyed_ex = "Destroyed!",
             poke_evolve_success = "Evolved!",
