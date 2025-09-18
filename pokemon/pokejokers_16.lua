@@ -670,6 +670,7 @@ local porygonz={
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Energy' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
       G.E_MANAGER:add_event(Event({
           trigger = 'immediate',
           delay = 0.0,
