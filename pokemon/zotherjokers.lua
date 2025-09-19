@@ -1,10 +1,10 @@
 local pokedex={ 
   name = "pokedex",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 2}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  config = {extra = {mult_mod = 1, found = {pokedex = true}, found_count = 1, searching = false}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+		return {vars = {card.ability.extra.found_count * card.ability.extra.mult_mod, card.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 5, 
@@ -12,26 +12,77 @@ local pokedex={
   atlas = "others",
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.delayed_cardarea_check then
+      local list_to_check = context.delayed_cardarea_check.cards
+      if list_to_check then
+        for k,joker in pairs(list_to_check) do
+          if joker.ability.set == "Joker" then
+            if joker.ability and type(joker.ability.name) == "string" and not card.ability.extra.found[joker.ability.name] then
+              print("FOUND: "..tostring(joker.ability.name))
+              card.ability.extra.found[joker.ability.name] = true
+              card.ability.extra.found_count = card.ability.extra.found_count + 1
+              if not context.delayed_check_silent then
+                card_eval_status_text(card, 'jokers', nil, nil, nil, {message = localize("poke_pokedex_entry"), colour = G.C.RED})
+              end
+            end
+          end
+        end
+      end
+    elseif context.buying_card then
+      G.E_MANAGER:add_event(Event({ func = function() self:calculate(card, {starting_shop = true}); return true end }))
+    elseif context.starting_shop or context.reroll_shop then
+      G.E_MANAGER:add_event(Event({ func = function() self:calculate(card, {delayed_cardarea_check = G.shop_jokers}); return true end }))
+    elseif context.open_booster then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              self:calculate(card, {delayed_cardarea_check = G.pack_cards})
+              return true
+            end
+          }))
+          return true
+        end
+      }))
+    end
+
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
+      if context.joker_main and card.ability.extra.found_count > 0 then
+        local mult = card.ability.extra.found_count * card.ability.extra.mult_mod
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {mult}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
+          mult_mod = mult
         }
       end
     end
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
-      local pokemon_amount = 0
+      local update_jokers = false
+      local found_self = false
       for k, v in pairs(G.jokers.cards) do
-        if (v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype) or type_sticker_applied(v) then
-          pokemon_amount = pokemon_amount + 1
+        if not card.ability.extra.found[v.ability.name] then
+          update_jokers = true
+        elseif v == card then
+          found_self = true
         end
       end
-      card.ability.extra.mult = pokemon_amount * card.ability.extra.mult_mod
+      if update_jokers then
+        self:calculate(card, {delayed_cardarea_check = G.jokers, delayed_check_silent = not found_self})
+      end
     end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    -- delay check to allow other cards to appear
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        self:calculate(card, {delayed_cardarea_check = G.jokers, delayed_check_silent = true})
+        self:calculate(card, {delayed_cardarea_check = G.pack_cards, delayed_check_silent = true})
+        self:calculate(card, {delayed_cardarea_check = G.shop_jokers, delayed_check_silent = true})
+        return true
+      end
+    }))
   end
 }
 
