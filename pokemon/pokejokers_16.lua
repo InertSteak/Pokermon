@@ -878,8 +878,8 @@ local rotomw={
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       local enhanced = {}
       for k, v in ipairs(context.scoring_hand) do
-        enhanced[#enhanced+1] = v
         if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
+          enhanced[#enhanced+1] = v
           v.vampired = true
           v:set_ability(G.P_CENTERS.c_base, nil, true)
           G.E_MANAGER:add_event(Event({
