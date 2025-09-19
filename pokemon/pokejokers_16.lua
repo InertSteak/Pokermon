@@ -828,7 +828,7 @@ local rotomh={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  aux_joker = true, 
+  aux_poke = true, 
   no_collection = true,
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand == 2 and G.GAME.current_round.discards_used == 0 and not context.hook and not context.blueprint then
@@ -872,7 +872,7 @@ local rotomw={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  aux_joker = true, 
+  aux_poke = true, 
   no_collection = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
@@ -943,7 +943,7 @@ local rotomf={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  aux_joker = true, 
+  aux_poke = true, 
   no_collection = true,
   calculate = function(self, card, context)
     if context.setting_blind and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -992,7 +992,7 @@ local rotomfan={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  aux_joker = true, 
+  aux_poke = true, 
   no_collection = true,
   calculate = function(self, card, context)
     if context.setting_blind and not card.getting_sliced and not context.blueprint then
@@ -1076,7 +1076,7 @@ local rotomm={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  aux_joker = true,
+  aux_poke = true,
   no_collection = true,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
