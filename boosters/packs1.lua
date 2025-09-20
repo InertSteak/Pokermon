@@ -1,4 +1,7 @@
 local create_energy = function(self, card)
+  if pseudoseed('rainbow') < .10 then
+    return create_card("Spectral", G.pack_cards, nil, nil, true, true, 'c_poke_double_rainbow_energy', nil)
+  end
   local match_type = pseudorandom(pseudoseed('match'))
   if match_type > .50 and #G.jokers.cards > 0 then
     local energy_types = {}
