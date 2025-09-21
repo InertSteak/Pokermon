@@ -216,8 +216,8 @@ return {
                     "{C:inactive,s:0.8}({C:pink,s:0.8}Type{C:inactive,s:0.8} changes every hand played){}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:pink}Energize{} leftmost or",
-                    "selected Joker if its {C:pink}Type{}",
-                    "matches {C:pink}Type{} applied",
+                    "selected Joker if it",
+                    "is already {B:1,V:2}#1#{} {C:pink}Type{}"
                 },
             },
             c_poke_metalcoat = {
