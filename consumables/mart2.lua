@@ -564,13 +564,19 @@ local teraorb = {
   name = "teraorb",
   key = "teraorb",
   set = "Item",
+  config = {extra = {change_to_type = "Grass"}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Random Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
+    local info = center.ability.extra or self.config.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {info.change_to_type, colours = {G.ARGS.LOC_COLOURS[string.lower(info.change_to_type)]}}}
+    local highlight_colour = info.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    return {vars = {info.change_to_type, colours = {G.ARGS.LOC_COLOURS[string.lower(info.change_to_type)], highlight_colour}}}
   end,
   pos = { x = 9, y = 2 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
+  soul_set = "Item",
+  soul_rate = .045,
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
@@ -586,9 +592,36 @@ local teraorb = {
     else
       return
     end
-    apply_type_sticker(choice)
-    energy_increase(choice, type_sticker_applied(choice))
+    if is_type(choice, card.ability.extra.change_to_type) then
+      if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
+        energy_increase(choice, choice.ability.extra.ptype)
+      elseif type_sticker_applied(choice) then
+        energy_increase(choice, type_sticker_applied(choice))
+      end
+    end
+    apply_type_sticker(choice, card.ability.extra.change_to_type)
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
+  end,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+        local change_list = {}
+        for i = 1, #poketype_list do
+          if card.ability.extra.change_to_type ~= poketype_list[i] then
+            change_list[#change_list + 1] = poketype_list[i]
+          end
+        end
+        card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.change_to_type, colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]})
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+      card.ability.extra.change_to_type = pseudorandom_element(poketype_list, 'tera')
+    end
   end,
   in_pool = function(self)
     return true

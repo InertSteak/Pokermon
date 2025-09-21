@@ -156,6 +156,7 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 position = "after"
 payload = '''
 if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - 1 * #find_joker('rotom')) end
+if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.rotom_discount or 0) * #find_joker('rotomdex')) end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothitelle') > 0 then self.cost = 0 end

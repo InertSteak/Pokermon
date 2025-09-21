@@ -212,10 +212,12 @@ return {
             c_poke_teraorb = {
                 name = "Tera Orb",
                 text = {
-                    "{C:attention}Type Changer:{} {X:pink,C:white}Random{}",
+                    "{C:attention}Type Changer:{} {B:1,V:2}#1#{}",
+                    "{C:inactive,s:0.8}({C:pink,s:0.8}Type{C:inactive,s:0.8} changes every hand played){}",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{C:pink}Energize{} leftmost",
-                    "or selected Joker{}",
+                    "{C:pink}Energize{} leftmost or",
+                    "selected Joker if its {C:pink}Type{}",
+                    "matches {C:pink}Type{} applied",
                 },
             },
             c_poke_metalcoat = {
@@ -4508,12 +4510,17 @@ return {
             j_poke_pokedex = {
                 name = 'Pokedex',
                 text = {
-                    "{C:mult}+#2#{} Mult for each Joker",
-                    "you have that has a {C:pink}Type{}",
-                    "{br:3}ERROR - CONTACT STEAK",
                     "{C:attention}Pokemon{} from the same", 
                     "evolutionary line may appear",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+                } 
+            },
+            j_poke_rotomdex = {
+                name = 'Rotom Dex',
+                text = {
+                    "{C:attention}Booster Packs{} cost {C:money}$1{} less",
+                    "for each different {C:pink}Type",
+                    "among your Jokers",
+                    "{C:inactive}(Currently {C:money}$#1#{C:inactive} less)"
                 } 
             },
             j_poke_everstone = {

@@ -2,13 +2,14 @@ local jd_def = JokerDisplay.Definitions
 
 
 -- Pokedex
+--[[
 jd_def["j_poke_pokedex"] = {
     text = {
         { text = "+" },
         { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
     },
     text_config = { colour = G.C.MULT },
-}
+}]]--
 
 -- Everstone 
 jd_def["j_poke_everstone"] = {

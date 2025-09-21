@@ -216,6 +216,20 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "placeholder_joker",
+    path = "placeholder_joker.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "placeholder_jokerShiny",
+    path = "placeholder_jokerShiny.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "unergy",
     path = "unergy.png",
     px = 71,
