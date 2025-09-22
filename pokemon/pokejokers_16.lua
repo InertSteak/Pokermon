@@ -1081,11 +1081,12 @@ local rotomm={
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
       local targets = {G.hand.cards[1], G.hand.cards[2]}
-      juice_flip_table(card, targets, false, 2)
+      
+      juice_flip_table(card, targets, false, #targets)
       for i = 1, #targets do
         poke_vary_rank(G.hand.cards[i], true)
       end
-      juice_flip_table(card, targets, true, 2)
+      juice_flip_table(card, targets, true, #targets)
       delay(0.5)
     end
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
