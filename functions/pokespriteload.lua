@@ -1094,7 +1094,7 @@ local poke_artist_info = {
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("000000"), highlight_colour = HEX("4428BC")},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
-  RedHaering = {display_name = 'RedHaering', artist_colour = HEX("C91610")},
+  RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540")},
   RibbonOnline = {display_name = 'RibbonOnline', artist_colour = HEX("F11250")},
   Sonfive = {display_name = 'Sonfive', artist_colour = HEX("87DEFF")},
   Silverfish07 = {display_name = 'Silverfish07', artist_colour = HEX('FFAE00')},
