@@ -1870,6 +1870,7 @@ return {
             j_poke_ditto = {
                 name = 'Ditto',
                 text = {
+                    "{C:attention}Volatile Right{}",
                     "{C:attention}Transforms{} into leftmost",
                     "Joker with {C:attention}Perishable{}",
                     "and a {C:colorless}Colorless{} sticker",

@@ -572,11 +572,13 @@ local lapras={
 local ditto={
   name = "ditto", 
   pos = {x = 2, y = 10}, 
+   config = {extra = {volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'availability', vars = {"you have a Perishable Joker"}}
       info_queue[#info_queue+1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds}}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
   end,
   rarity = 2, 
@@ -589,7 +591,7 @@ local ditto={
   eternal_compat = false,
   custom_pool_func = true, 
   calculate = function(self, card, context) --mostly copied from how invisible joker works
-    if context.ending_shop and not context.blueprint then
+    if context.ending_shop and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
       local jokers = {}
       for i=1, #G.jokers.cards do 
           if G.jokers.cards[i] ~= card and G.jokers.cards[i].ability.name ~= "ditto" then
