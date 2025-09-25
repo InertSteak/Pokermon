@@ -29,7 +29,7 @@
 local mimikyu={
   name = "mimikyu",
   pos = {x = 2, y = 5},
-  broke_pos = {x = 3, y = 5},
+  broke_pos = {x = 4, y = 4},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -75,6 +75,7 @@ local mimikyu={
         end
         if save then
           card.ability.extra.disguise = false
+          card.children.center.atlas = G.ASSET_ATLAS['poke_'..card.config.center.poke_lookup_atlas]
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
           G.E_MANAGER:add_event(Event({

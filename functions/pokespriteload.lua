@@ -818,7 +818,7 @@ minior = {base = {pos = {x = 16, y = 51}, soul_pos =  {x = 17, y = 51}},},
 komala = {base = {pos = {x = 18, y = 51}},},
 turtonator = {base = {pos = {x = 20, y = 51}},},
 togedemaru = {base = {pos = {x = 22, y = 51}},},
-mimikyu = {base = {pos = {x = 24, y = 51}},},
+mimikyu = {base = {pos = {x = 24, y = 51}},lookup_gen_atlas = true},
 bruxish = {base = {pos = {x = 26, y = 51}},},
 drampa = {base = {pos = {x = 28, y = 51}},},
 dhelmise = {base = {pos = {x = 0, y = 52}},},
@@ -1186,6 +1186,15 @@ poke_load_atlas = function(item)
         item.atlas = atlas_prefix.."Others"
       else
         item.atlas = atlas_prefix.."Natdex"
+      end
+      if sprite_info.lookup_gen_atlas and item.gen then
+        local gen_string = nil
+        if item.gen < 10 then
+          gen_string = 'Gen0'..item.gen 
+        else
+          gen_string = 'Gen'..item.gen
+        end
+        item.poke_lookup_atlas = atlas_prefix..gen_string
       end
     end
   end
