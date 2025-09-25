@@ -410,7 +410,7 @@ local leftovers = {
       func = function() card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
     end}))
     card.ability.extra.usable = false
-    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
+    card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
@@ -485,7 +485,7 @@ local leek = {
       return true end }))
     end
     card.ability.extra.usable = false
-    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
+    card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and card.edition then
@@ -543,7 +543,7 @@ local thickclub = {
     delay(0.5)
     poke_unhighlight_cards()
     card.ability.extra.usable = false
-    card.children.floating_sprite:set_sprite_pos({ x = 7, y = 9 })
+    card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
   end,
   calculate = function(self, card, context)
     if context.end_of_round and not card.ability.extra.usable then
