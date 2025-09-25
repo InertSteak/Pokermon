@@ -319,6 +319,7 @@ local wish_pack = {
 
     local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
     local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%6], no_edition = true, skip_materialize = true}
+    if not G.P_CENTERS[temp_card.key] then temp_card.key = 'c_judgement' end
     return SMODS.create_card(temp_card)
 	end,
 	loc_vars = function(self, info_queue, card)
