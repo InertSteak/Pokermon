@@ -572,7 +572,8 @@ local teraorb = {
     local highlight_colour = info.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
     return {vars = {info.change_to_type, colours = {G.ARGS.LOC_COLOURS[string.lower(info.change_to_type)], highlight_colour}}}
   end,
-  pos = { x = 9, y = 2 },
+  pos = { x = 2, y = 9 },
+  soul_pos = { x = 3, y = 9 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
   soul_set = "Item",
@@ -613,6 +614,7 @@ local teraorb = {
           end
         end
         card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
+        self:set_sprites(card)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.change_to_type, colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]})
       end
     end
@@ -621,7 +623,19 @@ local teraorb = {
     if initial then
       local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
       card.ability.extra.change_to_type = pseudorandom_element(poketype_list, 'tera')
+      
+      self:set_sprites(card)
     end
+  end,
+  set_sprites = function(self, card, front)
+    local info = card.ability and card.ability.extra or self.config.extra
+    local sprite_locations = {grass = {x = 2, y = 9}, fire = {x = 0, y = 9}, water = {x = 2, y = 10}, lightning = {x = 4, y = 9}, psychic = {x = 8, y = 9}, fighting = {x = 8, y = 8},
+                              colorless = {x = 0, y = 10}, dark = {x = 0, y = 8}, metal = {x = 6, y = 9}, fairy = {x = 6, y = 8}, dragon = {x = 2, y = 8}, earth = {x = 4, y = 8}}
+    local sprite_x = sprite_locations[string.lower(info.change_to_type)].x
+    local sprite_y = sprite_locations[string.lower(info.change_to_type)].y
+    
+    card.children.center:set_sprite_pos({x = sprite_x, y = sprite_y})
+    card.children.floating_sprite:set_sprite_pos({x = sprite_x + 1, y = sprite_y})
   end,
   in_pool = function(self)
     return true
