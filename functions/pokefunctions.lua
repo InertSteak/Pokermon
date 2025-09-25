@@ -819,6 +819,12 @@ pokemon_in_pool = function (self)
   else
     name = self.name or "bulbasaur"
   end
+  if (name == "dreepy" or name == "drakloak" or name == "dragapult") and not G.P_CENTERS['j_poke_dreepy_dart'] then
+    return false
+  end
+  if name == "ruins_of_alph" and not G.P_CENTERS['j_poke_unown'] then
+    return false
+  end
   local found_other
   local in_family
   for k, v in ipairs(pokermon.family) do
