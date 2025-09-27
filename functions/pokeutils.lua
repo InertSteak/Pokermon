@@ -541,3 +541,27 @@ function applies_splash()
   next(SMODS.find_card('j_poke_feebas')) or
   next(SMODS.find_card('j_poke_luvdisc'))
 end
+
+function poke_is_even(card)
+  if card:get_id() == 2 or 
+   card:get_id() == 4 or 
+   card:get_id() == 6 or 
+   card:get_id() == 8 or 
+   card:get_id() == 10 then
+     return true
+  else
+    return false
+  end
+end
+
+function poke_is_odd(card)
+  if card:get_id() == 3 or 
+   card:get_id() == 5 or 
+   card:get_id() == 7 or 
+   card:get_id() == 9 or 
+   card:get_id() == 14 then
+     return true
+  else
+    return false
+  end
+end

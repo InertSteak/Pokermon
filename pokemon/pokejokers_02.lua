@@ -549,11 +549,7 @@ local oddish={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 or 
-         context.other_card:get_id() == 9 or 
-         context.other_card:get_id() == 14 then
+      if poke_is_odd(context.other_card) then
           local value
           if pseudorandom('oddish') < .50 then
             value = card.ability.extra.mult
@@ -593,11 +589,7 @@ local gloom={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 or 
-         context.other_card:get_id() == 9 or 
-         context.other_card:get_id() == 14 then
+      if poke_is_odd(context.other_card) then
           local value
           if pseudorandom('gloom') < .50 then
             value = card.ability.extra.mult
@@ -631,11 +623,7 @@ local vileplume={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 or 
-         context.other_card:get_id() == 9 or 
-         context.other_card:get_id() == 14 then
+      if poke_is_odd(context.other_card) then
           if pseudorandom('vileplume') < .50 then
             return { 
               x_mult = card.ability.extra.Xmult_multi,

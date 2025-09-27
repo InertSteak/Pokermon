@@ -106,7 +106,7 @@ local bellossom={
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           local upgrade = pseudorandom(pseudoseed('bellossom'))
-          if (v:get_id() == 3 or v:get_id() == 5 or v:get_id() == 7 or v:get_id() == 9 or v:get_id() == 14) and upgrade > .50 and not v.edition then
+          if poke_is_odd(v) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
               if v.ability.name == 'Wild Card' and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
@@ -137,11 +137,7 @@ local bellossom={
       end
     end
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if context.other_card:get_id() == 3 or 
-         context.other_card:get_id() == 5 or 
-         context.other_card:get_id() == 7 or 
-         context.other_card:get_id() == 9 or 
-         context.other_card:get_id() == 14 then
+      if poke_is_odd(context.other_card) then
           if context.other_card.bellossom_score then
             return {
               mult = card.ability.extra.mult,

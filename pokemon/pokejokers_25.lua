@@ -125,12 +125,222 @@ local vikavolt={
 -- Cutiefly 742
 -- Ribombee 743
 -- Rockruff 744
+local rockruff={
+  name = "rockruff",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 2, even_to_score = 20, odd_to_score = 20,}, evo_rqmt = 20},
+  loc_txt = {
+    name = "Rockruff",
+    text = {
+      "Each played {C:attention}non-face{} card",
+      "gives {C:mult}+#1#{} Mult when scored",
+      "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2#{C:inactive,s:0.8} Even cards)",
+      "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#3#{C:inactive,s:0.8} Odd cards)"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.even_to_score, center.ability.extra.odd_to_score}}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 7,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card:is_face() then
+      if poke_is_even(context.other_card) and card.ability.extra.even_to_score > 0 then
+        card.ability.extra.even_to_score = card.ability.extra.even_to_score - 1
+      end
+      if poke_is_odd(context.other_card) and card.ability.extra.odd_to_score > 0 then
+        card.ability.extra.odd_to_score = card.ability.extra.odd_to_score - 1
+      end
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+    local evo = scaling_evo(self, card, context, "j_poke_lycanroc_dusk", (self.config.evo_rqmt * 2) - card.ability.extra.odd_to_score - card.ability.extra.even_to_score, self.config.evo_rqmt * 2)
+    if not evo then
+      evo = scaling_evo(self, card, context, "j_poke_lycanroc_day", self.config.evo_rqmt - card.ability.extra.even_to_score, self.config.evo_rqmt)
+    end
+    if not evo then
+      evo = scaling_evo(self, card, context, "j_poke_lycanroc_night", self.config.evo_rqmt - card.ability.extra.odd_to_score, self.config.evo_rqmt)
+    end
+    if evo then return evo end
+  end,
+}
 -- Lycanroc 745
+local lycanroc_day={
+  name = "lycanroc_day",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 4, chip_mod = 40, hands = 1}},
+  loc_txt = {
+    name = "Lycanroc (Midday)",
+    text = {
+      "Each played card with {C:attention}Even{} rank",
+      "gives {C:mult}+#1#{} Mult when scored",
+      "{br:3}ERROR - CONTACT STEAK",
+      "If first played hand has",
+      "has exactly {C:attention}1{} card it", 
+      "gives {C:chips}+#2#{} and {C:attention}+1{} hand",
+      "this round when scored"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.chip_mod, center.ability.extra.hands}}
+  end,
+  rarity = "poke_safari",
+  cost = 5,
+  gen = 7,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and poke_is_even(context.other_card) then
+      if G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 then
+        ease_hands_played(card.ability.extra.hands)
+        return {
+          mult = card.ability.extra.mult,
+          chips = card.ability.extra.chip_mod,
+          card = card
+        }
+      end
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+  end,
+}
+
+local lycanroc_night={
+  name = "lycanroc_night",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 5, hands = 1, discards = 1, h_size = 1}},
+  loc_txt = {
+    name = "Lycanroc (Midnight)",
+    text = {
+      "Each played card with {C:attention}Odd{} rank",
+      "gives {C:mult}+#1#{} Mult when scored",
+      "{br:3}ERROR - CONTACT STEAK",
+      "When Boss Blind is selected",
+      "gain {C:attention}#2#{} hand, {C:attention}#3#{} discard", 
+      "and {C:attention}#2#{} hand size this round",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.h_size}}
+  end,
+  rarity = "poke_safari",
+  cost = 5,
+  gen = 7,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and context.blind.boss then
+      ease_hands_played(card.ability.extra.hands)
+      ease_discard(card.ability.extra.discards)
+      G.hand:change_size(card.ability.extra.h_size)
+      G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and poke_is_odd(context.other_card) then
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+  end,
+}
+
+local lycanroc_dusk={
+  name = "lycanroc_dusk",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 4, retriggers = 1}},
+  loc_txt = {
+    name = "Lycanroc (Dusk)",
+    text = {
+      "Each played {C:attention}non-face{} card",
+      "gives {C:mult}+#1#{} Mult when scored",
+      "{br:3}ERROR - CONTACT STEAK",
+      "Retrigger the {C:attention}first{} scoring",
+      "card with {C:attention}Even{} rank and",
+      "the {C:attention}first{} scoring card with",
+      "{C:attention}Odd{} rank once per round"
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult}}
+  end,
+  rarity = "poke_safari",
+  cost = 5,
+  gen = 7,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card:is_face() then
+      return {
+        mult = card.ability.extra.mult,
+        card = card
+      }
+    end
+    if context.repetition and context.cardarea == G.play then
+      local first_even = nil
+      local first_odd = nil
+      for i = 1, #context.scoring_hand do
+        if poke_is_even(context.scoring_hand[i]) and not first_even then
+          first_even = context.scoring_hand[i]
+        end
+        if poke_is_odd(context.scoring_hand[i]) and not first_odd then
+          first_odd = context.scoring_hand[i]
+        end
+      end
+      if context.other_card == first_even and not card.ability.extra.even_triggered then
+        card.ability.extra.even_triggered = true  
+        return {
+              message = localize('k_again_ex'),
+              repetitions = card.ability.extra.retriggers,
+              card = card
+          }
+      end
+      if context.other_card == first_odd and not card.ability.extra.odd_triggered then
+        card.ability.extra.odd_triggered = true  
+        return {
+              message = localize('k_again_ex'),
+              repetitions = card.ability.extra.retriggers,
+              card = card
+          }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.even_triggered = nil
+      card.ability.extra.odd_triggered = nil
+    end
+  end,
+}
 -- Wishiwashi 746
 -- Mareanie 747
 -- Toxapex 748
 -- Mudbray 749
 -- Mudsdale 750
 return {name = "Pokemon Jokers 721-750", 
-        list = {grubbin, charjabug, vikavolt},
+        list = {grubbin, charjabug, vikavolt, rockruff, lycanroc_day, lycanroc_night, lycanroc_dusk},
 }

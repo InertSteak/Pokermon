@@ -141,6 +141,7 @@ pokermon.family = {
     {"deino", "zweilous", "hydreigon"},
     {"litleo", "pyroar"},
     {"grubbin", "charjabug", "vikavolt"},
+    {"rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
     {"hisuian_qwilfish", "overqwil"},
     {"nickit", "thievul"},
