@@ -129,15 +129,6 @@ local rockruff={
   name = "rockruff",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 2, even_to_score = 20, odd_to_score = 20,}, evo_rqmt = 20},
-  loc_txt = {
-    name = "Rockruff",
-    text = {
-      "Each played {C:attention}non-face{} card",
-      "gives {C:mult}+#1#{} Mult when scored",
-      "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2#{C:inactive,s:0.8} Even cards)",
-      "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#3#{C:inactive,s:0.8} Odd cards)"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.even_to_score, center.ability.extra.odd_to_score}}
@@ -179,18 +170,6 @@ local lycanroc_day={
   name = "lycanroc_day",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 4, chip_mod = 40, hands = 1}},
-  loc_txt = {
-    name = "Lycanroc (Midday)",
-    text = {
-      "Each played card with {C:attention}Even{} rank",
-      "gives {C:mult}+#1#{} Mult when scored",
-      "{br:3}ERROR - CONTACT STEAK",
-      "If first played hand has",
-      "has exactly {C:attention}1{} card it", 
-      "gives {C:chips}+#2#{} and {C:attention}+1{} hand",
-      "this round when scored"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.chip_mod, center.ability.extra.hands}}
@@ -226,17 +205,6 @@ local lycanroc_night={
   name = "lycanroc_night",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 5, hands = 1, discards = 1, h_size = 1}},
-  loc_txt = {
-    name = "Lycanroc (Midnight)",
-    text = {
-      "Each played card with {C:attention}Odd{} rank",
-      "gives {C:mult}+#1#{} Mult when scored",
-      "{br:3}ERROR - CONTACT STEAK",
-      "When Boss Blind is selected",
-      "gain {C:attention}#2#{} hand, {C:attention}#3#{} discard", 
-      "and {C:attention}#2#{} hand size this round",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.h_size}}
@@ -270,18 +238,6 @@ local lycanroc_dusk={
   name = "lycanroc_dusk",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 4, retriggers = 1}},
-  loc_txt = {
-    name = "Lycanroc (Dusk)",
-    text = {
-      "Each played {C:attention}non-face{} card",
-      "gives {C:mult}+#1#{} Mult when scored",
-      "{br:3}ERROR - CONTACT STEAK",
-      "Retrigger the {C:attention}first{} scoring",
-      "card with {C:attention}Even{} rank and",
-      "the {C:attention}first{} scoring card with",
-      "{C:attention}Odd{} rank once per round"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult}}

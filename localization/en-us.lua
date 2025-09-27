@@ -4178,6 +4178,50 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 }
             },
+            j_poke_rockruff = {
+              name = "Rockruff",
+              text = {
+                "Each played {C:attention}non-face{} card",
+                "gives {C:mult}+#1#{} Mult when scored",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2#{C:inactive,s:0.8} Even cards)",
+                "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#3#{C:inactive,s:0.8} Odd cards)"
+              }
+            },
+            j_poke_lycanroc_day = {
+              name = "Lycanroc (Midday)",
+              text = {
+                "Each played card with {C:attention}Even{} rank",
+                "gives {C:mult}+#1#{} Mult when scored",
+                "{br:3}ERROR - CONTACT STEAK",
+                "If first played hand has",
+                "exactly {C:attention}1{} card it gives", 
+                "{C:chips}+#2#{} Chips and {C:attention}+1{} hand this",
+                "round when scored"
+              }
+            },
+            j_poke_lycanroc_night= {
+              name = "Lycanroc (Midnight)",
+              text = {
+                "Each played card with {C:attention}Odd{} rank",
+                "gives {C:mult}+#1#{} Mult when scored",
+                "{br:3}ERROR - CONTACT STEAK",
+                "When Boss Blind is selected",
+                "gain {C:attention}#2#{} hand, {C:attention}#3#{} discard", 
+                "and {C:attention}#2#{} hand size this round",
+              }
+            },
+            j_poke_lycanroc_dusk = {
+              name = "Lycanroc (Dusk)",
+              text = {
+                "Each played {C:attention}non-face{} card",
+                "gives {C:mult}+#1#{} Mult when scored",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Retrigger the {C:attention}first{} scoring",
+                "card with {C:attention}Even{} rank and",
+                "the {C:attention}first{} scoring card with",
+                "{C:attention}Odd{} rank once per round"
+              }
+            },
             j_poke_mimikyu = {
                 name = "Mimikyu",
                 text = {
