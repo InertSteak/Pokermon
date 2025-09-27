@@ -2916,7 +2916,6 @@ return {
                     "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
                     "Creates a {C:attention}Standard{} tag",
                     "when this Joker evolves",
-                    "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -2926,7 +2925,6 @@ return {
                     "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
                     "Creates a {C:attention}Coupon{} tag",
                     "when this Joker evolves",
-                    "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -2935,7 +2933,6 @@ return {
                 text = {
                     "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
                     "{C:red}+#2#{} discards",
-                    "{C:inactive}(Yes, this will {C:attention}reduce{C:inactive} your Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -4206,8 +4203,8 @@ return {
                 "gives {C:mult}+#1#{} Mult when scored",
                 "{br:3}ERROR - CONTACT STEAK",
                 "When Boss Blind is selected",
-                "gain {C:attention}#2#{} hand, {C:attention}#3#{} discard", 
-                "and {C:attention}#2#{} hand size this round",
+                "gain {C:chips}+#2#{} hand, {C:mult}+#3#{} discard", 
+                "and {C:attention}+#2#{} hand size this round",
               }
             },
             j_poke_lycanroc_dusk = {

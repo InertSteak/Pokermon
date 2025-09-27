@@ -86,7 +86,7 @@ local armarouge={
         end
         if card.ability.extra.Xmult ~= starting_Xmult then 
           return {
-            message = localize{type='variable',key='a_Xmult_mod',vars={card.ability.extra.Xmult_mod}},
+            message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_mod}},
             colour = G.C.RED,
             card = card
           }
