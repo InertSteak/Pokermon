@@ -3329,7 +3329,7 @@ return {
                 "in final hand, destroy it",
                 "and create a {C:spectral}Spectral{} card",
                 "{C:inactive}(Must have room){}",
-                "{C:inactive}(Evolves with a {C:attention}Link Cable{C:inactive})",
+                "{C:inactive}(Evolves with a {C:attention}Linking Cord{C:inactive})",
               }
             },
             j_poke_absol = {
