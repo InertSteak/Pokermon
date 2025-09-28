@@ -729,6 +729,39 @@ local probopass={
   end
 }
 -- Dusknoir 477
+local dusknoir={
+  name = "dusknoir",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 1, spec_up = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, }}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 4,
+  stage = "Two",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.spectral_rate = G.GAME.spectral_rate + card.ability.extra.spec_up
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.spectral_rate = math.max(0, G.GAME.spectral_rate - card.ability.extra.spec_up)
+  end
+}
 -- Froslass 478
 local froslass={
   name = "froslass",
@@ -1110,7 +1143,7 @@ local rotomm={
 
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, froslass, rotom,
-          rotomh, rotomw, rotomf, rotomfan, rotomm
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, dusknoir,
+          froslass, rotom, rotomh, rotomw, rotomf, rotomfan, rotomm
         },
 }

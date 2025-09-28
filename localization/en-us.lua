@@ -3311,6 +3311,27 @@ return {
                   "scoring hand is {C:attention}mono-suit{}"
                 }
             },
+            j_poke_duskull = {
+              name = "Duskull",
+              text = {
+                "Retrigger first {C:attention}4{} scored cards",
+                "in {C:attention}final hand{} of round",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            },
+            j_poke_dusclops = {
+              name = "Dusclops",
+              text = {
+                "Retrigger first {C:attention}4{} scored cards",
+                "in {C:attention}final hand{} of round",
+                "{br:2}ERROR - CONTACT STEAK",
+                "If there is {C:attention}1{} unscored card",
+                "in final hand, destroy it",
+                "and create a {C:spectral}Spectral{} card",
+                "{C:inactive}(Must have room){}",
+                "{C:inactive}(Evolves with a {C:attention}Link Cable{C:inactive})",
+              }
+            },
             j_poke_absol = {
                 name = "Absol",
                 text = {
@@ -3743,6 +3764,17 @@ return {
                     "Played {C:attention}Stone{} cards",
                     "give {X:mult,C:white} X#1# {} Mult when scored"
                 } 
+            },
+            j_poke_dusknoir = {
+                name = "Dusknoir",
+                text = {
+                  "Retrigger all scored cards",
+                  "in {C:attention}final hand{} of round",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:spectral}Spectral{} cards may",
+                  "appear in the shop",
+                  "{C:inactive,s:0.8}(Increases rate if they already appear){}"
+                }
             },
             j_poke_froslass = {
                 name = "Froslass",

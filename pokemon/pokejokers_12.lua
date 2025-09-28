@@ -89,7 +89,85 @@ local milotic={
 -- Shuppet 353
 -- Banette 354
 -- Duskull 355
+local duskull={
+  name = "duskull",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 1,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+      if #context.scoring_hand > 4 and context.scoring_hand[5] ~= context.other_card then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+    return level_evo(self, card, context, "j_poke_dusclops")
+  end,
+}
 -- Dusclops 356
+local dusclops={
+  name = "dusclops",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 1,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  item_req = "linkcable",
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+      if #context.scoring_hand > 4 and context.scoring_hand[5] ~= context.other_card then
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.after and G.GAME.current_round.hands_left == 0 and (#context.full_hand - #context.scoring_hand) == 1 and not context.blueprint then
+        for k, v in pairs(context.full_hand) do
+          if not SMODS.in_scoring(v, context.scoring_hand) then
+            poke_remove_card(v, card)
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                local _card = SMODS.add_card {set = 'Spectral'}
+                card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+                return true
+              end
+            }))
+            break
+          end
+        end
+      end
+    end
+    return item_evo(self, card, context, "j_poke_dusknoir")
+  end,
+}
 -- Tropius 357
 -- Chimecho 358
 -- Absol 359
@@ -172,5 +250,5 @@ local wynaut={
   end,
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {feebas, milotic, absol, wynaut},
+        list = {feebas, milotic, duskull, dusclops, absol, wynaut},
 }
