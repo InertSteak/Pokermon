@@ -5877,6 +5877,8 @@ return {
             poke_energized_ex = "Energized!",
             poke_round_plus_ex = "Round Passed!",
             poke_unlimited_energy = "Infinity",
+            poke_reroll_plural = "Rerolls",
+            poke_reroll_singular = "Reroll",
 
             --Some infoqueue/variable stuff
             farfetchd_infoqueue = "Farfetch\'d",
