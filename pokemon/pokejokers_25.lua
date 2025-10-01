@@ -184,19 +184,28 @@ local lycanroc_day={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play and poke_is_even(context.other_card) then
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
       if G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 then
         ease_hands_played(card.ability.extra.hands)
+        if poke_is_even(context.other_card) then
+          return {
+            mult = card.ability.extra.mult,
+            chips = card.ability.extra.chip_mod,
+            card = card
+          }
+        else
+          return {
+            chips = card.ability.extra.chip_mod,
+            card = card
+          }
+        end
+      end
+      if poke_is_even(context.other_card) then
         return {
           mult = card.ability.extra.mult,
-          chips = card.ability.extra.chip_mod,
           card = card
         }
       end
-      return {
-        mult = card.ability.extra.mult,
-        card = card
-      }
     end
   end,
 }
