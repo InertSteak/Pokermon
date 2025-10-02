@@ -100,7 +100,7 @@ local luvdisc={
   end,
   rarity = 1,
   cost = 4,
-  gen = 1,
+  gen = 3,
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex3",
