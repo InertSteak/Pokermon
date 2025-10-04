@@ -108,7 +108,8 @@ local duskull={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if #context.scoring_hand > 4 and context.scoring_hand[5] ~= context.other_card then
+      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
+      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
@@ -140,7 +141,8 @@ local dusclops={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if #context.scoring_hand > 4 and context.scoring_hand[5] ~= context.other_card then
+      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
+      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
         return {
           message = localize('k_again_ex'),
           repetitions = card.ability.extra.retriggers,
