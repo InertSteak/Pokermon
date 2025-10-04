@@ -614,7 +614,13 @@ local teraorb = {
           end
         end
         card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
-        self:set_sprites(card)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            self:set_sprites(card)
+            return true
+          end
+        }))
+  
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.change_to_type, colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]})
       end
     end
