@@ -72,7 +72,8 @@ local bibarel={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not card.debuff then
+        
         card.ability.extra.rerolls = card.ability.extra.rerolls + card.ability.extra.increase
         SMODS.change_free_rerolls(card.ability.extra.increase)
         return {
