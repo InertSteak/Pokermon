@@ -87,6 +87,7 @@ rapidash = {base = {pos = {x = 4, y = 5}},alts = {AtlasJokersSeriesA = {artist =
 slowpoke = {base = {pos = {x = 6, y = 5}},},
 slowbro = {base = {pos = {x = 8, y = 5}},},
 mega_slowbro = {base = {pos = {x = 2, y = 1}, soul_pos = {x = 3, y = 1}},gen_atlas = true},
+shell = {base = {pos = {x = 4, y = 8}}, gen_atlas = true,},
 magnemite = {base = {pos = {x = 10, y = 5}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 magneton = {base = {pos = {x = 12, y = 5}},},
 farfetchd = {base = {pos = {x = 14, y = 5}},},

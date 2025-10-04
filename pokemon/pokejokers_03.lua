@@ -791,11 +791,12 @@ local rapidash={
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, last_counter = 0}, evo_rqmt = 4},
+  config = {extra = {Xmult = 2, last_counter = 0, num = 1, dem = 7}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.last_counter)
-    return {vars = {card.ability.extra.Xmult, triggers_left}}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'tauros')
+    return {vars = {card.ability.extra.Xmult, triggers_left, num, dem}}
   end,
   rarity = 2, 
   cost = 6,
@@ -818,9 +819,20 @@ local slowpoke={
         }
       end
     end
+    if context.reroll_shop and not context.blueprint then
+      if SMODS.pseudorandom_probability(card, 'slowpoke', card.ability.extra.num, card.ability.extra.dem, 'slowpoke') then
+        local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_shell"}
+        local add_card = SMODS.create_card(temp_card)
+        poke_add_shop_card(add_card, card)
+        add_card.cost = 0
+      end
+    end
     local evo = item_evo(self, card, context, "j_poke_slowking")
     if not evo then
       evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
+    end
+    if not evo then
+      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.shell_used, 1)
     end
     return evo
   end
@@ -904,6 +916,41 @@ local mega_slowbro={
       }
     end
   end,
+}
+local shell={
+  name = "shell",
+  pos = {x = 11, y = 6},
+  config = {extra = {}},
+  no_collection = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = "poke_safari",
+  cost = 0,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex1",
+  gen = 1,
+  aux_poke = true,
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    for k, v in pairs(G.jokers.cards) do
+      if v.config.center_key == 'j_poke_slowpoke' and v.ability.extra.shell_used ~= 1 then
+        v.ability.extra.shell_used = 1
+        break
+      end
+    end
+    remove(self, card, {})
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      local edition = {negative = true}
+      card:set_edition(edition, true, true)
+    end
+  end
 }
 -- Magnemite 081
 local magnemite={
@@ -1311,5 +1358,5 @@ local shellder={
 
 return {name = "Pokemon Jokers 61-90", 
         list = { poliwhirl, poliwrath, abra, kadabra, alakazam, mega_alakazam, machop, machoke, machamp, bellsprout, weepinbell, victreebel, tentacool, tentacruel, geodude, graveler, 
-                 golem, ponyta, rapidash, slowpoke, slowbro, mega_slowbro, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
+                 golem, ponyta, rapidash, slowpoke, slowbro, mega_slowbro, shell, magnemite, magneton, farfetchd, doduo, dodrio, seel, dewgong, grimer, muk, shellder, },
 }

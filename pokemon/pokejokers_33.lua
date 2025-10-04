@@ -236,6 +236,59 @@ local dudunsparce={
   end,
 }
 -- Kingambit 983
+local kingambit={
+  name = "kingambit",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, }}
+  end,
+  rarity = "poke_safari",
+  cost = 11,
+  gen = 9,
+  stage = "Two",
+  ptype = "Metal",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local king_count = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+        if playing_card:get_id() == 13 then king_count = king_count + 1 end
+      end
+      if king_count == 1 then
+        local has_king = nil
+        for k, v in pairs(context.full_hand) do
+          if v:get_id() == 13 then 
+            has_king = true
+            break
+          end
+        end
+        if has_king and not context.other_card:is_face() then
+          local Xmult = card.ability.extra.Xmult/2
+          if Xmult > 1 then
+            return {
+              x_mult = Xmult,
+              card = card
+            }
+          end
+        end
+      end
+    end
+  end,
+}
 -- Great Tusk 984
 -- Scream Tail 985
 -- Brute Bonnet 986
@@ -244,5 +297,5 @@ local dudunsparce={
 -- Sandy Shocks 989
 -- Iron Treads 990
 return {name = "Pokemon Jokers 961-990", 
-        list = {wugtrio, annihilape, farigiraf, dudunsparce},
+        list = {wugtrio, annihilape, farigiraf, dudunsparce, kingambit},
 }

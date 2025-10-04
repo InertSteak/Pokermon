@@ -420,12 +420,120 @@ local golurk={
   end,
 }
 -- Pawniard 624
+local pawniard={
+  name = "pawniard",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.25,}, evo_rqmt = 2},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 5,
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.remove_playing_cards and not context.blueprint then
+        local face_cards = 0
+        for _, removed_card in ipairs(context.removed) do
+            if removed_card:is_face() then face_cards = face_cards + 1 end
+        end
+        if face_cards > 0 then
+            card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } } }
+        end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
+  end,
+}
 -- Bisharp 625
+local bisharp={
+  name = "bisharp",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1,Xmult_mod = 0.25,kings_destroyed = 0}, evo_rqmt = 3},
+  loc_txt = {
+    name = "Bisharp",
+    text = {
+      "Gains {X:red,C:white}X#2#{} Mult when a",
+      "{C:attention}face{} card is destroyed",
+      "{br:2}ERROR - CONTACT STEAK",
+      "If first played hand is a",
+      "single {C:attention}face{} card, destroy it",
+      "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+      "{C:inactive,s:0.8}(Evolves after destroying {C:attention,s:0.8}#3#{C:inactive,s:0.8} Kings)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.kings_destroyed)}}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  gen = 5,
+  stage = "One",
+  ptype = "Metal",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn then
+      local eval = function() return G.GAME.current_round.hands_played == 0 end
+      juice_card_until(card, eval, true)
+    end
+    
+    if context.remove_playing_cards and not context.blueprint then
+        local face_cards = 0
+        for _, removed_card in ipairs(context.removed) do
+            if removed_card:is_face() then face_cards = face_cards + 1 end
+            if removed_card:get_id() == 13 then card.ability.extra.kings_destroyed = card.ability.extra.kings_destroyed + 1 end
+        end
+        if face_cards > 0 then
+            card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } } }
+        end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:is_face() and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      context.full_hand[1].bisharp_remove = card
+      card:juice_up()
+    end
+    if context.destroy_card and context.destroy_card.bisharp_remove == card and not context.blueprint then
+      context.destroy_card.to_be_removed_by = nil
+      return {
+        remove = true
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
+  end,
+}
 -- Bouffalant 626
 -- Rufflet 627
 -- Braviary 628
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk},
+        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
 }

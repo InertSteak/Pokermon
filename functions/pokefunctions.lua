@@ -137,6 +137,7 @@ pokermon.family = {
     {"pansear", "simisear"},
     {"panpour", "simipour"},
     {"golett", "golurk"},
+    {"pawniard", "bisharp", "kingambit"},
     {"roggenrola", "boldore", "gigalith"},
     {"ferroseed", "ferrothorn"},
     {"zorua", "zoroark"},
@@ -167,6 +168,7 @@ pokermon.family = {
 }
 
 extended_family = {
+  slowpoke = {"shell"},
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
   luvdisc = {{item = true, name = "heartscale"}},

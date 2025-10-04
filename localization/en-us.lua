@@ -1371,6 +1371,13 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
+            j_poke_shell = {
+                name = "Shellder...?",
+                text = {
+                  "Evolves leftmost {C:attention}Slowpoke",
+                  "{S:1.1,C:red,E:2}self destructs{}",
+                }
+            },
             j_poke_magnemite = {
                 name = "Magnemite",
                 text = {
@@ -4127,6 +4134,26 @@ return {
                   "Guaranteed for {C:attention}Hazard{} cards",
                 }
             },
+            j_poke_pawniard = {
+                name = "Pawniard",
+                text = {
+                  "Gains {X:red,C:white}X#2#{} Mult when a",
+                  "{C:attention}face{} card is destroyed",
+                  "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X#3#{C:inactive} Mult)",
+                }
+            },
+            j_poke_bisharp = {
+              name = "Bisharp",
+              text = {
+                "Gains {X:red,C:white}X#2#{} Mult when a",
+                "{C:attention}face{} card is destroyed",
+                "{br:2}ERROR - CONTACT STEAK",
+                "If first played hand is a",
+                "single {C:attention}face{} card, destroy it",
+                "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after destroying {C:attention,s:0.8}#3#{C:inactive,s:0.8} Kings)",
+              }
+            },
             j_poke_zweilous = {
                 name = "Zweilous",
                 text = {
@@ -4534,6 +4561,16 @@ return {
                   "{C:attention}+#1#{} card slot available in shop",
                   "{C:attention}+#1#{} Booster Pack slot available in shop",
                   "{C:attention}+#1#{} Voucher slot available in shop",
+                }
+            },
+            j_poke_kingambit = {
+                name = "Kingambit",
+                text = {
+                  "{X:red,C:white}X#1#{} Mult",
+                  "If played hand has the only",
+                  "{C:attention}King{} in your full deck, each",
+                  "played {C:attention}nonface{} card gives half",
+                  "this Joker's {X:mult,C:white}X{} Mult when scored",
                 }
             },
             j_poke_farigiraf = {
