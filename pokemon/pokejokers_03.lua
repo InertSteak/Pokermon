@@ -791,7 +791,7 @@ local rapidash={
 local slowpoke={
   name = "slowpoke", 
   pos = {x = 0, y = 6}, 
-  config = {extra = {Xmult = 2, last_counter = 0, num = 1, dem = 7}, evo_rqmt = 4},
+  config = {extra = {Xmult = 2, last_counter = 0, num = 1, dem = 7, shell_used = 0}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.last_counter)
