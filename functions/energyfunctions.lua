@@ -1,6 +1,6 @@
 energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, Xmult1 = .2, Xmult2 = .2, Xchips = .2, money = .3, money2 = .3, money_mod = .1, mult_mod = .2, mult_mod2 = .2, s_mult = .4, chip_mod = .2, 
-  Xmult_mod = .2, Xmult_multi = .05, Xmult_multi2 = .05, Xchips_multi = .05
+  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, Xmult1 = .2, Xmult2 = .2, Xchips = .2, money = .3, money1 = .3, money2 = .3, money_mod = .1, 
+  mult_mod = .2, mult_mod2 = .2, s_mult = .4, chip_mod = .2, Xmult_mod = .2, Xmult_multi = .05, Xmult_multi2 = .05, Xchips_multi = .05
 }
 
 energy_max = 3
@@ -105,7 +105,7 @@ round_energy_value = function(value, field)
   if field == "mult" or field == "mult2" or field == "chips" or field == "chips1" or field == "chips2" or field == "chips3" then
     rounded = math.ceil(value)
     frac = nil
-  elseif field == "money" or field == "money2" or field == "mult_mod" or field == "mult_mod2" or field == "chip_mod" or field == "money_mod" then
+  elseif field == "money" or field == "money1" or field == "money2" or field == "mult_mod" or field == "mult_mod2" or field == "chip_mod" or field == "money_mod" then
     rounded, frac = math.modf(value)
   else
     rounded = value
@@ -413,6 +413,11 @@ ease_poke_dollars = function(card, seed, amt, calc_only)
   if card.ability.extra and type(card.ability.extra) == "table" then
     if card.ability.money_frac then
       if card.ability.money_frac > pseudorandom(pseudoseed(seed)) then
+        earned = earned + 1
+      end
+    end
+    if card.ability.money1_frac then
+      if card.ability.money1_frac > pseudorandom(pseudoseed(seed)) then
         earned = earned + 1
       end
     end

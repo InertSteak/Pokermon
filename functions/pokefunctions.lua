@@ -962,6 +962,12 @@ type_tooltip = function(self, info_queue, center)
           info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
         end
       end
+      if center.ability.money1_frac and center.ability.money1_frac > 0 then
+        percent = tonumber(string.format('%.3f', center.ability.money1_frac)) * 100
+        if percent ~= 100 and percent ~= 0 then
+          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
+        end
+      end
       if center.ability.money2_frac and center.ability.money2_frac > 0 then
         percent = tonumber(string.format('%.3f', center.ability.money2_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
