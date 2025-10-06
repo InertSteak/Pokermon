@@ -133,6 +133,7 @@ pokermon.family = {
     {"elgyem", "beheeyem"},
     {"trubbish", "garbodor"},
     {"litwick", "lampent", "chandelure"},
+    {"drilbur", "excadrill"},
     {"pansage", "simisage"},
     {"pansear", "simisear"},
     {"panpour", "simipour"},
@@ -1544,6 +1545,66 @@ reset_sneasel_rank = function()
     local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
     G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
     G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
+  end
+end
+
+poke_create_treasure = function(card, seed, megastone)
+  local treasure = pseudorandom(pseudoseed(seed))
+  local money = 0
+  local stone_max = 0
+  local mega = nil
+  if treasure > .70 then
+    stone_max = 1
+  elseif treasure > .40 then
+    money = 5
+  elseif treasure > .20 then
+    stone_max = 2
+  elseif treasure > .05 then
+    money = 10
+  elseif (megastone and treasure > 0.01) or not megastone then
+    money = 20
+  else
+    mega = true
+  end
+  if money > 0 then
+    ease_poke_dollars(card, seed, money)
+  end
+  if stone_max > 0 then
+    for i = 1, stone_max do
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+            local evo_stones = {'moonstone', 'sunstone', 'waterstone', 'leafstone', 'firestone', 'thunderstone', 'shinystone', 'dawnstone', 'duskstone'}
+            local avail_evo_stones = {}
+            for k = 1, #evo_stones do
+              if not next(SMODS.find_card('c_poke_'..evo_stones[k])) then
+                avail_evo_stones[#avail_evo_stones + 1] = evo_stones[k]
+              end
+            end
+            local stone_key = pseudorandom_element(avail_evo_stones, pseudoseed('evostone_drill'))
+            if stone_key then
+              stone_key = 'c_poke_'..stone_key
+            end
+            SMODS.add_card{set = 'Item', key = stone_key}
+            G.GAME.consumeable_buffer = 0
+            return true
+          end)
+        }))
+      end
+    end
+  end
+  if mega then
+    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          SMODS.add_card{set = 'Spectral', key = 'c_poke_megastone'}
+          G.GAME.consumeable_buffer = 0
+          return true
+        end)
+      }))
+    end
   end
 end
 

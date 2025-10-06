@@ -364,7 +364,87 @@ local gigalith = {
 -- Woobat 527
 -- Swoobat 528
 -- Drilbur 529
+local drilbur={
+  name = "drilbur",
+  pos = {x = 0, y = 0},
+  config = {extra = {active = true, stones_destroyed = 0}, evo_rqmt = 4},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'dril_treasure'}
+    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.stones_destroyed)}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 5,
+  enhancement_gate = "m_stone",
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.destroying_card then
+      if not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_stone') and card.ability.extra.active then
+        card.ability.extra.active = false
+        card.ability.extra.stones_destroyed = card.ability.extra.stones_destroyed + 1
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
+        poke_create_treasure(card, 'drilbur')
+        return true
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.active = true
+    end
+    return scaling_evo(self, card, context, "j_poke_excadrill", card.ability.extra.stones_destroyed, self.config.evo_rqmt)
+  end,
+}
 -- Excadrill 530
+local excadrill={
+  name = "excadrill",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 2},},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'exdril_treasure'}
+    return {vars = {center.ability.extra.mult_mod, G.GAME.starting_deck_size,  
+                    math.max(0, center.ability.extra.mult_mod * (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0))}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 5,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Mult = math.max(0, card.ability.extra.mult_mod * (G.GAME.starting_deck_size - #G.playing_cards))
+        if Mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+            colour = G.C.MULT,
+            mult_mod = Mult
+          }
+        end
+      end
+    end
+    if context.destroying_card then
+      if not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_stone') then
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
+        poke_create_treasure(card, 'excadril', true)
+        return true
+      end
+    end
+  end,
+}
 -- Audino 531
 -- Timburr 532
 -- Gurdurr 533
@@ -377,5 +457,5 @@ local gigalith = {
 -- Sewaddle 540
 return {
   name = "Pokemon Jokers 511-540",
-  list = {roggenrola, boldore, gigalith, pansage, simisage, pansear, simisear, panpour, simipour },
+  list = {pansage, simisage, pansear, simisear, panpour, simipour, roggenrola, boldore, gigalith, drilbur, excadrill },
 }

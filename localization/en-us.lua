@@ -3949,6 +3949,28 @@ return {
                     "and retriggers"
                 }
             },
+            j_poke_drilbur = {
+                name = "Drilbur",
+                text = {
+                  "First played {C:attention}Stone{} card",
+                  "each round is destroyed",
+                  "and creates {C:money}Treasure{}",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#1#{C:inactive,s:0.8} times)"
+                }
+            },
+            j_poke_excadrill = {
+              name = "Excadrill",
+              text = {
+                "Played {C:attention}Stone{} cards are",
+                "destroyed and create {C:money}Treasure{}",
+                "{C:inactive}(Must have room)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:mult}+#1#{} Mult for each card below",
+                "{C:attention}#2#{} in your full deck",
+                "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+              }
+            },
             j_poke_trubbish = {
               name = "Trubbish",
               text = {
@@ -5293,6 +5315,27 @@ return {
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
             },
+            dril_treasure = {
+                name = "Treasure",
+                text = {
+                    "{C:green}30%{} - {C:attention}Evolution {C:item}Stone   ",
+                    "{C:green}30%{} - {C:money}$5{}               ",
+                    "{C:green}20%{} - {C:attention}2 Evolution {C:item}Stones",
+                    "{C:green}15%{} - {C:money}$10{}              ",
+                    "{C:green}5%{} - {C:money}$20{}             ",
+                }
+            },
+            exdril_treasure = {
+                name = "Treasure",
+                text = {
+                    "{C:green}30%{} - {C:attention}Evolution {C:item}Stone   ",
+                    "{C:green}30%{} - {C:money}$5{}               ",
+                    "{C:green}20%{} - {C:attention}2 Evolution {C:item}Stones",
+                    "{C:green}15%{} - {C:money}$10{}              ",
+                    "{C:green}4%{} - {C:money}$20{}             ",
+                    "{C:green}1%{} - {C:attention}Mega Stone     ",
+                }
+            },
             pickup = {
               name = "Pickup",
               text = {
@@ -5965,6 +6008,7 @@ return {
             --If it's not 100% accurate...
             poke_thunder_ex = "Thunder!",
             poke_gift_ex = "Present!",
+            poke_drill_ex = "Drill Run!",
             poke_faint_ex = "Fainted!",
             poke_reveal_ex = "Revealed!",
             poke_nido_ex = "Nido!",
