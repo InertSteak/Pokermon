@@ -445,7 +445,7 @@ local pawniard={
         end
         if face_cards > 0 then
             card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } } }
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult}}, colour = G.C.XMULT }
         end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -504,7 +504,7 @@ local bisharp={
         end
         if face_cards > 0 then
             card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } } }
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult}}, colour = G.C.XMULT }
         end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
