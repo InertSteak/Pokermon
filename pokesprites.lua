@@ -324,7 +324,7 @@ end
 --RBY sprites skins by GAME FREAK, arranged by Catzzadilla
 local RBYspades = SMODS.Atlas{
     key = 'RBY_Spades_atlas',
-    path = 'DeckskinRBYSpades.png',
+    path = 'DeckSkins/Gen01RBYSpades.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -332,7 +332,7 @@ local RBYspades = SMODS.Atlas{
 
 local RBYclubs = SMODS.Atlas{
     key = 'RBY_Clubs_atlas',
-    path = 'DeckskinRBYClubs.png',
+    path = 'DeckSkins/Gen01RBYClubs.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -340,7 +340,7 @@ local RBYclubs = SMODS.Atlas{
 
 local RBYhearts = SMODS.Atlas{
     key = 'RBY_Hearts_atlas',
-    path = 'DeckskinRBYHearts.png',
+    path = 'DeckSkins/Gen01RBYHearts.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -348,7 +348,7 @@ local RBYhearts = SMODS.Atlas{
 
 local RBYdiamonds = SMODS.Atlas{
     key = 'RBY_Diamonds_atlas',
-    path = 'DeckskinRBYDiamonds.png',
+    path = 'DeckSkins/Gen01RBYDiamonds.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -356,7 +356,7 @@ local RBYdiamonds = SMODS.Atlas{
 
 local RBYspadesHC = SMODS.Atlas{
     key = 'RBY_Spades_HC_atlas',
-    path = 'DeckskinRBYSpadesHC.png',
+    path = 'DeckSkins/Gen01RBYSpadesHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -364,7 +364,7 @@ local RBYspadesHC = SMODS.Atlas{
 
 local RBYclubsHC = SMODS.Atlas{
     key = 'RBY_Clubs_HC_atlas',
-    path = 'DeckskinRBYClubsHC.png',
+    path = 'DeckSkins/Gen01RBYClubsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -372,7 +372,7 @@ local RBYclubsHC = SMODS.Atlas{
 
 local RBYheartsHC = SMODS.Atlas{
     key = 'RBY_Hearts_HC_atlas',
-    path = 'DeckskinRBYHeartsHC.png',
+    path = 'DeckSkins/Gen01RBYHeartsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -380,7 +380,7 @@ local RBYheartsHC = SMODS.Atlas{
 
 local RBYdiamondsHC = SMODS.Atlas{
     key = 'RBY_Diamonds_HC_atlas',
-    path = 'DeckskinRBYDiamondsHC.png',
+    path = 'DeckSkins/Gen01RBYDiamondsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -490,7 +490,7 @@ SMODS.DeckSkin {
 
 local GSCmorning = SMODS.Atlas{
     key = 'GSC_morning_atlas',
-    path = 'DeckskinGSCSpadesMorning.png',
+    path = 'DeckSkins/Gen02GSCSpadesMorning.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -498,7 +498,7 @@ local GSCmorning = SMODS.Atlas{
 
 local GSCevening = SMODS.Atlas{
     key = 'GSC_evening_atlas',
-    path = 'DeckskinGSCSpadesEvening.png',
+    path = 'DeckSkins/Gen02GSCSpadesEvening.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -506,7 +506,7 @@ local GSCevening = SMODS.Atlas{
 
 local GSCclubs = SMODS.Atlas{
     key = 'GSC_clubs_atlas',
-    path = 'DeckskinGSCClubs.png',
+    path = 'DeckSkins/Gen02GSCClubs.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -514,7 +514,7 @@ local GSCclubs = SMODS.Atlas{
 
 local GSChearts = SMODS.Atlas{
     key = 'GSC_Hearts_atlas',
-    path = 'DeckskinGSCHearts.png',
+    path = 'DeckSkins/Gen02GSCHearts.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -522,7 +522,7 @@ local GSChearts = SMODS.Atlas{
 
 local GSCdiamonds = SMODS.Atlas{
     key = 'GSC_Diamonds_atlas',
-    path = 'DeckskinGSCDiamonds.png',
+    path = 'DeckSkins/Gen02GSCDiamonds.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -530,7 +530,7 @@ local GSCdiamonds = SMODS.Atlas{
 
 local GSCmorningHC = SMODS.Atlas{
     key = 'GSC_morning_HC_atlas',
-    path = 'DeckskinGSCSpadesMorningHC.png',
+    path = 'DeckSkins/Gen02GSCSpadesMorningHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -538,7 +538,7 @@ local GSCmorningHC = SMODS.Atlas{
 
 local GSCeveningHC = SMODS.Atlas{
     key = 'GSC_evening_HC_atlas',
-    path = 'DeckskinGSCSpadesEveningHC.png',
+    path = 'DeckSkins/Gen02GSCSpadesEveningHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -546,7 +546,7 @@ local GSCeveningHC = SMODS.Atlas{
 
 local GSCclubsHC = SMODS.Atlas{
     key = 'GSCClubs_HC_atlas',
-    path = 'DeckskinGSCClubsHC.png',
+    path = 'DeckSkins/Gen02GSCClubsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -554,7 +554,7 @@ local GSCclubsHC = SMODS.Atlas{
 
 local GSCheartsHC = SMODS.Atlas{
     key = 'GSC_Hearts_HC_atlas',
-    path = 'DeckskinGSCHeartsHC.png',
+    path = 'DeckSkins/Gen02GSCHeartsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
@@ -562,7 +562,7 @@ local GSCheartsHC = SMODS.Atlas{
 
 local GSCdiamondsHC = SMODS.Atlas{
     key = 'GSCDiamonds_HC_atlas',
-    path = 'DeckskinGSCDiamondsHC.png',
+    path = 'DeckSkins/Gen02GSCDiamondsHC.png',
     px = 71,
     py = 95,
     atlas_table = 'ASSET_ATLAS'
