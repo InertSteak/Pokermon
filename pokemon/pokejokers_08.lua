@@ -1518,7 +1518,10 @@ local smeargle={
       local right_joker = G.jokers.cards[found_pos]
       card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
     end
-  end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    card.ability.extra.copy_joker = nil
+  end,
 }
 -- Tyrogue 236
 local tyrogue={

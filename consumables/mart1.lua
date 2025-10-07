@@ -696,6 +696,10 @@ local megastone = {
     end
     return mega_poke
   end,
+  add_to_deck = function(self, card, from_debuff)
+    card.ability.extra.used_on = nil
+    card.ability.extra.usable = true
+  end,
   remove_from_deck = function(self, card, from_debuff)
     if card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then
       for k, v in ipairs(G.jokers.cards) do
