@@ -1880,7 +1880,7 @@ return {
                     "{C:attention}Volatile Right{}",
                     "{C:attention}Transforms{} into leftmost",
                     "Joker with {C:attention}Perishable{}",
-                    "and a {C:colorless}Colorless{} sticker",
+                    "and a {X:colorless,C:white}Colorless{} sticker",
                     "at end of shop",
                     "{C:inactive,s:0.8}(Excludes Dittos)",
                 } 
@@ -2978,7 +2978,7 @@ return {
                 name = "Miltank",
                 text = {
                   "Earn {C:money}$#1#{} for each", 
-                  "{C:colorless}Colorless{} Joker you have",
+                  "{X:colorless,C:white}Colorless{} Joker you have",
                   "at end of round",
                   "{C:inactive}(Currently {C:money}$#2#{C:inactive}){}"
                 }
@@ -4084,6 +4084,25 @@ return {
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
+            j_poke_ferroseed = {
+                name = "Ferroseed",
+                text = {
+                  "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
+                  "are also {C:attention}Steel{} cards",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_ferrothorn = {
+              name = "Ferrothorn",
+              text = {
+                "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
+                "are also {C:attention}Steel{} cards",
+                "{br:2}ERROR - CONTACT STEAK",
+                "If played hand contains",
+                "a {C:attention}Flush{}, retrigger all",
+                "{C:attention}Steel{} cards {C:attention}held{} in hand",
+              }
+            },
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {
@@ -4676,7 +4695,7 @@ return {
             j_poke_jelly_donut = {
                 name = "Jelly Donut",
                 text = {
-                  "Create a {C:colorless}Colorless {C:pink}Energy{}",
+                  "Create a {X:colorless,C:white}Colorless{C:pink} Energy",
                   "when blind is selected",
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }

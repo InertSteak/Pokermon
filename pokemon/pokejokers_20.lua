@@ -551,14 +551,6 @@ local ferroseed={
   name = "ferroseed",
   pos = {x = 5, y = 7},
   config = {extra = {rounds = 5}},
-  loc_txt = {
-    name = "Ferroseed",
-    text = {
-      "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
-      "are also {C:attention}Steel{} cards",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -591,17 +583,6 @@ local ferrothorn={
   name = "ferrothorn",
   pos = {x = 6, y = 7},
   config = {extra = {retriggers = 1}},
-  loc_txt = {
-    name = "Ferrothorn",
-    text = {
-      "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
-      "are also {C:attention}Steel{} cards",
-      "{br:2}ERROR - CONTACT STEAK",
-      "If played hand contains",
-      "a {C:attention}Flush{}, retrigger all",
-      "{C:attention}Steel{} cards {C:attention}held{} in hand",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
