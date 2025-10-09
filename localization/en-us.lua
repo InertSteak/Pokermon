@@ -2233,7 +2233,7 @@ return {
                 text = {
                   "{C:chips}+#1#{} Chips",
                   "{C:green}#2# in #3#{} for {C:chips}+#5#{} Chips instead",
-                  "{C:inactive,s:0.8}(Evolves after {C:attention}#4#{C:inactive} rounds)",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_ariados = {
