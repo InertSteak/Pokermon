@@ -3049,7 +3049,7 @@ return {
                 text = {
                   "If played hand is a {C:attention}Full House{}",
                   "upgrade its level, then played",
-                  "cards permanently gain Chips",
+                  "cards permanently gain {C:chips}Chips",
                   "equal to level of {C:attention}Full House{}"
                 }
             },
