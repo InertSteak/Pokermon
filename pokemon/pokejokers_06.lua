@@ -500,6 +500,9 @@ local sentret={
     end
     return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    card.ability.extra.last_hand = G.GAME.last_hand_played
+  end,
 }
 -- Furret 162
 local furret={
@@ -537,6 +540,9 @@ local furret={
         end
       end
     end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    card.ability.extra.last_hand = G.GAME.last_hand_played
   end,
 }
 -- Hoothoot 163
