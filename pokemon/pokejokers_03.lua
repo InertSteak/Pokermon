@@ -940,6 +940,7 @@ local shell={
     for k, v in pairs(G.jokers.cards) do
       if v.config.center_key == 'j_poke_slowpoke' and v.ability.extra.shell_used ~= 1 then
         v.ability.extra.shell_used = 1
+        play_sound('poke_shellchomp', 1, 0.5)
         break
       end
     end
