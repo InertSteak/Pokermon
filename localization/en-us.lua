@@ -591,6 +591,13 @@ return {
                     "be destroyed if {C:attention}held{} in",
                     "hand at end of round"
                 },
+            },
+            m_poke_flower = {
+                name = "Flower Card",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if poker",
+                    "hand contains {C:attention}4+ suits"
+                },
             }
         },
         Stake = {
@@ -3874,6 +3881,23 @@ return {
                   "hand at end of round",
                   "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
                 }
+            },
+            j_poke_shaymin = {
+              name = "Shaymin",
+              text = {
+                "The rightmost scoring card",
+                "of {C:attention}first hand{} of round",
+                "becomes a {C:attention}Flower{} card",
+                "{C:inactive,s:0.8}(Transforms after scoring {C:attention,s:0.8}#1#{C:inactive,s:0.8} Flower cards)"
+              }
+            },
+            j_poke_shaymin_sky = {
+              name = "Shaymin (Sky)",
+              text = {
+                "{C:attention}Flower{} cards are",
+                "also {C:attention}Wild{} cards",
+                "{C:inactive,s:0.8}(Transforms with a {C:attention,s:0.8}Death{C:inactive,s:0.8} card)"
+              }
             },
             j_poke_pansage = {
                 name = "Pansage",
