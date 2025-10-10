@@ -275,6 +275,10 @@ SMODS.Sound({
 	path = "energy_use.ogg",
 })
 
+SMODS.Sound({
+    key = "shellchomp",
+    path = "chomp.ogg",
+})
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)
