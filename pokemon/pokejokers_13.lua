@@ -105,7 +105,7 @@ local luvdisc={
   ptype = "Water",
   atlas = "Pokedex3",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
   end,
