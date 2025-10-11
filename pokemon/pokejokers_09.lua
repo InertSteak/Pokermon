@@ -567,7 +567,9 @@ local treecko={
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
-              card.ability.extra.money_earned = card.ability.extra.money_earned + earned
+              if not context.blueprint then
+                card.ability.extra.money_earned = card.ability.extra.money_earned + earned
+              end
               return {
                 dollars = earned,
                 card = card
@@ -625,7 +627,9 @@ local grovyle={
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
-              card.ability.extra.money_earned = card.ability.extra.money_earned + earned
+              if not context.blueprint then
+                card.ability.extra.money_earned = card.ability.extra.money_earned + earned
+              end
               return {
                 dollars = earned,
                 card = card
