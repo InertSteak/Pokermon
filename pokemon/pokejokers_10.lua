@@ -16,10 +16,10 @@
 local shroomish={
   name = "shroomish",
   pos = {x = 3, y = 3},
-  config = {extra = {hands = 1, d_size = 1, h_size = 1, boss_quest = 0, ante = 0}},
+  config = {extra = {hands = 1, d_size = 1, h_size = 1, boss_defeated = 0}, evo_rqmt = 2},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.hands, center.ability.extra.d_size, center.ability.extra.h_size, center.ability.extra.ante}}
+    return {vars = {center.ability.extra.hands, center.ability.extra.d_size, center.ability.extra.h_size, math.max(0, self.config.evo_rqmt - center.ability.extra.boss_defeated)}}
   end,
   rarity = 1,
   cost = 4,
@@ -47,16 +47,11 @@ local shroomish={
       end
       card:juice_up()
     end
-    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss and G.GAME.round_resets.ante >= card.ability.extra.ante then
-      card.ability.extra.boss_quest = card.ability.extra.boss_quest + 1
-      return scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_quest, 1)
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card.ability.extra.boss_defeated = card.ability.extra.boss_defeated + 1
     end
+    return scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_defeated, self.config.evo_rqmt)
   end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      card.ability.extra.ante = G.GAME.round_resets.ante + 1
-    end
-  end
 }
 -- Breloom 286
 local breloom={

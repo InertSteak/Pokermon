@@ -3226,7 +3226,7 @@ return {
                   "When {C:attention}Blind{} is selected, gain",
                   "{C:chips}+#1#{} hand, {C:mult}+#2#{} discard, or",
                   "{C:attention}+#3#{} hand size this round",
-                  "{C:inactive,s:0.8}(Evolves after defeating the {C:attention,s:0.8}Ante #4#{C:inactive,s:0.8} Boss Blind){}"
+                  "{C:inactive,s:0.8}(Evolves after defeating {C:attention,s:0.8}#4#{C:inactive,s:0.8} Boss Blinds){}"
                 }
             }, 
             j_poke_breloom = {
