@@ -100,9 +100,11 @@ local garbodor={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 then
-      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.discards_left)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+    if context.end_of_round and not context.individual and not context.repetition then
+      if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and not context.blueprint then
+        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.discards_left)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+      end
       if ((G.GAME.poke_ante_discards_used or 0) == 0) and G.GAME.blind.boss then
         G.E_MANAGER:add_event(Event({
           func = (function()
