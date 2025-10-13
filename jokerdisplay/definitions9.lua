@@ -83,8 +83,37 @@ end
 --	Naclstack
 --	Garganacl
 --	Charcadet
+jd_def["j_poke_charcadet"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", colour = G.C.MULT },
+  },
+}
+
 --	Armarouge
+jd_def["j_poke_armarouge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Ceruledge
+jd_def["j_poke_ceruledge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Tadbulb
 --	Bellibolt
 --	Wattrel

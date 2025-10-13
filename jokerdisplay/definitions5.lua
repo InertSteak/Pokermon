@@ -110,6 +110,17 @@ jd_def["j_poke_gigalith"] = {
 --	Swoobat
 --	Drilbur
 --	Excadrill
+jd_def["j_poke_excadrill"] = {
+  text = {
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    card.joker_display_values.mult = math.max(0, card.ability.extra.mult_mod * (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0))
+  end
+}
+
 --	Audino
 --	Timburr
 --	Gurdurr

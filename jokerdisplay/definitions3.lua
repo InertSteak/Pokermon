@@ -646,6 +646,17 @@ jd_def["j_poke_milotic"] = {
 --	Tropius
 --	Chimecho
 --	Absol
+jd_def["j_poke_absol"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+}
+
 --	Wynaut
 jd_def["j_poke_wynaut"] = {
     text = {
