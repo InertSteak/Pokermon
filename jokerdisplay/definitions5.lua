@@ -470,7 +470,29 @@ jd_def["j_poke_golurk"] = {
 }
 
 --	Pawniard
+jd_def["j_poke_pawniard"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bisharp
+jd_def["j_poke_bisharp"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Bouffalant
 --	Rufflet
 --	Braviary
