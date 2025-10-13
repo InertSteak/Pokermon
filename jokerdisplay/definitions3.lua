@@ -642,7 +642,72 @@ jd_def["j_poke_milotic"] = {
 --	Shuppet
 --	Banette
 --	Duskull
+jd_def["j_poke_duskull"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.active = G.GAME and G.GAME.current_round.hands_left <= 1 and localize("jdis_active") or localize("jdis_inactive")
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    local second_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[2]
+    local third_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[3]
+    local fourth_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[4]
+    if G.GAME.current_round.hands_left <= 1 then
+      return first_card and playing_card == first_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      second_card and playing_card == second_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      third_card and playing_card == third_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      fourth_card and playing_card == fourth_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    else
+      return 0
+    end
+  end
+}
+
 --	Dusclops
+jd_def["j_poke_dusclops"] = {
+  text = {
+    { text = "+", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local hand = JokerDisplay.current_hand
+    local _, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if scoring_hand and #scoring_hand > 0 and G.GAME.current_round.hands_left <= 1 then
+      count = #hand - #scoring_hand
+      if count == 1 then count = 1 else count = 0
+      end
+    end
+    card.joker_display_values.active = G.GAME and G.GAME.current_round.hands_left <= 1 and localize("jdis_active") or localize("jdis_inactive")
+    card.joker_display_values.count = count
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    local second_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[2]
+    local third_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[3]
+    local fourth_card = scoring_hand and JokerDisplay.sort_cards(scoring_hand)[4]
+    if G.GAME.current_round.hands_left <= 1 then
+      return first_card and playing_card == first_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      second_card and playing_card == second_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      third_card and playing_card == third_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0 and
+      fourth_card and playing_card == fourth_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    else
+      return 0
+    end
+  end
+}
+
 --	Tropius
 --	Chimecho
 --	Absol
