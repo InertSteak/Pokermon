@@ -16,7 +16,73 @@ local jd_def = JokerDisplay.Definitions
 --	Bidoof
 --	Bibarel
 --	Kricketot
+jd_def["j_poke_kricketot"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  calc_function = function(card)
+    local money = 0
+    local suits = 0
+    local hand = JokerDisplay.current_hand
+    if #hand == 4 then
+      for k, v in pairs(SMODS.Suits) do
+        for x, y in pairs(hand) do
+          if y:is_suit(v.key) then
+            suits = suits + 1
+            break
+          end
+        end
+      end
+      if suits >= 4 then
+        money = card.ability.extra.money
+      end
+    end
+    card.joker_display_values.money = money
+  end,
+}
+
 --	Kricketune
+jd_def["j_poke_kricketune"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD },
+    { text = " +", colour = G.C.SECONDARY_SET.Tarot },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Tarot },
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'kricketune')
+    local money = 0
+    local count = 0
+    local suits = 0
+    local hand = JokerDisplay.current_hand
+    if #hand == 4 then
+      for k, v in pairs(SMODS.Suits) do
+        for x, y in pairs(hand) do
+          if y:is_suit(v.key) then
+            suits = suits + 1
+            break
+          end
+        end
+      end
+      if suits >= 4 then
+        money = card.ability.extra.money
+        count = 1
+      end
+    end
+    card.joker_display_values.money = money
+    card.joker_display_values.count = count
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem }}
+  end,
+}
+
 --	Shinx
 --	Luxio
 --	Luxray
