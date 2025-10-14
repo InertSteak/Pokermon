@@ -251,9 +251,9 @@ jd_def["j_poke_mismagius"] = {
   text_config = { colour = G.C.CHIPS },
   extra = {
     {
-      { text = "(" },
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
       { ref_table = "card.joker_display_values", ref_value = "odds",colour = G.C.GREEN, scale = 0.3 },
-      { text = ")" },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
     },
   },
   calc_function = function(card)
