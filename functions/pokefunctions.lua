@@ -710,7 +710,7 @@ get_previous_evo = function(card, full_key)
     end
     if found then break end
   end
-  if full_key then
+  if full_key and prev then
     prev = "j_"..prefix.."_"..prev
   end
   return prev
