@@ -687,11 +687,11 @@ get_previous_evo = function(card, full_key)
           end
         end
         -- Hardcode the branching legendaries because HATRED and RAGE
-        if cur_name == "Lunala" or cur_name == "Solgaleo" then
-          prev = "Cosmoem"
+        if cur_name == "lunala" or cur_name == "solgaleo" then
+          prev = "cosmoem"
           break
-        elseif cur_name == "Urshifu_Single_Strike" or cur_name == "Urshifu_Rapid_Strike" then
-          prev = "Kubfu"
+        elseif cur_name == "urshifu_single_strike" or cur_name == "urshifu_rapid_strike" then
+          prev = "kubfu"
           break
         end
         -- Count backwards and skip the aux_poke jokers
