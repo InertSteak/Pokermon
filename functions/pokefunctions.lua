@@ -649,10 +649,12 @@ end
 
 get_previous_from_mega = function(name, prefix, full_key)
   local prev = string.sub(name,6,-1)
+  if string.sub(prev, #prev-1, -1) == "_x" or string.sub(prev, #prev-1, -1) == "_y" then prev = string.sub(prev, 0, #prev - 2) end
   if full_key then
-    prev = "j_"..prefix.."_"..prev 
+    prev = "j_"..prefix.."_"..prev
+    return G.P_CENTERS[prev] and prev or nil
   end
-  return G.P_CENTERS[prev] and prev or nil
+  return G.P_CENTERS["j_"..prefix.."_"..prev] and prev or nil
 end
 
 get_previous_evo = function(card, full_key)
@@ -660,13 +662,7 @@ get_previous_evo = function(card, full_key)
   local found = nil
   local prev = nil
   local max = nil
-  local choice = nil
   local mega = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
   local prefix = card.config.center.poke_custom_prefix or "poke"
   if not card.name and card.ability.name then
     name = card.ability.name
@@ -680,17 +676,32 @@ get_previous_evo = function(card, full_key)
       local cur_name = (type(y) == "table" and y.key) or y
       if cur_name == name then
         found = true
-        max = #v
-        local max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
-
-        if x > 1 then
-          while max > 0 and string.sub(max_evo_name,1,5) == "mega_" or max_evo_name == "slowking" do
-            max = max - 1
-            if max > 0 then
-              max_evo_name = (type(v[max]) == "table" and v[max].key) or v[max]
-            end
+        local stages = {"Baby", "Basic", "One", "Two", "Legendary", "Mega"}
+        local cur_stage
+        local prev_stage
+        if card.config.center.stage then cur_stage = card.config.center.stage end
+        for i = 1, #stages do
+          if cur_stage and cur_stage == stages[i] and i ~= 1 then
+            if cur_stage == "Legendary" then prev_stage = "Legendary"
+            else prev_stage = stages[i-1] end
           end
-          prev = max_evo_name
+        end
+        -- Hardcode the branching legendaries because HATRED and RAGE
+        if cur_name == "Lunala" or cur_name == "Solgaleo" then
+          prev = "Cosmoem"
+          break
+        elseif cur_name == "Urshifu_Single_Strike" or cur_name == "Urshifu_Rapid_Strike" then
+          prev = "Kubfu"
+          break
+        end
+        -- Count backwards and skip the aux_poke jokers
+        while x > 1 do
+          x = x - 1
+          local prev_name = (type(v[x]) == "table" and v[x].key) or v[x]
+          if G.P_CENTERS['j_'..prefix..'_'..prev_name]['stage'] == prev_stage and not G.P_CENTERS['j_'..prefix..'_'..prev_name]['aux_poke'] == true then
+            prev = prev_name
+            break
+          end
         end
         break
       end
@@ -698,7 +709,7 @@ get_previous_evo = function(card, full_key)
     if found then break end
   end
   if full_key then
-    prev = "j_"..prefix.."_"..prev 
+    prev = "j_"..prefix.."_"..prev
   end
   return prev
 end
