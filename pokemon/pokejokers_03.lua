@@ -1254,11 +1254,8 @@ local grimer={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local _card = create_playing_card({
-        front = pseudorandom_element(G.P_CARDS, pseudoseed('grimer')), 
-        center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE
-      })
-      playing_card_joker_effects({_card})
+      local added_card = SMODS.add_card{set = 'Base', no_edition = true}
+      playing_card_joker_effects({added_card})
       card:juice_up()
     end
     return level_evo(self, card, context, "j_poke_muk")
@@ -1295,10 +1292,7 @@ local muk={
     if context.end_of_round and not context.individual and not context.repetition then
       local cards = {}
       for i = 1, 2 do
-        cards[i] = create_playing_card({
-          front = pseudorandom_element(G.P_CARDS, pseudoseed('muk')), 
-          center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE
-        })
+        cards[i] = SMODS.add_card{set = 'Base', no_edition = true}
       end
       playing_card_joker_effects(cards);
       local target = pseudorandom_element(G.playing_cards, pseudoseed('muk'))

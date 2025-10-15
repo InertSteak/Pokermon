@@ -1060,7 +1060,8 @@ local spearow={
   config = {extra = {rounds = 4, card_threshold = 20, cards_scored = 0, upgrade = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.rounds, center.ability.extra.card_threshold, center.ability.extra.cards_scored, center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
+    return {vars = {center.ability.extra.rounds, center.ability.extra.card_threshold, math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_scored), 
+                    center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -1103,7 +1104,8 @@ local fearow={
   config = {extra = {card_threshold = 15, cards_scored = 0, upgrade = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.card_threshold, center.ability.extra.cards_scored, center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
+    return {vars = {center.ability.extra.card_threshold, math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_scored), 
+                    center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = 2, 
   cost = 5, 
