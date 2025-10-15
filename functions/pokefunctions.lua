@@ -703,6 +703,8 @@ get_previous_evo = function(card, full_key)
             break
           end
         end
+        -- Getting here means there's no previous evo or the stage variable is set wrong
+        if prev == nil then return end
         break
       end
     end
