@@ -384,7 +384,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_, Kek",
+                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_, Kek, Eternalnacho",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE
