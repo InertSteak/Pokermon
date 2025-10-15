@@ -565,3 +565,30 @@ function poke_is_odd(card)
     return false
   end
 end
+
+function poke_suit_check(hand, num)
+  local suits = {}
+  local suit_count = 0
+  
+  for k, v in pairs(hand) do
+    for x, y in pairs(SMODS.Suits) do
+      if not SMODS.has_any_suit(v) and v:is_suit(y.key) and not suits[y.key] then
+        suits[y.key] = true
+        suit_count = suit_count + 1
+        break
+      end
+    end
+  end
+  
+  for k, v in pairs(hand) do
+    for x, y in pairs(SMODS.Suits) do
+      if SMODS.has_any_suit(v) and v:is_suit(y.key) and not suits[y.key] then
+        suits[y.key] = true
+        suit_count = suit_count + 1
+        break
+      end
+    end
+  end
+  
+  return suit_count >= num
+end

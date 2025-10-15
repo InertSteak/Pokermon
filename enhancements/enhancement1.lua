@@ -36,18 +36,7 @@ local flower = {
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play then
-        local suits = 0
-        
-        for k, v in pairs(SMODS.Suits) do
-          for x, y in pairs(context.scoring_hand) do
-            if y:is_suit(v.key) then
-              suits = suits + 1
-              break
-            end
-          end
-        end
-        
-        if suits >= 4 then
+        if poke_suit_check(context.scoring_hand, 4) then
           return
           {
             x_mult = card.ability.extra.Xmult
