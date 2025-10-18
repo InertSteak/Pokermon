@@ -216,6 +216,13 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "placeholder_sleeve",
+    path = "placeholder_sleeve.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "placeholder_joker",
     path = "placeholder_joker.png",
     px = 71,

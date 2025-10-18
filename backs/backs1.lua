@@ -49,7 +49,7 @@ local luminousdeck = {
 local obituarydeck = {
 	name = "obituarydeck",
 	key = "obituarydeck",  
-	order = 21,
+	order = 25,
   unlocked = true,
   discovered = true,
 	config = {},
@@ -66,7 +66,7 @@ local obituarydeck = {
 local revenantdeck = {
 	name = "revenanteck",
 	key = "revenantdeck",  
-	order = 22,
+	order = 26,
   unlocked = true,
   discovered = true,
 	config = {},
@@ -108,7 +108,99 @@ local ampeddeck = {
 	atlas = "AtlasDecksBasic",
 } 
 
-local dList = {luminousdeck, telekineticdeck, ampeddeck}
+local futuredeck = {
+	name = "futuredeck",
+	key = "futuredeck",  
+	order = 21,
+  unlocked = true,
+  discovered = true,
+	config = {scry = 4},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {self.config.scry}}
+  end,
+	pos = { x = 6, y = 0 },
+	atlas = "AtlasDecksBasic",
+  apply = function(self)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+  end
+}
+
+local stadiumdeck = {
+	name = "stadiumdeck",
+	key = "stadiumdeck",  
+	order = 22,
+  unlocked = true,
+  discovered = true,
+	config = {},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {}}
+  end,
+	pos = { x = 0, y = 0 },
+	atlas = "placeholder_deck",
+  apply = function(self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
+        for i = 1, #enhancements do
+          local added_card = SMODS.add_card{set = 'Base', area = G.deck, no_edition = true, enhancement = enhancements[i], skip_materialize = true}
+        end
+        G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
+        return true
+      end
+    }))
+  end
+}
+
+local megadeck = {
+	name = "megadeck",
+	key = "megadeck",  
+	order = 23,
+  unlocked = true,
+  discovered = true,
+	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut"}, consumables = {'c_poke_megastone'}, shop_size = 1},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
+                    self.config.shop_size}}
+  end,
+	pos = { x = 0, y = 0 },
+	atlas = "placeholder_deck",
+  apply = function(self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+          change_shop_size(-self.config.shop_size)
+          return true
+      end
+    }))
+  end,
+} 
+--Vending Sleeve
+local vendingdeck = {
+	name = "vendingdeck",
+	key = "vendingdeck",  
+	order = 24,
+  unlocked = true,
+  discovered = true,
+	config = {},
+  loc_vars = function(self, info_queue, center)
+    return { vars = { localize { type = 'name_text', key = 'tag_voucher', set = 'Tag' } } }
+  end,
+	pos = { x = 7, y = 0 },
+	atlas = "AtlasDecksBasic",
+    calculate = function(self, back, context)
+      if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  add_tag(Tag('tag_voucher'))
+                  play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                  play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                  return true
+              end
+          }))
+      end
+    end,
+}
+
+local dList = {luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck}
 
 if pokermon_config.pokeballs then
   table.insert(dList, 1, pokemondeck)

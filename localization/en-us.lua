@@ -77,6 +77,38 @@ return {
                     "{C:pink,T:c_poke_double_rainbow_energy}#2#"
                 } 
             },
+            b_poke_futuredeck = {
+                name = "Future Deck",
+                text = {
+                    "{C:purple}+#1# Foresight{}",
+                } 
+            },
+            b_poke_stadiumdeck = {
+                name = "Stadium Deck",
+                text = {
+                    "Start the run with",
+                    "an additional {C:attention}Bonus, Mult,",
+                    "{C:attention}Wild, Glass, Steel, Stone,",
+                    "{C:attention}Gold{}, and {C:attention}Lucky{} card"
+                } 
+            },
+            b_poke_megadeck = {
+                name = "Mega Deck",
+                text = {
+                    "Start the run with the",
+                    "{C:tarot,T:v_reroll_surplus}#2#{} and {C:tarot,T:v_reroll_glut}#3#{} vouchers",
+                    "and a {C:spectral,T:c_poke_megastone}#1#{} card",
+                    "{C:red}-#4#{} shop slot"
+                } 
+            },
+            b_poke_vendingdeck = {
+                name = "Vending Deck",
+                text = {
+                    "After defeating each",
+                    "{C:attention}Odd Boss Blind{}, gain a",
+                    "{C:attention,T:tag_vremade_double}#1#",
+                } 
+            },
         },
         Blind = {
             bl_poke_cgoose = {
@@ -1463,7 +1495,7 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult per card over {C:attention}#2#{} in your deck",
                     "{br:4}ERROR - CONTACT STEAK",
-                    "At end of round, remove {C:attention}1{} random card",
+                    "At end of round, destroy {C:attention}1{} random card",
                     "from deck then add {C:attention}2{} random cards",
                     "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult){}"
                 } 
@@ -4872,6 +4904,38 @@ return {
                     "{C:pink,T:c_poke_double_rainbow_energy}#2#"
                 } 
             },
+            sleeve_poke_futuresleeve = {
+                name = "Future Sleeve",
+                text = {
+                    "{C:purple}+#1# Foresight{}",
+                } 
+            },
+            sleeve_poke_stadiumsleeve = {
+                name = "Stadium Sleeve",
+                text = {
+                    "Start the run with",
+                    "an additional {C:attention}Bonus, Mult,",
+                    "{C:attention}Wild, Glass, Steel, Stone,",
+                    "{C:attention}Gold{}, and {C:attention}Lucky{} card"
+                } 
+            },
+            sleeve_poke_megasleeve = {
+                name = "Mega Sleeve",
+                text = {
+                    "Start the run with the",
+                    "{C:tarot,T:v_reroll_surplus}#2#{} and {C:tarot,T:v_reroll_glut}#3#{} vouchers",
+                    "and a {C:spectral,T:c_poke_megastone}#1#{} card",
+                    "{C:red}-#4#{} shop slot"
+                } 
+            },
+            sleeve_poke_vendingsleeve = {
+                name = "Vending Sleeve",
+                text = {
+                    "After defeating each",
+                    "{C:attention}Odd Boss Blind{}, gain a",
+                    "{C:attention,T:tag_vremade_double}#1#",
+                } 
+            },
         },
         Spectral = {
             c_poke_ultraball = {
@@ -6013,6 +6077,7 @@ return {
             silverseal_variable = "Silver Seal",
             twisted_spoon_variable = "Twisted Spoon",
             double_rainbow_energy_variable = "Double Rainbow Energy",
+            megastone_variable = "Mega Stone",
 
             --From Gastly Line
             poke_lick_ex = "Lick!",
