@@ -31,7 +31,7 @@ pokermon.family = {
     {"tentacool","tentacruel"},
     {"geodude","graveler","golem"},
     {"ponyta","rapidash"},
-    {"slowpoke", "slowbro", "slowking", "mega_slowbro"},
+    {"slowpoke", "slowbro", "slowking", "shell", "mega_slowbro"},
     {"magnemite","magneton", "magnezone"},
     {"doduo","dodrio"},
     {"seel","dewgong"},
@@ -170,7 +170,6 @@ pokermon.family = {
 }
 
 extended_family = {
-  slowpoke = {"shell"},
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
   luvdisc = {{item = true, name = "heartscale"}},

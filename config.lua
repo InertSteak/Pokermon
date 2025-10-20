@@ -23,6 +23,7 @@ return {
   ["hazards_on"]=true,
   ["pokemon_discovery"]=true,
   ["pokemon_altart"]=true,
+  ["previous_evo_stickers"]=true,
   ["poke_enable_animations"]=true,
   ["pokemon_aprilfools"]=false,
   ["pokemon_legacy"]=false,
