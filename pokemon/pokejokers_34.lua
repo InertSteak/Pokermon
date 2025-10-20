@@ -96,6 +96,7 @@ local gimmighoulr={
   atlas = "Pokedex9",
   gen = 9,
   aux_poke = true,
+  auto_sticker = true,
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = false,

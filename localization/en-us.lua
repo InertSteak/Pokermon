@@ -5672,6 +5672,14 @@ return {
                 "tooltips from Pokemon Jokers",
               }
             },
+			previous_evo_stickers_tooltip = {
+              name = "Previous Evo Stickers",
+              text = {
+                "Previous evolutions of",
+                "winning Jokers also",
+                "win the current run",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {
@@ -6008,6 +6016,7 @@ return {
             poke_settings_unlimited_energy = "Unlmited Energy?",
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",
             poke_settings_pokemon_detailed_tooltips = "Detailed Tooltips?",
+			poke_settings_previous_evo_stickers = "Previous Evo Stickers?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",
             poke_settings_pokeballs = "Allow Pokéballs?",

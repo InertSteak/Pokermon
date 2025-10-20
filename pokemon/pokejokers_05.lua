@@ -386,6 +386,7 @@ local taurosh={
   atlas = "Pokedex1",
   gen = 1,
   aux_poke = true,
+  auto_sticker = true,
   blueprint_compat = true, 
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then

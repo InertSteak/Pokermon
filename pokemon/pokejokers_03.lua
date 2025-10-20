@@ -933,6 +933,7 @@ local shell={
   atlas = "Pokedex1",
   gen = 1,
   aux_poke = true,
+  auto_sticker = true,
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = false,

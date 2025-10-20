@@ -300,6 +300,7 @@ local weird_tree={
   blueprint_compat = false,
   eternal_compat = true,
   aux_poke = true,
+  auto_sticker = true,
   no_collection = true,
   custom_pool_func = true,
   calculate = function(self, card, context)

@@ -193,6 +193,7 @@ local dreepy_dart={
   atlas = "Pokedex8",
   gen = 8,
   aux_poke = true,
+  auto_sticker = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
