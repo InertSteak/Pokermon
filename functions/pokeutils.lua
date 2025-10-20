@@ -606,12 +606,12 @@ set_joker_family_win = function(card)
           --Excludes higher evolutions
           if index and k > index and (G.P_CENTERS[v]['stage'] ~= card.config.center.stage or G.P_CENTERS[v]['stage'] == "Legendary") and G.P_CENTERS[v]['auto_sticker'] ~= true then break end 
           -- This if statement makes me go cross-eyed so I'm sorry about that
-          if G.P_CENTERS[v]['set'] == 'Joker' and not (G.P_CENTERS[v]['stage'] == card.config.center.stage) and not -- Excludes the same stage mons in an evo line
+          if G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and not (G.P_CENTERS[v]['stage'] == card.config.center.stage) and not -- Excludes the same stage mons in an evo line
               ((card.config.center.stage == "One" or card.config.center.stage == "Two" or card.config.center.stage == "Mega") and
                   (G.P_CENTERS[v]['stage'] == G.P_CENTERS[get_previous_evo(card, true)]['stage']) and v ~= get_previous_evo(card, true)) or -- Checks for branching evos in previous stages
               (card.config.center.stage == "Legendary" and get_previous_evo(card, true) and (G.P_CENTERS[v]['stage'] == G.P_CENTERS[get_previous_evo(card, true)]['stage'])) or -- (i.e Meltan or Cosmog or Terapagos)
-              (G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['aux_poke'] == true and G.P_CENTERS[v]['stage'] == card.config.center.stage) or -- Checks for forms (which have the same stage i.e. Jirachi, Rotom)
-              (G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['auto_sticker'] == true) then 
+              (G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['aux_poke'] == true and G.P_CENTERS[v]['stage'] == card.config.center.stage) or -- Checks for forms (which have the same stage i.e. Jirachi, Rotom)
+              (G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['auto_sticker'] == true) then 
 
             -- This is the bit that tracks joker wins
             G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v] or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
