@@ -886,6 +886,7 @@ local mega_slowbro={
   soul_pos = { x = 0, y = 1},
   config = {extra = {Xmult_mod = 0.5, Xmult = 1, hands_played = 0}},
   loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
     local xmult_total = center.ability.extra.Xmult
     xmult_total = xmult_total + center.ability.extra.hands_played * center.ability.extra.Xmult_mod
     return {vars = {center.ability.extra.Xmult_mod, xmult_total}}

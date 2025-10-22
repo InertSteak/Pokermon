@@ -4304,6 +4304,90 @@ return {
                     "or {C:dark_edition}Polychrome{} to it",
                 } 
             },
+            j_poke_pumpkaboo_small = {
+                name = 'Pumpkaboo (Small)',
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_average = {
+                name = 'Pumpkaboo (Average)',
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_large = {
+                name = 'Pumpkaboo (Large)',
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_super = {
+                name = 'Pumpkaboo (Super)',
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_gourgeist_small = {
+                name = "Gourgeist (Small)",
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Earn {C:money}$#3#{} when a {C:spectral}Spectral{} card",
+                  "is used and apply a {X:psychic,C:white}Psychic{}",
+                  "sticker to {C:attention}leftmost{} Joker"
+                }
+            },
+            j_poke_gourgeist_average = {
+                name = "Gourgeist (Average)",
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Earn {C:money}$#3#{} when a {C:spectral}Spectral{} card",
+                  "is used and apply a {X:psychic,C:white}Psychic{}",
+                  "sticker to {C:attention}leftmost{} Joker"
+                }
+            },
+            j_poke_gourgeist_large = {
+                name = "Gourgeist (Large)",
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Earn {C:money}$#3#{} when a {C:spectral}Spectral{} card",
+                  "is used and apply a {X:psychic,C:white}Psychic{}",
+                  "sticker to {C:attention}leftmost{} Joker"
+                }
+            },
+            j_poke_gourgeist_super = {
+                name = "Gourgeist (Super)",
+                text = {
+                  "After discarding {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jacks,",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Earn {C:money}$#3#{} when a {C:spectral}Spectral{} card",
+                  "is used and apply a {X:psychic,C:white}Psychic{}",
+                  "sticker to {C:attention}leftmost{} Joker"
+                }
+            },
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
@@ -6095,6 +6179,7 @@ return {
             poke_surf_ex = "Surf!",
             --From Voltorb Line
             poke_explosion_ex = "BOOM!",
+            poke_boo_ex = "BOO!",
             --From Exeggutor
             poke_solar_ex = "Solar!",
             poke_solar = "Solar",

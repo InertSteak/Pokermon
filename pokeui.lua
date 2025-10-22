@@ -810,6 +810,7 @@ G.FUNCS.your_collection_pokemon_page = function(args)
         if type(akeys[j]) == "table" then
           card.ability.extra.form = akeys[j].form
           G.P_CENTERS[key]:set_sprites(card)
+          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
         end
         G.your_collection[i]:emplace(card)
     end
@@ -844,6 +845,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
         if type(keys[j]) == "table" then
           card.ability.extra.form = keys[j].form
           G.P_CENTERS[key]:set_sprites(card)
+          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
         end
         G.your_collection[i]:emplace(card)
       end
@@ -870,6 +872,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
         if type(keys[j]) == "table" and G.P_CENTERS[key].set_sprites then
           card.ability.extra.form = keys[j].form
           G.P_CENTERS[key]:set_sprites(card)
+          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
         end
         G.your_collection[i]:emplace(card)
       end
@@ -893,6 +896,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
       if type(keys[i]) == "table" then
         card.ability.extra.form = keys[i].form
         G.P_CENTERS[key]:set_sprites(card)
+        if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
       end
       G.your_collection[1]:emplace(card)
     end

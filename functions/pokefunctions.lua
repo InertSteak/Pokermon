@@ -145,6 +145,9 @@ pokermon.family = {
     {"zorua", "zoroark"},
     {"deino", "zweilous", "hydreigon"},
     {"litleo", "pyroar"},
+    {{key = "pumpkaboo", form = 0}, {key = "pumpkaboo", form = 1}, {key = "pumpkaboo", form = 2}, {key = "pumpkaboo", form = 3},
+     {key = "gourgeist", form = 0}, {key = "gourgeist", form = 1}, {key = "gourgeist", form = 2}, {key = "gourgeist", form = 3},
+    },
     {"grubbin", "charjabug", "vikavolt"},
     {"rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk"},
     {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
@@ -354,7 +357,7 @@ poke_backend_evolve = function(card, to_key)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "form", "jack_target", "jacks_discarded"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -364,7 +367,7 @@ poke_backend_evolve = function(card, to_key)
       values_to_keep[k] = card.ability.extra[k]
     end
   end
-
+  
   -- value filtering
   if values_to_keep.hazards_drawn then
     values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
@@ -394,10 +397,22 @@ poke_backend_evolve = function(card, to_key)
   if type(card.ability.extra) == "table" then
     for k,v in pairs(values_to_keep) do
       if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" then
-        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) then
+        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" or k == "jack_target" then
           card.ability.extra[k] = v
         end
       end
+    end
+    if to_key == 'j_poke_gourgeist' then
+      if card.ability.extra.form == 0 then
+        card.ability.extra.money = 2
+      elseif card.ability.extra.form == 1 then
+        card.ability.extra.money = 5
+      elseif card.ability.extra.form == 2 then
+        card.ability.extra.money = 8
+      elseif card.ability.extra.form == 3 then
+        card.ability.extra.money = 11
+      end
+      new_card:set_ability(card)
     end
     if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
       energize(card, nil, true, true)
