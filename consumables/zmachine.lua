@@ -23,6 +23,7 @@ local function is_rotom(key)
 end
 
 local function machine_transform(self, card, area, copier, machine)
+  set_spoon_item(card)
   if not machine then machine = 'oven' end
   local machine_dict = {oven = 'j_poke_rotomh', washing_machine = 'j_poke_rotomw', fridge = 'j_poke_rotomf', fan = 'j_poke_rotomfan', lawn_mower = 'j_poke_rotomm'}
   if G.jokers.highlighted and #G.jokers.highlighted == 1 then
