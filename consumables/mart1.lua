@@ -495,6 +495,9 @@ local double_rainbow_energy = {
   name = "double_rainbow_energy",
   key = "double_rainbow_energy",
   set = "Spectral",
+  artist = poke_get_artist_info("MyDude_YT").display_name,
+  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
   config = {},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -600,6 +603,9 @@ local megastone = {
   name = "megastone",
   key = "megastone",
   set = "Spectral",
+  artist = poke_get_artist_info("MyDude_YT").display_name,
+  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
   helditem = true,
   config = {extra = {usable = true, used_on = nil}},
   loc_vars = function(self, info_queue, center)

@@ -205,6 +205,9 @@ local hardstone = {
   name = "hardstone",
   key = "hardstone",
   set = "Item",
+  artist = poke_get_artist_info("Sonfive").display_name,
+  artist_colours = {poke_get_artist_info("Sonfive").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("Sonfive").highlight_colour,
   config = {max_highlighted = 1, max_chips = 10},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone

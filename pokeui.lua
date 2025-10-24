@@ -520,7 +520,7 @@ SMODS.current_mod.extra_tabs = function()
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Marie|Tsunami, CBMX, ...and you!",
+                  text = "Marie|Tsunami, CBMX, 64x64 Pokémon Sprite Resource...and you!",
                   shadow = true,
                   scale = scale * 0.8,
                   colour = G.C.BLUE

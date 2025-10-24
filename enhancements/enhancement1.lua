@@ -2,6 +2,9 @@
 
 local hazard = {
    key = "hazard",
+   artist = poke_get_artist_info("PrincessRoxie").display_name,
+   artist_colours = {poke_get_artist_info("PrincessRoxie").artist_colour}, 
+   artist_highlight_colours = poke_get_artist_info("PrincessRoxie").highlight_colour,
    atlas = "AtlasEnhancementsBasic",
    pos = { x = 0, y = 0 },
    config = {num = 1, dem = 6},
@@ -27,6 +30,9 @@ local hazard = {
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
+   artist = poke_get_artist_info("Catzzadilla").display_name,
+   artist_colours = {poke_get_artist_info("Catzzadilla").artist_colour}, 
+   artist_highlight_colours = poke_get_artist_info("Catzzadilla").highlight_colour,
    pos = { x = 6, y = 0 },
    config = {extra = {Xmult = 3}},
    loc_vars = function(self, info_queue, center)
