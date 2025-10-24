@@ -197,6 +197,9 @@ local jelly_donut={
 local treasure_eatery={
   name = "treasure_eatery",
   pos = {x = 6, y = 1},
+  artist = poke_get_artist_info("PrincessRoxie").display_name,
+  artist_colours = {poke_get_artist_info("PrincessRoxie").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("PrincessRoxie").highlight_colour,
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -404,10 +407,12 @@ local mystery_egg = {
     --desc_nodes[#desc_nodes+1] = main_start
   end,--]]
 }
-
 local rival = {
   name = "rival",
   pos = {x = 3, y = 1},
+  artist = poke_get_artist_info("MyDude_YT").display_name,
+  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
   config = {extra = {mult = 10, Xmult = 3, form = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
@@ -490,9 +495,11 @@ local rival = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    G.GAME.rival_losses = G.GAME.rival_losses or 0
-    card.ability.extra.form = G.GAME.rival_losses
-    self:set_sprites(card)
+    if initial then
+      G.GAME.rival_losses = G.GAME.rival_losses or 0
+      card.ability.extra.form = G.GAME.rival_losses
+      self:set_sprites(card)
+    end
   end,
   set_sprites = function(self, card, front)
     if card.ability and card.ability.extra and card.ability.extra.form and card.ability.extra.form > 1 then
@@ -508,6 +515,9 @@ local rival = {
 local ruins_of_alph={
   name = "ruins_of_alph",
   pos = {x = 1, y = 2},
+  artist = poke_get_artist_info("MyDude_YT").display_name,
+  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
   config = {extra = {mult = 0, mult_mod = 2, merged = 0, forms = {}, quest1 = 5, quest2 = 10, quest3 = 20, quest4 = 28}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)

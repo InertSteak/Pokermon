@@ -1204,3 +1204,9 @@ poke_load_atlas = function(item)
     end
   end
 end
+
+poke_get_artist_info = function(name)
+  if poke_artist_info[name] then
+    return poke_artist_info[name]
+  end
+end
