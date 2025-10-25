@@ -1534,21 +1534,26 @@ local mewtwo={
         local chosen_joker = G.jokers.cards[1]
         
         if (#G.jokers.cards - 1 < G.jokers.config.card_limit and not leftmost.ability.eternal) or (#G.jokers.cards < G.jokers.config.card_limit and leftmost.ability.eternal) then
-          local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
-          local edition = {polychrome = true}
-          _card:set_edition(edition, true)
-          _card.ability.card_limit = 0
-          if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
-            energy_increase(_card, _card.ability.extra.ptype)
-          elseif type_sticker_applied(_card) then
-            energy_increase(_card, type_sticker_applied(_card))
-          end
-          _card:add_to_deck()
-          G.jokers:emplace(_card)
-          if _card.debuff then 
-            _card.debuff = false 
-            if _card.ability.perishable then _card.ability.perish_tally = G.GAME.perishable_rounds end
-          end
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
+              local edition = {polychrome = true}
+              _card:set_edition(edition, true)
+              _card.ability.card_limit = 0
+              if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
+                energy_increase(_card, _card.ability.extra.ptype)
+              elseif type_sticker_applied(_card) then
+                energy_increase(_card, type_sticker_applied(_card))
+              end
+              _card:add_to_deck()
+              G.jokers:emplace(_card)
+              if _card.debuff then 
+                _card.debuff = false 
+                if _card.ability.perishable then _card.ability.perish_tally = G.GAME.perishable_rounds end
+              end
+              return true
+            end
+          }))
         end
         
         if not leftmost.ability.eternal then
