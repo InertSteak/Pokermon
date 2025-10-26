@@ -1081,7 +1081,23 @@ function Controller:capture_focused_input(button, input_type, dt)
   return poke_capture_focused_input(self, button, input_type, dt)
 end
 
-function poke_artist_credit(artist_name, artist_colour, artist_highlight_colour)
+function poke_artist_credit(artists)
+    local artist_name, artist_colour, artist_highlight_colour
+    if type(artists) == 'string' then
+        local artist_info = poke_get_artist_info(artists)
+        artist_name = artist_info.display_name
+        artist_colour = {artist_info.artist_colour or G.C.FILTER}
+        artist_highlight_colour = artist_info.highlight_colour
+    else
+        artist_name, artist_colour, artist_highlight_colour = {}, {}, {}
+        for _, artist in ipairs(artists) do
+            local artist_info = poke_get_artist_info(artist)
+            artist_name[#artist_name+1] = artist_info.display_name
+            artist_colour[#artist_colour+1] = artist_info.artist_colour or {G.C.FILTER}
+            artist_highlight_colour[#artist_highlight_colour+1] = artist_info.highlight_colour
+        end
+    end
+
     local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
         {n=G.UIT.T, config={
             text = localize('poke_credits_artist'),
@@ -1176,7 +1192,7 @@ function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
   local center = (card and card.config) and card.config.center or nil
   if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist, center.artist_colours or {G.C.FILTER}, center.artist_highlight_colours))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist))
   end
   if center and center.designer then
     table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))

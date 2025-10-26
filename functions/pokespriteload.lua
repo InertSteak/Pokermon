@@ -1150,28 +1150,7 @@ poke_load_atlas = function(item)
     local sprite_info = PokemonSprites[item.name]
     local atlas_prefix = poke_get_atlas_prefix(item.name, sprite_info)
     if sprite_info.alts and sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].artist then
-      local artist_info = nil
-      if type(sprite_info.alts[atlas_prefix].artist) == 'string' then
-        artist_info = poke_artist_info[sprite_info.alts[atlas_prefix].artist]
-        if artist_info then
-          item.artist = artist_info.display_name
-          item.artist_colours = {artist_info.artist_colour}
-          item.artist_highlight_colours = artist_info.highlight_colour
-        end
-      else
-        local artists = sprite_info.alts[atlas_prefix].artist
-        local display_names = {}
-        local artist_colours = {}
-        item.artist = {}
-        item.artist_colours = {}
-        item.artist_highlight_colours = {}
-        for i = 1, #artists do
-          artist_info = poke_artist_info[artists[i]]
-          item.artist[#item.artist + 1] = artist_info.display_name
-          item.artist_colours[#item.artist_colours + 1] = artist_info.artist_colour
-          item.artist_highlight_colours[#item.artist_highlight_colours + 1] = artist_info.highlight_colour
-        end
-      end
+      item.artist = sprite_info.alts[atlas_prefix].artist
       if sprite_info.alts[atlas_prefix].soul_pos then
         item.soul_pos = sprite_info.alts[atlas_prefix].soul_pos
       end
