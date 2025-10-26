@@ -559,6 +559,186 @@ end
 function G.FUNCS.pokermon_discord(e)
   love.system.openURL("https://discord.gg/AptX86Qsyz")
 end
+
+-- Moveables are called with delta time multiplied by 0,
+-- so this is a hacked together way to use the dt variable from `Game:update` instead
+local poke_dt = 0
+local upd = Game.update
+function Game:update(dt)
+  poke_dt = dt
+  upd(self, dt)
+end
+
+function poke_create_display_card(args, x, y, w, h)
+  local atlas = args.atlas
+  local pos = args.pos
+  local soul_pos = args.soul_pos
+  local anim_key = args.anim_key
+
+  local w = w or args.w or G.CARD_W
+  local h = h or args.h or G.CARD_H
+
+  local card = Moveable(x, y, w, h)
+
+  if anim_key then
+    -- Animation code modified from Aura
+    local t = 0
+    card.update = function(self)
+      local dt = poke_dt
+
+      local next_frame = false
+      local anim = AnimatedPokemon[anim_key]
+      t = t + dt
+      if t > 1 / (anim.fps or 10) then
+        t = t - 1 / (anim.fps or 10)
+        next_frame = true
+      end
+      if next_frame then
+        local loc = pos.y * (anim.frames_per_row or anim.frames) + pos.x
+        loc = loc + 1
+        if loc >= anim.frames then loc = anim.start_frame or 0 end
+        pos.x = loc % (anim.frames_per_row or anim.frames)
+        pos.y = math.floor(loc / (anim.frames_per_row or anim.frames))
+        self.children.center:set_sprite_pos(pos)
+        -- There is no current standard for animated soul layers in the PokemonSprites table,
+        -- so this serves as an example for how it might work but never actually gets called
+        -- (Yes, Unown Swarm isn't in the PokemonSprites table. Tragic.)
+        if soul_pos then
+          soul_pos.x = pos.x
+          soul_pos.y = pos.y
+          self.children.floating_sprite:set_sprite_pos(soul_pos)
+        end
+      end
+    end
+  end
+
+  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[atlas], pos)
+  card.children.center.states.hover = card.states.hover
+  card.children.center.states.click = card.states.click
+  card.children.center.states.drag = card.states.drag
+  card.children.center.states.collide.can = false
+  card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+
+  if soul_pos then
+    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[atlas], soul_pos)
+    card.children.floating_sprite.role.draw_major = card
+    card.children.floating_sprite.states.hover.can = false
+    card.children.floating_sprite.states.click.can = false
+  end
+
+  -- These are required so that CardArea doesn't crash the game
+  -- They're not important, trust me
+  card.ability = {}
+  card.set_card_area = function() end
+  card.remove_from_area = function() end
+  card.highlight = function() end
+
+  -- CardArea will just call this without arguments, which messes with Moveable
+  card.hard_set_T = function(self, X, Y, W, H)
+    local x = (X or self.T.x)
+    local y = (Y or self.T.y)
+    local w = (W or self.T.w)
+    local h = (H or self.T.h)
+    Moveable.hard_set_T(self, x, y, w, h)
+    self.children.center:hard_set_T(x, y, w, h)
+  end
+
+  -- This is for the little wiggle that cards do when you hover over them
+  card.hover = function(self)
+    self:juice_up(0.05, 0.03)
+    play_sound('paper1', math.random()*0.2 + 0.9, 0.35)
+    Node.hover(self)
+  end
+
+  -- This is to draw the soul layer (and shadow)
+  -- Yes, these things don't just draw themselves
+  -- well, properly anyway
+  card.draw = function(self, layer)
+    layer = layer or 'both'
+
+    G.shared_shadow = self.children.center
+
+    if G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
+      self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + (self.states.drag.is and 0.35 or 0.1)
+      G.shared_shadow:draw_shader('dissolve', self.shadow_height)
+    end
+
+    if layer == 'card' or layer == 'both' then
+      self.children.center:draw_shader('dissolve')
+
+      if self.children.floating_sprite then
+        -- For more on what this is about, ask LocalThunk
+        local scale_mod = 0.07 + 0.02*math.sin(1.8*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL))*math.pi*14)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^3
+        local rotate_mod = 0.05*math.sin(1.219*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL)*math.pi*5)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^2
+
+        self.children.floating_sprite:draw_shader('dissolve',0, nil, nil, self.children.center,scale_mod, rotate_mod,nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL),nil, 0.6)
+        self.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+      end
+    end
+
+    add_to_drawhash(self)
+  end
+
+  return card
+end
+local function get_sprite_keys_by_artist(artist)
+  local keys = {}
+
+  for _, pokemon in pairs(PokemonOrder) do
+    local sprite_info = PokemonSprites[pokemon]
+    if sprite_info and sprite_info.alts then
+      for series, alt in pairs(sprite_info.alts) do
+        local artists = type(alt.artist) == 'table' and alt.artist or {alt.artist}
+        for _, alt_artist in pairs(artists) do
+          if alt_artist == artist then
+            local key = {}
+            if alt.anim_atlas then
+              key.anim_key = 'j_poke_'..pokemon
+              key.atlas = 'poke_'..alt.anim_atlas
+              key.pos = { x = 0, y = 0 }
+            else
+              local stub
+              if sprite_info.gen_atlas then
+                stub = (sprite_info.gen_atlas < 10 and 'Gen0' or 'Gen')..sprite_info.gen_atlas
+              else
+                stub = 'Natdex'
+              end
+              key.atlas = 'poke_'..series..stub
+              key.pos = sprite_info.base.pos
+              key.soul_pos = alt.soul_pos or sprite_info.base.soul_pos
+            end
+            keys[#keys+1] = key
+            break
+          end
+        end
+      end
+    end
+  end
+
+  local add_pool_to_keys = function(pool, w, h)
+    for _, item in ipairs(pool) do
+      if item.artist == artist then
+        local key = { atlas = item.atlas, pos = item.pos }
+        if w then key.w = w end
+        if h then key.h = h end
+        keys[#keys+1] = key
+      end
+    end
+  end
+
+  add_pool_to_keys(G.P_CENTER_POOLS.Consumeables)
+  add_pool_to_keys(G.P_CENTER_POOLS.Enhanced)
+  add_pool_to_keys(G.P_CENTER_POOLS.Booster, G.CARD_W*1.27, G.CARD_H*1.27)
+  add_pool_to_keys(G.P_CENTER_POOLS.Seal)
+  add_pool_to_keys(G.P_CENTER_POOLS.Tag, 0.8, 0.8)
+  add_pool_to_keys(G.P_CENTER_POOLS.Back)
+
+  if artist == 'Sonfive' then
+    keys[#keys+1] = { atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
+  end
+
+  return keys
+end
 function G.FUNCS.pokermon_energy(e)
   local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
   local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}

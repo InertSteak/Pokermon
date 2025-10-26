@@ -1194,3 +1194,11 @@ poke_get_artist_info = function(name)
     return poke_artist_info[name]
   end
 end
+
+poke_get_artist_list = function()
+  local list = {}
+  for artist, _ in pairs(poke_artist_info) do
+    list[#list+1] = artist
+  end
+  return list
+end
