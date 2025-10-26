@@ -136,6 +136,14 @@ else
   sprite()
 end
 
+--Load Order file
+local order, load_error = SMODS.load_file("pokeorder.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  order()
+end
+
 --Load Sprites file
 local sprite, load_error = SMODS.load_file("pokesprites.lua")
 if load_error then
