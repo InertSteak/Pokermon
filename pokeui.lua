@@ -712,6 +712,16 @@ local function get_sprite_keys_by_artist(artist)
           end
         end
       end
+else
+      -- Grab Jokers that don't have alts in the PokemonSprites table, like Ruins of Alph
+      local center = G.P_CENTERS['j_poke_'..pokemon]
+      if center and center.artist == artist then
+        local key = {}
+        key.atlas = center.atlas
+        key.pos = center.pos
+        if center.soul_pos then key.soul_pos = center.soul_pos end
+        keys[#keys+1] = key
+      end
     end
   end
 
