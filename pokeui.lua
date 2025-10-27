@@ -570,7 +570,6 @@ function Game:update(dt)
 end
 
 function poke_create_display_card(args, x, y, w, h)
-  local atlas = args.atlas
   local pos = args.pos
   local soul_pos = args.soul_pos
   local anim_key = args.anim_key
@@ -579,6 +578,31 @@ function poke_create_display_card(args, x, y, w, h)
   local h = h or args.h or G.CARD_H
 
   local card = Moveable(x, y, w, h)
+
+  card.atlas = args.atlas
+  card.shiny = false
+  card.poke_toggle_shiny = function(self)
+    if self.atlas then
+      if self.shiny then
+        self.shiny = false
+        self.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+        if self.children.floating_sprite then
+          self.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+        end
+        self:juice_up(0.05, 0.03)
+      else
+        local shiny_atlas = self.atlas..'Shiny'
+        if G.ASSET_ATLAS[shiny_atlas] then
+          self.shiny = true
+          self.children.center.atlas = G.ASSET_ATLAS[shiny_atlas]
+          if self.children.floating_sprite then
+            self.children.floating_sprite.atlas = G.ASSET_ATLAS[shiny_atlas]
+          end
+          self:juice_up(0.05, 0.03)
+        end
+      end
+    end
+  end
 
   if anim_key then
     -- Animation code modified from Aura
@@ -612,7 +636,7 @@ function poke_create_display_card(args, x, y, w, h)
     end
   end
 
-  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[atlas], pos)
+  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[card.atlas], pos)
   card.children.center.states.hover = card.states.hover
   card.children.center.states.click = card.states.click
   card.children.center.states.drag = card.states.drag
@@ -620,7 +644,7 @@ function poke_create_display_card(args, x, y, w, h)
   card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
 
   if soul_pos then
-    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[atlas], soul_pos)
+    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[card.atlas], soul_pos)
     card.children.floating_sprite.role.draw_major = card
     card.children.floating_sprite.states.hover.can = false
     card.children.floating_sprite.states.click.can = false
@@ -1219,6 +1243,8 @@ function Controller:queue_R_cursor_press(x, y)
       else
         G.FUNCS.pokemon_toggle_sprite(clicked)
       end
+    elseif clicked and clicked.poke_toggle_shiny and type(clicked.poke_toggle_shiny) == 'function' then
+      clicked:poke_toggle_shiny()
     end
 end
 
@@ -1264,6 +1290,8 @@ function Controller:capture_focused_input(button, input_type, dt)
         else
           G.FUNCS.pokemon_toggle_sprite(clicked)
         end
+      elseif clicked and clicked.poke_toggle_shiny and type(clicked.poke_toggle_shiny) == 'function' then
+        clicked:poke_toggle_shiny()
       end
     end
   end
