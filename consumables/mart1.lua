@@ -510,33 +510,18 @@ local double_rainbow_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    elseif G.jokers.cards and #G.jokers.cards > 0 then
-      choice = G.jokers.cards[1]
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
     else
-      return false
-    end
-    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
-      return true
-    else
-      return false
+      return highlighted_energy_can_use(self, card)
     end
   end,
   use = function(self, card, area, copier)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
-    play_sound('poke_energy_use', 1, 0.5)
     for i = 1, 2 do
-      if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
-        energy_increase(choice, choice.ability.extra.ptype)
-      elseif type_sticker_applied(choice) then
-        energy_increase(choice, type_sticker_applied(choice))
+      if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+        energy_use(self, card, area, copier)
+      else
+        highlighted_energy_use(self, card, area, copier)
       end
     end
     if not G.GAME.modifiers.no_interest then

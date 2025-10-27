@@ -8,7 +8,7 @@ energy_max = 3
 highlighted_energy_can_use = function(self, card)
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
-  if energy_matches(choice, self.etype, true) then
+  if energy_matches(choice, self.etype, true) or self.etype == "Trans" then
     if type(choice.ability.extra) == "table" then
       if can_increase_energy(choice) then
         for name, _ in pairs(energy_values) do
@@ -363,7 +363,7 @@ end
 
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
-    if energy_matches(v, self.etype, true) then
+    if energy_matches(v, self.etype, true) or self.etype == "Trans" then
       if type(v.ability.extra) == "table" then
         if can_increase_energy(v) then
           for name, _ in pairs(energy_values) do
