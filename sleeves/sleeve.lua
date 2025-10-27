@@ -22,10 +22,20 @@ end
 		prefix_config = {},
 		atlas = "AtlasDecksBasic",
 		pos = { x = 0, y = 1 },
-		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
+		config = {vouchers = { "v_poke_goodrod"}},
 		loc_vars = function(self, info_queue, center)
 			return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
 		end,
+		  apply = function(self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+		if self.get_current_deck_key() ~= 'b_poke_pokemondeck' then
+          SMODS.add_card { key = 'c_poke_pokeball' }
+        end
+        return true
+      end
+    }))
+  end
 	}
 --- Obituary Sleeve
 	local obituarysleeve = {
