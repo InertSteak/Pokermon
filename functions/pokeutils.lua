@@ -607,6 +607,7 @@ set_joker_family_win = function(card)
       if #keys > 1 then
         local index
         for k, v in ipairs(keys) do
+          if type(v) == "table" then v = v.key end
           if v == card.config.center.key then index = k end
           --Excludes higher evolutions
           if index and k > index and (G.P_CENTERS[v]['stage'] ~= card.config.center.stage or G.P_CENTERS[v]['stage'] == "Legendary") and G.P_CENTERS[v]['auto_sticker'] ~= true then break end 
