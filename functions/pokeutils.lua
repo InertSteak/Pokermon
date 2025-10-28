@@ -133,6 +133,11 @@ poke_add_card = function(add_card, card, area)
 end
 
 poke_add_shop_card = function(add_card, card)
+    if G.GAME.shop.joker_max == 1 then
+      G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
+      G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1)*1.02*G.CARD_W,4.08*G.CARD_W)
+      G.shop:recalculate()
+    end
     add_card.states.visible = false
     G.shop_jokers:emplace(add_card)
     add_card:start_materialize()
@@ -602,6 +607,7 @@ set_joker_family_win = function(card)
       if #keys > 1 then
         local index
         for k, v in ipairs(keys) do
+          if type(v) == "table" then v = v.key end
           if v == card.config.center.key then index = k end
           --Excludes higher evolutions
           if index and k > index and (G.P_CENTERS[v]['stage'] ~= card.config.center.stage or G.P_CENTERS[v]['stage'] == "Legendary") and G.P_CENTERS[v]['auto_sticker'] ~= true then break end 

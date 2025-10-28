@@ -8,23 +8,23 @@ energy_max = 3
 highlighted_energy_can_use = function(self, card)
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
-  if energy_matches(choice, self.etype, true) or self.etype == "Trans" then
+  if energy_matches(choice, self.etype, true) then
     if type(choice.ability.extra) == "table" then
-      if can_increase_energy(choice) then
+      if can_increase_energy(choice, self.etype) then
         for name, _ in pairs(energy_values) do
           if type(choice.ability.extra[name]) == "number" then
-            return true
+            return choice
           end
         end
       end
     elseif type(choice.ability.extra) == "number" then
-      if can_increase_energy(choice) then
-        return true
+      if can_increase_energy(choice, self.etype) then
+        return choice
       end
     elseif (choice.ability.mult and choice.ability.mult > 0) or (choice.ability.t_mult and choice.ability.t_mult > 0) or (choice.ability.t_chips and choice.ability.t_chips > 0)
           or (choice.ability.x_mult and choice.ability.x_mult > 1) then
-      if can_increase_energy(choice) then
-        return true
+      if can_increase_energy(choice, self.etype) then
+        return choice
       end
     end
   end
@@ -42,7 +42,7 @@ highlighted_energy_use = function(self, card, area, copier)
   end
   play_sound('poke_energy_use', 1, 0.5)
   set_spoon_item(card)
-  if (energy_matches(choice, self.etype, true) or self.etype == "Trans") then
+  if (energy_matches(choice, self.etype, true)) then
     if type(choice.ability.extra) == "table" then
       if can_increase_energy(choice) then
         for name, _ in pairs(energy_values) do
@@ -59,7 +59,7 @@ highlighted_energy_use = function(self, card, area, copier)
     end
     if viable then
       if type(choice.ability.extra) == "table" then
-        if (energy_matches(choice, self.etype, false) or self.etype == "Trans") then
+        if (energy_matches(choice, self.etype, false)) then
           if choice.ability.extra.energy_count then
             choice.ability.extra.energy_count = choice.ability.extra.energy_count + 1
           else
@@ -76,7 +76,7 @@ highlighted_energy_use = function(self, card, area, copier)
         end
       elseif type(choice.ability.extra) == "number" or (choice.ability.mult and choice.ability.mult > 0) or (choice.ability.t_mult and choice.ability.t_mult > 0) or 
            (choice.ability.t_chips and choice.ability.t_chips > 0) or (choice.ability.x_mult and choice.ability.x_mult > 1) then
-        if (energy_matches(choice, self.etype, false) or self.etype == "Trans") then
+        if (energy_matches(choice, self.etype, false)) then
           if choice.ability.energy_count then
             choice.ability.energy_count = choice.ability.energy_count + 1
           else
@@ -115,6 +115,7 @@ end
 
 energy_matches = function(card, etype, include_colorless)
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
+    if has_type(card) and (etype == "Trans" or etype == "Bird") then return true end
     if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype and not type_sticker_applied(card)) or (card.ability[string.lower(etype).."_sticker"]) then
       return true
     elseif etype == "Colorless" and (card.ability.extra.ptype or type_sticker_applied(card)) and include_colorless then
@@ -279,14 +280,14 @@ get_total_energy = function(card)
   return curr_energy_count + curr_c_energy_count
 end
 
-can_increase_energy = function(card)
-  if pokermon_config.unlimited_energy or card.config.center.no_energy_limit then return true end
+can_increase_energy = function(card, etype)
+  if pokermon_config.unlimited_energy or card.config.center.no_energy_limit or (etype and etype == "Bird") then return true end
   return get_total_energy(card) < energy_max + (G.GAME.energy_plus or 0)
 end
 
 increment_energy = function(card, etype)
   if card.ability.extra and type(card.ability.extra) == "table" then
-    if (energy_matches(card, etype, false) or etype == "Trans") then
+    if (energy_matches(card, etype, false)) then
       if card.ability.extra.energy_count then
         card.ability.extra.energy_count = card.ability.extra.energy_count + 1
       else
@@ -303,7 +304,7 @@ increment_energy = function(card, etype)
     end
   elseif type(card.ability.extra) == "number" or (card.ability.mult and card.ability.mult > 0) or (card.ability.t_mult and card.ability.t_mult > 0) or 
        (card.ability.t_chips and card.ability.t_chips > 0) or (card.ability.x_mult and card.ability.x_mult > 1) then
-    if (energy_matches(card, etype, false) or etype == "Trans") then
+    if (energy_matches(card, etype, false)) then
       if card.ability.energy_count then
         card.ability.energy_count = card.ability.energy_count + 1
       else
@@ -332,7 +333,7 @@ energy_use = function(self, card, area, copier)
   play_sound('poke_energy_use', 1, 0.5)
   set_spoon_item(card)
   for k, v in pairs(G.jokers.cards) do
-    if applied ~= true and (energy_matches(v, self.etype, true) or self.etype == "Trans") then
+    if applied ~= true and (energy_matches(v, self.etype, true)) then
       if type(v.ability.extra) == "table" then
         if can_increase_energy(v) then
           for name, _ in pairs(energy_values) do
@@ -363,24 +364,24 @@ end
 
 energy_can_use = function(self, card)
   for k, v in pairs(G.jokers.cards) do
-    if energy_matches(v, self.etype, true) or self.etype == "Trans" then
+    if energy_matches(v, self.etype, true) then
       if type(v.ability.extra) == "table" then
-        if can_increase_energy(v) then
+        if can_increase_energy(v, self.etype) then
           for name, _ in pairs(energy_values) do
             local data = v.ability.extra[name]
             if type(data) == "number" then
-              return true
+              return v
             end
           end
         end
       elseif type(v.ability.extra) == "number" then
-        if can_increase_energy(v) then
-          return true
+        if can_increase_energy(v, self.etype) then
+          return v
         end
       elseif (v.ability.mult and v.ability.mult > 0) or (v.ability.t_mult and v.ability.t_mult > 0) or (v.ability.t_chips and v.ability.t_chips > 0)
             or (v.ability.x_mult and v.ability.x_mult > 1) then
-        if can_increase_energy(v) then
-          return true
+        if can_increase_energy(v, self.etype) then
+          return v
         end
       end
     end
@@ -388,9 +389,9 @@ energy_can_use = function(self, card)
   return false
 end
 
-matching_energy = function(card)
-  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and card.ability.extra.ptype ~= "Bird" and not type_sticker_applied(card) then
+matching_energy = function(card, allow_bird)
+  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth", "bird"}
+  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and (card.ability.extra.ptype ~= "Bird" or allow_bird) and not type_sticker_applied(card) then
     if card.ability.extra.ptype == "Dark" or card.ability.extra.ptype == "dark" then
       return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
     else

@@ -89,6 +89,13 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "AtlasConsumablesBirdEnergy",
+    path = "Basic Series/AtlasConsumablesBirdEnergy.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "AtlasConsumablesSeriesA",
     path = "Series A/AtlasConsumablesSeriesA.png",
     px = 71,
