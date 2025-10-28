@@ -119,15 +119,46 @@ local futuresleeve = {
 	name = "futuresleeve",
 	key = "futuresleeve",  
   prefix_config = {},
-	config = {scry = 4},
+	config = {scry = 4, scry_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.scry}}
   end,
 	pos = { x = 6, y = 1 },
 	atlas = "AtlasDecksBasic",
-  apply = function(self)
+    apply = function(self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if self.get_current_deck_key() ~= 'b_poke_futuredeck' then
+          G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+        end
+        return true
+      end
+    }))
+  end,
+calculate = function(self, sleeve, context)
+	if self.get_current_deck_key() == 'b_poke_futuredeck' then
+    	if context.scoring_hand then
+      if context.before then
+        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry_plus
+        G.GAME.scry_added = (G.GAME.scry_added or 0) + self.config.scry_plus
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.GAME.scry_amount = math.max(self.config.scry, (G.GAME.scry_amount or 0) - G.GAME.scry_added)
+      G.GAME.scry_added = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.PURPLE
+      }
+    end
+  end
+  add_to_deck = function(self, sleeve, from_debuff)
     G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
   end
+  remove_from_deck = function(self, sleeve, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - self.config.scry)
+  end
+end
 }
 
 --Stadium Sleeve
