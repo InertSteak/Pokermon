@@ -589,6 +589,12 @@ return {
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
+            c_poke_bird_energy = {
+                name = "Bird Energy",
+                text = {
+                  ""
+                },
+            },
             c_poke_emergy = {
                 name = "Emergy",
                 text = {
@@ -6084,6 +6090,10 @@ return {
             k_poke_pocket_pack = "Pocket Pack",
             k_poke_wish_pack = "Wish Pack",
             k_poke_starter_pack = "Starter Pack",
+            k_poke_gives = "Gives",
+            k_poke_ignores = "Ignores",
+            k_poke_limit = "Limit",
+            k_poke_pp = "PP UP",
             
             k_poke_baby = "Baby",
             k_poke_safari = "Safari",
@@ -6240,6 +6250,8 @@ return {
             poke_iron_tail_ex = "Iron Tail!",
             poke_autotomize_ex = "Autotomize!",
             poke_highjumpkick_ex = "High Jump Kick!",
+            poke_water_gun_ex = "Water Gun!",
+            poke_sky_attack_ex = "Sky Attack!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",

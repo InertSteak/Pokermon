@@ -491,6 +491,98 @@ local earth_energy = {
   end
 }
 
+local bird_energy = {
+  name = "bird_energy",
+  key = "bird_energy",
+  set = "Energy",
+  animated = true,
+  artist = poke_get_artist_info("Catzzadilla").display_name,
+  artist_colours = {poke_get_artist_info("Catzzadilla").artist_colour}, 
+  artist_highlight_colours = poke_get_artist_info("Catzzadilla").highlight_colour,
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+    return {vars = {energy_max + (G.GAME.energy_plus or 0)}}
+  end,
+  pos = { x = 0, y = 0 },
+  atlas = "AtlasConsumablesBirdEnergy",
+  cost = 4,
+  etype = "Bird",
+  unlocked = true,
+  discovered = true,
+  no_collection = true,
+  loc_vars = function(self, info_queue, card)
+        local r_mults = {}
+        for i = 1, 23 do
+            r_mults[#r_mults + 1] = tostring(i)
+        end
+        local gives_strings = {{ string = localize('poke_water_gun_ex'), colour = G.ARGS.LOC_COLOURS.water }, { string = localize('poke_sky_attack_ex'), colour = G.ARGS.LOC_COLOURS.colorless },
+                               { string = 'HEX("FF7ABF")', colour = G.C.JOKER_GREY}, { string = '?????', colour = G.C.JOKER_GREY}
+                             }
+        local energy_strings = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
+                                { string = localize('k_mult'), colour = G.C.MULT}, { string = 'ERROR', colour = G.C.CHIPS}
+                               }
+        local energy_strings2 = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
+                        { string = localize('k_mult'), colour = G.C.MULT}, { string = 'ERROR', colour = G.C.CHIPS}
+                       }
+        main_start = {
+          {n = G.UIT.R,
+          config = {
+            align = "cm",
+            padding = 0.05,
+            colour = G.C.CLEAR,
+          },
+          nodes = {
+              { n = G.UIT.O, config = { object = DynaText(poke_random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
+              { n = G.UIT.T, config = { text = ' +'..(energy_max + (G.GAME.energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
+              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+            }
+          },
+          {n = G.UIT.R,
+          config = {
+            align = "cm",
+            padding = 0.05,
+            colour = G.C.CLEAR,
+          },
+          nodes = {
+              { n = G.UIT.T, config = { text = '('..localize('k_poke_ignores')..' ', colour = G.C.JOKER_GREY, scale = 0.32 } },
+              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings2, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+              { n = G.UIT.T, config = { text = ' '..localize('k_poke_limit')..')', colour = G.C.JOKER_GREY, scale = 0.32 } },
+            }
+          },
+        }
+        return { main_start = main_start }
+    end,
+  can_use = function(self, card)
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      return energy_can_use(self, card)
+    else
+      return highlighted_energy_can_use(self, card)
+    end
+  end,
+  use = function(self, card, area, copier)
+    local choice = nil
+    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
+      choice = energy_can_use(self, card)
+    else
+      choice = highlighted_energy_can_use(self, card)
+    end
+    if choice then
+      local max = energy_max + (G.GAME.energy_plus or 0)
+      for i = 1, max do
+        increment_energy(choice, self.etype)
+      end
+    end
+    if G.GAME.energies_used then
+      G.GAME.energies_used = G.GAME.energies_used  + 1
+    else
+      G.GAME.energies_used = 1
+    end
+  end,
+  in_pool = function(self)
+    return false
+  end
+}
+
 local double_rainbow_energy = {
   name = "double_rainbow_energy",
   key = "double_rainbow_energy",
@@ -839,8 +931,7 @@ local emergy = {
 	end,
 }
 
-local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy, metal_energy,
-        fairy_energy, dragon_energy, earth_energy, double_rainbow_energy, transformation, obituary, nightmare, revenant, megastone}
+local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy,              metal_energy, fairy_energy, dragon_energy, earth_energy, bird_energy, double_rainbow_energy, transformation, obituary, nightmare, revenant, megastone}
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)

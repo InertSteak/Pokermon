@@ -5,6 +5,7 @@ AnimatedPokemon = {
    j_poke_unown_swarm = {native = true, frames_per_row = 12, frames = 36, fps = 12, soul = true, size = {x = 290, y = 285} },
    j_poke_voltorb = {shiny_offset = 1, frames_per_row = 11, frames = 11, fps = 11, },
    j_poke_electrode = {shiny_offset = 1, frames_per_row = 13, frames = 13, fps = 13, },
+   c_poke_bird_energy = {frames_per_row = 18, frames = 36, fps = 15, }
 }
 AnimatedSingles = {}
 

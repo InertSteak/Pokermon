@@ -20,7 +20,7 @@ local pink_seal = {
             local energy_types = {}
             local _card = nil
             for l, v in pairs(G.jokers.cards) do
-              local match = matching_energy(v)
+              local match = matching_energy(v, true)
               if match then
                 table.insert(energy_types, match)
               end
@@ -28,6 +28,9 @@ local pink_seal = {
             if #energy_types > 0 then
               local energy = pseudorandom_element(energy_types, pseudoseed('pink'))
               _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+              if energy == "c_poke_bird_energy" then
+                card:set_seal(nil)
+              end
             else
               _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
             end
