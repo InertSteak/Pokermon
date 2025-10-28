@@ -708,8 +708,7 @@ end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
-  for _, pokemon in pairs(PokemonOrder) do
-    local sprite_info = PokemonSprites[pokemon]
+  for _, sprite_info in ipairs(PokemonSprites.list) do
     if sprite_info and sprite_info.alts then
       for series, alt in pairs(sprite_info.alts) do
         local artists = type(alt.artist) == 'table' and alt.artist or {alt.artist}
@@ -717,7 +716,7 @@ local function get_sprite_keys_by_artist(artist)
           if alt_artist == artist then
             local key = {}
             if alt.anim_atlas then
-              key.anim_key = 'j_poke_'..pokemon
+              key.anim_key = 'j_poke_'..sprite_info.name
               key.atlas = 'poke_'..alt.anim_atlas
               key.pos = { x = 0, y = 0 }
             else
@@ -738,7 +737,7 @@ local function get_sprite_keys_by_artist(artist)
       end
 else
       -- Grab Jokers that don't have alts in the PokemonSprites table, like Ruins of Alph
-      local center = G.P_CENTERS['j_poke_'..pokemon]
+      local center = G.P_CENTERS['j_poke_'..sprite_info.name]
       if center and center.artist == artist then
         local key = {}
         key.atlas = center.atlas
