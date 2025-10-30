@@ -1112,6 +1112,7 @@ local poke_artist_info = {
   Desnik = {display_name = 'Desnik', artist_colour = HEX("FDDF00")},
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A")},
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
+  InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC")},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
