@@ -1214,6 +1214,6 @@ poke_get_artist_list = function()
   for artist, _ in pairs(poke_artist_info) do
     list[#list+1] = artist
   end
-  table.sort(list)
+  table.sort(list, function(a,b) return a:lower() < b:lower() end)
   return list
 end
