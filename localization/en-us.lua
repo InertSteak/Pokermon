@@ -6154,6 +6154,8 @@ return {
 
             poke_artist_credits_art_credits = "Art Credits",
             poke_artist_credits_artists = "Artists:",
+            poke_artist_credits_basic_sprites_by = "Basic Pokémon sprites by:",
+            poke_artist_credits_sprite_resource = "the 64x64 Pokémon sprite resource",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",

@@ -562,7 +562,7 @@ end
 
 local pokermon_actual_credits_artists_create_grid = function()
   local page = G.pokermon_actual_credits_artists_grid_page or 1
-  local rows, cols = 5, 5
+  local rows, cols = 4, 5
   local artist_list = poke_get_artist_list()
   local row_nodes = {}
       
@@ -636,6 +636,10 @@ local pokermon_actual_credits_artists = function()
           colour = G.C.CLEAR,
         },
         nodes = {
+          {n=G.UIT.R, config={align = "cm"}, nodes={
+            {n=G.UIT.T, config={text = localize('poke_artist_credits_basic_sprites_by') .. ' ', padding = 0.1, colour = mix_colours(G.C.UI.TEXT_LIGHT, G.C.UI.TEXT_INACTIVE, 0.5), scale = 0.55}},
+            UIBox_button { col = true, button = 'pokermon_sprite_resource', label={localize('poke_artist_credits_sprite_resource')}, text_colour = mix_colours(G.C.UI.TEXT_LIGHT, G.C.UI.TEXT_INACTIVE, 0.625), colour = adjust_alpha(G.C.UI.BACKGROUND_INACTIVE, 0.25), scale = 0.55, minw = 7.5 },
+          }},
           {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
             {n=G.UIT.T, config={text = localize('poke_artist_credits_artists'), colour = G.C.UI.TEXT_LIGHT, scale = 1}}
           }},
@@ -648,6 +652,18 @@ local pokermon_actual_credits_artists = function()
         },
       }
     end,
+  }
+end
+
+G.FUNCS.pokermon_sprite_resource = function()
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
+    {n=G.UIT.R, config={align = "cm"}, nodes={
+      {n=G.UIT.T, config={text = "Hello! This page is under construction!", colour = G.C.UI.TEXT_LIGHT, scale = 1}}
+    }},
+  }})
+
+  G.FUNCS.overlay_menu{
+    definition = t,
   }
 end
 
