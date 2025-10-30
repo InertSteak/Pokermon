@@ -173,7 +173,7 @@ SMODS.current_mod.config_tab = function()
     }
 end
 
-SMODS.current_mod.extra_tabs = function()
+local pokermon_actual_credits = function()
   local scale = 0.75
   return {
     label = localize("poke_credits_actualcredits"),
@@ -558,6 +558,123 @@ function G.FUNCS.pokermon_github(e)
 end
 function G.FUNCS.pokermon_discord(e)
   love.system.openURL("https://discord.gg/AptX86Qsyz")
+end
+
+local pokermon_actual_credits_artists_create_grid = function()
+  local page = G.pokermon_actual_credits_artists_grid_page or 1
+  local rows, cols = 5, 5
+  local artist_list = poke_get_artist_list()
+  local row_nodes = {}
+      
+  local marker = 1 + rows * cols * (page - 1)
+  for i = 1, rows do
+    local col_nodes = {}
+    local row_end = math.min(marker + cols - 1, #artist_list)
+    for j = marker, row_end do
+      local artist = artist_list[j]
+      if not artist then break end
+      local info = poke_get_artist_info(artist)
+      local button = {
+        n = G.UIT.C,
+        config = { align = "tm", padding = 0.1 },
+        nodes = {
+          UIBox_button {
+            id = artist,
+            label = {artist},
+            button = "pokermon_show_artist_jokers",
+            text_colour = info.artist_colour,
+            colour = info.highlight_colour or G.C.BLACK
+          },
+        }}
+      col_nodes[#col_nodes+1] = button
+    end
+    row_nodes[i] = {n=G.UIT.R, config={align="tm", minw = 3 * cols, minh = 1.2}, nodes=col_nodes}
+    marker = marker + cols
+  end
+
+  local total_pages = math.ceil(#artist_list / (rows * cols))
+  local cycle_options = {}
+  for i = 1, total_pages do
+    cycle_options[#cycle_options+1] = localize('k_page') .. " " .. i .. "/" .. total_pages
+  end
+
+  row_nodes[#row_nodes+1] = {n = G.UIT.R, config = {align = "cm"}, nodes={
+    create_option_cycle {
+      options = cycle_options,
+      w = 2.5,
+      cycle_shoulders = true,
+      opt_callback = 'pokermon_actual_credits_artists_page',
+      current_option = page,
+      colour = G.C.RED,
+      no_pips = true,
+      focus_args = {snap_to = true, nav = 'wide'}
+    }
+  }}
+
+  return {
+    n = G.UIT.ROOT,
+    config = {
+      align = "cm",
+      r = 0.1,
+      padding = 0.1,
+      colour = G.C.CLEAR,
+    },
+    nodes = row_nodes,
+  }
+end
+
+local pokermon_actual_credits_artists = function()
+  return {
+    label = localize('poke_artist_credits_art_credits'),
+    tab_definition_function = function()
+      return {
+        n = G.UIT.ROOT,
+        config = {
+          align = "cm",
+          r = 0.1,
+          padding = 0.1,
+          colour = G.C.CLEAR,
+        },
+        nodes = {
+          {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+            {n=G.UIT.T, config={text = localize('poke_artist_credits_artists'), colour = G.C.UI.TEXT_LIGHT, scale = 1}}
+          }},
+          {n = G.UIT.R, config = {align = "tm"}, nodes={
+            {n = G.UIT.O, config = { id = 'poke_artist_grid_wrap', object = UIBox {
+              definition = pokermon_actual_credits_artists_create_grid(),
+              config = { align = "cm" }
+            }}}
+          }},
+        },
+      }
+    end,
+  }
+end
+
+G.FUNCS.pokermon_actual_credits_artists_page = function(e)
+  if not e or not e.cycle_config then return end
+  local page = e.cycle_config.current_option
+
+  G.pokermon_actual_credits_artists_grid_page = page
+
+  if G.OVERLAY_MENU then
+    local grid_wrap = G.OVERLAY_MENU:get_UIE_by_ID('poke_artist_grid_wrap')
+
+    grid_wrap.config.object:remove()
+    grid_wrap.config.object = UIBox {
+      definition = pokermon_actual_credits_artists_create_grid(),
+      config = { parent = grid_wrap, type = "cm" }
+    }
+
+    grid_wrap.UIBox:recalculate()
+  end
+end
+
+SMODS.current_mod.extra_tabs = function()
+  return {
+    pokermon_actual_credits(),
+    pokermon_actual_credits_artists(),
+  }
 end
 
 -- Moveables are called with delta time multiplied by 0,

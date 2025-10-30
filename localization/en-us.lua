@@ -6152,6 +6152,9 @@ return {
             poke_credits_artist = "Artist: ",
             poke_credits_designer = "Designer: ",
 
+            poke_artist_credits_art_credits = "Art Credits",
+            poke_artist_credits_artists = "Artists:",
+
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
             poke_plus_consumable = "+1 Consumable",
