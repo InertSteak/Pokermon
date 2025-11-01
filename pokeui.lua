@@ -581,7 +581,7 @@ local pokermon_actual_credits_artists_create_grid = function()
           UIBox_button {
             id = artist,
             label = {artist},
-            button = "pokermon_show_artist_jokers",
+            button = "pokermon_actual_credits_artists_view_artist",
             text_colour = info.artist_colour,
             colour = info.highlight_colour or G.C.BLACK
           },
@@ -655,6 +655,13 @@ local pokermon_actual_credits_artists = function()
   }
 end
 
+SMODS.current_mod.extra_tabs = function()
+  return {
+    pokermon_actual_credits(),
+    pokermon_actual_credits_artists(),
+  }
+end
+
 G.FUNCS.pokermon_sprite_resource = function()
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
     {n=G.UIT.R, config={align = "cm"}, nodes={
@@ -703,6 +710,7 @@ function Game:update(dt)
 end
 
 function poke_create_display_card(args, x, y, w, h)
+  local display_text = args.display_text
   local pos = args.pos
   local soul_pos = args.soul_pos
   local anim_key = args.anim_key
@@ -800,16 +808,33 @@ function poke_create_display_card(args, x, y, w, h)
     self.children.center:hard_set_T(x, y, w, h)
   end
 
-  -- This is for the little wiggle that cards do when you hover over them
   card.hover = function(self)
     self:juice_up(0.05, 0.03)
     play_sound('paper1', math.random()*0.2 + 0.9, 0.35)
+
+    if display_text then
+      self.config.h_popup = {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.R, config = {align = "cm", padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07},nodes={
+          {n=G.UIT.R, config = {align = "cm", minw = G.CARD_W, r = 0.1, padding = 0.07, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)},nodes={
+            {n=G.UIT.T, config = {text = display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #display_text, shadow = true }},
+          }}
+        }}
+      }}
+
+      self.config.h_popup_config = {
+        major = self,
+        parent = self,
+        xy_bond = 'Strong',
+        r_bond = 'Weak',
+        wh_bond = 'Weak',
+        type = 'bm',
+        offset = { x = 0, y = 0.1 },
+      }
+    end
+
     Node.hover(self)
   end
 
-  -- This is to draw the soul layer (and shadow)
-  -- Yes, these things don't just draw themselves
-  -- well, properly anyway
   card.draw = function(self, layer)
     layer = layer or 'both'
 
@@ -838,16 +863,23 @@ function poke_create_display_card(args, x, y, w, h)
 
   return card
 end
+local function get_series_localize_key(atlas_prefix)
+  local series_start = string.find(atlas_prefix, "Series")
+  local series = string.sub(atlas_prefix, series_start)
+  local localize_prefix = 'poke_settings_pokemon_spritesheet_'
+  return localize_prefix .. string.lower(series)
+end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
   for _, sprite_info in ipairs(PokemonSprites.list) do
     if sprite_info and sprite_info.alts then
-      for series, alt in pairs(sprite_info.alts) do
+      for atlas_prefix, alt in pairs(sprite_info.alts) do
         local artists = type(alt.artist) == 'table' and alt.artist or {alt.artist}
         for _, alt_artist in pairs(artists) do
           if alt_artist == artist then
             local key = {}
+            key.display_text = localize(get_series_localize_key(atlas_prefix))
             if alt.anim_atlas then
               key.anim_key = 'j_poke_'..sprite_info.name
               key.atlas = 'poke_'..alt.anim_atlas
@@ -859,7 +891,7 @@ local function get_sprite_keys_by_artist(artist)
               else
                 stub = 'Natdex'
               end
-              key.atlas = 'poke_'..series..stub
+              key.atlas = 'poke_'..atlas_prefix..stub
               key.pos = sprite_info.base.pos
               key.soul_pos = alt.soul_pos or sprite_info.base.soul_pos
             end
@@ -868,11 +900,12 @@ local function get_sprite_keys_by_artist(artist)
           end
         end
       end
-else
+    else
       -- Grab Jokers that don't have alts in the PokemonSprites table, like Ruins of Alph
       local center = G.P_CENTERS['j_poke_'..sprite_info.name]
       if center and center.artist == artist then
         local key = {}
+        key.display_text = localize { type = 'name_text', set = 'Joker', key = center.key }
         key.atlas = center.atlas
         key.pos = center.pos
         if center.soul_pos then key.soul_pos = center.soul_pos end
@@ -882,11 +915,18 @@ else
   end
 
   local add_pool_to_keys = function(pool, w, h)
-    for _, item in ipairs(pool) do
-      if item.artist == artist then
-        local key = { atlas = item.atlas, pos = item.pos }
+    for _, center in ipairs(pool) do
+      if center.artist == artist then
+        local key = { atlas = center.atlas, pos = center.pos }
         if w then key.w = w end
         if h then key.h = h end
+        local set = center.set
+        -- TODO: Seals and probably Stickers don't work
+        if center.set == 'Booster' or center.set == 'Seal' or center.set == 'Sticker' then
+          set = 'Other'
+        end
+        local display_text = localize { type = 'name_text', set = set, key = center.key }
+        if display_text and display_text ~= 'ERROR' then key.display_text = display_text end
         keys[#keys+1] = key
       end
     end
@@ -905,6 +945,237 @@ else
 
   return keys
 end
+
+local function parse_url(url)
+  -- simple Url parser for getting domain name and path
+  local protocol = url:match('[a-z]+://')
+  if protocol then url = url:sub(protocol:len()+1) end
+  local domains = {}
+  for domain in url:gmatch('([a-z0-9%-]+)%.') do
+    table.insert(domains, domain)
+  end
+  local domain_name = domains[#domains]
+  local path = url:match('.[a-z]+/(.*)')
+  return domain_name, path
+end
+
+local site_colours = {
+  ['youtube'] = G.C.RED,
+  ['twitch'] = G.C.PURPLE,
+  ['steam'] = G.C.BLACK,
+  ['steamcommunity'] = G.C.BLACK,
+  ['x'] = G.C.BLACK,
+  ['twitter'] = G.C.BLUE,
+  ['reddit'] = G.C.ORANGE,
+}
+
+local function get_site_colour(domain)
+  return site_colours[domain] or G.C.RED
+end
+
+local function first_to_upper(str)
+  return str:gsub("^%l", string.upper)
+end
+
+function G.FUNCS.pokermon_open_site(e)
+  if e and e.config then
+    local url = e.config.url
+    if url then
+      love.system.openURL(url)
+    end
+  end
+end
+
+function poke_create_button(args)
+  -- TODO: just wrap the regular UIBox_button function and fiddle with the outcome
+  args = args or {}
+
+  local config = {
+    align = "cm",
+    r = 0.1,
+    hover = true,
+    colour = G.C.RED,
+    minw = 2.7,
+    maxw = 2.5,
+    minh = 0.9,
+    shadow = true,
+  }
+  
+  for k, v in pairs(args.config or {}) do
+    config[k] = v
+  end
+
+  local labels = args.labels or {}
+  local label_nodes = {}
+
+  for _, label in ipairs(labels) do
+    label_nodes[#label_nodes+1] = {n=G.UIT.R, config={align="cm"}, nodes={
+      {n=G.UIT.T, config={
+        text = label.text,
+        colour = label.colour or G.C.UI.TEXT_LIGHT,
+        scale = label.scale or args.text_scale or 0.75
+      }}
+    }}
+  end
+
+  return {n=G.UIT.C, config={align="cm"}, nodes={
+    {n=G.UIT.C, config = config, nodes = label_nodes},
+  }}
+end
+
+local function pokermon_show_artist_info(artist)
+  local artist_info = poke_get_artist_info(artist)
+  local display_name = artist_info.display_name
+  local text_colour = artist_info.artist_colour
+  local colour = artist_info.highlight_colour
+  local links = artist_info.links
+
+  local row_link_nodes = {}
+
+  if links then
+    local rows, cols = 3, 3
+
+    local marker = 1
+    for i = 1, rows do
+      local col_nodes = {}
+      for j = marker, marker + cols - 1 do
+        local link = links[j]
+        if not link then break end
+        local domain_name, path = parse_url(link.url)
+        local colour = link.colour or get_site_colour(domain_name)
+        local site_text = link.site_text or first_to_upper(domain_name)
+        local account_text = link.account_text or path
+        col_nodes[#col_nodes+1] = {n=G.UIT.C, config={align="cm", padding=0.1}, nodes = {
+          poke_create_button({
+            labels = {
+              {text = site_text, scale = 0.55},
+              {text = account_text, scale = 0.32},
+            },
+            config = {
+              colour = colour,
+              padding = 0.1,
+              button = "pokermon_open_site",
+              url = link.url
+            }
+          })
+        }}
+      end
+      row_link_nodes[#row_link_nodes+1] = {n=G.UIT.R, nodes=col_nodes}
+      marker = marker + cols
+    end
+  end
+
+  return {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes = {
+    {n=G.UIT.R, config={align="cm"}, nodes = {
+      {n=G.UIT.R, config={colour = colour, r = 0.1, padding = 0.1}, nodes = {
+        {n=G.UIT.T, config={text = display_name, colour = text_colour, scale = 1}},
+      }}
+    }},
+    {n=G.UIT.R, config={align="cm", padding = 0.1}, nodes = {
+      {n=G.UIT.C, nodes = row_link_nodes},
+    }},
+  }}
+end
+
+local function pokermon_show_artist_jokers(artist)
+  local keys = get_sprite_keys_by_artist(artist)
+
+  G.your_collection = {}
+  local deck_tables = {}
+  local rows, cols = 3, 5
+
+  local marker = 1
+  for i = 1, rows do
+    G.your_collection[i] = CardArea(
+      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+      cols*G.CARD_W,
+      0.95*G.CARD_H, 
+      {card_limit = cols, type = 'title', highlight_limit = 0, collection = true})
+      table.insert(deck_tables,
+      {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
+        {n=G.UIT.O, config={object = G.your_collection[i]}}
+      }})
+
+    local lastcard = math.min(marker + cols - 1, #keys)
+    for j = marker, lastcard do
+      local card = poke_create_display_card(keys[j], G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y)
+      G.your_collection[i]:emplace(card)
+    end
+    marker = marker + cols
+  end
+
+  local joker_options = {}
+  for i = 1, math.ceil(#keys/(cols*#G.your_collection)) do
+    table.insert(joker_options, localize('k_page')..' '..tostring(i)..'/'..tostring(math.ceil(#keys/(cols*#G.your_collection))))
+  end
+  
+  return {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes = {
+    {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables},
+    {n=G.UIT.R, config={align = "cm"}, nodes={
+      create_option_cycle({options = joker_options, w = 2.5, cycle_shoulders = true, opt_callback = 'your_collection_pokemon_artist_credit_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true, focus_args = {snap_to = true, nav = 'wide'}})
+    }}
+  }}
+end
+
+G.FUNCS.your_collection_pokemon_artist_credit_page = function(args)
+  if not args or not args.cycle_config then return end
+  local rows, cols = 3, 5
+  for j = 1, #G.your_collection do
+    for i = #G.your_collection[j].cards,1, -1 do
+      local c = G.your_collection[j]:remove_card(G.your_collection[j].cards[i])
+      c:remove()
+      c = nil
+    end
+  end
+  local row_start = 1 + (rows * cols * (args.cycle_config.current_option - 1))
+  for i = 1, rows do
+    for j = row_start, row_start + cols - 1 do
+      local akeys = args.cycle_config.keys
+      local key = akeys[j]
+      if not key then break end
+      local card = poke_create_display_card(key, G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y)
+      G.your_collection[i]:emplace(card)
+    end
+    row_start = row_start + cols
+  end
+end
+
+G.FUNCS.pokermon_actual_credits_artists_view_artist = function(e)
+  if not e then return end
+  local artist = e.config.id -- Yes, this is a hacked way of transferring values. Take it up with god.
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
+    {
+      n = G.UIT.R,
+      config = {
+        align = "tm",
+        colour = G.C.CLEAR,
+        -- minh = 10.9 -- required for the tab buttons to stay in place
+      },
+      nodes = {
+        create_tabs {
+          tabs = {
+            {
+              label = localize("poke_artist_credits_artist_info"),
+              chosen = true,
+              tab_definition_function = pokermon_show_artist_info,
+              tab_definition_function_args = artist,
+            },
+            {
+              label = localize("poke_artist_credits_art_collection"),
+              tab_definition_function = pokermon_show_artist_jokers,
+              tab_definition_function_args = artist,
+            }
+          },
+        },
+      }
+    }
+  }})
+
+  G.FUNCS.overlay_menu{
+    definition = t,
+  }
+end
+
 function G.FUNCS.pokermon_energy(e)
   local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
   local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}

@@ -6137,6 +6137,7 @@ return {
             poke_settings_pokemon_spritesheet = "Default Sprite Sheet (Resets Individual)",
             poke_settings_pokemon_spritesheet_classic = "Classic",
             poke_settings_pokemon_spritesheet_seriesa = "Series A",
+            poke_settings_pokemon_spritesheet_seriesb = "Series B",
             
             poke_credits_actualcredits = "Credits",
             poke_credits_thanks = "Thanks to",
@@ -6156,6 +6157,8 @@ return {
             poke_artist_credits_artists = "Artists:",
             poke_artist_credits_basic_sprites_by = "Basic Pokémon sprites by:",
             poke_artist_credits_sprite_resource = "the 64x64 Pokémon sprite resource",
+            poke_artist_credits_artist_info = "Artist info",
+            poke_artist_credits_art_collection = "Art collection",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
