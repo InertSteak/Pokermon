@@ -827,6 +827,7 @@ local rotom={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  auto_sticker = true,
   calculate = function(self, card, context)
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
