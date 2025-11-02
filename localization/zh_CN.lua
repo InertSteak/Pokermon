@@ -6096,7 +6096,7 @@ return {
         },
         v_text = {
            ch_c_poke_add_joker_slots = {"打败Boss盲注后，{C:attention}+1{}小丑牌数量{C:inactive}（最多5个）"},
-           ch_c_poke_nuzlocke = {"每个赌注的第一个商店必定有{C:attention}丑角包"},
+           ch_c_poke_nuzlocke = {"每个赌注的第一个商店必定有{C:attention}小丑包"},
            ch_c_apply_randomizer = {"宝可梦小丑牌会进化成随机的其他宝可梦"},
         },
     }
