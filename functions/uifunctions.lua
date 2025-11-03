@@ -95,3 +95,129 @@ poke_random_text = function(strings, config)
   return {colours = c_colours, string = strings, scale = c_scale, pop_in_rate = c_pop_in_rate, silent = c_silent, random_element = c_random_element, 
           pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
 end
+
+-- TODO: These probably need to be somewhere else.
+--
+function poke_create_collection_card(key, cardarea)
+  local form = type(key == 'table') and key.form
+  local center_key = type(key == 'table') and key.key or key
+  local center = G.P_CENTERS[center_key]
+
+  local card = Card(
+    cardarea.T.x + cardarea.T.w / 2,
+    cardarea.T.y,
+    G.CARD_W,
+    G.CARD_H,
+    nil,
+    center
+  )
+
+  if form and center.set_sprites then
+    card.ability.extra.form = form
+    center:set_sprites(card)
+    if center.set_ability then
+      center:set_ability(card)
+    end
+  end
+
+  cardarea:emplace(card)
+
+  return card
+end
+
+function poke_create_sprite_change_card(key, cardarea)
+  local card = poke_create_collection_card(key, cardarea)
+
+  card.poke_change_sprite = true
+
+  return card
+end
+
+function poke_create_UIBox_your_collection(args)
+  args = args or {}
+
+  local keys = args.keys or {}
+  local rows = args.rows or 3
+  local cols = args.cols or 5
+  local card_func = args.card_func or poke_create_collection_card
+
+  if args.dynamic_sizing then
+    rows = math.min(math.ceil(#keys / cols), rows)
+    cols = math.min(#keys, cols)
+  end
+
+  local row_nodes = {}
+  G.your_collection = {}
+  poke_your_collection_config = {
+    rows = rows,
+    cols = cols,
+    card_func = card_func,
+  }
+
+  local marker = 1
+  for i = 1, rows do
+    local cardarea = CardArea(
+      G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
+      G.ROOM.T.h,
+      G.CARD_W * cols,
+      G.CARD_H * 0.95,
+      {
+        card_limit = cols,
+        type = 'title',
+        highlight_limit = 0,
+        collection = true,
+      }
+    )
+
+    row_nodes[#row_nodes + 1] = {
+      n = G.UIT.R,
+      config = { align = "cm", padding = 0.07, no_fill = true },
+      nodes = {
+        { n = G.UIT.O, config = { object = cardarea } }
+      }
+    }
+
+    local lastcard = math.min(marker + cols - 1, #keys)
+    for j = marker, lastcard do
+      card_func(keys[j], cardarea)
+    end
+
+    G.your_collection[i] = cardarea
+
+    marker = marker + cols
+  end
+
+  return row_nodes
+end
+
+G.FUNCS.poke_your_collection_page = function(args)
+  if not args or not args.cycle_config then return end
+
+  local page = args.cycle_config.current_option
+  local keys = args.cycle_config.keys
+
+  for _, cardarea in ipairs(G.your_collection) do
+    remove_all(cardarea.cards)
+  end
+
+  local rows = G.your_collection.poke_config.rows
+  local cols = G.your_collection.poke_config.cols
+  local card_func = G.your_collection.poke_config.card_func
+
+  local marker = 1 + (rows * cols * (page - 1))
+  for i = 1, rows do
+    local cardarea = G.your_collection[i]
+
+    for j = marker, marker + cols - 1 do
+      local key = keys[j]
+
+      if not key then break end
+
+      card_func(key, cardarea)
+    end
+
+    marker = marker + cols
+  end
+
+  INIT_COLLECTION_CARD_ALERTS()
+end

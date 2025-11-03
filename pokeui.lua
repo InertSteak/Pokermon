@@ -1347,30 +1347,11 @@ G.FUNCS.pokermon_individual_sprites = function(e)
     end
   end
   
-  G.your_collection = {}
-  local deck_tables = {}
-  local rows = 3
-  local marker = 1
-  for i = 1, rows do
-    G.your_collection[i] = CardArea(
-    G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-    4*G.CARD_W,
-    0.95*G.CARD_H, 
-    {card_limit = 4, type = 'title', highlight_limit = 0, collection = true})
-  table.insert(deck_tables, 
-  {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
-    {n=G.UIT.O, config={object = G.your_collection[i]}}
-  }}
-)
-    local lastcard = math.min(marker + 3, #keys)
-    for j = marker, lastcard do
-      local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
-      local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-      card.poke_change_sprite = true
-      G.your_collection[i]:emplace(card)
-    end
-    marker = marker + 4
-  end
+  local deck_tables = poke_create_UIBox_your_collection {
+    keys = keys,
+    cols = 3,
+    card_func = poke_create_sprite_change_card,
+  }
   
   local joker_options = {}
   for i = 1, math.ceil(#keys/(4*#G.your_collection)) do
@@ -1380,7 +1361,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   local t =  create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
         {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
         {n=G.UIT.R, config={align = "cm"}, nodes={
-          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'your_collection_pokemon_sprite_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true,        focus_args = {          snap_to = true, nav = 'wide'}})
+          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'poke_your_collection_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true,        focus_args = {          snap_to = true, nav = 'wide'}})
         }}
     }})
   
@@ -1389,139 +1370,15 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   }
 end
 
-G.FUNCS.your_collection_pokemon_sprite_page = function(args)
-  if not args or not args.cycle_config then return end
-  for j = 1, #G.your_collection do
-    for i = #G.your_collection[j].cards,1, -1 do
-      local c = G.your_collection[j]:remove_card(G.your_collection[j].cards[i])
-      c:remove()
-      c = nil
-    end
-  end
-  local row_start = 1 + (12 * (args.cycle_config.current_option - 1))
-  for i = 1, 3 do
-    for j = row_start, row_start + 3 do
-      local akeys = args.cycle_config.keys
-      local key = (type(akeys[j]) == "table" and akeys[j].key) or akeys[j]
-      if not akeys[j] then break end
-      local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-      card.poke_change_sprite = true
-      G.your_collection[i]:emplace(card)
-    end
-    row_start = row_start + 4
-  end
-end
-
-G.FUNCS.your_collection_pokemon_page = function(args)
-  if not args or not args.cycle_config then return end
-  for j = 1, #G.your_collection do
-    for i = #G.your_collection[j].cards,1, -1 do
-      local c = G.your_collection[j]:remove_card(G.your_collection[j].cards[i])
-      c:remove()
-      c = nil
-    end
-  end
-  local row_start = 1 + (12 * (args.cycle_config.current_option - 1))
-  for i = 1, 3 do
-    for j = row_start, row_start + 3 do
-      local akeys = args.cycle_config.keys
-      local key = (type(akeys[j]) == "table" and akeys[j].key) or akeys[j]
-      if not akeys[j] then break end
-      local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(akeys[j]) == "table" then
-          card.ability.extra.form = akeys[j].form
-          G.P_CENTERS[key]:set_sprites(card)
-          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
-        end
-        G.your_collection[i]:emplace(card)
-    end
-    row_start = row_start + 4
-  end
-  INIT_COLLECTION_CARD_ALERTS()
-end
-
 poke_joker_page = 1
 
 create_UIBox_pokedex_jokers = function(keys, previous_menu)
-  local deck_tables = {}
-  G.your_collection = {}
-  if #keys > 4 and #keys < 13 then
-    local rows = math.ceil(#keys/4)
-    local marker = 1
-    for i = 1, rows do
-      G.your_collection[i] = CardArea(
-      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-      4*G.CARD_W,
-      0.95*G.CARD_H, 
-      {card_limit = 4, type = 'title', highlight_limit = 0, collection = true})
-    table.insert(deck_tables, 
-    {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
-      {n=G.UIT.O, config={object = G.your_collection[i]}}
-    }}
-  )
-      local lastcard = math.min(marker + 3, #keys)
-      for j = marker, lastcard do
-        local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
-        local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(keys[j]) == "table" then
-          card.ability.extra.form = keys[j].form
-          G.P_CENTERS[key]:set_sprites(card)
-          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
-        end
-        G.your_collection[i]:emplace(card)
-      end
-      marker = marker + 4
-    end
-  elseif #keys > 12 then
-    local rows = 3
-    local marker = 1
-    for i = 1, rows do
-      G.your_collection[i] = CardArea(
-      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-      4*G.CARD_W,
-      0.95*G.CARD_H, 
-      {card_limit = 4, type = 'title', highlight_limit = 0, collection = true})
-    table.insert(deck_tables, 
-    {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
-      {n=G.UIT.O, config={object = G.your_collection[i]}}
-    }}
-  )
-      local lastcard = math.min(marker + 3, #keys)
-      for j = marker, lastcard do
-        local key = (type(keys[j]) == "table" and keys[j].key) or keys[j]
-        local card = Card(G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-        if type(keys[j]) == "table" and G.P_CENTERS[key].set_sprites then
-          card.ability.extra.form = keys[j].form
-          G.P_CENTERS[key]:set_sprites(card)
-          if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
-        end
-        G.your_collection[i]:emplace(card)
-      end
-      marker = marker + 4
-    end
-  else
-    G.your_collection[1] = CardArea(
-      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-      math.min(4, #keys)*G.CARD_W,
-      0.95*G.CARD_H, 
-      {card_limit = #keys, type = 'title', highlight_limit = 0, collection = true})
-    table.insert(deck_tables, 
-    {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
-      {n=G.UIT.O, config={object = G.your_collection[1]}}
-    }}
-    )
-    
-    for i = 1, #keys do
-      local key = (type(keys[i]) == "table" and keys[i].key) or keys[i]
-      local card = Card(G.your_collection[1].T.x + G.your_collection[1].T.w/2, G.your_collection[1].T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS[key])
-      if type(keys[i]) == "table" then
-        card.ability.extra.form = keys[i].form
-        G.P_CENTERS[key]:set_sprites(card)
-        if G.P_CENTERS[key].set_ability then G.P_CENTERS[key]:set_ability(card) end
-      end
-      G.your_collection[1]:emplace(card)
-    end
-  end
+  local deck_tables = poke_create_UIBox_your_collection {
+    keys = keys,
+    rows = 3,
+    cols = 4,
+    dynamic_sizing = true
+  }
   local t = nil
   if #keys <= 12 then
     t =  create_UIBox_generic_options({ back_func = previous_menu or 'exit_overlay_menu', contents = {
@@ -1535,7 +1392,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
     t =  create_UIBox_generic_options({ back_func = previous_menu or 'exit_overlay_menu', contents = {
         {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
         {n=G.UIT.R, config={align = "cm"}, nodes={
-          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'your_collection_pokemon_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true, focus_args = {          snap_to = true, nav = 'wide'}})
+          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'poke_your_collection_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true, focus_args = {          snap_to = true, nav = 'wide'}})
         }}
     }})
   end
