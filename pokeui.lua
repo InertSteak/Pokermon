@@ -797,6 +797,7 @@ function poke_create_display_card(args, x, y, w, h)
   card.set_card_area = function() end
   card.remove_from_area = function() end
   card.highlight = function() end
+  card.update_alert = function() end
 
   -- CardArea will just call this without arguments, which messes with Moveable
   card.hard_set_T = function(self, X, Y, W, H)
@@ -1084,41 +1085,12 @@ end
 local function pokermon_show_artist_jokers(artist)
   local keys = get_sprite_keys_by_artist(artist)
 
-  G.your_collection = {}
-  local deck_tables = {}
-  local rows, cols = 3, 5
-
-  local marker = 1
-  for i = 1, rows do
-    G.your_collection[i] = CardArea(
-      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-      cols*G.CARD_W,
-      0.95*G.CARD_H, 
-      {card_limit = cols, type = 'title', highlight_limit = 0, collection = true})
-      table.insert(deck_tables,
-      {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
-        {n=G.UIT.O, config={object = G.your_collection[i]}}
-      }})
-
-    local lastcard = math.min(marker + cols - 1, #keys)
-    for j = marker, lastcard do
-      local card = poke_create_display_card(keys[j], G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y)
-      G.your_collection[i]:emplace(card)
-    end
-    marker = marker + cols
-  end
-
-  local joker_options = {}
-  for i = 1, math.ceil(#keys/(cols*#G.your_collection)) do
-    table.insert(joker_options, localize('k_page')..' '..tostring(i)..'/'..tostring(math.ceil(#keys/(cols*#G.your_collection))))
-  end
-  
-  return {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes = {
-    {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables},
-    {n=G.UIT.R, config={align = "cm"}, nodes={
-      create_option_cycle({options = joker_options, w = 2.5, cycle_shoulders = true, opt_callback = 'your_collection_pokemon_artist_credit_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true, focus_args = {snap_to = true, nav = 'wide'}})
-    }}
-  }}
+  return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
+    nodes = poke_create_UIBox_your_collection {
+      keys = keys,
+      card_func = poke_create_display_card,
+    }
+  }
 end
 
 G.FUNCS.your_collection_pokemon_artist_credit_page = function(args)

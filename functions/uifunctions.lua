@@ -212,7 +212,7 @@ function poke_create_UIBox_your_collection(args)
   populate_cardareas(keys)
 
   if show_pagination then
-    local pages = math.ceil(#keys / (rows * cols))
+    local pages = math.max(math.ceil(#keys / (rows * cols)), 1)
     local page_options = {}
 
     for i = 1, pages do
