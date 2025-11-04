@@ -98,19 +98,13 @@ end
 
 -- TODO: These probably need to be somewhere else.
 --
-function poke_create_collection_card(key, cardarea)
+
+function poke_create_your_collection_card(key, x, y)
   local form = type(key == 'table') and key.form
   local center_key = type(key == 'table') and key.key or key
   local center = G.P_CENTERS[center_key]
 
-  local card = Card(
-    cardarea.T.x + cardarea.T.w / 2,
-    cardarea.T.y,
-    G.CARD_W,
-    G.CARD_H,
-    nil,
-    center
-  )
+  local card = Card(x, y, G.CARD_W, G.CARD_H, nil, center)
 
   if form and center.set_sprites then
     card.ability.extra.form = form
@@ -120,17 +114,64 @@ function poke_create_collection_card(key, cardarea)
     end
   end
 
-  cardarea:emplace(card)
-
   return card
 end
 
-function poke_create_sprite_change_card(key, cardarea)
-  local card = poke_create_collection_card(key, cardarea)
+local function create_cardareas(row_count, col_count)
+  G.your_collection = {}
+  local nodes = {}
 
-  card.poke_change_sprite = true
+  for i = 1, row_count do
+    local cardarea = CardArea(
+      G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
+      G.ROOM.T.h,
+      G.CARD_W * col_count,
+      G.CARD_H * 0.95,
+      {
+        card_limit = col_count,
+        type = 'title',
+        highlight_limit = 0,
+        collection = true,
+      }
+    )
 
-  return card
+    nodes[#nodes + 1] = {
+      n = G.UIT.R,
+      config = { align = "cm", padding = 0.07, no_fill = true },
+      nodes = {
+        { n = G.UIT.O, config = { object = cardarea } }
+      }
+    }
+
+    G.your_collection[i] = cardarea
+  end
+
+  return nodes
+end
+
+local function populate_cardareas(keys, page)
+  local rows = poke_your_collection_config.rows
+  local cols = poke_your_collection_config.cols
+  local card_func = poke_your_collection_config.card_func
+  page = page or 1
+  local offset = rows * cols * (page - 1)
+
+  local marker = 1 + offset
+  for i = 1, rows do
+    local cardarea = G.your_collection[i]
+
+    local lastcard = math.min(marker + cols - 1, #keys)
+    for j = marker, lastcard do
+      local x = cardarea.T.x + cardarea.T.w / 2
+      local y = cardarea.T.y
+
+      local card = card_func(keys[j], x, y)
+
+      cardarea:emplace(card)
+    end
+
+    marker = marker + cols
+  end
 end
 
 function poke_create_UIBox_your_collection(args)
@@ -139,55 +180,66 @@ function poke_create_UIBox_your_collection(args)
   local keys = args.keys or {}
   local rows = args.rows or 3
   local cols = args.cols or 5
-  local card_func = args.card_func or poke_create_collection_card
+
+  local page_text = args.page_text or localize('k_page')
+  local show_pagination = true
 
   if args.dynamic_sizing then
+    if #keys <= rows * cols then show_pagination = false end
     rows = math.min(math.ceil(#keys / cols), rows)
     cols = math.min(#keys, cols)
   end
 
-  local row_nodes = {}
-  G.your_collection = {}
   poke_your_collection_config = {
     rows = rows,
     cols = cols,
-    card_func = card_func,
+    card_func = args.card_func or poke_create_your_collection_card,
   }
 
-  local marker = 1
-  for i = 1, rows do
-    local cardarea = CardArea(
-      G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
-      G.ROOM.T.h,
-      G.CARD_W * cols,
-      G.CARD_H * 0.95,
-      {
-        card_limit = cols,
-        type = 'title',
-        highlight_limit = 0,
-        collection = true,
-      }
-    )
-
-    row_nodes[#row_nodes + 1] = {
+  local nodes = {
+    {
       n = G.UIT.R,
-      config = { align = "cm", padding = 0.07, no_fill = true },
-      nodes = {
-        { n = G.UIT.O, config = { object = cardarea } }
-      }
+      config = {
+        align = "cm",
+        r = 0.1,
+        colour = G.C.BLACK,
+        emboss = 0.05
+      },
+      nodes = create_cardareas(rows, cols)
     }
+  }
 
-    local lastcard = math.min(marker + cols - 1, #keys)
-    for j = marker, lastcard do
-      card_func(keys[j], cardarea)
+  populate_cardareas(keys)
+
+  if show_pagination then
+    local pages = math.ceil(#keys / (rows * cols))
+    local page_options = {}
+
+    for i = 1, pages do
+      page_options[#page_options + 1] = page_text .. ' ' .. i .. '/' .. pages
     end
 
-    G.your_collection[i] = cardarea
-
-    marker = marker + cols
+    nodes[#nodes + 1] = {
+      n = G.UIT.R, config = { align = "cm" }, nodes = {
+        create_option_cycle {
+          options = page_options,
+          w = 4.5,
+          cycle_shoulders = true,
+          opt_callback = 'poke_your_collection_page',
+          current_option = 1,
+          keys = keys,
+          colour = G.C.RED,
+          no_pips = true,
+          focus_args = {
+            snap_to = true,
+            nav = 'wide'
+          }
+        }
+      }
+    }
   end
 
-  return row_nodes
+  return nodes
 end
 
 G.FUNCS.poke_your_collection_page = function(args)
@@ -200,24 +252,7 @@ G.FUNCS.poke_your_collection_page = function(args)
     remove_all(cardarea.cards)
   end
 
-  local rows = G.your_collection.poke_config.rows
-  local cols = G.your_collection.poke_config.cols
-  local card_func = G.your_collection.poke_config.card_func
-
-  local marker = 1 + (rows * cols * (page - 1))
-  for i = 1, rows do
-    local cardarea = G.your_collection[i]
-
-    for j = marker, marker + cols - 1 do
-      local key = keys[j]
-
-      if not key then break end
-
-      card_func(key, cardarea)
-    end
-
-    marker = marker + cols
-  end
+  populate_cardareas(keys, page)
 
   INIT_COLLECTION_CARD_ALERTS()
 end

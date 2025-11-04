@@ -1346,57 +1346,35 @@ G.FUNCS.pokermon_individual_sprites = function(e)
       keys[#keys + 1] = v
     end
   end
-  
-  local deck_tables = poke_create_UIBox_your_collection {
-    keys = keys,
-    cols = 3,
-    card_func = poke_create_sprite_change_card,
-  }
-  
-  local joker_options = {}
-  for i = 1, math.ceil(#keys/(4*#G.your_collection)) do
-    table.insert(joker_options, 'Right Click to Change'..' '..tostring(i)..'/'..tostring(math.ceil(#keys/(4*#G.your_collection))))
-  end
-  
-  local t =  create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
-        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
-        {n=G.UIT.R, config={align = "cm"}, nodes={
-          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'poke_your_collection_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true,        focus_args = {          snap_to = true, nav = 'wide'}})
-        }}
-    }})
-  
+
   G.FUNCS.overlay_menu{
-    definition = t,
+    definition = create_UIBox_generic_options {
+      back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu',
+      contents = poke_create_UIBox_your_collection {
+        keys = keys,
+        cols = 3,
+        card_func = function(key, x, y)
+          local card = poke_create_your_collection_card(key, x, y)
+          card.poke_change_sprite = true
+          return card
+        end,
+        page_text = localize('poke_settings_pokemon_sprites_right_click_to_change')
+      }
+    }
   }
 end
 
 poke_joker_page = 1
 
 create_UIBox_pokedex_jokers = function(keys, previous_menu)
-  local deck_tables = poke_create_UIBox_your_collection {
-    keys = keys,
-    rows = 3,
-    cols = 4,
-    dynamic_sizing = true
+  return create_UIBox_generic_options {
+    back_func = previous_menu or 'exit_overlay_menu',
+    contents = poke_create_UIBox_your_collection {
+      keys = keys,
+      cols = 4,
+      dynamic_sizing = true
+    }
   }
-  local t = nil
-  if #keys <= 12 then
-    t =  create_UIBox_generic_options({ back_func = previous_menu or 'exit_overlay_menu', contents = {
-          {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
-      }})
-  else
-    local joker_options = {}
-    for i = 1, math.ceil(#keys/(4*#G.your_collection)) do
-      table.insert(joker_options, localize('k_page')..' '..tostring(i)..'/'..tostring(math.ceil(#keys/(4*#G.your_collection))))
-    end
-    t =  create_UIBox_generic_options({ back_func = previous_menu or 'exit_overlay_menu', contents = {
-        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
-        {n=G.UIT.R, config={align = "cm"}, nodes={
-          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'poke_your_collection_page', current_option = 1, keys = keys, colour = G.C.RED, no_pips = true, focus_args = {          snap_to = true, nav = 'wide'}})
-        }}
-    }})
-  end
-  return t
 end
 
 G.FUNCS.pokedexui = function(e)
