@@ -437,6 +437,7 @@ end
 
 poke_is_in_collection = function(card)
   if G.your_collection then
+    if not card.area then return true end
     for k, v in pairs(G.your_collection) do
       if card.area == v then
         return true
@@ -632,4 +633,9 @@ set_joker_family_win = function(card)
       end
     end
   end
+end
+
+poke_can_set_sprite = function(card)
+  if poke_is_in_collection(card) and not card.discovered then return false end
+  return true
 end
