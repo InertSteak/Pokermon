@@ -144,6 +144,14 @@ else
   sprite()
 end
 
+--Load UI Helpers
+local helper, load_error = SMODS.load_file("ui/uihelpers.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  helper()
+end
+
 --Load InputManager file
 local input_manager, load_error = SMODS.load_file("ui/inputmanager.lua")
 if load_error then

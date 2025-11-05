@@ -1088,7 +1088,7 @@ local function pokermon_show_artist_jokers(artist)
   return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
     nodes = poke_create_UIBox_your_collection {
       keys = keys,
-      card_func = poke_create_display_card,
+      create_card_func = poke_create_display_card,
     }
   }
 end
@@ -1325,7 +1325,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
       contents = poke_create_UIBox_your_collection {
         keys = keys,
         cols = 3,
-        card_func = function(key, x, y)
+        create_card_func = function(key, x, y)
           local card = poke_create_your_collection_card(key, x, y)
           card.poke_change_sprite = true
           return card
