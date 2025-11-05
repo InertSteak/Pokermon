@@ -3057,7 +3057,7 @@ return {
                 name = "Suicune",
                 text = {
                   "Permanently {C:attention}doubles{} the total chips",
-                  "of each card in played hand",
+                  "of each card in {C:attention}poker hand",
                   "{C:inactive}(Up to {C:chips}+#1#{C:inactive} Chips per increase)",
                 }
             },
@@ -3297,7 +3297,7 @@ return {
                 name = 'Aron',
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
-                    "{C:attention}Steel{} card in poker hand,",
+                    "{C:attention}Steel{} card in {C:attention}poker hand{},",
                     "then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
@@ -3307,7 +3307,7 @@ return {
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{} and {C:attention}Stone{} card in",
-                    "poker hand, then destroy them",
+                    "{C:attention}poker hand{}, then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
@@ -3316,7 +3316,7 @@ return {
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{}, {C:attention}Stone{} and {C:attention}Gold{} card in",
-                    "poker hand, then destroy them",
+                    "{C:attention}poker hand{}, then destroy them",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
@@ -4170,7 +4170,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, create a",
                     "{C:dark_edition}Negative{} {C:planet}Planet{} card of one of",
-                    "your {C:attention}#1#{} highest level poker hands",
+                    "your {C:attention}#1#{} highest level {C:attention}poker hands",
                     "{C:inactive,s:0.8}(Evolves when holding #2#/{C:planet,s:0.8}#3#{C:inactive,s:0.8} different planet cards){}"
                 }
             },
@@ -4179,7 +4179,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, create a",
                     "{C:dark_edition}Negative{} {C:planet}Planet{} card of one of",
-                    "your {C:attention}#1#{} highest level poker hands",
+                    "your {C:attention}#1#{} highest level {C:attention}poker hands",
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "After opening {C:attention}#2# Boosters{}, create a",
                     "{C:attention}Telescope{} or {C:attention}Observatory{} if able"
@@ -5308,7 +5308,7 @@ return {
                 text = {
                     "Effect based on",
                     "number of {C:attention}#1#s{}",
-                    "in poker hand",
+                    "in {C:attention}poker hand",
                     "{C:inactive}(Effects are {C:attention}cumulative{C:inactive})"
                 }
             },
