@@ -144,6 +144,14 @@ else
   sprite()
 end
 
+--Load InputManager file
+local input_manager, load_error = SMODS.load_file("ui/inputmanager.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  input_manager()
+end
+
 --Load UI file
 local UI, load_error = SMODS.load_file("pokeui.lua")
 if load_error then
