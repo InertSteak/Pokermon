@@ -160,6 +160,14 @@ else
   input_manager()
 end
 
+--Load Pokedex UI file
+local pokedex, load_error = SMODS.load_file("ui/pokedex.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  pokedex()
+end
+
 --Load UI file
 local UI, load_error = SMODS.load_file("pokeui.lua")
 if load_error then

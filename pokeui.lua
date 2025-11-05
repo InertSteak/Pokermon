@@ -1093,29 +1093,6 @@ local function pokermon_show_artist_jokers(artist)
   }
 end
 
-G.FUNCS.your_collection_pokemon_artist_credit_page = function(args)
-  if not args or not args.cycle_config then return end
-  local rows, cols = 3, 5
-  for j = 1, #G.your_collection do
-    for i = #G.your_collection[j].cards,1, -1 do
-      local c = G.your_collection[j]:remove_card(G.your_collection[j].cards[i])
-      c:remove()
-      c = nil
-    end
-  end
-  local row_start = 1 + (rows * cols * (args.cycle_config.current_option - 1))
-  for i = 1, rows do
-    for j = row_start, row_start + cols - 1 do
-      local akeys = args.cycle_config.keys
-      local key = akeys[j]
-      if not key then break end
-      local card = poke_create_display_card(key, G.your_collection[i].T.x + G.your_collection[i].T.w/2, G.your_collection[i].T.y)
-      G.your_collection[i]:emplace(card)
-    end
-    row_start = row_start + cols
-  end
-end
-
 G.FUNCS.pokermon_actual_credits_artists_view_artist = function(e)
   if not e then return end
   local artist = e.config.id -- Yes, this is a hacked way of transferring values. Take it up with god.
@@ -1336,49 +1313,6 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   }
 end
 
-poke_joker_page = 1
-
-create_UIBox_pokedex_jokers = function(keys, previous_menu)
-  return create_UIBox_generic_options {
-    back_func = previous_menu or 'exit_overlay_menu',
-    contents = poke_create_UIBox_your_collection {
-      keys = keys,
-      cols = 4,
-      dynamic_sizing = true
-    }
-  }
-end
-
-G.FUNCS.pokedexui = function(e)
-  if G.STAGE == G.STAGES.RUN then
-    if G.jokers and G.jokers.highlighted and G.jokers.highlighted[1] then
-      local selected = G.jokers.highlighted[1]
-      if selected.config.center.stage then
-        G.FUNCS.overlay_menu{
-          definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name, selected.config.center.poke_custom_prefix, selected)),
-        }
-      end
-    end
-  end
-end
-
-G.FUNCS.pokedex_back = function()
-  G.FUNCS.your_collection_jokers()
-  G.FUNCS.SMODS_card_collection_page({cycle_config = {current_option = poke_joker_page}})
-  local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
-  page.config.ref_table.current_option = poke_joker_page
-  page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]
-end
-
--- Functionality for Pokedex View
-SMODS.Keybind({
-    key = "openPokedex",
-    key_pressed = "p",
-    action = function(controller)
-        G.FUNCS.pokedexui()
-    end
-})
-
 G.FUNCS.pokemon_toggle_sprite = function(card)
   local sprite_info = PokemonSprites[card.config.center.name]
   if sprite_info.alts and not card.config.center.poke_custom_prefix then
@@ -1439,20 +1373,6 @@ G.FUNCS.pokemon_toggle_sprite = function(card)
     end
   end
 end
-
-poke_input_manager:add_listener({ 'right_click', 'double_click' }, function(target)
-  if target and target:is(Card) and target.facing ~= 'back'
-      and not target.poke_change_sprite
-      and (target.config.center.stage or target.config.center.poke_multi_item) then
-    local menu = G.SETTINGS.paused and 'pokedex_back' or nil
-    if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
-    if menu and target.config.center.poke_multi_item then menu = 'your_collection_consumables' end
-    G.FUNCS.overlay_menu {
-      definition = create_UIBox_pokedex_jokers(get_family_keys(target.config.center.name, target.config.center.poke_custom_prefix, target), menu),
-    }
-    G.CONTROLLER:update_focus()
-  end
-end)
 
 poke_input_manager:add_listener('right_click', function(target)
   if target and target.poke_change_sprite then
