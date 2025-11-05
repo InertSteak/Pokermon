@@ -3056,8 +3056,9 @@ return {
             j_poke_suicune = {
                 name = "Suicune",
                 text = {
-                  "Permanently {C:attention}doubles{} the total chips",
-                  "of each card in {C:attention}poker hand",
+                  "Permanently {C:attention}doubles{} the",
+                  "total chips of each scoring",
+                  "card in played hand",
                   "{C:inactive}(Up to {C:chips}+#1#{C:inactive} Chips per increase)",
                 }
             },
