@@ -4438,7 +4438,7 @@ return {
                 "{br:3}ERROR - CONTACT STEAK",
                 "If first played hand has",
                 "exactly {C:attention}1{} card it gives", 
-                "{C:chips}+#2#{} Chips and {C:attention}+1{} hand this",
+                "{C:chips}+#2#{} Chips and {C:blue}+1{} hand this",
                 "round when scored"
               }
             },
