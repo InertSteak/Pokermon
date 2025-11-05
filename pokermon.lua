@@ -161,7 +161,7 @@ else
 end
 
 --Load Pokedex UI file
-local pokedex, load_error = SMODS.load_file("ui/pokedex.lua")
+local pokedex, load_error = SMODS.load_file("ui/pokedexui.lua")
 if load_error then
   sendDebugMessage ("The error is: "..load_error)
 else
