@@ -709,7 +709,7 @@ PokemonSprites = {
 {name = "bunnelby", base = {pos = {x = 26, y = 43}},},
 {name = "diggersby", base = {pos = {x = 28, y = 43}},},
 {name = "fletchling", base = {pos = {x = 0, y = 44}}, alts = {AtlasJokersSeriesA = {artist = 'Alber_Pro'}}},
-{name = "fletchinder", base = {pos = {x = 2, y = 44}},},
+{name = "fletchinder", base = {pos = {x = 2, y = 44}}, alts = {AtlasJokersSeriesA = {artist = 'Alber_Pro'}}},
 {name = "talonflame", base = {pos = {x = 4, y = 44}}, alts = {AtlasJokersSeriesA = {artist = 'Alber_Pro'}}},
 {name = "scatterbug", base = {pos = {x = 6, y = 44}},},
 {name = "spewpa", base = {pos = {x = 8, y = 44}},},

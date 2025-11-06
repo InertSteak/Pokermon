@@ -609,9 +609,9 @@ local double_rainbow_energy = {
   use = function(self, card, area, copier)
     for i = 1, 2 do
       if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-        energy_use(self, card, area, copier)
+        energy_use(self, card, area, copier, true)
       else
-        highlighted_energy_use(self, card, area, copier)
+        highlighted_energy_use(self, card, area, copier, true)
       end
     end
     if not G.GAME.modifiers.no_interest then

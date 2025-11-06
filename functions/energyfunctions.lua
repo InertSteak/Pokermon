@@ -31,7 +31,7 @@ highlighted_energy_can_use = function(self, card)
   return false
 end
 
-highlighted_energy_use = function(self, card, area, copier)
+highlighted_energy_use = function(self, card, area, copier, exclude_spoon)
   local viable = false
   if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
   local choice = G.jokers.highlighted[1]
@@ -41,7 +41,7 @@ highlighted_energy_use = function(self, card, area, copier)
     G.GAME.energies_used = 1
   end
   play_sound('poke_energy_use', 1, 0.5)
-  set_spoon_item(card)
+  if not exclude_spoon then set_spoon_item(card) end
   if (energy_matches(choice, self.etype, true)) then
     if type(choice.ability.extra) == "table" then
       if can_increase_energy(choice) then
@@ -322,7 +322,7 @@ increment_energy = function(card, etype)
   end
 end
 
-energy_use = function(self, card, area, copier)
+energy_use = function(self, card, area, copier, exclude_spoon)
   local applied = false
   local viable = false
   if G.GAME.energies_used then
@@ -331,7 +331,7 @@ energy_use = function(self, card, area, copier)
     G.GAME.energies_used = 1
   end
   play_sound('poke_energy_use', 1, 0.5)
-  set_spoon_item(card)
+  if not exclude_spoon then set_spoon_item(card) end
   for k, v in pairs(G.jokers.cards) do
     if applied ~= true and (energy_matches(v, self.etype, true)) then
       if type(v.ability.extra) == "table" then

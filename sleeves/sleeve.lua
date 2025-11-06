@@ -125,8 +125,8 @@ local stadiumsleeve = {
 	name = "stadiumsleeve",
 	key = "stadiumsleeve",  
 	prefix_config = {},
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_sleeve",
+	pos = { x = 8, y = 1 },
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.E_MANAGER:add_event(Event({
       func = function()
