@@ -1,6 +1,7 @@
+-- Functionality for Pokedex View
 poke_joker_page = 1
 
-create_UIBox_pokedex_jokers = function(keys, previous_menu)
+local function create_UIBox_pokedex_jokers(keys, previous_menu)
   return create_UIBox_generic_options {
     back_func = previous_menu or 'exit_overlay_menu',
     contents = poke_create_UIBox_your_collection {
@@ -11,37 +12,7 @@ create_UIBox_pokedex_jokers = function(keys, previous_menu)
   }
 end
 
-G.FUNCS.pokedexui = function(e)
-  if G.STAGE == G.STAGES.RUN then
-    if G.jokers and G.jokers.highlighted and G.jokers.highlighted[1] then
-      local selected = G.jokers.highlighted[1]
-      if selected.config.center.stage then
-        G.FUNCS.overlay_menu{
-          definition = create_UIBox_pokedex_jokers(get_family_keys(selected.config.center.name, selected.config.center.poke_custom_prefix, selected)),
-        }
-      end
-    end
-  end
-end
-
-G.FUNCS.pokedex_back = function()
-  G.FUNCS.your_collection_jokers()
-  G.FUNCS.SMODS_card_collection_page({cycle_config = {current_option = poke_joker_page}})
-  local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
-  page.config.ref_table.current_option = poke_joker_page
-  page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]
-end
-
--- Functionality for Pokedex View
-SMODS.Keybind({
-    key = "openPokedex",
-    key_pressed = "p",
-    action = function(controller)
-        G.FUNCS.pokedexui()
-    end
-})
-
-poke_input_manager:add_listener({ 'right_click', 'double_click' }, function(target)
+local function open_pokedex(target)
   if target and target:is(Card) and target.facing ~= 'back'
       and not target.poke_change_sprite
       and (target.config.center.stage or target.config.center.poke_multi_item) then
@@ -53,4 +24,25 @@ poke_input_manager:add_listener({ 'right_click', 'double_click' }, function(targ
     }
     G.CONTROLLER:update_focus()
   end
-end)
+end
+
+local function open_pokedex_from_highlighted()
+  local highlighted = (G.jokers and G.jokers.highlighted and G.jokers.highlighted[1])
+      or (G.consumeables and G.consumeables.highlighted and G.consumeables.highlighted[1])
+
+  if highlighted then
+    open_pokedex(highlighted)
+  end
+end
+
+G.FUNCS.pokedex_back = function()
+  G.FUNCS.your_collection_jokers()
+  G.FUNCS.SMODS_card_collection_page({ cycle_config = { current_option = poke_joker_page } })
+  local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
+  page.config.ref_table.current_option = poke_joker_page
+  page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]
+end
+
+poke_input_manager:add_listener({ 'right_click', 'double_click', 'right_stick' }, open_pokedex)
+
+SMODS.Keybind({ key = "openPokedex", key_pressed = "p", action = open_pokedex_from_highlighted })

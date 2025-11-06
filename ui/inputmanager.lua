@@ -8,6 +8,7 @@ poke_input_manager = {
     ['left_click'] = {},
     ['right_click'] = {},
     ['double_click'] = {},
+    ['right_stick'] = {}
   }
 }
 
@@ -54,6 +55,12 @@ function poke_input_manager:right_click(target)
   end
 end
 
+function poke_input_manager:right_stick(target)
+  if target then
+    self:fire_event('right_stick', target)
+  end
+end
+
 local controller_is_locked = function()
   return (G.CONTROLLER.locked and (not G.SETTINGS.paused or G.screenwipe))
       or G.CONTROLLER.locks.frame
@@ -82,7 +89,7 @@ local capture_focused_input_ref = G.CONTROLLER.capture_focused_input
 G.CONTROLLER.capture_focused_input = function(self, button, input_type, dt)
   if input_type == 'press' and button == 'rightstick' and self.focused then
     local target = self.focused.target
-    poke_input_manager:right_click(target)
+    poke_input_manager:right_stick(target)
   end
   return capture_focused_input_ref(self, button, input_type, dt)
 end
