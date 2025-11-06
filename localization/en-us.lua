@@ -6161,6 +6161,8 @@ return {
             poke_artist_credits_sprite_resource = "the 64x64 Pokémon sprite resource",
             poke_artist_credits_artist_info = "Artist info",
             poke_artist_credits_art_collection = "Art collection",
+            poke_artist_credits_toggle_shiny = "Right Click to toggle Shiny",
+            poke_artist_credits_toggle_soul_layer = "Double Click to hide Soul Layer",
 
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",

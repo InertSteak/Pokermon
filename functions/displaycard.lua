@@ -118,7 +118,57 @@ function PokeDisplayCard:hover()
   self:juice_up(0.05, 0.03)
   play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
 
+  local h_popup_nodes = {}
+
   if self.display_text then
+    table.insert(h_popup_nodes, {
+      n = G.UIT.R, config = { align = "cm" }, nodes = {
+        {
+          n = G.UIT.T,
+          config = {
+            text = self.display_text,
+            colour = G.C.UI.TEXT_LIGHT,
+            scale = 0.55 - 0.004 * #self.display_text,
+            shadow = true
+          }
+        }
+      }
+    })
+  end
+
+  if self.has_shiny then
+    table.insert(h_popup_nodes, {
+      n = G.UIT.R, config = { align = "cm" }, nodes = {
+        {
+          n = G.UIT.T,
+          config = {
+            text = localize("poke_artist_credits_toggle_shiny"),
+            colour = mix_colours(G.C.UI.TEXT_LIGHT, G.C.UI.TEXT_INACTIVE, 0.65),
+            scale = 0.30,
+            shadow = true
+          }
+        }
+      }
+    })
+  end
+
+  if self.soul_pos then
+    table.insert(h_popup_nodes, {
+      n = G.UIT.R, config = { align = "cm" }, nodes = {
+        {
+          n = G.UIT.T,
+          config = {
+            text = localize("poke_artist_credits_toggle_soul_layer"),
+            colour = mix_colours(G.C.UI.TEXT_LIGHT, G.C.UI.TEXT_INACTIVE, 0.65),
+            scale = 0.28,
+            shadow = true
+          }
+        }
+      }
+    })
+  end
+
+  if #h_popup_nodes > 0 then
     self.config.h_popup = {
       n = G.UIT.ROOT,
       config = { align = 'cm', colour = G.C.CLEAR },
@@ -128,11 +178,9 @@ function PokeDisplayCard:hover()
           config = { align = "cm", padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07 },
           nodes = {
             {
-              n = G.UIT.R,
+              n = G.UIT.C,
               config = { align = "cm", minw = G.CARD_W, r = 0.1, padding = 0.07, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8) },
-              nodes = {
-                { n = G.UIT.T, config = { text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #self.display_text, shadow = true } },
-              }
+              nodes = h_popup_nodes
             }
           }
         }
