@@ -84,7 +84,6 @@ G.CONTROLLER.queue_R_cursor_press = function(self, x, y)
   return queue_R_cursor_press_ref(self, x, y)
 end
 
--- make R3 presses count as right clicks
 local capture_focused_input_ref = G.CONTROLLER.capture_focused_input
 G.CONTROLLER.capture_focused_input = function(self, button, input_type, dt)
   if input_type == 'press' and button == 'rightstick' and self.focused then

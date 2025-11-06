@@ -1,20 +1,4 @@
 --Config UI
-local restart_toggles_left = { 
-                 {ref_value = "pokeballs", label = "poke_settings_pokeballs"},
-                 {ref_value = "pokemon_altart", label = "poke_settings_pokemon_altart"},
-                 {ref_value = "pokemon_aprilfools", label = "poke_settings_pokemon_aprilfools"},
-                 {ref_value = "poke_enable_animations", label = "poke_settings_enable_animations"}
-                }
-                
-local restart_toggles_right = { 
-  {ref_value = "pokemon_splash", label = "poke_settings_pokemon_splash"}, 
-  {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}},
-  {ref_value = "pokemon_legacy", label = "poke_settings_pokemon_legacy"}
-}
-
-local no_restart_toggles = {{ref_value = "pokemon_only", label = "poke_settings_pokemon_only"}, {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards"},
-                          {ref_value = "gen_oneb", label = "poke_settings_pokemon_gen_one"}, }
- 
 local energy_toggles = {
   {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy", tooltip = {set = 'Other', key = 'unlimited_energy_tooltip'}}, 
   {ref_value = "precise_energy", label = "poke_settings_pokemon_precise_energy", tooltip = {set = 'Other', key = 'precise_energy_tooltip'}},
@@ -56,16 +40,13 @@ local misc_restart_toggles = {
   {ref_value = "pokeballs", label = "poke_settings_pokeballs", tooltip = {set = 'Other', key = 'allowpokeballs_tooltip'}},
   {ref_value = "pokemon_discovery", label = "poke_settings_pokemon_discovery", tooltip = {set = 'Other', key = 'discovery_tooltip'}},
 }
- 
+
 local create_menu_toggles = function (parent, toggles)
   for k, v in ipairs(toggles) do
     parent.nodes[#parent.nodes + 1] = create_toggle({
           label = localize(v.label),
           ref_table = pokermon_config,
           ref_value = v.ref_value,
-          callback = function(_set_toggle)
-            NFS.write(mod_dir.."/config.lua", STR_PACK(pokermon_config))
-          end,
     })
     if v.tooltip then
       parent.nodes[#parent.nodes].config.detailed_tooltip = v.tooltip
@@ -73,106 +54,172 @@ local create_menu_toggles = function (parent, toggles)
   end
 end
 
-pokemonconfig = function()
-  local restart_left_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(restart_left_settings, restart_toggles_left)
-
-  local restart_right_settings = {n = G.UIT.C, config = {align = "tl", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(restart_right_settings, restart_toggles_right)
-
-  local no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR,}, nodes = {}}
-  create_menu_toggles(no_restart_settings, no_restart_toggles)
-  
-  local config_nodes =   
-  {
-    {
-      n = G.UIT.R,
-      config = {
-        padding = 0.25,
-        align = "cm"
-      },
-      nodes = {
-        {
-          n = G.UIT.T,
-          config = {
-            text = localize("poke_settings_header_norequired"),
-            shadow = true,
-            scale = 0.75 * 0.8,
-            colour = HEX("ED533A")
-          }
-        }
-      },
+local pokemonconfig = function()
+  return {
+    n = G.UIT.ROOT,
+    config = {
+      align = "cm",
+      padding = 0.05,
+      colour = G.C.CLEAR,
     },
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("ED533A"),
-      button = "pokermon_joker_pool",
-      label = {"Joker Pool Options"}
-    }),
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("FF7ABF"),
-      button = "pokermon_energy",
-      label = {"Energy Options"}
-    }),
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("9AA4B7"),
-      button = "pokermon_misc_no_restart",
-      label = {"Misc Options"}
-    }),
-    {
-      n = G.UIT.R,
-      config = {
-        padding = 0.25,
-        align = "cm"
-      },
-      nodes = {
-        {
-          n = G.UIT.T,
-          config = {
-            text = localize("poke_settings_header_required"),
-            shadow = true,
-            scale = 0.75 * 0.8,
-            colour = HEX("ED533A")
+    nodes = {
+      {
+        n = G.UIT.R,
+        config = {
+          padding = 0.25,
+          align = "cm"
+        },
+        nodes = {
+          {
+            n = G.UIT.T,
+            config = {
+              text = localize("poke_settings_header_norequired"),
+              shadow = true,
+              scale = 0.75 * 0.8,
+              colour = HEX("ED533A")
+            }
           }
-        }
+        },
       },
-    },
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("38b8f8"),
-      button = "pokermon_content",
-      label = {"Content Options"}
-    }),
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("c135ff"),
-      button = "pokermon_visual",
-      label = {"Visual Options"}
-    }),
-    UIBox_button({
-      minw = 3.85,
-      colour = HEX("9AA4B7"),
-      button = "pokermon_misc_restart",
-      label = {"Misc Options"}
-    }),
-  }
-  return config_nodes
-end
-
-SMODS.current_mod.config_tab = function()
-    return {
-      n = G.UIT.ROOT,
-      config = {
-        align = "cm",
-        padding = 0.05,
-        colour = G.C.CLEAR,
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("ED533A"),
+        button = "pokermon_joker_pool",
+        label = {"Joker Pool Options"}
+      }),
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("FF7ABF"),
+        button = "pokermon_energy",
+        label = {"Energy Options"}
+      }),
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("9AA4B7"),
+        button = "pokermon_misc_no_restart",
+        label = {"Misc Options"}
+      }),
+      {
+        n = G.UIT.R,
+        config = {
+          padding = 0.25,
+          align = "cm"
+        },
+        nodes = {
+          {
+            n = G.UIT.T,
+            config = {
+              text = localize("poke_settings_header_required"),
+              shadow = true,
+              scale = 0.75 * 0.8,
+              colour = HEX("ED533A")
+            }
+          }
+        },
       },
-      nodes = pokemonconfig()
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("38b8f8"),
+        button = "pokermon_content",
+        label = {"Content Options"}
+      }),
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("c135ff"),
+        button = "pokermon_visual",
+        label = {"Visual Options"}
+      }),
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("9AA4B7"),
+        button = "pokermon_misc_restart",
+        label = {"Misc Options"}
+      }),
     }
+  }
 end
 
+function G.FUNCS.pokermon_joker_pool(e)
+  local joker_pool_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(joker_pool_settings, joker_pool_toggles)
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {joker_pool_settings}
+  })
+  G.FUNCS.overlay_menu {
+    definition = t
+  }
+end
+
+function G.FUNCS.pokermon_energy(e)
+  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(energy_settings, energy_toggles)
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {energy_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+
+function G.FUNCS.pokermon_misc_no_restart(e)
+  local misc_no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(misc_no_restart_settings, misc_no_restart_toggles)
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {misc_no_restart_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+
+function G.FUNCS.pokermon_content(e)
+  local content_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(content_settings, content_toggles)
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {content_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+
+function G.FUNCS.pokermon_visual(e)
+  local visual_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(visual_settings, visual_toggles)
+
+  visual_settings.nodes[#visual_settings.nodes + 1] =
+    create_option_cycle({
+      label = localize("poke_settings_pokemon_spritesheet"),
+      scale = 0.8,
+      w = 6,
+      options = {localize("poke_settings_pokemon_spritesheet_classic"), localize("poke_settings_pokemon_spritesheet_seriesa"),},
+      opt_callback = 'pokermon_upd_sprite_setting',
+      current_option = pokermon_config.pokemon_spritesheet_id,
+    })
+
+  visual_settings.nodes[#visual_settings.nodes + 1] = 
+    UIBox_button({
+      minw = 3.85,
+      button = "pokermon_individual_sprites",
+      label = {"Individual Sprites"}
+    })
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {visual_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+function G.FUNCS.pokermon_misc_restart(e)
+  local misc_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
+  create_menu_toggles(misc_restart_settings, misc_restart_toggles)
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
+      contents = {misc_restart_settings}
+  })
+  G.FUNCS.overlay_menu{definition = t}
+end
+
+SMODS.current_mod.config_tab = pokemonconfig
+
+-- Credits UI
 local pokermon_actual_credits = function()
   local credits_text = {
     { localize("poke_credits_thanks") },
@@ -251,6 +298,7 @@ function G.FUNCS.pokermon_discord(e)
   love.system.openURL("https://discord.gg/AptX86Qsyz")
 end
 
+-- Art Credits UI
 local pokermon_actual_credits_artists_create_grid = function()
   local page = G.pokermon_actual_credits_artists_grid_page or 1
   local rows, cols = 4, 5
@@ -346,13 +394,6 @@ local pokermon_actual_credits_artists = function()
   }
 end
 
-SMODS.current_mod.extra_tabs = function()
-  return {
-    pokermon_actual_credits(),
-    pokermon_actual_credits_artists(),
-  }
-end
-
 G.FUNCS.pokermon_sprite_resource = function()
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
     {n=G.UIT.R, config={align = "cm"}, nodes={
@@ -391,174 +432,6 @@ SMODS.current_mod.extra_tabs = function()
   }
 end
 
--- Moveables are called with delta time multiplied by 0,
--- so this is a hacked together way to use the dt variable from `Game:update` instead
-local poke_dt = 0
-local upd = Game.update
-function Game:update(dt)
-  poke_dt = dt
-  upd(self, dt)
-end
-
-function poke_create_display_card(args, x, y, w, h)
-  local display_text = args.display_text
-  local pos = args.pos
-  local soul_pos = args.soul_pos
-  local anim_key = args.anim_key
-
-  local w = w or args.w or G.CARD_W
-  local h = h or args.h or G.CARD_H
-
-  local card = Moveable(x, y, w, h)
-
-  card.atlas = args.atlas
-  card.shiny = false
-  card.poke_toggle_shiny = function(self)
-    if self.atlas then
-      if self.shiny then
-        self.shiny = false
-        self.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-        if self.children.floating_sprite then
-          self.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-        end
-        self:juice_up(0.05, 0.03)
-      else
-        local shiny_atlas = self.atlas..'Shiny'
-        if G.ASSET_ATLAS[shiny_atlas] then
-          self.shiny = true
-          self.children.center.atlas = G.ASSET_ATLAS[shiny_atlas]
-          if self.children.floating_sprite then
-            self.children.floating_sprite.atlas = G.ASSET_ATLAS[shiny_atlas]
-          end
-          self:juice_up(0.05, 0.03)
-        end
-      end
-    end
-  end
-
-  if anim_key then
-    -- Animation code modified from Aura
-    local t = 0
-    card.update = function(self)
-      local dt = poke_dt
-
-      local next_frame = false
-      local anim = AnimatedPokemon[anim_key]
-      t = t + dt
-      if t > 1 / (anim.fps or 10) then
-        t = t - 1 / (anim.fps or 10)
-        next_frame = true
-      end
-      if next_frame then
-        local loc = pos.y * (anim.frames_per_row or anim.frames) + pos.x
-        loc = loc + 1
-        if loc >= anim.frames then loc = anim.start_frame or 0 end
-        pos.x = loc % (anim.frames_per_row or anim.frames)
-        pos.y = math.floor(loc / (anim.frames_per_row or anim.frames))
-        self.children.center:set_sprite_pos(pos)
-        -- There is no current standard for animated soul layers in the PokemonSprites table,
-        -- so this serves as an example for how it might work but never actually gets called
-        -- (Yes, Unown Swarm isn't in the PokemonSprites table. Tragic.)
-        if soul_pos then
-          soul_pos.x = pos.x
-          soul_pos.y = pos.y
-          self.children.floating_sprite:set_sprite_pos(soul_pos)
-        end
-      end
-    end
-  end
-
-  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[card.atlas], pos)
-  card.children.center.states.hover = card.states.hover
-  card.children.center.states.click = card.states.click
-  card.children.center.states.drag = card.states.drag
-  card.children.center.states.collide.can = false
-  card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
-
-  if soul_pos then
-    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[card.atlas], soul_pos)
-    card.children.floating_sprite.role.draw_major = card
-    card.children.floating_sprite.states.hover.can = false
-    card.children.floating_sprite.states.click.can = false
-  end
-
-  -- These are required so that CardArea doesn't crash the game
-  -- They're not important, trust me
-  card.ability = {}
-  card.set_card_area = function() end
-  card.remove_from_area = function() end
-  card.highlight = function() end
-  card.update_alert = function() end
-
-  -- CardArea will just call this without arguments, which messes with Moveable
-  card.hard_set_T = function(self, X, Y, W, H)
-    local x = (X or self.T.x)
-    local y = (Y or self.T.y)
-    local w = (W or self.T.w)
-    local h = (H or self.T.h)
-    Moveable.hard_set_T(self, x, y, w, h)
-    self.children.center:hard_set_T(x, y, w, h)
-  end
-
-  card.hover = function(self)
-    self:juice_up(0.05, 0.03)
-    play_sound('paper1', math.random()*0.2 + 0.9, 0.35)
-
-    if display_text then
-      self.config.h_popup = {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
-        {n=G.UIT.R, config = {align = "cm", padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07},nodes={
-          {n=G.UIT.R, config = {align = "cm", minw = G.CARD_W, r = 0.1, padding = 0.07, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)},nodes={
-            {n=G.UIT.T, config = {text = display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #display_text, shadow = true }},
-          }}
-        }}
-      }}
-
-      self.config.h_popup_config = {
-        major = self,
-        parent = self,
-        xy_bond = 'Strong',
-        r_bond = 'Weak',
-        wh_bond = 'Weak',
-        type = 'bm',
-        offset = { x = 0, y = 0.1 },
-      }
-    end
-
-    Node.hover(self)
-  end
-
-  card.draw = function(self, layer)
-    layer = layer or 'both'
-
-    G.shared_shadow = self.children.center
-
-    if G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
-      self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + (self.states.drag.is and 0.35 or 0.1)
-      G.shared_shadow:draw_shader('dissolve', self.shadow_height)
-    end
-
-    if layer == 'card' or layer == 'both' then
-      self.children.center:draw_shader('dissolve')
-
-      if self.children.floating_sprite and not self.hide_soul_layer then
-        -- For more on what this is about, ask LocalThunk
-        local scale_mod = 0.07 + 0.02*math.sin(1.8*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL))*math.pi*14)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^3
-        local rotate_mod = 0.05*math.sin(1.219*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL)*math.pi*5)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^2
-
-        self.children.floating_sprite:draw_shader('dissolve',0, nil, nil, self.children.center,scale_mod, rotate_mod,nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL),nil, 0.6)
-        self.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
-      end
-    end
-
-    add_to_drawhash(self)
-  end
-
-  card.click = function(self)
-    self.hide_soul_layer = not self.hide_soul_layer
-  end
-
-  return card
-end
 local function get_series_localize_key(atlas_prefix)
   local series_start = string.find(atlas_prefix, "Series")
   local series = string.sub(atlas_prefix, series_start)
@@ -820,78 +693,54 @@ G.FUNCS.pokermon_actual_credits_artists_view_artist = function(e)
   }
 end
 
-function G.FUNCS.pokermon_energy(e)
-  local ttip = {set = 'Other', key = 'precise_energy_tooltip'}
-  local energy_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(energy_settings, energy_toggles)
-  
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {energy_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
+-- Pokedex View Functionality
+poke_joker_page = 1
+
+local function create_UIBox_pokedex_jokers(keys, previous_menu)
+  return create_UIBox_generic_options {
+    back_func = previous_menu or 'exit_overlay_menu',
+    contents = poke_create_UIBox_your_collection {
+      keys = keys,
+      cols = 4,
+      dynamic_sizing = true
+    }
+  }
 end
-function G.FUNCS.pokermon_joker_pool(e)
-  local joker_pool_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(joker_pool_settings, joker_pool_toggles)
-  
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {joker_pool_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
+
+local function open_pokedex(target)
+  if target and target:is(Card) and target.facing ~= 'back'
+      and not target.poke_change_sprite
+      and (target.config.center.stage or target.config.center.poke_multi_item) then
+    local menu = G.SETTINGS.paused and 'pokedex_back' or nil
+    if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
+    if menu and target.config.center.poke_multi_item then menu = 'your_collection_consumables' end
+    G.FUNCS.overlay_menu {
+      definition = create_UIBox_pokedex_jokers(get_family_keys(target.config.center.name, target.config.center.poke_custom_prefix, target), menu),
+    }
+    G.CONTROLLER:update_focus()
+  end
 end
-function G.FUNCS.pokermon_misc_no_restart(e)
-  local misc_no_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(misc_no_restart_settings, misc_no_restart_toggles)
-    
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {misc_no_restart_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
+
+local function open_pokedex_from_highlighted()
+  local highlighted = (G.jokers and G.jokers.highlighted and G.jokers.highlighted[1])
+      or (G.consumeables and G.consumeables.highlighted and G.consumeables.highlighted[1])
+
+  if highlighted then
+    open_pokedex(highlighted)
+  end
 end
-function G.FUNCS.pokermon_content(e)
-  local content_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(content_settings, content_toggles)
-  
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {content_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
+
+G.FUNCS.pokedex_back = function()
+  G.FUNCS.your_collection_jokers()
+  G.FUNCS.SMODS_card_collection_page({ cycle_config = { current_option = poke_joker_page } })
+  local page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1]
+  page.config.ref_table.current_option = poke_joker_page
+  page.config.ref_table.current_option_val = page.config.ref_table.options[poke_joker_page]
 end
-function G.FUNCS.pokermon_visual(e)
-  local visual_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(visual_settings, visual_toggles)
-  
-  visual_settings.nodes[#visual_settings.nodes + 1] = 
-    create_option_cycle({
-      label = localize("poke_settings_pokemon_spritesheet"),
-      scale = 0.8,
-      w = 6,
-      options = {localize("poke_settings_pokemon_spritesheet_classic"), localize("poke_settings_pokemon_spritesheet_seriesa"),},
-      opt_callback = 'pokermon_upd_sprite_setting',
-      current_option = pokermon_config.pokemon_spritesheet_id,
-    })
-  
-  visual_settings.nodes[#visual_settings.nodes + 1] = 
-    UIBox_button({
-      minw = 3.85,
-      button = "pokermon_individual_sprites",
-      label = {"Individual Sprites"}
-    })
-  
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {visual_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
-end
-function G.FUNCS.pokermon_misc_restart(e)
-  local misc_restart_settings = {n = G.UIT.R, config = {align = "tm", padding = 0.05, scale = 0.75, colour = G.C.CLEAR}, nodes = {}}
-  create_menu_toggles(misc_restart_settings, misc_restart_toggles)
-  
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'your_collection',
-      contents = {misc_restart_settings}
-  })
-  G.FUNCS.overlay_menu{definition = t}
-end
+
+poke_input_manager:add_listener({ 'right_click', 'double_click', 'right_stick' }, open_pokedex)
+
+SMODS.Keybind({ key = "openPokedex", key_pressed = "p", action = open_pokedex_from_highlighted })
 
 --Reserve Area for Pocket packs (adapted from betmma)
 local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
@@ -970,6 +819,7 @@ local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
         }))
     end
 
+-- Toggle Individual Sprites UI
 G.FUNCS.pokermon_upd_sprite_setting = function(e)
   local atlas = {"AtlasJokersBasic", "AtlasJokersSeriesA"}
   pokermon_config.pokemon_spritesheet_atlas = atlas[e.to_key]
@@ -1065,18 +915,13 @@ G.FUNCS.pokemon_toggle_sprite = function(card)
   end
 end
 
-poke_input_manager:add_listener('right_click', function(target)
+poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
   if target and target.poke_change_sprite then
     G.FUNCS.pokemon_toggle_sprite(target)
   end
 end)
 
-poke_input_manager:add_listener('right_click', function(target)
-  if target and target.poke_toggle_shiny then
-    target:poke_toggle_shiny()
-  end
-end)
-
+-- Tooltip Credits UI
 function poke_artist_credit(artists)
     local artist_name, artist_colour, artist_highlight_colour
     if type(artists) == 'string' then
