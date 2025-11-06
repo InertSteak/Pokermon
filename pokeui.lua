@@ -174,7 +174,61 @@ SMODS.current_mod.config_tab = function()
 end
 
 local pokermon_actual_credits = function()
-  local scale = 0.75
+  local credits_text = {
+    { localize("poke_credits_thanks") },
+    { localize("poke_credits_lead"), "InertSteak" },
+    { localize("poke_credits_graphics"), "GayCoonie, Joey J. Jester, Larantula, The Kuro, Lemmanade" },
+    { localize("poke_credits_graphics"), "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive, PrincessRoxie" },
+    { localize("poke_credits_graphics"), "Catzzadilla, bt, KatRoman" },
+    { localize("poke_credits_quality_assurance_main"), "Lemmanade, drspectred" },
+    { localize("poke_credits_sound"), "Dread" },
+    { localize("poke_credits_developer"), "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_, Kek, Eternalnacho" },
+    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla" },
+    { localize("poke_credits_localization"), "Rafael, PainKiller, FlamingRok, Mr. Onyx" },
+    { localize("poke_credits_localization"), "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf" },
+    { localize("poke_credits_community_manager"), "Astra, Kaethela" },
+    { localize("poke_credits_special_thanks"), "Marie|Tsunami, CBMX, 64x64 Pokémon Sprite Resource...and you!" },
+  }
+
+  local content_nodes = {}
+
+  for _, text_row in ipairs(credits_text) do
+    local row_node = { n = G.UIT.R, config = { align = "cm" }, nodes = {} }
+    for i, text in ipairs(text_row) do
+      table.insert(row_node.nodes, {
+        n = G.UIT.T,
+        config = {
+          text = text,
+          shadow = true,
+          scale = 0.6,
+          colour = i == 1 and G.C.UI.TEXT_LIGHT or G.C.BLUE,
+        }
+      })
+    end
+    table.insert(content_nodes, row_node)
+  end
+
+  table.insert(content_nodes, {
+    n = G.UIT.R,
+    config = {
+      padding = 0.2,
+      align = "cm",
+    },
+    nodes = {
+      UIBox_button({
+        minw = 3.85,
+        button = "pokermon_github",
+        label = {"Github"}
+      }),
+      UIBox_button({
+        minw = 3.85,
+        colour = HEX("9656ce"),
+        button = "pokermon_discord",
+        label = {"Discord"}
+      })
+    },
+  })
+
   return {
     label = localize("poke_credits_actualcredits"),
     tab_definition_function = function()
@@ -185,370 +239,7 @@ local pokermon_actual_credits = function()
           padding = 0.05,
           colour = G.C.CLEAR,
         },
-        nodes = {
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_thanks"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_lead"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "InertSteak",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_graphics"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "GayCoonie, Joey J. Jester, Larantula, The Kuro, Lemmanade",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            },
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_graphics"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Yamper, MyDude, Numbuh 214, SMG9000, Sonfive, PrincessRoxie",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            },
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_graphics"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Catzzadilla, bt, KatRoman",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            },
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_quality_assurance_main"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Lemmanade, drspectred",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_sound"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Dread",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_developer"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "SDM0, Jevonnissocoolman, Ishtech, Fem, MathIsFun_, Kek, Eternalnacho",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_designer"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Xilande, Lemmanade, PrincessRoxie, Catzzadilla",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_localization"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Rafael, PainKiller, FlamingRok, Mr. Onyx",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_localization"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_community_manager"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Astra, Kaethela",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0,
-              align = "cm"
-            },
-            nodes = {
-              {
-                n = G.UIT.T,
-                config = {
-                  text = localize("poke_credits_special_thanks"),
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.UI.TEXT_LIGHT
-                }
-              },
-              {
-                n = G.UIT.T,
-                config = {
-                  text = "Marie|Tsunami, CBMX, 64x64 Pokémon Sprite Resource...and you!",
-                  shadow = true,
-                  scale = scale * 0.8,
-                  colour = G.C.BLUE
-                }
-              }
-            }
-          },
-          {
-            n = G.UIT.R,
-            config = {
-              padding = 0.2,
-              align = "cm",
-            },
-            nodes = {
-              UIBox_button({
-                minw = 3.85,
-                button = "pokermon_github",
-                label = {"Github"}
-              }),
-              UIBox_button({
-                minw = 3.85,
-                colour = HEX("9656ce"),
-                button = "pokermon_discord",
-                label = {"Discord"}
-              })
-            },
-          },
-        },
+        nodes = content_nodes,
       }
     end
   }
