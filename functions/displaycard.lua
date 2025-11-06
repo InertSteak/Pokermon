@@ -22,6 +22,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
   Moveable.init(self, x, y, w, h)
 
   self.atlas = args.atlas
+  self.has_shiny = G.ASSET_ATLAS[self.atlas .. 'Shiny'] ~= nil
   self.shiny = false
 
   self:set_sprites()
@@ -71,18 +72,20 @@ function PokeDisplayCard:toggle_shiny()
         self.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
       end
       self:juice_up(0.05, 0.03)
-    else
+    elseif self.has_shiny then
+      self.shiny = true
       local shiny_atlas = self.atlas .. 'Shiny'
-      if G.ASSET_ATLAS[shiny_atlas] then
-        self.shiny = true
-        self.children.center.atlas = G.ASSET_ATLAS[shiny_atlas]
-        if self.children.floating_sprite then
-          self.children.floating_sprite.atlas = G.ASSET_ATLAS[shiny_atlas]
-        end
-        self:juice_up(0.05, 0.03)
+      self.children.center.atlas = G.ASSET_ATLAS[shiny_atlas]
+      if self.children.floating_sprite then
+        self.children.floating_sprite.atlas = G.ASSET_ATLAS[shiny_atlas]
       end
+      self:juice_up(0.05, 0.03)
     end
   end
+end
+
+function PokeDisplayCard:toggle_soul_layer()
+  self.hide_soul_layer = not self.hide_soul_layer
 end
 
 function PokeDisplayCard:set_sprites()
@@ -177,12 +180,14 @@ function PokeDisplayCard:draw(layer)
   self:draw_boundingrect()
 end
 
-function PokeDisplayCard:click()
-  self.hide_soul_layer = not self.hide_soul_layer
-end
-
 poke_input_manager:add_listener('right_click', function(target)
   if target and target.toggle_shiny and type(target.toggle_shiny) == 'function' then
     target:toggle_shiny()
+  end
+end)
+
+poke_input_manager:add_listener('double_click', function(target)
+  if target and target.toggle_soul_layer and type(target.toggle_soul_layer) == 'function' then
+    target:toggle_soul_layer()
   end
 end)
