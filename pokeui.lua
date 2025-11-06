@@ -652,7 +652,7 @@ local function pokermon_show_artist_jokers(artist)
   return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
     nodes = poke_create_UIBox_your_collection {
       keys = keys,
-      create_card_func = poke_create_display_card,
+      create_card_func = PokeDisplayCard,
     }
   }
 end
