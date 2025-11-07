@@ -46,3 +46,24 @@ SMODS.DrawStep({
    end,
    conditions = { vortex = false, facing = 'front' },
 })
+
+SMODS.DrawStep {
+   key = 'mega_sleeve',
+   order = 1,
+   func = function(self)
+      if self.config and self.config.center and self.config.center.key == 'sleeve_poke_megasleeve' then
+        self.children.back:draw_shader('booster', nil, self.ARGS.send_to_shader, true)
+      end
+   end,
+   conditions = { vortex = false, facing = 'back' }
+}
+
+if (SMODS.Mods["CardSleeves"] or {}).can_load then
+   local cardarea_draw_ref = CardArea.draw
+   function CardArea:draw(...)
+      cardarea_draw_ref(self, ...)
+      if G.GAME.selected_sleeve == 'sleeve_poke_megasleeve' and self.sleeve_sprite then
+         self.sleeve_sprite:draw_shader('negative_shine', nil, self.ARGS.send_to_shader, true)
+      end
+   end
+end
