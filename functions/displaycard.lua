@@ -27,12 +27,25 @@ function PokeDisplayCard:init(args, x, y, w, h)
 
   self:set_sprites()
 
+  self.highlighted = false
+
   -- These are required so that CardArea doesn't crash the game
   self.ability = {}
-  self.set_card_area = function() end
-  self.remove_from_area = function() end
-  self.highlight = function() end
   self.update_alert = function() end
+end
+
+function PokeDisplayCard:highlight(is_highlighted)
+  self.highlighted = is_highlighted
+end
+
+function PokeDisplayCard:set_card_area(area)
+  self.area = area
+  self.parent = area
+end
+
+function PokeDisplayCard:remove_card_area()
+  self.area = nil
+  self.parent = nil
 end
 
 function PokeDisplayCard:update()
@@ -60,6 +73,11 @@ function PokeDisplayCard:update()
         self.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
     end
+  end
+
+  if not self.states.focus.is and self.children.focused_ui then
+    self.children.focused_ui:remove()
+    self.children.focused_ui = nil
   end
 end
 
@@ -199,6 +217,10 @@ function PokeDisplayCard:hover()
   end
 
   Node.hover(self)
+
+  if self.states.focus.is and not self.children.focused_ui then
+    self.children.focused_ui = G.UIDEF.card_focus_ui(self)
+  end
 end
 
 function PokeDisplayCard:draw(layer)
@@ -212,6 +234,10 @@ function PokeDisplayCard:draw(layer)
   end
 
   if layer == 'card' or layer == 'both' then
+    if self.children.focused_ui then
+      self.children.focused_ui:draw()
+    end
+
     self.children.center:draw_shader('dissolve')
 
     if self.children.floating_sprite and not self.hide_soul_layer then
@@ -228,7 +254,7 @@ function PokeDisplayCard:draw(layer)
   self:draw_boundingrect()
 end
 
-poke_input_manager:add_listener('right_click', function(target)
+poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
   if target and target.toggle_shiny and type(target.toggle_shiny) == 'function' then
     target:toggle_shiny()
   end
@@ -239,3 +265,24 @@ poke_input_manager:add_listener('double_click', function(target)
     target:toggle_soul_layer()
   end
 end)
+
+-- Controller support
+local is_node_focusable_ref = G.CONTROLLER.is_node_focusable
+function G.CONTROLLER:is_node_focusable(node)
+  if not self.screen_keyboard and node:is(PokeDisplayCard) then
+    return true
+  end
+  return is_node_focusable_ref(self, node)
+end
+
+local game_draw_ref = Game.draw
+function Game:draw()
+  game_draw_ref(self)
+  local target = self.CONTROLLER.focused.target
+  if target and target:is(PokeDisplayCard) then
+    love.graphics.push()
+    target:translate_container()
+    target:draw()
+    love.graphics.pop()
+  end
+end
