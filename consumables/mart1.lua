@@ -496,13 +496,7 @@ local bird_energy = {
   key = "bird_energy",
   set = "Energy",
   animated = true,
-  artist = poke_get_artist_info("Catzzadilla").display_name,
-  artist_colours = {poke_get_artist_info("Catzzadilla").artist_colour}, 
-  artist_highlight_colours = poke_get_artist_info("Catzzadilla").highlight_colour,
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {energy_max + (G.GAME.energy_plus or 0)}}
-  end,
+  artist = "Catzzadilla",
   pos = { x = 0, y = 0 },
   atlas = "AtlasConsumablesBirdEnergy",
   cost = 4,
