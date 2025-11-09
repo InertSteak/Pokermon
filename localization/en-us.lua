@@ -1051,8 +1051,8 @@ return {
                     "Gain {C:chips}+#4#{} for scoring {C:attention}Bonus{} / {C:attention}Stone{} cards",
                     "{C:mult}+#2#{} for scoring {C:attention}Mult{} / {C:attention}Wild{} cards",
                     "{X:mult,C:white}X#6#{} for scoring {C:attention}Steel{} / {C:attention}Glass{} cards",
-                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards",
-                    "Then remove scoring card {C:dark_edition}Enhancements",
+                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards,",
+                    "removes card {C:attention}Enhancement",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive}, {C:mult}+#1#{C:inactive}, {X:mult,C:white}X#5#{C:inactive}, {C:money}$#7#{C:inactive} end of round)",
                     "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#9#{C:inactive,s:0.8} Enhancements)",
                 } 
@@ -3874,7 +3874,7 @@ return {
                   "{C:inactive}(Must have room){}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Earn {C:money}$#3#{} per scoring",
-                  "{C:attention}Enhanced{} card played",
+                  "{C:attention}Enhanced{} card played,",
                   "removes card {C:attention}Enhancement",
                   "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
