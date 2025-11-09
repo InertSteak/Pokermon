@@ -162,8 +162,8 @@ local megadeck = {
     return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
                     self.config.shop_size}}
   end,
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_deck",
+	pos = { x = 9, y = 0 },
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.E_MANAGER:add_event(Event({
       func = function()

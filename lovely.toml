@@ -459,14 +459,14 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "game.lua"
-pattern = "if #G.hand.cards < 1 and #G.deck.cards < 1 and #G.play.cards < 1 then"
-position = "before"
+pattern = "function Game:update_selecting_hand(dt)"
+position = "after"
 payload = '''
-if not self.scry_view and type(create_scry_cardarea) == "function" then
-  self.scry_view = create_scry_cardarea()
-elseif self.scry_view then
-  update_scry_cardarea(self.scry_view)
-end
+    if not self.scry_view and type(create_scry_cardarea) == "function" then
+      self.scry_view = create_scry_cardarea()
+    elseif self.scry_view then
+      update_scry_cardarea(self.scry_view)
+    end
 '''
 match_indent = true
 
@@ -528,7 +528,6 @@ if card.area == G.scry_view then
 end
 '''
 match_indent = true
-
 
 #Zorua Rental Incompatibility
 [[patches]]
