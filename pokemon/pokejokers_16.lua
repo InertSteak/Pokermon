@@ -617,9 +617,17 @@ local mamoswine={
         
         if stoneglass > 0 then
           if earn then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+            local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
             return {
               mult = card.ability.extra.mult * stoneglass,
-              dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+              dollars = earned,
               card = card
             }
           else
@@ -630,8 +638,16 @@ local mamoswine={
           end
         end
       elseif earn then
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+            end
+        }))
+        local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
         return {
-          dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+          dollars = earned,
           card = card
         }
       end
