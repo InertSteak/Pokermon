@@ -84,6 +84,28 @@ local cgoose={
   end
 }
 
+local mirror = {
+  key = "mirror",
+  dollars = 5,
+  mult = 2,
+  boss = { min = 3, max = 80 },
+  pos = { x = 0, y = 1 },
+  atlas = "AtlasBossblinds",
+  boss_colour = HEX("C57BE6"),
+  debuff = {},
+  config = {},
+  discovered = true,
+  set_blind = function(self)
+    if #G.jokers.cards > 0 then
+      local target = G.jokers.cards[#G.jokers.cards]
+      if target.ability.eternal then
+        target:set_eternal(false)
+      end
+      poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
+    end
+  end
+}
+
 return {name = "Blinds",
-        list = {cgoose}
+        list = {mirror, cgoose}
 }
