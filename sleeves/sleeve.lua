@@ -169,11 +169,11 @@ local futuresleeve = {
 
 --Stadium Sleeve
 local stadiumsleeve = {
-    name = "stadiumsleeve",
+  name = "stadiumsleeve",
   key = "stadiumsleeve",
   prefix_config = {},
-  pos = { x = 0, y = 0 },
-  atlas = "placeholder_sleeve",
+  pos = { x = 8, y = 1 },
+  atlas = "AtlasDecksBasic",
   loc_vars = function(self, info_queue, center)
     local curr_key = nil
     if self.get_current_deck_key() == "b_poke_stadiumdeck" then
