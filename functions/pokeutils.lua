@@ -437,6 +437,7 @@ end
 
 poke_is_in_collection = function(card)
   if G.your_collection then
+    if not card.area then return true end
     for k, v in pairs(G.your_collection) do
       if card.area == v then
         return true
@@ -607,6 +608,7 @@ set_joker_family_win = function(card)
       if #keys > 1 then
         local index
         for k, v in ipairs(keys) do
+          if type(v) == "table" then v = v.key end
           if v == card.config.center.key then index = k end
           --Excludes higher evolutions
           if index and k > index and (G.P_CENTERS[v]['stage'] ~= card.config.center.stage or G.P_CENTERS[v]['stage'] == "Legendary") and G.P_CENTERS[v]['auto_sticker'] ~= true then break end 
@@ -631,4 +633,9 @@ set_joker_family_win = function(card)
       end
     end
   end
+end
+
+poke_can_set_sprite = function(card)
+  if poke_is_in_collection(card) and not card.discovered then return false end
+  return true
 end

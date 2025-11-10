@@ -118,6 +118,14 @@ return {
                     "every hand",
                 }, 
             },
+            bl_poke_mirror = {
+                name = "The Mirror",
+                text = {
+                    "Rightmost Joker",
+                    "transforms into a {c:attention}Ditto",
+                    "when {C:attention}Blind{} selected",
+                }, 
+            },
         },
         Item = {
             c_poke_pokeball = {
@@ -589,6 +597,12 @@ return {
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
+            c_poke_bird_energy = {
+                name = "Bird Energy",
+                text = {
+                  ""
+                },
+            },
             c_poke_emergy = {
                 name = "Emergy",
                 text = {
@@ -1045,8 +1059,8 @@ return {
                     "Gain {C:chips}+#4#{} for scoring {C:attention}Bonus{} / {C:attention}Stone{} cards",
                     "{C:mult}+#2#{} for scoring {C:attention}Mult{} / {C:attention}Wild{} cards",
                     "{X:mult,C:white}X#6#{} for scoring {C:attention}Steel{} / {C:attention}Glass{} cards",
-                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards",
-                    "Then remove scoring card {C:dark_edition}Enhancements",
+                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards,",
+                    "removes card {C:attention}Enhancement",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive}, {C:mult}+#1#{C:inactive}, {X:mult,C:white}X#5#{C:inactive}, {C:money}$#7#{C:inactive} end of round)",
                     "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#9#{C:inactive,s:0.8} Enhancements)",
                 } 
@@ -3050,8 +3064,9 @@ return {
             j_poke_suicune = {
                 name = "Suicune",
                 text = {
-                  "Permanently {C:attention}doubles{} the total chips",
-                  "of each card in played hand",
+                  "Permanently {C:attention}doubles{} the",
+                  "total chips of each scoring",
+                  "card in played hand",
                   "{C:inactive}(Up to {C:chips}+#1#{C:inactive} Chips per increase)",
                 }
             },
@@ -3291,7 +3306,7 @@ return {
                 name = 'Aron',
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
-                    "{C:attention}Steel{} card in poker hand,",
+                    "{C:attention}Steel{} card in {C:attention}poker hand{},",
                     "then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X2{C:inactive} Mult)",
                 }
@@ -3301,7 +3316,7 @@ return {
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{} and {C:attention}Stone{} card in",
-                    "poker hand, then destroy them",
+                    "{C:attention}poker hand{}, then destroy them",
                     "{C:inactive}(Evolves at {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X4{C:inactive} Mult)"
                 }
             },
@@ -3310,7 +3325,7 @@ return {
                 text = {
                     "Gain {X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Steel{}, {C:attention}Stone{} and {C:attention}Gold{} card in",
-                    "poker hand, then destroy them",
+                    "{C:attention}poker hand{}, then destroy them",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
@@ -3867,7 +3882,7 @@ return {
                   "{C:inactive}(Must have room){}",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Earn {C:money}$#3#{} per scoring",
-                  "{C:attention}Enhanced{} card played",
+                  "{C:attention}Enhanced{} card played,",
                   "removes card {C:attention}Enhancement",
                   "{C:inactive}(Transforms when using a {C:attention}Machine{C:inactive}){}"
                 }
@@ -4164,7 +4179,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, create a",
                     "{C:dark_edition}Negative{} {C:planet}Planet{} card of one of",
-                    "your {C:attention}#1#{} highest level poker hands",
+                    "your {C:attention}#1#{} highest level {C:attention}poker hands",
                     "{C:inactive,s:0.8}(Evolves when holding #2#/{C:planet,s:0.8}#3#{C:inactive,s:0.8} different planet cards){}"
                 }
             },
@@ -4173,7 +4188,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, create a",
                     "{C:dark_edition}Negative{} {C:planet}Planet{} card of one of",
-                    "your {C:attention}#1#{} highest level poker hands",
+                    "your {C:attention}#1#{} highest level {C:attention}poker hands",
                     "{br:3.5}ERROR - CONTACT STEAK",
                     "After opening {C:attention}#2# Boosters{}, create a",
                     "{C:attention}Telescope{} or {C:attention}Observatory{} if able"
@@ -4432,7 +4447,7 @@ return {
                 "{br:3}ERROR - CONTACT STEAK",
                 "If first played hand has",
                 "exactly {C:attention}1{} card it gives", 
-                "{C:chips}+#2#{} Chips and {C:attention}+1{} hand this",
+                "{C:chips}+#2#{} Chips and {C:blue}+1{} hand this",
                 "round when scored"
               }
             },
@@ -5333,7 +5348,7 @@ return {
                 text = {
                     "Effect based on",
                     "number of {C:attention}#1#s{}",
-                    "in poker hand",
+                    "in {C:attention}poker hand",
                     "{C:inactive}(Effects are {C:attention}cumulative{C:inactive})"
                 }
             },
@@ -6115,6 +6130,10 @@ return {
             k_poke_pocket_pack = "Pocket Pack",
             k_poke_wish_pack = "Wish Pack",
             k_poke_starter_pack = "Starter Pack",
+            k_poke_gives = "Gives",
+            k_poke_ignores = "Ignores",
+            k_poke_limit = "Limit",
+            k_poke_pp = "PP UP",
             
             k_poke_baby = "Baby",
             k_poke_safari = "Safari",
@@ -6272,6 +6291,8 @@ return {
             poke_iron_tail_ex = "Iron Tail!",
             poke_autotomize_ex = "Autotomize!",
             poke_highjumpkick_ex = "High Jump Kick!",
+            poke_water_gun_ex = "Water Gun!",
+            poke_sky_attack_ex = "Sky Attack!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",

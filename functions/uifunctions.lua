@@ -77,3 +77,21 @@ update_scry_cardarea = function(scry_view)
       end,
    }))
 end
+
+poke_random_text = function(strings, config)
+  config = config or {}
+  local c_colours = config.colours or {G.C.UI.TEXT_DARK}
+  if config.poke_rep_string and config.poke_rep_num then
+    for i = 1, config.poke_rep_num do
+      strings[#strings + 1] = config.poke_rep_string
+    end
+  end
+  local c_scale = config.scale or 0.32
+  local c_pop_in_rate = config.pop_in_rate or 9999999
+  local c_silent = config.not_silent and false or true
+  local c_random_element = config.not_random_element and false or true
+  local c_pop_delay = config.pop_delay or 0.2011
+  local c_min_cycle_time = config.min_cycle_time or 0
+  return {colours = c_colours, string = strings, scale = c_scale, pop_in_rate = c_pop_in_rate, silent = c_silent, random_element = c_random_element, 
+          pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
+end

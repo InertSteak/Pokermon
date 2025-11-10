@@ -82,8 +82,24 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "placeholder_blind",
+    atlas_table = "ANIMATION_ATLAS",
+    path = "placeholder_blind.png",
+    px = 34,
+    py = 34,
+    frames = 21,
+}):register()
+
+SMODS.Atlas({
     key = "AtlasConsumablesBasic",
     path = "Basic Series/AtlasConsumablesBasic.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasConsumablesBirdEnergy",
+    path = "Basic Series/AtlasConsumablesBirdEnergy.png",
     px = 71,
     py = 95
 }):register()

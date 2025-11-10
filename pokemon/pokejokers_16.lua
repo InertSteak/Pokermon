@@ -481,7 +481,7 @@ local leafeon={
   gen = 4,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
+    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.before and card.ability.extra.h_size > 0 then
         card.ability.extra.h_size = card.ability.extra.h_size - card.ability.extra.h_mod
         G.hand:change_size(-card.ability.extra.h_mod)
@@ -491,7 +491,7 @@ local leafeon={
         }
       end
     end
-    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit then
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit and not context.blueprint then
       card.ability.extra.h_size = card.ability.extra.h_size + card.ability.extra.h_mod
       G.hand:change_size(card.ability.extra.h_mod)
       return {
@@ -670,12 +670,16 @@ local porygonz={
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Energy' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local energy_key = nil
+      if pseudorandom('porygonz') < .05 then
+        energy_key = 'c_poke_bird_energy'
+      end
       G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
       G.E_MANAGER:add_event(Event({
           trigger = 'immediate',
           delay = 0.0,
           func = (function()
-                  local _card = create_card('Energy', G.consumeables, nil, nil, nil, nil, nil, 'pory')
+                  local _card = create_card('Energy', G.consumeables, nil, nil, nil, nil, energy_key, 'pory')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0
@@ -823,6 +827,7 @@ local rotom={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  auto_sticker = true,
   calculate = function(self, card, context)
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then
