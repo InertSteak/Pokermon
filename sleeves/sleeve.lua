@@ -30,7 +30,7 @@ end
       else
         curr_key = self.key
       end
-			return {key = curr_key, vars = {localize("goodrod_variable"), localize("greatball_variable")}}
+			return {key = curr_key, vars = {localize("goodrod_variable"), localize("pokeball_variable"), localize("greatball_variable")}}
 		end,
     apply = function(self)
       G.E_MANAGER:add_event(Event({

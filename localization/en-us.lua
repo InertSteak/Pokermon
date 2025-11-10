@@ -4968,9 +4968,8 @@ return {
             sleeve_poke_pokemonsleeve_alt = {
                 name = "Trainer Sleeve",
                 text = {
-                    "Start run with the",
-                    "{C:tarot,T:v_poke_goodrod}#1#{} voucher",
-                    "and a {C:tarot,T:c_poke_greatball}#2#{} card",
+                    "Start run with a {C:tarot,T:c_poke_greatball}#3#{} card",
+                    "instead of a {C:tarot,T:c_poke_pokeball}#2#{} card",
                 },
             },
             sleeve_poke_obituarysleeve = {
@@ -5061,9 +5060,9 @@ return {
             sleeve_poke_vendingsleeve_alt = {
                 name = "Vending Sleeve",
                 text = {
-                    "After defeating each",
-                    "{C:attention}Boss Blind{}, gain a",
-                    "{C:attention,T:tag_vremade_double}#1#",
+                    "Gain a {C:attention,T:tag_vremade_double}#1#",
+                    "after defeating every",
+                    "{C:attention}Boss Blind{} instead"
                 } 
             },
         },
