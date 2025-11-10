@@ -1155,7 +1155,7 @@ local mega_kangaskhan={
   ptype = "Colorless",
   atlas = "Megas",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play then
       return {
@@ -1164,7 +1164,7 @@ local mega_kangaskhan={
         card = card
       }
     end
-    if context.using_consumeable then
+    if context.using_consumeable and not context.blueprint then
       card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1
       if card.ability.extra.consumeables_used >= 2 then
         local eval = function(card) return (card.ability.extra.consumeables_used and card.ability.extra.consumeables_used >= 2) and not G.RESET_JIGGLES end
