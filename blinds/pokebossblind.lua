@@ -98,6 +98,9 @@ local mirror = {
   set_blind = function(self)
     if #G.jokers.cards > 0 then
       local target = G.jokers.cards[#G.jokers.cards]
+      if target.ability.eternal then
+        target:set_eternal(false)
+      end
       poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
     end
   end
