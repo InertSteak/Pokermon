@@ -1155,7 +1155,7 @@ local mega_kangaskhan={
   ptype = "Colorless",
   atlas = "Megas",
   gen = 1,
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play then
       return {
@@ -1164,7 +1164,7 @@ local mega_kangaskhan={
         card = card
       }
     end
-    if context.using_consumeable and not context.blueprint then
+    if context.using_consumeable then
       card.ability.extra.consumeables_used = card.ability.extra.consumeables_used + 1
       if card.ability.extra.consumeables_used >= 2 then
         local eval = function(card) return (card.ability.extra.consumeables_used and card.ability.extra.consumeables_used >= 2) and not G.RESET_JIGGLES end
@@ -1359,6 +1359,14 @@ local staryu={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+            end
+        }))
+
         local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult,

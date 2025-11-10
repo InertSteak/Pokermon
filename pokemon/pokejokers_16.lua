@@ -481,7 +481,7 @@ local leafeon={
   gen = 4,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
+    if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and card.ability.extra.h_size > 0 then
         card.ability.extra.h_size = card.ability.extra.h_size - card.ability.extra.h_mod
         G.hand:change_size(-card.ability.extra.h_mod)
@@ -491,7 +491,7 @@ local leafeon={
         }
       end
     end
-    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit and not context.blueprint then
+    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit then
       card.ability.extra.h_size = card.ability.extra.h_size + card.ability.extra.h_mod
       G.hand:change_size(card.ability.extra.h_mod)
       return {
@@ -617,9 +617,17 @@ local mamoswine={
         
         if stoneglass > 0 then
           if earn then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+            local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
             return {
               mult = card.ability.extra.mult * stoneglass,
-              dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+              dollars = earned,
               card = card
             }
           else
@@ -630,8 +638,16 @@ local mamoswine={
           end
         end
       elseif earn then
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+            end
+        }))
+        local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
         return {
-          dollars = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true),
+          dollars = earned,
           card = card
         }
       end
