@@ -198,18 +198,20 @@ local vendingdeck = {
   end,
 	pos = { x = 7, y = 0 },
 	atlas = "AtlasDecksBasic",
-    calculate = function(self, back, context)
+  calculate = function(self, back, context)
+    if not ((SMODS.Mods["CardSleeves"] or {}).can_load and G.GAME.selected_sleeve == 'sleeve_poke_vendingsleeve') then
       if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  add_tag(Tag('tag_voucher'))
-                  play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
-                  play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
-                  return true
-              end
-          }))
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                add_tag(Tag('tag_voucher'))
+                play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
       end
-    end,
+    end
+  end,
 }
 
 local dList = {luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck}

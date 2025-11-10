@@ -4950,6 +4950,14 @@ return {
                     "and a {C:tarot,T:c_poke_pokeball}#2#{} card",
                 },
             },
+            sleeve_poke_pokemonsleeve_alt = {
+                name = "Trainer Sleeve",
+                text = {
+                    "Start run with the",
+                    "{C:tarot,T:v_poke_goodrod}#1#{} voucher",
+                    "and a {C:tarot,T:c_poke_greatball}#2#{} card",
+                },
+            },
             sleeve_poke_obituarysleeve = {
                 name = "Obituary Sleeve",
                 text = {
@@ -4994,6 +5002,13 @@ return {
                     "{C:purple}+#1# Foresight{}",
                 } 
             },
+            sleeve_poke_futuresleeve_alt = {
+                name = "Future Sleeve",
+                text = {
+                  "Gain {C:purple}+#2# Foresight{} when hand is played",
+                  "{C:inactive,s:0.8}(Resets at end of round)",
+                } 
+            },
             sleeve_poke_stadiumsleeve = {
                 name = "Stadium Sleeve",
                 text = {
@@ -5001,6 +5016,14 @@ return {
                     "an additional {C:attention}Bonus, Mult,",
                     "{C:attention}Wild, Glass, Steel, Stone,",
                     "{C:attention}Gold{}, and {C:attention}Lucky{} card"
+                } 
+            },
+            sleeve_poke_stadiumsleeve_alt = {
+                name = "Stadium Sleeve",
+                text = {
+                    "After defeating each",
+                    "{C:attention}Boss Blind{}, create a random",
+                    "{C:dark_edition}Negative{} {C:attention}Enhancement{} {C:tarot}Tarot{} card"
                 } 
             },
             sleeve_poke_megasleeve = {
@@ -5017,6 +5040,14 @@ return {
                 text = {
                     "After defeating each",
                     "{C:attention}Odd Boss Blind{}, gain a",
+                    "{C:attention,T:tag_vremade_double}#1#",
+                } 
+            },
+            sleeve_poke_vendingsleeve_alt = {
+                name = "Vending Sleeve",
+                text = {
+                    "After defeating each",
+                    "{C:attention}Boss Blind{}, gain a",
                     "{C:attention,T:tag_vremade_double}#1#",
                 } 
             },
@@ -6165,6 +6196,7 @@ return {
             cubone_marowak_infoqueue = "Cubone and Marowak",
             snorlax_infoqueue = "Snorlax",
             pokeball_variable = "Pokéball",
+            greatball_variable = "Greatball",
             goodrod_variable = "Good Rod",
             pinkseal_variable = "Pink Seal",
             silverseal_variable = "Silver Seal",
