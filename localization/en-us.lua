@@ -118,6 +118,14 @@ return {
                     "every hand",
                 }, 
             },
+            bl_poke_mirror = {
+                name = "The Mirror",
+                text = {
+                    "Rightmost Joker",
+                    "transforms into a {c:attention}Ditto",
+                    "when {C:attention}Blind{} selected",
+                }, 
+            },
         },
         Item = {
             c_poke_pokeball = {
