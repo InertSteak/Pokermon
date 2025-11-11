@@ -255,3 +255,19 @@ G.FUNCS.poke_your_collection_page = function(args)
 
   INIT_COLLECTION_CARD_ALERTS()
 end
+
+function poke_UIBox_link_button(args)
+  args.button = 'pokermon_open_site'
+  local button = UIBox_button(args)
+  button.nodes[1].config.url = args.url
+  return button
+end
+
+function G.FUNCS.pokermon_open_site(e)
+  if e and e.config then
+    local url = e.config.url
+    if url then
+      love.system.openURL(url)
+    end
+  end
+end

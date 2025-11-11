@@ -6172,6 +6172,16 @@ return {
             poke_artist_credits_toggle_shiny = "Right Click to toggle Shiny",
             poke_artist_credits_toggle_soul_layer = "Double Click to hide Soul Layer",
 
+            poke_artist_credits_sprite_resource_content = {
+                "The basic sprites art style uses sprites from",
+                "the 64x64 Pokémon sprites resource, as well as its successors.",
+                "While the plan is to eventually use Series A as the new standard,",
+                "we'd like to thank all contributors to these resources",
+                "for the opportunity to use these sprites.",
+                "You may find the Pokecommunity threads for these resources",
+                "by clicking their respective buttons:"
+            },
+
             poke_plus_pokeitem = "+1 Item",
             poke_plus_energy = "+1 Energy",
             poke_plus_consumable = "+1 Consumable",

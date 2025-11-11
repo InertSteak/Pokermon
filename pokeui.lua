@@ -395,9 +395,37 @@ local pokermon_actual_credits_artists = function()
 end
 
 G.FUNCS.pokermon_sprite_resource = function()
-  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
-    {n=G.UIT.R, config={align = "cm"}, nodes={
-      {n=G.UIT.T, config={text = "Hello! This page is under construction!", colour = G.C.UI.TEXT_LIGHT, scale = 1}}
+  local lines = localize('poke_artist_credits_sprite_resource_content')
+  local content_nodes = {}
+
+  for _, text in ipairs(lines) do
+    table.insert(content_nodes, { n = G.UIT.R, config = { align = "cm" }, nodes = {
+      { n = G.UIT.T, config = { text = text, scale = 0.6, colour = G.C.UI.TEXT_LIGHT } }
+    }})
+  end
+
+  local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_" .. G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
+    {n=G.UIT.C, config={align = "cm"}, nodes={
+      { n = G.UIT.R, config = { align = "cm", padding = 0.1, }, nodes = {
+        { n = G.UIT.C, config = { align = "cm" }, nodes = content_nodes }
+      }},
+      { n = G.UIT.R, config = { align = "cm" }, nodes = {
+        { n = G.UIT.C, config = { align = "cm" }, nodes = {
+          { n = G.UIT.R, config = { minh = 0.2 }},
+          { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
+            poke_UIBox_link_button({ label = { "Gen I-V" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/the-ds-style-64x64-pok%C3%A9mon-sprite-resource-completed.267728/" }),
+            { n = G.UIT.T, config = { text = "by Chaos Rush", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
+          }},
+          { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
+            poke_UIBox_link_button({ label = { "Gen VI" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/gen-vi-ds-style-64x64-pokemon-sprite-resource.314422/" }),
+            { n = G.UIT.T, config = { text = "by MrDollSteak", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
+          }},
+          { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
+            poke_UIBox_link_button({ label = { "Gen VII+" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/ds-style-gen-vii-and-beyond-pok%C3%A9mon-sprite-repository-in-64x64.368703/" }),
+            { n = G.UIT.T, config = { text = "by thedarkdragon11", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
+          }},
+        }}
+      }},
     }},
   }})
 
@@ -434,9 +462,11 @@ end
 
 local function get_series_localize_key(atlas_prefix)
   local series_start = string.find(atlas_prefix, "Series")
-  local series = string.sub(atlas_prefix, series_start)
-  local localize_prefix = 'poke_settings_pokemon_spritesheet_'
-  return localize_prefix .. string.lower(series)
+  if series_start then
+    local series = string.sub(atlas_prefix, series_start)
+    local localize_prefix = 'poke_settings_pokemon_spritesheet_'
+    return localize_prefix .. string.lower(series)
+  end
 end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
@@ -544,15 +574,6 @@ end
 
 local function first_to_upper(str)
   return str:gsub("^%l", string.upper)
-end
-
-function G.FUNCS.pokermon_open_site(e)
-  if e and e.config then
-    local url = e.config.url
-    if url then
-      love.system.openURL(url)
-    end
-  end
 end
 
 function poke_create_button(args)
