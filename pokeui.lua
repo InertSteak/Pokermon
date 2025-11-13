@@ -545,74 +545,6 @@ local function get_sprite_keys_by_artist(artist)
   return keys
 end
 
-local function parse_url(url)
-  -- simple Url parser for getting domain name and path
-  local protocol = url:match('[a-z]+://')
-  if protocol then url = url:sub(protocol:len()+1) end
-  local domains = {}
-  for domain in url:gmatch('([a-z0-9%-]+)%.') do
-    table.insert(domains, domain)
-  end
-  local domain_name = domains[#domains]
-  local path = url:match('.[a-z]+/(.*)')
-  return domain_name, path
-end
-
-local site_colours = {
-  ['youtube'] = G.C.RED,
-  ['twitch'] = G.C.PURPLE,
-  ['steam'] = G.C.BLACK,
-  ['steamcommunity'] = G.C.BLACK,
-  ['x'] = G.C.BLACK,
-  ['twitter'] = G.C.BLUE,
-  ['reddit'] = G.C.ORANGE,
-}
-
-local function get_site_colour(domain)
-  return site_colours[domain] or G.C.RED
-end
-
-local function first_to_upper(str)
-  return str:gsub("^%l", string.upper)
-end
-
-function poke_create_button(args)
-  -- TODO: just wrap the regular UIBox_button function and fiddle with the outcome
-  args = args or {}
-
-  local config = {
-    align = "cm",
-    r = 0.1,
-    hover = true,
-    colour = G.C.RED,
-    minw = 2.7,
-    maxw = 2.5,
-    minh = 0.9,
-    shadow = true,
-  }
-  
-  for k, v in pairs(args.config or {}) do
-    config[k] = v
-  end
-
-  local labels = args.labels or {}
-  local label_nodes = {}
-
-  for _, label in ipairs(labels) do
-    label_nodes[#label_nodes+1] = {n=G.UIT.R, config={align="cm"}, nodes={
-      {n=G.UIT.T, config={
-        text = label.text,
-        colour = label.colour or G.C.UI.TEXT_LIGHT,
-        scale = label.scale or args.text_scale or 0.75
-      }}
-    }}
-  end
-
-  return {n=G.UIT.C, config={align="cm"}, nodes={
-    {n=G.UIT.C, config = config, nodes = label_nodes},
-  }}
-end
-
 local function pokermon_show_artist_info(artist)
   local artist_info = poke_get_artist_info(artist)
   local display_name = artist_info.display_name
@@ -631,23 +563,15 @@ local function pokermon_show_artist_info(artist)
       for j = marker, marker + cols - 1 do
         local link = links[j]
         if not link then break end
-        local domain_name, path = parse_url(link.url)
-        local colour = link.colour or get_site_colour(domain_name)
-        local site_text = link.site_text or first_to_upper(domain_name)
-        local account_text = link.account_text or path
         col_nodes[#col_nodes+1] = {n=G.UIT.C, config={align="cm", padding=0.1}, nodes = {
-          poke_create_button({
-            labels = {
-              {text = site_text, scale = 0.55},
-              {text = account_text, scale = 0.32},
-            },
-            config = {
-              colour = colour,
-              padding = 0.1,
-              button = "pokermon_open_site",
-              url = link.url
-            }
-          })
+          poke_UIBox_link_button {
+            url = link.url,
+            colour = link.colour,
+            site_text = link.site,
+            bottom_text = link.account,
+            scale = { 0.55, 0.32 },
+            padding = 0.1,
+          }
         }}
       end
       row_link_nodes[#row_link_nodes+1] = {n=G.UIT.R, nodes=col_nodes}
@@ -661,6 +585,7 @@ local function pokermon_show_artist_info(artist)
         {n=G.UIT.T, config={text = display_name, colour = text_colour, scale = 1}},
       }}
     }},
+    {n=G.UIT.R, config={minh = 0.2}},
     {n=G.UIT.R, config={align="cm", padding = 0.1}, nodes = {
       {n=G.UIT.C, nodes = row_link_nodes},
     }},

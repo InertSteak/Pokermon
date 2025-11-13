@@ -256,10 +256,70 @@ G.FUNCS.poke_your_collection_page = function(args)
   INIT_COLLECTION_CARD_ALERTS()
 end
 
+local function parse_url(url)
+  -- simple Url parser for getting domain name and path
+  local protocol = url:match('[a-z]+://')
+  if protocol then url = url:sub(protocol:len() + 1) end
+  local domains = {}
+  for domain in url:gmatch('([a-z0-9%-]+)%.') do
+    table.insert(domains, domain)
+  end
+  local domain_name = domains[#domains]
+  local path = url:match('.[a-z]+/(.*)')
+  return domain_name, path
+end
+
+local site_colours = {
+  ['youtube'] = G.C.RED,
+  ['twitch'] = G.C.PURPLE,
+  ['steam'] = G.C.BLACK,
+  ['steamcommunity'] = G.C.BLACK,
+  ['x'] = G.C.BLACK,
+  ['twitter'] = G.C.BLUE,
+  ['reddit'] = G.C.ORANGE,
+}
+
+local function get_site_colour(domain)
+  return site_colours[domain] or G.C.RED
+end
+
+local function first_to_upper(str)
+  return str:gsub("^%l", string.upper)
+end
+
 function poke_UIBox_link_button(args)
+  local domain_name, path = parse_url(args.url)
+
   args.button = 'pokermon_open_site'
+  args.colour = args.colour or get_site_colour(domain_name)
+
+  if not args.label then
+    args.label = {
+      args.site_text or first_to_upper(domain_name),
+      -- we live in a society
+      args.bottom_text or path
+    }
+  end
+
+  local scale = args.scale
+
+  if type(scale) == 'table' then
+    args.scale = scale[1]
+  end
+
   local button = UIBox_button(args)
+
+  -- We can do this because UIBox_button does not return a UIBox
   button.nodes[1].config.url = args.url
+
+  if type(scale) == 'table' then
+    for i = 2, #scale do
+      if button.nodes[1].nodes[i] then
+        button.nodes[1].nodes[i].nodes[1].config.scale = scale[i]
+      end
+    end
+  end
+
   return button
 end
 
