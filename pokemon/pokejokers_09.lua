@@ -499,9 +499,9 @@ local celebi = {
   ptype = "Grass",
   atlas = "Pokedex2",
   gen = 2,
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.skip_blind then
+    if context.skip_blind and not context.blueprint then
       card:juice_up(0.1)
       card.ability.extra.skip_count = card.ability.extra.skip_count + 1
       if card.ability.extra.skip_count >= G.GAME.celebi_skips then
@@ -522,8 +522,6 @@ local celebi = {
       else
         G.GAME.celebi_triggered = false
       end
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
