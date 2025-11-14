@@ -471,56 +471,29 @@ end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
-  for _, sprite_info in ipairs(PokemonSprites.list) do
-    if sprite_info and sprite_info.alts then
-      for atlas_prefix, alt in pairs(sprite_info.alts) do
-        local artists = (type(alt.artist) == 'table' and not alt.artist.key)
-            and alt.artist
-            or {alt.artist}
+  for _, sprite in ipairs(poke_get_artist_sprites(artist)) do
+    local key = {}
 
-        for _, alt_artist in ipairs(artists) do
-          if alt_artist == artist or (type(alt_artist) == 'table' and alt_artist.key == artist) then
-            local key = {}
+    key.display_text = localize(get_series_localize_key(sprite.atlas_prefix))
+    key.layer = sprite.layer
 
-            key.display_text = localize(get_series_localize_key(atlas_prefix))
-
-            if type(alt_artist) == 'table' then
-              key.layer = alt_artist.layer
-            end
-
-            if alt.anim_atlas then
-              key.anim_key = 'j_poke_'..sprite_info.name
-              key.atlas = 'poke_'..alt.anim_atlas
-              key.pos = { x = 0, y = 0 }
-            else
-              local stub
-              if sprite_info.gen_atlas then
-                stub = (sprite_info.gen_atlas < 10 and 'Gen0' or 'Gen')..sprite_info.gen_atlas
-              else
-                stub = 'Natdex'
-              end
-              key.atlas = 'poke_'..atlas_prefix..stub
-              key.pos = sprite_info.base.pos
-              key.soul_pos = alt.soul_pos or sprite_info.base.soul_pos
-            end
-
-            keys[#keys+1] = key
-            break
-          end
-        end
-      end
+    if sprite.anim_atlas then
+      key.anim_key = 'j_poke_'..sprite.name
+      key.atlas = 'poke_'..sprite.anim_atlas
+      key.pos = { x = 0, y = 0 }
     else
-      -- Grab Jokers that don't have alts in the PokemonSprites table, like Ruins of Alph
-      local center = G.P_CENTERS['j_poke_'..sprite_info.name]
-      if center and center.artist == artist then
-        local key = {}
-        key.display_text = localize { type = 'name_text', set = 'Joker', key = center.key }
-        key.atlas = center.atlas
-        key.pos = center.pos
-        if center.soul_pos then key.soul_pos = center.soul_pos end
-        keys[#keys+1] = key
+      local stub
+      if sprite.gen_atlas then
+        stub = (sprite.gen_atlas < 10 and 'Gen0' or 'Gen')..sprite.gen_atlas
+      else
+        stub = 'Natdex'
       end
+      key.atlas = 'poke_'..sprite.atlas_prefix..stub
+      key.pos = sprite.pos
+      key.soul_pos = sprite.soul_pos
     end
+
+    keys[#keys+1] = key
   end
 
   local add_pool_to_keys = function(pool, w, h)

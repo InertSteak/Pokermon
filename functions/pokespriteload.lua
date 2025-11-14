@@ -1,5 +1,6 @@
 PokemonSprites = {
   lookup = {},
+  artist_lookup = {},
   list = {
 {name = "bulbasaur", base = {pos = {x = 0, y = 0}},},
 {name = "ivysaur", base = {pos = {x = 2, y = 0}},},
@@ -1240,16 +1241,6 @@ PokemonSprites = {
   }
 }
 
-for i, sprite in ipairs(PokemonSprites.list) do
-  PokemonSprites.lookup[sprite.name] = i
-end
-
-setmetatable(PokemonSprites, {
-  __index = function(_, key)
-    return PokemonSprites.list[PokemonSprites.lookup[key]]
-  end
-})
-
 local poke_artist_info = {
   Alber_Pro = {display_name = 'Alber_Pro', artist_colour = HEX('FFAE00')},
   bt = {display_name = 'bt', artist_colour = HEX("2C4522"), highlight_colour = HEX("efead8")},
@@ -1273,6 +1264,42 @@ local poke_artist_info = {
   TunaBear = {display_name = 'TunaBear', artist_colour = HEX("5FEDED")},
   Xenellia = {display_name = 'Xenellia', artist_colour = HEX("9B0000")}
 }
+
+poke_get_artist_sprites = function(artist)
+  PokemonSprites.artist_lookup[artist] = PokemonSprites.artist_lookup[artist] or {}
+  return PokemonSprites.artist_lookup[artist]
+end
+
+for i, sprite in ipairs(PokemonSprites.list) do
+  PokemonSprites.lookup[sprite.name] = i
+
+  if sprite.alts then
+    for atlas_prefix, alt in pairs(sprite.alts) do
+      local artists = (type(alt.artist) == 'table' and not alt.artist.key)
+          and alt.artist
+          or {alt.artist}
+
+      for _, artist in ipairs(artists) do
+        local artist_key = type(artist) == 'table' and artist.key or artist
+        table.insert(poke_get_artist_sprites(artist_key), {
+          name = sprite.name,
+          pos = sprite.base.pos,
+          soul_pos = alt.soul_pos or sprite.base.soul_pos,
+          atlas_prefix = atlas_prefix,
+          gen_atlas = sprite.gen_atlas,
+          anim_atlas = alt.anim_atlas,
+          layer = type(artist) == 'table' and artist.layer
+        })
+      end
+    end
+  end
+end
+
+setmetatable(PokemonSprites, {
+  __index = function(_, key)
+    return PokemonSprites.list[PokemonSprites.lookup[key]]
+  end
+})
 
 poke_load_sprites = function(item)
   local sprite_info = PokemonSprites[item.name]
@@ -1353,9 +1380,7 @@ poke_load_atlas = function(item)
 end
 
 poke_get_artist_info = function(name)
-  if poke_artist_info[name] then
-    return poke_artist_info[name]
-  end
+  return poke_artist_info[name]
 end
 
 poke_get_artist_list = function()
