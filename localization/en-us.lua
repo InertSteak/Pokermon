@@ -6170,6 +6170,8 @@ return {
             poke_artist_credits_artist_info = "Artist info",
             poke_artist_credits_art_collection = "Art collection",
             poke_artist_credits_toggle_shiny = "Right Click to toggle Shiny",
+            poke_artist_credits_cycle_draw_layers = "Double Click to cycle through layers",
+            poke_artist_credits_toggle_center_layer = "Double Click to hide background",
             poke_artist_credits_toggle_soul_layer = "Double Click to hide Soul Layer",
 
             poke_artist_credits_sprite_resource_content = {

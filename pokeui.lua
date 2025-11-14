@@ -474,11 +474,20 @@ local function get_sprite_keys_by_artist(artist)
   for _, sprite_info in ipairs(PokemonSprites.list) do
     if sprite_info and sprite_info.alts then
       for atlas_prefix, alt in pairs(sprite_info.alts) do
-        local artists = type(alt.artist) == 'table' and alt.artist or {alt.artist}
-        for _, alt_artist in pairs(artists) do
-          if alt_artist == artist then
+        local artists = (type(alt.artist) == 'table' and not alt.artist.key)
+            and alt.artist
+            or {alt.artist}
+
+        for _, alt_artist in ipairs(artists) do
+          if alt_artist == artist or (type(alt_artist) == 'table' and alt_artist.key == artist) then
             local key = {}
+
             key.display_text = localize(get_series_localize_key(atlas_prefix))
+
+            if type(alt_artist) == 'table' then
+              key.layer = alt_artist.layer
+            end
+
             if alt.anim_atlas then
               key.anim_key = 'j_poke_'..sprite_info.name
               key.atlas = 'poke_'..alt.anim_atlas
@@ -494,6 +503,7 @@ local function get_sprite_keys_by_artist(artist)
               key.pos = sprite_info.base.pos
               key.soul_pos = alt.soul_pos or sprite_info.base.soul_pos
             end
+
             keys[#keys+1] = key
             break
           end
@@ -876,19 +886,22 @@ end)
 
 -- Tooltip Credits UI
 function poke_artist_credit(artists)
-    local artist_name, artist_colour, artist_highlight_colour
-    if type(artists) == 'string' then
-        local artist_info = poke_get_artist_info(artists)
-        artist_name = artist_info.display_name
-        artist_colour = {artist_info.artist_colour or G.C.FILTER}
-        artist_highlight_colour = artist_info.highlight_colour
+    local artist_names, artist_colours, artist_highlight_colours = {}, {}, {}
+    local add_artist_info = function(artist)
+      if type(artist) == 'table' then
+        artist = artist.key
+      end
+      local artist_info = poke_get_artist_info(artist)
+      artist_names[#artist_names+1] = artist_info.display_name
+      artist_colours[#artist_colours+1] = artist_info.artist_colour or {G.C.FILTER}
+      artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
+    end
+
+    if type(artists) == 'string' or type(artists) == 'table' and artists.key then
+        add_artist_info(artists)
     else
-        artist_name, artist_colour, artist_highlight_colour = {}, {}, {}
         for _, artist in ipairs(artists) do
-            local artist_info = poke_get_artist_info(artist)
-            artist_name[#artist_name+1] = artist_info.display_name
-            artist_colour[#artist_colour+1] = artist_info.artist_colour or {G.C.FILTER}
-            artist_highlight_colour[#artist_highlight_colour+1] = artist_info.highlight_colour
+            add_artist_info(artist)
         end
     end
 
@@ -902,12 +915,13 @@ function poke_artist_credit(artists)
     local outline_nodes = {}
     local outline_node = nil
     local artist_node = nil
-    if type(artist_name) == 'string' then
-      outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
-      
+
+    for i = 1, #artist_names do
+      outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colours and artist_highlight_colours[i] or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
+        
       artist_node = {n=G.UIT.O, config={
-          object = DynaText({string = artist_name,
-          colours = artist_colour,
+        object = DynaText({string = artist_names[i],
+          colours = {artist_colours[i]},
           bump = true,
           silent = true,
           pop_in = 0,
@@ -915,30 +929,11 @@ function poke_artist_credit(artists)
           shadow = true,
           y_offset = -0.6,
           scale =  0.27
-          })
+        })
       }}
       table.insert(outline_node.nodes, artist_node)
-      outline_nodes[1] = outline_node
-    else
-      for i = 1, #artist_name do
-        outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colour and artist_highlight_colour[i] or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
-        
-        artist_node = {n=G.UIT.O, config={
-          object = DynaText({string = artist_name[i],
-          colours = {artist_colour[i]},
-          bump = true,
-          silent = true,
-          pop_in = 0,
-          pop_in_rate = 4,
-          shadow = true,
-          y_offset = -0.6,
-          scale =  0.27
-          })
-        }}
-        table.insert(outline_node.nodes, artist_node)
                 
-        outline_nodes[#outline_nodes + 1] = outline_node
-      end
+      outline_nodes[#outline_nodes + 1] = outline_node
     end
     
     for j = 1, #outline_nodes do

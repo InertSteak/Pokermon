@@ -14,8 +14,8 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.soul_pos = args.soul_pos
 
   if self.soul_pos then
-    self.can_hide_center = true
-    self.can_hide_soul = true
+    self.can_hide_center = args.layer ~= 'center'
+    self.can_hide_soul = args.layer ~= 'soul'
   end
 
   self.animation_key = args.anim_key
