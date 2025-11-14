@@ -862,7 +862,7 @@ function poke_artist_credit(artists)
     local artist_names, artist_colours, artist_highlight_colours = {}, {}, {}
     local add_artist_info = function(artist)
       if type(artist) == 'table' then
-        artist = artist.key
+        artist = artist.name
       end
       local artist_info = poke_get_artist_info(artist)
       artist_names[#artist_names+1] = artist_info.display_name
@@ -870,7 +870,7 @@ function poke_artist_credit(artists)
       artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
     end
 
-    if type(artists) == 'string' or type(artists) == 'table' and artists.key then
+    if type(artists) == 'string' or type(artists) == 'table' and artists.name then
         add_artist_info(artists)
     else
         for _, artist in ipairs(artists) do
