@@ -520,6 +520,13 @@ local function get_sprite_keys_by_artist(artist)
         if w then key.w = w end
         if h then key.h = h end
         local set = center.set
+        if center.set == 'Booster' or center.set == 'Spectral'
+            or center.set == 'Seal' and center.key == 'poke_silver' then
+          key.shader = 'booster'
+        end
+        if center.set == 'Voucher' then
+          key.shader = 'voucher'
+        end
         -- TODO: Seals and probably Stickers don't work
         if center.set == 'Booster' or center.set == 'Seal' or center.set == 'Sticker' then
           set = 'Other'

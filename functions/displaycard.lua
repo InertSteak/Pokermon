@@ -25,6 +25,8 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.has_shiny = G.ASSET_ATLAS[self.atlas .. 'Shiny'] ~= nil
   self.shiny = false
 
+  self.shader = args.shader
+
   self:set_sprites()
 
   self.highlighted = false
@@ -239,6 +241,13 @@ function PokeDisplayCard:draw(layer)
     end
 
     self.children.center:draw_shader('dissolve')
+
+    if self.shader then
+      self.ARGS.send_to_shader = self.ARGS.send_to_shader or {}
+      self.ARGS.send_to_shader[1] = math.min(self.VT.r * 3, 1) + G.TIMERS.REAL / 28 + (self.juice and self.juice.r * 20 or 0)
+      self.ARGS.send_to_shader[2] = G.TIMERS.REAL
+      self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader)
+    end
 
     if self.children.floating_sprite and not self.hide_soul_layer then
       -- For more on what this is about, ask LocalThunk
