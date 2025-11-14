@@ -1168,7 +1168,7 @@ PokemonSprites = {
 {name = "greavard", base = {pos = {x = 20, y = 64}},},
 {name = "houndstone", base = {pos = {x = 22, y = 64}},},
 {name = "flamigo", base = {pos = {x = 24, y = 64}},},
-{name = "cetoddle", base = {pos = {x = 26, y = 64}},alts = {AtlasJokersSeriesA = {artist = 'Sonfive', 'Ayako Ozaki'}}},
+{name = "cetoddle", base = {pos = {x = 26, y = 64}},alts = {AtlasJokersSeriesA = {artist = {'Sonfive', 'Ayako Ozaki'}}}},
 {name = "cetitan", base = {pos = {x = 28, y = 64}},},
 {name = "veluza", base = {pos = {x = 0, y = 65}},},
 {name = "dondozo", base = {pos = {x = 2, y = 65}},},
