@@ -13,6 +13,11 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.pos = args.pos
   self.soul_pos = args.soul_pos
 
+  if self.soul_pos then
+    self.can_hide_center = true
+    self.can_hide_soul = true
+  end
+
   self.animation_key = args.anim_key
   self.t = 0
 
@@ -104,8 +109,21 @@ function PokeDisplayCard:toggle_shiny()
   end
 end
 
-function PokeDisplayCard:toggle_soul_layer()
-  self.hide_soul_layer = not self.hide_soul_layer
+function PokeDisplayCard:cycle_layer_visibility()
+  if self.can_hide_soul and self.can_hide_center then
+    if not self.hide_center and not self.hide_soul then
+      self.hide_soul = not self.hide_soul
+    elseif not self.hide_center then
+      self.hide_soul = not self.hide_soul
+      self.hide_center = not self.hide_center
+    elseif not self.hide_soul then
+      self.hide_center = not self.hide_center
+    end
+  elseif self.can_hide_soul then
+    self.hide_soul = not self.hide_soul
+  elseif self.can_hide_center then
+    self.hide_center = not self.hide_center
+  end
 end
 
 function PokeDisplayCard:set_sprites()
@@ -172,13 +190,18 @@ function PokeDisplayCard:hover()
     })
   end
 
-  if self.soul_pos then
+  if self.can_hide_center or self.can_hide_soul then
+    local localize_key =
+        (not self.can_hide_soul and "poke_artist_credits_toggle_center_layer")
+        or (not self.can_hide_center and "poke_artist_credits_toggle_soul_layer")
+        or "poke_artist_credits_cycle_draw_layers"
+
     table.insert(h_popup_nodes, {
       n = G.UIT.R, config = { align = "cm" }, nodes = {
         {
           n = G.UIT.T,
           config = {
-            text = localize("poke_artist_credits_toggle_soul_layer"),
+            text = localize(localize_key),
             colour = mix_colours(G.C.UI.TEXT_LIGHT, G.C.UI.TEXT_INACTIVE, 0.65),
             scale = 0.28,
             shadow = true
@@ -230,7 +253,7 @@ function PokeDisplayCard:draw(layer)
 
   G.shared_shadow = self.children.center
 
-  if G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
+  if not self.hide_center and G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
     self.shadow_height = 0 * (0.08 + 0.4 * math.sqrt(self.velocity.x ^ 2)) + (self.states.drag.is and 0.35 or 0.1)
     G.shared_shadow:draw_shader('dissolve', self.shadow_height)
   end
@@ -240,16 +263,18 @@ function PokeDisplayCard:draw(layer)
       self.children.focused_ui:draw()
     end
 
-    self.children.center:draw_shader('dissolve')
+    if not self.hide_center then
+      self.children.center:draw_shader('dissolve')
 
-    if self.shader then
-      self.ARGS.send_to_shader = self.ARGS.send_to_shader or {}
-      self.ARGS.send_to_shader[1] = math.min(self.VT.r * 3, 1) + G.TIMERS.REAL / 28 + (self.juice and self.juice.r * 20 or 0)
-      self.ARGS.send_to_shader[2] = G.TIMERS.REAL
-      self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader)
+      if self.shader then
+        self.ARGS.send_to_shader = self.ARGS.send_to_shader or {}
+        self.ARGS.send_to_shader[1] = math.min(self.VT.r * 3, 1) + G.TIMERS.REAL / 28 + (self.juice and self.juice.r * 20 or 0)
+        self.ARGS.send_to_shader[2] = G.TIMERS.REAL
+        self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader)
+      end
     end
 
-    if self.children.floating_sprite and not self.hide_soul_layer then
+    if self.children.floating_sprite and not self.hide_soul then
       -- For more on what this is about, ask LocalThunk
       local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) + 0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
       local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) + 0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
@@ -264,14 +289,14 @@ function PokeDisplayCard:draw(layer)
 end
 
 poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
-  if target and target.toggle_shiny and type(target.toggle_shiny) == 'function' then
+  if target and target:is(PokeDisplayCard) then
     target:toggle_shiny()
   end
 end)
 
 poke_input_manager:add_listener('double_click', function(target)
-  if target and target.toggle_soul_layer and type(target.toggle_soul_layer) == 'function' then
-    target:toggle_soul_layer()
+  if target and target:is(PokeDisplayCard) then
+    target:cycle_layer_visibility()
   end
 end)
 
