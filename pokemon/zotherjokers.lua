@@ -197,9 +197,7 @@ local jelly_donut={
 local treasure_eatery={
   name = "treasure_eatery",
   pos = {x = 6, y = 1},
-  artist = poke_get_artist_info("PrincessRoxie").display_name,
-  artist_colours = {poke_get_artist_info("PrincessRoxie").artist_colour}, 
-  artist_highlight_colours = poke_get_artist_info("PrincessRoxie").highlight_colour,
+  artist = "PrincessRoxie",
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -410,9 +408,7 @@ local mystery_egg = {
 local rival = {
   name = "rival",
   pos = {x = 3, y = 1},
-  artist = poke_get_artist_info("MyDude_YT").display_name,
-  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
-  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
+  artist = "MyDude_YT",
   config = {extra = {mult = 10, Xmult = 3, form = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
@@ -515,9 +511,7 @@ local rival = {
 local ruins_of_alph={
   name = "ruins_of_alph",
   pos = {x = 1, y = 2},
-  artist = poke_get_artist_info("MyDude_YT").display_name,
-  artist_colours = {poke_get_artist_info("MyDude_YT").artist_colour}, 
-  artist_highlight_colours = poke_get_artist_info("MyDude_YT").highlight_colour,
+  artist = "MyDude_YT",
   config = {extra = {mult = 0, mult_mod = 2, merged = 0, forms = {}, quest1 = 5, quest2 = 10, quest3 = 20, quest4 = 28}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
