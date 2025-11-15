@@ -468,6 +468,7 @@ local function get_series_localize_key(atlas_prefix)
     return localize_prefix .. string.lower(series)
   end
 end
+
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
@@ -482,13 +483,7 @@ local function get_sprite_keys_by_artist(artist)
       key.atlas = 'poke_'..sprite.anim_atlas
       key.pos = { x = 0, y = 0 }
     else
-      local stub
-      if sprite.gen_atlas then
-        stub = (sprite.gen_atlas < 10 and 'Gen0' or 'Gen')..sprite.gen_atlas
-      else
-        stub = 'Natdex'
-      end
-      key.atlas = 'poke_'..sprite.atlas_prefix..stub
+      key.atlas = 'poke_'..poke_get_atlas_string(sprite.atlas_prefix, sprite.gen_atlas, sprite.others_atlas)
       key.pos = sprite.pos
       key.soul_pos = sprite.soul_pos
     end
@@ -496,40 +491,33 @@ local function get_sprite_keys_by_artist(artist)
     keys[#keys+1] = key
   end
 
-  local add_pool_to_keys = function(pool, w, h)
-    for _, center in ipairs(pool) do
-      if center.artist == artist then
-        local key = { atlas = center.atlas, pos = center.pos }
-        if w then key.w = w end
-        if h then key.h = h end
-        local set = center.set
-        if center.set == 'Booster' or center.set == 'Spectral'
-            or center.set == 'Seal' and center.key == 'poke_silver' then
-          key.shader = 'booster'
-        end
-        if center.set == 'Voucher' then
-          key.shader = 'voucher'
-        end
-        -- TODO: Seals and probably Stickers don't work
-        if center.set == 'Booster' or center.set == 'Seal' or center.set == 'Sticker' then
-          set = 'Other'
-        end
-        local display_text = localize { type = 'name_text', set = set, key = center.key }
-        if display_text and display_text ~= 'ERROR' then key.display_text = display_text end
-        keys[#keys+1] = key
+  -- Jokers get special treatment because we only want jokers without alts
+  for _, joker in ipairs(G.P_CENTER_POOLS["Joker"]) do
+    if joker.artist == artist and joker.stage == 'Other' then
+      keys[#keys+1] = { existing_key = joker.key, set = "Joker" }
+    end
+  end
+
+  local add_pool_to_keys = function(pool)
+    for _, item in pairs(pool) do
+      if item.artist == artist then
+        keys[#keys+1] = { existing_key = item.key, set = item.set }
       end
     end
   end
 
-  add_pool_to_keys(G.P_CENTER_POOLS.Consumeables)
-  add_pool_to_keys(G.P_CENTER_POOLS.Enhanced)
-  add_pool_to_keys(G.P_CENTER_POOLS.Booster, G.CARD_W*1.27, G.CARD_H*1.27)
-  add_pool_to_keys(G.P_CENTER_POOLS.Seal)
-  add_pool_to_keys(G.P_CENTER_POOLS.Tag, 0.8, 0.8)
-  add_pool_to_keys(G.P_CENTER_POOLS.Back)
+  -- We take from the pools because we want the sprites to be in order
+  add_pool_to_keys(G.P_CENTER_POOLS["Back"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Voucher"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Consumeables"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Enhanced"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Edition"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Booster"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Seal"])
+  add_pool_to_keys(G.P_CENTER_POOLS["Tag"])
 
   if artist == 'Sonfive' then
-    keys[#keys+1] = { atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
+    keys[#keys+1] = { display_text = "Main Menu Logo", atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
   end
 
   return keys
@@ -560,6 +548,7 @@ local function pokermon_show_artist_info(artist)
             site_text = link.site,
             bottom_text = link.account,
             scale = { 0.55, 0.32 },
+            minh = 1.12,
             padding = 0.1,
           }
         }}
@@ -570,8 +559,8 @@ local function pokermon_show_artist_info(artist)
   end
 
   return {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes = {
-    {n=G.UIT.R, config={align="cm"}, nodes = {
-      {n=G.UIT.R, config={colour = colour, r = 0.1, padding = 0.1}, nodes = {
+    {n=G.UIT.R, config={align="bm", minh = 1.5}, nodes = {
+      {n=G.UIT.R, config={align="cm", colour = colour, r = 0.1, padding = 0.1}, nodes = {
         {n=G.UIT.T, config={text = display_name, colour = text_colour, scale = 1}},
       }}
     }},
@@ -595,7 +584,7 @@ end
 
 G.FUNCS.pokermon_actual_credits_artists_view_artist = function(e)
   if not e then return end
-  local artist = e.config.id -- Yes, this is a hacked way of transferring values. Take it up with god.
+  local artist = e.config.id
   local t = create_UIBox_generic_options({ back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu', contents = {
     {
       n = G.UIT.R,

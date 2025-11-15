@@ -9,6 +9,10 @@ end
 PokeDisplayCard = Moveable:extend()
 
 function PokeDisplayCard:init(args, x, y, w, h)
+  if args.existing_key then
+    return self:init_from_existing(args.existing_key, args, x, y, w, h)
+  end
+
   self.display_text = args.display_text
   self.pos = args.pos
   self.soul_pos = args.soul_pos
@@ -286,6 +290,52 @@ function PokeDisplayCard:draw(layer)
 
   add_to_drawhash(self)
   self:draw_boundingrect()
+end
+
+function PokeDisplayCard:init_from_existing(key, args, x, y, w, h)
+  -- There is a very good argument for just using a regular game object instead if the item already exists, but just don't think about it
+  args = args or {}
+  local new_args = {}
+  local existing_obj
+
+  if args.set == 'Seal' then
+    existing_obj = G.P_SEALS[key]
+  elseif args.set == 'Tag' then
+    existing_obj = G.P_TAGS[key]
+  else
+    existing_obj = G.P_CENTERS[key]
+  end
+
+  new_args.atlas = existing_obj.atlas
+  new_args.pos = existing_obj.pos
+  new_args.soul_pos = existing_obj.soul_pos
+
+  if args.set == 'Booster' or args.set == 'Sticker' then
+    new_args.display_text = localize { type = 'name_text', set = 'Other', key = key }
+  elseif args.set == 'Seal' then
+    new_args.display_text = localize { type = 'name_text', set = 'Other', key = key..'_seal' }
+  else
+    new_args.display_text = localize { type = 'name_text', set = args.set, key = key }
+  end
+
+  if args.set == 'Booster' or args.set == 'Spectral' or key == 'poke_silver' then
+    new_args.shader = 'booster'
+  end
+  if args.set == 'Voucher' then
+    new_args.shader = 'voucher'
+  end
+
+  if args.set == 'Booster' then
+    w = G.CARD_W*1.27
+    h = G.CARD_H*1.27
+  end
+
+  if args.set == 'Tag' then
+    w = 0.8
+    h = 0.8
+  end
+
+  self:init(new_args, x, y, w, h)
 end
 
 poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
