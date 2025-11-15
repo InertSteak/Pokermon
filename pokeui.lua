@@ -864,8 +864,8 @@ function poke_artist_credit(artists)
       if type(artist) == 'table' then
         artist = artist.name
       end
-      local artist_info = poke_get_artist_info(artist)
-      artist_names[#artist_names+1] = artist_info.display_name
+      local artist_info = poke_get_artist_info(artist) or {}
+      artist_names[#artist_names+1] = artist_info.display_name or artist
       artist_colours[#artist_colours+1] = artist_info.artist_colour or G.C.FILTER
       artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
     end
