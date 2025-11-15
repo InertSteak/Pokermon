@@ -267,6 +267,15 @@ function PokeDisplayCard:draw(layer)
       self.children.focused_ui:draw()
     end
 
+    if self.states.hover.is then
+      self.hover_tilt = 1
+      self.tilt_var = {mx = 0, my = 0, dx = 0, dy = 0, amt = 0}
+      self.tilt_var.mx, self.tilt_var.my = G.CONTROLLER.cursor_position.x, G.CONTROLLER.cursor_position.y
+      self.tilt_var.amt = math.abs(self.hover_offset.y + self.hover_offset.x - 1)*0.3
+    else
+      self.hover_tilt = nil
+    end
+
     if not self.hide_center then
       self.children.center:draw_shader('dissolve')
 
