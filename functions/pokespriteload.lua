@@ -1241,13 +1241,9 @@ PokemonSprites = {
   }
 }
 
-local function populate_lookup_table()
-  for i, sprite in ipairs(PokemonSprites.list) do
-    PokemonSprites.lookup[sprite.name] = i
-  end
+for i, sprite in ipairs(PokemonSprites.list) do
+  PokemonSprites.lookup[sprite.name] = i
 end
-
-populate_lookup_table()
 
 setmetatable(PokemonSprites, {
   __index = function(_, key)
