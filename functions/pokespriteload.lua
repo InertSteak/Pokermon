@@ -1241,6 +1241,20 @@ PokemonSprites = {
   }
 }
 
+local function populate_lookup_table()
+  for i, sprite in ipairs(PokemonSprites.list) do
+    PokemonSprites.lookup[sprite.name] = i
+  end
+end
+
+populate_lookup_table()
+
+setmetatable(PokemonSprites, {
+  __index = function(_, key)
+    return PokemonSprites.list[PokemonSprites.lookup[key]]
+  end
+})
+
 local poke_artist_info = {
   Alber_Pro = {display_name = 'Alber_Pro', artist_colour = HEX('FFAE00')},
   bt = {display_name = 'bt', artist_colour = HEX("2C4522"), highlight_colour = HEX("efead8")},
@@ -1276,42 +1290,6 @@ local poke_artist_info = {
   Xenellia = {display_name = 'Xenellia', artist_colour = HEX("9B0000")}
 }
 
-poke_get_artist_sprites = function(artist)
-  PokemonSprites.artist_lookup[artist] = PokemonSprites.artist_lookup[artist] or {}
-  return PokemonSprites.artist_lookup[artist]
-end
-
-for i, sprite in ipairs(PokemonSprites.list) do
-  PokemonSprites.lookup[sprite.name] = i
-
-  if sprite.alts then
-    for atlas_prefix, alt in pairs(sprite.alts) do
-      local artists = (type(alt.artist) == 'table' and not alt.artist.name)
-          and alt.artist
-          or {alt.artist}
-
-      for _, artist in ipairs(artists) do
-        local artist_name = type(artist) == 'table' and artist.name or artist
-        table.insert(poke_get_artist_sprites(artist_name), {
-          name = sprite.name,
-          pos = sprite.base.pos,
-          soul_pos = alt.soul_pos or sprite.base.soul_pos,
-          atlas_prefix = atlas_prefix,
-          gen_atlas = sprite.gen_atlas,
-          anim_atlas = alt.anim_atlas,
-          layer = type(artist) == 'table' and artist.layer
-        })
-      end
-    end
-  end
-end
-
-setmetatable(PokemonSprites, {
-  __index = function(_, key)
-    return PokemonSprites.list[PokemonSprites.lookup[key]]
-  end
-})
-
 poke_load_sprites = function(item)
   local sprite_info = PokemonSprites[item.name]
   local sprite = nil
@@ -1346,6 +1324,22 @@ poke_get_atlas_prefix = function(name, sprite_info)
   return atlas_prefix
 end
 
+poke_get_atlas_string = function(atlas_prefix, gen_atlas, others_atlas)
+  if gen_atlas then
+    local gen_string
+    if gen_atlas < 10 then
+      gen_string = 'Gen0'..gen_atlas
+    else
+      gen_string = 'Gen'..gen_atlas
+    end
+    return atlas_prefix..gen_string
+  elseif others_atlas then
+    return atlas_prefix.."Others"
+  else
+    return atlas_prefix.."Natdex"
+  end
+end
+
 poke_load_atlas = function(item)
   if not item.poke_custom_atlas and PokemonSprites[item.name] then
     local sprite_info = PokemonSprites[item.name]
@@ -1362,29 +1356,9 @@ poke_load_atlas = function(item)
       end
     end
     if not item.animated then
-      if sprite_info.gen_atlas and (type(sprite_info.gen_atlas) == 'number' or item.gen) then
-        local gen = type(sprite_info.gen_atlas) == 'number' and sprite_info.gen_atlas or item.gen
-        local gen_string = nil
-        if gen < 10 then
-          gen_string = 'Gen0'..gen
-        else
-          gen_string = 'Gen'..gen
-        end
-        item.atlas = atlas_prefix..gen_string
-      elseif sprite_info.others_atlas then
-        item.atlas = atlas_prefix.."Others"
-      else
-        item.atlas = atlas_prefix.."Natdex"
-      end
-      if sprite_info.lookup_gen_atlas and (type(sprite_info.lookup_gen_atlas) == 'number' or item.gen) then
-        local gen = type(sprite_info.lookup_gen_atlas) == 'number' and sprite_info.lookup_gen_atlas or item.gen
-        local gen_string = nil
-        if gen < 10 then
-          gen_string = 'Gen0'..gen
-        else
-          gen_string = 'Gen'..gen
-        end
-        item.poke_lookup_atlas = atlas_prefix..gen_string
+      item.atlas = poke_get_atlas_string(atlas_prefix, sprite_info.gen_atlas, sprite_info.others_atlas)
+      if sprite_info.lookup_gen_atlas then
+        item.poke_lookup_atlas = poke_get_atlas_string(atlas_prefix, sprite_info.lookup_gen_atlas)
       end
     end
   end
@@ -1401,4 +1375,39 @@ poke_get_artist_list = function()
   end
   table.sort(list, function(a,b) return a:lower() < b:lower() end)
   return list
+end
+
+poke_get_artist_sprites = function(artist)
+  local sprites = {}
+
+  for _, sprite in ipairs(PokemonSprites.list) do
+
+    if sprite.alts then
+      for atlas_prefix, alt in pairs(sprite.alts) do
+        local artists = (type(alt.artist) == 'table' and not alt.artist.name)
+            and alt.artist
+            or {alt.artist}
+
+        for _, alt_artist in ipairs(artists) do
+          local artist_name = type(alt_artist) == 'table' and alt_artist.name or alt_artist
+          local layer = type(alt_artist) == 'table' and alt_artist.layer or 'both'
+
+          if artist == artist_name then
+            table.insert(sprites, {
+              name = sprite.name,
+              pos = sprite.base.pos,
+              soul_pos = alt.soul_pos or sprite.base.soul_pos,
+              atlas_prefix = atlas_prefix,
+              gen_atlas = sprite.gen_atlas,
+              others_atlas = sprite.others_atlas,
+              anim_atlas = alt.anim_atlas,
+              layer = layer
+            })
+          end
+        end
+      end
+    end
+  end
+
+  return sprites
 end
