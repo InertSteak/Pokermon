@@ -488,10 +488,11 @@ local celebi = {
   name = "celebi", 
   pos = {x = 4, y = 10},
   soul_pos = { x = 5, y = 10},
-  config = {extra = {reward = 1, skip_count = 0}},
+  config = {extra = {reward = 1, skip_count = 0, skip_target = 1, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {G.GAME.celebi_skips, card.ability.extra.reward, G.GAME.celebi_skips - card.ability.extra.skip_count}}
+    return {vars = {card.ability.extra.skip_target, card.ability.extra.reward, card.ability.extra.skip_target - card.ability.extra.skip_count, 
+                    card.ability.extra.Xmult_mod, 1 + (G.GAME.round * card.ability.extra.Xmult_mod)}}
   end,
   rarity = 4,
   cost = 20,
@@ -499,35 +500,30 @@ local celebi = {
   ptype = "Grass",
   atlas = "Pokedex2",
   gen = 2,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.skip_blind and not context.blueprint then
       card:juice_up(0.1)
       card.ability.extra.skip_count = card.ability.extra.skip_count + 1
-      if card.ability.extra.skip_count >= G.GAME.celebi_skips then
+      if card.ability.extra.skip_count >= card.ability.extra.skip_target then
         ease_ante(-card.ability.extra.reward)
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
-        G.E_MANAGER:add_event(Event({
-          trigger = 'immediate',
-          func = function()
-            if not G.GAME.celebi_triggered then
-              G.GAME.celebi_skips = G.GAME.celebi_skips + 1
-              G.GAME.celebi_triggered = true
-            end
-            card.ability.extra.skip_count = 0
-            return true
-          end
-        }))
-      else
-        G.GAME.celebi_triggered = false
+        card.ability.extra.skip_target = card.ability.extra.skip_target + 1
+        card.ability.extra.skip_count = 0
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = Xmult
+        }
       end
     end
   end,
-  set_ability = function(self, card, initial, delay_sprites)
-    G.GAME.celebi_skips = G.GAME.celebi_skips or 1
-    G.GAME.celebi_triggered = false
-  end
 }
 -- Treecko 252
 local treecko={
