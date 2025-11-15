@@ -866,7 +866,7 @@ function poke_artist_credit(artists)
       end
       local artist_info = poke_get_artist_info(artist)
       artist_names[#artist_names+1] = artist_info.display_name
-      artist_colours[#artist_colours+1] = artist_info.artist_colour or {G.C.FILTER}
+      artist_colours[#artist_colours+1] = artist_info.artist_colour or G.C.FILTER
       artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
     end
 
