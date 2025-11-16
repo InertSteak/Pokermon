@@ -340,6 +340,7 @@ end
 poke_backend_evolve = function(card, to_key)
   local custom_values_to_keep = {}
   local has_custom_values_to_keep = nil
+  local trigger_add = nil
   local new_card = G.P_CENTERS[to_key]
   if card.config.center == new_card then return end
   
@@ -353,6 +354,7 @@ poke_backend_evolve = function(card, to_key)
   
   -- if it's not a mega and not a devolution and still has rounds left, reset perish tally
   if card.ability.perishable and card.config.center.rarity ~= "poke_mega" then
+    if card.ability.perish_tally == 0 then trigger_add = true end
     card.ability.perish_tally = G.GAME.perishable_rounds
     card.debuff = false
   end
@@ -449,7 +451,11 @@ poke_backend_evolve = function(card, to_key)
       G.P_CENTERS.e_poke_shiny.on_load(card)
     end
   end
-
+  
+  if trigger_add then
+    card:add_to_deck()
+  end
+  
   -- can be removed once this PR has been merged:
   --    https://github.com/Steamodded/smods/pull/611
   local to_fix = {}
