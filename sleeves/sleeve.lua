@@ -22,10 +22,26 @@ end
 		prefix_config = {},
 		atlas = "AtlasDecksBasic",
 		pos = { x = 0, y = 1 },
-		config = {vouchers = { "v_poke_goodrod"}, consumables = {'c_poke_pokeball'}},
+		config = {vouchers = { "v_poke_goodrod"}},
 		loc_vars = function(self, info_queue, center)
-			return {vars = {localize("goodrod_variable"), localize("pokeball_variable")}}
+      local curr_key = nil
+      if self.get_current_deck_key() == 'b_poke_pokemondeck' then
+        curr_key = self.key.."_alt"
+      else
+        curr_key = self.key
+      end
+			return {key = curr_key, vars = {localize("goodrod_variable"), localize("pokeball_variable"), localize("greatball_variable")}}
 		end,
+    apply = function(self)
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          if self.get_current_deck_key() ~= 'b_poke_pokemondeck' then
+            SMODS.add_card { key = 'c_poke_pokeball' }
+          end
+          return true
+        end
+      }))
+    end
 	}
 --- Obituary Sleeve
 	local obituarysleeve = {
@@ -109,35 +125,87 @@ local futuresleeve = {
 	name = "futuresleeve",
 	key = "futuresleeve",  
   prefix_config = {},
-	config = {scry = 4},
+	config = {scry = 4, scry_plus = 1},
   loc_vars = function(self, info_queue, center)
-    return {vars = {self.config.scry}}
+    local curr_key = nil
+    if self.get_current_deck_key() == "b_poke_futuredeck" then
+      curr_key = self.key.."_alt"
+    else
+      curr_key = self.key
+    end
+    return {key = curr_key, vars = {self.config.scry, self.config.scry_plus}}
   end,
 	pos = { x = 6, y = 1 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
-  end
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if self.get_current_deck_key() ~= 'b_poke_futuredeck' then
+          G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+        end
+        return true
+      end
+    }))
+  end,
+  calculate = function(self, sleeve, context)
+    if self.get_current_deck_key() == 'b_poke_futuredeck' then
+      if context.scoring_hand then
+        if context.before then
+          G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry_plus
+          G.GAME.scry_added = (G.GAME.scry_added or 0) + self.config.scry_plus
+        end
+      end
+      if context.end_of_round and not context.individual and not context.repetition then
+        G.GAME.scry_amount = math.max(self.config.scry, (G.GAME.scry_amount or 0) - (G.GAME.scry_added or 0))
+        G.GAME.scry_added = 0
+        return {
+          message = localize('k_reset'),
+          colour = G.C.PURPLE
+        }
+      end
+    end
+  end,
 }
 
 --Stadium Sleeve
 local stadiumsleeve = {
-	name = "stadiumsleeve",
-	key = "stadiumsleeve",  
-	prefix_config = {},
-	pos = { x = 8, y = 1 },
-	atlas = "AtlasDecksBasic",
+  name = "stadiumsleeve",
+  key = "stadiumsleeve",
+  prefix_config = {},
+  pos = { x = 8, y = 1 },
+  atlas = "AtlasDecksBasic",
+  loc_vars = function(self, info_queue, center)
+    local curr_key = nil
+    if self.get_current_deck_key() == "b_poke_stadiumdeck" then
+      curr_key = self.key.."_alt"
+    else
+      curr_key = self.key
+    end
+    return {key = curr_key, vars = {}}
+  end,
   apply = function(self)
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
-        for i = 1, #enhancements do
-          local added_card = SMODS.add_card{set = 'Base', area = G.deck, no_edition = true, enhancement = enhancements[i], skip_materialize = true}
-        end
-        G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
-        return true
-      end
-    }))
+    if self.get_current_deck_key() ~= "b_poke_stadiumdeck" then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+            local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
+            for i = 1, #enhancements do
+              local added_card = SMODS.add_card{set = 'Base', area = G.deck, no_edition = true, enhancement = enhancements[i], skip_materialize = true}
+            end
+            G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
+          return true
+      end}))
+    end
+  end,
+  calculate = function(self, back, context)
+    if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and self.get_current_deck_key() == "b_poke_stadiumdeck" then
+      local bosstarots = {'c_magician', 'c_empress', 'c_heirophant', 'c_lovers', 'c_chariot', 'c_justice', 'c_devil', 'c_tower'}
+      local tarotselect = pseudorandom_element(bosstarots, pseudoseed('stadium'))
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          SMODS.add_card{set='Tarot', area = G.consumables, edition = "e_negative", key = tarotselect}
+          return true
+      end}))
+    end
   end
 }
 
@@ -170,22 +238,30 @@ local vendingsleeve = {
   prefix_config = {},
 	config = {},
   loc_vars = function(self, info_queue, center)
-    return { vars = { localize { type = 'name_text', key = 'tag_voucher', set = 'Tag' } } }
+    local curr_key = nil
+    if self.get_current_deck_key() == "b_poke_vendingdeck" then
+      curr_key = self.key.."_alt"
+    else
+      curr_key = self.key
+    end
+    return {key = curr_key, vars = { localize { type = 'name_text', key = 'tag_voucher', set = 'Tag' } } }
   end,
 	pos = { x = 7, y = 1 },
 	atlas = "AtlasDecksBasic",
-    calculate = function(self, back, context)
-      if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  add_tag(Tag('tag_voucher'))
-                  play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
-                  play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
-                  return true
-              end
-          }))
+  calculate = function(self, back, context)
+    if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss then
+      if self.get_current_deck_key() == "b_poke_vendingdeck" or ((G.GAME.round_resets.ante - 1) % 2 == 1) then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                add_tag(Tag('tag_voucher'))
+                play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
       end
-    end,
+    end
+  end
 }
 
 local slist = nil

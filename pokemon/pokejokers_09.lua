@@ -488,10 +488,11 @@ local celebi = {
   name = "celebi", 
   pos = {x = 4, y = 10},
   soul_pos = { x = 5, y = 10},
-  config = {extra = {reward = 1, skip_count = 0}},
+  config = {extra = {reward = 1, skip_count = 0, skip_target = 1, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {G.GAME.celebi_skips, card.ability.extra.reward, G.GAME.celebi_skips - card.ability.extra.skip_count}}
+    return {vars = {card.ability.extra.skip_target, card.ability.extra.reward, card.ability.extra.skip_target - card.ability.extra.skip_count, 
+                    card.ability.extra.Xmult_mod, 1 + (G.GAME.round * card.ability.extra.Xmult_mod)}}
   end,
   rarity = 4,
   cost = 20,
@@ -501,35 +502,28 @@ local celebi = {
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.skip_blind then
+    if context.skip_blind and not context.blueprint then
       card:juice_up(0.1)
       card.ability.extra.skip_count = card.ability.extra.skip_count + 1
-      if card.ability.extra.skip_count >= G.GAME.celebi_skips then
+      if card.ability.extra.skip_count >= card.ability.extra.skip_target then
         ease_ante(-card.ability.extra.reward)
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
-        G.E_MANAGER:add_event(Event({
-          trigger = 'immediate',
-          func = function()
-            if not G.GAME.celebi_triggered then
-              G.GAME.celebi_skips = G.GAME.celebi_skips + 1
-              G.GAME.celebi_triggered = true
-            end
-            card.ability.extra.skip_count = 0
-            return true
-          end
-        }))
-      else
-        G.GAME.celebi_triggered = false
+        card.ability.extra.skip_target = card.ability.extra.skip_target + 1
+        card.ability.extra.skip_count = 0
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = Xmult
+        }
+      end
     end
   end,
-  set_ability = function(self, card, initial, delay_sprites)
-    G.GAME.celebi_skips = G.GAME.celebi_skips or 1
-    G.GAME.celebi_triggered = false
-  end
 }
 -- Treecko 252
 local treecko={
@@ -566,6 +560,13 @@ local treecko={
       if (SMODS.pseudorandom_probability(card, 'treecko', card.ability.extra.num, card.ability.extra.dem, 'treecko')) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               if not context.blueprint then
                 card.ability.extra.money_earned = card.ability.extra.money_earned + earned
@@ -626,6 +627,13 @@ local grovyle={
       if (SMODS.pseudorandom_probability(card, 'seed', card.ability.extra.num, card.ability.extra.dem, 'grovyle')) or earn then
         for i=1, #card.ability.extra.targets do
           if context.other_card:get_id() == card.ability.extra.targets[i].id then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
               local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
               if not context.blueprint then
                 card.ability.extra.money_earned = card.ability.extra.money_earned + earned
@@ -680,6 +688,13 @@ local sceptile={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod + (find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money_increase)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
             local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (find_other_poke_or_energy_type(card, "Grass") * card.ability.extra.money_increase), true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {

@@ -17,6 +17,7 @@ local ampharos={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  poke_custom_values_to_keep = {"Xmult"},
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1  then
@@ -52,6 +53,7 @@ local mega_ampharos={
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
+  poke_custom_values_to_keep = {"Xmult"},
   calculate = function(self, card, context)
     if context.setting_blind and not context.blueprint then
       if G.hand.config.card_limit < math.ceil(#G.deck.cards/2) then

@@ -106,8 +106,17 @@ local earth_sticker = {
   pos = { x = 2, y = 1 },
 }
 
+local bird_sticker = {
+  key = "bird_sticker",
+  badge_colour = HEX("F7B58C"),
+  prefix_config = {key = false},
+  rate = 0.0,
+  atlas = "AtlasStickersBasic",
+  pos = { x = 4, y = 1 },
+}
+
 return
 {
   name = "Stickers",
-  list = {grass_sticker, fire_sticker, water_sticker, lightning_sticker, psychic_sticker, fighting_sticker, colorless_sticker, dark_sticker, metal_sticker, fairy_sticker, dragon_sticker, earth_sticker}
+  list = {grass_sticker, fire_sticker, water_sticker, lightning_sticker, psychic_sticker, fighting_sticker, colorless_sticker, dark_sticker, metal_sticker, fairy_sticker, dragon_sticker, earth_sticker, bird_sticker}
 }

@@ -140,8 +140,7 @@ local missingno ={
   soul_pos = { x = 2, y = 12},
   config = {extra = {tags_created = 2}},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
-    		return {vars = {center.ability.extra.tags_created}}
+    return {vars = {center.ability.extra.tags_created}}
   end,
   rarity = 4, 
   cost = 21, 
