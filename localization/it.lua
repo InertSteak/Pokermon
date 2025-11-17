@@ -67,16 +67,47 @@ return {
                 }
             },
             b_poke_ampeddeck = {
-                name = "Amped Deck",
+                name = "Mazzo Amplificato",
                 text = {
-                    "Inizia la partita con un voucher",
+                    "Inizia la partita con un buono",
                     "{C:tarot,T:v_poke_energysearch}#1#{}",
                     "e una copia di",
                     "{C:pink,T:c_poke_double_rainbow_energy}#2#"
                 } 
             },
+            b_poke_futuredeck = {
+                name = "Mazzo Futuro",
+                text = {
+                    "{C:purple}+#1# Preveggenza{}",
+                } 
+            },
+            b_poke_stadiumdeck = {
+                name = "Mazzo Stadio",
+                text = {
+                    "Inizia la partita con",
+                    "delle carte extra {C:attention}Bonus, Mult,",
+                    "{C:attention}Multiuso, di Vetro, d'Acciaio, di Pietra,",
+                    "{C:attention}Dorate{}, e {C:attention}Fortunate{}"
+                } 
+            },
+            b_poke_megadeck = {
+                name = "Mazzo Mega",
+                text = {
+                    "Inizia la partita con un buono",
+                    "{C:tarot,T:v_reroll_surplus}#2#{} e {C:tarot,T:v_reroll_glut}#3#{}",
+                    "e una carta {C:spectral,T:c_poke_megastone}#1#{}",
+                    "{C:red}-#4#{} slot nel negozio"
+                } 
+            },
+            b_poke_vendingdeck = {
+                name = "Mazzo Distributore",
+                text = {
+                    "Dopo aver sconfitto un",
+                    "{C:attention}Buio Boss pari{},ottieni dei",
+                    "{C:attention,T:tag_vremade_double}#1#",
+                } 
+            },
         },
-		
         Blind = {
             bl_poke_cgoose = {
                 name = "Camera Chartreuse",
@@ -365,6 +396,57 @@ return {
                     "{C:item}Succo di Bacca{} casuale"
                 }
             },
+            c_poke_oven = {
+                name = "Microonde",
+                text = {
+                  "Ottieni {C:attention}+#1#{} scarti per questo round",
+                  "se utilizzato durante un {C:attention}Buio",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Trasforma il {C:attention}Rotom ",
+                  "più a sinistra o selezionato"
+                }
+            },
+            c_poke_washing_machine = {
+                name = "Lavatrice",
+                text = {
+                  "Ottieni {C:attention}+#1#{} mani per questo round",
+                  "se utilizzato durante un {C:attention}Buio",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Trasforma il {C:attention}Rotom ",
+                  "più a sinistra o selezionato"
+                }
+            },
+            c_poke_fridge = {
+                name = "Frigorifero",
+                text = {
+                  "Crea {C:attention}2{} {C:attention}Consumablili casuali",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Trasforma il {C:attention}Rotom ",
+                  "più a sinistra o selezionato"
+                }
+            },
+            c_poke_fan = {
+                name = "Ventilatore",
+                text = {
+                  "Crea fino a {C:attention}2{}",
+                  "Jolly {C:blue}Comuni{}",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Trasforma il {C:attention}Rotom ",
+                  "più a sinistra o selezionato"
+                }
+            },
+            c_poke_lawn_mower = {
+                name = "Tagliaerba",
+                text = {
+                  "Ottieni {C:attention}+#1#{} dimensione della mano per questo round",
+                  "se utilizzato durante un {C:attention}Buio",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Trasforma il {C:attention}Rotom ",
+                  "più a sinistra o selezionato"
+                }
+            },
         },
         Energy = {
             c_poke_grass_energy = {
@@ -466,6 +548,14 @@ return {
                     "{C:inactive}(Massimo di {C:attention}#1#{}{C:inactive} aumenti per ogni Jolly)",
                 },
             },
+            c_poke_bird_energy = {
+                name = " Energia Uccello",
+                text = {
+                  "Aumenta la maggior parte dei valori {C:attention}punteggio{} e {C:money}${}",
+                  "del Jolly {C:attention}Uccello{} selezionato o più a sinistra permanentemente, se possibile",
+                  "{C:inactive}(Massimo di {C:attention}#1#{}{C:inactive} aumenti per ogni Jolly)",
+                },
+            },
             c_poke_emergy = {
                 name = "Emergia",
                 text = {
@@ -490,11 +580,22 @@ return {
             -- HA HA! Not anymore!
 
             m_poke_hazard = {
-                name = "Carte Pericolo",
+                name = "Carte Azzardo",
                 text = {
-                    "{C:attention}+1{} carte in mano",
                     "Nessun seme o valore",
-                    "Rimosse alla fine del round",
+                    "Il {C:attention}Potenziamento{} viene rimosso",
+                    "alla fine del round",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:green}#1# possibilità su #2#{} che venga",
+                    "distrutta se {C:attention}tenuta in mano{}",
+                    "alla fine del round"
+                },
+            },
+            m_poke_flower = {
+                name = "Carta Fiore",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult se la",
+                    "mano giocata include {C:attention}4+ semi"
                 },
             }
         },
@@ -1297,6 +1398,13 @@ return {
                     "{C:inactive}(Attualmente {X:red,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
+            j_poke_shell = {
+                name = "Shellder...?",
+                text = {
+                  "Evolve lo {C:attention}Slowpoke più a sinistra",
+                  "{S:1.1,C:red,E:2}si autodistrugge{}",
+                }
+            },
             j_poke_magnemite = {
                 name = "Magnemite",
                 text = {
@@ -1798,6 +1906,9 @@ return {
                 text = {
                     "{C:chips}+#2#{} fiche per ogni",
                     "{C:attention}Buio{} saltato in questa partita",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Vai direttamente al {C:attention}negozio{}",
+                    "quando salti un buio",
                     "{C:inactive}(Attualmente {C:chips}+#1# {C:inactive}fiche)"
                 } 
             },
@@ -2043,7 +2154,7 @@ return {
                     "{C:red}+#1#{} scarti",
                     "{C:mult}+#2#{} Mult per ogni",
                     "{C:attention}scarto{} rimanente",
-                    "{C:inactive}(Attuallmente {C:mult}+#4#{C:inactive} Mult)",
+                    "{C:inactive}(Attualmente {C:mult}+#4#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Si evolve dopo{C:attention,s:0.8}#3#{C:inactive,s:0.8} round)",
                 }
             },
@@ -2472,7 +2583,7 @@ return {
                     "Le carte {C:attention}Re{} giocate danno {X:red,C:white}X#1#{} mult",
                     "quando assegnano punti, aumenta di {X:red,C:white}X#2#{} mult",
                     "per ogni mano giocata oltre la prima",
-                    "{C:inactive,s:0.8}(Si resetta alla fine del turno)",
+                    "{C:inactive,s:0.8}(Si resetta alla fine del round)",
                 }
             },
             j_poke_misdreavus = {
@@ -2582,11 +2693,11 @@ return {
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
-                    "{C:purple}+#1# Carte Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ottieni {C:chips}+#3#{} Fiche per ogni",
-                    "{C:attention}Carte pericolo tenute{} in mano",
-                    "durante la mano giocata",
-                    "{C:inactive}(Attualme {C:chips}+#4#{C:inactive} Fiche)",
+                    "{C:purple}+#1# Carte Azzardo",
+                    "Ottieni {C:chips}+#2#{} Fiche quando",
+                    "una carta {C:attention}potenziata{}",
+                    "viene distrutta",
+                    "{C:inactive}(Attualmente {C:chips}+#3#{C:inactive} Fiche)",
                 }
             },
             j_poke_scizor = {
@@ -2642,7 +2753,7 @@ return {
                 "Ottiene {C:mult}+#2#{} Mult e",
                 "crea un {C:item}Oggetto{} quando un",
                 "{C:attention}Pcchetto{} viene saltato {C:inactive,s:0.8}(Devi avere spazio)",
-                "{C:inactive}(Attuallmente {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive}(Attualmente {C:mult}+#1#{C:inactive} Mult)",
                 "{C:inactive,s:0.8}(Si evolve tramite{C:attention,s:0.8}Pietralunare{C:inactive,s:0.8})",
               }
             },
@@ -2743,10 +2854,11 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:purple}+#1# Carte Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "{X:mult,C:white}X#3#{} Mult per ogni",
-                    "{C:attention}Carte Pericolo tenuta{} in mano",
-                    "{C:inactive}(Attualmente {X:mult,C:white}X#4#{C:inactive} Mult)",
+                    "{C:purple}+#1# Carte Azzardo",
+                    "{X:mult,C:white}X#2#{} Mult per ogni carta",
+                    "{C:attention}Azzardo{} o {C:attention}d'Acciaio{}",
+                    "{C:attention}tenute{} in mano",
+                    "{C:inactive}(Attualmente {X:mult,C:white}X#3#{C:inactive} Mult)",
                 }
             },
             j_poke_kingdra = {
@@ -2942,6 +3054,15 @@ return {
                   "perde permanentemente {C:chips}#1#{} fiche",
                   "e guadagna permanentemente {X:mult,C:white}X#2#{} Mult se",
                   "finchè si possono rimuovere fiche dalle carte"
+                }
+            },
+            j_poke_mega_tyranitar = {
+                name = "Mega Tyranitar",
+                text = {
+                  "Se la mano giocata è un {C:attention}Full{}",
+                  "aumenta il livello, e poi viene giocata",
+                  "Le carta guadagnano permanentemente {C:chips}Fiche",
+                  "in base al livello del {C:attention}Full{}"
                 }
             },
             j_poke_lugia = {
@@ -3198,6 +3319,36 @@ return {
                   "se sono tutte dello stesso {C:attention}seme{}",
                 }
             },
+            j_poke_duskull = {
+              name = "Duskull",
+              text = {
+                "Riattiva le prime {C:attention}4{} carte che assegnano punti",
+                "durante la {C:attention}mano finale{} del round",
+                "{C:inactive}(Si evolve dopo {C:attention}#2#{C:inactive} round)",
+              }
+            },
+            j_poke_dusclops = {
+              name = "Dusclops",
+              text = {
+                "Riattiva le prime {C:attention}4{} carte che assegnano punti",
+                "durante la {C:attention}mano finale{} del round",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Se c'è {C:attention}1{} carta che non assegna",
+                "punti nella mano finale, viene distrutta",
+                "e ottieni una carta {C:spectral}Spettrale{}",
+                "{C:inactive}(Devi avere spazio){}",
+                "{C:inactive}(Si evolve tramite {C:attention}Cavo di Collegamento{C:inactive})",
+              }
+            },
+            j_poke_absol = {
+                name = "Absol",
+                text = {
+                  "{X:red,C:white}X#1#{} Mult",
+                  "Tutte le {C:green,E:1,S:1.1}possibilità{} {C:attention}elencate{}", 
+                  "sono sempre {C:attention}0{}",
+                  "{C:inactive}(ex: {C:green}1 possibilità su 6{C:inactive} -> {C:green}0 possibilità su 6{C:inactive})",
+                }
+            },
             j_poke_wynaut = {
                 name = 'Wynaut',
                 text = {
@@ -3223,6 +3374,13 @@ return {
                   "Alla fine del round,",
                   "porta i soldi a {C:money}$0"
                 }
+            },
+            j_poke_luvdisc = {
+              name = "Luvdisc",
+              text = {
+                "{C:attention}Ottieni {C:hearts}Squama cuore",
+                "Usa {C:attention}Splash",
+              }
             },
             j_poke_beldum = {
                 name = 'Beldum',
@@ -3306,6 +3464,26 @@ return {
                     "Se {C:attention}il primo scarto{} ha esattamente {C:attention}1{} carta,",
                     "{C:attention}distruggila{}",
                 }
+            },
+            j_poke_kricketot = {
+              name = "Kricketot",
+              text = {
+                "Ottieni {C:money}$#1#{} se la mano giocata",
+                "ha esattamente {C:attention}4{} carte e ha",
+                "{C:attention}4{} {C:attention}semi{} diversi",
+                "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#2#{C:inactive,s:0.8} round)",
+              }
+            },
+            j_poke_kricketune = {
+              name = "Kricketune",
+              text = {
+                "Ottieni {C:money}$#1#{} se la mano giocata",
+                "ha esattamente {C:attention}4{} carte e ha",
+                "{C:attention}4{} {C:attention}semi{} diversi",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:green}#2# possibilità su #3#{} di creare",
+                "un {C:tarot}Tarocco{}"
+              }
             },
             j_poke_buizel = {
                 name = 'Buizel',
@@ -3580,6 +3758,17 @@ return {
                     "aggiunge {X:mult,C:white} X#1# {} Mult quando vengono assegnati punti"
                 } 
             },
+            j_poke_dusknoir = {
+                name = "Dusknoir",
+                text = {
+                  "Riattiva tutte le carte giocate",
+                  "nella {C:attention}mano finale{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Le carte {C:spectral}Spettrali{} possono apparire",
+                  "nel negozio",
+                  "{C:inactive,s:0.8}(La probabilità aumenta se ne sono già apparse){}"
+                }
+            },
             j_poke_froslass = {
                 name = "Froslass",
                 text = {
@@ -3589,6 +3778,105 @@ return {
                   "la mano viene giocata mentre si è in debito",
                   "{C:inactive,s:0.8}(Devi avere spazio)",
                 }
+            },
+            j_poke_rotom = {
+                name = "Rotom",
+                text = {
+                  "{C:green}#1# possibilità su #2#{} di creare",
+                  "un {C:item}oggetto{} quando apri una qualsiasi",
+                  "{C:attention}Busta d'espansione{}",
+                  "{C:inactive}(Devi avere spazio){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:attention}Tutti i paccheti{} costano {C:money}$1{} in meno",
+                  "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+                }
+            },
+            j_poke_rotomh = {
+                name = "Rotom (Calore)",
+                text = {
+                  "{C:green}#1# possibilità su #2#{} di creare",
+                  "un {C:item}oggetto{} quando apri una qualsiasi",
+                  "{C:attention}Busta d'espansione{}",
+                  "{C:inactive}(Devi avere spazio){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Se il primo scarto è di esattamente",
+                  "{C:attention}2{} carte, diventanto",
+                  "entrambe carte {C:attention}Mult{} ",
+                  "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+                }
+            },
+            j_poke_rotomw = {
+                name = "Rotom (Lavaggio)",
+                text = {
+                  "{C:green}#1# possibilità su #2#{} di creare",
+                  "un {C:item}oggetto{} quando apri una qualsiasi",
+                  "{C:attention}Busta d'espansione{}",
+                  "{C:inactive}(Devi avere spazio){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Guadagni {C:money}$#3#{} per ogni carta",
+                  "{C:attention}Potenziata{} giocata che assegna punti",
+                  "Rimuovi i {C:attention}potenziamenti",
+                  "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+                }
+            },
+            j_poke_rotomf = {
+              name = "Rotom (Gelo)",
+              text = {
+                "{C:green}#1# possibilità su #2#{} di creare",
+                "un {C:item}oggetto{} quando apri una qualsiasi",
+                "{C:attention}Busta d'espansione{}",
+                "{C:inactive}(Devi avere spazio){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Quando un buio viene selezionato, crea",
+                "un {C:attention}Consumabile{} casuale con un'edizione",
+                "{C:dark_edition}Foil{}, {C:dark_edition}Olografica{}, o {C:dark_edition}Policroma{}",
+                "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+              }
+            },
+            j_poke_rotomfan = {
+                name = "Rotom (Vortice)",
+                text = {
+                  "{C:green}#1# possibilità su #2#{} di creare",
+                  "un {C:item}oggetto{} quando apri una qualsiasi",
+                  "{C:attention}Busta d'espansione{}",
+                  "{C:inactive}(Devi avere spazio){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Quando un Buio viene selezionato,",
+                  "distruggi il jolly",
+                  "e crea un {C:attention}Patto",
+                  "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+                }
+            },
+            j_poke_rotomm = {
+                name = "Rotom (Taglio)",
+                text = {
+                  "{C:green}#1# possibilità su #2#{} di creare",
+                  "un {C:item}oggetto{} quando apri una qualsiasi",
+                  "{C:attention}Busta d'espansione{}",
+                  "{C:inactive}(Devi avere spazio){}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{C:attention}Riduci{} il valore delle",
+                  "prime {C:attention}2{} carte {C:attention}tenute{} in",
+                  "mano alla fine del round",
+                  "{C:inactive}(Si trasforma quando usi una{C:attention}Macchina{C:inactive}){}"
+                }
+            },
+            j_poke_shaymin = {
+              name = "Shaymin",
+              text = {
+                "La carta più a destra che assegna punti",
+                "della {C:attention}prima mano{} del round",
+                "diventa una carta {C:attention}Fiore{}",
+                "{C:inactive,s:0.8}(Si trasforma dopo che {C:attention,s:0.8}#1#{C:inactive,s:0.8} Carte Fiore hanno assegnato punti)"
+              }
+            },
+            j_poke_shaymin_sky = {
+              name = "Shaymin (Cielo)",
+              text = {
+                "Le carte {C:attention}Fiore{} sono",
+                "considerate anche carte {C:attention}Multiuso{}",
+                "{C:inactive,s:0.8}(Si trasforma tramite una carta{C:attention,s:0.8}Morte{C:inactive,s:0.8})"
+              }
             },
             j_poke_pansage = {
                 name = "Pansage",
@@ -3640,28 +3928,51 @@ return {
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ogni {C:attention}Carta pericolo tenuta{} in mano",
-                    "da {C:mult}+#3#{} Mult",
-                    "{C:inactive,s:0.8}(Si evolve dopo aver attivato le Carte Pericolo {C:attention,s:0.8}#4#{C:inactive,s:0.8} volte)",
+                    "{C:purple}+#1# Carte Azzardo",
+                    "Per ogni carta {C:attention}senza valore{}",
+                    "{C:attention}held{} in hand gives {C:mult}+#2#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
                 }
             },
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ogni {C:attention}Carta pericolo tenuta{} in mano",
-                    "da {C:mult}+#3#{} Mult",
-                    "{C:inactive,s:0.8}(Si evolve tramite {C:attention,s:0.8}Cavo di Collegamento{C:inactive,s:0.8})"
+                    "{C:purple}+#1# Carte Azzardo",
+                    "Ogni carta {C:attention}senza valore{}",
+                    "{C:attention}tenuta{} in mano da {C:mult}+#2#{} Mult",
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 }
             },
             j_poke_gigalith = {
                 name = "Gigalith",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ogni {C:attention}Carta pericolo tenuta{} in mano",
-                    "da {C:mult}+#3#{} Mult e vengono riattivate",
+                    "{C:purple}+#1# Carte Azzardo",
+                    "Ogni carta {C:attention}senza valore{}",
+                    "{C:attention}tenuta{} in mano da {C:mult}+#2#{} Mult",
+                    "e si riattiva"
                 }
+            },
+            j_poke_drilbur = {
+                name = "Drilbur",
+                text = {
+                  "La prima carta {C:attention}di Pietra{} giocata",
+                  "ogni round viene distrutta",
+                  "e crea un {C:money}Tesoro{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{C:inactive,s:0.8}(Si evole dopo essersi attivata {C:attention,s:0.8}#1#{C:inactive,s:0.8} volte)"
+                }
+            },
+            j_poke_excadrill = {
+              name = "Excadrill",
+              text = {
+                "Le carte di {C:attention}Pietra{} giocata",
+                "vengono distrutte e crea un {C:money}Tesoro{}",
+                "{C:inactive}(Devi avere spazio)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:mult}+#1#{} Mult per ogni carta in meno",
+                "{C:attention}#2#{} nel tuo mazzo pieno",
+                "{C:inactive}(Attualmente {C:mult}+#3#{C:inactive} Mult)",
+              }
             },
             j_poke_trubbish = {
               name = "Trubbish",
@@ -3776,6 +4087,25 @@ return {
                   "{C:inactive}(Attualmente {C:chips}+#1#{C:inactive} Fiche)",
                 }
             },
+            j_poke_ferroseed = {
+                name = "Ferroseed",
+                text = {
+                  "Le carte {C:attention}multiuso{} e le carte {C:attention}Azzardo{} ",
+                  "sono considerate anche carte {C:attention}d'acciaio{}",
+                  "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#1#{C:inactive,s:0.8} round)",
+                }
+            },
+            j_poke_ferrothorn = {
+              name = "Ferrothorn",
+              text = {
+                "Le carte {C:attention}multiuso{} e le carte {C:attention}Azzardo{} ",
+                "sono considerate anche carte {C:attention}d'acciaio{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Se la mano include un",
+                "{C:attention}colore{}, riattiva tutte le",
+                "carte {C:attention}d'Acciaio{} {C:attention}tenute{} in mano",
+              }
+            },
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {
@@ -3790,9 +4120,9 @@ return {
                 text = {
                     "Quando un {C:attention}Buio{} viene selezionato, crea",
                     "una carta {C:planet}Pianeta{} {C:dark_edition}Negativa{}",
-                    "di {C:attention}#1#{} delle mani di poker più altre giocate",
+                    "{C:attention}#1#{} delle mani di poker più alte giocate",
                     "{br:3.5}text needs to be here to work",
-                    "Dopo aver aperto un {C:attention}#2# Boosters{}, crea un voucher",
+                    "Dopo aver aperto {C:attention}#2# Buste d'espansione{}, crea un buono",
                     "{C:attention}Telescopio{} o {C:attention}Osservatorio{} se possibile"
                 }
             },
@@ -3831,19 +4161,41 @@ return {
             j_poke_golett = {
                 name = "Golett",
                 text = {
-                  "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                  "Ogni {C:attention}quattro{} carte {C:attention}tenute{} in mano",
-                  "ottieni {X:mult,C:white}X#3#{} Mult",
-                  "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#4#{C:inactive,s:0.8} round)"
+                  "{C:purple}+#1# Carte Azzardo",
+                  "{C:green}#4# possibilità su #5#{} per ogni carta {C:attention}tenuta{}",
+                  "in mano di dare {X:mult,C:white}X#2#{} Mult",
+                  "Garantito per ogni carta {C:attention}Azzardo{}",
+                  "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#3#{C:inactive,s:0.8} round)"
                 }
             },
             j_poke_golurk = {
                 name = "Golurk",
                 text = {
-                  "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                  "Ogni {C:attention}tre{} carte {C:attention}tenute{} in mano",
-                  "ottieni {X:mult,C:white}X#3#{} Mult",
+                  "{C:purple}+#1# Carte Azzardo",
+                  "{C:green}#3# possibilità su #4#{} per ogni carta {C:attention}tenuta{}",
+                  "in mano di dare {X:mult,C:white}X#2#{} Mult", 
+                  "Garantito per ogni carta {C:attention}Azzardo{}",
                 }
+            },
+            j_poke_pawniard = {
+                name = "Pawniard",
+                text = {
+                  "Ottieni {X:red,C:white}X#2#{} Mult quando una",
+                  "{C:attention}Figura{} vine distrutta",
+                  "{C:inactive}(Si evolve a {X:mult,C:white}X#1#{C:inactive} / {X:inactive,C:white}X#3#{C:inactive} Mult)",
+                }
+            },
+            j_poke_bisharp = {
+              name = "Bisharp",
+              text = {
+                "Ottieni {X:red,C:white}X#2#{} Mult quando una",
+                "{C:attention}figura{} viene distrutta",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Se la mano giocata",
+                "è una sola {C:attention}figura{}, distruggila",
+                "{C:inactive}(Attualmente {X:mult,C:white}X#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Si evolve dopo aver distrutto {C:attention,s:0.8}#3#{C:inactive,s:0.8} Re)",
+              }
             },
             j_poke_zweilous = {
                 name = "Zweilous",
@@ -3897,6 +4249,90 @@ return {
                     "o {C:dark_edition}Policromo{} alla carta",
                 } 
             },
+            j_poke_pumpkaboo_small = {
+                name = 'Pumpkaboo (Piccolo)',
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "create una  carta{C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{C:inactive,s:0.8}(Si evolve tramite {C:attention,s:0.8}Cavo di Collegamento{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_average = {
+                name = 'Pumpkaboo (Medio)',
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Si evolve tramite {C:attention,s:0.8}Cavo di Collegamento{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_large = {
+                name = 'Pumpkaboo (Grande)',
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Must have room)",
+                  "{C:inactive,s:0.8}(Si evolve tramite {C:attention,s:0.8}Cavo di Collegamento{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_pumpkaboo_super = {
+                name = 'Pumpkaboo (Super)',
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{C:inactive,s:0.8}(Si evolve tramite {C:attention,s:0.8}Cavo di Collegamento{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_gourgeist_small = {
+                name = "Gourgeist (Piccolo)",
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Guadagni {C:money}$#3#{} quando una carta{C:spectral}Spettrale{}",
+                  "viene usata e applica un adesivo{X:psychic,C:white}Psico{}",
+                  "al Jolly {C:attention}più a sinistra{}"
+                }
+            },
+            j_poke_gourgeist_average = {
+                name = "Gourgeist (Medio)",
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Guadagni {C:money}$#3#{} quando una carta{C:spectral}Spettrale{}",
+                  "viene usata e applica un adesivo{X:psychic,C:white}Psico{}",
+                  "al Jolly {C:attention}più a sinistra{}"
+                }
+            },
+            j_poke_gourgeist_large = {
+                name = "Gourgeist (Grande)",
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Guadagni {C:money}$#3#{} quando una carta{C:spectral}Spettrale{}",
+                  "viene usata e applica un adesivo{X:psychic,C:white}Psico{}",
+                  "al Jolly {C:attention}più a sinistra{}"
+                }
+            },
+            j_poke_gourgeist_super = {
+                name = "Gourgeist (Super)",
+                text = {
+                  "Dopo aver scartato {C:attention}#1#{} {C:inactive}[#2#]{} {C:attention}Jack,",
+                  "crea una carta {C:spectral}Spettrale{}",
+                  "{C:inactive}(Devi avere spazio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Guadagni {C:money}$#3#{} quando una carta{C:spectral}Spettrale{}",
+                  "viene usata e applica un adesivo{X:psychic,C:white}Psico{}",
+                  "al Jolly {C:attention}più a sinistra{}"
+                }
+            },
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
@@ -3923,6 +4359,50 @@ return {
                     "Jolly {X:lightning, C:black}Elettro{} in possesso",
                     "{C:inactive}(Attualmente {X:red,C:white} X#2# {C:inactive} Mult)",
                 }
+            },
+            j_poke_rockruff = {
+              name = "Rockruff",
+              text = {
+                "Ogni carta che {C:attention}non è una figura{}",
+                "da {C:mult}+#1#{} Mult quando assegna putni",
+                "{C:inactive,s:0.8}(Si evolve dopo che {C:attention,s:0.8}#2#{C:inactive,s:0.8} carte pari hanno assegnato punti)",
+                "{C:inactive,s:0.8}(Si evolve dopo che{C:attention,s:0.8}#3#{C:inactive,s:0.8} carte dispari hanno assegnato punti)"
+              }
+            },
+            j_poke_lycanroc_day = {
+              name = "Lycanroc (Giorno)",
+              text = {
+                "Ogni carta {C:attention}pari{} giocata",
+                "data {C:mult}+#1#{} Mult quando assegna punti",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Se la prima mano giocata ha",
+                "esattamente {C:attention}1{} carta ottieni", 
+                "{C:chips}+#2#{} Fiche e {C:blue}+1{} mani",
+                "per questo round"
+              }
+            },
+            j_poke_lycanroc_night= {
+              name = "Lycanroc (Mezzanotte)",
+              text = {
+                "Ogni carta {C:attention}dispari{} giocata",
+                "da {C:mult}+#1#{} Mult quando assegna punti",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Quando un Buio viene selezionato",
+                "ottieni {C:chips}+#2#{} mani, {C:mult}+#3#{} scarti", 
+                "e {C:attention}+#2#{} dimensione della mano per questo round",
+              }
+            },
+            j_poke_lycanroc_dusk = {
+              name = "Lycanroc (Crepuscolo)",
+              text = {
+                "Ogni carta che non è una {C:attention}figura{}",
+                "da {C:mult}+#1#{} Mult quando assegna punti",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Riattiva la {C:attention}prima{} carta che",
+                "assegna punti con un valore {C:attention}pari{} e",
+                "la {C:attention}prima{} carta con valore",
+                "{C:attention}Dispari{} una volta per round"
+              }
             },
             j_poke_mimikyu = {
                 name = "Mimikyu",
@@ -4012,22 +4492,22 @@ return {
                 }
             },
             j_poke_hisuian_qwilfish = {
-                name = "Qwilfish (Forma Hisui)",
+                name = "Qwilfish (Forma di Hisui)",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ottieni {C:chips}+#3#{} fiche quando una",
-                    "{C:attention}Carta Pericolo{} viene pescata",
+                    "{C:purple}+#1# Carte Azzardo {C:inactive}(1 ogni #2# carte)",
+                    "Ottieni {C:chips}+#3#{} Fiche quando peschi",
+                    "una {C:attention}Carta Azzardo{}",
                     "{C:inactive}(Si evolve a {C:chips}+#4#{C:inactive} / +#5# Fiche)",
                 }
             },
             j_poke_overqwil = {
                 name = "Overqwil",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Ottieni {C:chips}+#3#{} fiche quando una",
-                    "{C:attention}Carta Pericolo{} viene pescata",
+                    "{C:purple}+#1# Carte Azzardo {C:inactive}(1 ogni #2# carte)",
+                    "Ottieni {C:chips}+#3#{} Fiche quando peschi",
+                    "una {C:attention}Carta Azzardo{}",
                     "{br:3}ERROR - CONTACT STEAK",
-                    "{C:attention}Dimezza{} le fiche dopo che una mano viene giocata",
+                    "{C:attention}Dimezza{} le fiche dopo aver giocato la mano",
                     "{C:inactive}(Attualmente {C:chips}+#4#{C:inactive} Fiche)",
                 }
             },
@@ -4066,21 +4546,18 @@ return {
             j_poke_tarountula = {
                 name = "Tarountula",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Crea una carta {C:planet}Pianeta{} ogni",
-                    "{C:attention}#4# Carta Pericolo tenuta{} in mano",
-                    "alla fine del round",
-                    "{C:inactive}(Devi avere spazio)",
-                    "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#3#{C:inactive,s:0.8} round)",
+                    "{C:purple}+#1# Carte Azzardo{}, {C:attention}+#3#{} dimensione della mano",
+                    "{C:inactive,s:0.8}(Si evolve dopo {C:attention,s:0.8}#2#{C:inactive,s:0.8} round)",
                 }
             },
             j_poke_spidops = {
                 name = "Spidops",
                 text = {
-                    "{C:purple}+#1# Carta Pericolo {C:inactive}(1 ogni #2# carte)",
-                    "Aggiunge un sigillo {C:chips}Blu{} alla terza",
-                    "{C:attention}Carta Pericolo tenuta{} in mano",
-                    "alla fine del round",
+                    "{C:purple}+#1# Carte Azzardo, {C:attention}+#2#{} dimensione della mano",
+                    "Se la prima mano giocata",
+                    "include solo carte {C:attention}Azzardo{}, ottieni",
+                    "{C:attention}+#2#{} dimensione della mano per",
+                    "ogni carta nella mano giocata per tutto il round"
                 }
             },
             j_poke_fidough = {
@@ -4104,6 +4581,35 @@ return {
                   "{C:inactive,s:0.8}(Se il valore raggiunge il massimo, ritorna al minimo)",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} chips)",
                 }
+            },
+            j_poke_charcadet = {
+              name = "Charcadet",
+              text = {
+                "Ottieni {C:mult}+#2#{} Mult dopo che la mano",
+                "giocata assegna punti",
+                "{C:inactive,s:0.8}(Si resetta alla fine round)",
+                "{C:inactive,s:0.8}(Si evolve tra {C:attention,s:0.8}Pietralbore{C:inactive,s:0.8} or {C:attention,s:0.8}Neropietra{C:inactive,s:0.8})",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
+            },
+            j_poke_armarouge = {
+              name = "Armarouge",
+              text = {
+                "{X:mult,C:white} X#1# {} Mult",
+                "Perdi {X:mult,C:white} X#2# {} Mult dopo che la mano",
+                "giocata assegna punti",
+                "{C:inactive,s:0.8}(Si resetta alla fine round)",
+              }
+            },
+            j_poke_ceruledge = {
+              name = "Ceruledge",
+              text = {
+                "Ottieni {X:mult,C:white} X#2# {} Mult dopo che la mano giocata",
+                "assegna punti e assorbi {C:money}$#3#{}",
+                "da un altro Jolly casuale",
+                "{C:inactive,s:0.8}(Si resetta alla fine del round)",
+                "{C:inactive}(Attualmente {X:mult,C:white} X#1# {C:inactive} Mult)",
+              }
             },
             j_poke_tinkatink = {
                 name = "Tinkatink",
@@ -4174,7 +4680,7 @@ return {
                 text = {
                   "{C:attention}+#1#{} slot carte nel negozio",
                   "{C:attention}+#1#{} Slot Booster Pack nel negozio",
-                  "{C:attention}+#1#{} Slot Voucher nel negozio",
+                  "{C:attention}+#1#{} Slot Buoni nel negozio",
                 }
             },
             j_poke_dudunsparce2 = {
@@ -4183,7 +4689,17 @@ return {
                   "{C:attention}Ottieni Patto doppio{}",
                   "{C:attention}+#1#{} slot carte nel negozio",
                   "{C:attention}+#1#{} Slot Booster Pack nel negozio",
-                  "{C:attention}+#1#{} Slot Voucher nel negozio",
+                  "{C:attention}+#1#{} Slot Buoni nel negozio",
+                }
+            },
+            j_poke_kingambit = {
+                name = "Kingambit",
+                text = {
+                  "{X:red,C:white}X#1#{} Mult",
+                  "Se la mano include l'unico",
+                  "{C:attention}Re{} del tuo mazzo completo, ogni",
+                  "carta giocata che {C:attention}non è una figura{} ottiene",
+                  "metà del {X:mult,C:white}X{} Mult di questo Jolly quando assegna punti",
                 }
             },
             j_poke_farigiraf = {
@@ -4326,6 +4842,14 @@ return {
                     "{S:1.1,C:red,E:2}Si autodistrugge{} e ottieni{C:money}$#2#",
                 }
             },
+            j_poke_professor = {
+                name = "Professore",
+                text = {
+                    "Dopo {C:attention}#1#{} round, vendi questo Jolly",
+                    "per creare un patto {C:attention}Starter{}",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+                }
+            },
             j_poke_mystery_egg = {
                 name = "Uovo misterioso",
                 text = {
@@ -4395,12 +4919,44 @@ return {
                 } 
             },
             sleeve_poke_ampedsleeve = {
-                name = "Amped Sleeve",
+                name = "Mazzo Amplificato",
                 text = {
                     "Inizia la partita con il buono",
                     "{C:tarot,T:v_poke_energysearch}#1#{}",
                     "e una copia di",
                     "{C:pink,T:c_poke_double_rainbow_energy}#2#"
+                } 
+            },
+            sleeve_poke_futuresleeve = {
+                name = "Mazzo Futuro",
+                text = {
+                    "{C:purple}+#1# Preveggenza{}",
+                } 
+            },
+            sleeve_poke_stadiumsleeve = {
+                name = "Mazzo Stadio",
+                text = {
+                    "Inizia la partita con",
+                    "delle carte extra {C:attention}Bonus, Mult,",
+                    "{C:attention}Multiuso, di Vetro, d'Acciaio, di Pietra,",
+                    "{C:attention}Dorate{}, e {C:attention}Fortunate{}"
+                } 
+            },
+            sleeve_poke_megasleeve = {
+                name = "Mega Sleeve",
+                text = {
+                    "Inizia la partita con un buono",
+                    "{C:tarot,T:v_reroll_surplus}#2#{} e {C:tarot,T:v_reroll_glut}#3#{}",
+                    "e una carta {C:spectral,T:c_poke_megastone}#1#{}",
+                    "{C:red}-#4#{} slot nel negozio"
+                } 
+            },
+            sleeve_poke_vendingsleeve = {
+                name = "Vending Sleeve",
+                text = {
+                    "Dopo aver sconfitto un",
+                    "{C:attention}Buio Boss pari{},ottieni dei",
+                    "{C:attention,T:tag_vremade_double}#1#",
                 } 
             },
         },
@@ -4542,6 +5098,12 @@ return {
                 text = {
                     "Il negozio ha un Jolly",
                     "{C:safari}Safari{} gratuito",
+                }, 
+            },
+            tag_poke_starter_tag = {
+                name = "Patto Starter",
+                text = {
+                    "Ottieni un {C:attention}Pacchetto Starter gratuito",
                 }, 
             },
         },
@@ -4877,6 +5439,27 @@ return {
                     "{C:green}15%{} - {C:dark_edition}Policromo{} {C:attention}Carta Regalo",
                 }
             },
+            dril_treasure = {
+                name = "Tesoro",
+                text = {
+                    "{C:green}30%{} - {C:item}Pietra {C:attention}Evoluzione  ",
+                    "{C:green}30%{} - {C:money}$5{}               ",
+                    "{C:green}20%{} - {C:attention}2 Evolution {C:item}Stones",
+                    "{C:green}15%{} - {C:money}$10{}              ",
+                    "{C:green}5%{} - {C:money}$20{}             ",
+                }
+            },
+            exdril_treasure = {
+                name = "Tesoro",
+                text = {
+                    "{C:green}30%{} - {C:item}Pietra {C:attention}Evoluzione  ",
+                    "{C:green}30%{} - {C:money}$5{}               ",
+                    "{C:green}20%{} - {C:item}2 Pietre {C:attention}Evoluzione",
+                    "{C:green}15%{} - {C:money}$10{}              ",
+                    "{C:green}4%{} - {C:money}$20{}             ",
+                    "{C:green}1%{} - {C:attention}Mega Pietra    ",
+                }
+            },
             pickup = {
               name = "Raccogli",
               text = {
@@ -4885,6 +5468,12 @@ return {
                 "{C:green}25%{} - {C:attention}Poke Ball",
                 "{C:green}15%{} - {C:attention}Mega Ball",
                 "{C:green}1%{} - {C:attention}Ultra Ball",
+              }
+            },
+            poke_artist = {
+              name = "Artista",
+              text = {
+                "{V:1}#1#"
               }
             },
             pokeballs_group = {
@@ -5018,11 +5607,10 @@ return {
                     "{C:red}Scoprire tutti gli oggetti non può essere annullato{}"
                 }
             },
-            pokemaster_tooltip = {
-              name = "Pokemon Master Mode",
+            pokemononly_tooltip = {
+              name = "Solo Pokemon",
               text = {
-                "Applica modalità solo Pokemon",
-                "Altre Puntate disponibili"
+                "Appariranno soltanto Jolly {C:attention}Pokemon{}",
               }
             },
             gen1_tooltip = {
@@ -5110,6 +5698,14 @@ return {
                 "tooltips from Pokemon Jokers",
               }
             },
+            previous_evo_stickers_tooltip = {
+              name = "Previous Evo Stickers",
+              text = {
+                "Previous evolutions of",
+                "winning Jokers also",
+                "win the current run",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {
@@ -5164,22 +5760,22 @@ return {
                 "Pokemon Only setting applied",
                 "Additional Stakes are available"
               }
-            }, 
+            },
             designed_by = {
-                name = "Progettato Da",
-                text = {
-                    "{C:dark_edition}#1#{}"
-                }
+              name = "Designed By",
+              text = {
+                "{C:dark_edition}#1#{}"
+              }
             },
             endless = {
-                name = "Riutilizzabile",
-                text = {
-                    "Non viene consumato quando usato",
-                    "{C:inactive,s:0.8}(Escluso da {C:attention,s:0.8}Cucchiaio Torto{C:inactive,s:0.8})"
-                }
+              name = "Reusable",
+              text = {
+                "Not consumed when used",
+                "{C:inactive,s:0.8}(Excluded by {C:attention,s:0.8}Twisted Spoon{C:inactive,s:0.8})"
+              }
             },
             sylveon_tag_pool = {
-              name = "Pool di Patti",
+              name = "Tag Pool",
               text = {
                 "{C:attention}#1#",
                 "{C:tarot}#2#",
@@ -5187,7 +5783,7 @@ return {
               }
             },
             omastar_tag_pool = {
-              name = "Pool di Patti",
+              name = "Tag Pool",
               text = {
                 "{C:money}#1#",
                 "{C:money}#2#",
@@ -5199,9 +5795,9 @@ return {
             safaridesc = {
                 name = "Safari",
                 text = {
-                    "Può essere ottenuto solo",
-                    "attraverso {C:attention}Evoluzione{}",
-                    "o determinati {C:attention}Oggetti Pokéball{}"
+                    "Can only be obtained",
+                    "through {C:attention}Evolution{}",
+                    "or certain {C:attention}Pokeball Items{}"
                 } 
             },
 
@@ -5390,12 +5986,19 @@ return {
                     "{C:dark_edition}Esprimi un desiderio!{}",
                 },
             },
+            p_poke_pokepack_starter_pack = {
+                name = "Pacchetto Starter",
+                text = {
+                    "Scegli un {C:attention}#1# Pokemon Starter{}",
+                    "tra {C:attention}#2#{} Jolly"
+                },
+            },
             poke_hazards = {
-                name = "Carte Pericolo",
+                name = "Carte Azzardo",
                 text = {
                     "Quando un {C:attention}Buio{} viene selezionato,",
-                    "aggiungi delle {C:attention}Carte Pericolo{} al mazzo",
-                    "basate sul numero di carte",
+                    "{C:attention}#1#{} carte non potenziate del tuo mazzo",
+                    "diventano {C:attention}Carte Azzardo{}",
                 },
             },
         },
