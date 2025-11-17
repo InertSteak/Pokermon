@@ -873,7 +873,7 @@ PokemonSprites = {
 {name = "noibat", base = {pos = {x = 16, y = 47}},},
 {name = "noivern", base = {pos = {x = 18, y = 47}},},
 {name = "xerneas", base = {pos = {x = 6, y = 10}, soul_pos = {x = 7, y = 10}},gen_atlas = 6},
-{name = "yveltal", base = {pos = {x = 22, y = 47}, soul_pos = {x = 3, y = 47}},},
+{name = "yveltal", base = {pos = {x = 22, y = 47}, soul_pos = {x = 23, y = 47}},},
 {name = "zygarde", base = {pos = {x = 2, y = 11}, soul_pos = {x = 3, y = 11}},gen_atlas = 6},
 {name = "zygarde_10", base = {pos = {x = 0, y = 11}, soul_pos = {x = 1, y = 11}},gen_atlas = 6},
 {name = "zygarde_complete", base = {pos = {x = 4, y = 11}, soul_pos = {x = 5, y = 11}},gen_atlas = 6},
