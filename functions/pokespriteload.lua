@@ -280,7 +280,7 @@ tyranitar = {base = {pos = {x = 14, y = 16}},alts = {AtlasJokersSeriesA = {artis
 mega_tyranitar = {base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = true, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}}}},
 lugia = {base = {pos = {x = 16, y = 16}, soul_pos = {x = 17, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'Tovivi'}}},
 ho_oh = {base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},},
-celebi = {base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},},
+celebi = {base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {}}},
 treecko = {base = {pos = {x = 22, y = 16}},},
 grovyle = {base = {pos = {x = 24, y = 16}},},
 sceptile = {base = {pos = {x = 26, y = 16}},},
