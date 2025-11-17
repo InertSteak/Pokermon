@@ -81,6 +81,7 @@ local revenantdeck = {
 	order = 26,
   unlocked = true,
   discovered = true,
+  artist = "Sonfive",
 	config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("silverseal_variable")}}
@@ -98,6 +99,7 @@ local telekineticdeck = {
 	order = 19,
   unlocked = true,
   discovered = true,
+  artist = "MyDude_YT",
 	config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
@@ -112,6 +114,7 @@ local ampeddeck = {
 	order = 20,
   unlocked = true,
   discovered = true,
+  artist = "MyDude_YT",
 	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
@@ -126,6 +129,7 @@ local futuredeck = {
 	order = 21,
   unlocked = true,
   discovered = true,
+  artist = "Catzzadilla",
 	config = {scry = 4},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.scry}}
@@ -143,6 +147,7 @@ local stadiumdeck = {
 	order = 22,
   unlocked = true,
   discovered = true,
+  artist = "InertSteak",
 	config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {}}
@@ -169,6 +174,7 @@ local megadeck = {
 	order = 23,
   unlocked = true,
   discovered = true,
+  artist = "Catzzadilla",
 	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut"}, consumables = {'c_poke_megastone'}, shop_size = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},

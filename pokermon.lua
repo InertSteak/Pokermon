@@ -144,6 +144,22 @@ else
   sprite()
 end
 
+--Load InputManager file
+local input_manager, load_error = SMODS.load_file("functions/inputmanager.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  input_manager()
+end
+
+--Load DisplayCard file
+local pokedex, load_error = SMODS.load_file("functions/displaycard.lua")
+if load_error then
+  sendDebugMessage ("The error is: "..load_error)
+else
+  pokedex()
+end
+
 --Load UI file
 local UI, load_error = SMODS.load_file("pokeui.lua")
 if load_error then
