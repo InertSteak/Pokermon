@@ -126,6 +126,25 @@ return {
                     "when {C:attention}Blind{} selected",
                 }, 
             },
+            bl_poke_rocket = {
+                name = "The Rocket",
+                text = {
+                    "All cards are drawn face down",
+                    "if you have $25 or more"
+                }, 
+            },
+            bl_poke_magma = {
+                name = "The Magma",
+                text = {
+                    "Base Chips are quartered",
+                }, 
+            },
+            bl_poke_aqua = {
+                name = "The Aqua",
+                text = {
+                    "Base Mult is quartered",
+                }, 
+            },
         },
         Item = {
             c_poke_pokeball = {
@@ -3129,7 +3148,11 @@ return {
                 name = "Celebi",
                 text = {
                     "{C:attention}-#2#{} Ante after skipping {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{}",
-                    "{C:inactive}(Required skips increase each time)"
+                    "{C:inactive}(Required skips increase each time)",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{X:mult,C:white} X#4# {} Mult for each round played",
+                    "{C:inactive}(Currently {X:mult,C:white} X#5# {C:inactive} Mult){}"
+                    
                 } 
             },
             j_poke_treecko = {
