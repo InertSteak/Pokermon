@@ -924,7 +924,7 @@ return {
                     "have {C:money}#3#${} or more",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Earn {C:money}#2#${} when {C:attention}Blind{}",
-                    "selected if you have",
+                    "is selected if you have",
                     "less than {C:money}#3#$",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
                 }
@@ -937,7 +937,7 @@ return {
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Earn interest when",
-                    "{C:attention}Blind{} selected",
+                    "{C:attention}Blind{} is selected",
                 } 
             },
             j_poke_sandshrew = {
