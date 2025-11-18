@@ -1636,7 +1636,7 @@ return {
                     "{C:attention}Volatile Right{}",
                     "{X:mult,C:white} X#1# {} Mult then",
                     "debuff self this round",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds not debuffed)",
                 } 
             },
             j_poke_electrode = {
@@ -2665,7 +2665,7 @@ return {
                 "{C:attention}Volatile Left{}",
                 "{C:chips}+#1#{} Chips then",
                 "debuff self this round",
-                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds not debuffed)",
               }
             },
             j_poke_forretress = {
