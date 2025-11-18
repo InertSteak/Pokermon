@@ -338,7 +338,7 @@ PokemonSprites = {
 {name = "tyranitar", base = {pos = {x = 14, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}}}},
 {name = "lugia", base = {pos = {x = 16, y = 16}, soul_pos = {x = 17, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = 'Tovivi', layer = 'center'}}}},
-{name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},},
+{name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},alts = {AtlasJokersSeriesA = {}}},
 {name = "celebi", base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {}}},
 {name = "treecko", base = {pos = {x = 22, y = 16}},},
 {name = "grovyle", base = {pos = {x = 24, y = 16}},},
