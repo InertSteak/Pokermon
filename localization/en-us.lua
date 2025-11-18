@@ -920,21 +920,24 @@ return {
             j_poke_pikachu = {
                 name = "Pikachu",
                 text = {
-                    "Earn {C:money}$#1#{} for each Joker card",
-                    "you have at end of round",
-                    "{C:inactive,s:0.8}(Max of {C:money,s:0.8}$10{C:inactive,s:0.8})",
+                    "{C:mult}+#1#{} Mult if you",
+                    "have {C:money}#3#${} or more",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Earn {C:money}#2#${} when {C:attention}Blind{}",
+                    "selected if you have",
+                    "less than {C:money}#3#$",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
                 }
             },
             j_poke_raichu = {
                 name = "Raichu",
                 text = {
-                    "Gains {C:dark_edition}Negative{} at end of round",
-                    "if you have at least {C:money}$#2#{}",
-                    "{C:inactive,s:0.8}(Increases per Raichu you have){}",
-                    "Earn {C:money}$#1#{} for each Joker card",
-                    "you have at end of round",
-                    "{C:inactive,s:0.8}(Max of {C:money,s:0.8}$#3#{C:inactive,s:0.8})"
+                    "{C:mult}+#1#{} Mult for every",
+                    "{C:money}$#2#{} you have",
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Earn interest when",
+                    "{C:attention}Blind{} selected",
                 } 
             },
             j_poke_sandshrew = {

@@ -1232,13 +1232,13 @@ local arbok={
 local pikachu={
   name = "pikachu", 
   pos = {x = 11, y = 1},
-  config = {extra={money = 1}},
+  config = {extra={money = 2, mult = 10, money_threshold = 25}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     end
-    return {vars = {center.ability.extra.money}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.money, center.ability.extra.money_threshold}}
   end,
   rarity = 1, 
   cost = 6,
@@ -1248,10 +1248,30 @@ local pikachu={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = false,
-  calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "pikachu", math.min(10, #G.jokers.cards * card.ability.extra.money), true) 
-	end,
   calculate = function(self, card, context)
+    if context.setting_blind then
+      local dollars = G.GAME.dollars
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        dollars = to_number(dollars)
+      end
+      if dollars < card.ability.extra.money_threshold then
+        card:juice_up()
+        ease_poke_dollars(card, "pikachu", card.ability.extra.money)
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      local dollars = G.GAME.dollars
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        dollars = to_number(dollars)
+      end
+      if context.joker_main and dollars >= card.ability.extra.money_threshold then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
     return item_evo(self, card, context, "j_poke_raichu")
   end
 }
@@ -1259,16 +1279,11 @@ local pikachu={
 local raichu={
   name = "raichu", 
   pos = {x = 12, y = 1}, 
-  config = {extra={money = 2, threshold = 120, plus_slot = false, money_limit = 16}},
+  config = {extra={mult_mod = 4, money_count = 10, money_threshold = 50}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      if not center.edition or (center.edition and not center.edition.negative) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
-      end
-    end
-    return {vars = {center.ability.extra.money, math.max(center.ability.extra.threshold, center.ability.extra.threshold + (center.ability.extra.threshold * (#find_joker("raichu") - 1))), 
-                    center.ability.extra.money_limit}}
+    local info = center.ability.extra
+    return { vars = { info.mult_mod, info.money_count, info.mult_mod * math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / info.money_count), info.money_threshold}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -1277,19 +1292,31 @@ local raichu={
   atlas = "Pokedex1",
   gen = 1, 
   blueprint_compat = false,
-  calc_dollar_bonus = function(self, card)
-    local turn_neg = nil
-    if (SMODS.Mods["Talisman"] or {}).can_load then
-      turn_neg = to_big(G.GAME.dollars) >= to_big(card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1))) and not (card.edition and card.edition.negative)
-    else
-      turn_neg = G.GAME.dollars >= card.ability.extra.threshold + (card.ability.extra.threshold * (#find_joker("raichu") - 1)) and not (card.edition and card.edition.negative)
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      card:juice_up()
+      ease_poke_dollars(card, "raichu", G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))
     end
-    if turn_neg then
-      local edition = {negative = true}
-      card:set_edition(edition, true)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      local dollars = G.GAME.dollars
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        dollars = to_number(dollars)
+      end
+      if context.joker_main then
+        local Mult = card.ability.extra.mult_mod * math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / card.ability.extra.money_count)
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          Mult = to_number(Mult)
+        end
+        if Mult > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
+            colour = G.C.MULT,
+            mult_mod = Mult
+          }
+        end
+      end
     end
-    return ease_poke_dollars(card, "raichu", math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money), true)
-	end,
+  end
 }
 -- Sandshrew 027
 local sandshrew={

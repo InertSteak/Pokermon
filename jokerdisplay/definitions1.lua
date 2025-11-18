@@ -551,35 +551,39 @@ jd_def["j_poke_arbok"] = {
 jd_def["j_poke_pikachu"] = {
     text = {
         {text = "+$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
-
+        { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD},
+        { text = " "},
+        { text = "+", colour = G.C.MULT},
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT}
     },
     reminder_text = {
         { ref_table = "card.joker_display_values", ref_value = "localized_text" },
     },
     calc_function = function(card)
-        local money
-        money = math.min(10, #G.jokers.cards * card.ability.extra.money)
-        card.joker_display_values.money = money
-        card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+      local mult = 0
+      local dollars = G.GAME.dollars
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        dollars = to_number(dollars)
+      end
+      if dollars >= card.ability.extra.money_threshold then
+        mult = card.ability.extra.mult
+      end
+      card.joker_display_values.mult = mult
+      card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
     end
 }
 
-jd_def["j_poke_raichu"] = {
-    text = {
-        {text = "+$", colour = G.C.GOLD},
-        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
-
-    },
-    reminder_text = {
-        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
-    },
-    calc_function = function(card)
-        local money
-        money = math.min(card.ability.extra.money_limit, #G.jokers.cards * card.ability.extra.money)
-        card.joker_display_values.money = money
-        card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
-    end
+jd_def["j_poke_raichu"] = { 
+        text = {
+            { text = "+" },
+            { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
+        },
+        text_config = { colour = G.C.MULT },
+        calc_function = function(card)
+            card.joker_display_values.mult = G.GAME and
+                card.ability.extra.mult_mod *
+                (math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / card.ability.extra.money_count)) or 0
+        end
 }
 
 jd_def["j_poke_sandshrew"] = {
