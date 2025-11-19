@@ -239,7 +239,7 @@ local magmar={
   ptype = "Fire",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       card.ability.extra.remove_triggered = false
