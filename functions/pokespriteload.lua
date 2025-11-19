@@ -1252,7 +1252,9 @@ setmetatable(PokemonSprites, {
 })
 
 local poke_artist_info = {
-  Alber_Pro = {display_name = 'Alber_Pro', artist_colour = HEX('FFAE00')},
+  Alber_Pro = {display_name = 'Alber_Pro', artist_colour = HEX('FFAE00'), links = {
+    {url = 'https://discord.com/users/348471005704093697', account = 'alber_propoke'}
+  }},
   bt = {display_name = 'bt', artist_colour = HEX("2C4522"), highlight_colour = HEX("efead8")},
   Captain_Slime = {display_name = 'Captain Slime', artist_colour = HEX("F7C429")},
   Catzzadilla = {display_name = 'Catzzadilla', artist_colour = HEX("F3CC3C"), highlight_colour = HEX("A400FF")},
@@ -1260,7 +1262,9 @@ local poke_artist_info = {
   Celsie_RS = {display_name = 'Celsie_RS', artist_colour = HEX("FA8F0B")},
   Chartreuse_Chamber = {display_name = 'Chartreuse Chamber', artist_colour = HEX("B0D820")},
   Desnik = {display_name = 'Desnik', artist_colour = HEX("FDDF00")},
-  Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A")},
+  Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A"), links = {
+    {url = 'https://dudelings.carrd.co/', account = 'Dudelings'}
+  }},
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
@@ -1270,7 +1274,10 @@ local poke_artist_info = {
   RibbonOnline = {display_name = 'RibbonOnline', artist_colour = HEX("F11250")},
   Sonfive = {display_name = 'Sonfive', artist_colour = HEX("87DEFF")},
   Silverfish07 = {display_name = 'Silverfish07', artist_colour = HEX('FFAE00')},
-  Sunny = {display_name = 'Sunny', artist_colour = HEX("078D70"), highlight_colour = HEX("98E8C1")},
+  Sunny = {display_name = 'Sunny', artist_colour = HEX("078D70"), highlight_colour = HEX("98E8C1"), links = {
+    {url = 'https://x.com/sunnydasun1'},
+    {url = 'https://discord.com/users/997552363940368426', account = 'sunny_draws'}
+  }},
   Tovivi = {display_name = 'Tovivi', artist_colour = HEX("FFF700")},
   TunaBear = {display_name = 'TunaBear', artist_colour = HEX("5FEDED")},
   Xenellia = {display_name = 'Xenellia', artist_colour = HEX("9B0000")}

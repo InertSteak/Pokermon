@@ -270,13 +270,15 @@ local function parse_url(url)
 end
 
 local site_colours = {
-  ['youtube'] = G.C.RED,
-  ['twitch'] = G.C.PURPLE,
+  ['youtube'] = HEX("FF0033"),
+  ['twitch'] = HEX("6441A5"),
   ['steam'] = G.C.BLACK,
   ['steamcommunity'] = G.C.BLACK,
-  ['x'] = G.C.BLACK,
+  ['x'] = HEX("000000"),
   ['twitter'] = G.C.BLUE,
-  ['reddit'] = G.C.ORANGE,
+  ['reddit'] = HEX("FF4500"),
+  ['carrd'] = HEX("4071B7"),
+  ['discord'] = HEX("5865F2")
 }
 
 local function get_site_colour(domain)
