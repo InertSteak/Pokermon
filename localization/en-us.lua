@@ -253,7 +253,7 @@ return {
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:green}#1# in #2#{} chance to add",
                     "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
-                    "{C:dark_edition}Polychrome{} to self",
+                    "{C:dark_edition}Polychrome{} to self,",
                     "remove {C:attention}Edition{} at end of round",
                     "{C:inactive}(Useable once per round)",
                 }
@@ -1476,7 +1476,7 @@ return {
                 text = {
                     "{C:attention}Holding {C:item}Leek{}",
                     "{C:green}#2# in #3#{} chance to earn {C:money}$#1#",
-                    "when a {C:attention}Consumable{} is used",
+                    "when a {C:attention}Consumable{} is used,",
                     "{C:money}${} guaranteed when using {C:attention}Leeks{}",
                 } 
             },
@@ -3602,7 +3602,7 @@ return {
               name = "Buneary",
               text = {
                 "{C:mult}+#1#{} Mult for",
-                "each unscored card",
+                "each {C:attention}unscored{} card",
                 "in played hand",
                 "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
               }
