@@ -1759,13 +1759,9 @@ jd_def["j_poke_celebi"] = {
         {text = "[", colour = G.C.GREY},
         {ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY},
         {text = "/", colour = G.C.GREY},
-        {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
+        {ref_table ="card.ability.extra", ref_value = "skip_target", colour = G.C.ORANGE},
         {text = "]", colour = G.C.GREY},
-    },
-    calc_function = function(card)
-        local limit = G.GAME.celebi_skips
-        card.joker_display_values.limit = limit
-    end
+    }
 }
 
 
