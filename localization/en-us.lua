@@ -150,7 +150,7 @@ return {
             c_poke_pokeball = {
                 name = "Poké Ball",
                 text = {
-                    "Create a random",
+                    "Creates a",
                     "{C:attention}Basic Joker{} card",
                     "{C:inactive}(Must have room)"
                 },
@@ -158,7 +158,7 @@ return {
             c_poke_greatball = {
                 name = "Great Ball",
                 text = {
-                    "Create a random",
+                    "Creates a",
                     "{C:attention}Stage 1 Joker{} card",
                     "{C:inactive}(Must have room)"
                 },
@@ -5096,7 +5096,7 @@ return {
             c_poke_ultraball = {
                 name = "Ultra Ball",
                 text = {
-                    "Create a random",
+                    "Creates a",
                     "{C:attention}Stage 2 Joker{} card",
                     "{C:inactive}(Must have room)"
                 },
