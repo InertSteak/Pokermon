@@ -1343,8 +1343,7 @@ local sandshrew={
     if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        if v.shattered and card.ability.extra.glass_restored <= 0 then
-
+        if (SMODS.has_enhancement(v, 'm_glass') or v.glass_trigger) and card.ability.extra.glass_restored <= 0 then
           G.E_MANAGER:add_event(Event({
               func = function()
                   local copy = copy_card(v, nil, nil, G.playing_card)
@@ -1423,7 +1422,7 @@ local sandslash={
     if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
       local card_to_copy = nil
       for k, v in ipairs(context.removed) do
-        if v.shattered and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
+        if (SMODS.has_enhancement(v, 'm_glass') or v.glass_trigger) and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
           G.E_MANAGER:add_event(Event({
               func = function()
                   local copy = copy_card(v, nil, nil, G.playing_card)
