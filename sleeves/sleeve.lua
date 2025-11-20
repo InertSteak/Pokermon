@@ -188,8 +188,8 @@ local stadiumsleeve = {
       G.E_MANAGER:add_event(Event({
         func = function()
             local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
-            for i = 1, #enhancements do
-              local added_card = SMODS.add_card{set = 'Base', area = G.deck, no_edition = true, enhancement = enhancements[i], skip_materialize = true}
+            for i = 1, math.min(#G.deck.cards, #enhancements) do
+              G.deck.cards[i]:set_ability(G.P_CENTERS[enhancements[i]], nil, true)
             end
             G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
           return true
@@ -214,10 +214,10 @@ local megasleeve = {
 	name = "megasleeve",
 	key = "megasleeve",  
   prefix_config = {},
-	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut"}, consumables = {'c_poke_megastone'}, shop_size = 1},
+	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
-                    self.config.shop_size}}
+                    self.config.shop_size, localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}}}
   end,
 	pos = { x = 9, y = 1 },
 	atlas = "AtlasDecksBasic",

@@ -86,17 +86,17 @@ return {
             b_poke_stadiumdeck = {
                 name = "Stadium Deck",
                 text = {
-                    "Start the run with",
-                    "an additional {C:attention}Bonus, Mult,",
+                    "Deck starts with a {C:attention}Bonus, Mult,",
                     "{C:attention}Wild, Glass, Steel, Stone,",
-                    "{C:attention}Gold{}, and {C:attention}Lucky{} card"
+                    "{C:attention}Gold,{} and {C:attention}Lucky{} card"
                 } 
             },
             b_poke_megadeck = {
                 name = "Mega Deck",
                 text = {
                     "Start the run with the",
-                    "{C:tarot,T:v_reroll_surplus}#2#{} and {C:tarot,T:v_reroll_glut}#3#{} vouchers",
+                    "{C:tarot,T:v_reroll_surplus}#2#{}, {C:tarot,T:v_reroll_glut}#3#{}",
+                    "and {C:tarot,T:v_crystal_ball}#5#{} vouchers",
                     "and a {C:spectral,T:c_poke_megastone}#1#{} card",
                     "{C:red}-#4#{} shop slot"
                 } 
@@ -5052,10 +5052,9 @@ return {
             sleeve_poke_stadiumsleeve = {
                 name = "Stadium Sleeve",
                 text = {
-                    "Start the run with",
-                    "an additional {C:attention}Bonus, Mult,",
+                    "Deck starts with a {C:attention}Bonus, Mult,",
                     "{C:attention}Wild, Glass, Steel, Stone,",
-                    "{C:attention}Gold{}, and {C:attention}Lucky{} card"
+                    "{C:attention}Gold,{} and {C:attention}Lucky{} card"
                 } 
             },
             sleeve_poke_stadiumsleeve_alt = {
@@ -5070,7 +5069,8 @@ return {
                 name = "Mega Sleeve",
                 text = {
                     "Start the run with the",
-                    "{C:tarot,T:v_reroll_surplus}#2#{} and {C:tarot,T:v_reroll_glut}#3#{} vouchers",
+                    "{C:tarot,T:v_reroll_surplus}#2#{}, {C:tarot,T:v_reroll_glut}#3#{}",
+                    "and {C:tarot,T:v_crystal_ball}#5#{} vouchers",
                     "and a {C:spectral,T:c_poke_megastone}#1#{} card",
                     "{C:red}-#4#{} shop slot"
                 } 
