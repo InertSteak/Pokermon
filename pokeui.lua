@@ -320,7 +320,7 @@ local pokermon_actual_credits_artists_create_grid = function()
         nodes = {
           UIBox_button {
             id = artist,
-            label = {artist},
+            label = {info.display_name},
             button = "pokermon_actual_credits_artists_view_artist",
             text_colour = info.artist_colour,
             colour = info.highlight_colour or G.C.BLACK
