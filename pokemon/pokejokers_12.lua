@@ -155,13 +155,16 @@ local dusclops={
         for k, v in pairs(context.full_hand) do
           if not SMODS.in_scoring(v, context.scoring_hand) then
             poke_remove_card(v, card)
-            G.E_MANAGER:add_event(Event({
-              func = function()
-                local _card = SMODS.add_card {set = 'Spectral'}
-                card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-                return true
-              end
-            }))
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              G.E_MANAGER:add_event(Event({
+                func = function()
+                  local _card = SMODS.add_card {set = 'Spectral'}
+                  card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end
             break
           end
         end
