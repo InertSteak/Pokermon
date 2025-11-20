@@ -1268,9 +1268,18 @@ local poke_artist_info = {
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
-  MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC")},
+  MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC"), links = {
+  {url = 'https://www.youtube.com/@mydudestudios6244', account = 'MyDude Studios'},
+  {url = 'https://www.reddit.com/user/My_Dude_CBC/', account = 'My_Dude_CBC'},
+  {url = 'https://x.com/MyDude81058128'},
+  {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
+  {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
+
+  }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
-  RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540")},
+  RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {
+    {url = 'https://redhaering.carrd.co/', account = 'RedHaering'}
+  }},
   RibbonOnline = {display_name = 'RibbonOnline', artist_colour = HEX("F11250")},
   Sonfive = {display_name = 'Sonfive', artist_colour = HEX("87DEFF")},
   Silverfish07 = {display_name = 'Silverfish07', artist_colour = HEX('FFAE00')},
