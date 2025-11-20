@@ -304,6 +304,7 @@ local mystery_egg = {
   atlas = "others",
   blueprint_compat = false,
   eternal_compat = false,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       local adjacent = 0

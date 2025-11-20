@@ -13,6 +13,7 @@ local aron = {
   gen = 3,
   ptype = "Metal",
   blueprint_compat = true,
+  perishable_compat = false,
   enhancement_gate = 'm_steel',
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -60,6 +61,7 @@ local lairon = {
   gen = 3,
   ptype = "Metal",
   blueprint_compat = true,
+  perishable_compat = false,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -108,6 +110,7 @@ local aggron = {
   gen = 3,
   ptype = "Metal",
   blueprint_compat = true,
+  perishable_compat = false,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then

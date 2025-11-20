@@ -415,6 +415,7 @@ local zubat={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
@@ -462,6 +463,7 @@ local golbat={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       local m_count = 0 
@@ -900,6 +902,7 @@ local meowth={
   gen = 1,
   enhancement_gate = 'm_lucky',
   blueprint_compat = false,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
       card.ability.extra.triggers = card.ability.extra.triggers + 1
@@ -933,6 +936,7 @@ local persian={
   gen = 1,
   enhancement_gate = 'm_lucky',
   blueprint_compat = false,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
       card.ability.extra.triggers = card.ability.extra.triggers + 1

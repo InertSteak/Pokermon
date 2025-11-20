@@ -240,6 +240,7 @@ local magmar={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       card.ability.extra.remove_triggered = false
@@ -535,6 +536,7 @@ local lapras={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then

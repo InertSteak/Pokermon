@@ -475,6 +475,7 @@ local wartortle={
   gen = 1,
   copy_scaled = true,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before and not context.blueprint then
