@@ -641,7 +641,7 @@ local transformation = {
     else
       return false
     end
-    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype and not choice.config.center.aux_poke then
+    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
       return true
     else
       return false
@@ -659,12 +659,14 @@ local transformation = {
     elseif type_sticker_applied(choice) then
       energy_increase(choice, type_sticker_applied(choice))
     end
-    local highest = get_highest_evo(choice)
-    if highest and type(highest) == "string" then
-      local prefix = choice.config.center.poke_custom_prefix or "poke"
-      local forced_key = "j_"..prefix.."_"..highest
-      local context = {}
-      poke_evolve(choice, forced_key)
+    if not choice.config.center.aux_poke then
+      local highest = get_highest_evo(choice)
+      if highest and type(highest) == "string" then
+        local prefix = choice.config.center.poke_custom_prefix or "poke"
+        local forced_key = "j_"..prefix.."_"..highest
+        local context = {}
+        poke_evolve(choice, forced_key)
+      end
     end
   end
 }
