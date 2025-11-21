@@ -133,7 +133,7 @@ local gimmighoulr={
 local gholdengo={
   name = "gholdengo",
   pos = {x = 13, y = 6},
-  config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5, future_dollars = 0}},
+  config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money_minus, center.ability.extra.Xmult_multi}}
@@ -161,26 +161,35 @@ local gholdengo={
       end
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      local dollars = nil
+      local buffer = nil
       if (SMODS.Mods["Talisman"] or {}).can_load then
-        card.ability.extra.future_dollars = to_big(card.ability.extra.future_dollars) - to_big(card.ability.extra.money_minus)
-        if to_big(card.ability.extra.future_dollars) >= to_big(0) then
-          card.ability.extra.Xmult = to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi)
-          return {
-            dollars = -card.ability.extra.money_minus,
-            card = card
-          }
-        end
+        dollars = to_number(G.GAME.dollars or 0)
+        buffer = to_number(G.GAME.dollar_buffer or 0)
       else
-        card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
-        if card.ability.extra.future_dollars >= 0 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
-          return {
-            dollars = -card.ability.extra.money_minus,
-            card = card
-          }
-        end
+        dollars = (G.GAME.dollars or 0)
+        buffer = (G.GAME.dollar_buffer or 0)
+      end
+      
+      if dollars + buffer - card.ability.extra.money_minus >= 0 then
+        card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
+        
+        G.GAME.dollar_buffer = buffer - card.ability.extra.money_minus
+        
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              G.GAME.dollar_buffer = 0
+              return true
+          end
+        }))
+    
+        return {
+          dollars = -card.ability.extra.money_minus,
+          card = card
+        }
       end
     end
+    
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.Xmult = card.ability.extra.oXmult
       return {
