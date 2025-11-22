@@ -632,6 +632,7 @@ local ditto={
         end
       end
     end
+    if next(find_joker("Showman")) then return true end
     return true
   end
 }
