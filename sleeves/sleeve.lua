@@ -219,7 +219,7 @@ local stadiumsleeve = {
       G.E_MANAGER:add_event(Event({
         func = function()
             local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
-            for i = 1, #enhancements do
+            for i = 1, math.min(#G.deck.cards, #enhancements) do
               G.deck.cards[i]:set_ability(G.P_CENTERS[enhancements[i]], nil, true)
             end
           return true
