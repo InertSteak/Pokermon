@@ -220,9 +220,8 @@ local stadiumsleeve = {
         func = function()
             local enhancements = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_stone", "m_gold", "m_lucky"}
             for i = 1, #enhancements do
-              local added_card = SMODS.add_card{set = 'Base', area = G.deck, no_edition = true, enhancement = enhancements[i], skip_materialize = true}
+              G.deck.cards[i]:set_ability(G.P_CENTERS[enhancements[i]], nil, true)
             end
-            G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
           return true
       end}))
     end
