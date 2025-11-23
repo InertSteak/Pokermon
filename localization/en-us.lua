@@ -5018,6 +5018,13 @@ return {
                     "and are {C:pink}Energized{} once",
                 },
             },
+            sleeve_poke_luminoussleeve_alt = {
+                name = "Luminous Sleeve",
+                text = {
+                    "Rerolls have a {C:green}#1# in #2#{} chance",
+                    "to spawn a {C:item}Tera Orb",
+                },
+            },
             sleeve_poke_telekineticsleeve = {
                 name = "Telekinetic Sleeve",
                 text = {
@@ -5026,6 +5033,14 @@ return {
                     "and {C:attention}2{} copies",
                     "of {C:item,T:c_poke_twisted_spoon}#2#"
                 } 
+            },
+			sleeve_poke_telekineticsleeve_alt = {
+                name = "Telekinetic Sleeve",
+                text = {
+                    "{C:item,T:c_poke_twisted_spoon}#2#s{} in your",
+                    "{C:attention}consumable{} area give",
+                    "{C:blue}+1{} consumable slot",
+                }
             },
             sleeve_poke_ampedsleeve = {
                 name = "Amped Sleeve",

@@ -75,6 +75,22 @@ end
 		end
 	}
 
+local add_shop_card = function(add_card, card)
+    if G.GAME.shop.joker_max == 1 then
+      G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
+      G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1)*1.02*G.CARD_W,4.08*G.CARD_W)
+      G.shop:recalculate()
+    end
+    G.shop_jokers:emplace(add_card)
+    create_shop_card_ui(add_card)
+    
+    if (SMODS.Mods["Talisman"] or {}).can_load then
+      if Talisman.config_file.disable_anims then 
+        add_card.states.visible = true
+      end
+    end
+end
+
 --- Luminous Sleeve 
 	local luminoussleeve = {
 		key = 'luminoussleeve',
@@ -82,29 +98,58 @@ end
 		prefix_config = {},
 		atlas = "AtlasDecksBasic",
 		pos = { x = 1, y = 1 },
-		config = {},
-		loc_vars = function(self, info_queue, center)
-			return {
-				vars = {
-				}
-		}
-	end,
+		config = {num = 1, dem = 4},
+  loc_vars = function(self, info_queue, back)
+    local num, dem = SMODS.get_probability_vars(back, self.config.num, self.config.dem, 'luminate')
+    local curr_key = nil
+    if self.get_current_deck_key() == "b_poke_luminousdeck" then
+      curr_key = self.key.."_alt"
+    else
+      curr_key = self.key
+    end
+    return {key = curr_key, vars = {num, dem}}
+  end,
 	apply = function(self)
-	  G.GAME.modifiers.apply_type = true
-	end
+      if self.get_current_deck_key() ~= "b_poke_luminousdeck" then
+	    G.GAME.modifiers.apply_type = true
+      end
+	end,
+  calculate = function(self, back, context)
+    if context.reroll_shop and self.get_current_deck_key() == "b_poke_luminousdeck" then
+      if SMODS.pseudorandom_probability(back, 'luminate', self.config.num, self.config.dem, 'luminate') then
+        local temp_card = {set = "Item", area = G.shop_jokers, key = "c_poke_teraorb"}
+        local add_card = SMODS.create_card(temp_card)
+        add_shop_card(add_card, card)
+      end
+    end
+  end,
 }
 
 -- Telekinetic Sleeve
-	local telekineticsleeve = {
-		key = 'telekineticsleeve',
-		name = 'Telekinetic Sleeve',
-		prefix_config = {},
-		atlas = "AtlasDecksBasic",
-		pos = { x = 3, y = 1 },
-		config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
-		loc_vars = function(self, info_queue, center)
-			return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
-		end,
+local telekineticsleeve = {
+  key = 'telekineticsleeve',
+  name = 'Telekinetic Sleeve',
+  prefix_config = {},
+  atlas = "AtlasDecksBasic",
+  pos = { x = 3, y = 1 },
+  loc_vars = function(self, info_queue, center)
+    local key
+    if self.get_current_deck_key() == "b_poke_telekineticdeck" then
+        key = self.key .. "_alt"
+        self.config = { }
+    else
+        key = self.key
+        self.config = { vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'} }
+    end
+    return {key = key, vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
+  end,
+  apply = function(self, sleeve)
+    if self.get_current_deck_key() ~= "b_poke_telekineticdeck" then
+      CardSleeves.Sleeve.apply(self)
+    else
+      G.GAME.modifiers.spoon_slots = true
+    end
+  end,
 }
 
 --Amped Sleeve
@@ -191,7 +236,6 @@ local stadiumsleeve = {
             for i = 1, math.min(#G.deck.cards, #enhancements) do
               G.deck.cards[i]:set_ability(G.P_CENTERS[enhancements[i]], nil, true)
             end
-            G.GAME.starting_deck_size = G.GAME.starting_deck_size + #enhancements
           return true
       end}))
     end
@@ -214,16 +258,10 @@ local megasleeve = {
 	name = "megasleeve",
 	key = "megasleeve",  
   prefix_config = {},
-	config = {},
+	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut"}, consumables = {'c_poke_megastone'}, shop_size = 1},
   loc_vars = function(self, info_queue, center)
-    if self.get_current_deck_key() == "b_poke_megadeck" then
-      self.config = {}
-      return {key = self.key.."_alt", vars = {localize("megastone_variable")}}
-    else
-      self.config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1}
-      return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
-                      self.config.shop_size, localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}}}
-    end
+    return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
+                    self.config.shop_size}}
   end,
 	pos = { x = 9, y = 1 },
 	atlas = "AtlasDecksBasic",
