@@ -5169,9 +5169,10 @@ return {
             c_poke_nightmare = {
                 name = "Nightmare",
                 text = {
-                    "Destroys selected Joker with a {C:pink}Type{}",
-                    "and creates {C:attention}2{} {C:dark_edition}Negative{} {C:pink}Energy{}",
-                    "of that Joker's {C:pink}type{}"
+                    "Destroys leftmost or selected",
+                    "Joker and creates {C:attention}2{} {C:dark_edition}Negative{}",
+                    "{C:pink}Energy{} of that Joker's {C:pink}type{}",
+                    "{C:inactive}(Typeless jokers give {X:colorless,C:white}Colorless{C:inactive})"
                 },
             },
             c_poke_revenant = {

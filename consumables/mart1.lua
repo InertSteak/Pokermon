@@ -863,21 +863,34 @@ local nightmare = {
   unlocked = true,
   discovered = true,
   use = function(self, card)
-    local selected = G.jokers.highlighted[1]
-    local energy = matching_energy(selected, true)
-    local max = (energy == "c_poke_bird_energy") and 1 or 2
-    local context = {}
-    remove(self, selected, context)
-    for i= 1, max do
-      local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
     end
+    local energy = matching_energy(choice, true) or "c_poke_colorless_energy"
+    if energy then
+      local max = (energy == "c_poke_bird_energy") and 1 or 2
+      local context = {}
+      for i= 1, max do
+        local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+        local edition = {negative = true}
+        _card:set_edition(edition, true)
+        _card:add_to_deck()
+        G.consumeables:emplace(_card)
+      end
+    end
+    remove(self, choice)
   end,
   can_use = function(self, card)
-    return G.jokers.highlighted and #G.jokers.highlighted == 1 and has_type(G.jokers.highlighted[1]) and not G.jokers.highlighted[1].ability.eternal
+    local choice = nil
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
+      choice = G.jokers.highlighted[1]
+    else
+      choice = G.jokers.cards[1]
+    end
+    return not choice.ability.eternal
   end,
 }
 
