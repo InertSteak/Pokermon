@@ -15,7 +15,7 @@ local pokedex={
 
 local rotomdex={ 
   name = "rotomdex",
-  pos = {x = 0, y = 0},
+  pos = {x = 0, y = 4},
   artist = {"InertSteak", "Catzzadilla"},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
@@ -25,7 +25,7 @@ local rotomdex={
   rarity = 1, 
   cost = 6, 
   stage = "Other",
-  atlas = "placeholder_joker", -- idk if I should change this, it crashed my game so I'll leave it here
+  atlas = "others",
   blueprint_compat = false,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
