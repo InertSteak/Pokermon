@@ -12,6 +12,7 @@ local pink_seal = {
 	badge_colour = HEX("FF7ABF"), --pink
 	atlas = "AtlasStickersBasic",
   pos = {x = 0, y = 0},
+  config = {num = 1, dem = 3},
 	calculate = function(self, card, context)
 		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and G.GAME.current_round.hands_played == 0 then
 			G.E_MANAGER:add_event(Event({
@@ -36,7 +37,11 @@ local pink_seal = {
             end
 						_card:add_to_deck()
 						G.consumeables:emplace(_card)
-						card:juice_up()
+            if G.GAME.modifiers.poke_pink_seal_selfdestruct
+                and SMODS.pseudorandom_probability(card, 'poke_pink_seal_selfdestruct', card.ability.seal.num, card.ability.seal.dem, 'poke_pink_seal_selfdestruct') then
+              card:set_seal(nil)
+            end
+            card:juice_up()
 					end
           return true
 				end,
