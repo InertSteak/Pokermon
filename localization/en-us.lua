@@ -5027,6 +5027,14 @@ return {
                     "of {C:item,T:c_poke_twisted_spoon}#2#"
                 } 
             },
+			sleeve_poke_telekineticsleeve_alt = {
+                name = "Telekinetic Sleeve",
+                text = {
+                    "{C:item,T:c_poke_twisted_spoon}#2#s{} in your",
+                    "{C:attention}consumable{} area give",
+                    "{C:blue}+1{} consumable slot",
+                }
+            },
             sleeve_poke_ampedsleeve = {
                 name = "Amped Sleeve",
                 text = {
