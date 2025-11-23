@@ -95,16 +95,30 @@ end
 }
 
 -- Telekinetic Sleeve
-	local telekineticsleeve = {
-		key = 'telekineticsleeve',
-		name = 'Telekinetic Sleeve',
-		prefix_config = {},
-		atlas = "AtlasDecksBasic",
-		pos = { x = 3, y = 1 },
-		config = {vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'}},
-		loc_vars = function(self, info_queue, center)
-			return {vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
-		end,
+local telekineticsleeve = {
+  key = 'telekineticsleeve',
+  name = 'Telekinetic Sleeve',
+  prefix_config = {},
+  atlas = "AtlasDecksBasic",
+  pos = { x = 3, y = 1 },
+  loc_vars = function(self, info_queue, center)
+    local key
+    if self.get_current_deck_key() == "b_poke_telekineticdeck" then
+        key = self.key .. "_alt"
+        self.config = { }
+    else
+        key = self.key
+        self.config = { vouchers = { "v_crystal_ball"}, consumables = {'c_poke_twisted_spoon', 'c_poke_twisted_spoon'} }
+    end
+    return {key = key, vars = {localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}, localize("twisted_spoon_variable")}}
+  end,
+  apply = function(self, sleeve)
+    if self.get_current_deck_key() ~= "b_poke_telekineticdeck" then
+      CardSleeves.Sleeve.apply(self)
+    else
+      G.GAME.modifiers.spoon_slots = true
+    end
+  end,
 }
 
 --Amped Sleeve
