@@ -5018,6 +5018,13 @@ return {
                     "and are {C:pink}Energized{} once",
                 },
             },
+            sleeve_poke_luminoussleeve_alt = {
+                name = "Luminous Sleeve",
+                text = {
+                    "Rerolls have a {C:green}#1# in #2#{} chance",
+                    "to spawn a {C:item}Tera Orb",
+                },
+            },
             sleeve_poke_telekineticsleeve = {
                 name = "Telekinetic Sleeve",
                 text = {
