@@ -50,13 +50,32 @@ end
 		prefix_config = {},
 		atlas = "AtlasDecksBasic",
 		pos = { x = 2, y = 1 },
-		config = {},
-		loc_vars = function(self, info_queue, center)
+		config = {num = 1, dem = 3},
+		loc_vars = function(self)
+      if self.get_current_deck_key() == 'b_poke_obituarydeck' then
+        local num, dem = SMODS.get_probability_vars(self, self.config.num, self.config.dem, 'poke_pink_seal_selfdestruct')
+        return {
+          key = self.key..'_alt',
+          vars = {num, dem}
+        }
+      end
 		  return {vars = {localize("pinkseal_variable")}}
 		end,
 		apply = function(self)
 			G.GAME.modifiers.poke_force_seal = "poke_pink_seal"
-		end
+      if self.get_current_deck_key() == 'b_poke_obituarydeck' then
+        G.GAME.modifiers.poke_pink_seal_selfdestruct = true
+      end
+		end,
+    calculate = function(self, sleeve, context)
+      if self.get_current_deck_key() ~= 'b_poke_obituarydeck' then return end
+      if context.joker_type_destroyed or context.selling_card then
+        local key = matching_energy(context.card, true)
+        if key then
+          SMODS.add_card { key = key, edition = 'e_negative' }
+        end
+      end
+    end
 	}
   
   --- Revenant Sleeve

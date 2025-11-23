@@ -267,6 +267,12 @@ copy_scaled_values = function(card)
 end
 
 remove = function(self, card, context, check_shiny)
+  card.getting_sliced = true
+  local flags = SMODS.calculate_context({ joker_type_destroyed = true, card = card })
+  if flags.no_destroy then
+    card.getting_sliced = nil
+    return
+  end
   if check_shiny and card.edition and card.edition.poke_shiny then
     SMODS.change_booster_limit(-1)
   end

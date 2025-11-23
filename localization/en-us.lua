@@ -5004,6 +5004,15 @@ return {
                     "All cards have a {C:dark_edition}#1#{}",
                 },
             },
+            sleeve_poke_obituarysleeve_alt = {
+                name = "Obituary Sleeve",
+                text = {
+                    "{C:pink}Pink Seals{} have a {C:green}#1# in #2#{} chance to",
+                    "be removed after triggering",
+                    "Jokers create a {C:dark_edition}Negative {C:pink}Energy{} of",
+                    "their type when sold or destroyed",
+                },
+            },
             sleeve_poke_revenantsleeve = {
                 name = "Revenant Sleeve",
                 text = {
