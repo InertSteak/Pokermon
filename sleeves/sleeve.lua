@@ -214,21 +214,31 @@ local megasleeve = {
 	name = "megasleeve",
 	key = "megasleeve",  
   prefix_config = {},
-	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1},
+	config = {},
   loc_vars = function(self, info_queue, center)
-    return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
-                    self.config.shop_size, localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}}}
+    if self.get_current_deck_key() == "b_poke_megadeck" then
+      self.config = {}
+      return {key = self.key.."_alt", vars = {localize("megastone_variable")}}
+    else
+      self.config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1}
+      return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
+                      self.config.shop_size, localize{type = 'name_text', key = 'v_crystal_ball', set = 'Voucher'}}}
+    end
   end,
 	pos = { x = 9, y = 1 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
-    G.E_MANAGER:add_event(Event({
-      func = function()
+    if self.get_current_deck_key() == "b_poke_megadeck" then
+      G.GAME.modifiers.infinite_megastone = true
+    else
+      G.E_MANAGER:add_event(Event({
+        func = function()
           change_shop_size(-self.config.shop_size)
           return true
-      end
-    }))
+        end
+      }))
+    end
   end,
 } 
 

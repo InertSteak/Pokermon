@@ -679,7 +679,9 @@ local megastone = {
   config = {extra = {usable = true, used_on = nil}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
+    if not G.GAME.modifiers.infinite_megastone then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
+    end
     if center and center.ability.extra.used_on then
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = center.ability.extra.used_on})}}
     end
@@ -743,7 +745,9 @@ local megastone = {
         end
       end
       forced_key = forced_mega_key.. mega
-      card.ability.extra.used_on = forced_key
+      if not G.GAME.modifiers.infinite_megastone then
+        card.ability.extra.used_on = forced_key
+      end
     else
       forced_key = get_previous_evo(target, true)
       card.ability.extra.used_on = nil
