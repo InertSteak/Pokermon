@@ -864,10 +864,11 @@ local nightmare = {
   discovered = true,
   use = function(self, card)
     local selected = G.jokers.highlighted[1]
-    local energy = matching_energy(selected)
+    local energy = matching_energy(selected, true)
+    local max = (energy == "c_poke_bird_energy") and 1 or 2
     local context = {}
     remove(self, selected, context)
-    for i= 1, 2 do
+    for i= 1, max do
       local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)
