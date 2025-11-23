@@ -1228,7 +1228,7 @@ PokemonSprites = {
 {name = "terapagos_stellar", base = {pos = {x = 4, y = 6}, soul_pos =  {x = 5, y = 6}},gen_atlas = 9},
 {name = "pecharunt", base = {pos = {x = 8, y = 68}, soul_pos =  {x = 9, y = 68}},},
 {name = "pokedex", base = {pos = {x = 0, y = 0}}, others_atlas = true,},
---rotomdex", base = {pos = {x = 0, y = 0}}, others_atlas = true,},
+{name = "rotomdex", base = {pos = {x = 0, y = 4}}, others_atlas = true,},
 {name = "everstone", base = {pos = {x = 2, y = 0}}, others_atlas = true,},
 {name = "tall_grass", base = {pos = {x = 4, y = 0}}, others_atlas = true,},
 {name = "jelly_donut", base = {pos = {x = 6, y = 0}}, others_atlas = true,},
