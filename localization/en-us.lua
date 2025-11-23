@@ -5090,6 +5090,14 @@ return {
                     "{C:red}-#4#{} shop slot"
                 } 
             },
+            sleeve_poke_megasleeve_alt = {
+                name = "Mega Sleeve",
+                text = {
+                    "{C:attention}Mega Evolution{} is no longer",
+                    "restricted to 1 Joker per",
+                    "{C:spectral,T:c_poke_megastone}#1#{} you have",
+                } 
+            },
             sleeve_poke_vendingsleeve = {
                 name = "Vending Sleeve",
                 text = {
