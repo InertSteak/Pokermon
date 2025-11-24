@@ -357,11 +357,12 @@ local vendingsleeve = {
   end
 }
 
-local slist = nil
+local slist = {pokemonsleeve, luminoussleeve, telekineticsleeve, ampedsleeve, futuresleeve, stadiumsleeve, megasleeve, vendingsleeve}
 if pokermon_config.pokemon_legacy then
-  slist = {pokemonsleeve, obituarysleeve, revenantsleeve, luminoussleeve, telekineticsleeve, ampedsleeve, futuresleeve, stadiumsleeve, megasleeve, vendingsleeve}
-else
-  slist = {pokemonsleeve, luminoussleeve, telekineticsleeve, ampedsleeve, futuresleeve, stadiumsleeve, megasleeve, vendingsleeve}
+  local legacy_sleeves = {obituarysleeve, revenantsleeve}
+  for i = 1, #legacy_sleeves do
+    slist[#slist + 1] = legacy_sleeves[i]
+  end
 end
 
 return {Name = "Sleeve",
