@@ -1379,6 +1379,19 @@ poke_get_artist_list = function()
   return list
 end
 
+function poke_get_artist_layer(obj, by_artist)
+  local artists = (type(obj.artist) == 'table' and not obj.artist.name)
+      and obj.artist
+      or { obj.artist }
+
+  for _, _artist in ipairs(artists) do
+    local artist_name = type(_artist) == 'table' and _artist.name or _artist
+    if by_artist == artist_name then
+      return _artist.layer or 'both'
+    end
+  end
+end
+
 poke_get_artist_sprites = function(artist)
   local sprites = {}
 
@@ -1386,26 +1399,19 @@ poke_get_artist_sprites = function(artist)
 
     if sprite.alts then
       for atlas_prefix, alt in pairs(sprite.alts) do
-        local artists = (type(alt.artist) == 'table' and not alt.artist.name)
-            and alt.artist
-            or {alt.artist}
+        local layer = poke_get_artist_layer(alt, artist)
 
-        for _, alt_artist in ipairs(artists) do
-          local artist_name = type(alt_artist) == 'table' and alt_artist.name or alt_artist
-          local layer = type(alt_artist) == 'table' and alt_artist.layer or 'both'
-
-          if artist == artist_name then
-            table.insert(sprites, {
-              name = sprite.name,
-              pos = sprite.base.pos,
-              soul_pos = alt.soul_pos or sprite.base.soul_pos,
-              atlas_prefix = atlas_prefix,
-              gen_atlas = sprite.gen_atlas,
-              others_atlas = sprite.others_atlas,
-              anim_atlas = alt.anim_atlas,
-              layer = layer
-            })
-          end
+        if layer then
+          table.insert(sprites, {
+            name = sprite.name,
+            pos = sprite.base.pos,
+            soul_pos = alt.soul_pos or sprite.base.soul_pos,
+            atlas_prefix = atlas_prefix,
+            gen_atlas = sprite.gen_atlas,
+            others_atlas = sprite.others_atlas,
+            anim_atlas = alt.anim_atlas,
+            layer = layer
+          })
         end
       end
     end
