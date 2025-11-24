@@ -554,7 +554,7 @@ local function pokermon_show_artist_info(artist)
           }
         }}
       end
-      row_link_nodes[#row_link_nodes+1] = {n=G.UIT.R, nodes=col_nodes}
+      row_link_nodes[#row_link_nodes+1] = {n=G.UIT.R, config={align = "cm"}, nodes=col_nodes}
       marker = marker + cols
     end
   end
