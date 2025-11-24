@@ -78,21 +78,40 @@ end
     end
 	}
   
-  --- Revenant Sleeve
-	local revenantsleeve = {
-		key = 'revenantsleeve',
-		name = 'Revenant Sleeve',
-		prefix_config = {},
-		atlas = "AtlasDecksBasic",
-		pos = { x = 5, y = 1 },
-		config = {},
-		loc_vars = function(self, info_queue, center)
-		  return {vars = {localize("silverseal_variable")}}
-		end,
-		apply = function(self)
-			G.GAME.modifiers.poke_force_seal = "poke_silver"
-		end
-	}
+--- Revenant Sleeve
+  local revenantsleeve = {
+    key = 'revenantsleeve',
+    name = 'Revenant Sleeve',
+    prefix_config = {},
+    atlas = "AtlasDecksBasic",
+    pos = { x = 5, y = 1 },
+    loc_vars = function(self, info_queue, center)
+      local key
+      local vars
+      if self.get_current_deck_key() == "b_poke_revenantdeck" then
+          key = self.key .. "_alt"
+          self.config = { consumable_slot = 3 }
+          vars = { self.config.consumable_slot }
+      else
+          key = self.key
+          self.config = { }
+          vars = { localize("silverseal_variable") }
+      end
+      return {key = key, vars = vars}
+    end,
+    apply = function(self)
+      CardSleeves.Sleeve.apply(self)
+      G.GAME.modifiers.poke_force_seal = "poke_silver"
+      if self.get_current_deck_key() == "b_poke_revenantdeck" then
+        G.GAME.modifiers.no_poke_packs = true
+        for k, v in pairs(G.P_CENTER_POOLS["Booster"]) do
+          if v.kind == "Energy" then
+            v.get_weight = function() return G.GAME.modifiers.no_poke_packs and 0 or 1 end
+          end
+        end
+      end
+    end
+  }
 
 local add_shop_card = function(add_card, card)
     if G.GAME.shop.joker_max == 1 then
