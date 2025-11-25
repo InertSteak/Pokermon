@@ -5068,6 +5068,15 @@ return {
                     "{C:pink,T:c_poke_double_rainbow_energy}#2#"
                 } 
             },
+            sleeve_poke_ampedsleeve_alt = {
+                name = "Amped Sleeve",
+                text = {
+                    "Start run with a {C:dark_edition}Negative {C:attention,T:j_poke_jelly_donut}#1#",
+                    "instead of a {C:pink,T:c_poke_double_rainbow_energy}#2#",
+                    "{C:pink,T:c_poke_colorless_energy}#3#{} is no longer half as",
+                    "effective on non-Colorless Jokers",
+                } 
+            },
             sleeve_poke_futuresleeve = {
                 name = "Future Sleeve",
                 text = {

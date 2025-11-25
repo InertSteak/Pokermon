@@ -172,7 +172,7 @@ energize = function(card, etype, evolving, silent)
         local updated_mod = nil
         if name == "mult_mod" or name == "chip_mod" then previous_mod = card.ability.extra[name] end
         if evolving then
-          if card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
+          if not G.GAME.modifiers.disable_colorless_penalty and card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker then
             addition = (addition * (card.ability.extra.energy_count or 0)) + (addition/2 * (card.ability.extra.c_energy_count or 0))
           else
             addition = (addition * ((card.ability.extra.energy_count or 0) + (card.ability.extra.c_energy_count or 0)))
@@ -191,7 +191,7 @@ energize = function(card, etype, evolving, silent)
             frac_added = true
           end
         else
-          if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+          if not G.GAME.modifiers.disable_colorless_penalty and (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
             card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition/2) * (card.ability.extra.escale or 1)
           else
             card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
@@ -228,7 +228,7 @@ energize = function(card, etype, evolving, silent)
       for x, y in pairs(v) do
         if card.ability.name == y then
           local increase = energy_values[k]
-          if not card.ability.colorless_sticker and etype == "Colorless" then
+          if not G.GAME.modifiers.disable_colorless_penalty and not card.ability.colorless_sticker and etype == "Colorless" then
             increase = increase/2
           end
           card.ability.extra = card.ability.extra + (card.config.center.config.extra * increase)
@@ -245,7 +245,7 @@ energize = function(card, etype, evolving, silent)
       increase = energy_values.Xmult
     end
     if increase then
-      if not card.ability.colorless_sticker and etype == "Colorless" then
+      if not G.GAME.modifiers.disable_colorless_penalty and not card.ability.colorless_sticker and etype == "Colorless" then
         increase = increase/2
       end
       if (card.ability.mult and card.ability.mult > 0 and card.config.center.config and card.config.center.config.mult) then
