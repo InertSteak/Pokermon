@@ -197,10 +197,34 @@ local ampedsleeve = {
   prefix_config = {},
   pos = { x = 4, y = 1 },
   atlas = "AtlasDecksBasic",
-	config = {vouchers = { "v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}},
   loc_vars = function(self, info_queue, center)
-    return {vars = {localize{type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}}
+    local key = self.key
+    local vars = {}
+
+    if self.get_current_deck_key() == "b_poke_ampeddeck" then
+      key = self.key.."_alt"
+      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'Energy'}}
+      self.config = {}
+    else
+      vars = {localize {type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}
+      self.config = {vouchers = {"v_poke_energysearch"}, consumables = {'c_poke_double_rainbow_energy'}}
+    end
+
+    return {key = key, vars = vars}
   end,
+  apply = function(self)
+    CardSleeves.Sleeve.apply(self)
+    if self.get_current_deck_key() == "b_poke_ampeddeck" then
+      G.GAME.modifiers.disable_colorless_penalty = true
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          SMODS.find_card('c_poke_double_rainbow_energy')[1]:remove()
+          SMODS.add_card { key = 'j_poke_jelly_donut', edition = 'e_negative' }
+          return true
+        end
+      }))
+    end
+  end
 } 
 
 --Future Sleeve
