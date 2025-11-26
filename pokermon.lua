@@ -205,21 +205,20 @@ end
 
 -- Dex ordering pokemon in add-ons
 G.E_MANAGER:add_event(Event({
-  trigger = 'after',
-  delay = 0.1,
   func = function()
     pokermon.dex_order_groups = {}
     for i, pokemon in ipairs (pokermon.dex_order) do
       if type(pokemon) == "table" then
         for _, mon in ipairs(pokemon) do
-          if not G.P_CENTERS['j_poke_'..mon] then
+          if not G.P_CENTERS['j_poke_'..mon] and not next(SMODS.deepfind(pokermon.dex_order_groups, mon, "v", true)) then
             pokermon.dex_order_groups[#pokermon.dex_order_groups+1] = { mon }
           end
         end
-      elseif not G.P_CENTERS['j_poke_'..pokemon] then
+      elseif not G.P_CENTERS['j_poke_'..pokemon] and not next(SMODS.deepfind(pokermon.dex_order_groups, pokemon, "v", true)) then
         pokermon.dex_order_groups[#pokermon.dex_order_groups+1] = { pokemon }
       end
     end
+	return true
   end
 }))
 --This is a new comment
