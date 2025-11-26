@@ -333,3 +333,92 @@ function G.FUNCS.pokermon_open_site(e)
     end
   end
 end
+
+
+-- Ordering Collection by Pokedex Order, and enabling pokemon only in collection
+-- modifying this function for *two* different config settings
+SMODS.collection_pool = function(_base_pool)
+  local pool = {}
+  local inserts = {}
+  if type(_base_pool) ~= 'table' then return pool end
+  local is_array = _base_pool[1]
+  local ipairs = is_array and ipairs or pairs
+  for _, v in ipairs(_base_pool) do
+    local moved = false
+    if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
+      if pokermon_config.order_jokers then
+        for x, y in pairs(pokermon.dex_order_groups) do
+          if table.contains(y, v.name) then
+            inserts[#inserts+1] = v
+            moved = true
+          end
+        end
+      end
+      local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only_collection
+      if not moved and not empty_vanilla then pool[#pool+1] = v end
+    end
+  end
+
+  if pokermon_config.order_jokers then
+    table.sort(inserts, function(a, b) return pokermon.get_dex_number(a.name) < pokermon.get_dex_number(b.name) end)
+    for k, v in pairs(inserts) do
+      for x, y in pairs(pokermon.dex_order_groups) do
+        if table.contains(y, v.name) then
+          local next_index = pokermon.dex_order[pokermon.find_next_dex_number(v.name)]
+          if type(next_index) == "table" then next_index = next_index[1] end
+          if not table.contains(pool, v) then
+            table.insert(pool, next_index and pokermon.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
+          end
+        end
+      end
+    end
+  end
+
+  if not is_array then table.sort(pool, function(a,b) return a.order < b.order end) end
+  return pool
+end
+
+pokermon.find_pool_index = function(pool, key)
+    for k, v in pairs(pool) do
+      if v.key == key then return k end
+    end
+end
+
+pokermon.get_dex_number = function(name)
+  for i, pokemon in ipairs(pokermon.dex_order) do
+    if type(pokemon) == 'table' then
+      for x, y in ipairs(pokemon) do
+        if name == y then return i + (x - 1)/10 end
+      end
+    elseif type(pokemon) == "string" and name == pokemon then return i end
+  end
+  return #pokermon.dex_order + 1
+end
+
+pokermon.find_next_dex_number = function(name)
+  local dexNo = pokermon.get_dex_number(name)
+  local group_list
+  for k, v in pairs(pokermon.dex_order_groups) do
+    if table.contains(v, name) then group_list = v break end
+  end
+  for i, pokemon in ipairs(pokermon.dex_order) do
+    if type(pokemon) == 'table' then
+      for _, mon in ipairs(pokemon) do
+        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
+          return i
+        end
+      end
+    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
+      return i
+    elseif pokemon == "missingno" then return i end
+  end
+end
+
+function table.contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end

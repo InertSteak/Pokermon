@@ -5877,6 +5877,22 @@ return {
                 "win the current run",
               }
             },
+			order_jokers_tooltip = {
+              name = "Order Jokers by Dex No.",
+              text = {
+                "Pokemon Jokers appear",
+                "in the collection in",
+                "Pokedex order",
+              }
+            },
+            pokemon_only_collection_tooltip = {
+              name = "Only Pokemon In Collection",
+              text = {
+                "Only Pokemon Jokers",
+                "will appear in",
+                "the collection",
+              }
+            },
             legacycontent_tooltip = {
               name = "Legacy Content",
               text = {
@@ -6218,6 +6234,8 @@ return {
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",
             poke_settings_pokemon_detailed_tooltips = "Detailed Tooltips?",
 			poke_settings_previous_evo_stickers = "Previous Evo Stickers?",
+			poke_settings_order_jokers = "Order Jokers by Dex No.?",
+            poke_settings_pokemon_only_collection = "Only Pokermon Jokers in Collection?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",
             poke_settings_pokeballs = "Allow Pokéballs?",
