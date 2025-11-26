@@ -346,7 +346,7 @@ SMODS.collection_pool = function(_base_pool)
   for _, v in ipairs(_base_pool) do
     local moved = false
     if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
-      if pokermon_config.orderJokers then
+      if pokermon_config.order_jokers then
         for x, y in pairs(pokermon.dex_order_groups) do
           if table.contains(y, v.name) then
             inserts[#inserts+1] = v
@@ -354,7 +354,7 @@ SMODS.collection_pool = function(_base_pool)
           end
         end
       end
-      local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only
+      local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only_collection
       if not moved and not empty_vanilla then pool[#pool+1] = v end
     end
   end
