@@ -1270,8 +1270,8 @@ return {
             j_poke_abra = {
                 name = "Abra",
                 text = {
-                    "{C:green}#1# in #2#{} chance to create an {C:item}Item",
-                    "or {C:tarot}Tarot{} card if played {C:attention}poker hand{}",
+                    "{C:green}#1# in #2#{} chance to create an {C:tarot}Tarot{}",
+                    "or {C:item}Item card if played {C:attention}poker hand{}",
                     "has already been played this round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 } 
@@ -1433,7 +1433,7 @@ return {
                 name = "Slowbro",
                 text = {
                     "{X:mult,C:white} X#1# {} Mult per hand played",
-                    "{C:inactive,s:0.8}(Resets at end of round)",
+                    "{C:inactive,s:0.8}(resets at end of round)",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
@@ -2386,7 +2386,7 @@ return {
                     "{C:attention}Lucky Cards{} have",
                     "a {C:green}#1# in #2#{} chance to give {C:chips}+#4#{} Chips",
                     "and a {C:green}#1# in #3#{} chance to give {X:mult,C:white}X#5#{} Mult",
-                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8} card)"
+                    "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8})"
                 }
             },
             j_poke_natu = {
@@ -2655,7 +2655,7 @@ return {
             j_poke_girafarig = {
               name = "Girafarig",
               text = {
-                "First and last {C:attention}face{} card",
+                "First and last {C:attention}face{} cards",
                 "give {X:mult,C:white}X#1#{} Mult when scored",
                 "if played hand contains a {C:attention}Two Pair{}",
                 "{C:inactive,s:0.8}(Evolves after using a {C:attention,s:0.8}Death{C:inactive,s:0.8} on {C:attention,s:0.8}2{C:inactive,s:0.8} face cards){}"
@@ -3112,11 +3112,11 @@ return {
             j_poke_tyranitar = {
                 name = "Tyranitar",
                 text = {
-                  "If played hand is a {C:attention}Full House{}",
-                  "When scored, every played card",
-                  "permanently loses up to {C:chips}#1#{} Chips and",
-                  "permanently gains {X:mult,C:white}X#2#{} Mult if",
-                  "chips were lost"
+                  "If played hand is a {C:attention}Full House{}, each",
+                  "played card permanently loses",
+                  "up to {C:chips}#1#{} Chips and permanently",
+                  "gains {X:mult,C:white}X#2#{} Mult if Chips were",
+                  "lost when scored"
                 }
             },
             j_poke_mega_tyranitar = {
@@ -3191,7 +3191,7 @@ return {
                     "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards give {C:mult}+#1#{} Mult",
                     "when scored",
-                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times)",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 } 
             },
             j_poke_combusken = {
@@ -3200,7 +3200,7 @@ return {
                     "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards give {C:mult}+#1#{} Mult",
                     "when scored",
-                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times)",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 } 
             },
             j_poke_blaziken = {
@@ -3242,7 +3242,7 @@ return {
                     "{br:2}ERROR - CONTACT STEAK",
                     "Create a {C:tarot}Tarot{} card for every {C:attention}2{}",
                     "{X:water,C:white}Water{} or {X:earth,C:white}Earth{} Jokers you have if",
-                    "poker hand contains {C:attention}#3#{} Nature cards",
+                    "poker hand contains {C:attention}#3# Nature{} cards",
                     "{C:inactive}(Must have room){}"
                 } 
             },
@@ -3816,10 +3816,10 @@ return {
               name = "Mamoswine",
               text = {
                 "First played card gives {C:mult}+#1#{} Mult for each",
-                "{C:attention}Stone{} and {C:attention}Glass{} Card in scoring hand",
+                "{C:attention}Stone{} and {C:attention}Glass{} card in scoring hand",
                 "{br:2}text needs to be here to work",
                 "{C:green}#3# in #4#{} chance for played {C:attention}Stone{}",
-                "and {C:attention}Glass{} Cards to earn {C:money}$#2#{} when scored",
+                "and {C:attention}Glass{} cards to earn {C:money}$#2#{} when scored",
               }
             },
             j_poke_porygonz = {
@@ -4007,7 +4007,7 @@ return {
                 text = {
                     "Applies {C:attention}Pareidolia",
                     "Leftmost unenhanced card with the",
-                    "lowest base chips in played hand",
+                    "lowest base Chips in played hand",
                     "becomes a {C:attention}Bonus{} card",
                 }
             },
@@ -4240,7 +4240,7 @@ return {
                 text = {
                     "Adds this Joker's sell value to Mult",
                     "{br:3.5}ERROR - CONTACT STEAK",
-                    "Each Joker with {C:money}1${} sell",
+                    "Each Joker with {C:money}$1{} sell",
                     "value gives {X:mult,C:white} X#1# {} Mult",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 }
@@ -4308,7 +4308,7 @@ return {
                 text = {
                   "{X:mult,C:white} X#1# {} Mult if played hand",
                   "is a {C:attention}Three of a Kind{}",
-                  "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times){}"
+                  "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times){}"
                 }
             },
             j_poke_litleo = {
@@ -4791,7 +4791,7 @@ return {
               name = "Farigiraf",
               text = {
                 "{C:attention}Holding{} {C:spectral}Cryptid{}",
-                "First and last {C:attention}face{} card",
+                "First and last {C:attention}face{} cards",
                 "give {X:mult,C:white}X#1#{} Mult when scored",
                 "if played hand contains a {C:attention}Two Pair{}",
               }
