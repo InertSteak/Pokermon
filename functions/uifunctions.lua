@@ -359,7 +359,7 @@ SMODS.collection_pool = function(_base_pool)
     end
   end
 
-  if pokermon_config.orderJokers then
+  if pokermon_config.order_jokers then
     table.sort(inserts, function(a, b) return pokermon.get_dex_number(a.name) < pokermon.get_dex_number(b.name) end)
     for k, v in pairs(inserts) do
       for x, y in pairs(pokermon.dex_order_groups) do
