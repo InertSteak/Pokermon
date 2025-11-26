@@ -203,10 +203,10 @@ for _, file in ipairs(pfiles) do
   end
 end
 
+pokermon.dex_order_groups = {}
 -- Dex ordering pokemon in add-ons
 G.E_MANAGER:add_event(Event({
   func = function()
-    pokermon.dex_order_groups = {}
     for i, pokemon in ipairs (pokermon.dex_order) do
       if type(pokemon) == "table" then
         for _, mon in ipairs(pokemon) do
