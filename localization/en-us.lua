@@ -921,11 +921,11 @@ return {
                 name = "Pikachu",
                 text = {
                     "{C:mult}+#1#{} Mult if you",
-                    "have {C:money}#3#${} or more",
+                    "have {C:money}$#3#{} or more",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Earn {C:money}#2#${} when {C:attention}Blind{}",
+                    "Earn {C:money}$#2#{} when {C:attention}Blind{}",
                     "is selected if you have",
-                    "less than {C:money}#3#$",
+                    "less than {C:money}$#3#",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
                 }
             },
@@ -1071,7 +1071,6 @@ return {
                 text = {
                     "Gains {C:mult}+#2#{} Mult for each",
                     "{C:attention}Enhanced{} card in scoring hand",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
                 }
             },
@@ -3161,23 +3160,19 @@ return {
             j_poke_treecko = {
                 name = "Treecko",
                 text = {
-                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
-                    "Played {C:attention}Nature{} cards have a",
-                    "a {C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
-                    "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards earn {C:money}$#1#{}",
+                    "when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 } 
             },
             j_poke_grovyle = {
                 name = "Grovyle",
                 text = {
-                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
-                    "Played {C:attention}Nature{} cards have a",
-                    "{C:green}#4# in #5#{} chance to earn {C:money}$#1#{} when scored",
-                    "Guaranteed if you have other {X:grass,C:white}Grass{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#2#{C:inactive,s:0.8})",
+                    "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#5#, #6#, #7#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards earn {C:money}$#1#{}",
+                    "or {C:money}$#4#{} when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)",
                 } 
             },
             j_poke_sceptile = {
@@ -3185,43 +3180,39 @@ return {
                 text = {
                     "{C:attention}+#3#{} hand size, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards earn {C:money}$#1#{}",
-                    "plus {C:money}$#5#{} for each other {X:grass,C:white}Grass{}",
-                    "card you have when scored",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
+                    "when scored plus {C:money}$#5#{} for each",
+                    "{C:attention}other{} {X:grass,C:white}Grass{} Joker you have",
                     "{C:inactive}(Currently {C:money}$#4#{C:inactive} total){}"
                 } 
             },
             j_poke_torchic = {
                 name = "Torchic",
                 text = {
-                    "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#5#, #6#, #7#{C:inactive}){}",
-                    "{C:mult}+#1#{} Mult for each {C:attention}Nature{} card discarded this round",
-                    "Doubled with other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after scoring {C:mult,s:0.8}#2#{C:inactive,s:0.8} Mult)",
+                    "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards give {C:mult}+#1#{} Mult",
+                    "when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times)",
                 } 
             },
             j_poke_combusken = {
                 name = "Combusken",
                 text = {
-                    "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#5#, #6#, #7#{C:inactive}){}",
-                    "{C:mult}+#1#{} Mult for each {C:attention}Nature{} card discarded this round",
-                    "Doubled with other {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-                    "{C:inactive,s:0.8}(Evolves after scoring {C:mult,s:0.8}#2#{C:inactive,s:0.8} Mult)",
+                    "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards give {C:mult}+#1#{} Mult",
+                    "when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} Times)",
                 } 
             },
             j_poke_blaziken = {
                 name = "Blaziken",
                 text = {
-                    "{C:mult}+#2#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
-                    "For each {C:attention}Nature{} card discarded this round",
-                    "gain {C:mult}+#4#{} Mult and {X:mult,C:white}X#1#{} Mult for",
-                    "each {X:fire,C:white}Fire{} or {X:earth,C:white}Fighting{} card you have",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {C:mult}+#5#{C:inactive} Mult, {X:mult,C:white}X#3#{C:inactive} Mult){}",
+                    "{C:mult}+#3#{} discards, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
+                    "Played {C:attention}Nature{} cards give {C:mult}+#1#{} Mult",
+                    "when scored",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Each {X:fire,C:white}Fire{} or {X:fighting,C:white}Fighting{} Joker gives",
+                    "{X:mult,C:white} X#2# {} Mult if you have discarded",
+                    "{C:attention}#4# {C:inactive}[#5#] {C:attention}Nature{} cards this round"
                 } 
             },
             j_poke_mudkip = {
@@ -3229,9 +3220,8 @@ return {
                 text = {
                     "{C:chips}+#3#{} hands, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards give {C:chips}+#1#{} Chips",
-                    "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after gaining {C:chips,s:0.8}#2#{C:inactive,s:0.8} Chips)"
+                    "when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_marshtomp = {
@@ -3239,19 +3229,21 @@ return {
                 text = {
                     "{C:chips}+#3#{} hands, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards give {C:chips}+#1#{} Chips",
-                    "Doubled with other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} cards",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive,s:0.8}(Evolves after gaining {C:chips,s:0.8}#2#{C:inactive,s:0.8} Chips)"
+                    "when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times)"
                 } 
             },
             j_poke_swampert = {
                 name = "Swampert",
                 text = {
-                    "{C:chips}+#3#{} hands, {C:attention}Nature: {C:inactive}({C:attention}#6#, #7#, #8#{C:inactive}){}",
+                    "{C:chips}+#2#{} hands, {C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "Played {C:attention}Nature{} cards give {C:chips}+#1#{} Chips",
-                    "and {C:chips}+#5#{} Chips per other {X:water,C:white}Water{} or {X:earth,C:white}Earth{} card",
-                    "{C:inactive,s:0.8}(includes Jokers and Energy cards){}",
-                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} total)"
+                    "when scored",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Create a {C:tarot}Tarot{} card for every {C:attention}2{}",
+                    "{X:water,C:white}Water{} or {X:earth,C:white}Earth{} Jokers you have if",
+                    "poker hand contains {C:attention}#3#{} Nature cards",
+                    "{C:inactive}(Must have room){}"
                 } 
             },
             j_poke_poochyena = {
