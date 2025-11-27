@@ -147,7 +147,7 @@ local mega_scizor={
   name = "mega_scizor",
   pos = {x = 4, y = 2},
   soul_pos = {x = 5, y = 2},
-  config = {extra = {Xmult_multi = 4}},
+  config = {extra = {Xmult_multi = 4, mult = 0, scizor_chips = 0, scizor_Xmult = 1, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi}}
