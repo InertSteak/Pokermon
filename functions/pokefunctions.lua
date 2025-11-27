@@ -1639,6 +1639,18 @@ poke_create_treasure = function(card, seed, megastone)
   end
 end
 
+get_ancient_amount = function(hand, id, append_to_card)
+  local count = 0
+  for i = 1, #hand do
+    if hand[i]:get_id() == id then count = count + 1 end
+  end
+  
+  if append_to_card then
+    append_to_card.ability.extra.ancient_count = count
+  end
+  return count
+end
+
 --[[ Putting this here for later use
 {C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
 -- Zorua 570
