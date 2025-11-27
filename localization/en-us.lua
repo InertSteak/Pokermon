@@ -1433,7 +1433,7 @@ return {
                 name = "Slowbro",
                 text = {
                     "{X:mult,C:white} X#1# {} Mult per hand played",
-                    "{C:inactive,s:0.8}(resets at end of round)",
+                    "{C:inactive,s:0.8}(Resets at end of round)",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
@@ -1441,7 +1441,7 @@ return {
                 name = "Mega Slowbro",
                 text = {
                     "{X:mult,C:white} X#1# {} Mult per hand played",
-                    "{C:inactive,s:0.8}(resets when {C:attention,s:0.8}Boss Blind{C:inactive,s:0.8} is defeated)",
+                    "{C:inactive,s:0.8}(Resets when {C:attention,s:0.8}Boss Blind{C:inactive,s:0.8} is defeated)",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 } 
             },
