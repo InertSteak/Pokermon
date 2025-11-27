@@ -99,19 +99,23 @@ local mirror = {
   set_blind = function(self)
     if #G.jokers.cards > 0 then
       local target = G.jokers.cards[#G.jokers.cards]
-      if target.ability.eternal then
-        self.config.reset_eternal = true
-        target:set_eternal(false)
+      if not target.getting_sliced then
+        if target.ability.eternal then
+          self.config.reset_eternal = true
+          target:set_eternal(false)
+        end
+        self.config.trans_key = target.config.center_key
+        poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
       end
-      self.config.trans_key = target.config.center_key
-      poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
     end
   end,
   disable = function(self)
     local target = G.jokers.cards[#G.jokers.cards]
-    poke_evolve(target, self.config.trans_key, nil, localize("poke_transform_success"), true)
-    if self.config.reset_eternal then
-      target.ability.eternal = true
+    if not target.getting_sliced then
+      poke_evolve(target, self.config.trans_key, nil, localize("poke_transform_success"), true)
+      if self.config.reset_eternal then
+        target.ability.eternal = true
+      end
     end
   end
 }
