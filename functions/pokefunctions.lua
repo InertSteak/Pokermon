@@ -232,8 +232,11 @@ find_pokemon_type = function(target_type, exclude_card)
 end
 
 is_type = function(card, target_type)
-  if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
+  if get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
     return true
+  -- end
+  -- if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
+  --   return true
   else
     return false
   end
@@ -249,10 +252,6 @@ get_type = function(card)
     end
   end
   return nil
-end
-
-has_type = function(card)
-  return (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) or type_sticker_applied(card)
 end
 
 copy_scaled_values = function(card)
@@ -996,8 +995,8 @@ end
 
 type_tooltip = function(self, info_queue, center)
   local percent
-  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and ((center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.extra.energy_count or 0) + (center.ability.extra.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
+  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and (get_total_energy(center) ~= 0)) then
+      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {get_total_energy(center), energy_max + (G.GAME.energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
         percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
@@ -1034,8 +1033,8 @@ type_tooltip = function(self, info_queue, center)
           info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {percent}}
         end
       end
-  elseif (center.ability and ((center.ability.energy_count or 0) + (center.ability.c_energy_count or 0) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {(center.ability.energy_count or 0) + (center.ability.c_energy_count or 0), energy_max + (G.GAME.energy_plus or 0)}}
+  elseif (center.ability and (get_total_energy(center) > 0)) then
+      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {get_total_energy(center), energy_max + (G.GAME.energy_plus or 0)}}
       if center.ability.money_frac then
         percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
