@@ -365,7 +365,7 @@ poke_backend_evolve = function(card, to_key)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "form", "jack_target", "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target", "jacks_discarded"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
