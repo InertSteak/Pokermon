@@ -232,11 +232,8 @@ find_pokemon_type = function(target_type, exclude_card)
 end
 
 is_type = function(card, target_type)
-  if get_type(card) and get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
+  if get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
     return true
-  -- end
-  -- if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
-  --   return true
   else
     return false
   end

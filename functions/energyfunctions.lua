@@ -39,58 +39,31 @@ can_increase_energy = function(card, etype)
   return get_total_energy(card) < energy_max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
 end
 
--- can_use and use are tied to energy cards proper
-energy_can_use = function(self, card, highlighted)
-  -- check if highlighted target or not
-  local choice = highlighted and G.jokers.highlighted[1] or nil
-  if choice and energy_matches(choice, self.etype, true) and is_energizable(choice) and can_increase_energy(choice, self.etype) then
-    return choice
-  -- if incompatible highlighted target, you can't use the energy
-  elseif choice then
-    return false
-  -- if no highlighted target, check for the leftmost compatible joker
-  else
-    for _, v in pairs(G.jokers.cards) do
-      if energy_matches(v, self.etype, true) and is_energizable(v) and can_increase_energy(v, self.etype) then
-        return v
-      end
-    end
-  end
-  return false
-end
-
-energy_use = function(self, card, area, copier, highlighted, exclude_spoon)
-  local applied
-  G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
-  play_sound('poke_energy_use', 1, 0.5)
-  if not exclude_spoon then set_spoon_item(card) end
-
-  -- check if highlighted target or not
-  local choice = highlighted and G.jokers.highlighted[1] or nil
-  if choice and (energy_matches(choice, self.etype, true)) then
-    if is_energizable(choice) and can_increase_energy(choice) then
-      increment_energy(choice, self.etype)
-      applied = true
-    end
-  else
-    for k, v in pairs(G.jokers.cards) do
-      if applied ~= true and (energy_matches(v, self.etype, true)) then
-        -- check for viable values in case of no target
-        if is_energizable(v) and can_increase_energy(v) then
-          increment_energy(v, self.etype)
-          applied = true
-        end
-      end
-    end
-  end
-end
-
 -- Checking the type compatibility flowchart
 energy_matches = function(card, etype, include_colorless)
   if get_type(card) and (etype == "Trans" or etype == "Bird") then return true
   elseif get_type(card) and etype == "Colorless" and include_colorless then return true
   elseif is_type(card, etype) then return true end
   return false
+end
+
+can_apply_energy = function(card, etype)
+  return energy_matches(card, etype, true) and is_energizable(card) and can_increase_energy(card, etype)
+end
+
+-- can_use and use are tied to energy cards proper
+energy_can_use = function(self, card)
+  -- So we've trimmed down the energy checks to about four different functions that all culminate here
+  return poke_find_leftmost_or_highlighted(function(joker) return can_apply_energy(joker, self.etype) end) or false
+end
+
+energy_use = function(self, card, area, copier, exclude_spoon)
+  G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
+  play_sound('poke_energy_use', 1, 0.5)
+  if not exclude_spoon then set_spoon_item(card) end
+  -- check if valid target or not
+  local choice = poke_find_leftmost_or_highlighted(function(joker) return can_apply_energy(joker, self.etype) end)
+  if choice then increment_energy(choice, self.etype) end
 end
 
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
@@ -145,7 +118,7 @@ energize = function(card, etype, evolving, silent, amount, center)
       local data = card.ability.extra[name]
       if type(data) == "number" then
         local addition = energy_values[name]
-        local previous_mod = (name == "mult_mod" or name == "chip_mod") and card.ability.extra[name] or nil
+        local previous_mod = (name == "mult_mod" or name == "chip_mod") and card.ability.extra[name]
         local updated_mod = nil
         if evolving then
           addition = addition * (energy_count + c_energy_count / 2)
@@ -154,7 +127,7 @@ energize = function(card, etype, evolving, silent, amount, center)
           rounded, frac = round_energy_value(card.ability.extra[name], name)
           card.ability.extra[name] = rounded
           if frac then
-            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod) or nil)
+            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
             frac = nil
           end
         else
@@ -163,7 +136,7 @@ energize = function(card, etype, evolving, silent, amount, center)
           rounded, frac = round_energy_value(card.ability.extra[name], name)
           card.ability.extra[name] = rounded
           if frac then
-            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod) or nil)
+            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
             frac = nil
           end
         end
