@@ -745,7 +745,6 @@ local kingsrock = {
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 5, y = 2 },
@@ -796,7 +795,6 @@ local upgrade = {
   config = {max_highlighted = 2, min_highlighted = 1,},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
-    info_queue[#info_queue+1] = {set = 'Other', key = 'playing_card_to_evolve'}
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 8, y = 2 },
