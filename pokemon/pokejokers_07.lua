@@ -352,7 +352,6 @@ local politoed={
       local scoring_suit = G.GAME.poke_poli_suit or "Spades"
       if context.other_card:is_suit(scoring_suit) then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
           mult = card.ability.extra.mult,
           card = card
@@ -364,9 +363,9 @@ local politoed={
       if context.other_card:is_suit(scoring_suit) then
         local total = #find_pokemon_type("Water")
         local cards = #context.scoring_hand
-        local pos
-        local remainder
-        local retriggers
+        local pos = 0
+        local remainder = 0
+        local retriggers = 0
         for i=1, #context.scoring_hand do
           if context.scoring_hand[i] == context.other_card then
             pos = i
@@ -376,11 +375,13 @@ local politoed={
         retriggers = math.floor(total/cards)
         remainder = total % cards
         if pos <= remainder then retriggers = retriggers + 1 end
-        return {
-          message = localize('k_again_ex'),
-          repetitions = retriggers,
-          card = card
-        }
+        if retriggers > 0 then
+          return {
+            message = localize('k_again_ex'),
+            repetitions = retriggers,
+            card = card
+          }
+        end
       end
     end
   end,

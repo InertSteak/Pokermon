@@ -471,16 +471,6 @@ local riolu={
   name = "riolu",
   pos = {x = 4, y = 4},
   config = {extra = {Xmult_minus = 0.9,rounds = 2,}},
-  loc_txt = {
-    name = "Riolu",
-    text = {
-      "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
-      "Creates a copy of {C:attention}Aura{}",
-      "at end of round",
-      "{C:inactive}(Must have room)",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
@@ -524,14 +514,6 @@ local lucario={
   name = "lucario",
   pos = {x = 5, y = 4},
   config = {extra = {Xmult_multi = 1.3,}},
-  loc_txt = {
-    name = "Lucario",
-    text = {
-       "Each {C:attention}editioned{} card",
-       "{C:attention}held{} in hand",
-       "gives {X:mult,C:white} X#1# {} Mult",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, }}

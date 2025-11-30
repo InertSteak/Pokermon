@@ -96,8 +96,9 @@ local mirror = {
   debuff = {},
   config = {trans_key = "j_joker", reset_eternal = false},
   discovered = true,
-  set_blind = function(self)
-    if #G.jokers.cards > 0 then
+  calculate = function(self, blind, context)
+    if context.setting_blind and not blind.disabled then
+      if #G.jokers.cards > 0 then
       local target = G.jokers.cards[#G.jokers.cards]
       if not target.getting_sliced then
         if target.ability.eternal then
@@ -107,6 +108,7 @@ local mirror = {
         self.config.trans_key = target.config.center_key
         poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
       end
+    end
     end
   end,
   disable = function(self)
