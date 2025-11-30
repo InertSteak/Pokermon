@@ -206,7 +206,7 @@ local treasure_eatery={
     if context.setting_blind then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
-        if has_type(G.jokers.cards[#G.jokers.cards]) then
+        if get_type(G.jokers.cards[#G.jokers.cards]) then
           apply_type_sticker(G.jokers.cards[1], get_type(G.jokers.cards[#G.jokers.cards]))
           card:juice_up()
           card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
@@ -592,7 +592,7 @@ local ruins_of_alph={
 local unown_swarm={
   name = "unown_swarm",
   pos = {x = 0, y = 0},
-  soul_pos = {x = 0, y = 0,     
+  soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
       -- AAAAA
       card.children.center.VT.w = card.T.w
@@ -600,7 +600,7 @@ local unown_swarm={
       card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
       card.children.center.VT.w = card.T.w * 1.174
     end},
-  config = {extra = {mult = 28,Xmult_multi = 2.8,}},
+  config = {extra = {mult = 28, Xmult_multi = 2.8}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult_multi, }}
@@ -643,7 +643,29 @@ local unown_swarm={
     card.children.center.VT.x = card.T.x - (G.CARD_H - G.CARD_W) / 2
     card.children.floating_sprite.VT.x = card.children.center.VT.x
     card.children.center.VT.w = card.T.w * 1.174
+
+	if card.front_card then
+	  card.front_card.children.center.VT.x = card.children.center.VT.x + 0.35
+	  card.front_card.children.center.VT.y = card.children.center.VT.y
+	  card.front_card.tilt_var = card.tilt_var
+	  card.front_card.states.hover = card.states.hover
+	  card.front_card.states.click = card.states.click
+	  card.front_card.states.drag = card.states.drag
+	end
   end,
+  draw = function(self, card, layer)
+    if not card.front_card then
+      local front_card = SMODS.create_card({set = 'Base', area = card.area})
+      front_card.states.visible = nil
+      front_card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+      front_card.children.center.states.hover = card.states.hover
+      front_card.children.center.states.click = card.states.click
+      front_card.children.center.states.drag = card.states.drag
+      front_card.children.center.states.collide.can = false
+      front_card:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
+      card.front_card = front_card
+    end
+  end
 }
 
 local billion_lions = {
@@ -668,7 +690,7 @@ local billion_lions = {
     if context.setting_blind and not card.getting_sliced then
       local destroyed = 0
       for k, v in pairs(G.jokers.cards) do
-        if v ~= card and has_type(v) and not v.ability.eternal then
+        if v ~= card and get_type(v) and not v.ability.eternal then
           destroyed = destroyed + 1
           v.getting_sliced = true
           G.E_MANAGER:add_event(Event({func = function()
