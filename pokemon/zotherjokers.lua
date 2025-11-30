@@ -668,67 +668,6 @@ local unown_swarm={
   end
 }
 
-SMODS.DrawStep {
-  key = 'unown_stickers',
-  order = 39,
-  func = function(self, layer)
-    if self.config.center.key == 'j_poke_unown_swarm' then
-      if self.sticker and G.shared_stickers[self.sticker] then
-        G.shared_stickers[self.sticker].role.draw_major = self.front_card
-        G.shared_stickers[self.sticker]:draw_shader('dissolve', nil, nil, nil, self.front_card.children.center)
-        G.shared_stickers[self.sticker]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.front_card.children.center)
-      elseif (self.sticker_run and G.shared_stickers[self.sticker_run]) and G.SETTINGS.run_stake_stickers then
-        G.shared_stickers[self.sticker_run].role.draw_major = self.front_card
-        G.shared_stickers[self.sticker_run]:draw_shader('dissolve', nil, nil, nil, self.front_card.children.center)
-        G.shared_stickers[self.sticker_run]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.front_card.children.center)
-      end
-
-      for k, v in pairs(SMODS.Stickers) do
-        if self.ability[v.key] then
-          if v and v.draw and type(v.draw) == 'function' then
-            v:draw(self, layer)
-          else
-            G.shared_stickers[v.key].role.draw_major = self.front_card
-            G.shared_stickers[v.key]:draw_shader('dissolve', nil, nil, nil, self.front_card.children.center)
-            G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.front_card.children.center)
-          end
-        end
-      end
-    end
-  end,
-  conditions = { vortex = false, facing = 'front' },
-}
-
-SMODS.DrawStep:take_ownership('stickers',
-  {
-    func = function(self, layer)
-      if self.config.center.key ~= 'j_poke_unown_swarm' then
-        if self.sticker and G.shared_stickers[self.sticker] then
-          G.shared_stickers[self.sticker].role.draw_major = self
-          G.shared_stickers[self.sticker]:draw_shader('dissolve', nil, nil, nil, self.children.center)
-          G.shared_stickers[self.sticker]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
-        elseif (self.sticker_run and G.shared_stickers[self.sticker_run]) and G.SETTINGS.run_stake_stickers then
-          G.shared_stickers[self.sticker_run].role.draw_major = self
-          G.shared_stickers[self.sticker_run]:draw_shader('dissolve', nil, nil, nil, self.children.center)
-          G.shared_stickers[self.sticker_run]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
-        end
-
-        for k, v in pairs(SMODS.Stickers) do
-          if self.ability[v.key] then
-            if v and v.draw and type(v.draw) == 'function' then
-              v:draw(self, layer)
-            else
-              G.shared_stickers[v.key].role.draw_major = self
-              G.shared_stickers[v.key]:draw_shader('dissolve', nil, nil, nil, self.children.center)
-              G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
-            end
-          end
-        end
-      end
-    end,
-  },
-  true)
-
 local billion_lions = {
   name = "billion_lions",
   pos = {x = 5, y = 12},
