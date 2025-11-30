@@ -83,8 +83,37 @@ end
 --	Naclstack
 --	Garganacl
 --	Charcadet
+jd_def["j_poke_charcadet"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", colour = G.C.MULT },
+  },
+}
+
 --	Armarouge
+jd_def["j_poke_armarouge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Ceruledge
+jd_def["j_poke_ceruledge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Tadbulb
 --	Bellibolt
 --	Wattrel
@@ -343,6 +372,51 @@ jd_def["j_poke_farigiraf"] = {
 
 --	Dudunsparce
 --	Kingambit
+jd_def["j_poke_kingambit"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+        { text = " X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult_multi", retrigger_type = "exp" },
+      },
+    },
+  },
+  calc_function = function(card)
+    local count = 0
+    local king_count = 0
+    local king_in_hand = false
+    local hand = JokerDisplay.current_hand
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+
+    for _, playing_card in ipairs(G.playing_cards) do
+      if playing_card:get_id() == 13 then king_count = king_count + 1 end
+    end
+
+    for _, playing_card in pairs(hand) do
+      if playing_card:get_id() == 13 then
+        king_in_hand = true
+      end
+    end
+
+    if text ~= 'Unknown' then
+      if king_count == 1 and king_in_hand == true then
+        for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card then
+            count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+          end
+        end
+      end
+    end
+    if king_in_hand == true then
+      card.joker_display_values.Xmult_multi = ((card.ability.extra.Xmult/2) * king_count) ^ count
+    else
+      card.joker_display_values.Xmult_multi = 1
+    end
+  end
+}
+
 --	Great Tusk
 --	Scream Tail
 --	Brute Bonnet
