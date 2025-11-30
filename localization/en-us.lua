@@ -1271,7 +1271,7 @@ return {
                 name = "Abra",
                 text = {
                     "{C:green}#1# in #2#{} chance to create a {C:tarot}Tarot{}",
-                    "or {C:item}Item card if {C:attention}poker hand{}",
+                    "or {C:item}Item card if played {C:attention}poker hand{}",
                     "has already been played this round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 } 
