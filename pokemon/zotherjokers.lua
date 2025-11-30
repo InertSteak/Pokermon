@@ -613,7 +613,7 @@ local unown_swarm={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  -- no_collection = true,
+  no_collection = true,
   calculate = function(self, card, context)
     if context.other_joker and (context.other_joker.config.center.rarity == 4 or context.other_joker.config.center.rarity == "Legendary")then
       G.E_MANAGER:add_event(Event({
@@ -644,12 +644,14 @@ local unown_swarm={
     card.children.floating_sprite.VT.x = card.children.center.VT.x
     card.children.center.VT.w = card.T.w * 1.174
 
-    card.front_card.children.center.VT.x = card.children.center.VT.x + 0.35
-    card.front_card.children.center.VT.y = card.children.center.VT.y
-    card.front_card.tilt_var = card.tilt_var
-    card.front_card.states.hover = card.states.hover
-    card.front_card.states.click = card.states.click
-    card.front_card.states.drag = card.states.drag
+	if card.front_card then
+	  card.front_card.children.center.VT.x = card.children.center.VT.x + 0.35
+	  card.front_card.children.center.VT.y = card.children.center.VT.y
+	  card.front_card.tilt_var = card.tilt_var
+	  card.front_card.states.hover = card.states.hover
+	  card.front_card.states.click = card.states.click
+	  card.front_card.states.drag = card.states.drag
+	end
   end,
   draw = function(self, card, layer)
     if not card.front_card then
