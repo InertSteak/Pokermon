@@ -811,3 +811,14 @@ if G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key] then
 position = "after"
 payload = '''set_joker_family_win(v)'''
 match_indent = true
+
+# Unown Swarm Stickers
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = '''order = 40,
+    func = function(self, layer)'''
+position = "after"
+payload = '''if self.config.center.key == 'j_poke_unown_swarm' then return end'''
+match_indent = true
+
