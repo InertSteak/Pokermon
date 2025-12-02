@@ -1043,6 +1043,18 @@ type_tooltip = function(self, info_queue, center)
         end
       end
   end
+  if self.megas and pokermon_config.detailed_tooltips then
+    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
+    if #self.megas > 1 and next(SMODS.find_card('c_poke_megastone')) then
+      local mega_names = {}
+      for _, mega in ipairs(self.megas) do
+        local prefix = self.poke_custom_prefix or "poke"
+        local key = "j_"..prefix.."_"..mega
+        mega_names[#mega_names+1] = localize({type = "name_text", set = "Joker", key = key})
+      end
+      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = mega_names}
+    end
+  end
 end
 
 poke_set_type_badge = function(self, card, badges)
