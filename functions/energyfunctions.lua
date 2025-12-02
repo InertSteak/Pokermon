@@ -68,6 +68,7 @@ end
 
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
 energy_increase = function(card, etype, amount, silent)
+  if not amount then amount = 1 end
   if can_increase_energy(card) or amount <= energy_max + (G.GAME.energy_plus or 0) +
       (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - get_total_energy(card) then
     increment_energy(card, etype, amount, silent)
