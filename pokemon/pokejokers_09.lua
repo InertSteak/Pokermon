@@ -310,7 +310,6 @@ local tyranitar={
   config = {extra = {chip_mod_minus = 4, Xmult_multi = 0.1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.chip_mod_minus, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",

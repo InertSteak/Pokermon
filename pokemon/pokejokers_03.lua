@@ -212,7 +212,6 @@ local alakazam={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
       info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     end
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'alakazam')
     return {vars = {num, dem, center.ability.extra.card_limit}}
@@ -844,9 +843,6 @@ local slowbro={
   config = {extra = {Xmult_mod = 0.4, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
     local xmult_total = center.ability.extra.Xmult
     if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.PLAY_TAROT then
       xmult_total = xmult_total + G.GAME.current_round.hands_played * center.ability.extra.Xmult_mod
