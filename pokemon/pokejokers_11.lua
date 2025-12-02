@@ -215,7 +215,6 @@ local camerupt={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
       info_queue[#info_queue+1] = G.P_CENTERS.m_mult
     end
     return {vars = {center.ability.extra.Xmult, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
