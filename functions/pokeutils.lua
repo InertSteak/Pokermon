@@ -213,6 +213,9 @@ function poke_find_card(key_or_function, use_highlighted)
 end
 
 function poke_find_leftmost_or_highlighted(key_or_function)
+  if not key_or_function then
+    return G.jokers.highlighted[1] or G.jokers.cards[1]
+  end
   return poke_find_card(key_or_function, true)
 end
 
