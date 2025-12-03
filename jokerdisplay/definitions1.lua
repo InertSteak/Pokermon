@@ -550,11 +550,11 @@ jd_def["j_poke_arbok"] = {
 
 jd_def["j_poke_pikachu"] = {
     text = {
-        {text = "+$", colour = G.C.GOLD},
-        { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD},
-        { text = " "},
-        { text = "+", colour = G.C.MULT},
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT}
+        { text = "+", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+        { text = " " },
+        { text = "+$", colour = G.C.GOLD },
+        { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD },
     },
     reminder_text = {
         { ref_table = "card.joker_display_values", ref_value = "localized_text" },
