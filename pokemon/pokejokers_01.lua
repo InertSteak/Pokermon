@@ -349,7 +349,7 @@ local mega_charizard_x = {
   name = "mega_charizard_x", 
   pos = {x = 2, y = 0},
   soul_pos = { x = 3, y = 0},
-  config = {extra = {Xmult = 5, d_remaining = 0}},
+  config = {extra = {Xmult = 5, d_remaining = 0, mult = 36}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.d_remaining}}
@@ -378,7 +378,7 @@ local mega_charizard_y = {
   name = "mega_charizard_y", 
   pos = {x = 4, y = 0},
   soul_pos = { x = 5, y = 0},
-  config = {extra = {rounds = 1, d_size = 5}},
+  config = {extra = {rounds = 1, d_size = 5, mult = 36}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.d_size}}
