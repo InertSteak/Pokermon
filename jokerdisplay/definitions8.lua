@@ -110,7 +110,7 @@ jd_def["j_poke_boltund"] = {
     },
 text_config = { colour = G.C.WHITE },
 calc_function = function(card)
-    local Xmult = 0
+    local Xmult = 1
     local money = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then
