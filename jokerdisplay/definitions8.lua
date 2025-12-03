@@ -66,7 +66,7 @@ jd_def["j_poke_yamper"] = {
         { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
         { text = " " },
         { text = "+$", colour = G.C.GOLD },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "add", colour = G.C.GOLD }
+        { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "add", colour = G.C.GOLD }
     },
     reminder_text = {
       { text = "(" },
