@@ -115,9 +115,6 @@ local venusaur={
   config = {extra = {money_mod = 2, earned = 0, h_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
-    end
     return {vars = {center.ability.extra.money_mod, center.ability.extra.earned, center.ability.extra.h_size, localize(G.GAME.current_round.bulb1card and G.GAME.current_round.bulb1card.rank or "Ace", 'ranks')}}
   end,
   rarity = "poke_safari", 
@@ -296,14 +293,6 @@ local charizard={
   config = {extra = {mult = 36, Xmult = 1.5, d_remaining = 0, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
-    if pokermon_config.detailed_tooltips then
-      if next(SMODS.find_card('c_poke_megastone')) then
-        info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Charizard X", "Mega Charizard Y"}}
-      end
-    end
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.d_remaining, center.ability.extra.d_size}}
   end,
   rarity = "poke_safari", 
@@ -513,9 +502,6 @@ local blastoise={
   config = {extra = {chips = 120, chip_mod = 25, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
   end,
   rarity = "poke_safari", 
@@ -735,9 +721,6 @@ local beedrill={
   cost = 5,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
 		return {vars = {center.ability.extra.chips}}
   end,
   stage = "Two", 
@@ -896,9 +879,6 @@ local pidgeot={
   config = {extra = {mult_mod = 5}}, 
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
 		return {vars = {center.ability.extra.mult_mod}}
   end,
   rarity = "poke_safari", 

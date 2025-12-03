@@ -156,9 +156,6 @@ local gengar={
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
     end
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
     return {vars = {center.ability.extra.gengar_rounds}}
   end,
   rarity = "poke_safari", 
@@ -1111,9 +1108,6 @@ local kangaskhan={
   config = {extra = {card_limit = 2, interest_cap = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
 		return {vars = {center.ability.extra.card_limit, center.ability.extra.interest_cap/5}}
   end,
   rarity = 2, 

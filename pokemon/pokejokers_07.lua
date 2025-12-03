@@ -5,7 +5,6 @@ local ampharos={
   config = {extra = {Xmult = 1,Xmult_mod = 0.3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",
@@ -1434,7 +1433,6 @@ local steelix={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_stone
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-      info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     end
   end,
   rarity = "poke_safari", 

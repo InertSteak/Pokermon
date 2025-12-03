@@ -55,7 +55,6 @@ local scizor={
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil
       info_queue[#info_queue+1] = G.P_CENTERS.e_holo
       info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-      info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     end
     local emult = 0 
     local echips = 0 
@@ -233,7 +232,6 @@ local heracross = {
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2,
@@ -1019,7 +1017,6 @@ local houndoom={
   config = {extra = {mult_mod = 2,rounds = 5, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue + 1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.mult_mod}}
   end,
   rarity = 3,

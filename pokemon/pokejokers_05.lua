@@ -276,9 +276,6 @@ local pinsir={
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2, 
@@ -447,9 +444,6 @@ local gyarados={
   config = {extra = {Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    end
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
@@ -1104,7 +1098,6 @@ local aerodactyl={
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
      if pokermon_config.detailed_tooltips then
-       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
        info_queue[#info_queue+1] = G.P_CENTERS.m_glass
      end
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
@@ -1469,10 +1462,6 @@ local mewtwo={
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
       end
-      if next(SMODS.find_card('c_poke_megastone')) then
-        info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
-      end
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     end
     return {vars = {center.ability.extra.Xmult_multi}}
   end,

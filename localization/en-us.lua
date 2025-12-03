@@ -3375,6 +3375,55 @@ return {
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
               }
             },
+            j_poke_lileep = {
+                name = "Lileep",
+                text = {
+                  "{C:attention}Ancient #1#s{}",
+                  "{X:attention,C:white}1+{} : {C:attention}+#4#{} hand size this round",
+                  "{X:attention,C:white}2+{} : Add {C:money}$#3#{} of sell value to self",
+                  "and every {C:attention}Consumable",
+                  "{X:attention,C:white}3+{} : Each card held in hand gives {C:chips}+#2#{} Chips",
+                  "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#6#{C:inactive,s:0.8} times to evolve)"
+                }
+            },
+            j_poke_cradily = {
+                name = "Cradily",
+                text = {
+                  "{C:attention}Ancient #1#s{}",
+                  "{X:attention,C:white}1+{} : {C:attention}+#4#{} hand size this round",
+                  "{X:attention,C:white}2+{} : Add {C:money}$#3#{} of sell value to self",
+                  "and every {C:attention}Consumable",
+                  "{X:attention,C:white}3+{} : Each card held in hand gives {C:chips}+#2#{} Chips",
+                  "{X:attention,C:white}4+{} : Earn {C:money}${} equal to the highest sell",
+                  "value among your {C:attention}Consumables "
+                }
+            },
+            j_poke_anorith = {
+                name = "Anorith",
+                text = {
+                  "{C:attention}Ancient #1#s{}",
+                  "{X:attention,C:white}1+{} : {C:mult}+#2#{} Mult",
+                  "{X:attention,C:white}2+{} : {C:green}#3# in #4#{} chance to add",
+                  "a {C:attention}#1#{} to deck",
+                  "{X:attention,C:white}3+{} : Destroy a card in deck",
+                  "with {C:attention}rank{} higher than {C:attention}#1#",
+                  "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#5#{C:inactive,s:0.8} times to evolve)"
+                }
+            },
+            j_poke_armaldo = {
+                name = "Armaldo",
+                text = {
+                  "{C:attention}Ancient #1#s{}",
+                  "{X:attention,C:white}1+{} : {C:mult}+#2#{} Mult",
+                  "{X:attention,C:white}2+{} : {C:green}#3# in #4#{} chance to add",
+                  "an {C:attention}Enhanced #1#{} to deck",
+                  "{X:attention,C:white}3+{} : Destroy a card in deck",
+                  "with {C:attention}rank{} higher than {C:attention}#1#",
+                  "{X:attention,C:white}4+{} : {X:mult,C:white} X#5# {} Mult for each {C:attention}Enhanced{}",
+                  "{C:attention}#1#{} in your {C:attention}full deck",
+                  "{C:inactive}(Currently {X:mult,C:white} X#6# {C:inactive} Mult){}"
+                }
+            },
             j_poke_feebas = {
                 name = 'Feebas',
                 text = {
