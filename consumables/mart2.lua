@@ -421,6 +421,17 @@ local leftovers = {
       card.children.floating_sprite:set_sprite_pos({ x = 6, y = 5 })
     end
   end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
   keep_on_use = function(self, card)
     return true
   end,
@@ -501,6 +512,17 @@ local leek = {
       card.children.floating_sprite:set_sprite_pos({ x = 7, y = 5 })
     end
   end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
   keep_on_use = function(self, card)
     return true
   end,
@@ -554,6 +576,17 @@ local thickclub = {
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
       card.children.floating_sprite:set_sprite_pos({ x = 8, y = 5 })
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
     end
   end,
   keep_on_use = function(self, card)
