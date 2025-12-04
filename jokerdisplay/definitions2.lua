@@ -541,9 +541,9 @@ jd_def["j_poke_marill"] = {
       local text, _, scoring_hand = JokerDisplay.evaluate_hand()
       if text ~= "Unknown" then
         for _, scoring_card in pairs(scoring_hand) do
-          if scoring_card.config.center == G.P_CENTERS.c_base then
+          if scoring_card.config.center == G.P_CENTERS.c_base and not scoring_card.debuff then
             unenhanced_found = true
-          else
+          elseif not scoring_card.debuff then
             enhanced_found = true
           end
         end
@@ -572,9 +572,9 @@ jd_def["j_poke_azumarill"] = {
       local text, _, scoring_hand = JokerDisplay.evaluate_hand()
       if text ~= "Unknown" then
         for _, scoring_card in pairs(scoring_hand) do
-          if scoring_card.ability.effect and scoring_card.ability.effect == "Bonus Card" then
+          if scoring_card.ability.effect and scoring_card.ability.effect == "Bonus Card" and not scoring_card.debuff then
             bonus_found = true
-          else
+          elseif not scoring_card.debuff then
             nonbonus_found = true
           end
         end
