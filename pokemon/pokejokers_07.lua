@@ -224,7 +224,7 @@ local azumarill={
         local bonus = nil
         local unbonus = nil
         for k, v in pairs(context.scoring_hand) do
-          if SMODS.has_enhancement(v, 'm_bonus') then
+          if SMODS.has_enhancement(v, 'm_bonus') and not v.debuff then
             bonus = true
           else
             unbonus = true
