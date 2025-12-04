@@ -53,19 +53,6 @@ local lileep={
             card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           end
         end
-        
-        if card.ability.extra.ancient_count > 2 then
-          if not context.blueprint then
-            card.ability.extra.third_times = card.ability.extra.third_times + 1
-          end
-          ease_dollars(-card.ability.extra.money_minus)
-          return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
-          }
-        end
-      
       end
       if context.after then
         card.ability.extra.ancient_count = 0
