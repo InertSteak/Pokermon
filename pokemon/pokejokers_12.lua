@@ -53,6 +53,12 @@ local lileep={
             card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           end
         end
+        
+        if card.ability.extra.ancient_count > 2 then
+          if not context.blueprint then
+            card.ability.extra.third_times = card.ability.extra.third_times + 1
+          end
+        end
       end
       if context.after then
         card.ability.extra.ancient_count = 0
