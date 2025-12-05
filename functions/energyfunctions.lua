@@ -1,6 +1,15 @@
 energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4, chips = .3, chips1 = .3, chips2 = .3, chips3 = .3, Xmult = .2, Xmult1 = .2, Xmult2 = .2, Xchips = .2, money = .3, money1 = .3, money2 = .3, money_mod = .1,
-  mult_mod = .2, mult_mod2 = .2, s_mult = .4, chip_mod = .2, Xmult_mod = .2, Xmult_multi = .05, Xmult_multi2 = .05, Xchips_multi = .05
+  mult = .4, mult1 = .4, mult2 = .4,
+  chips = .3, chips1 = .3, chips2 = .3, chips3 = .3,
+  Xmult = .2, Xmult1 = .2, Xmult2 = .2,
+  Xchips = .2, Xchips1 = .2, Xchips2 = .2,
+  money = .3, money1 = .3, money2 = .3,
+  money_mod = .1, money_mod1 = .1, money_mod2 = .1,
+  mult_mod = .2, mult_mod1 = .2, mult_mod2 = .2,
+  chip_mod = .2, chip_mod1 = .2, chip_mod2 = .2,
+  Xmult_mod = .2, Xmult_mod1 = .2, Xmult_mod2 = .2,
+  Xmult_multi = .05, Xmult_multi1 = .05, Xmult_multi2 = .05,
+  Xchips_multi = .05, Xchips_multi1 = .05, Xchips_multi2 = .05,
 }
 
 energy_max = 3
