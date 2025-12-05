@@ -40,15 +40,8 @@ local moonstone = {
     set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
-        local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-
-        level_up_hand(card, text)
-        if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-          or G.STATE == G.STATES.STANDARD_PACK then
-          update_hand_text({nopulse = true, delay = 0.3}, {mult = 0, chips = 0, level = '', handname = ''})
-        else
-          update_hand_text({nopulse = nil, delay = 0.3}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
-        end
+        local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+        SMODS.smart_level_up_hand(card, hand)
       else
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             attention_text({
