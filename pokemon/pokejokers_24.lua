@@ -116,7 +116,15 @@ local pumpkaboo={
   calculate = function(self, card, context)
     if context.discard and not context.other_card.debuff and context.other_card:get_id() == 11 then
       if card.ability.extra.jacks_discarded == card.ability.extra.jack_target - 1 then
-        card.ability.extra.jacks_discarded = 0
+        if not context.blueprint then
+          G.E_MANAGER:add_event(Event({
+            func = (function()
+                card.ability.extra.jacks_discarded = 0
+                return true
+            end)
+          }))
+        end
+        
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           G.E_MANAGER:add_event(Event({
@@ -134,11 +142,13 @@ local pumpkaboo={
           }
         end
       else
-        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
-        return {
-            message = localize('poke_boo_ex'),
-            colour = G.C.RED
-        }
+        if not context.blueprint then
+          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+          return {
+              message = localize('poke_boo_ex'),
+              colour = G.C.RED
+          }
+        end
       end
     end
     return item_evo(self, card, context, "j_poke_gourgeist")
@@ -215,7 +225,14 @@ local gourgeist={
   calculate = function(self, card, context)
     if context.discard and not context.other_card.debuff and context.other_card:get_id() == 11 then
       if card.ability.extra.jacks_discarded == card.ability.extra.jack_target - 1 then
-        card.ability.extra.jacks_discarded = 0
+        if not context.blueprint then
+          G.E_MANAGER:add_event(Event({
+            func = (function()
+                card.ability.extra.jacks_discarded = 0
+                return true
+            end)
+          }))
+        end
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           G.E_MANAGER:add_event(Event({
@@ -233,11 +250,13 @@ local gourgeist={
           }
         end
       else
-        card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
-        return {
-            message = localize('poke_boo_ex'),
-            colour = G.C.RED
-        }
+        if not context.blueprint then
+          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+          return {
+              message = localize('poke_boo_ex'),
+              colour = G.C.RED
+          }
+        end
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Spectral' then
