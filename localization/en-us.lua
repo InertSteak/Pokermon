@@ -5007,7 +5007,7 @@ return {
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
                 text = {
-                  "Hatches into a {C:attention}Basic{} or",
+                  "Transforms into a {C:attention}Basic{} or",
                   "{C:attention}Baby{} Joker after {C:attention}#1#{} rounds",
                   "that is {C:pink}Energized{} if applicable"
                 }
