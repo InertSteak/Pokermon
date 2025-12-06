@@ -195,7 +195,7 @@ PokemonSprites = {
 {name = "mega_gyarados", base = {pos = {x = 10, y = 1}, soul_pos = {x = 11, y = 1}},gen_atlas = 1},
 {name = "lapras", base = {pos = {x = 20, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'Celsie_RS'}}},
 {name = "gmax_lapras", base = {pos = {x = 14, y = 7}, soul_pos = {x = 15, y = 7}},gen_atlas = 1},
-{name = "ditto", base = {pos = {x = 22, y = 8}},},
+{name = "ditto", base = {pos = {x = 22, y = 8}}, alts = {AtlasJokersSeriesA = {artist = 'CBMX'}}},
 {name = "eevee", base = {pos = {x = 24, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'Desnik'}}},
 {name = "gmax_eevee", base = {pos = {x = 0, y = 8}, soul_pos = {x = 1, y = 8}},gen_atlas = 1},
 {name = "vaporeon", base = {pos = {x = 26, y = 8}},},
