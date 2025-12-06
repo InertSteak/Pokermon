@@ -3,7 +3,7 @@ local jd_def = JokerDisplay.Definitions
 --	Treecko
 jd_def["j_poke_treecko"] = {
   text = {
-    { text = "$", colour = G.C.GOLD},
+    { text = "+$", colour = G.C.GOLD},
     { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
