@@ -434,20 +434,22 @@ jd_def["j_poke_golett"] = {
       },
     },
   },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
   calc_function = function(card)
     local count = 0
-    local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
-    local cards_in_hand = {}
     for i, playing_card in ipairs(G.hand.cards) do
-      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
-        table.insert(cards_in_hand, playing_card)
-      end
-    end
-    for k, playing_card in ipairs(cards_in_hand) do
-      if k % interval == 0 then
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
         count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
       end
     end
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'golett')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     card.joker_display_values.Xmult = card.ability.extra.Xmult_multi ^ count
   end
 }
@@ -462,20 +464,22 @@ jd_def["j_poke_golurk"] = {
       },
     },
   },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
   calc_function = function(card)
     local count = 0
-    local interval = card.ability.extra.interval or 1 -- Default to interval of 1 if none is provided
-    local cards_in_hand = {}
     for i, playing_card in ipairs(G.hand.cards) do
-      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted then
-        table.insert(cards_in_hand, playing_card)
-      end
-    end
-    for k, playing_card in ipairs(cards_in_hand) do
-      if k % interval == 0 then
+      if not (playing_card.facing == 'back') and not playing_card.debuff and not playing_card.highlighted and SMODS.has_enhancement(playing_card, "m_poke_hazard") then
         count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
       end
     end
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'golurk')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     card.joker_display_values.Xmult = card.ability.extra.Xmult_multi ^ count
   end
 }
