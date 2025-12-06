@@ -131,9 +131,8 @@ local masterball = {
   end
 }
 
-local grass_energy = {
-  name = "grass_energy",
-  key = "grass_energy",
+-- We can initialize the 12 basic energies (not bird) with this template and a good for loop
+local energy_template = {
   set = "Energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -142,354 +141,25 @@ local grass_energy = {
   pos = { x = 0, y = 0 },
   atlas = "AtlasConsumablesBasic",
   cost = 4,
-  etype = "Grass",
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
+    return energy_can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
+    return energy_use(self, card, area, copier)
   end
 }
 
-local fire_energy = {
-  name = "fire_energy",
-  key = "fire_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 1, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Fire",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local water_energy = {
-  name = "water_energy",
-  key = "water_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 2, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Water",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local lightning_energy = {
-  name = "lightning_energy",
-  key = "lightning_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 3, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Lightning",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local psychic_energy = {
-  name = "psychic_energy",
-  key = "psychic_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 4, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Psychic",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local fighting_energy = {
-  name = "fighting_energy",
-  key = "fighting_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 5, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Fighting",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local colorless_energy = {
-  name = "colorless_energy",
-  key = "colorless_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 6, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Colorless",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local darkness_energy = {
-  name = "darkness_energy",
-  key = "darkness_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 7, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Dark",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local metal_energy = {
-  name = "metal_energy",
-  key = "metal_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 8, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Metal",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local fairy_energy = {
-  name = "fairy_energy",
-  key = "fairy_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 9, y = 0 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Fairy",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local dragon_energy = {
-  name = "dragon_energy",
-  key = "dragon_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 0, y = 1 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Dragon",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
-
-local earth_energy = {
-  name = "earth_energy",
-  key = "earth_energy",
-  set = "Energy",
-  loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
-  end,
-  pos = { x = 1, y = 1 },
-  atlas = "AtlasConsumablesBasic",
-  cost = 4,
-  etype = "Earth",
-  unlocked = true,
-  discovered = true,
-  can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
-  end,
-  use = function(self, card, area, copier)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_use(self, card, area, copier)
-    else
-      return highlighted_energy_use(self, card, area, copier)
-    end
-  end
-}
+local basic_etypes = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+local basic_energies = {}
+for k, etype in ipairs(basic_etypes) do
+  local energy = copy_table(energy_template)
+  energy.key = etype == 'Dark' and string.lower(etype) .. 'ness_energy' or string.lower(etype) .. '_energy'
+  energy.etype = etype
+  energy.pos = { x = (k - 1) % 10, y = math.floor((k - 1) / 10) }
+  table.insert(basic_energies, energy)
+end
 
 local bird_energy = {
   name = "bird_energy",
@@ -503,7 +173,6 @@ local bird_energy = {
   etype = "Bird",
   unlocked = true,
   discovered = true,
-  no_collection = true,
   loc_vars = function(self, info_queue, card)
         local r_mults = {}
         for i = 1, 23 do
@@ -547,30 +216,14 @@ local bird_energy = {
         return { main_start = main_start }
     end,
   can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
+    return energy_can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    local choice = nil
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      choice = energy_can_use(self, card)
-    else
-      choice = highlighted_energy_can_use(self, card)
-    end
+    local choice = energy_can_use(self, card)
     if choice then
-      local max = energy_max + (G.GAME.energy_plus or 0)
-      for i = 1, max do
-        increment_energy(choice, self.etype)
-      end
+      increment_energy(choice, self.etype, energy_max + (G.GAME.energy_plus or 0))
     end
-    if G.GAME.energies_used then
-      G.GAME.energies_used = G.GAME.energies_used  + 1
-    else
-      G.GAME.energies_used = 1
-    end
+    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,
   in_pool = function(self)
     return false
@@ -594,19 +247,11 @@ local double_rainbow_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-      return energy_can_use(self, card)
-    else
-      return highlighted_energy_can_use(self, card)
-    end
+    return energy_can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    for i = 1, 2 do
-      if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then
-        energy_use(self, card, area, copier, true)
-      else
-        highlighted_energy_use(self, card, area, copier, true)
-      end
+    for _ = 1, 2 do
+      energy_use(self, card, area, copier, true)
     end
     if not G.GAME.modifiers.no_interest then
       G.GAME.modifiers.reset_no_interest = true
@@ -633,32 +278,12 @@ local transformation = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    elseif G.jokers.cards and #G.jokers.cards > 0 then
-      choice = G.jokers.cards[1]
-    else
-      return false
-    end
-    if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and choice.ability.extra.ptype then
-      return true
-    else
-      return false
-    end
+    local choice = poke_find_leftmost_or_highlighted()
+    return get_type(choice)
   end,
   use = function(self, card, area, copier)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
-    if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
-      energy_increase(choice, choice.ability.extra.ptype)
-    elseif type_sticker_applied(choice) then
-      energy_increase(choice, type_sticker_applied(choice))
-    end
+    local choice = poke_find_leftmost_or_highlighted()
+    if get_type(choice) then energy_increase(choice, get_type(choice)) end
     if not choice.config.center.aux_poke then
       local highest = get_highest_evo(choice)
       if highest and type(highest) == "string" then
@@ -670,6 +295,7 @@ local transformation = {
     end
   end
 }
+
 local megastone = {
   name = "megastone",
   key = "megastone",
@@ -863,33 +489,19 @@ local nightmare = {
   unlocked = true,
   discovered = true,
   use = function(self, card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
+    local choice = poke_find_leftmost_or_highlighted()
     local energy = matching_energy(choice, true) or "c_poke_colorless_energy"
     if energy then
       local max = (energy == "c_poke_bird_energy") and 1 or 2
-      local context = {}
-      for i= 1, max do
-        local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
-        local edition = {negative = true}
-        _card:set_edition(edition, true)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
+      for _ = 1, max do
+        local _card = SMODS.add_card({set = "Energy", area = G.consumeables, key = energy, skip_materialize = true, soulable = true})
+        _card:set_edition({negative = true}, true)
       end
     end
     remove(self, choice)
   end,
   can_use = function(self, card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
+    local choice = poke_find_leftmost_or_highlighted()
     return not choice.ability.eternal
   end,
 }
@@ -947,7 +559,12 @@ local emergy = {
 	end,
 }
 
-local list = {pokeball, greatball, ultraball, masterball, grass_energy, fire_energy, water_energy, lightning_energy, psychic_energy, fighting_energy, colorless_energy, darkness_energy,              metal_energy, fairy_energy, dragon_energy, earth_energy, bird_energy, double_rainbow_energy, transformation, obituary, nightmare, revenant, megastone}
+local list = {pokeball, greatball, ultraball, masterball, bird_energy, double_rainbow_energy, transformation, obituary, nightmare, revenant, megastone}
+-- Keeping the order of consumables the same as before, the 12 energies get added after masterball
+for i = 1, #basic_energies do
+  table.insert(list, 4 + i, basic_energies[i])
+end
+
 
 if (SMODS.Mods["Cryptid"] or {}).can_load then
   table.insert(list, emergy)
