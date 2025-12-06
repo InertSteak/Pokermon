@@ -2943,24 +2943,21 @@ jd_def["j_poke_flareon"] = {
       }
   },
   calc_function = function(card)
-      local playing_hand = next(G.play.cards)
-      local count = 0
-      local first_mult = nil
-      for i=1, #G.hand.cards do
-        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
-          first_mult = G.hand.cards[i]
-          break
-        end
+    local count = 0
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
       end
-      for _, playing_card in ipairs(G.hand.cards) do
-          if playing_hand or not playing_card.highlighted then
-              if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card == first_mult then
-                  count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-              end
-          end
+    end
+    for _, playing_card in ipairs(cards_in_hand) do
+      if SMODS.has_enhancement(playing_card, 'm_mult') and not (playing_card.facing == 'back') and not playing_card.debuff then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+        break
       end
-      card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
-  end
+    end
+    card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
+end
 }
 
 jd_def["j_poke_omanyte"] = {
