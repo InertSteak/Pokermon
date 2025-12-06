@@ -1755,13 +1755,24 @@ jd_def["j_poke_ho_oh"] = {
 
 --	Celebi
 jd_def["j_poke_celebi"] = {
-    text = {
-        {text = "[", colour = G.C.GREY},
-        {ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY},
-        {text = "/", colour = G.C.GREY},
-        {ref_table ="card.ability.extra", ref_value = "skip_target", colour = G.C.ORANGE},
-        {text = "]", colour = G.C.GREY},
-    }
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "skip_target", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
+  end
 }
 
 
