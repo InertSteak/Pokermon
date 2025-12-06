@@ -3,10 +3,8 @@ local jd_def = JokerDisplay.Definitions
 --	Treecko
 jd_def["j_poke_treecko"] = {
   text = {
-    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
-    { text = "x", scale = 0.35 },
     { text = "$", colour = G.C.GOLD},
-    { ref_table = "card.ability.extra", ref_value = "money_mod", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
     {text = "["},
@@ -29,7 +27,7 @@ jd_def["j_poke_treecko"] = {
         end
       end
     end
-    card.joker_display_values.count = count
+    card.joker_display_values.money = count * card.ability.extra.money_mod
     card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
     card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
     card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
