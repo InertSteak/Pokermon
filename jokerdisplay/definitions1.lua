@@ -1501,7 +1501,7 @@ jd_def["j_poke_poliwrath"] = {
             count = 3
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
-        card.joker_display_values.Xmult = count * card.ability.extra.Xmult_multi
+        card.joker_display_values.Xmult = math.max(count ^ card.ability.extra.Xmult_multi, 1)
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
     end,
     style_function = function(card, text, reminder_text, extra)
