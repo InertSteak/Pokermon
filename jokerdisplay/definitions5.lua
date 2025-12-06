@@ -102,7 +102,7 @@ jd_def["j_poke_gigalith"] = {
         card.joker_display_values.mult = count * card.ability.extra.mult_mod
     end,
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-        return held_in_hand and SMODS.has_enhancement(playing_card, "m_poke_hazard") and (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+        return held_in_hand and SMODS.has_no_rank(playing_card) and (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
     end
 }
 
