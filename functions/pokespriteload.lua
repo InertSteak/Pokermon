@@ -661,7 +661,7 @@ PokemonSprites = {
 {name = "zebstrika", base = {pos = {x = 24, y = 34}},},
 {name = "roggenrola", base = {pos = {x = 26, y = 34}}, alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "boldore", base = {pos = {x = 28, y = 34}}, alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
-{name = "gigalith", base = {pos = {x = 0, y = 35}},},
+{name = "gigalith", base = {pos = {x = 0, y = 35}}, alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "woobat", base = {pos = {x = 2, y = 35}},},
 {name = "swoobat", base = {pos = {x = 4, y = 35}},},
 {name = "drilbur", base = {pos = {x = 6, y = 35}},},
