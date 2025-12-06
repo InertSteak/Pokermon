@@ -288,37 +288,48 @@ jd_def["j_poke_marshtomp"] = {
 
 --	Swampert
 jd_def["j_poke_swampert"] = {
-    text = {
-        { text = "+",                              colour = G.C.CHIPS },
-        { ref_table = "card.joker_display_values",        ref_value = "chips", colour = G.C.CHIPS },
-    },
-    reminder_text = {
-            {text = "["},
-            { ref_table = "card.joker_display_values", ref_value = "nature1",},
-            { text = ", " },
-            { ref_table = "card.joker_display_values", ref_value = "nature2",},
-            { text = ", "},
-            { ref_table = "card.joker_display_values", ref_value = "nature3",},
-            {text = "]"},
-    },
-    calc_function = function(card)
-        local count = 0
-        local chips = card.ability.extra.chip_mod
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:get_id() == card.ability.extra.targets[1].id or
-                   scoring_card:get_id() == card.ability.extra.targets[2].id or
-                   scoring_card:get_id() == card.ability.extra.targets[3].id then              
-                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-                end
-            end
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " +", colour = G.C.SECONDARY_SET.Tarot },
+    { ref_table = "card.joker_display_values", ref_value = "tarot", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Tarot },
+  },
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1" },
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature2" },
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3" },
+    { text = "]" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local chips = card.ability.extra.chip_mod
+    local nature_cards = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == card.ability.extra.targets[1].id or
+          scoring_card:get_id() == card.ability.extra.targets[2].id or
+          scoring_card:get_id() == card.ability.extra.targets[3].id then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+          nature_cards = nature_cards + 1
         end
-        card.joker_display_values.chips = count * chips
-        card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
-        card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
-        card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+      end
     end
+    if nature_cards >= 5 then
+      local water_jokers = #find_pokemon_type("Water")
+      local earth_jokers = #find_pokemon_type("Earth")
+      card.joker_display_values.tarot = math.floor((water_jokers + earth_jokers)/2)
+    else
+      card.joker_display_values.tarot = 0
+    end
+    card.joker_display_values.chips = count * chips
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end
 }
 
 --	Poochyena
