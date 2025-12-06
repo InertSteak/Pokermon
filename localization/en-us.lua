@@ -1585,7 +1585,7 @@ return {
             j_poke_mega_gengar = {
                 name = 'Mega Gengar',      
                 text = {
-                    "Creates a {C:dark_edition}Negative{} {C:attention}tag{} when",
+                    "Create a {C:attention}Negative Tag{} when",
                     "{C:attention}Small Blind{} or {C:attention}Big Blind{} is selected",
                 } 
             },
@@ -2017,7 +2017,7 @@ return {
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
                     "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
-                    "{X:attention,C:white}4+{} : Create a {C:attention}tag{} once per round{C:inactive}#3#{}",
+                    "{X:attention,C:white}4+{} : Create a {C:attention}Tag{} once per round{C:inactive}#3#{}",
                 } 
             },
             j_poke_kabuto = {
@@ -2893,8 +2893,8 @@ return {
             j_poke_delibird = {
                 name = "Delibird",
                 text = {
-                  "At end of round",
-                  "receive a {S:1.1,C:green,E:2}Present{}",
+                  "At end of round,",
+                  "receive a {S:1.1,C:green,E:2}Present!{}",
                   "{C:inactive,s:0.8}(Must have room)",
                 }
             },
@@ -2995,7 +2995,7 @@ return {
                 name = 'Smoochum',
                 text = {
                     "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
-                    "Creates a {C:attention}Standard{} tag",
+                    "Creates a {C:attention}Standard Tag{}",
                     "when this Joker evolves",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
@@ -3004,7 +3004,7 @@ return {
                 name = 'Elekid',
                 text = {
                     "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
-                    "Creates a {C:attention}Coupon{} tag",
+                    "Creates a {C:attention}Coupon Tag{}",
                     "when this Joker evolves",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
@@ -5000,7 +5000,7 @@ return {
                 name = "Professor",
                 text = {
                     "After {C:attention}#1#{} rounds, sell this card",
-                    "to create a {C:attention}Starter{} tag",
+                    "to create a {C:attention}Starter Tag",
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
