@@ -40,15 +40,8 @@ local moonstone = {
     set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
-        local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-
-        level_up_hand(card, text)
-        if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-          or G.STATE == G.STATES.STANDARD_PACK then
-          update_hand_text({nopulse = true, delay = 0.3}, {mult = 0, chips = 0, level = '', handname = ''})
-        else
-          update_hand_text({nopulse = nil, delay = 0.3}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
-        end
+        local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+        SMODS.smart_level_up_hand(card, hand)
       else
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             attention_text({
@@ -421,6 +414,17 @@ local leftovers = {
       card.children.floating_sprite:set_sprite_pos({ x = 6, y = 5 })
     end
   end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
   keep_on_use = function(self, card)
     return true
   end,
@@ -501,6 +505,17 @@ local leek = {
       card.children.floating_sprite:set_sprite_pos({ x = 7, y = 5 })
     end
   end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
   keep_on_use = function(self, card)
     return true
   end,
@@ -554,6 +569,17 @@ local thickclub = {
       card.ability.extra.usable = true
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
       card.children.floating_sprite:set_sprite_pos({ x = 8, y = 5 })
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
     end
   end,
   keep_on_use = function(self, card)

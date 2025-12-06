@@ -299,33 +299,11 @@ local mystery_egg = {
       end
       card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
       if card.ability.extra.rounds <= 1 then
-        local eval = function(card) return not card.REMOVED end
+        local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 end
         juice_card_until(card, eval, true)
       end
       if card.ability.extra.rounds <= 0 then
-        card.ability.extra.rounds = 99
-        G.E_MANAGER:add_event(Event({trigger = 'immediate',
-          func = function()
-            -- if edition is nil, it'll try again for an edition
-            local _card = SMODS.create_card({set = "Joker", area = G.jokers, key = card.ability.extra.key, edition = card.edition})
-            energy_increase(_card, 'Trans')
-            _card:add_to_deck()
-            local loc = 1
-            for i,jkr in ipairs(G.jokers.cards) do
-              if jkr == card then
-                loc = i
-              end
-            end
-            if card.edition and card.edition.poke_shiny then
-              SMODS.change_booster_limit(-1)
-            end
-            remove(self, card, context)
-            G.jokers:emplace(_card, loc)
-            return true
-          end}))
-        return {
-            message = localize('poke_crack_ex')
-        }
+        poke_evolve(card, card.ability.extra.key, nil, localize('poke_crack_ex'), true)
       else
         return {
             message = localize('poke_shake_ex')
@@ -369,23 +347,6 @@ local mystery_egg = {
       card.ability.extra.key = poke_key.key
     end
   end
-  --[[ Function for dynatext, needs to be changed to put it as a tooltip
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-
-    local _c = card and card.config.center or self
-    if not full_UI_table.name then
-			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-		end
-    local egg_messages = localize({ type = "raw_descriptions", set = _c.set, key = _c.key })
-    local first_message = table.remove(egg_messages, math.random(#egg_messages))
-    table.insert(egg_messages, 1, first_message)
-    local main_start = {
-      {n=G.UIT.O, config={object = DynaText({string = egg_messages,
-      colours = {G.C.DARK_EDITION},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 2.5, scale = 0.32, min_cycle_time = 0})}},
-    }
-    info_queue[#info_queue+1] = main_start
-    --desc_nodes[#desc_nodes+1] = main_start
-  end,--]]
 }
 local rival = {
   name = "rival",
@@ -506,7 +467,7 @@ local ruins_of_alph={
   cost = 8,
   stage = "Other",
   atlas = "others",
-  perishable_compat = true,
+  perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)

@@ -1475,7 +1475,7 @@ local mewtwo={
   calculate = function(self, card, context)
     if (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
       local leftmost = G.jokers.cards[1]
-      if leftmost ~= card then
+      if leftmost ~= card and not leftmost.getting_sliced then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         

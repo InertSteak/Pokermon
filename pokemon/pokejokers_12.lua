@@ -58,14 +58,7 @@ local lileep={
           if not context.blueprint then
             card.ability.extra.third_times = card.ability.extra.third_times + 1
           end
-          ease_dollars(-card.ability.extra.money_minus)
-          return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
-          }
         end
-      
       end
       if context.after then
         card.ability.extra.ancient_count = 0
@@ -105,7 +98,7 @@ local cradily={
   rarity = "poke_safari",
   cost = 8,
   gen = 3,
-  stage = "Basic",
+  stage = "One",
   ptype = "Grass",
   atlas = "Pokedex3",
   perishable_compat = true,
@@ -182,7 +175,7 @@ local anorith={
   rarity = 2,
   cost = 5,
   gen = 3,
-  stage = "One",
+  stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex3",
   perishable_compat = true,

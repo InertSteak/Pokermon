@@ -124,7 +124,41 @@ jd_def["j_poke_sylveon"] = {
 --	Phantump
 --	Trevenant
 --	Pumpkaboo
+jd_def["j_poke_pumpkaboo"] = {
+  text = {
+    { text = "+", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jacks_discarded", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jack_target", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+  end
+}
+
 --	Gourgeist
+jd_def["j_poke_gourgeist"] = {
+  text = {
+    { text = "+", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jacks_discarded", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jack_target", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+  end
+}
+
 --	Bergmite
 --	Avalugg
 --	Noibat

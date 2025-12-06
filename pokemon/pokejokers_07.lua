@@ -224,7 +224,7 @@ local azumarill={
         local bonus = nil
         local unbonus = nil
         for k, v in pairs(context.scoring_hand) do
-          if SMODS.has_enhancement(v, 'm_bonus') then
+          if SMODS.has_enhancement(v, 'm_bonus') and not v.debuff then
             bonus = true
           else
             unbonus = true
@@ -1124,14 +1124,6 @@ local wobbuffet={
   name = "wobbuffet",
   pos = {x = 0, y = 5},
   config = {extra = {retriggers = 1, volatile = 'left'}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
-      info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'}
-    end
-    return {vars = {center.ability.extra.retriggers, }}
-  end,
   rarity = "poke_safari",
   cost = 8,
   stage = "Basic",
@@ -1171,9 +1163,11 @@ local wobbuffet={
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    if not card.ability.eternal then
       info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'}
-      type_tooltip(self, info_queue, card)
+    end
+    type_tooltip(self, info_queue, card)
     local _c = card and card.config.center or card
     if not full_UI_table.name then
       full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
