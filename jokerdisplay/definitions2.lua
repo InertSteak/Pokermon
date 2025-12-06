@@ -653,6 +653,12 @@ jd_def["j_poke_politoed"] = {
           if held_in_hand then return 0 end
               return (playing_card:is_suit(suit)) and (retriggers * JokerDisplay.calculate_joker_triggers(joker_card or 0)) or 0
         end
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
 

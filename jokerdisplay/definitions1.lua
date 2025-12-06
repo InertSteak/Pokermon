@@ -1414,8 +1414,15 @@ jd_def["j_poke_poliwag"] = {
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
+
 --Poliwhirl
 jd_def["j_poke_poliwhirl"] = {
     text = {
@@ -1447,8 +1454,15 @@ jd_def["j_poke_poliwhirl"] = {
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
+
 --Poliwrath
 jd_def["j_poke_poliwrath"] = {
     text = {
@@ -1489,6 +1503,12 @@ jd_def["j_poke_poliwrath"] = {
         card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.Xmult = count * card.ability.extra.Xmult_multi
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
 
