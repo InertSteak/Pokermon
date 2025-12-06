@@ -361,6 +361,26 @@ jd_def["j_poke_jellicent"] = {
 --	Galvantula
 --	Ferroseed
 --	Ferrothorn
+jd_def["j_poke_ferrothorn"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if not held_in_hand then return 0 end
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    if poker_hands['Flush'] and next(poker_hands['Flush']) then
+      return held_in_hand and SMODS.has_enhancement(playing_card, "m_steel") and (joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+    else
+      return 0
+    end
+  end
+
+}
 --	Klink
 --	Klang
 --	Klinklang
