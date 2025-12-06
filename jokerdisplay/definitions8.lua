@@ -66,7 +66,7 @@ jd_def["j_poke_yamper"] = {
         { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
         { text = " " },
         { text = "+$", colour = G.C.GOLD },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "add", colour = G.C.GOLD }
+        { ref_table = "card.joker_display_values", ref_value = "money", retrigger_type = "add", colour = G.C.GOLD }
     },
     reminder_text = {
       { text = "(" },
@@ -110,7 +110,7 @@ jd_def["j_poke_boltund"] = {
     },
 text_config = { colour = G.C.WHITE },
 calc_function = function(card)
-    local Xmult = 0
+    local Xmult = 1
     local money = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Straight'] and next(poker_hands['Straight']) then

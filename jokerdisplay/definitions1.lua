@@ -550,40 +550,50 @@ jd_def["j_poke_arbok"] = {
 
 jd_def["j_poke_pikachu"] = {
     text = {
-        {text = "+$", colour = G.C.GOLD},
-        { ref_table = "card.ability.extra", ref_value = "money", colour = G.C.GOLD},
-        { text = " "},
-        { text = "+", colour = G.C.MULT},
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT}
+        { text = "+", colour = G.C.MULT },
+        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+        { text = " " },
+        { text = "+$", colour = G.C.GOLD },
+        { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
     },
     reminder_text = {
         { ref_table = "card.joker_display_values", ref_value = "localized_text" },
     },
     calc_function = function(card)
       local mult = 0
+      local money = 0
       local dollars = G.GAME.dollars
       if (SMODS.Mods["Talisman"] or {}).can_load then
         dollars = to_number(dollars)
       end
       if dollars >= card.ability.extra.money_threshold then
         mult = card.ability.extra.mult
+      else
+        money = card.ability.extra.money
       end
       card.joker_display_values.mult = mult
+      card.joker_display_values.money = money
       card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
     end
 }
 
 jd_def["j_poke_raichu"] = { 
-        text = {
-            { text = "+" },
-            { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
-        },
-        text_config = { colour = G.C.MULT },
-        calc_function = function(card)
-            card.joker_display_values.mult = G.GAME and
-                card.ability.extra.mult_mod *
-                (math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / card.ability.extra.money_count)) or 0
-        end
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+    { text = " " },
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  text_config = { colour = G.C.MULT },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME and card.ability.extra.mult_mod * (math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / card.ability.extra.money_count)) or 0
+    card.joker_display_values.money = G.GAME and G.GAME.dollars and math.max(math.min(math.floor(G.GAME.dollars / 5), G.GAME.interest_cap / 5), 0)
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
 }
 
 jd_def["j_poke_sandshrew"] = {
@@ -1404,8 +1414,15 @@ jd_def["j_poke_poliwag"] = {
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
+
 --Poliwhirl
 jd_def["j_poke_poliwhirl"] = {
     text = {
@@ -1437,8 +1454,15 @@ jd_def["j_poke_poliwhirl"] = {
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
+
 --Poliwrath
 jd_def["j_poke_poliwrath"] = {
     text = {
@@ -1477,8 +1501,14 @@ jd_def["j_poke_poliwrath"] = {
             count = 3
         end
         card.joker_display_values.mult = count * card.ability.extra.mult
-        card.joker_display_values.Xmult = count * card.ability.extra.Xmult_multi
+        card.joker_display_values.Xmult = math.max(count ^ card.ability.extra.Xmult_multi, 1)
         card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+    end,
+    style_function = function(card, text, reminder_text, extra)
+      if reminder_text and reminder_text.children[2] then
+        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      end
+      return false
     end
 }
 
@@ -2933,24 +2963,21 @@ jd_def["j_poke_flareon"] = {
       }
   },
   calc_function = function(card)
-      local playing_hand = next(G.play.cards)
-      local count = 0
-      local first_mult = nil
-      for i=1, #G.hand.cards do
-        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
-          first_mult = G.hand.cards[i]
-          break
-        end
+    local count = 0
+    local cards_in_hand = {}
+    for i, playing_card in ipairs(G.hand.cards) do
+      if not playing_card.highlighted then
+        table.insert(cards_in_hand, playing_card)
       end
-      for _, playing_card in ipairs(G.hand.cards) do
-          if playing_hand or not playing_card.highlighted then
-              if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card == first_mult then
-                  count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-              end
-          end
+    end
+    for _, playing_card in ipairs(cards_in_hand) do
+      if SMODS.has_enhancement(playing_card, 'm_mult') and not (playing_card.facing == 'back') and not playing_card.debuff then
+        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+        break
       end
-      card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
-  end
+    end
+    card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
+end
 }
 
 jd_def["j_poke_omanyte"] = {
