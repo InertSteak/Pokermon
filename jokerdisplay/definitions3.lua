@@ -182,36 +182,43 @@ jd_def["j_poke_combusken"] = {
 
 --	Blaziken
 jd_def["j_poke_blaziken"] = {
-    text = {
-        { text = "+",                              colour = G.C.MULT },
-        { ref_table = "card.joker_display_values",        ref_value = "mult", colour = G.C.MULT },
-    },
-    reminder_text = {
-            {text = "["},
-            { ref_table = "card.joker_display_values", ref_value = "nature1",},
-            { text = ", "},
-            { ref_table = "card.joker_display_values", ref_value = "nature2",},
-            { text = ", " },
-            { ref_table = "card.joker_display_values", ref_value = "nature3",},
-            {text = "]"},
-    },
-    calc_function = function(card)
-        local count = 0
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        if text ~= 'Unknown' then
-          for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == card.ability.extra.targets[1].id or
-              scoring_card:get_id() == card.ability.extra.targets[2].id or
-              scoring_card:get_id() == card.ability.extra.targets[3].id then
-              count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
-          end
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1",},
+    { text = ", "},
+    { ref_table = "card.joker_display_values", ref_value = "nature2",},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3",},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == card.ability.extra.targets[1].id or
+          scoring_card:get_id() == card.ability.extra.targets[2].id or
+          scoring_card:get_id() == card.ability.extra.targets[3].id then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
-        card.joker_display_values.mult = count * card.ability.extra.mult_mod
-        card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
-        card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
-        card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+      end
     end
+    card.joker_display_values.mult = count * card.ability.extra.mult_mod
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end,
+  mod_function = function(card, mod_joker)
+    if mod_joker.ability.extra.cards_discarded >= mod_joker.ability.extra.discard_target then
+      return { x_mult = ((card.config.center.ptype and card.config.center.ptype == "Fire" or card.config.center.ptype == "Fighting") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+    else
+      return { xmult = nil }
+    end
+  end
 }
 
 --	Mudkip
