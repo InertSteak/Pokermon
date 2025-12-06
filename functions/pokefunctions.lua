@@ -403,7 +403,7 @@ poke_backend_evolve = function(card, to_key)
 
   if type(card.ability.extra) == "table" then
     for k,v in pairs(values_to_keep) do
-      if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" then
+      if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
         if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" or k == "jack_target" then
           card.ability.extra[k] = v
         end
