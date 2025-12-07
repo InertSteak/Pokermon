@@ -328,21 +328,7 @@ local charizard={
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
-  megas = {"mega_charizard_x","mega_charizard_y"},
-  getMega = function(self, card)
-    -- Leftmost = X, Rightmost = Y, Middle = Random
-    local mega = nil
-    for k, v in ipairs(G.jokers.cards) do
-      if card == v and k == 1 then
-        mega = self.megas[1]
-        break
-      elseif card == v and k == #G.jokers.cards then
-        mega = self.megas[2]
-      end
-    end
-    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
-    return mega
-  end
+  megas = {"mega_charizard_x", "mega_charizard_y"},
 }
 -- Mega Charizard X 006-1
 local mega_charizard_x = {

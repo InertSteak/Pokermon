@@ -303,13 +303,16 @@ local megastone = {
   artist = "MyDude_YT",
   helditem = true,
   config = {extra = {usable = true, used_on = nil}},
-  loc_vars = function(self, info_queue, center)
+  loc_vars = function(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
     if not G.GAME.modifiers.infinite_megastone then
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
     end
-    if center and center.ability.extra.used_on then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = center.ability.extra.used_on})}}
+    local joker = poke_find_card(function(joker)
+        return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
+      end)
+    if joker then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'mega_used_on', vars = {localize({ type = "name_text", set = "Joker", key = joker.config.center.key})}}
     end
   end,
   pos = { x = 4, y = 5 },
@@ -321,103 +324,67 @@ local megastone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-       or G.STATE == G.STATES.STANDARD_PACK then 
-      if (#G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit) and card.area == G.pack_cards then return false end
-    end
+    -- location-based usability checks
+    if (#G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit) and card.area == G.pack_cards then return false end
     if card.area == G.shop_jokers then return false end
-    if not (G.jokers and G.jokers.cards) then return false end
-    if #G.jokers.cards == 0 then return false end
+    if not (G.jokers and G.jokers.cards) or #G.jokers.cards == 0 then return false end
     if not card.ability.extra.usable then return false end
-    local target = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and 
-       not (G.jokers.highlighted[1].debuff and G.jokers.highlighted[1].config.center.megas) then
-      target = G.jokers.highlighted[1]
-    else
-      for k, poke in pairs(G.jokers.cards) do
-        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not (poke.debuff and poke.config.center.megas) then
-          target = poke
-          break
-        end
-      end
-    end
+    -- Find an eligible pokemon (also checks if the mega stone has been used, and on which joker)
+    local target = poke_find_leftmost_or_highlighted(function(joker)
+      return not card.ability.extra.used_on and get_mega(joker) and not joker.debuff
+        or joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
+        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
+      end)
     if not target then return false end
-    if card.ability.extra.used_on and target.config.center.key ~= card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then return false end
+    -- If none of that nonsense happened you can use it I guess
     return true
   end,
   use = function(self, card, area, copier)
-    local target = nil
-    local forced_key = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and (G.jokers.highlighted[1].config.center.megas or G.jokers.highlighted[1].config.center.rarity == "poke_mega") and
-       not (G.jokers.highlighted[1].debuff and G.jokers.highlighted[1].config.center.megas) then
-      target = G.jokers.highlighted[1]
-    else
-      for k, poke in pairs(G.jokers.cards) do
-        if (poke.config.center.megas or poke.config.center.rarity == "poke_mega") and not (poke.debuff and poke.config.center.megas) then
-          target = poke
-          break
-        end
-      end
-    end
+    local target = poke_find_leftmost_or_highlighted(function(joker)
+      return not card.ability.extra.used_on and get_mega(joker) and not joker.debuff
+        or joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
+        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
+      end)
+    local forced_key
     local prefix = target.config.center.poke_custom_prefix or "poke"
-    local forced_mega_key = "j_"..prefix.."_"
-    if target.config.center.megas then
-      local mega = target.config.center.megas[1]
-      if #target.config.center.megas > 1 then
-        if target.config.center.getMega then
-          mega = target.config.center:getMega(target)
-        else
-          mega = pseudorandom_element(mega, pseudoseed('megastone_'..target.config.center.name))
-        end
-      end
-      forced_key = forced_mega_key.. mega
-      if not G.GAME.modifiers.infinite_megastone then
-        card.ability.extra.used_on = forced_key
-      end
+    if get_mega(target) then
+      forced_key = "j_"..prefix.."_"..get_mega(target)
+      card.ability.extra.used_on = not G.GAME.modifiers.infinite_megastone and target.unique_val
     else
       forced_key = get_previous_evo(target, true)
       card.ability.extra.used_on = nil
     end
-    local context = {}
     card.ability.extra.usable = false
-     
     poke_evolve(target, forced_key)
   end,
   calculate = function(self, card, context)
-    if context.end_of_round and not card.ability.extra.usable then
-      card.ability.extra.usable = true
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+    if context.end_of_round then
+      local mega = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
+      if not mega then card.ability.extra.used_on = nil end
+      if not card.ability.extra.usable then
+        card.ability.extra.usable = true
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      end
     end
   end,
   keep_on_use = function(self, card)
     return true
   end,
   in_pool = function(self)
-    local mega_poke = false
-    if G.jokers and G.jokers.cards then
-      for k, poke in pairs(G.jokers.cards) do
-        if poke.config.center.megas then
-          mega_poke = true
-        end
-      end
-    end
+    local mega_poke = G.jokers and poke_find_card(function(joker) return joker.config.center.megas end)
     return mega_poke
   end,
   add_to_deck = function(self, card, from_debuff)
-    card.ability.extra.used_on = nil
+    if not from_debuff then card.ability.extra.used_on = nil end
     card.ability.extra.usable = true
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then
-      for k, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == card.ability.extra.used_on then
-          local forced_key = get_previous_evo(v, true)
-          poke_evolve(v, forced_key)
-          break
-        end
-      end
+    local target = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
+    if target then
+      local forced_key = get_previous_evo(target, true)
+      poke_evolve(target, forced_key)
     end
-  end
+  end,
 }
 
 local obituary = {
