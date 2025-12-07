@@ -615,20 +615,9 @@ local teraorb = {
   end,
   use = function(self, card, area, copier)
     set_spoon_item(card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    elseif G.jokers.cards and #G.jokers.cards > 0 then
-      choice = G.jokers.cards[1]
-    else
-      return
-    end
+    local choice = poke_find_leftmost_or_highlighted()
     if is_type(choice, card.ability.extra.change_to_type) then
-      if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
-        energy_increase(choice, choice.ability.extra.ptype)
-      elseif type_sticker_applied(choice) then
-        energy_increase(choice, type_sticker_applied(choice))
-      end
+      energy_increase(choice, get_type(choice))
     end
     apply_type_sticker(choice, card.ability.extra.change_to_type)
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})

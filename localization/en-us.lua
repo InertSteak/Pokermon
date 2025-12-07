@@ -1280,7 +1280,7 @@ return {
                 name = "Kadabra",
                 text = {
                     "{C:green}#1# in #2#{} chance to create a {C:tarot}Tarot{} or",
-                    "{C:item}Twisted Spoon{} card if played {C:attention}poker hand{}",
+                    "{C:item}Twisted Spoon{} card if {C:attention}poker hand{}",
                     "has already been played this round",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
                 } 
@@ -1290,7 +1290,7 @@ return {
                 text = {
                     "{C:attention}+#3#{} consumable slot",
                     "{C:green}#1# in #2#{} chance to create a {C:attention}Fool{} or",
-                    "{C:item}Twisted Spoon{} card if played {C:attention}poker hand{}",
+                    "{C:item}Twisted Spoon{} card if {C:attention}poker hand{}",
                     "has already been played this round",
                 } 
             },
@@ -5553,7 +5553,7 @@ return {
                 }
             },
             energy = {
-                name = "Energy Used",
+                name = "Energy Count",
                 text = {
                     "{C:attention}#1#{}/#2#",
                 }

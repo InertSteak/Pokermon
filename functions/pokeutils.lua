@@ -193,7 +193,31 @@ poke_debug = function(message, verbose, depth)
   else
     sendDebugMessage(message)
   end
-end 
+end
+
+function poke_find_card(key_or_function, use_highlighted)
+  local is_target = function(card)
+    return (type(key_or_function) == "function") and key_or_function(card)
+      or card.config.center.key == key_or_function
+  end
+  for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+    if use_highlighted and cardarea.highlighted and #cardarea.highlighted == 1 then
+      local highlighted = cardarea.highlighted[1]
+      if is_target(highlighted) then return highlighted end
+    elseif cardarea.cards then
+      for _, card in pairs(cardarea.cards) do
+        if is_target(card) then return card end
+      end
+    end
+  end
+end
+
+function poke_find_leftmost_or_highlighted(key_or_function)
+  if not key_or_function then
+    return G.jokers.highlighted[1] or G.jokers.cards[1]
+  end
+  return poke_find_card(key_or_function, true)
+end
 
 poke_vary_rank = function(card, decrease, seed, immediate)
   -- if it doesn't have a rank/suit within SMODS, don't do anything
