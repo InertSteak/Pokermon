@@ -296,6 +296,14 @@ local transformation = {
   end
 }
 
+local get_mega_target = function(self)
+  return poke_find_leftmost_or_highlighted(function(joker)
+    return not self.ability.extra.used_on and get_mega(joker) and not joker.debuff
+        or joker.config.center.rarity == "poke_mega" and joker.unique_val == self.ability.extra.used_on
+        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
+  end)
+end
+
 local megastone = {
   name = "megastone",
   key = "megastone",
@@ -330,21 +338,13 @@ local megastone = {
     if not (G.jokers and G.jokers.cards) or #G.jokers.cards == 0 then return false end
     if not card.ability.extra.usable then return false end
     -- Find an eligible pokemon (also checks if the mega stone has been used, and on which joker)
-    local target = poke_find_leftmost_or_highlighted(function(joker)
-      return not card.ability.extra.used_on and get_mega(joker) and not joker.debuff
-        or joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
-        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
-      end)
+    local target = get_mega_target(card)
     if not target then return false end
     -- If none of that nonsense happened you can use it I guess
     return true
   end,
   use = function(self, card, area, copier)
-    local target = poke_find_leftmost_or_highlighted(function(joker)
-      return not card.ability.extra.used_on and get_mega(joker) and not joker.debuff
-        or joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
-        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
-      end)
+    local target = get_mega_target(card)
     local forced_key
     local prefix = target.config.center.poke_custom_prefix or "poke"
     if get_mega(target) then
