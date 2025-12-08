@@ -253,14 +253,10 @@ local alakazam={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
-      return true end }))
+    G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
-      return true end }))
+    G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
   end, 
   megas = {"mega_alakazam"}
 }
@@ -300,14 +296,10 @@ local mega_alakazam={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
-      return true end }))
+    G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({func = function()
-      G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
-      return true end }))
+    G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
   end, 
 }
 -- Machop 066
