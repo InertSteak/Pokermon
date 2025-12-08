@@ -672,6 +672,18 @@ get_highest_evo = function(card)
   return pseudorandom_element(evos, pseudoseed('highest'))
 end
 
+get_mega = function(card)
+  if not card.config.center.megas then return end
+  if #card.config.center.megas == 1 then return card.config.center.megas[1] end
+  -- Leftmost = X, Rightmost = Y, Middle = Random
+  local mega
+  if #G.jokers.cards == 1 then mega = pseudorandom_element(card.config.center.megas, pseudoseed('megastone'))
+  elseif card == G.jokers.cards[1] then mega = card.config.center.megas[1]
+  elseif card == G.jokers.cards[#G.jokers.cards] then mega = card.config.center.megas[2]
+  else mega = pseudorandom_element(card.config.center.megas, pseudoseed('megastone')) end
+  return mega
+end
+
 get_previous_from_mega = function(name, prefix, full_key)
   local prev = string.sub(name,6,-1)
   if string.sub(prev, #prev-1, -1) == "_x" or string.sub(prev, #prev-1, -1) == "_y" then prev = string.sub(prev, 0, #prev - 2) end
