@@ -33,6 +33,9 @@ end
 			return {key = curr_key, vars = {localize("goodrod_variable"), localize("pokeball_variable"), localize("greatball_variable")}}
 		end,
     apply = function(self)
+      if self.get_current_deck_key() ~= "b_poke_pokemondeck" then
+        CardSleeves.Sleeve.apply(self)
+      end
       G.E_MANAGER:add_event(Event({
         func = function()
           if self.get_current_deck_key() ~= 'b_poke_pokemondeck' then
