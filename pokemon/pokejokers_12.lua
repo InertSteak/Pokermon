@@ -210,7 +210,10 @@ local anorith={
         
         if card.ability.extra.ancient_count > 1 then
           if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
-            SMODS.add_card{set = 'Base', rank = card.ability.extra.rank, area = G.deck}
+            local rank = card.ability.extra.rank
+            local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('anorith'))
+            local created_card = create_playing_card({front = G.P_CARDS[suit..'_'..rank], nil, G.deck, nil, nil, {G.C.PURPLE}) 
+            playing_card_joker_effects({created_card})
           end
         end
         
@@ -284,8 +287,12 @@ local armaldo={
         end
         
         if card.ability.extra.ancient_count > 1 then
-          if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
-            SMODS.add_card{set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck}
+          if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
+            local rank = card.ability.extra.rank
+            local suit = pseudorandom_element({'S','H','D','C'}, pseudoseed('anorith'))
+            local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
+            local created_card = create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE}) 
+            playing_card_joker_effects({created_card})
           end
         end
         
