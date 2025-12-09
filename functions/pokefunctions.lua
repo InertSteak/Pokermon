@@ -293,12 +293,12 @@ remove = function(self, card, context, check_shiny)
   return true
 end
 
-poke_evolve = function(card, to_key, immediate, evolve_message, transformation)
+poke_evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.apply_randomizer and not transformation then
     to_key = get_random_poke_key('randomizer')
   end
   if immediate then
-    poke_backend_evolve(card, to_key)
+    poke_backend_evolve(card, to_key, energize_amount)
   else
     G.E_MANAGER:add_event(Event({
       func = function()
@@ -314,7 +314,7 @@ poke_evolve = function(card, to_key, immediate, evolve_message, transformation)
         }))
         G.E_MANAGER:add_event(Event({
           func = function()
-            poke_backend_evolve(card, to_key)
+            poke_backend_evolve(card, to_key, energize_amount)
             return true
           end
         }))
@@ -342,7 +342,7 @@ end
 
 -- Stolen from Cardsauce
 -- Based on code from Ortalab
-poke_backend_evolve = function(card, to_key)
+poke_backend_evolve = function(card, to_key, energize_amount)
   local custom_values_to_keep = {}
   local has_custom_values_to_keep = nil
   local trigger_add = nil
@@ -459,6 +459,10 @@ poke_backend_evolve = function(card, to_key)
   
   if trigger_add then
     card:add_to_deck()
+  end
+  
+  if energize_amount then
+    energy_increase(card, 'Trans', energize_amount)
   end
   
   -- can be removed once this PR has been merged:

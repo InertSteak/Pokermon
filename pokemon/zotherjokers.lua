@@ -303,7 +303,7 @@ local mystery_egg = {
         juice_card_until(card, eval, true)
       end
       if card.ability.extra.rounds <= 0 then
-        poke_evolve(card, card.ability.extra.key, nil, localize('poke_crack_ex'), true)
+        poke_evolve(card, card.ability.extra.key, nil, localize('poke_crack_ex'), true, 1)
       else
         return {
             message = localize('poke_shake_ex')
