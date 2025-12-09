@@ -217,7 +217,7 @@ PokemonSprites = {
 {name = "galarian_articuno", base = {pos = {x = 8, y = 5}, soul_pos = {x = 9, y = 5}},gen_atlas = 1},
 {name = "zapdos", base = {pos = {x = 18, y = 9}, soul_pos = {x = 19, y = 9}},alts = {AtlasJokersSeriesA = {artist = {name = 'Sonfive', layer = 'center'}}}},
 {name = "galarian_zapdos", base = {pos = {x = 10, y = 5}, soul_pos = {x = 11, y = 5}},gen_atlas = 1},
-{name = "moltres", base = {pos = {x = 20, y = 9}, soul_pos = {x = 21, y = 9}},alts = {AtlasJokersSeriesA = {}}},
+{name = "moltres", base = {pos = {x = 20, y = 9}, soul_pos = {x = 21, y = 9}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
 {name = "galarian_moltres", base = {pos = {x = 12, y = 5}, soul_pos = {x = 13, y = 5}},gen_atlas = 1},
 {name = "dratini", base = {pos = {x = 22, y = 9}},alts = {AtlasJokersSeriesA = {artist = 'Desnik'}}},
 {name = "dragonair", base = {pos = {x = 24, y = 9}},},
@@ -281,7 +281,7 @@ PokemonSprites = {
 {name = "slowking", base = {pos = {x = 6, y = 13}},},
 {name = "galarian_slowking", base = {pos = {x = 6, y = 4}},gen_atlas = 2},
 {name = "misdreavus", base = {pos = {x = 8, y = 13}},},
-{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}},gen_atlas = 2},
+{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, alts = {AtlasJokersSeriesA = {artist = {{name = 'Catzzadilla', layer = 'center'}, {name = 'LocalThunk', layer = 'center'}},}},gen_atlas = 2},
 {name = "wobbuffet", base = {pos = {x = 12, y = 13}},},
 {name = "girafarig", base = {pos = {x = 14, y = 13}},},
 {name = "pineco", base = {pos = {x = 16, y = 13}},},
@@ -338,8 +338,8 @@ PokemonSprites = {
 {name = "tyranitar", base = {pos = {x = 14, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}}}},
 {name = "lugia", base = {pos = {x = 16, y = 16}, soul_pos = {x = 17, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = 'Tovivi', layer = 'center'}}}},
-{name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},alts = {AtlasJokersSeriesA = {}}},
-{name = "celebi", base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {}}},
+{name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
+{name = "celebi", base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
 {name = "treecko", base = {pos = {x = 22, y = 16}},},
 {name = "grovyle", base = {pos = {x = 24, y = 16}},},
 {name = "sceptile", base = {pos = {x = 26, y = 16}},},
@@ -1274,7 +1274,6 @@ local poke_artist_info = {
   {url = 'https://x.com/MyDude81058128'},
   {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
   {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
-
   }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {
