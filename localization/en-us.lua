@@ -6059,10 +6059,9 @@ return {
             poke_pink_seal_seal = {
                 name = "Pink Seal",
                 text = {
-                    "Creates an {C:pink}Energy{} card",
-                    "matching an owned Joker's {C:attention}type",
-                    "if it scores in",
-                    "{C:attention}first hand{} of round",
+                    "Creates an {C:pink}Energy{} card that",
+                    "matches an owned Joker's {C:pink}Type",
+                    "if scored in {C:attention}first hand{} of round",
                     "{C:inactive}(Must have room){}"
                 },
             },
