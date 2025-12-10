@@ -210,7 +210,7 @@ local anorith={
         
         if card.ability.extra.ancient_count > 1 then
           if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
-            SMODS.add_card{set = 'Base', rank = card.ability.extra.rank, area = G.deck}
+            poke_add_playing_card{set = 'Base', rank = card.ability.extra.rank, area = G.deck}
           end
         end
         
@@ -285,7 +285,7 @@ local armaldo={
         
         if card.ability.extra.ancient_count > 1 then
           if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
-            SMODS.add_card{set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck}
+            poke_add_playing_card{set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck}
           end
         end
         
