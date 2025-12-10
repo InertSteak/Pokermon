@@ -184,15 +184,19 @@ local zorua = {
     if not type_sticker_applied(card) and not poke_is_in_collection(card) and not G.SETTINGS.paused then
       apply_type_sticker(card, "Dark")
     end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-    else
-      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-      card.children.center:set_sprite_pos(self.pos)
-    end
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
+          card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
+          local _o = G.P_CENTERS[card.ability.extra.hidden_key]
+          card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
+          card.children.center:set_sprite_pos(_o.pos)
+        else
+          card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+          card.children.center:set_sprite_pos(self.pos)
+        end
+        return true
+      end }))
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
