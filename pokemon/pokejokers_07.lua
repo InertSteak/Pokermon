@@ -1105,6 +1105,11 @@ local unown={
       self:set_sprites(card)
       
       card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
+      
+      if poke_is_in_collection(card) then
+        local edition = {negative = true}
+        card:set_edition(edition, true, true)
+      end
     end
   end,
   set_sprites = function(self, card, front)
