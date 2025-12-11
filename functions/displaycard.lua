@@ -54,7 +54,15 @@ function PokeDisplayCard:set_card_area(area)
   self.parent = area
 end
 
-function PokeDisplayCard:remove_card_area()
+function PokeDisplayCard:remove()
+  if self.area then self.area:remove_card(self) end
+
+  remove_all(self.children)
+
+  Moveable.remove(self)
+end
+
+function PokeDisplayCard:remove_from_area()
   self.area = nil
   self.parent = nil
 end
@@ -351,7 +359,7 @@ function PokeDisplayCard:set_seal()
   --does nothing for now, prevents crash
 end
 
---copied from Card
+--start_materialize/dissolve methods stolen from Card
 function PokeDisplayCard:start_materialize(dissolve_colours, silent, timefac)
     local dissolve_time = 0.6*(timefac or 1)
     self.states.visible = true
@@ -365,7 +373,7 @@ function PokeDisplayCard:start_materialize(dissolve_colours, silent, timefac)
     (self.ability.set == 'Booster' and {G.C.BOOSTER}) or
     (self.ability.set == 'Voucher' and {G.C.SECONDARY_SET.Voucher, G.C.CLEAR}) or 
     {G.C.GREEN}
-    self:juice_up()
+    self:juice_up(0.05, 0.03)
     self.children.particles = Particles(0, 0, 0,0, {
         timer_type = 'TOTAL',
         timer = 0.025*dissolve_time,
@@ -408,6 +416,59 @@ function PokeDisplayCard:start_materialize(dissolve_colours, silent, timefac)
         blockable = false,
         delay =  1.05*dissolve_time,
         func = (function() self.states.hover.can = true; if self.children.particles then self.children.particles:remove(); self.children.particles = nil end return true end)
+    }))
+end
+
+function PokeDisplayCard:start_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
+    local dissolve_time = 0.7*(dissolve_time_fac or 1)
+    self.dissolve = 0
+    self.dissolve_colours = dissolve_colours
+        or {G.C.BLACK, G.C.ORANGE, G.C.RED, G.C.GOLD, G.C.JOKER_GREY}
+    if not no_juice then self:juice_up(0.05, 0.03) end
+    local childParts = Particles(0, 0, 0,0, {
+        timer_type = 'TOTAL',
+        timer = 0.01*dissolve_time,
+        scale = 0.1,
+        speed = 2,
+        lifespan = 0.7*dissolve_time,
+        attach = self,
+        colours = self.dissolve_colours,
+        fill = true
+    })
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        blockable = false,
+        delay =  0.7*dissolve_time,
+        func = (function() childParts:fade(0.3*dissolve_time) return true end)
+    }))
+    if not silent then 
+        G.E_MANAGER:add_event(Event({
+            blockable = false,
+            func = (function()
+                    play_sound('whoosh2', math.random()*0.2 + 0.9,0.5)
+                    play_sound('crumple'..math.random(1, 5), math.random()*0.2 + 0.9,0.5)
+                return true end)
+        }))
+    end
+    G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        blockable = false,
+        ref_table = self,
+        ref_value = 'dissolve',
+        ease_to = 1,
+        delay =  1*dissolve_time,
+        func = (function(t) return t end)
+    }))
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        blockable = false,
+        delay =  1.05*dissolve_time,
+        func = (function() self:remove() return true end)
+    }))
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        blockable = false,
+        delay =  1.051*dissolve_time,
     }))
 end
 
