@@ -54,7 +54,15 @@ function PokeDisplayCard:set_card_area(area)
   self.parent = area
 end
 
-function PokeDisplayCard:remove_card_area()
+function PokeDisplayCard:remove()
+  if self.area then self.area:remove_card(self) end
+
+  remove_all(self.children)
+
+  Moveable.remove(self)
+end
+
+function PokeDisplayCard:remove_from_area()
   self.area = nil
   self.parent = nil
 end
