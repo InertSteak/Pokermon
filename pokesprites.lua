@@ -161,6 +161,20 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "AtlasJokersBasicTitleCard",
+    path = "Basic Series/TitleCard.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesATitleCard",
+    path = "Series A/TitleCard.png",
+    px = 71,
+    py = 95
+}):register()
+
+SMODS.Atlas({
     key = "AtlasTags",
     path = "AtlasTags.png",
     px = 34,

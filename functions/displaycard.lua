@@ -29,11 +29,11 @@ function PokeDisplayCard:init(args, x, y, w, h)
   h = h or args.h or G.CARD_H
 
   Moveable.init(self, x, y, w, h)
-
+  
   self.atlas = args.atlas
   self.has_shiny = G.ASSET_ATLAS[self.atlas .. 'Shiny'] ~= nil
   self.shiny = false
-
+  
   self.shader = args.shader
 
   self:set_sprites()
@@ -345,6 +345,70 @@ function PokeDisplayCard:init_from_existing(key, args, x, y, w, h)
   end
 
   self:init(new_args, x, y, w, h)
+end
+
+function PokeDisplayCard:set_seal()
+  --does nothing for now, prevents crash
+end
+
+--copied from Card
+function PokeDisplayCard:start_materialize(dissolve_colours, silent, timefac)
+    local dissolve_time = 0.6*(timefac or 1)
+    self.states.visible = true
+    self.states.hover.can = false
+    self.dissolve = 1
+    self.dissolve_colours = dissolve_colours or
+    (self.ability.set == 'Joker' and {G.C.RARITY[self.config.center.rarity]}) or
+    (self.ability.set == 'Planet'  and {G.C.SECONDARY_SET.Planet}) or
+    (self.ability.set == 'Tarot' and {G.C.SECONDARY_SET.Tarot}) or
+    (self.ability.set == 'Spectral' and {G.C.SECONDARY_SET.Spectral}) or
+    (self.ability.set == 'Booster' and {G.C.BOOSTER}) or
+    (self.ability.set == 'Voucher' and {G.C.SECONDARY_SET.Voucher, G.C.CLEAR}) or 
+    {G.C.GREEN}
+    self:juice_up()
+    self.children.particles = Particles(0, 0, 0,0, {
+        timer_type = 'TOTAL',
+        timer = 0.025*dissolve_time,
+        scale = 0.25,
+        speed = 3,
+        lifespan = 0.7*dissolve_time,
+        attach = self,
+        colours = self.dissolve_colours,
+        fill = true
+    })
+    if not silent then 
+        if not G.last_materialized or G.last_materialized +0.01 < G.TIMERS.REAL or G.last_materialized > G.TIMERS.REAL then
+            G.last_materialized = G.TIMERS.REAL
+            G.E_MANAGER:add_event(Event({
+                blockable = false,
+                func = (function()
+                        play_sound('whoosh1', math.random()*0.1 + 0.6,0.3)
+                        play_sound('crumple'..math.random(1,5), math.random()*0.2 + 1.2,0.8)
+                    return true end)
+            }))
+        end
+    end
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        blockable = false,
+        delay =  0.5*dissolve_time,
+        func = (function() if self.children.particles then self.children.particles.max = 0 end return true end)
+    }))
+    G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        blockable = false,
+        ref_table = self,
+        ref_value = 'dissolve',
+        ease_to = 0,
+        delay =  1*dissolve_time,
+        func = (function(t) return t end)
+    }))
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        blockable = false,
+        delay =  1.05*dissolve_time,
+        func = (function() self.states.hover.can = true; if self.children.particles then self.children.particles:remove(); self.children.particles = nil end return true end)
+    }))
 end
 
 poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
