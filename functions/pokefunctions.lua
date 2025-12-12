@@ -409,16 +409,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
         end
       end
     end
-    if to_key == 'j_poke_gourgeist' then
-      if card.ability.extra.form == 0 then
-        card.ability.extra.money = 2
-      elseif card.ability.extra.form == 1 then
-        card.ability.extra.money = 5
-      elseif card.ability.extra.form == 2 then
-        card.ability.extra.money = 8
-      elseif card.ability.extra.form == 3 then
-        card.ability.extra.money = 11
-      end
+    if values_to_keep["form"] then
       new_card:set_ability(card)
     end
     if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
