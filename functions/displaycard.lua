@@ -421,10 +421,6 @@ end
 
 --copied from Card
 function PokeDisplayCard:start_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
-    if self.getting_sliced and not (self.ability.set == 'Default' or self.ability.set == 'Enhanced') then
-        local flags = SMODS.calculate_context({joker_type_destroyed = true, card = self})
-        if flags.no_destroy then self.getting_sliced = nil; return end
-    end
     if self.skip_destroy_animation then
         G.E_MANAGER:add_event(Event({
             func = function()
