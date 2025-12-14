@@ -197,6 +197,121 @@ local aqua = {
   end
 }
 
+gray_godfather_remove = function(difference)
+    local in_debt = nil
+    local dollars = nil
+    local buffer = nil
+    if (SMODS.Mods["Talisman"] or {}).can_load then
+      dollars = to_number(G.GAME.dollars or 0)
+      buffer = to_number(G.GAME.dollar_buffer or 0)
+    else
+      dollars = (G.GAME.dollars or 0)
+      buffer = (G.GAME.dollar_buffer or 0)
+    end
+    in_debt = dollars + buffer - difference < 0
+    if in_debt then
+      local destructable_jokers = {}
+      for i = 1, #G.jokers.cards do
+        if not SMODS.is_eternal(G.jokers.cards[i]) and not G.jokers.cards[i].getting_sliced then
+          destructable_jokers[#destructable_jokers + 1] = G.jokers.cards[i]
+        end
+      end
+      local joker_to_destroy = pseudorandom_element(destructable_jokers, 'gray_godfather')
+
+      if joker_to_destroy then
+        joker_to_destroy.getting_sliced = true
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            joker_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
+            return true
+          end
+        }))
+      end
+    end
+end
+
+local gray_godfather = {
+  key = "gray_godfather",
+  dollars = 8,
+  mult = 2,
+  boss = { showdown = true, min = 8, max = 80 },
+  pos = { x = 0, y = 3 },
+  atlas = "AtlasBossblinds",
+  artist = "Catzzadilla",
+  boss_colour = HEX("B3B3B3"),
+  debuff = {},
+  config = {dollars = 5},
+  discovered = true,
+  loc_vars = function(self)
+    return {vars = {self.config.dollars}}
+  end,
+  collection_loc_vars = function(self)
+    return {vars = {self.config.dollars}}
+  end,
+  calculate = function(self, blind, context)
+    if not blind.disabled then
+      if context.before then
+        ease_dollars(-self.config.dollars)
+        gray_godfather_remove(self.config.dollars)
+      end
+      if context.pre_discard then
+        ease_dollars(-self.config.dollars)
+        gray_godfather_remove(self.config.dollars)
+      end
+    end
+  end,
+}
+
+white_executive_total = function()
+  local total = 0
+  for _, area in ipairs({ G.jokers, G.consumeables }) do
+    for _, other_card in ipairs(area.cards) do
+      total = total + other_card.sell_cost
+    end
+  end
+  total = math.floor(total)
+  return total
+end
+
+local white_executive = {
+  key = "white_executive",
+  dollars = 8,
+  mult = 2,
+  boss = { showdown = true, min = 8, max = 80 },
+  pos = { x = 0, y = 4 },
+  atlas = "AtlasBossblinds",
+  artist = "Catzzadilla",
+  boss_colour = HEX("E8E8F8"),
+  debuff = {},
+  config = {},
+  discovered = true,
+  loc_vars = function(self)
+    return {vars = {white_executive_total()}}
+  end,
+  collection_loc_vars = function(self)
+    return {vars = {white_executive_total()}}
+  end,
+  calculate = function(self, blind, context)
+    if not blind.disabled then
+      if context.setting_blind then
+        local modify = function(v) SMODS.debuff_card(v, true, 'white_executive'); end
+        local args = {array = G.playing_cards, amt = white_executive_total(), seed = 'whiteexec', mod_func = modify}
+        pseudorandom_multi(args)
+      end
+      if context.end_of_round and not context.individual and not context.repetition then
+        for k, v in pairs(G.playing_cards) do
+          SMODS.debuff_card(v,false, 'white_executive')
+        end
+      end
+    end
+  end,
+  disable = function(self)
+    for k, v in pairs(G.playing_cards) do
+      SMODS.debuff_card(v,false,'white_executive')
+    end
+  end
+}
+
 return {name = "Blinds",
-        list = {mirror, rocket, cgoose}
+        list = {mirror, rocket, cgoose, gray_godfather, white_executive}
 }

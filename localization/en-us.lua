@@ -133,6 +133,24 @@ return {
                     "if you have $25 or more"
                 }, 
             },
+            bl_poke_gray_godfather = {
+                name = "Gray Godfather",
+                text = {
+                    "-$#1# when hand is played",
+                    "or discarded, then",
+                    "destroy a random Joker",
+                    "if you are in debt",
+                }, 
+            },
+            bl_poke_white_executive = {
+                name = "White Executive",
+                text = {
+                    "Debuffs #1# cards in your deck,",
+                    "equal to the total sell value",
+                    "of every Joker and Consumable,",
+                    "when {C:attention}Blind{} selected",
+                }, 
+            },
             bl_poke_magma = {
                 name = "The Magma",
                 text = {
@@ -5681,7 +5699,7 @@ return {
                 name = "Presents",
                 text = {
                     "{C:green}35%{} - {C:money}$8{}",
-                    "{C:green}30%{} - {C:item}Item{} {C:attention}Card",
+                    "{C:green}30%{} - {C:item}Item{} card",
                     "{C:green}20%{} - {C:attention}Coupon Tag",
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
