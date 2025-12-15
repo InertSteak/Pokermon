@@ -65,7 +65,8 @@ local pumpkaboo={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local forms = {'j_poke_pumpkaboo_small', 'j_poke_pumpkaboo_average', 'j_poke_pumpkaboo_large', 'j_poke_pumpkaboo_super'}
-    return {vars = {center.ability.extra.jack_target, math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)}, key = forms[center.ability.extra.form + 1]}
+    local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
+    return {vars = {center.ability.extra.jack_target, display_jacks}, key = forms[center.ability.extra.form + 1]}
   end,
   rarity = 2,
   cost = 6,
@@ -114,17 +115,19 @@ local pumpkaboo={
     end
   end,
   calculate = function(self, card, context)
-    if context.discard and not context.other_card.debuff and context.other_card:get_id() == 11 then
-      if card.ability.extra.jacks_discarded == card.ability.extra.jack_target - 1 then
-        if not context.blueprint then
-          G.E_MANAGER:add_event(Event({
-            func = (function()
-                card.ability.extra.jacks_discarded = 0
-                return true
-            end)
-          }))
+    if context.pre_discard and not context.blueprint then
+      for k, v in ipairs(context.full_hand) do
+        if v:get_id() == 11 and not v.debuff then
+          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+          if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
+            v['pumpkaboo_trigger'..card.unique_val] = true
+            card.ability.extra.jacks_discarded = 0
+          end
         end
-        
+      end
+    end
+    if context.discard then
+      if context.other_card['pumpkaboo_trigger'..card.unique_val] then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           G.E_MANAGER:add_event(Event({
@@ -133,6 +136,7 @@ local pumpkaboo={
                     set = 'Spectral'
                 }
                 G.GAME.consumeable_buffer = 0
+                context.other_card['pumpkaboo_trigger'..card.unique_val] = nil
                 return true
             end)
           }))
@@ -143,7 +147,6 @@ local pumpkaboo={
         end
       else
         if not context.blueprint then
-          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
           return {
               message = localize('poke_boo_ex'),
               colour = G.C.RED
@@ -170,7 +173,8 @@ local gourgeist={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local forms = {'j_poke_gourgeist_small', 'j_poke_gourgeist_average', 'j_poke_gourgeist_large', 'j_poke_gourgeist_super'}
-    return {vars = {center.ability.extra.jack_target, math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded), center.ability.extra.money}, 
+    local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
+    return {vars = {center.ability.extra.jack_target, display_jacks, center.ability.extra.money}, 
             key = forms[center.ability.extra.form + 1]}
   end,
   rarity = "poke_safari",
@@ -223,16 +227,19 @@ local gourgeist={
     end
   end,
   calculate = function(self, card, context)
-    if context.discard and not context.other_card.debuff and context.other_card:get_id() == 11 then
-      if card.ability.extra.jacks_discarded == card.ability.extra.jack_target - 1 then
-        if not context.blueprint then
-          G.E_MANAGER:add_event(Event({
-            func = (function()
-                card.ability.extra.jacks_discarded = 0
-                return true
-            end)
-          }))
+    if context.pre_discard and not context.blueprint then
+      for k, v in ipairs(context.full_hand) do
+        if v:get_id() == 11 and not v.debuff then
+          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
+          if card.ability.extra.jacks_discarded == card.ability.extra.jack_target then
+            v['gourgeist_trigger'..card.unique_val] = true
+            card.ability.extra.jacks_discarded = 0
+          end
         end
+      end
+    end
+    if context.discard then
+      if context.other_card['gourgeist_trigger'..card.unique_val]  then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           G.E_MANAGER:add_event(Event({
@@ -241,6 +248,7 @@ local gourgeist={
                     set = 'Spectral'
                 }
                 G.GAME.consumeable_buffer = 0
+                context.other_card['gourgeist_trigger'..card.unique_val] = nil
                 return true
             end)
           }))
@@ -251,7 +259,6 @@ local gourgeist={
         end
       else
         if not context.blueprint then
-          card.ability.extra.jacks_discarded = card.ability.extra.jacks_discarded + 1
           return {
               message = localize('poke_boo_ex'),
               colour = G.C.RED
