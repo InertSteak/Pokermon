@@ -4060,8 +4060,8 @@ return {
                 name = "Simisage",
                 text = {
                     "Applies {C:attention}Shortcut",
-                    "All played unenhanced cards have a",
-                    "{C:green}#1# in #2#{} chance to become {C:attention}Lucky{}"
+                    "Each played unenhanced card has",
+                    "a {C:green}#1# in #2#{} chance to become {C:attention}Lucky{}",
                 }
             },
             j_poke_pansear = {
