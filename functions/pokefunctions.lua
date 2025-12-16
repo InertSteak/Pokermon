@@ -649,7 +649,7 @@ get_highest_evo = function(card)
   -- find the pokermon's family list
   local family = poke_get_family_list(name)
   -- if pokermon isn't in a family, return false
-  if not family then return false end
+  if #family < 2 then return false end
 
   -- Check for max evo in family list, ignoring megas and aux pokermon
   local max = #family
@@ -742,26 +742,15 @@ end
 
 get_family_keys = function(cardname, custom_prefix, card)
   local keys = {}
-  local line = nil
-  local extra = nil
-  local initial_custom_prefix = custom_prefix
-  custom_prefix = custom_prefix and 'j_'..custom_prefix..'_' or 'j_poke_'
-  if card.config.center.poke_multi_item then custom_prefix = initial_custom_prefix and 'c_'..initial_custom_prefix..'_' or 'c_poke_' end
-  for k, v in pairs(pokermon.family) do
-    for x, y in pairs(v) do
-      if y == cardname or (type(y) == "table" and y.key == cardname) then line = v; break end
-    end
-  end
-  if line then
+  local line = poke_get_family_list(cardname)
+  local prefix = custom_prefix or 'poke'
+  custom_prefix = 'j_'..prefix..'_'
+  if card.config.center.poke_multi_item then custom_prefix = 'c_'..prefix..'_' end
+  if #line > 1 then
     for i = 1, #line do
       if type(line[i]) == "table" then
-        local new_table = {}
+        local new_table = copy_table(line[i])
         new_table.key = custom_prefix..line[i].key
-        for k, v in pairs(line[i]) do
-          if k ~= 'key' then
-            new_table[k] = v
-          end
-        end
         table.insert(keys, new_table)
       else
         table.insert(keys, custom_prefix..line[i])
@@ -772,7 +761,7 @@ get_family_keys = function(cardname, custom_prefix, card)
   end
   for k, v in pairs(extended_family) do
     if k == cardname then
-      for x, y in pairs(v) do
+      for _, y in pairs(v) do
         if type(y) == "table" then
           if y.item then
             local item_prefix = y.custom_prefix or "c_poke_"
@@ -786,70 +775,44 @@ get_family_keys = function(cardname, custom_prefix, card)
       end
     end
   end
-  if extra and #extra > 0 then
-    for i = 2, #extra do
-      if type(extra[i]) == "table" then
-        local extra_table = {}
-        extra_table.key = custom_prefix..extra[i].key
-        for k, v in pairs(extra[i]) do
-          if k ~= 'key' then
-            extra_table[k] = v
-          end
-        end
-        table.insert(keys, extra_table)
-      else
-        table.insert(keys, custom_prefix..extra[i])
-      end
-    end
-  end
   if cardname == "smeargle" then
     if card.ability.extra.copy_joker then
       table.insert(keys, card.ability.extra.copy_joker.config.center_key)
     end
-  end  
+  end
   if cardname == "ruins_of_alph" then
-    for k, v in pairs(card.ability.extra.forms) do
+    for _, v in pairs(card.ability.extra.forms) do
       local form = {key = "j_poke_unown", form = v}
       table.insert(keys, form)
     end
   end
-    
+  local evo_item_keys = get_evo_item_keys(card, prefix)
+  table.move(evo_item_keys, 1, #evo_item_keys, #keys + 1, keys)
+  return keys
+end
+
+get_evo_item_keys = function(card, prefix)
+  local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
-    local item_key = nil
-    local evo_item_prefix = nil
+    local item_key, evo_item_prefix
     local native_evo_items = {
-      "firestone", "waterstone", "leafstone", "thunderstone", 
-      "dawnstone", "shinystone", "moonstone", "duskstone", 
-      "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc", 
+      "firestone", "waterstone", "leafstone", "thunderstone",
+      "dawnstone", "shinystone", "moonstone", "duskstone",
+      "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
       "linkcable", "kingsrock", "dragonscale", "hardstone",
     }
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
-        for k, v in pairs(native_evo_items) do
-          if v == card.config.center.item_req[i] then
-            evo_item_prefix = 'poke'
-            break
-          else
-            evo_item_prefix = initial_custom_prefix
-          end 
-        end
-      item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
-      table.insert(keys, item_key)
+        evo_item_prefix = table.contains(native_evo_items, card.config.center.item_req[i]) and 'poke' or prefix
+        item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
+        table.insert(keys, item_key)
       end
     else
-      for k, v in pairs(native_evo_items) do
-        if v == card.config.center.item_req then
-          evo_item_prefix = 'poke'
-          break
-        else
-          evo_item_prefix = initial_custom_prefix
-        end
-      end
+      evo_item_prefix = table.contains(native_evo_items, card.config.center.item_req) and 'poke' or prefix
       item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req
       table.insert(keys, item_key)
     end
   end
-    
   return keys
 end
 
