@@ -798,7 +798,7 @@ get_family_keys = function(cardname, custom_prefix, card)
     end
   end
   local evo_item_keys = get_evo_item_keys(card, prefix)
-  table.move(evo_item_keys, 1, #evo_item_keys, #keys + 1, keys)
+  table.append(keys, evo_item_keys)
   return keys
 end
 
