@@ -637,6 +637,12 @@ get_next_stage = function(stage)
   return (POKE_STAGES[stage] or {}).next
 end
 
+HIGHEST_EVO_OVERRIDES = {
+  ["cosmog"] = { "solgaleo", "lunala" },
+  ["cosmoem"] = { "solgaleo", "lunala" },
+  ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
+}
+
 get_highest_evo = function(card)
   local name = (not card.name and card.ability.name) or card.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
