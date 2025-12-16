@@ -813,7 +813,11 @@ if G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key] then
       end
 '''
 position = "after"
-payload = '''set_joker_family_win(v)'''
+payload = '''
+if pokermon_config.previous_evo_stickers then
+  set_joker_family_win(v)
+end
+'''
 match_indent = true
 
 # Unown Swarm Stickers
