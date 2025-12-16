@@ -669,3 +669,12 @@ poke_can_set_sprite = function(card)
   if poke_is_in_collection(card) and not card.discovered then return false end
   return true
 end
+
+function table.contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
