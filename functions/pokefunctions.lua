@@ -644,12 +644,21 @@ HIGHEST_EVO_OVERRIDES = {
 }
 
 get_highest_evo = function(card)
-  local name = (not card.name and card.ability.name) or card.name or "bulbasaur"
-  local prefix = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
+  local name = card.name or card.ability.name or "bulbasaur"
+  local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
+
+  -- if there's an override then return early
+  if HIGHEST_EVO_OVERRIDES[name] then
+    local evos = HIGHEST_EVO_OVERRIDES[name]
+    return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
+  end
+  
   -- find the pokermon's family list
   local family = poke_get_family_list(name)
   -- if pokermon isn't in a family, return false
-  if #family < 2 then return false end
+  if #family < 2 then return false
+  -- if already at highest stage, return false
+  elseif POKE_STAGES[G.P_CENTERS[prefix..name].stage].next == nil then return false end
 
   -- Check for max evo in family list, ignoring megas and aux pokermon
   local max = #family
@@ -659,12 +668,9 @@ get_highest_evo = function(card)
   while max > 1 and (max_stage.prev == nil or G.P_CENTERS[prefix..max_evo_name].aux_poke) do
     max = max - 1
     max_evo_name = (type(family[max]) == "table" and family[max].key) or family[max]
+    max_stage = POKE_STAGES[G.P_CENTERS[prefix..max_evo_name].stage]
   end
-
-  -- if already at the max stage, return false
   max_stage = G.P_CENTERS[prefix..max_evo_name].stage
-  if POKE_STAGES[G.P_CENTERS[prefix..name].stage].next == nil then return false
-  elseif G.P_CENTERS[prefix..name].stage == max_stage and max_stage ~= "Legendary" then return false end
 
   -- find pokermon in family list with max stage
   local evos = {max_evo_name}
@@ -677,8 +683,6 @@ get_highest_evo = function(card)
         table.insert(evos, curr_name)
     end
   end
-
-  if HIGHEST_EVO_OVERRIDES[name] then evos = HIGHEST_EVO_OVERRIDES[name] end
   return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
 end
 
@@ -696,8 +700,8 @@ end
 
 get_previous_from_mega = function(name, prefix, full_key)
   local prev = string.sub(name, 6, -1)
-  -- string.match here essentially wants to catch '_x', '_y' and '_z' at the end of the key
-  if string.match(prev, '_%a', #prev - 1) then prev = string.sub(prev, 0, #prev - 2) end
+  -- string.match here wants to catch '_x', '_y' and '_z' at the end of the key
+  prev = string.gsub(prev, '_%a$', '')
   local prev_key = "j_"..prefix.."_"..prev
   return G.P_CENTERS["j_"..prefix.."_"..prev] and (full_key and prev_key or prev)
 end
@@ -719,6 +723,11 @@ get_previous_evo_from_center = function(center, full_key)
   local index, prev
   local prefix = center.poke_custom_prefix or "poke"
 
+  if PREVIOUS_EVO_OVERRIDES[name] then
+    prev = PREVIOUS_EVO_OVERRIDES[name]
+    return full_key and "j_"..prefix.."_"..prev or prev
+  end
+
   if center.stage == "Mega" then
     local mega = get_previous_from_mega(name, prefix, full_key)
     if mega then return mega end
@@ -726,17 +735,18 @@ get_previous_evo_from_center = function(center, full_key)
 
   local list = poke_get_family_list(name)
   if #list < 2 then return end
-  for i, v in pairs(list) do if name == (type(v) == 'table' and v.key or v) then index = i; break end end
+  for i, v in pairs(list) do
+    if name == (type(v) == 'table' and v.key or v) then index = i; break end
+  end
   while index > 1 do
     index = index - 1
-    local next_center = G.P_CENTERS['j_'..prefix..'_'..list[index]]
-    if next_center.stage == get_previous_stage(center.stage) and not center.aux_poke then
-      prev = next_center.name
+    local prev_center = G.P_CENTERS['j_'..prefix..'_'..list[index]]
+    if prev_center.stage == get_previous_stage(center.stage) and not center.aux_poke then
+      prev = prev_center.name
       break
     end
   end
 
-  if PREVIOUS_EVO_OVERRIDES[name] then prev = PREVIOUS_EVO_OVERRIDES[name] end
   if not prev then return end
   return full_key and "j_"..prefix.."_"..prev or prev
 end
@@ -745,20 +755,20 @@ get_family_keys = function(cardname, custom_prefix, card)
   local keys = {}
   local line = poke_get_family_list(cardname)
   local prefix = custom_prefix or 'poke'
-  custom_prefix = 'j_'..prefix..'_'
-  if card.config.center.poke_multi_item then custom_prefix = 'c_'..prefix..'_' end
+  local full_prefix = 'j_'..prefix..'_'
+  if card.config.center.poke_multi_item then full_prefix = 'c_'..prefix..'_' end
   if #line > 1 then
     for i = 1, #line do
       if type(line[i]) == "table" then
         local new_table = copy_table(line[i])
-        new_table.key = custom_prefix..line[i].key
+        new_table.key = full_prefix..line[i].key
         table.insert(keys, new_table)
       else
-        table.insert(keys, custom_prefix..line[i])
+        table.insert(keys, full_prefix..line[i])
       end
     end
   else
-    table.insert(keys, custom_prefix..cardname)
+    table.insert(keys, full_prefix..cardname)
   end
   for k, v in pairs(extended_family) do
     if k == cardname then
@@ -768,10 +778,10 @@ get_family_keys = function(cardname, custom_prefix, card)
             local item_prefix = y.custom_prefix or "c_poke_"
             table.insert(keys, item_prefix..y.name)
           else
-            table.insert(keys, custom_prefix..y.name)
+            table.insert(keys, full_prefix..y.name)
           end
         else
-          table.insert(keys, custom_prefix..y)
+          table.insert(keys, full_prefix..y)
         end
       end
     end
