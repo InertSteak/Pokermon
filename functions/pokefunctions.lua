@@ -725,6 +725,7 @@ get_previous_evo_from_center = function(center, full_key)
   end
 
   local list = poke_get_family_list(name)
+  if #list < 2 then return end
   for i, v in pairs(list) do if name == (type(v) == 'table' and v.key or v) then index = i; break end end
   while index > 1 do
     index = index - 1
