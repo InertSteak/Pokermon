@@ -803,6 +803,7 @@ get_family_keys = function(cardname, custom_prefix, card)
 end
 
 get_evo_item_keys = function(card, prefix)
+  prefix = prefix or card.config.center.poke_custom_prefix
   local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
     local item_key, evo_item_prefix
