@@ -631,43 +631,56 @@ function poke_suit_check(hand, num)
   return suit_count >= num
 end
 
-
-
 set_joker_family_win = function(card)
-  if pokermon_config.previous_evo_stickers then
-    if get_family_keys(card.config.center.name, card.config.center.poke_custom_prefix, card) then
-      local keys = get_family_keys(card.config.center.name, card.config.center.poke_custom_prefix, card)
-      if #keys > 1 then
-        local index
-        for k, v in ipairs(keys) do
-          if type(v) == "table" then v = v.key end
-          if v == card.config.center.key then index = k end
-          --Excludes higher evolutions
-          if index and k > index and (G.P_CENTERS[v]['stage'] ~= card.config.center.stage or G.P_CENTERS[v]['stage'] == "Legendary") and G.P_CENTERS[v]['auto_sticker'] ~= true then break end 
-          -- This if statement makes me go cross-eyed so I'm sorry about that
-          if G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and not (G.P_CENTERS[v]['stage'] == card.config.center.stage) and not -- Excludes the same stage mons in an evo line
-              ((card.config.center.stage == "One" or card.config.center.stage == "Two" or card.config.center.stage == "Mega") and
-                  (G.P_CENTERS[v]['stage'] == G.P_CENTERS[get_previous_evo(card, true)]['stage']) and v ~= get_previous_evo(card, true)) or -- Checks for branching evos in previous stages
-              (card.config.center.stage == "Legendary" and get_previous_evo(card, true) and (G.P_CENTERS[v]['stage'] == G.P_CENTERS[get_previous_evo(card, true)]['stage'])) or -- (i.e Meltan or Cosmog or Terapagos)
-              (G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['aux_poke'] == true and G.P_CENTERS[v]['stage'] == card.config.center.stage) or -- Checks for forms (which have the same stage i.e. Jirachi, Rotom)
-              (G.P_CENTERS[v] and G.P_CENTERS[v]['set'] == 'Joker' and G.P_CENTERS[v]['auto_sticker'] == true) then 
-
-            -- This is the bit that tracks joker wins
-            G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v] or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
-            if G.PROFILES[G.SETTINGS.profile].joker_usage[v] then
-              G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins = G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins or {}
-              G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins[G.GAME.stake] = (G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins[G.GAME.stake] or 0) + 1
-              G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins_by_key[SMODS.stake_from_index(G.GAME.stake)] =
-                  (G.PROFILES[G.SETTINGS.profile].joker_usage[v].wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
-            end
-          end
-        end
-      end
+  local keys = get_family_keys(card.config.center.name, card.config.center.poke_custom_prefix, card)
+  for _, v in pairs(keys) do
+    -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
+    if G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker
+        or card.config.center.aux_poke and card.config.center.stage == G.P_CENTERS[v].stage then
+      -- This is the bit that tracks joker wins
+      G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v]
+          or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
+      local joker_usage = G.PROFILES[G.SETTINGS.profile].joker_usage[v]
+      joker_usage.wins = joker_usage.wins or {}
+      joker_usage.wins[G.GAME.stake] = (joker_usage.wins[G.GAME.stake] or 0) + 1
+      joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] = (joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
     end
+  end
+  -- This will sticker the previous evo line
+  set_previous_evo_win(card.config.center)
+end
+
+set_previous_evo_win = function(center)
+  local previous = get_previous_evo_from_center(center, true)
+  if previous then
+    -- This is the bit that tracks joker wins
+    G.PROFILES[G.SETTINGS.profile].joker_usage[previous] = G.PROFILES[G.SETTINGS.profile].joker_usage[previous]
+        or {count = 1, order = G.P_CENTERS[previous]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
+    local joker_usage = G.PROFILES[G.SETTINGS.profile].joker_usage[previous]
+    joker_usage.wins = joker_usage.wins or {}
+    joker_usage.wins[G.GAME.stake] = (joker_usage.wins[G.GAME.stake] or 0) + 1
+    joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] = (joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
+    -- Moves all the way down the family tree recursively (rather than a gigantic if-else block)
+    set_previous_evo_win(G.P_CENTERS[previous])
   end
 end
 
 poke_can_set_sprite = function(card)
   if poke_is_in_collection(card) and not card.discovered then return false end
   return true
+end
+
+function table.contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
+
+table.append = function(t1, t2)
+  for _, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
 end
