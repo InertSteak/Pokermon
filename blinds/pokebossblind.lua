@@ -5,10 +5,12 @@ local count = 1
 
 local increase = pseudorandom('increasetypes')
 
-if increase > .66 then
-  count = count + 2
-elseif increase > .33 then
+if G.GAME.blind.name == 'bl_poke_iridescent_hacker' then 
+  if increase > .66 then
+    count = count + 2
+  elseif increase > .33 then
   count = count + 1
+  end
 end
 
 local ptypes = {}
@@ -197,6 +199,48 @@ local aqua = {
   end
 }
 
+local star={
+  key = "star",
+  dollars = 5,
+  mult = 2,
+  boss = { showdown = false, min = 3, max = 80 },
+  boss_colour = HEX("D9B673"),
+  pos = { x = 0, y = 24 },
+  atlas = "AtlasBossblinds",
+  artist = "Catzzadilla",
+  discovered = true,
+  debuff = {},
+  config = {disabled = false},
+  set_blind = function(self)
+    self.config.ptypes = determine_type()
+  end,
+  recalc_debuff = function(self, card, from_blind)
+    --return goose_disable(self.config.disabled, card, self.config.ptypes)
+  end,
+  press_play = function(self)
+    G.GAME.blind.triggered = true
+    G.GAME.blind.prepped = true
+    self.config.ptypes = determine_type()
+  end,
+  drawn_to_hand = function(self)
+    if G.GAME.blind.prepped then
+      for x,y in pairs(G.jokers.cards) do
+        y:set_debuff(false)
+      end
+      for l,v in pairs(G.jokers.cards) do
+        if goose_disable(self.config.disabled, v, self.config.ptypes) then
+          v:set_debuff(true)
+					v:juice_up()
+					G.GAME.blind:wiggle()
+        end
+      end
+    end
+  end,
+  disable = function(self)
+    self.config.disabled = true
+  end
+}
+
 gray_godfather_remove = function(difference)
     local in_debt = nil
     local dollars = nil
@@ -237,7 +281,6 @@ local gray_godfather = {
   boss = { showdown = true, min = 8, max = 80 },
   pos = { x = 0, y = 3 },
   atlas = "AtlasBossblinds",
-  artist = "Catzzadilla",
   boss_colour = HEX("B3B3B3"),
   debuff = {},
   config = {dollars = 5},
@@ -280,7 +323,6 @@ local white_executive = {
   boss = { showdown = true, min = 8, max = 80 },
   pos = { x = 0, y = 4 },
   atlas = "AtlasBossblinds",
-  artist = "Catzzadilla",
   boss_colour = HEX("E8E8F8"),
   debuff = {},
   config = {},
@@ -312,6 +354,48 @@ local white_executive = {
   end
 }
 
+local iridescent_hacker={
+  key = "iridescent_hacker",
+  dollars = 8,
+  mult = 2,
+  boss = { showdown = true, min = 8, max = 80 },
+  boss_colour = HEX("505860"),
+  pos = { x = 0, y = 25 },
+  atlas = "AtlasBossblinds",
+  artist = "Catzzadilla",
+  discovered = true,
+  debuff = {},
+  config = {disabled = false},
+  set_blind = function(self)
+    self.config.ptypes = determine_type()
+  end,
+  recalc_debuff = function(self, card, from_blind)
+    --return goose_disable(self.config.disabled, card, self.config.ptypes)
+  end,
+  press_play = function(self)
+    G.GAME.blind.triggered = true
+    G.GAME.blind.prepped = true
+    self.config.ptypes = determine_type()
+  end,
+  drawn_to_hand = function(self)
+    if G.GAME.blind.prepped then
+      for x,y in pairs(G.jokers.cards) do
+        y:set_debuff(false)
+      end
+      for l,v in pairs(G.jokers.cards) do
+        if goose_disable(self.config.disabled, v, self.config.ptypes) then
+          v:set_debuff(true)
+					v:juice_up()
+					G.GAME.blind:wiggle()
+        end
+      end
+    end
+  end,
+  disable = function(self)
+    self.config.disabled = true
+  end
+}
+
 return {name = "Blinds",
-        list = {mirror, rocket, cgoose, gray_godfather, white_executive}
+        list = {mirror, rocket, star, gray_godfather, white_executive, iridescent_hacker}
 }

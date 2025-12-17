@@ -133,6 +133,13 @@ return {
                     "if you have $25 or more"
                 }, 
             },
+            bl_poke_star = {
+                name = "The Star",
+                text = {
+                    "A random type is debuffed",
+                    "every hand",
+                },
+            },
             bl_poke_gray_godfather = {
                 name = "Gray Godfather",
                 text = {
@@ -162,6 +169,13 @@ return {
                 text = {
                     "Base Mult is quartered",
                 }, 
+            },
+            bl_poke_iridescent_hacker = {
+                name = "Iridescent Hacker",
+                text = {
+                    "Random types are debuffed",
+                    "every hand",
+                },
             },
         },
         Item = {
