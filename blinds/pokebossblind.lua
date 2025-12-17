@@ -1,24 +1,24 @@
 determine_type = function()
-local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-pseudoshuffle(ptype_list, pseudoseed('chart'))
-local count = 1
+  local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+  pseudoshuffle(ptype_list, pseudoseed('chart'))
+  local count = 1
 
-local increase = pseudorandom('increasetypes')
+  local increase = pseudorandom('increasetypes')
 
-if G.GAME.blind.name == 'bl_poke_iridescent_hacker' then 
-  if increase > .66 then
-    count = count + 2
-  elseif increase > .33 then
-  count = count + 1
+  if G.GAME.blind.name == 'bl_poke_iridescent_hacker' then 
+    if increase > .66 then
+      count = count + 2
+    elseif increase > .33 then
+    count = count + 1
+    end
   end
-end
 
-local ptypes = {}
-for i = 1, count do
-  ptypes[#ptypes+1] = ptype_list[i]
-end
-
-return ptypes
+  local ptypes = {}
+  for i = 1, count do
+    ptypes[#ptypes+1] = ptype_list[i]
+  end
+  
+  return ptypes
 end
 
 goose_disable = function(disabled, card, btypes)
@@ -58,9 +58,6 @@ local cgoose={
   config = {disabled = false},
   set_blind = function(self)
     self.config.ptypes = determine_type()
-  end,
-  recalc_debuff = function(self, card, from_blind)
-    --return goose_disable(self.config.disabled, card, self.config.ptypes)
   end,
   press_play = function(self)
     G.GAME.blind.triggered = true
@@ -214,9 +211,6 @@ local star={
   set_blind = function(self)
     self.config.ptypes = determine_type()
   end,
-  recalc_debuff = function(self, card, from_blind)
-    --return goose_disable(self.config.disabled, card, self.config.ptypes)
-  end,
   press_play = function(self)
     G.GAME.blind.triggered = true
     G.GAME.blind.prepped = true
@@ -368,9 +362,6 @@ local iridescent_hacker={
   config = {disabled = false},
   set_blind = function(self)
     self.config.ptypes = determine_type()
-  end,
-  recalc_debuff = function(self, card, from_blind)
-    --return goose_disable(self.config.disabled, card, self.config.ptypes)
   end,
   press_play = function(self)
     G.GAME.blind.triggered = true
