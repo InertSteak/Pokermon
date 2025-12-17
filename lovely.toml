@@ -251,7 +251,7 @@ if pokermon_config.pokemon_title then
   else
     poke_atlas_string = "poke_AtlasJokersBasicTitleCard"
   end
-  replace_card = PokeDisplayCard({atlas = poke_atlas_string, pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale)
+  replace_card = PokeDisplayCard({atlas = poke_atlas_string, pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}, suppress_text = true}, self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale)
 else
   replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)
 end

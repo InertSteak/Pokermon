@@ -43,6 +43,8 @@ function PokeDisplayCard:init(args, x, y, w, h)
   -- These are required so that CardArea doesn't crash the game
   self.ability = {}
   self.update_alert = function() end
+  
+  self.suppress_text = args.suppress_text
 end
 
 function PokeDisplayCard:highlight(is_highlighted)
@@ -202,7 +204,7 @@ function PokeDisplayCard:hover()
     })
   end
 
-  if self.can_hide_center or self.can_hide_soul then
+  if (self.can_hide_center or self.can_hide_soul) and not self.suppress_text then
     local localize_key =
         (not self.can_hide_soul and "poke_artist_credits_toggle_center_layer")
         or (not self.can_hide_center and "poke_artist_credits_toggle_soul_layer")
