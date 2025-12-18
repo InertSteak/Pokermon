@@ -915,7 +915,7 @@ PokemonSprites = {
 {name = "mudbray", base = {pos = {x = 26, y = 49}},},
 {name = "mudsdale", base = {pos = {x = 28, y = 49}},},
 {name = "dewpider", base = {pos = {x = 0, y = 50}},alts= {AtlasJokersSeriesA = {artist = 'Gappie'}}},
-{name = "araquanid", base = {pos = {x = 2, y = 50}},},
+{name = "araquanid", base = {pos = {x = 2, y = 50}},alts = {AtlasJokersSeriesA = {artist = 'Gappie'}}},
 {name = "fomantis", base = {pos = {x = 4, y = 50}},},
 {name = "lurantis", base = {pos = {x = 6, y = 50}},},
 {name = "morelull", base = {pos = {x = 8, y = 50}},},
@@ -1265,7 +1265,10 @@ local poke_artist_info = {
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A"), links = {
     {url = 'https://dudelings.carrd.co/', account = 'Dudelings'}
   }},
-  Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
+  Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062'), links = {
+{url = 'https://x.com/just_smol_child'},
+{url = 'https://bsky.app/profile/justsmolchild.bsky.social', site = 'Bluesky', account = 'justsmolchild'}
+  }},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC"), links = {
