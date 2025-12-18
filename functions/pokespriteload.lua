@@ -915,7 +915,7 @@ PokemonSprites = {
 {name = "mudbray", base = {pos = {x = 26, y = 49}},},
 {name = "mudsdale", base = {pos = {x = 28, y = 49}},},
 {name = "dewpider", base = {pos = {x = 0, y = 50}},alts= {AtlasJokersSeriesA = {artist = 'Gappie'}}},
-{name = "araquanid", base = {pos = {x = 2, y = 50}},},
+{name = "araquanid", base = {pos = {x = 2, y = 50}},alts = {AtlasJokersSeriesA = {artist = 'Gappie'}}},
 {name = "fomantis", base = {pos = {x = 4, y = 50}},},
 {name = "lurantis", base = {pos = {x = 6, y = 50}},},
 {name = "morelull", base = {pos = {x = 8, y = 50}},},
