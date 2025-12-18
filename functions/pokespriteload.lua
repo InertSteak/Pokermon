@@ -1265,7 +1265,10 @@ local poke_artist_info = {
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A"), links = {
     {url = 'https://dudelings.carrd.co/', account = 'Dudelings'}
   }},
-  Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062')},
+  Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062'), links = {
+{url = 'https://x.com/just_smol_child'},
+{url = 'https://bsky.app/profile/justsmolchild.bsky.social', site = 'Bluesky', account = 'justsmolchild'}
+  }},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC"), links = {

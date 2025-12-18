@@ -276,6 +276,7 @@ local site_colours = {
   ['steamcommunity'] = G.C.BLACK,
   ['x'] = HEX("283234"),
   ['twitter'] = G.C.BLUE,
+  ['bsky'] = HEX("006AFF"),
   ['reddit'] = HEX("FF4500"),
   ['carrd'] = HEX("4071B7"),
   ['discord'] = HEX("5865F2")
