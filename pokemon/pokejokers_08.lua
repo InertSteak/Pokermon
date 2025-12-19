@@ -1521,7 +1521,9 @@ local smeargle={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    card.ability.extra.copy_joker = nil
+    if not from_debuff then
+      card.ability.extra.copy_joker = nil
+    end
   end,
 }
 -- Tyrogue 236
