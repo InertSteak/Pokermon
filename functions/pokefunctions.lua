@@ -74,6 +74,7 @@ pokermon.family = {
     {"totodile", "croconaw", "feraligatr"},
     {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
     {"poochyena", "mightyena"},
+    {"wurmple", "silcoon", "beautifly", "cascoon", "dustox"},
     {"numel", "camerupt", "mega_camerupt"},
     {"feebas", "milotic"},
     {"snorunt", "glalie", "froslass"},
@@ -1169,7 +1170,7 @@ get_poke_target_card_ranks = function(seed, num, default, use_deck)
   if use_deck then
     for i = 1, num do
       for k, v in ipairs(G.playing_cards) do
-        if v.ability.effect ~= 'Stone Card' then
+        if not SMODS.has_no_rank(v) then
             local already_picked = false
             for j = 1, #target_ranks do
               if target_ranks[j].id == v.base.id then already_picked = true; break end
@@ -1206,6 +1207,36 @@ get_poke_target_card_ranks = function(seed, num, default, use_deck)
   local sort_function = function(card1, card2) return card1.id < card2.id end
   table.sort(target_ranks, sort_function)
   return target_ranks
+end
+
+get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
+  local suit = default or 'Spades'
+  local allowed_suits = limit_suits or SMODS.Suits
+  local valid_cards = {}
+  if not G.playing_cards then
+    return {{suit = suit}}
+  end
+  if use_deck then
+    for k, v in ipairs(G.playing_cards) do
+      if not SMODS.has_no_suit(v) then
+        for x, y in pairs(allowed_suits) do
+          if (y.key and v:is_suit(y.key)) or v:is_suit(y) then
+            valid_cards[#valid_cards+1] = v
+            break
+          end
+        end
+      end
+    end
+    if #valid_cards > 0 then
+      local picked = pseudorandom_element(valid_cards, pseudoseed(seed))
+      return {{suit = picked.base.suit}}
+    else
+      return {{suit = suit}}
+    end
+  else
+    local picked = pseudorandom_element(allowed_suits, pseudoseed(seed))
+    return {{suit = picked.key or picked}}
+  end
 end
 
 add_target_cards_to_vars = function(vars, targets)

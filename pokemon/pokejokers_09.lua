@@ -1285,12 +1285,256 @@ local linoone={
   end,
 }
 -- Wurmple 265
+local wurmple={
+  name = "wurmple",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 3, chips = 16, targets = {{suit = 'Spades'}}, nature_scored = 0}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    local suit_colours = (center.ability.extra.nature_scored <= 0) and {G.C.UI.TEXT_INACTIVE} or {G.C.SUITS[center.ability.extra.targets[1].suit or "Spades"]}
+    local suits_message = (center.ability.extra.nature_scored <= 0) and '??? '..localize('poke_suit') or localize(center.ability.extra.targets[1].suit, 'suits_plural')
+    return {vars = {center.ability.extra.mult, center.ability.extra.chips, math.max(0, self.config.evo_rqmt - center.ability.extra.nature_scored), suits_message,
+                    colours = suit_colours}}
+  end,
+  rarity = 1,
+  cost = 2,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        if pseudorandom('wurmple') < .50 then
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+            colour = G.C.MULT,
+            mult_mod = card.ability.extra.mult
+          }
+        else
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips
+          }
+        end
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.targets[1].suit) and not context.blueprint then
+      card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
+    end
+    if card.ability.extra.targets[1].suit == 'Hearts' or card.ability.extra.targets[1].suit == 'Diamonds' then
+      return scaling_evo(self, card, context, "j_poke_silcoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
+    elseif card.ability.extra.targets[1].suit == 'Spades' or card.ability.extra.targets[1].suit == 'Clubs' then
+      return scaling_evo(self, card, context, "j_poke_cascoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
+    end
+  end
+}
 -- Silcoon 266
+local silcoon={
+  name = "silcoon",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 8,targets = {{suit = 'Hearts'}}, nature_scored = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.targets[1].suit, 'suits_plural'), math.max(0, self.config.evo_rqmt - center.ability.extra.nature_scored), 
+            colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Hearts"]}}}
+  end,
+  rarity = "poke_safari",
+  cost = 4,
+  gen = 3,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.targets[1].suit) then
+      card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
+    end
+    return scaling_evo(self, card, context, "j_poke_beautifly", card.ability.extra.nature_scored, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
+    end
+  end
+}
 -- Beautifly 267
+local beautifly={
+  name = "beautifly",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 8,targets = {{suit = 'Hearts'}}, num = 1, dem = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'beautifly')
+    return {vars = {center.ability.extra.mult, localize(center.ability.extra.targets[1].suit, 'suits_plural'), num, dem, 
+            colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Hearts"]}}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "Two",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        local has_nature = nil
+        for k, v in ipairs(context.scoring_hand) do
+          if v:is_suit(card.ability.extra.targets[1].suit) then
+            has_nature = true
+          end
+        end
+        if has_nature and SMODS.pseudorandom_probability(card, 'beautifly', card.ability.extra.num, card.ability.extra.dem, 'beautifly') then
+          SMODS.smart_level_up_hand(card, 'Flush')
+        end
+      end
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
+    end
+  end
+}
 -- Cascoon 268
+local cascoon={
+  name = "cascoon",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 60,targets = {{suit = 'Spades'}}, nature_scored = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.targets[1].suit, 'suits_plural'), math.max(0, self.config.evo_rqmt - center.ability.extra.nature_scored), 
+            colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Spades"]}}}
+  end,
+  rarity = "poke_safari",
+  cost = 4,
+  gen = 3,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.targets[1].suit) then
+      card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
+    end
+    return scaling_evo(self, card, context, "j_poke_dustox", card.ability.extra.nature_scored, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+    end
+  end
+}
 -- Dustox 269
+local dustox={
+  name = "dustox",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 60,targets = {{suit = 'Spades'}}, Xmult = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.targets[1].suit, 'suits_plural'), center.ability.extra.Xmult, 
+            colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Spades"]}}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "Two",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local all_nature = true
+        for k, v in ipairs(G.hand.cards) do
+          if not v:is_suit(card.ability.extra.targets[1].suit) then
+            all_nature = false
+          end
+        end
+        if all_nature then
+          return {
+            message = localize('poke_bug_buzz_ex'), 
+            colour = G.C.XMULT,
+            chip_mod = card.ability.extra.chips,
+            Xmult_mod = card.ability.extra.Xmult,
+          }
+        else
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips
+          }
+        end
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+    end
+  end
+}
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
         list = {miltank, blissey, raikou, entei, suicune, larvitar, pupitar, tyranitar, mega_tyranitar, lugia, ho_oh, celebi, 
-                treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, poochyena, mightyena, zigzagoon, linoone},
+                treecko, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, poochyena, mightyena, 
+                zigzagoon, linoone, wurmple, silcoon, beautifly, cascoon, dustox},
 }
