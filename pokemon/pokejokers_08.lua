@@ -1407,7 +1407,7 @@ local stantler={
 local smeargle={
   name = "smeargle",
   pos = {x = 3, y = 8},
-  config = {extra = {copy_joker = nil}},
+  config = {extra = {copy_joker = nil, copy_val = nil}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
