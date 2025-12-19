@@ -1288,7 +1288,7 @@ local linoone={
 local wurmple={
   name = "wurmple",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 3, chips = 16, targets = {{suit = 'Spades'}}, nature_scored = 0}, evo_rqmt = 5},
+  config = {extra = {mult = 3, chips = 20, targets = {{suit = 'Spades'}}, nature_scored = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -1417,7 +1417,7 @@ local beautifly={
           end
         end
         if has_nature and SMODS.pseudorandom_probability(card, 'beautifly', card.ability.extra.num, card.ability.extra.dem, 'beautifly') then
-          SMODS.smart_level_up_hand(card, 'Flush')
+          SMODS.smart_level_up_hand(context.blueprint_card or card, 'Flush')
         end
       end
       if context.joker_main then
