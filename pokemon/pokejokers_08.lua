@@ -1407,7 +1407,7 @@ local stantler={
 local smeargle={
   name = "smeargle",
   pos = {x = 3, y = 8},
-  config = {extra = {copy_joker = nil, copy_pos = 0}},
+  config = {extra = {copy_joker = nil}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -1426,19 +1426,25 @@ local smeargle={
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind and card.ability.blueprint_compat == 'compatible' and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
-      local found_pos = 0
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card then found_pos = i + 1 end
+    if context.setting_blind and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
+      local found_pos = get_index(G.jokers.cards, card) + 1
+      if G.jokers.cards[found_pos] and card.ability.blueprint_compat == 'compatible' then
+        card.ability.extra.copy_joker = G.jokers.cards[found_pos]
+        card.ability.extra.copy_val = G.jokers.cards[found_pos].unique_val
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
       end
-      if G.jokers.cards[found_pos] then
-        card.ability.extra.copy_joker = G.jokers.cards[found_pos] 
-        card.ability.extra.copy_pos = found_pos
-      end
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
     end
-
-    local other_joker = G.jokers.cards[card.ability.extra.copy_pos]
+    -- On "load", check whether blueprinted joker exists, then re-set it
+    if card.ability.extra.copy_val and type(card.ability.extra.copy_joker) ~= 'table' then
+      card.ability.extra.copy_joker = poke_find_card(function(v) return v.unique_val == card.ability.extra.copy_val end)
+    end
+    -- Find the blueprinted joker
+    local other_joker = poke_find_card(function(v) return v == card.ability.extra.copy_joker end)
+    if not other_joker then
+      card.ability.extra.copy_joker = nil
+      card.ability.extra.copy_val = nil
+    end
+    -- Calculate the blueprinted joker
     if other_joker and other_joker ~= card and not context.no_blueprint then
       context.blueprint = (context.blueprint or 0) + 1
       context.blueprint_card = context.blueprint_card or card
@@ -1447,7 +1453,7 @@ local smeargle={
       context.blueprint = nil
       local eff_card = context.blueprint_card or card
       context.blueprint_card = nil
-      if other_joker_ret then 
+      if other_joker_ret then
         other_joker_ret.card = eff_card
         other_joker_ret.colour = G.C.BLACK
         return other_joker_ret
@@ -1485,44 +1491,17 @@ local smeargle={
           {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
         }}
       }}
-    } or nil
+    }
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     desc_nodes[#desc_nodes+1] = main_end
   end,
-  load = function(self, card, card_table, other_card)
-    card.has_loaded = true
-  end,
   update = function(self, card, dt)
-    if card.has_loaded then
-      card.ability.extra.copy_joker = G.jokers.cards[card.ability.extra.copy_pos]
-      card.has_loaded = false
-    end
-    if card.ability.extra.copy_joker and card.ability.extra.copy_joker ~= G.jokers.cards[card.ability.extra.copy_pos] then
-      local found = nil
-      for i=1, #G.jokers.cards do
-        if card.ability.extra.copy_joker == G.jokers.cards[i] then
-          card.ability.extra.copy_pos = i
-          found = true
-          break
-        end
-      end
-      if not found then
-        card.ability.extra.copy_joker = nil
-        card.ability.extra.copy_pos = 0
-      end
-    end
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local found_pos = 0
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card then found_pos = i + 1 end
-      end
+      local found_pos = get_index(G.jokers.cards, card) + 1
       local right_joker = G.jokers.cards[found_pos]
-      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-    end
-  end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      card.ability.extra.copy_joker = nil
+      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff
+          and right_joker.config.center.blueprint_compat and 'compatible')
+          or 'incompatible'
     end
   end,
 }
