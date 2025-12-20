@@ -757,7 +757,6 @@ local daycare={
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'breed'}
     return {vars = {}}
   end,
   rarity = 3,
@@ -792,6 +791,39 @@ local daycare={
         end
       end
     end
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local breedable = 0
+      for i = 1, #adjacent_jokers do
+        local adj_joker = adjacent_jokers[i]
+        if adj_joker.config and adj_joker.config.center.stage then
+          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" and adj_joker.config.center.stage ~= "Legendary" then
+            breedable = breedable + 1
+          end
+        end
+      end
+      card.ability.blueprint_compat = ( breedable >= 2  and 'compatible') or 'incompatible'
+    end
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    type_tooltip(self, info_queue, card)
+    local _c = card and card.config.center or card
+    if not full_UI_table.name then
+      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+    end
+    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
+    card.ability.blueprint_compat_check = nil
+    local main_end = (card.area and card.area == G.jokers) and {
+      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
+          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
+        }}
+      }}
+    } or nil
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {}}
+    desc_nodes[#desc_nodes+1] = main_end
   end,
 }
 

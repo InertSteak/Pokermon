@@ -5088,7 +5088,8 @@ return {
             j_poke_daycare = {
               name = "Daycare",
               text = {
-                "Sell this card to {C:attention}breed{}",
+                "Sell this card to create",
+                "a {C:attention}Mystery Egg{} based on",
                 "adjacent Pokemon Jokers",
                 "{C:inactive,s:0.8}(Excludes Baby and Legendary Jokers){}"
               }
