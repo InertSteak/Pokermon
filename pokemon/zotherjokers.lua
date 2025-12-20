@@ -273,7 +273,6 @@ local mystery_egg = {
   config = {extra = {key = nil, rounds = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_egg_tip'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -752,12 +751,56 @@ local professor={
   end
 }
 
+local daycare={
+  name = "daycare",
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'breed'}
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Other",
+  atlas = "placeholder_joker",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.selling_self and not context.blueprint then
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local breedable = 0
+      for i = 1, #adjacent_jokers do
+        local adj_joker = adjacent_jokers[i]
+        if adj_joker.config and adj_joker.config.center.stage then
+          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" and adj_joker.config.center.stage ~= "Legendary" then
+            breedable = breedable + 1
+          end
+        end
+      end
+      
+      if breedable >= 2 then
+        local parent = pseudorandom_element(adjacent_jokers, pseudoseed("daycare"))
+        local lowest = get_lowest_evo(parent)
+        if lowest and type(lowest) == "string" then
+          local prefix = parent.config.center.poke_custom_prefix or "poke"
+          local egg_key = "j_"..prefix.."_"..lowest
+          local egg = SMODS.add_card{set = 'Joker', key = 'j_poke_mystery_egg'}
+          egg.ability.extra.key = egg_key
+          egg.ability.extra.rounds = 3
+        end
+      end
+    end
+  end,
+}
+
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare}
+
 if pokermon_config.pokemon_aprilfools then
-  return {name = "Other Jokers",
-        list = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, billion_lions}
-  }
-else
-  return {name = "Other Jokers",
-        list = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor}
-  }
+  jlist[#jlist + 1] = billion_lions
 end
+
+return {name = "Other Jokers",
+      list = jlist
+}

@@ -1354,7 +1354,7 @@ local silcoon={
     return {vars = {center.ability.extra.mult, localize(center.ability.extra.targets[1].suit, 'suits_plural'), math.max(0, self.config.evo_rqmt - center.ability.extra.nature_scored), 
             colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Hearts"]}}}
   end,
-  rarity = "poke_safari",
+  rarity = 2,
   cost = 4,
   gen = 3,
   stage = "One",
@@ -1448,7 +1448,7 @@ local cascoon={
     return {vars = {center.ability.extra.chips, localize(center.ability.extra.targets[1].suit, 'suits_plural'), math.max(0, self.config.evo_rqmt - center.ability.extra.nature_scored), 
             colours = {G.C.SUITS[center.ability.extra.targets[1].suit or "Spades"]}}}
   end,
-  rarity = "poke_safari",
+  rarity = 2,
   cost = 4,
   gen = 3,
   stage = "One",

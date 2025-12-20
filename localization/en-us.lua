@@ -5085,6 +5085,14 @@ return {
                   "that is {C:pink}Energized{} if applicable"
                 }
             },
+            j_poke_daycare = {
+              name = "Daycare",
+              text = {
+                "Sell this card to {C:attention}breed{}",
+                "adjacent Pokemon Jokers",
+                "{C:inactive,s:0.8}(Excludes Baby and Legendary Jokers){}"
+              }
+            },
             j_poke_billion_lions = {
                 name = 'A Billion Lions',
                 text = {
@@ -5557,6 +5565,16 @@ return {
                     "number of {C:attention}#1#s{}",
                     "in {C:attention}poker hand",
                     "{C:inactive}(Effects are {C:attention}cumulative{C:inactive})"
+                }
+            },
+            breed = {
+                name = "Breed",
+                text = {
+                    "Create a {C:attention}Mystery Egg{}",
+                    "that will hatch into",
+                    "the lowest {C:attention}stage{} of",
+                    "one of the {C:attention}parents",
+                    "{C:inactive}(Always {C:attention}3{C:inactive} rounds to hatch){}"
                 }
             },
             energize = {

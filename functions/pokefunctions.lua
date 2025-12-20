@@ -643,6 +643,16 @@ HIGHEST_EVO_OVERRIDES = {
   ["cosmoem"] = { "solgaleo", "lunala" },
   ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
 }
+get_lowest_evo = function(card)
+  local name = card.name or card.ability.name or "bulbasaur"
+  local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
+  
+  local family = poke_get_family_list(name)
+  
+  --Nice and simple, we just want the lowest value, which should be the first
+  --In the case the family is one joker, just return the name
+  return (type(family[1]) == "table" and family[1].key) or family[1] or name
+end
 
 get_highest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
