@@ -542,7 +542,7 @@ poke_set_hazards = function(amount)
     end
     if #valid > 0 then
       local card = pseudorandom_element(valid, pseudoseed('hazard'))
-      card:set_ability(G.P_CENTERS.m_poke_hazard, nil, true)
+      card:set_ability(G.P_CENTERS.m_poke_hazard)
     end
   end
 end
