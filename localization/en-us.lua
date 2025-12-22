@@ -6476,6 +6476,7 @@ return {
             poke_reroll_plural = "Rerolls",
             poke_reroll_singular = "Reroll",
             poke_suit = "suit",
+            poke_saved_by = "Saved by",
 
             --Some infoqueue/variable stuff
             farfetchd_infoqueue = "Farfetch\'d",

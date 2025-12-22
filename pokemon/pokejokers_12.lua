@@ -353,6 +353,11 @@ local feebas={
         }
       end
     end
+    if context.modify_scoring_hand and not context.blueprint then
+      return {
+          add_to_hand = true
+      }
+    end
     return item_evo(self, card, context, "j_poke_milotic")
   end
 }

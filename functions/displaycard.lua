@@ -361,6 +361,10 @@ function PokeDisplayCard:set_seal()
   --does nothing for now, prevents crash
 end
 
+function PokeDisplayCard:set_edition(edition, immediate, silent)
+  --does nothing for now, prevents crash
+end
+
 --copied from Card
 function PokeDisplayCard:start_materialize(dissolve_colours, silent, timefac)
     local dissolve_time = 0.6*(timefac or 1)

@@ -99,11 +99,17 @@ local mimikyu={
           })) 
           return {
               message = localize('k_saved_ex'),
-              saved = true,
+              saved = localize('poke_saved_by')..' '..(G.localization.descriptions.Joker[card.config.center.key].name),
               colour = G.C.RED
           }
         end
       end
+  end,
+  set_sprites = function(self, card, front)
+    if card and card.ability and card.ability.extra and not card.ability.extra.disguise then
+      card.children.center.atlas = G.ASSET_ATLAS['poke_'..card.config.center.poke_lookup_atlas]
+      card.children.center:set_sprite_pos(card.config.center.broke_pos)
+    end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then

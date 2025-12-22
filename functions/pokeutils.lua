@@ -574,12 +574,6 @@ function poke_get_rank(card)
   return rank
 end
 
-function applies_splash()
-  return next(SMODS.find_card('j_poke_magikarp')) or
-  next(SMODS.find_card('j_poke_feebas')) or
-  next(SMODS.find_card('j_poke_luvdisc'))
-end
-
 function poke_is_even(card)
   if card:get_id() == 2 or 
    card:get_id() == 4 or 

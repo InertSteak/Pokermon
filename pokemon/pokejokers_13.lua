@@ -108,6 +108,11 @@ local luvdisc={
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
+    if context.modify_scoring_hand and not context.blueprint then
+      return {
+          add_to_hand = true
+      }
+    end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then

@@ -32,41 +32,6 @@ if v.set == 'Joker' and v.stage and pokermon_config and not pokermon_config.haza
 if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
 '''
 match_indent = true
-
-# Magikarp functionality
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "if next(find_joker('Splash')) then"
-position = "at"
-payload = "if next(find_joker('Splash')) or applies_splash() then"
-match_indent = true
-
-# Magikarp functionality better calc
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash'))"
-position = "at"
-payload = '''
-local splashed = SMODS.always_scores(G.play.cards[i]) or next(find_joker('Splash')) or applies_splash()
-'''
-match_indent = true
-
-# Mimikyu Localization Functionality
-[[patches]]
-[patches.regex]
-target = 'functions/state_events.lua'
-pattern = '''if eval.saved then
-  game_over = false
-end'''
-position = 'after'
-payload = '''
-  if not G.localization.misc.dictionary.ph_mr_bones_numbutils then
-    G.localization.misc.dictionary.ph_mr_bones_numbutils = ""..G.localization.misc.dictionary.ph_mr_bones
-  end
-  G.localization.misc.dictionary.ph_mr_bones = G.localization.misc.dictionary.ph_mr_bones_numbutils:gsub("Mr. Bones", G.localization.descriptions.Joker[G.jokers.cards[i].config.center.key].name)
-  '''
   
 # Extra Booster Functionality
 [[patches]]
