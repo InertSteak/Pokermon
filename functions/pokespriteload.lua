@@ -1111,7 +1111,7 @@ PokemonSprites = {
 {name = "quaxwell", base = {pos = {x = 24, y = 60}},},
 {name = "quaquaval", base = {pos = {x = 26, y = 60}},},
 {name = "lechonk", base = {pos = {x = 28, y = 60}},alts = {AtlasJokersSeriesA = {artist = 'Sonfive'}}},
-{name = "oinkologne", base = {pos = {x = 0, y = 61}},},
+{name = "oinkologne", base = {pos = {{x = 0, y = 0}, {x = 2, y = 0}}}, gen_atlas = 9},
 {name = "tarountula", base = {pos = {x = 2, y = 61}},},
 {name = "spidops", base = {pos = {x = 4, y = 61}},},
 {name = "nymble", base = {pos = {x = 6, y = 61}},},
