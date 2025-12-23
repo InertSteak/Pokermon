@@ -320,8 +320,29 @@ local randomizer = {
     },
 }
 
-
+local delibird_delimma = {
+    key = 'delibird_delimma',
+    rules = {
+        custom = {
+            { id = 'no_reward' },
+            { id = 'no_extra_hand_money' },
+            { id = 'no_interest' },
+        }
+    },
+    jokers = {
+        { id = 'j_poke_delibird', eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+            { id = 'v_seed_money' },
+            { id = 'v_money_tree' },
+            { id = 'j_to_the_moon' },
+            { id = 'j_rocket' },
+            { id = 'j_satellite' },
+        }
+    }
+}
 
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma}
 }

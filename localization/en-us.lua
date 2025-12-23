@@ -6363,7 +6363,8 @@ return {
             c_poke_littlecup = "Little Cup",
             c_poke_hammertime = "Hammertime",
             c_poke_lonesome = "Lonesome",
-            c_poke_randomizer = "Randomizer"
+            c_poke_randomizer = "Randomizer",
+            c_poke_delibird_delimma = "Delibird Delimma",
         },
         dictionary = {
             k_energy = "Energy",
