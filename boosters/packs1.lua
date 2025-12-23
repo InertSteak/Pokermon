@@ -445,7 +445,7 @@ local starter_pack = {
 	group_key = "k_poke_starter_pack",
 }
 
-local pack_list = {pack1, pack2, pack3, pack4, pack5, pack6, pack7, pack8, wish_pack, starter_pack}
+local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack}
 
 for k, v in pairs(pack_list) do
   if not v.ease_background_colour then
