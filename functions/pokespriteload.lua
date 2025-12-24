@@ -931,7 +931,7 @@ PokemonSprites = {
 {name = "salazzle", base = {pos = {x = 14, y = 50}},},
 {name = "stufful", base = {pos = {x = 16, y = 50}},},
 {name = "bewear", base = {pos = {x = 18, y = 50}},},
-{name = "bounsweet", base = {pos = {x = 20, y = 50}},},
+{name = "bounsweet", base = {pos = {x = 20, y = 50}},alts = {AtlasJokersSeriesA = {artist = 'Gappie'}}},
 {name = "steenee", base = {pos = {x = 22, y = 50}},},
 {name = "tsareena", base = {pos = {x = 24, y = 50}},},
 {name = "comfey", base = {pos = {x = 26, y = 50}},},
