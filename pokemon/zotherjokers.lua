@@ -773,8 +773,13 @@ local daycare={
       for i = 1, #adjacent_jokers do
         local adj_joker = adjacent_jokers[i]
         if adj_joker.config and adj_joker.config.center.stage then
-          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" and adj_joker.config.center.stage ~= "Legendary" then
-            breedable = breedable + 1
+          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" then
+            local lowest = get_lowest_evo(adj_joker)
+            local prefix = adj_joker.config.center.poke_custom_prefix or "poke"
+            local lowest_key = "j_"..prefix.."_"..lowest
+            if G.P_CENTERS[lowest_key].stage ~= "Legendary" then
+              breedable = breedable + 1
+            end
           end
         end
       end
@@ -799,8 +804,13 @@ local daycare={
       for i = 1, #adjacent_jokers do
         local adj_joker = adjacent_jokers[i]
         if adj_joker.config and adj_joker.config.center.stage then
-          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" and adj_joker.config.center.stage ~= "Legendary" then
-            breedable = breedable + 1
+          if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" then
+            local lowest = get_lowest_evo(adj_joker)
+            local prefix = adj_joker.config.center.poke_custom_prefix or "poke"
+            local lowest_key = "j_"..prefix.."_"..lowest
+            if G.P_CENTERS[lowest_key].stage ~= "Legendary" then
+              breedable = breedable + 1
+            end
           end
         end
       end
