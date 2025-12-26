@@ -94,19 +94,19 @@ increment_energy = function(card, etype, amount, silent)
   if (energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.energy_count = card.ability.extra.energy_count and (card.ability.extra.energy_count + amount) or amount
-      energize(card, nil, false, silent, amount)
+      energize(card, etype, false, silent, amount)
     elseif is_energizable(card) then
       card.ability.energy_count = card.ability.energy_count and (card.ability.energy_count + amount) or amount
-      energize(card, nil, false, silent, amount)
+      energize(card, etype, false, silent, amount)
     end
   -- We only need to increase c_energy_count if the colorless penalty applies to that energy in the first place
   elseif c_penalty then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.c_energy_count = card.ability.extra.c_energy_count and (card.ability.extra.c_energy_count + amount) or amount
-      energize(card, nil, false, silent, amount)
+      energize(card, etype, false, silent, amount)
     elseif is_energizable(card) then
       card.ability.c_energy_count = card.ability.c_energy_count and (card.ability.c_energy_count + amount) or amount
-      energize(card, nil, false, silent, amount)
+      energize(card, etype, false, silent, amount)
     end
   end
 end
