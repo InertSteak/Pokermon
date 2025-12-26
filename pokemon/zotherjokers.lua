@@ -22,7 +22,7 @@ local rotomdex={
     type_tooltip(self, info_queue, center)
 		return {vars = {G.GAME.rotom_discount or 0}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 6, 
   stage = "Other",
   atlas = "others",
@@ -352,28 +352,26 @@ local rival = {
   name = "rival",
   pos = {x = 3, y = 1},
   artist = "MyDude_YT",
-  config = {extra = {mult = 10, Xmult = 3, form = 0}},
+  config = {extra = {Xmult_mod = 0.2, form = 0, money1 = 15, money2 = 25, money_mod1 = 10, money_mod2 = 20}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local mult = card.ability.extra.mult
-    local money = 5
+    local money = card.ability.extra.money1
+    local money_mod = card.ability.extra.money_mod1
     local alt_key = nil
     if card.ability.extra.form == 1 then
       alt_key = "j_poke_bitter_rival"
-      mult = card.ability.extra.mult * 2
-      money = 10
+      money = card.ability.extra.money2
+      money_mod = card.ability.extra.money_mod2
     elseif card.ability.extra.form > 1 then
       alt_key = "j_poke_champion"
-      mult = card.ability.extra.Xmult
-      money = 25
+      info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
     end
 
-    local percent = (2 ^ card.ability.extra.form) + 1
-
-    return {vars = {mult, money, percent}, key = alt_key}
+    return {vars = {money, money_mod, card.ability.extra.Xmult_mod, 1 + G.GAME.skips * card.ability.extra.Xmult_mod}, key = alt_key}
   end,
   rarity = 1,
-  cost = 6,
+  cost = 5,
   joblacklist = true,
   stage = "Other",
   atlas = "others",
@@ -381,56 +379,63 @@ local rival = {
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
+    if context.skip_blind and card.ability.extra.form < 2 and not context.blueprint then
+      if card.ability.extra.form == 1 then
+        card.ability.extra.money2 = card.ability.extra.money2 + card.ability.extra.money_mod2
+      else
+        card.ability.extra.money1 = card.ability.extra.money1 + card.ability.extra.money_mod1
+      end
+      
+      return {
+        message = localize('k_upgrade_ex'),
+        colour = G.C.MONEY
+      }
+    end
+    
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         if card.ability.extra.form > 1 then
           return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + G.GAME.skips * card.ability.extra.Xmult_mod}}, 
             colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
-        else
-          local mult = card.ability.extra.mult * (card.ability.extra.form == 0 and 1 or 2)
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {mult}},
-            colour = G.C.MULT,
-            mult_mod = mult
+            Xmult_mod =  1 + G.GAME.skips * card.ability.extra.Xmult_mod
           }
         end
       end
     end
 
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      local beaten = false
-      if not G.GAME.chips or not G.GAME.blind.chips or not card.ability.extra.form then return end
-      if (SMODS.Mods["Talisman"] or {}).can_load and to_big(G.GAME.chips)/G.GAME.blind.chips >= to_big((2 ^ card.ability.extra.form) + 1) then
-        beaten = true
-      elseif not (SMODS.Mods["Talisman"] or {}).can_load and G.GAME.chips/G.GAME.blind.chips >= (2 ^ card.ability.extra.form) + 1 then
-        beaten = true
+    if (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
+      G.GAME.rival_losses = G.GAME.rival_losses + 1
+
+      local money = card.ability.extra.money1
+      if card.ability.extra.form == 1 then
+        money = card.ability.extra.money2
       end
-      if beaten then
-        G.GAME.rival_losses = G.GAME.rival_losses + 1
-
-        local money = 5
-        if card.ability.extra.form == 1 then
-          money = 10
-        elseif card.ability.extra.form > 1 then
-          money = 25
-        end
+      if card.ability.extra.form < 2 then
         ease_poke_dollars(card, 'rival', money)
+      else
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_skip'))
+              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+              return true
+          end)
+        }))
+      end
 
-        
+      if card.ability.extra.form < 2 then
         G.E_MANAGER:add_event(Event({
           func = function()
             remove(self, card, context, true)
             return true
           end
         }))
-
-        return {
-            message = localize("poke_smell_ya")
-        }
       end
+
+      return {
+          message = localize("poke_smell_ya")
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)

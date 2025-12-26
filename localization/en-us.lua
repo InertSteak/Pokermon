@@ -1381,7 +1381,10 @@ return {
                 text = {
                     "Played cards with {C:attention}even{} rank",
                     "give {C:chips}+#1#{} Chips when scored",
-                    "and {C:attention}retrigger{}"
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Retrigger the first {C:attention}#2#{} {C:inactive}[#3#]{}",
+                    "scored cards with {C:attention}even{}",
+                    "rank each round"
                 } 
             },
             j_poke_tentacool = {
@@ -5048,25 +5051,30 @@ return {
             j_poke_rival = {
                 name = "Rival",
                 text = {
-                    "{C:mult}+#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} Blind Requirement",
-                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                    "Increase payout by {C:money}$#2#{} after skipping",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "When {C:attention}Boss Blind{} is defeated,",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#1#",
                 }
             },
             j_poke_bitter_rival = {
                 name = "Bitter Rival",
                 text = {
-                    "{C:mult}+#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} Blind Requirement",
-                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                    "Increase payout by {C:money}$#2#{} after skipping",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "When {C:attention}Boss Blind{} is defeated,",
+                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#1#",
                 }
             },
             j_poke_champion = {
                 name = "Champion",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult",
-                    "If score is {C:attention}>#3#X{} Blind Requirement",
-                    "{S:1.1,C:red,E:2}self destruct{} and earn {C:money}$#2#",
+                    "When {C:attention}Boss Blind{} is defeated,",
+                    "create a {C:attention}Speed Tag",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{X:mult,C:white}X#3#{} Mult for each",
+                    "Blind skipped this run",
+                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult){}"
                 }
             },
             j_poke_professor = {

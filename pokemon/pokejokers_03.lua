@@ -507,10 +507,10 @@ local weepinbell={
 local victreebel={
   name = "victreebel", 
   pos = {x = 5, y = 5},
-  config = {extra = {chips = 16, retriggers = 1}},
+  config = {extra = {chips = 24, retriggers = 1, retrigger_max = 4, round_retriggers = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.retrigger_max, math.max(0, center.ability.extra.retrigger_max - center.ability.extra.round_retriggers)}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -528,12 +528,13 @@ local victreebel={
           }
       end
     end
-    if context.repetition and context.cardarea == G.play and not context.other_card.debuff then
+    if context.repetition and context.cardarea == G.play and not context.other_card.debuff and card.ability.extra.round_retriggers < card.ability.extra.retrigger_max then
       if context.other_card:get_id() == 2 or 
          context.other_card:get_id() == 4 or 
          context.other_card:get_id() == 6 or 
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
+           card.ability.extra.round_retriggers = card.ability.extra.round_retriggers + 1
           return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
@@ -541,8 +542,13 @@ local victreebel={
           }
       end
     end
-  end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.round_retriggers = 0
+    end
+  end,
+  --megas = { "mega_victreebel" },
 }
+
 -- Tentacool 072
 local tentacool={
   name = "tentacool", 
