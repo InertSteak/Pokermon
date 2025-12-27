@@ -4771,8 +4771,8 @@ return {
               name = "Ursaluna",
               text = {
                 "Gains {C:mult}+#2#{} Mult and creates",
-                "an {C:item}Item{} with {C:dark_edition}Foil{}, {C:dark_edition}Polychrome{},",
-                "or {C:dark_edition}Holographic{} when any",
+                "an {C:item}Item{} with {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
+                "or {C:dark_edition}Polychrome{} when any",
                 "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
                 "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
               }
