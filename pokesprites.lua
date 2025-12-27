@@ -101,7 +101,10 @@ SMODS.Atlas({
     key = "AtlasConsumablesBirdEnergy",
     path = "Basic Series/AtlasConsumablesBirdEnergy.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 36,
+    fps = 15
 }):register()
 
 SMODS.Atlas({
@@ -196,31 +199,83 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "j_poke_unown_swarm",
+    path = "j_poke_unown_swarm.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny",
+    path = "j_poke_unown_swarm_shiny.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_soul",
+    path = "j_poke_unown_swarm_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny_soul",
+    path = "j_poke_unown_swarm_shiny_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorb",
     path = "Series A/AtlasJokersSeriesAVoltorb.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 }):register()
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorbShiny",
     path = "Series A/AtlasJokersSeriesAVoltorbShiny.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 }):register()
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrode",
     path = "Series A/AtlasJokersSeriesAElectrode.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
 }):register()
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrodeShiny",
     path = "Series A/AtlasJokersSeriesAElectrodeShiny.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
 }):register()
 
 
