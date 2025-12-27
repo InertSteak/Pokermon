@@ -1302,6 +1302,7 @@ local poke_artist_info = {
 }
 
 poke_load_sprites = function(item)
+  if item.animated then return end
   local sprite_info = PokemonSprites[item.name]
   local sprite = nil
   local new_pos = {}
