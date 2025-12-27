@@ -189,6 +189,13 @@ extended_family = {
   rotomm = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
 }
 
+native_evo_items = {
+  "firestone", "waterstone", "leafstone", "thunderstone",
+  "dawnstone", "shinystone", "moonstone", "duskstone",
+  "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
+  "linkcable", "kingsrock", "dragonscale", "hardstone",
+}
+
 type_sticker_applied = function(card)
   if not card then return false end
   if card.ability.grass_sticker then
@@ -819,12 +826,6 @@ get_evo_item_keys = function(card, prefix)
   local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
     local item_key, evo_item_prefix
-    local native_evo_items = {
-      "firestone", "waterstone", "leafstone", "thunderstone",
-      "dawnstone", "shinystone", "moonstone", "duskstone",
-      "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
-      "linkcable", "kingsrock", "dragonscale", "hardstone",
-    }
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
         evo_item_prefix = table.contains(native_evo_items, card.config.center.item_req[i]) and 'poke' or prefix
