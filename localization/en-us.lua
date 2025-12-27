@@ -4688,7 +4688,7 @@ return {
                   "to every {C:attention}Joker{} card and {C:attention}converts{}",
                   "all cards held in hand to",
                   "leftmost card's {C:attention}suit",
-                  "{C:inactive,s:0.8}(Evolves when a straight flush is played)",
+                  "{C:inactive,s:0.8}(Evolves when a {C:attention,s:0.8}Straight Flush{C:inactive,s:0.8} is played)",
                 }
             },
             j_poke_drakloak = {
