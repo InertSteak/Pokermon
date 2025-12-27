@@ -43,7 +43,7 @@ local poll_evo_item = function(seed)
     end
   end
   if #evo_item_key_list > 1 then
-    return pseudorandom_element(evo_item_key_list, seed)
+    return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
   end
 end
 
