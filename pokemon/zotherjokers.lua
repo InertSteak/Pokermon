@@ -600,7 +600,7 @@ local unown_swarm={
     if self.discovered or card.bypass_discovery_center then
       card.children.center:reset()
       if card.children.floating_sprite then
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
+        card.children.floating_sprite.atlas = G.ANIMATION_ATLAS[card.children.center.atlas.name .. "_soul"]
         card.children.floating_sprite:reset()
       end
     end
