@@ -983,7 +983,7 @@ local chansey={
     if G.playing_cards then
       local enhance_count = 0
       for k, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, 'm_lucky') then enhance_count = enhance_count  + 1 end
+        if v.config.center.key == "m_lucky" then enhance_count = enhance_count  + 1 end
       end
       deck_data = '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] '
     end
