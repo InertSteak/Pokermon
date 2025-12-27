@@ -1299,8 +1299,8 @@ calc_function = function(card)
             end
         end
     end
-    card.joker_display_values.chips = count * card.ability.extra.chips
-    card.joker_display_values.mult = count * card.ability.extra.mult
+    card.joker_display_values.chips = count * card.ability.extra.chip_mod
+    card.joker_display_values.mult = count * card.ability.extra.mult_mod
     card.joker_display_values.localized_text = "(2,3,5,7)"
 end
 }
@@ -1329,8 +1329,8 @@ calc_function = function(card)
             end
         end
     end
-    card.joker_display_values.chips = count * card.ability.extra.chips
-    card.joker_display_values.mult = count * card.ability.extra.mult
+    card.joker_display_values.chips = count * card.ability.extra.chip_mod
+    card.joker_display_values.mult = count * card.ability.extra.mult_mod
     card.joker_display_values.localized_text = "(2,3,5,7)"
 end
 }

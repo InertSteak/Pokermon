@@ -2,12 +2,18 @@
 local ursaluna={
   name = "ursaluna",
   pos = {x = 2, y = 8},
-  config = {extra = {mult = 0,mult_mod = 3,}},
+  config = {extra = {mult = 0,mult_mod = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
+      if not center.edition or (center.edition and not center.edition.foil) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      end
+      if not center.edition or (center.edition and not center.edition.holo) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
       end
     end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
@@ -29,7 +35,7 @@ local ursaluna={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
-        local edition = {polychrome = true}
+        local edition = poll_edition('aura', nil, true, true)
         _card:set_edition(edition, true)
         _card:add_to_deck()
         G.consumeables:emplace(_card)

@@ -629,11 +629,11 @@ local sunflora={
 local yanma={
   name = "yanma",
   pos = {x = 1, y = 4},
-  config = {extra = {mult = 3,chips = 6, mult2 = 6, chips2 = 12, num = 1, dem = 3, scored = 0}, evo_rqmt = 36},
+  config = {extra = {mult_mod = 3,chip_mod = 6, mult_mod2 = 6, chip_mod2 = 12, num = 1, dem = 3, scored = 0}, evo_rqmt = 36},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'yanma')
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult2, center.ability.extra.chips2, 
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, center.ability.extra.mult_mod2, center.ability.extra.chip_mod2, 
                     num, dem, math.max(0, self.config.evo_rqmt - center.ability.extra.scored)}}
   end,
   rarity = 1,
@@ -651,11 +651,11 @@ local yanma={
         if not context.blueprint then
           card.ability.extra.scored = card.ability.extra.scored + 1
         end
-        local Mult = card.ability.extra.mult
-        local Chips = card.ability.extra.chips
+        local Mult = card.ability.extra.mult_mod
+        local Chips = card.ability.extra.chip_mod
         if SMODS.pseudorandom_probability(card, 'yanma', card.ability.extra.num, card.ability.extra.dem, 'yanma') then
-          Mult = card.ability.extra.mult2
-          Chips = card.ability.extra.chips2
+          Mult = card.ability.extra.mult_mod2
+          Chips = card.ability.extra.chip_mod2
         end
         return {
           mult = Mult,

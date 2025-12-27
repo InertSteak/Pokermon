@@ -537,10 +537,10 @@ local golbat={
 local oddish={
   name = "oddish", 
   pos = {x = 3, y = 3},
-  config = {extra = {mult = 1, mult2 = 5, rounds = 5}},
+  config = {extra = {mult = 1, mult2 = 5, rounds = 4, mult1 = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.rounds}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.rounds, center.ability.extra.mult1}}
   end,
   rarity = 1, 
   cost = 4, 
@@ -553,8 +553,11 @@ local oddish={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if poke_is_odd(context.other_card) then
           local value
-          if pseudorandom('oddish') < .50 then
+          local random = pseudorandom('oddish')
+          if random < (1/3) then
             value = card.ability.extra.mult
+          elseif random < (2/3) then
+            value = card.ability.extra.mult1
           else
             value = card.ability.extra.mult2
           end
@@ -571,14 +574,14 @@ local oddish={
 local gloom={
   name = "gloom", 
   pos = {x = 4, y = 3},
-  config = {extra = {mult = 3, mult2 = 7}},
+  config = {extra = {mult = 3, mult2 = 7, mult1 = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leafstone
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_sunstone
     end
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult2}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult2, center.ability.extra.mult1}}
   end,
   rarity = 2,
   cost = 6,
@@ -593,8 +596,11 @@ local gloom={
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if poke_is_odd(context.other_card) then
           local value
-          if pseudorandom('gloom') < .50 then
+          local random = pseudorandom('gloom')
+          if random < (1/3) then
             value = card.ability.extra.mult
+          elseif random < (2/3) then
+            value = card.ability.extra.mult1
           else
             value = card.ability.extra.mult2
           end
@@ -610,11 +616,11 @@ local gloom={
 -- Vileplume 045
 local vileplume={
   name = "vileplume",
-  config = {extra = {Xmult_multi = 1.5, mult = 7}},
+  config = {extra = {Xmult_multi = 1.5, mult = 7, Xmult_multi2 = 1.3}},
   pos = {x = 5, y = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.mult}}
+		return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.mult, center.ability.extra.Xmult_multi2}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -626,7 +632,24 @@ local vileplume={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
       if poke_is_odd(context.other_card) then
-          if pseudorandom('vileplume') < .50 then
+          local random = pseudorandom('vileplume')
+          if random < (1/3) then
+            return { 
+              mult = card.ability.extra.mult,
+              card = card
+            }
+          elseif random < (2/3) then
+            return { 
+              x_mult = card.ability.extra.Xmult_multi2,
+              card = card
+            }
+          else
+            return { 
+              x_mult = card.ability.extra.Xmult_multi,
+              card = card
+            }
+          end
+          if random < .50 then
             return { 
               x_mult = card.ability.extra.Xmult_multi,
               card = card
@@ -1027,10 +1050,10 @@ local golduck={
 local mankey={
   name = "mankey", 
   pos = {x = 3, y = 4},
-  config = {extra = {mult = 3, chips = 5, rounds = 5}},
+  config = {extra = {mult_mod = 3, chip_mod = 5, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, center.ability.extra.rounds}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -1046,8 +1069,8 @@ local mankey={
          context.other_card:get_id() == 5 or
          context.other_card:get_id() == 7 then
         return {
-            chips = card.ability.extra.chips,
-            mult = card.ability.extra.mult,
+            chips = card.ability.extra.chip_mod,
+            mult = card.ability.extra.mult_mod,
             card = card
         }
       end
@@ -1059,11 +1082,11 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult = 5, chips = 7, primes_played = 0}, evo_rqmt = 25},
+  config = {extra = {mult_mod = 5, chip_mod = 7, primes_played = 0}, evo_rqmt = 25},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local primes_left = math.max(0, self.config.evo_rqmt - card.ability.extra.primes_played)
-    return {vars = {card.ability.extra.mult, card.ability.extra.chips, primes_left}}
+    return {vars = {card.ability.extra.mult_mod, card.ability.extra.chip_mod, primes_left}}
   end,
   rarity = 3, 
   cost = 9, 
@@ -1080,8 +1103,8 @@ local primeape={
          context.other_card:get_id() == 7 then
         card.ability.extra.primes_played = card.ability.extra.primes_played + 1
         return {
-            chips = card.ability.extra.chips,
-            mult = card.ability.extra.mult,
+            chips = card.ability.extra.chip_mod,
+            mult = card.ability.extra.mult_mod,
             card = card
         }
       end

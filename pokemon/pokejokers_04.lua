@@ -522,7 +522,7 @@ local electrode={
     end
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Lightning",
@@ -1185,7 +1185,7 @@ local horsea={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 3, 
   stage = "Basic", 
   ptype = "Water",
@@ -1230,7 +1230,7 @@ local seadra={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Water",

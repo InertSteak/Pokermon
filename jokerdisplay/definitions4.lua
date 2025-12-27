@@ -644,8 +644,8 @@ calc_function = function(card)
             end
         end
     end
-    card.joker_display_values.chips = count * card.ability.extra.chips
-    card.joker_display_values.mult = count * card.ability.extra.mult
+    card.joker_display_values.chips = count * card.ability.extra.chip_mod
+    card.joker_display_values.mult = count * card.ability.extra.mult_mod
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'yanmega')
     card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
     card.joker_display_values.localized_text = "(3,6)"

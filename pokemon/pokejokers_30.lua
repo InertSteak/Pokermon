@@ -16,10 +16,10 @@
 local dreepy={
   name = "dreepy",
   pos = {x = 11, y = 5},
-  config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
+  config = {extra = {money = 1, straight_flush_played = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
+    return {vars = {center.ability.extra.money}}
   end,
   designer = "Lemmanade",
   rarity = 2,
@@ -41,11 +41,15 @@ local dreepy={
         end
       end
       if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        juice_flip_hand(card)
-        for i=1, #G.hand.cards do
-          G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(card.ability.extra.suit);return true end }))
-        end 
-        juice_flip_hand(card, true)
+        local first_card = G.hand.cards[1]
+        if not SMODS.has_no_suit(first_card) then
+          local suit = first_card.base.suit
+          juice_flip_hand(card)
+          for i=1, #G.hand.cards do
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
+          end 
+          juice_flip_hand(card, true)
+        end
       end
       return {
         message = localize('k_val_up'),
@@ -206,11 +210,15 @@ local dreepy_dart={
         end
       end
       if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        juice_flip_hand(card)
-        for i=1, #G.hand.cards do
-          G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(card.ability.extra.suit);return true end }))
+        local first_card = G.hand.cards[1]
+        if not SMODS.has_no_suit(first_card) then
+          local suit = first_card.base.suit
+          juice_flip_hand(card)
+          for i=1, #G.hand.cards do
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
+          end 
+          juice_flip_hand(card, true)
         end
-        juice_flip_hand(card, true)
       end
     end
   end,

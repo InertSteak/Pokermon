@@ -1122,7 +1122,7 @@ return {
                 name = "Oddish",
                 text = {
                     "Played cards with {C:attention}odd{} rank",
-                    "give {C:mult}+#1#{} or {C:mult}+#2#{} Mult when scored",
+                    "give {C:mult}+#1#{}, {C:mult}+#4#{}, or {C:mult}+#2#{} Mult when scored",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
                 } 
             },
@@ -1130,7 +1130,7 @@ return {
                 name = "Gloom",
                 text = {
                     "Played cards with {C:attention}odd{} rank",
-                    "give {C:mult}+#1#{} or {C:mult}+#2#{} Mult when scored",
+                    "give {C:mult}+#1#{}, {C:mult}+#3#{}, or {C:mult}+#2#{} Mult when scored",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8} or {C:attention,s:0.8}Sun Stone{C:inactive,s:0.8})",
                 } 
             },
@@ -1138,7 +1138,7 @@ return {
                 name = "Vileplume",
                 text = {
                     "Played cards with {C:attention}odd{} rank",
-                    "give {C:mult}+#2#{} Mult or {X:mult,C:white}X#1#{} Mult",
+                    "give {C:mult}+#2#{} Mult, {X:mult,C:white}X#3#{} Mult, or {X:mult,C:white}X#1#{} Mult",
                     "when scored",
                 } 
             },
@@ -4686,7 +4686,8 @@ return {
                 text = {
                   "When sold, adds {C:money}$#1#{} of sell value",
                   "to every {C:attention}Joker{} card and {C:attention}converts{}",
-                  "all cards held in hand to {C:spades}#2#{}",
+                  "all cards held in hand to",
+                  "leftmost card's {C:attention}suit",
                   "{C:inactive,s:0.8}(Evolves when a straight flush is played)",
                 }
             },
@@ -4719,7 +4720,8 @@ return {
                 text = {
                     "When sold, adds {C:money}$#1#{} of sell value",
                     "to every {C:attention}Joker{} card and {C:attention}converts{}",
-                    "all cards held in hand to {C:spades}#2#{}",
+                    "all cards held in hand to",
+                    "leftmost card's {C:attention}suit",
                 }
             },
             j_poke_hisuian_qwilfish = {
@@ -4769,7 +4771,8 @@ return {
               name = "Ursaluna",
               text = {
                 "Gains {C:mult}+#2#{} Mult and creates",
-                "an {C:item}Item{} with {C:dark_edition}Polychrome{} when any",
+                "an {C:item}Item{} with {C:dark_edition}Foil{}, {C:dark_edition}Polychrome{},",
+                "or {C:dark_edition}Holographic{} when any",
                 "{C:attention}Booster Pack{} is skipped {C:inactive,s:0.8}(Must have room)",
                 "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
               }
