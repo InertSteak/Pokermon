@@ -19,49 +19,42 @@ local create_energy = function(self, card)
   return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
-local create_item = function(self, card)
-  local item_key = nil
-  local evo_item_chance = pseudorandom(pseudoseed('match'))
-  if evo_item_chance > .92 then
-    local evo_item_keys = {}
-    for k, v in pairs(G.jokers.cards) do
-      if v.config.center.item_req then
-        if type(v.config.center.item_req) == "table" then
-          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
-          if not next(SMODS.find_card(item_key)) then
-            local already_created = nil
-            for k, v in pairs(self.config.c_keys) do
-              if v == item_key then
-                already_created = true
-              end
-            end
-            if not already_created then
-              table.insert(evo_item_keys, item_key)
-            end
-          end
-        else
-          item_key = "c_poke_"..v.config.center.item_req
-          if not next(SMODS.find_card(item_key)) then
-            local already_created = nil
-            for k, v in pairs(self.config.c_keys) do
-              if v == item_key then
-                already_created = true
-              end
-            end
-            if not already_created then
-              table.insert(evo_item_keys, item_key)
-            end
-          end
-        end
-      end
-    end
-    if #evo_item_keys > 0 then
-      return create_card("Item", G.pack_cards, nil, nil, true, true, pseudorandom_element(evo_item_keys, pseudoseed('match')), nil)
-    else
-      return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+local poll_evo_item = function(seed)
+  local evo_item_key_set = {}
+  for _, v in pairs(G.jokers.cards) do
+    if v.config.center.item_req then
+      local item_req = type(v.config.center.item_req) == 'table'
+          and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
+          or v.config.center.item_req
+
+      local prefix = table.contains(native_evo_items, item_req)
+          and 'poke'
+          or v.config.center.poke_custom_prefix
+
+      local item_key = 'c_' .. prefix .. '_' .. item_req
+
+      evo_item_key_set[item_key] = true
     end
   end
-  return create_card("Item", G.pack_cards, nil, nil, true, true, nil, nil)
+  local evo_item_key_list = {}
+  for key, _ in pairs(evo_item_key_set) do
+    if not G.GAME.used_jokers[key] and G.P_CENTERS[key]:in_pool() then
+      evo_item_key_list[#evo_item_key_list+1] = key
+    end
+  end
+  if #evo_item_key_list > 1 then
+    return pseudorandom_element(evo_item_key_list, seed)
+  end
+end
+
+local create_item = function(seed)
+  if pseudorandom(pseudoseed(seed .. '_evo_item')) > .92 then
+    local evo_item_key = poll_evo_item('match')
+    if evo_item_key then
+      return SMODS.create_card { key = evo_item_key, area = G.pack_cards }
+    end
+  end
+  return SMODS.create_card { set = "Item", area = G.pack_cards, key_append = seed }
 end
 
 local create_pocket_card = function(self, card, i)
@@ -72,10 +65,10 @@ local create_pocket_card = function(self, card, i)
       if mega > .75 then
         return create_card("Item", G.pack_cards, nil, nil, true, true, 'c_poke_megastone', nil)
       else
-        return create_item(self, card)
+        return create_item('pocket')
       end
     else
-      return create_item(self, card)
+      return create_item('pocket')
     end
 end
 
