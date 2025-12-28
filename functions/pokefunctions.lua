@@ -670,14 +670,13 @@ get_highest_evo = function(card)
     local evos = HIGHEST_EVO_OVERRIDES[name]
     return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
   end
-  
+  -- if already at highest stage, return early
+  if POKE_STAGES[card.config.center.stage].next == nil then return end
+
   -- find the pokermon's family list
   local family = poke_get_family_list(name)
   -- if pokermon isn't in a family, return false
-  if #family < 2 then return false
-  -- if already at highest stage, return false
-  elseif POKE_STAGES[G.P_CENTERS[prefix..name].stage].next == nil then return false end
-
+  if #family < 2 then return false end
   -- Check for max evo in family list, ignoring megas and aux pokermon
   local max = #family
   local max_evo_name = (type(family[max]) == "table" and family[max].key) or family[max]
@@ -690,14 +689,19 @@ get_highest_evo = function(card)
   end
   max_stage = G.P_CENTERS[prefix..max_evo_name].stage
 
+  -- check if max stage is the same as card's, and check split evo weirdness
+  if max_stage ~= "Legendary" and card.config.center.stage == max_stage then return
+  elseif max_stage ~= "Legendary" and POKE_STAGES[card.config.center.stage].next == max_stage
+    and get_previous_evo_from_center(G.P_CENTERS[prefix..max_evo_name], true) ~= card.config.center_key then return
+  end
+
   -- find pokermon in family list with max stage
   local evos = {max_evo_name}
   for _, v in pairs(family) do
     local curr_name = (type(v) == "table" and v.key) or v
-    if G.P_CENTERS[prefix..curr_name].stage == max_stage
-      and not G.P_CENTERS[prefix..curr_name].stage == "Legendary"
-      and not G.P_CENTERS[prefix..curr_name].aux_poke
-      and curr_name ~= max_evo_name then
+    if G.P_CENTERS[prefix..curr_name].stage == max_stage and curr_name ~= max_evo_name
+      and G.P_CENTERS[prefix..curr_name].stage ~= "Legendary"
+      and G.P_CENTERS[prefix..curr_name].aux_poke ~= true then
         table.insert(evos, curr_name)
     end
   end
