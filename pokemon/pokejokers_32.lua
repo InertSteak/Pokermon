@@ -206,7 +206,7 @@ local tinkatink={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
-      local modify = function(v) SMODS.debuff_card(v, true, card); end
+      local modify = function(v) SMODS.debuff_card(v, true, 'tinkatink'..card.unique_val); end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -218,7 +218,7 @@ local tinkatink={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkatink'..card.unique_val)
       end
     end
     return level_evo(self, card, context, "j_poke_tinkatuff")
@@ -226,7 +226,7 @@ local tinkatink={
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkatink'..card.unique_val)
       end
     end
   end
@@ -255,7 +255,7 @@ local tinkatuff={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
-      local modify = function(v) SMODS.debuff_card(v, true, card) end
+      local modify = function(v) SMODS.debuff_card(v, true, 'tinkatuff'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -267,7 +267,7 @@ local tinkatuff={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkatuff'..card.unique_val)
       end
     end
     return level_evo(self, card, context, "j_poke_tinkaton")
@@ -275,7 +275,7 @@ local tinkatuff={
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkatuff'..card.unique_val)
       end
     end
   end
@@ -305,7 +305,7 @@ local tinkaton={
   calculate = function(self, card, context)
     if context.setting_blind then
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
-      local modify = function(v) SMODS.debuff_card(v, true, card) end
+      local modify = function(v) SMODS.debuff_card(v, true, 'tinkaton'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
       pseudorandom_multi(args)
     end
@@ -322,14 +322,14 @@ local tinkaton={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkaton'..card.unique_val)
       end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
       for k, v in pairs(G.playing_cards) do
-        SMODS.debuff_card(v,'reset', card)
+        SMODS.debuff_card(v,false, 'tinkaton'..card.unique_val)
       end
     end
   end

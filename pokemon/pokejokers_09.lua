@@ -462,6 +462,7 @@ local ho_oh={
         card.ability.extra.used = card.ability.extra.used + 1
       end
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
         G.E_MANAGER:add_event(Event({
           func = function() 
             local copy = nil
@@ -474,6 +475,7 @@ local ho_oh={
             copy:set_edition(edition)
             copy:add_to_deck()
             G.consumeables:emplace(copy) 
+            G.GAME.consumeable_buffer = 0
             return true
         end}))
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})

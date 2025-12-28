@@ -713,10 +713,10 @@ jd_def["j_poke_yanma"] = {
               end
           end
       end
-      card.joker_display_values.chips = count * card.ability.extra.chips
-      card.joker_display_values.mult = count * card.ability.extra.mult
-      card.joker_display_values.chips2 = count * card.ability.extra.chips2
-      card.joker_display_values.mult2 = count * card.ability.extra.mult2
+      card.joker_display_values.chips = count * card.ability.extra.chip_mod
+      card.joker_display_values.mult = count * card.ability.extra.mult_mod
+      card.joker_display_values.chips2 = count * card.ability.extra.chip_mod2
+      card.joker_display_values.mult2 = count * card.ability.extra.mult_mod2
       local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'yanma')
       card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
       card.joker_display_values.localized_text = "(3,6)"

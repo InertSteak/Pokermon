@@ -392,7 +392,7 @@ local teddiursa={
 local ursaring={
   name = "ursaring",
   pos = {x = 5, y = 6},
-  config = {extra = {mult = 0,mult_mod = 3,}},
+  config = {extra = {mult = 0,mult_mod = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then

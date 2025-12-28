@@ -320,8 +320,8 @@ jd_def["j_poke_annihilape"] = {
                 end
             end
         end
-        card.joker_display_values.chips = count * card.ability.extra.chips * (1 + G.GAME.current_round.hands_played)
-        card.joker_display_values.mult = count * card.ability.extra.mult * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.chips = count * card.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.mult = count * card.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played)
         card.joker_display_values.localized_text = "(2,3,5,7)"
     end
 }

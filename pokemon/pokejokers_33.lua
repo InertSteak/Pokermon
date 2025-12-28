@@ -74,11 +74,11 @@ local wugtrio={
 local annihilape={
   name = "annihilape", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {mult = 5, chips = 7}},
+  config = {extra = {mult_mod = 5, chip_mod = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult * (1 + G.GAME.current_round.hands_played), 
-                    center.ability.extra.chips * (1 + G.GAME.current_round.hands_played)}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, center.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played), 
+                    center.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played)}}
   end,
   rarity = "poke_safari", 
   cost = 11, 
@@ -94,8 +94,8 @@ local annihilape={
          context.other_card:get_id() == 5 or 
          context.other_card:get_id() == 7 then
         return {
-            chips = card.ability.extra.chips * (1 + G.GAME.current_round.hands_played),
-            mult = card.ability.extra.mult * (1 + G.GAME.current_round.hands_played),
+            chips = card.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played),
+            mult = card.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played),
             card = card
         }
       end
