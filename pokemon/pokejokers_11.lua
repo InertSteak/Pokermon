@@ -54,7 +54,7 @@ local lairon = {
   name = "lairon",
   pos = { x = 3, y = 5 },
   config = { extra = { Xmult = 1, Xmult_mod = .4, eaten = 0 }, evo_rqmt = 4 },
-  rarity = 3,
+  rarity = "poke_safari",
   cost = 8,
   stage = "One",
   atlas = "Pokedex3",

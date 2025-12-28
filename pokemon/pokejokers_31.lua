@@ -353,8 +353,8 @@ local dachsbun={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
-  rarity = 2,
-  cost = 5,
+  rarity = "poke_safari",
+  cost = 7,
   stage = "One",
   ptype = "Fairy",
   atlas = "Pokedex9",

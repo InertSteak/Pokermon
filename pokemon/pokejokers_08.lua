@@ -950,13 +950,13 @@ local skarmory = {
 local houndour={
   name = "houndour",
   pos = {x = 6, y = 7},
-  config = {extra = {mult_mod = 1,rounds = 5, discards = 2, active = false}},
+  config = {extra = {mult_mod = 1,rounds = 4, discards = 2, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.discards}}
   end,
   rarity = 2,
-  cost = 6,
+  cost = 4,
   stage = "Basic",
   ptype = "Dark",
   atlas = "Pokedex2",
@@ -968,7 +968,7 @@ local houndour={
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
       if card.ability.extra.active then
         card.ability.extra.active = false
-      elseif #context.full_hand > 3 then
+      elseif #context.full_hand > 4 then
         card.ability.extra.active = true
       end
     end
@@ -1017,10 +1017,15 @@ local houndoom={
   config = {extra = {mult_mod = 2,rounds = 5, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
+      info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
+    end
     return {vars = {center.ability.extra.mult_mod}}
   end,
-  rarity = 3,
-  cost = 8,
+  rarity = "poke_safari",
+  cost = 7,
   stage = "One",
   ptype = "Dark",
   atlas = "Pokedex2",
@@ -1032,7 +1037,7 @@ local houndoom={
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
       if card.ability.extra.active then
         card.ability.extra.active = false
-      elseif #context.full_hand > 3 then
+      elseif #context.full_hand > 4 then
         card.ability.extra.active = true
       end
     end
@@ -1072,6 +1077,12 @@ local houndoom={
     end
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.active = false
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      local _card = SMODS.add_card{set = 'Spectral', key = 'c_medium'}
+      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
   end,
   megas = { "mega_houndoom" },

@@ -1566,7 +1566,7 @@ return {
                     "{C:mult}+#1#{} Mult per card over {C:attention}#2#{} in your deck",
                     "{br:4}ERROR - CONTACT STEAK",
                     "At end of round, destroy {C:attention}1{} random card",
-                    "from deck then add {C:attention}2{} random cards",
+                    "in deck then add {C:attention}2{} random cards",
                     "{C:inactive}(Currently {C:mult}+#3#{} {C:inactive}Mult){}"
                 } 
             },
@@ -1997,7 +1997,8 @@ return {
             j_poke_eevee = {
                 name = 'Eevee',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult",
+                    "{X:mult,C:white} X#1# {} Mult on {C:attention}first",
+                    "{C:attention}hand{} of round",
                     "{C:inactive,s:0.8}(Evolves with...a lot)",
                 } 
             },
@@ -2630,9 +2631,9 @@ return {
             j_poke_umbreon = {
                 name = 'Umbreon',
                 text = {
-                    "Decrease level of",
-                    "discarded {C:attention}#1#{}",
-                    "and add it to most",
+                    "If first {C:attention}discarded{} hand",
+                    "is a {C:attention}#1#{}",
+                    "increase level of most",
                     "played {C:attention}poker hand",
                     "{C:inactive,s:0.7}Hand changes every round{}"
                 } 
@@ -3055,7 +3056,7 @@ return {
             j_poke_houndour = {
               name = "Houndour",
               text = {
-                "Discarding more than {C:attention}3{} cards",
+                "Discarding more than {C:attention}4{} cards",
                 "also discards {C:attention}#3#{} random cards {C:attention}held{} in hand",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Discarded cards permanently gain {C:mult}+#1#{} Mult",
@@ -3065,7 +3066,8 @@ return {
             j_poke_houndoom = {
               name = "Houndoom",
               text = {
-                "Discarding more than {C:attention}3{} cards",
+                "{C:attention}Holding {C:spectral}Medium{}",
+                "Discarding more than {C:attention}4{} cards",
                 "also discards {C:attention}all{} cards {C:attention}held{} in hand",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Discarded cards permanently gain {C:mult}+#1#{} Mult",

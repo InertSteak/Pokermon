@@ -824,16 +824,9 @@ local umbreon={
         end
       end
     end
-    if context.pre_discard and not context.blueprint and not context.hook then
+    if context.pre_discard and G.GAME.current_round.discards_used <= 0 and not context.blueprint and not context.hook then
       local text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-      local can_level = nil
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        can_level = to_big(G.GAME.hands[card.ability.extra.hand_played].level) > to_big(1)
-      else
-        can_level = G.GAME.hands[card.ability.extra.hand_played].level > 1
-      end
-      if can_level and G.GAME.hands[card.ability.extra.hand_played] == G.GAME.hands[text] then
-        level_up_hand(card, card.ability.extra.hand_played, nil, -1)
+      if G.GAME.hands[card.ability.extra.hand_played] == G.GAME.hands[text] then
         local highest_played = 0
         local highest_hands = {}
         for handname, values in pairs(G.GAME.hands) do
@@ -1554,7 +1547,7 @@ local granbull = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult_multi2}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Fairy",

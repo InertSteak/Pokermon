@@ -1377,7 +1377,7 @@ local sandslash={
                     center.ability.extra.glass_limit - center.ability.extra.glass_restored, 
                     colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6, 
   enhancement_gate = 'm_glass',
   stage = "One", 

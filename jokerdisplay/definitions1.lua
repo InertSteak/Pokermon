@@ -2016,7 +2016,7 @@ jd_def["j_poke_muk"] = {
     },
     calc_function = function(card)
         local mult = 0
-        mult = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size)
+        mult = card.ability.extra.mult_mod * (#G.playing_cards - G.GAME.starting_deck_size)
         card.joker_display_values.mult = mult
     end
 }

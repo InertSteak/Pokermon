@@ -1261,13 +1261,13 @@ local grimer={
 local muk={
   name = "muk", 
   pos = {x = 10, y = 6}, 
-  config = {extra = {mult = 3}},
+  config = {extra = {mult_mod = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, G.GAME.starting_deck_size, 
-                    math.max(0, ((G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.mult))}}
+    return {vars = {center.ability.extra.mult_mod, G.GAME.starting_deck_size, 
+                    math.max(0, ((G.playing_cards and (#G.playing_cards - G.GAME.starting_deck_size) or 0) * center.ability.extra.mult_mod))}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 6, 
   stage = "One", 
   ptype = "Dark",
@@ -1278,9 +1278,9 @@ local muk={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.playing_cards > G.GAME.starting_deck_size then
         return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size)}}, 
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * (#G.playing_cards - G.GAME.starting_deck_size)}}, 
           colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult * (#G.playing_cards - G.GAME.starting_deck_size),
+          mult_mod = card.ability.extra.mult_mod * (#G.playing_cards - G.GAME.starting_deck_size),
           card = card
         }
       end
