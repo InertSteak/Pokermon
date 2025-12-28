@@ -561,10 +561,10 @@ local unown_swarm={
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
       -- AAAAA
-      card.children.center.VT.w = card.T.w
+      card.VT.w = card.T.w
       card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL), nil, 0.6)
       card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
-      card.children.center.VT.w = card.T.w * 1.174
+      card.VT.w = card.T.w * 1.174
     end},
   config = {extra = {mult = 28, Xmult_multi = 2.8}},
   loc_vars = function(self, info_queue, center)
@@ -608,7 +608,7 @@ local unown_swarm={
   update = function(self, card, dt)
     card.children.center.VT.x = card.T.x - (G.CARD_H - G.CARD_W) / 2
     card.children.floating_sprite.VT.x = card.children.center.VT.x
-    card.children.center.VT.w = card.T.w * 1.174
+    card.VT.w = card.T.w * 1.174
 
 	if card.front_card then
 	  card.front_card.children.center.VT.x = card.children.center.VT.x + 0.35
