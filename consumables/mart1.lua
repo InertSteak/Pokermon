@@ -171,6 +171,7 @@ local bird_energy = {
   atlas = "AtlasConsumablesBirdEnergy",
   cost = 4,
   etype = "Bird",
+  no_collection = true,
   unlocked = true,
   discovered = true,
   loc_vars = function(self, info_queue, card)

@@ -342,6 +342,9 @@ function loc_colour(_c, _default)
   return pokecolors(_c, _default)
 end
 
+--called to ensure crashes don't happen
+loc_colour()
+
 --Stake textures for Malverk
 if (SMODS.Mods["malverk"] or {}).can_load then
   AltTexture({
