@@ -4634,7 +4634,7 @@ return {
                 "Retrigger the {C:attention}first{} card",
                 "with {C:attention}even{} rank and the",
                 "{C:attention}first{} card with {C:attention}odd{} rank",
-                "used in scoring"
+                "in poker hand"
               }
             },
             j_poke_mimikyu = {

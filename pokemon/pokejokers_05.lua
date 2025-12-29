@@ -562,6 +562,7 @@ local lapras={
           G.STATE_COMPLETE = false
           G.GAME.current_round.used_packs = {}
           G.GAME.current_round.reroll_cost_increase = 0
+          G.GAME.current_round.free_rerolls = G.GAME.round_resets.free_rerolls
           calculate_reroll_cost(true)
           return true
         end,
