@@ -15,7 +15,7 @@ local charcadet={
     end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
   end,
-  rarity = 1,
+  rarity = 2,
   cost = 5,
   gen = 9,
   item_req = {"dawnstone", "duskstone"},

@@ -234,7 +234,7 @@ local suicune={
 local larvitar={
   name = "larvitar",
   pos = {x = 7, y = 9},
-  config = {extra = {chip_mod = 8, full_houses = 0}, evo_rqmt = 6},
+  config = {extra = {chip_mod = 10, full_houses = 0}, evo_rqmt = 6},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.full_houses)}}
@@ -271,7 +271,7 @@ local larvitar={
 local pupitar={
   name = "pupitar",
   pos = {x = 8, y = 9},
-  config = {extra = {chip_mod = 12, full_houses = 0}, evo_rqmt = 8},
+  config = {extra = {chip_mod = 15, full_houses = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chip_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.full_houses)}}

@@ -93,7 +93,7 @@ local bibarel={
 local kricketot={
   name = "kricketot",
   pos = {x = 0, y = 0},
-  config = {extra = {money = 5,rounds = 4,}},
+  config = {extra = {money = 4,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.rounds, }}
@@ -126,7 +126,7 @@ local kricketot={
 local kricketune={
   name = "kricketune",
   pos = {x = 0, y = 0},
-  config = {extra = {money = 5,num = 1, dem = 2}},
+  config = {extra = {money = 4,num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kricketune')
