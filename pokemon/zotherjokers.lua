@@ -769,8 +769,8 @@ local daycare={
   stage = "Other",
   atlas = "placeholder_joker",
   perishable_compat = true,
-  blueprint_compat = true,
-  eternal_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and not context.blueprint then
       local adjacent_jokers = poke_get_adjacent_jokers(card)
