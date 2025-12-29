@@ -4631,10 +4631,10 @@ return {
                 "Each played {C:attention}non-face{} card",
                 "gives {C:mult}+#1#{} Mult when scored",
                 "{br:3}ERROR - CONTACT STEAK",
-                "Retrigger the {C:attention}first{} scoring",
-                "card with {C:attention}even{} rank and",
-                "the {C:attention}first{} scoring card with",
-                "{C:attention}odd{} rank once per round"
+                "Retrigger the {C:attention}first{} card",
+                "with {C:attention}even{} rank and the",
+                "{C:attention}first{} card with {C:attention}odd{} rank",
+                "used in scoring"
               }
             },
             j_poke_mimikyu = {

@@ -223,7 +223,7 @@ local simipour = {
 local roggenrola = {
   name = "roggenrola", 
   pos = {x = 2, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 4, hazard_triggered = 0}, evo_rqmt = 25},
+  config = {extra = {hazards = 4, mult_mod = 8, hazard_triggered = 0}, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -269,7 +269,7 @@ local roggenrola = {
 local boldore = {
   name = "boldore", 
   pos = {x = 3, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 8}},
+  config = {extra = {hazards = 4, mult_mod = 12}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -282,7 +282,7 @@ local boldore = {
     
     return {vars = {abbr.hazards, abbr.mult_mod}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Earth",
@@ -316,7 +316,7 @@ local boldore = {
 local gigalith = {
   name = "gigalith", 
   pos = {x = 4, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 6, retriggers = 1}},
+  config = {extra = {hazards = 4, mult_mod = 8, retriggers = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
