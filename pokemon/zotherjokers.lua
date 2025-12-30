@@ -10,7 +10,7 @@ local pokedex={
   cost = 5, 
   stage = "Other",
   atlas = "others",
-  blueprint_compat = true,
+  blueprint_compat = false,
 }
 
 local rotomdex={ 
