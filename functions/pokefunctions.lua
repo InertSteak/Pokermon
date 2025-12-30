@@ -843,7 +843,7 @@ end
 
 pokemon_in_pool = function (self)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then
-      return true
+    return true
   end
   local name
   if not self.name and self.ability.name then
@@ -852,8 +852,8 @@ pokemon_in_pool = function (self)
     name = self.name or "bulbasaur"
   end
   if (name == "dreepy" or name == "drakloak" or name == "dragapult") and not G.P_CENTERS['j_poke_dreepy_dart'] then
-    return false
-  end
+          return false
+        end
   if name == "ruins_of_alph" and not G.P_CENTERS['j_poke_unown'] then
     return false
   end
@@ -866,8 +866,8 @@ pokemon_in_pool = function (self)
         found_other = true 
       elseif cur_name == name then
         in_family = true
-      end
     end
+  end
     if in_family and found_other then
       return false
     end
@@ -880,7 +880,7 @@ pokemon_in_pool = function (self)
     if self.enhancement_gate and G.playing_cards then
       for k, v in pairs(G.playing_cards) do
           if v.config.center.key == self.enhancement_gate then
-              return true
+  return true
           end
       end
       return false
@@ -1133,7 +1133,17 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
     if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
        and not (poketype and poketype ~= v.ptype) and v:in_pool() and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
-      table.insert(poke_keys, v.key)
+
+      if v.enhancement_gate then
+        for kk, vv in pairs(G.playing_cards) do
+          if SMODS.has_enhancement(vv, v.enhancement_gate) then
+            table.insert(poke_keys, v.key)
+            break
+          end
+        end
+      else
+        table.insert(poke_keys, v.key)
+      end
     end
   end
   
