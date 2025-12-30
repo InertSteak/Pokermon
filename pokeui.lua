@@ -521,6 +521,7 @@ local function get_sprite_keys_by_artist(artist)
 
   if artist == 'Sonfive' then
     keys[#keys+1] = { display_text = "Main Menu Logo", atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
+    keys[#keys+1] = { display_text = "Pokermon Logo", atlas = "poke_logo_alt", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
   end
 
   return keys

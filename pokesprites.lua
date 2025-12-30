@@ -283,13 +283,20 @@ SMODS.Atlas({
 SMODS.Atlas({
     key = "smeargle_logo",
     path = "smeargle_logo.png",
-    px = 300,
-    py = 194
+    px = 389,
+    py = 216
 }):register()
 
 SMODS.Atlas({
     key = "poke_logo",
     path = "poke_logo.png",
+    px = 389,
+    py = 216
+}):register()
+
+SMODS.Atlas({
+    key = "poke_logo_alt",
+    path = "poke_logo_alt.png",
     px = 389,
     py = 216
 }):register()
