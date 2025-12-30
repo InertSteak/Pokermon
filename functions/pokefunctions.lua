@@ -841,52 +841,8 @@ get_evo_item_keys = function(card, prefix)
   return keys
 end
 
-pokemon_in_pool = function (self)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then
-    return true
-  end
-  local name
-  if not self.name and self.ability.name then
-    name = self.ability.name
-  else
-    name = self.name or "bulbasaur"
-  end
-  if (name == "dreepy" or name == "drakloak" or name == "dragapult") and not G.P_CENTERS['j_poke_dreepy_dart'] then
-          return false
-        end
-  if name == "ruins_of_alph" and not G.P_CENTERS['j_poke_unown'] then
-    return false
-  end
-  local found_other
-  local in_family
-  for k, v in ipairs(pokermon.family) do
-    for l, p in ipairs(v) do
-      local cur_name = (type(p) == "table" and p.key) or p
-      if cur_name ~= name and next(find_joker(cur_name)) then
-        found_other = true 
-      elseif cur_name == name then
-        in_family = true
-    end
-  end
-    if in_family and found_other then
-      return false
-    end
-    found_other = false
-    in_family = false
-  end
-  if next(find_joker(name)) then
-    return false
-  else
-    if self.enhancement_gate and G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-          if v.config.center.key == self.enhancement_gate then
-  return true
-          end
-      end
-      return false
-    end
-    return true
-  end
+pokemon_in_pool = function(self)
+  return not poke_family_present(self)
 end
 
 evo_item_use = function(self, card, area, copier)
