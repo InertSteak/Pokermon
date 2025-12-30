@@ -841,10 +841,6 @@ get_evo_item_keys = function(card, prefix)
   return keys
 end
 
-pokemon_in_pool = function(self)
-  return not poke_family_present(self)
-end
-
 evo_item_use = function(self, card, area, copier)
     local applied = false
     local evolve = false
@@ -1087,7 +1083,7 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
     
   for k, v in pairs(G.P_CENTERS) do
     if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and v:in_pool() and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
+       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and v:in_pool() and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
       if v.enhancement_gate then

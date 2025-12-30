@@ -988,9 +988,6 @@ local rattata={
     end
     return level_evo(self, card, context, "j_poke_raticate")
   end,
-  in_pool = function(self)
-    return pokemon_in_pool(self)
-  end
 }
 -- Raticate 020
 local raticate={
