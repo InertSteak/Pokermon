@@ -626,7 +626,7 @@ function poke_suit_check(hand, num)
 end
 
 set_joker_family_win = function(card)
-  local keys = get_family_keys(card.config.center.name, card.config.center.poke_custom_prefix, card)
+  local keys = get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
     if G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker
