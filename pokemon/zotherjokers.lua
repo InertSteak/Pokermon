@@ -68,12 +68,12 @@ local rotomdex={
 local everstone={ 
   name = "everstone",
   pos = {x = 1, y = 0},
-  config = {extra = {Xmult_multi = 1.75}},
+  config = {extra = {Xmult_multi = 1.75, Xmult_multi2 = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-		return {vars = {center.ability.extra.Xmult_multi}}
+		return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2}}
   end,
   rarity = 3, 
   cost = 8, 
@@ -82,17 +82,25 @@ local everstone={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.other_joker and context.other_joker.config and (context.other_joker.config.center.stage == "Basic" or context.other_joker.config.center.stage == "Baby") then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              context.other_joker:juice_up(0.5, 0.5)
-              return true
-          end
-        })) 
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
+        local Xmult = 1
+        if context.other_joker.config.center.stage == "Basic" then
+          Xmult = card.ability.extra.Xmult_multi2
+        elseif context.other_joker.config.center.stage == "Baby" then
+          Xmult = card.ability.extra.Xmult_multi
+        end
+        if Xmult > 1 then
+          G.E_MANAGER:add_event(Event({
+            func = function()
+                context.other_joker:juice_up(0.5, 0.5)
+                return true
+            end
+          })) 
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
     end
   end,
 }

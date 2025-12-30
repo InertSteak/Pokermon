@@ -5001,7 +5001,8 @@ return {
                 text = {
                     "Pokemon {C:attention}can't{} evolve or transform",
                     "{br:3.5}ERROR - CONTACT STEAK",
-                    "{C:attention}Basic{} and {C:attention}Baby{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
+                    "{C:attention}Basic{} Pokemon each give {X:mult,C:white} X#2# {} Mult",
+                    "{C:attention}Baby{} Pokemon each give {X:mult,C:white} X#1# {} Mult",
                 } 
             },
             j_poke_tall_grass = {
