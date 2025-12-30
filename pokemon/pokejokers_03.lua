@@ -1304,7 +1304,7 @@ local muk={
           return true end }))
       delay(0.3)
       for i = 1, #G.jokers.cards do
-          G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
+          G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}, poke_removed_at_end = true})
       end
       card:juice_up()
     end

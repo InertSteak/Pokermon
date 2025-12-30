@@ -1317,7 +1317,8 @@ local sandshrew={
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
-                  G.hand:emplace(copy)
+                  local area = context.poke_removed_at_end and G.deck or G.hand
+                  area:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
                   playing_card_joker_effects({copy})
@@ -1396,7 +1397,8 @@ local sandslash={
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
-                  G.hand:emplace(copy)
+                  local area = context.poke_removed_at_end and G.deck or G.hand
+                  area:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
                   playing_card_joker_effects({copy})
