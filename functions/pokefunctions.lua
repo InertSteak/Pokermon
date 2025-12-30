@@ -1427,8 +1427,9 @@ end
 poke_family_present = function(center)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
   local family_list = poke_get_family_list(center.name)
+  local prefix = center.poke_custom_prefix or 'poke'
   for _, fam in pairs(family_list) do
-    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
+    if G.GAME.used_jokers['j_'..prefix..'_'..((type(fam) == "table" and fam.key) or fam)] then
       return true
     end
   end
