@@ -380,9 +380,9 @@ SMODS.collection_pool = function(_base_pool)
 end
 
 pokermon.find_pool_index = function(pool, key)
-    for k, v in pairs(pool) do
-      if v.key == key then return k end
-    end
+  for k, v in pairs(pool) do
+    if v.key == key then return k end
+  end
 end
 
 pokermon.get_dex_number = function(name)
@@ -412,5 +412,18 @@ pokermon.find_next_dex_number = function(name)
     elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
       return i
     elseif pokemon == "missingno" then return i end
+  end
+end
+
+-- Toggle function for Stake + Sticker Skins
+G.FUNCS.toggle_pokermon_skins = function()
+  for k, v in pairs(G.P_STAKES) do
+    if pokermon_config.stake_skins then
+      SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
+      G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
+    else
+      SMODS.Stake:take_ownership(k, { atlas = "chips" }, true)
+      G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
+    end
   end
 end

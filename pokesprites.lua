@@ -371,6 +371,20 @@ if (SMODS.Mods["malverk"] or {}).can_load then
     })
 end
 
+SMODS.Atlas({
+  key = "pokestakes",
+  path = 'pokestakes.png',
+  px = 29,
+  py = 29
+})
+
+SMODS.Atlas({
+  key = "pokestakes_stickers",
+  path = 'pokestakes_stickers.png',
+  px = 71,
+  py = 95
+})
+
 --Deck Skins
 --RBY sprites skins by GAME FREAK, arranged by Catzzadilla
 local RBYspades = SMODS.Atlas{
