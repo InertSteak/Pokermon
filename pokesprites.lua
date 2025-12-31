@@ -16,14 +16,14 @@ for i = 1, #joker_basic_atlases do
     path = 'Basic Series/'..atlas_base..".png",
     px = 71,
     py = 95
-  }):register()
+  })
 
   SMODS.Atlas({
     key = atlas_shiny,
     path = 'Basic Series/'..atlas_shiny..".png",
     px = 71,
     py = 95
-  }):register()
+  })
   if joker_basic_atlases[i] ~= "Others" then
     local atlas_seriesa = series_a_prefix..joker_basic_atlases[i]
     local atlas_seriesa_shiny = atlas_seriesa.."Shiny"
@@ -33,14 +33,14 @@ for i = 1, #joker_basic_atlases do
       path = 'Series A/'..atlas_seriesa..".png",
       px = 71,
       py = 95
-    }):register()
+    })
 
     SMODS.Atlas({
       key = atlas_seriesa_shiny,
       path = 'Series A/'..atlas_seriesa_shiny..".png",
       px = 71,
       py = 95
-    }):register()
+    })
   end
 end
 
@@ -49,28 +49,28 @@ SMODS.Atlas({
     path = "Series B/AtlasJokersSeriesBNatdex.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesBNatdexShiny",
     path = "Series B/AtlasJokersSeriesBNatdexShiny.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasBoosterpacksBasic",
     path = "Basic Series/AtlasBoosterpacksBasic.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasBoosterpacksSeriesA",
     path = "Series A/AtlasBoosterpacksSeriesA.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasBossblinds",
@@ -79,7 +79,7 @@ SMODS.Atlas({
     px = 34,
     py = 34,
     frames = 21,
-}):register()
+})
 
 SMODS.Atlas({
     key = "placeholder_blind",
@@ -88,140 +88,140 @@ SMODS.Atlas({
     px = 34,
     py = 34,
     frames = 21,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasConsumablesBasic",
     path = "Basic Series/AtlasConsumablesBasic.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasConsumablesBirdEnergy",
     path = "Basic Series/AtlasConsumablesBirdEnergy.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasConsumablesSeriesA",
     path = "Series A/AtlasConsumablesSeriesA.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasDecksBasic",
     path = "Basic Series/AtlasDecksBasic.png",
     px = 71,
     py = 95,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasDecksSeriesA",
     path = "Series A/AtlasDecksSeriesA.png",
     px = 71, 
     py = 95,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasEnhancementsBasic",
     path = "Basic Series/AtlasEnhancementsBasic.png",
     px = 71,
     py = 95,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasEnhancementsSeriesA",
     path = "Series A/AtlasEnhancementsSeriesA.png",
     px = 71,
     py = 95,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersVanillaShiny",
     path = "AtlasJokersVanillaShiny.png",
     px = 71,
     py = 95,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasStickersBasic",
     path = "Basic Series/AtlasStickersBasic.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasStickersSeriesA",
     path = "Series A/AtlasStickersSeriesA.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersBasicTitleCard",
     path = "Basic Series/TitleCard.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesATitleCard",
     path = "Series A/TitleCard.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasTags",
     path = "AtlasTags.png",
     px = 34,
     py = 34,
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasVouchersBasic",
     path = "Basic Series/AtlasVouchersBasic.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasVouchersSeriesA",
     path = "Series A/AtlasVouchersSeriesA.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorb",
     path = "Series A/AtlasJokersSeriesAVoltorb.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorbShiny",
     path = "Series A/AtlasJokersSeriesAVoltorbShiny.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrode",
     path = "Series A/AtlasJokersSeriesAElectrode.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrodeShiny",
     path = "Series A/AtlasJokersSeriesAElectrodeShiny.png",
     px = 71,
     py = 95
-}):register()
+})
 
 
 SMODS.Atlas({
@@ -236,76 +236,76 @@ SMODS.Atlas({
     path = "placeholder_item.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "placeholder_deck",
     path = "placeholder_deck.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "placeholder_sleeve",
     path = "placeholder_sleeve.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "placeholder_joker",
     path = "placeholder_joker.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "placeholder_jokerShiny",
     path = "placeholder_jokerShiny.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "unergy",
     path = "unergy.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "unitem",
     path = "unitem.png",
     px = 71,
     py = 95
-}):register()
+})
 
 SMODS.Atlas({
     key = "smeargle_logo",
     path = "smeargle_logo.png",
     px = 389,
     py = 216
-}):register()
+})
 
 SMODS.Atlas({
     key = "poke_logo",
     path = "poke_logo.png",
     px = 389,
     py = 216
-}):register()
+})
 
 SMODS.Atlas({
     key = "poke_logo_alt",
     path = "poke_logo_alt.png",
     px = 389,
     py = 216
-}):register()
+})
 
 --Custom sounds
 SMODS.Sound({
     key = "e_shiny",
     path = "e_shiny.ogg"
-}):register()
+})
 
 SMODS.Sound({
 	key = "pocket_music_high",
