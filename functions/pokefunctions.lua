@@ -242,7 +242,7 @@ find_pokemon_type = function(target_type, exclude_card)
 end
 
 is_type = function(card, target_type)
-  if get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
+  if card and get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
     return true
   else
     return false
@@ -774,12 +774,12 @@ get_previous_evo_from_center = function(center, full_key)
   return full_key and "j_"..prefix.."_"..prev or prev
 end
 
-get_family_keys = function(cardname, custom_prefix, card)
+get_family_keys = function(card)
   local keys = {}
-  local line = poke_get_family_list(cardname)
-  local prefix = custom_prefix or 'poke'
-  local full_prefix = 'j_'..prefix..'_'
-  if card.config.center.poke_multi_item then full_prefix = 'c_'..prefix..'_' end
+  local center = card.config.center
+  local line = poke_get_family_list(center.name)
+  local prefix = center.poke_custom_prefix or 'poke'
+  local full_prefix = (center.poke_multi_item and 'c_' or 'j_')..prefix..'_'
   if #line > 1 then
     for i = 1, #line do
       if type(line[i]) == "table" then
@@ -791,10 +791,10 @@ get_family_keys = function(cardname, custom_prefix, card)
       end
     end
   else
-    table.insert(keys, full_prefix..cardname)
+    table.insert(keys, full_prefix..center.name)
   end
   for k, v in pairs(extended_family) do
-    if k == cardname then
+    if k == center.name then
       for _, y in pairs(v) do
         if type(y) == "table" then
           if y.item then
@@ -809,26 +809,26 @@ get_family_keys = function(cardname, custom_prefix, card)
       end
     end
   end
-  if cardname == "smeargle" then
+  if center.name == "smeargle" then
     if card.ability.extra.copy_joker then
       table.insert(keys, card.ability.extra.copy_joker.config.center_key)
     end
   end
-  if cardname == "ruins_of_alph" then
+  if center.name == "ruins_of_alph" then
     for _, v in pairs(card.ability.extra.forms) do
       local form = {key = "j_poke_unown", form = v}
       table.insert(keys, form)
     end
   end
-  local evo_item_keys = get_evo_item_keys(card, prefix)
+  local evo_item_keys = get_evo_item_keys(card)
   table.append(keys, evo_item_keys)
   return keys
 end
 
-get_evo_item_keys = function(card, prefix)
-  prefix = prefix or card.config.center.poke_custom_prefix
+get_evo_item_keys = function(card)
   local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
+    local prefix = card.config.center.poke_custom_prefix
     local item_key, evo_item_prefix
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
