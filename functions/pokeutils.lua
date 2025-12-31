@@ -678,3 +678,39 @@ table.append = function(t1, t2)
     table.insert(t1, v)
   end
 end
+
+pokermon.find_pool_index = function(pool, key)
+  for k, v in pairs(pool) do
+    if v.key == key then return k end
+  end
+end
+
+pokermon.get_dex_number = function(name)
+  for i, pokemon in ipairs(pokermon.dex_order) do
+    if type(pokemon) == 'table' then
+      for x, y in ipairs(pokemon) do
+        if name == y then return i + (x - 1)/10 end
+      end
+    elseif type(pokemon) == "string" and name == pokemon then return i end
+  end
+  return #pokermon.dex_order + 1
+end
+
+pokermon.find_next_dex_number = function(name)
+  local dexNo = pokermon.get_dex_number(name)
+  local group_list
+  for k, v in pairs(pokermon.dex_order_groups) do
+    if table.contains(v, name) then group_list = v break end
+  end
+  for i, pokemon in ipairs(pokermon.dex_order) do
+    if type(pokemon) == 'table' then
+      for _, mon in ipairs(pokemon) do
+        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
+          return i
+        end
+      end
+    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
+      return i
+    elseif pokemon == "missingno" then return i end
+  end
+end
