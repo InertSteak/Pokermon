@@ -273,10 +273,10 @@ end
 function PokeDisplayCard:draw(layer)
   layer = layer or 'both'
 
-  G.shared_shadow = self.children.center
+  G.shared_shadow = self.children.center or self.children.animatedSprite
 
   if not self.hide_center and G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
-    self.shadow_height = 0 * (0.08 + 0.4 * math.sqrt(self.velocity.x ^ 2)) + (self.states.drag.is and 0.35 or 0.1)
+    self.shadow_height = --[[0 * (0.08 + 0.4 * math.sqrt(self.velocity.x ^ 2)) +]] (self.states.drag.is and 0.35 or 0.1)
     G.shared_shadow:draw_shader('dissolve', self.shadow_height)
   end
 
