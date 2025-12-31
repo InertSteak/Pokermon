@@ -141,12 +141,19 @@ function PokeDisplayCard:cycle_layer_visibility()
 end
 
 function PokeDisplayCard:set_sprites()
-  self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[self.atlas], self.pos)
-  self.children.center.states.hover = self.states.hover
-  self.children.center.states.click = self.states.click
-  self.children.center.states.drag = self.states.drag
-  self.children.center.states.collide.can = false
-  self.children.center:set_role({ major = self, role_type = 'Glued', draw_major = self })
+  if G.ANIMATION_ATLAS[self.atlas] then
+    self.children.animatedSprite = AnimatedSprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ANIMATION_ATLAS[self.atlas], self.pos)
+    self.children.animatedSprite.states = self.states
+    self.children.animatedSprite.states.drag.can = true
+    self.children.animatedSprite:set_role({ major = self, role_type = 'Glued', draw_major = self })
+  else
+    self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[self.atlas], self.pos)
+    self.children.center.states.hover = self.states.hover
+    self.children.center.states.click = self.states.click
+    self.children.center.states.drag = self.states.drag
+    self.children.center.states.collide.can = false
+    self.children.center:set_role({ major = self, role_type = 'Glued', draw_major = self })
+  end
 
   if self.soul_pos then
     self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[self.atlas], self.soul_pos)
@@ -163,7 +170,8 @@ function PokeDisplayCard:hard_set_T(X, Y, W, H)
   local w = (W or self.T.w)
   local h = (H or self.T.h)
   Moveable.hard_set_T(self, x, y, w, h)
-  self.children.center:hard_set_T(x, y, w, h)
+  if self.children.center then self.children.center:hard_set_T(x, y, w, h) end
+  if self.children.animatedSprite then self.children.animatedSprite:hard_set_T(x, y, w, h) end
 end
 
 function PokeDisplayCard:hover()
@@ -265,10 +273,10 @@ end
 function PokeDisplayCard:draw(layer)
   layer = layer or 'both'
 
-  G.shared_shadow = self.children.center
+  G.shared_shadow = self.children.center or self.children.animatedSprite
 
   if not self.hide_center and G.SETTINGS.GRAPHICS.shadows == 'On' and (layer == 'shadow' or layer == 'both') then
-    self.shadow_height = 0 * (0.08 + 0.4 * math.sqrt(self.velocity.x ^ 2)) + (self.states.drag.is and 0.35 or 0.1)
+    self.shadow_height = --[[0 * (0.08 + 0.4 * math.sqrt(self.velocity.x ^ 2)) +]] (self.states.drag.is and 0.35 or 0.1)
     G.shared_shadow:draw_shader('dissolve', self.shadow_height)
   end
 
@@ -287,13 +295,18 @@ function PokeDisplayCard:draw(layer)
     end
 
     if not self.hide_center then
-      self.children.center:draw_shader('dissolve')
+      if self.children.center then self.children.center:draw_shader('dissolve') end
+      if self.children.animatedSprite then
+        self.children.animatedSprite.role.draw_major = self
+        self.children.animatedSprite:draw_shader('dissolve', 0.1)
+        self.children.animatedSprite:draw_shader('dissolve')
+      end
 
       if self.shader then
         self.ARGS.send_to_shader = self.ARGS.send_to_shader or {}
         self.ARGS.send_to_shader[1] = math.min(self.VT.r * 3, 1) + G.TIMERS.REAL / 28 + (self.juice and self.juice.r * 20 or 0)
         self.ARGS.send_to_shader[2] = G.TIMERS.REAL
-        self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader)
+        if self.children.center then self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader) end
       end
     end
 
@@ -304,6 +317,15 @@ function PokeDisplayCard:draw(layer)
 
       self.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, self.children.center, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
       self.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+    end
+  end
+
+  if self.children.animatedSprite then
+    for k, v in pairs(self.children) do 
+        if k ~= 'animatedSprite' then
+            v.VT.scale = self.VT.scale
+            v:draw()
+        end
     end
   end
 
@@ -321,8 +343,18 @@ function PokeDisplayCard:init_from_existing(key, args, x, y, w, h)
     existing_obj = G.P_SEALS[key]
   elseif args.set == 'Tag' then
     existing_obj = G.P_TAGS[key]
+    w = 0.8
+    h = 0.8
+  elseif args.set == 'Blind' then
+    existing_obj = G.P_BLINDS[key]
+    w = 1.3
+    h = 1.3
   else
     existing_obj = G.P_CENTERS[key]
+    if args.set == 'Booster' then
+      w = G.CARD_W*1.27
+      h = G.CARD_H*1.27
+    end
   end
 
   new_args.atlas = existing_obj.atlas
@@ -342,16 +374,6 @@ function PokeDisplayCard:init_from_existing(key, args, x, y, w, h)
   end
   if args.set == 'Voucher' then
     new_args.shader = 'voucher'
-  end
-
-  if args.set == 'Booster' then
-    w = G.CARD_W*1.27
-    h = G.CARD_H*1.27
-  end
-
-  if args.set == 'Tag' then
-    w = 0.8
-    h = 0.8
   end
 
   self:init(new_args, x, y, w, h)

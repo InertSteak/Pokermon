@@ -518,6 +518,7 @@ local function get_sprite_keys_by_artist(artist)
   add_pool_to_keys(G.P_CENTER_POOLS["Booster"])
   add_pool_to_keys(G.P_CENTER_POOLS["Seal"])
   add_pool_to_keys(G.P_CENTER_POOLS["Tag"])
+  add_pool_to_keys(G.P_BLINDS)
 
   if artist == 'Sonfive' then
     keys[#keys+1] = { display_text = "Main Menu Logo", atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
