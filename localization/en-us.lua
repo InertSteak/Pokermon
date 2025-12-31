@@ -1799,7 +1799,7 @@ return {
                     "Played {C:attention}Wild{} cards give",
                     "{C:mult}+#1#{} Mult, {C:chips}+#2#{} Chips, or {C:money}$#3#{}",
                     "{C:green}#4# in #5#{} chance for {C:attention}all three{}",
-                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#6#{C:inactive,s:0.8}  Wild cards)"
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#6#{C:inactive,s:0.8} Wild cards)"
                 } 
             },
             j_poke_kangaskhan = {
