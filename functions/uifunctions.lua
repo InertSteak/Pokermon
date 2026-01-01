@@ -382,13 +382,16 @@ end
 
 -- Toggle function for Stake + Sticker Skins
 G.FUNCS.toggle_pokermon_skins = function()
-  for k, v in pairs(G.P_STAKES) do
-    if pokermon_config.stake_skins then
-      SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
-      G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
-    else
-      SMODS.Stake:take_ownership(k, { atlas = "chips" }, true)
-      G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
+  local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
+  for k, _ in pairs(G.P_STAKES) do
+    if table.contains(vanilla_stakes, k) then
+      if pokermon_config.stake_skins then
+        SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
+      else
+        SMODS.Stake:take_ownership(k, { atlas = "chips" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
+      end
     end
   end
 end
