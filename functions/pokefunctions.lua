@@ -1074,20 +1074,27 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
+get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
   local poke_keys = {}
-  local pokearea = area or G.jokers
   local poke_key
   exclude_keys = exclude_keys or {}
-  
+
   if pokerarity then
-    if string.lower(pokerarity) == "common" then pokerarity = 1 end
-    if string.lower(pokerarity) == "uncommon" then pokerarity = 2 end
-    if string.lower(pokerarity) == "rare" then pokerarity = 3 end
+    local rarities = { common = 1, uncommon = 2, rare = 3, legendary = 4 }
+    if type(pokerarity) == 'table' then
+      for k, v in ipairs(pokerarity) do
+        pokerarity[k] = type(v) == 'string' and rarities[v:lower()] or v
+      end
+    elseif type(pokerarity) == 'string' then
+      pokerarity = rarities[pokerarity:lower()] or pokerarity
+    end
   end
-    
+
+  local valid_stages = poke_convert_to_set(stage)
+  local valid_rarities = poke_convert_to_set(pokerarity)
+
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
+    if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
        and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not type(v.in_pool) == 'function' or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
