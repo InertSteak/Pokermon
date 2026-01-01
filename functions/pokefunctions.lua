@@ -1095,7 +1095,7 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
 
   for k, v in pairs(G.P_CENTERS) do
     if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not type(v.in_pool) == 'function' or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
+       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
       if v.enhancement_gate then
