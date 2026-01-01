@@ -1097,13 +1097,16 @@ local unown={
       card.ability.extra.form = form
       self:set_sprites(card)
       
-      card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
+      self:set_nature(card)
       
       if poke_is_in_collection(card) then
         local edition = {negative = true}
         card:set_edition(edition, true, true)
       end
     end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
   end,
   set_sprites = function(self, card, front)
     card.children.center:set_sprite_pos({x = 0, y = 0})
