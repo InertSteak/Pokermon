@@ -1120,6 +1120,15 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
   return poke_key
 end
 
+get_random_poke_key_options = function(options)
+  local pseed = options.seed or options.pseed or options.key_append
+  local stage = options.stage or options.pokestage
+  local pokerarity = options.rarity or options.pokerarity
+  local poketype = options.type or options.poketype
+  local exclude_keys = options.exclude_keys
+  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys)
+end
+
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   local create_args = {set = "Joker", area = pokearea, key = ''}
   create_args.key = get_random_poke_key(pseed, stage, pokerarity, area, poketype)
