@@ -6043,7 +6043,7 @@ return {
                 "tooltips from Pokemon Jokers",
               }
             },
-			previous_evo_stickers_tooltip = {
+			      previous_evo_stickers_tooltip = {
               name = "Previous Evo Stickers",
               text = {
                 "Previous evolutions of",
@@ -6051,12 +6051,20 @@ return {
                 "win the current run",
               }
             },
-			order_jokers_tooltip = {
+			      order_jokers_tooltip = {
               name = "Order Jokers by Dex No.",
               text = {
                 "Pokemon Jokers appear",
                 "in the collection in",
                 "Pokedex order",
+              }
+            },
+            stake_skins_tooltip = {
+              name = "Custom Stake Skins",
+              text = {
+                "Use the custom",
+                "sprites for stakes",
+                "and stake stickers",
               }
             },
             pokemon_only_collection_tooltip = {
@@ -6406,9 +6414,10 @@ return {
             poke_settings_pokemon_only = "Pokemon Only?",
             poke_settings_unlimited_energy = "Unlmited Energy?",
             poke_settings_shiny_playing_cards = "Shiny on playing cards?",
+            poke_settings_stake_skins = "Use Custom Stake Skins?",
             poke_settings_pokemon_detailed_tooltips = "Detailed Tooltips?",
-			poke_settings_previous_evo_stickers = "Previous Evo Stickers?",
-			poke_settings_order_jokers = "Order Jokers by Dex No.?",
+            poke_settings_previous_evo_stickers = "Previous Evo Stickers?",
+            poke_settings_order_jokers = "Order Jokers by Dex No.?",
             poke_settings_pokemon_only_collection = "Only Pokermon Jokers in Collection?",
             poke_settings_jokers_only = "Jokers only?",
             poke_settings_no_evolutions = "No Evolutions?",

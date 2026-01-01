@@ -379,38 +379,19 @@ SMODS.collection_pool = function(_base_pool)
   return pool
 end
 
-pokermon.find_pool_index = function(pool, key)
-    for k, v in pairs(pool) do
-      if v.key == key then return k end
+
+-- Toggle function for Stake + Sticker Skins
+G.FUNCS.toggle_pokermon_skins = function()
+  local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
+  for k, _ in pairs(G.P_STAKES) do
+    if table.contains(vanilla_stakes, k) then
+      if pokermon_config.stake_skins then
+        SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
+      else
+        SMODS.Stake:take_ownership(k, { atlas = "chips" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
+      end
     end
-end
-
-pokermon.get_dex_number = function(name)
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for x, y in ipairs(pokemon) do
-        if name == y then return i + (x - 1)/10 end
-      end
-    elseif type(pokemon) == "string" and name == pokemon then return i end
-  end
-  return #pokermon.dex_order + 1
-end
-
-pokermon.find_next_dex_number = function(name)
-  local dexNo = pokermon.get_dex_number(name)
-  local group_list
-  for k, v in pairs(pokermon.dex_order_groups) do
-    if table.contains(v, name) then group_list = v break end
-  end
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for _, mon in ipairs(pokemon) do
-        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
-          return i
-        end
-      end
-    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
-      return i
-    elseif pokemon == "missingno" then return i end
   end
 end

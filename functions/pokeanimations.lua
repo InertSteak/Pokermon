@@ -17,13 +17,13 @@ for k, tbl in pairs(AnimatedPokemon) do
          path = k .. ".png",
          px = tbl.size and tbl.size.x or 71,
          py = tbl.size and tbl.size.y or 95,
-      }):register()
+      })
       SMODS.Atlas({
          key = k .. "_shiny",
          path = k .. "_shiny.png",
          px = tbl.size and tbl.size.x or 71,
          py = tbl.size and tbl.size.y or 95,
-      }):register()
+      })
    end
    if tbl.soul and not tbl.soul_atlas then
       tbl.soul_atlas = true
@@ -32,13 +32,13 @@ for k, tbl in pairs(AnimatedPokemon) do
          path = k .. "_soul.png",
          px = tbl.soul_size and tbl.soul_size.x or tbl.size and tbl.size.x or 71,
          py = tbl.soul_size and tbl.soul_size.y or tbl.size and tbl.size.y or 95,
-      }):register()
+      })
       SMODS.Atlas({
          key = k .. "_shiny_soul",
          path = k .. "_shiny_soul.png",
          px = tbl.soul_size and tbl.soul_size.x or tbl.size and tbl.size.x or 71,
          py = tbl.soul_size and tbl.soul_size.y or tbl.size and tbl.size.y or 95,
-      }):register()
+      })
    end
 end
 
