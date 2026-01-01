@@ -1098,11 +1098,13 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
        and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
-      if G.playing_cards and v.enhancement_gate then
-        for kk, vv in pairs(G.playing_cards) do
-          if SMODS.has_enhancement(vv, v.enhancement_gate) then
-            table.insert(poke_keys, v.key)
-            break
+      if v.enhancement_gate then
+        if G.playing_cards then
+          for kk, vv in pairs(G.playing_cards) do
+            if SMODS.has_enhancement(vv, v.enhancement_gate) then
+              table.insert(poke_keys, v.key)
+              break
+            end
           end
         end
       else
