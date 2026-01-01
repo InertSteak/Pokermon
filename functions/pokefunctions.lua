@@ -232,8 +232,7 @@ find_pokemon_type = function(target_type, exclude_card)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
-      if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) 
-      and v ~= exclude_card then
+      if is_type(v, target_type) and v ~= exclude_card then
         table.insert(found, v)
       end
     end
