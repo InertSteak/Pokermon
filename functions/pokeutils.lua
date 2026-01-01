@@ -678,3 +678,19 @@ table.append = function(t1, t2)
     table.insert(t1, v)
   end
 end
+
+--- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
+poke_convert_to_set = function(element_or_list)
+  if element_or_list then
+    local set
+    if type(element_or_list) == 'table' then
+      for _, v in ipairs(element_or_list) do
+        set = set or {}
+        set[v] = true
+      end
+    else
+      set = { [element_or_list] = true }
+    end
+    return set
+  end
+end
