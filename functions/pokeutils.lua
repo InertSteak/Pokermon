@@ -629,8 +629,8 @@ set_joker_family_win = function(card)
   local keys = get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
-    if G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker
-        or card.config.center.aux_poke and card.config.center.stage == G.P_CENTERS[v].stage then
+    if (G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker)
+        or (card.config.center.aux_poke and (G.P_CENTERS[v] and card.config.center.stage == G.P_CENTERS[v].stage)) then
       -- This is the bit that tracks joker wins
       G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v]
           or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
