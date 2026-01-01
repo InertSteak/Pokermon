@@ -321,20 +321,12 @@ local mystery_egg = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local prefix_config = "j_"..(card.config.center.poke_custom_prefix and card.config.center.poke_custom_prefix or "poke").."_"
-      local poke_keys = {}
-      for k, v in pairs(G.P_CENTERS) do
-        if string.sub(v.key,1,string.len(prefix_config)) == prefix_config and get_gen_allowed(v) and not v.aux_poke and pokemon_in_pool(v) and v.stage and type(v.rarity) == "number" then
-          if ((v.stage == "Baby" or v.stage == "Basic") and v.rarity ~= 4) then
-            table.insert(poke_keys, {key = v.key, rarity = v.rarity})
-          end
-        end
-      end
-
-      local poke_key = {key = "j_poke_rhyhorn", rarity = 2}
-      if #poke_keys > 0 then
-        poke_key = pseudorandom_element(poke_keys, pseudoseed('egg'))
-      end
+      local poke_key = get_random_poke_key_options {
+        stage = { "Baby", "Basic" },
+        rarity = { "Common", "Uncommon", "Rare" },
+        key_append = 'egg'
+      }
+      local center = G.P_CENTERS[poke_key]
       -- common hatches in 2 turns
       -- uncommon hatches in 2 or 3 turns
       -- rare hatches in 3 turns
@@ -342,17 +334,17 @@ local mystery_egg = {
       -- w/o fire = 2/3/3
       -- w/1 fire = 2/2/3
       -- w/2 fire = 2/2/2
-      if poke_key.rarity == 1 then
+      if center.rarity == 1 then
         card.ability.extra.rounds = 2
-      elseif poke_key.rarity == 2 then
+      elseif center.rarity == 2 then
         card.ability.extra.rounds = 2
         if pseudorandom('regg') > .50 then
           card.ability.extra.rounds = card.ability.extra.rounds + 1 
         end
-      elseif poke_key.rarity == 3 then
+      elseif center.rarity == 3 then
          card.ability.extra.rounds = 3
       end
-      card.ability.extra.key = poke_key.key
+      card.ability.extra.key = center.key
     end
   end
 }
@@ -704,7 +696,7 @@ local professor={
   stage = "Other",
   atlas = "others",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then

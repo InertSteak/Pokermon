@@ -845,52 +845,9 @@ get_evo_item_keys = function(card)
   return keys
 end
 
-pokemon_in_pool = function (self)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then
-      return true
-  end
-  local name
-  if not self.name and self.ability.name then
-    name = self.ability.name
-  else
-    name = self.name or "bulbasaur"
-  end
-  if (name == "dreepy" or name == "drakloak" or name == "dragapult") and not G.P_CENTERS['j_poke_dreepy_dart'] then
-    return false
-  end
-  if name == "ruins_of_alph" and not G.P_CENTERS['j_poke_unown'] then
-    return false
-  end
-  local found_other
-  local in_family
-  for k, v in ipairs(pokermon.family) do
-    for l, p in ipairs(v) do
-      local cur_name = (type(p) == "table" and p.key) or p
-      if cur_name ~= name and next(find_joker(cur_name)) then
-        found_other = true 
-      elseif cur_name == name then
-        in_family = true
-      end
-    end
-    if in_family and found_other then
-      return false
-    end
-    found_other = false
-    in_family = false
-  end
-  if next(find_joker(name)) then
-    return false
-  else
-    if self.enhancement_gate and G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-          if v.config.center.key == self.enhancement_gate then
-              return true
-          end
-      end
-      return false
-    end
-    return true
-  end
+---@deprecated functionality is handled by generation code instead
+pokemon_in_pool = function()
+  return true
 end
 
 evo_item_use = function(self, card, area, copier)
@@ -1121,23 +1078,42 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
+get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
   local poke_keys = {}
-  local pokearea = area or G.jokers
   local poke_key
   exclude_keys = exclude_keys or {}
-  
+
   if pokerarity then
-    if string.lower(pokerarity) == "common" then pokerarity = 1 end
-    if string.lower(pokerarity) == "uncommon" then pokerarity = 2 end
-    if string.lower(pokerarity) == "rare" then pokerarity = 3 end
+    local rarities = { common = 1, uncommon = 2, rare = 3, legendary = 4 }
+    if type(pokerarity) == 'table' then
+      for k, v in ipairs(pokerarity) do
+        pokerarity[k] = type(v) == 'string' and rarities[v:lower()] or v
+      end
+    elseif type(pokerarity) == 'string' then
+      pokerarity = rarities[pokerarity:lower()] or pokerarity
+    end
   end
-    
+
+  local valid_stages = poke_convert_to_set(stage)
+  local valid_rarities = poke_convert_to_set(pokerarity)
+
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and v:in_pool() and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
+    if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
+       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
-      table.insert(poke_keys, v.key)
+
+      if v.enhancement_gate then
+        if G.playing_cards then
+          for kk, vv in pairs(G.playing_cards) do
+            if SMODS.has_enhancement(vv, v.enhancement_gate) then
+              table.insert(poke_keys, v.key)
+              break
+            end
+          end
+        end
+      else
+        table.insert(poke_keys, v.key)
+      end
     end
   end
   
@@ -1148,6 +1124,15 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
   end
 
   return poke_key
+end
+
+get_random_poke_key_options = function(options)
+  local pseed = options.seed or options.pseed or options.key_append
+  local stage = options.stage or options.pokestage
+  local pokerarity = options.rarity or options.pokerarity
+  local poketype = options.type or options.poketype
+  local exclude_keys = options.exclude_keys
+  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys)
 end
 
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
@@ -1431,8 +1416,9 @@ end
 poke_family_present = function(center)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
   local family_list = poke_get_family_list(center.name)
+  local prefix = center.poke_custom_prefix or 'poke'
   for _, fam in pairs(family_list) do
-    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
+    if G.GAME.used_jokers['j_'..prefix..'_'..((type(fam) == "table" and fam.key) or fam)] then
       return true
     end
   end

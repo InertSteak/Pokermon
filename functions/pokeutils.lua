@@ -629,8 +629,8 @@ set_joker_family_win = function(card)
   local keys = get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
-    if G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker
-        or card.config.center.aux_poke and card.config.center.stage == G.P_CENTERS[v].stage then
+    if (G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker)
+        or (card.config.center.aux_poke and (G.P_CENTERS[v] and card.config.center.stage == G.P_CENTERS[v].stage)) then
       -- This is the bit that tracks joker wins
       G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v]
           or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
@@ -712,5 +712,20 @@ pokermon.find_next_dex_number = function(name)
     elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
       return i
     elseif pokemon == "missingno" then return i end
+  end
+end
+--- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
+poke_convert_to_set = function(element_or_list)
+  if element_or_list then
+    local set
+    if type(element_or_list) == 'table' then
+      for _, v in ipairs(element_or_list) do
+        set = set or {}
+        set[v] = true
+      end
+    else
+      set = { [element_or_list] = true }
+    end
+    return set
   end
 end
