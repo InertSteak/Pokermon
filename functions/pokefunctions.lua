@@ -841,6 +841,11 @@ get_evo_item_keys = function(card, prefix)
   return keys
 end
 
+---@deprecated functionality is handled by generation code instead
+pokemon_in_pool = function()
+  return true
+end
+
 evo_item_use = function(self, card, area, copier)
     local applied = false
     local evolve = false
