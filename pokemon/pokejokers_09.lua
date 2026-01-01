@@ -589,9 +589,12 @@ local treecko={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("treecko", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("treecko", 3, card.ability.extra.targets)
+  end,
 }
 -- Grovyle 253
 local grovyle={
@@ -655,9 +658,12 @@ local grovyle={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("grovyle", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("grovyle", 3, card.ability.extra.targets)
+  end,
 }
 -- Sceptile 254
 local sceptile={
@@ -712,9 +718,12 @@ local sceptile={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("sceptile", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("sceptile", 3, card.ability.extra.targets)
+  end,
 }
 -- Torchic 255
 local torchic={
@@ -767,9 +776,12 @@ local torchic={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("torchic", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("torchic", 3, card.ability.extra.targets)
+  end,
 }
 -- Combusken 256
 local combusken={
@@ -821,9 +833,12 @@ local combusken={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("combusken", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("combusken", 3, card.ability.extra.targets)
+  end,
 }
 -- Blaziken 257
 local blaziken={
@@ -907,9 +922,12 @@ local blaziken={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("blaziken", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("blaziken", 3, card.ability.extra.targets)
+  end,
 }
 -- Mudkip 258
 local mudkip={
@@ -967,9 +985,12 @@ local mudkip={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("mudkip", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("mudkip", 3, card.ability.extra.targets)
+  end,
 }
 -- Marshtomp 259
 local marshtomp={
@@ -1027,9 +1048,12 @@ local marshtomp={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
+  end,
 }
 -- Swampert 260
 local swampert={
@@ -1115,9 +1139,12 @@ local swampert={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_ranks("swampert", 3, card.ability.extra.targets)
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("swampert", 3, card.ability.extra.targets)
+  end,
 }
 -- Poochyena 261
 local poochyena={
@@ -1339,9 +1366,12 @@ local wurmple={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
+  end,
 }
 -- Silcoon 266
 local silcoon={
@@ -1382,9 +1412,12 @@ local silcoon={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
+  end,
 }
 -- Beautifly 267
 local beautifly={
@@ -1433,9 +1466,12 @@ local beautifly={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
+  end,
 }
 -- Cascoon 268
 local cascoon={
@@ -1476,9 +1512,12 @@ local cascoon={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+  end,
 }
 -- Dustox 269
 local dustox={
@@ -1530,9 +1569,12 @@ local dustox={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+      self:set_nature(card)
     end
-  end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_suit('dustox', true, 'Spades', {'Spades', 'Clubs'})
+  end,
 }
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 
