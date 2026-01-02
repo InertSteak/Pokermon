@@ -962,19 +962,23 @@ end
 local cuibbp = create_UIBox_blind_popup
 function create_UIBox_blind_popup(blind, discovered, vars)
   local ret = cuibbp(blind, discovered, vars)
-  local nodes = {}
-  if blind.artist then
-    nodes[#nodes+1] = poke_artist_credit(blind.artist)
-  end
-  if blind.designer then
-    nodes[#nodes+1] = poke_designer_credit(blind.designer)
-  end
   if blind.artist or blind.designer then
+    local nodes = {}
+    if blind.artist then
+      nodes[#nodes+1] = poke_artist_credit(blind.artist)
+    end
+    if blind.designer then
+      nodes[#nodes+1] = poke_designer_credit(blind.designer)
+    end
     table.insert(ret.nodes,
-      {n=G.UIT.R, config={align = "cm"}, nodes = nodes}
+      {n=G.UIT.R, config = {align = "cm"}, nodes = {
+        {n=G.UIT.R, config = {align = "cm", r = 1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8), padding = 0.05}, nodes = {
+          {n=G.UIT.C, config = {minw = 0.2}},
+          {n=G.UIT.C, nodes = nodes},
+          {n=G.UIT.C, config = {minw = 0.2}},
+        }}
+      }}
     )
   end
-  ret.n = G.UIT.R
-  ret.config.colour = G.C.BLACK
-  return {n=G.UIT.ROOT, config={align = "cm", padding = 0.05, colour = lighten(G.C.JOKER_GREY, 0.5), r = 0.1, emboss = 0.05}, nodes={ret}}
+  return ret
 end
