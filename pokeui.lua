@@ -972,7 +972,7 @@ function create_UIBox_blind_popup(blind, discovered, vars)
     end
     table.insert(ret.nodes,
       {n=G.UIT.R, config = {align = "cm"}, nodes = {
-        {n=G.UIT.R, config = {align = "cm", r = 1, colour = mix_colours(lighten(G.C.JOKER_GREY, 0.5), G.C.BLACK, 0.1), padding = 0.05}, nodes = {
+        {n=G.UIT.R, config = {align = "cm", r = 1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8), padding = 0.05}, nodes = {
           {n=G.UIT.C, config = {minw = 0.2}},
           {n=G.UIT.C, nodes = nodes},
           {n=G.UIT.C, config = {minw = 0.2}},
