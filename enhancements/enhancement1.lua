@@ -28,7 +28,7 @@ local hazard = {
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
-   artist = "Catzzadilla",
+   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
    pos = { x = 6, y = 0 },
    config = {extra = {Xmult = 3}},
    loc_vars = function(self, info_queue, center)
