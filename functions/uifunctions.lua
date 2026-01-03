@@ -173,6 +173,15 @@ local function populate_cardareas(keys, options)
 end
 
 function poke_create_UIBox_your_collection(args)
+  -- Fix for cards not realizing they're in a collection,
+  -- because the collection gets initialized *after* the cards do
+  -- -- Vanilla cards work without this because the joker collection is nested within a second overlay
+  local handle_overlay_menu = false
+  if not G.OVERLAY_MENU then
+    G.OVERLAY_MENU = true
+    handle_overlay_menu = true
+  end
+
   args = args or {}
 
   local keys = args.keys or {}
@@ -234,6 +243,9 @@ function poke_create_UIBox_your_collection(args)
       }
     }
   end
+
+  -- Avoids crashing when `G.FUNCS.overlay_menu` tries to call the remove method
+  if handle_overlay_menu then G.OVERLAY_MENU = nil end
 
   return nodes
 end
