@@ -28,7 +28,7 @@ local hazard = {
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
-   artist = "Catzzadilla",
+   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
    pos = { x = 6, y = 0 },
    config = {extra = {Xmult = 3}},
    loc_vars = function(self, info_queue, center)
@@ -50,5 +50,5 @@ local flower = {
 
 return {
    name = "Enhancements",
-   list = { hazard, flower}
+   list = { hazard, flower} -- should probably also add seed cards stages 0, 1, 2, 3 and 4 here... actually nvm, let's wait until we have actual art for them.
 }
