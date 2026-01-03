@@ -482,7 +482,7 @@ PokemonSprites = {
 {name = "huntail", base = {pos = {x = 12, y = 24}},},
 {name = "gorebyss", base = {pos = {x = 14, y = 24}},},
 {name = "relicanth", base = {pos = {x = 16, y = 24}},},
-{name = "luvdisc", base = {pos = {x = 18, y = 24}},},
+{name = "luvdisc", base = {pos = {x = 18, y = 24}}, alts = {AtlasJokersSeriesA = {artist = 'Emma'}}},
 {name = "bagon", base = {pos = {x = 20, y = 24}},},
 {name = "shelgon", base = {pos = {x = 22, y = 24}},},
 {name = "salamence", base = {pos = {x = 24, y = 24}},},
@@ -1272,6 +1272,7 @@ local poke_artist_info = {
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A"), links = {
     {url = 'https://dudelings.carrd.co/', account = 'Dudelings'}
   }},
+  Emma = {display_name = 'Emma', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("F5A9B8")},
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062'), links = {
 {url = 'https://x.com/just_smol_child'},
 {url = 'https://bsky.app/profile/justsmolchild.bsky.social', site = 'Bluesky', account = 'justsmolchild'}
