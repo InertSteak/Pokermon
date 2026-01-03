@@ -410,6 +410,9 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
   for i = 1, #cards do
     if t.mod_conv then
       poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
+      if t.mod_conv == 'm_poke_seed' then
+        cards[i]:set_sprites(cards[i].config.center)
+      end
     end
     if t.edition then
       poke_conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)

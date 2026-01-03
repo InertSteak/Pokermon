@@ -29,7 +29,7 @@ local simisage = {
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_shortcut', config = {} }
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
+    info_queue[#info_queue + 1] = G.P_CENTERS.m_poke_seed
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'simisage')
     return { vars = { num, dem } }
   end,
@@ -47,7 +47,8 @@ local simisage = {
         if v.config.center == G.P_CENTERS.c_base then
           if SMODS.pseudorandom_probability(card, 'simisage', card.ability.extra.num, card.ability.extra.dem, 'simisage') then
             stall_for_effects = true
-            v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+            v:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+            v:set_sprites(v.config.center)
             G.E_MANAGER:add_event(Event({
               func = function()
                 v:juice_up()

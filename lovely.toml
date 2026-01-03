@@ -690,6 +690,9 @@ if other.config.center.name == "ruins_of_alph" then
   new_card.ability.extra.forms = {}
   new_card.ability.extra.merged = 0
 end
+if new_card.config.center == G.P_CENTERS.m_poke_seed then
+  new_card:set_sprites(new_card.config.center)
+end
 '''
 match_indent = true
 

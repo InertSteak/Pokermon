@@ -92,6 +92,7 @@ local bellossom={
         info_queue[#info_queue+1] = G.P_CENTERS.e_holo
       end
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_seed
     end
 		return {vars = {center.ability.extra.mult}}
   end,
@@ -109,17 +110,24 @@ local bellossom={
           local upgrade = pseudorandom(pseudoseed('bellossom'))
           if poke_is_odd(v) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
-              if v.ability.name == 'Wild Card' and not v.edition then
+              if v.config.center ~= G.P_CENTERS.c_base and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
                 v:set_edition(edition, true, true)
               end
-              v:set_ability(G.P_CENTERS.m_wild, nil, true)
-              G.E_MANAGER:add_event(Event({
-                  func = function()
-                      v:juice_up()
-                      return true
-                  end
-              })) 
+              if v.config.center == G.P_CENTERS.c_base then
+                local enhancements = {'m_wild', 'm_poke_seed'}
+                local enhancement = pseudorandom_element(enhancements, pseudorandom(pseudoseed('wildorseed')))
+                v:set_ability(G.P_CENTERS[enhancement], nil, true)
+                if enhancement == 'm_poke_seed' then
+                  v:set_sprites(v.config.center)
+                end
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        v:juice_up()
+                        return true
+                    end
+                })) 
+              end
           else
             v.bellossom_score = true
           end
@@ -393,7 +401,7 @@ local hoppip={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
@@ -409,7 +417,7 @@ local hoppip={
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2]}
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
@@ -437,7 +445,7 @@ local skiploom={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
@@ -453,7 +461,7 @@ local skiploom={
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
@@ -481,7 +489,7 @@ local jumpluff={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size}}
   end,
@@ -500,7 +508,7 @@ local jumpluff={
       for k, v in pairs(context.full_hand) do
         if v then table.insert(target, v) end
       end
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)

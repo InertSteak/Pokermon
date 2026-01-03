@@ -304,6 +304,33 @@ local heartscale = {
   end
 }
 
+local miracleseed = {
+  name = "miracleseed",
+  key = "miracleseed",
+  set = "Item",
+  config = {max_highlighted = 2, min_highlighted = 1},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {self.config.max_highlighted}}
+  end,
+  pos = { x = 2, y = 7 },
+  atlas = "AtlasConsumablesBasic",
+  cost = 4,
+  unlocked = true,
+  discovered = true,
+  use = function(self, card, area, copier)
+    set_spoon_item(card)
+    juice_flip(card)
+    for i = 1, #G.hand.highlighted do
+      G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+    end
+    juice_flip(card, true)
+  end,
+  in_pool = function(self)
+    return true
+  end
+}
+
 return {name = "Items 3",
-        list = {prismscale, dawnstone,duskstone, hardstone, heartscale}
+        list = {prismscale, dawnstone,duskstone, hardstone, heartscale, miracleseed}
 }

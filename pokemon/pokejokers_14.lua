@@ -188,7 +188,77 @@ local kricketune={
 -- Luxio 404
 -- Luxray 405
 -- Budew 406
+local budew={
+  name = "budew",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_miracleseed
+    end
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+  end,
+  rarity = 2,
+  cost = 3,
+  stage = "Baby",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  gen = 4,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          SMODS.add_card{set = 'Item', key = 'c_poke_miracleseed', edition = 'e_negative'}
+          return true
+        end
+      }))
+    end
+    return level_evo(self, card, context, "j_poke_roselia")
+  end,
+}
 -- Roserade 407
+local roserade={
+  name = "roserade",
+  pos = {x = 0, y = 0},
+  config = {extra = {retriggers = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
+    return {vars = {center.ability.extra.retriggers, }}
+  end,
+  rarity = "poke_safari",
+  cost = 9,
+  gen = 4,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and context.other_card == context.scoring_hand[1] and poke_is_odd(context.other_card) then
+      return {
+        repetitions = card.ability.extra.retriggers
+      }
+    end
+  end,
+}
 -- Cranidos 408
 -- Rampardos 409
 -- Shieldon 410
@@ -264,5 +334,5 @@ local floatzel={
 }
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 
-        list = {bidoof, bibarel, kricketot, kricketune, buizel, floatzel},
+        list = {bidoof, bibarel, kricketot, kricketune, budew, roserade, buizel, floatzel},
 }

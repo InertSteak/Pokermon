@@ -433,6 +433,13 @@ return {
                     "for each {X:earth,C:white}Earth{} Joker you have"
                 }
             },
+            c_poke_miracleseed = {
+                name = "Miracle Seed",
+                text = {
+                    "Enhances {C:attention}2{} selected",
+                    "cards into {C:attention}Seed{} cards"
+                }
+            },
             c_poke_heartscale = {
                 name = "Heart Scale",
                 text = {
@@ -694,6 +701,16 @@ return {
                 text = {
                     "{X:mult,C:white} X#1# {} Mult if poker",
                     "hand contains {C:attention}4+ suits"
+                },
+            },
+            m_poke_seed = {
+                name = "Seed Card",
+                text = {
+                    "{C:attention}Grows{} when scored",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Turns into a {C:attention}Flower{} card",
+                    "and earns {C:money}$#3#{} after",
+                    "growing {C:attention}#1#{} {C:inactive}[#2#]{} times",
                 },
             }
         },
@@ -2519,9 +2536,9 @@ return {
                 name = 'Bellossom',
                 text = {
                     "Played cards with {C:attention}odd{} rank",
-                    "give {C:mult}+#1#{} Mult or become",
-                    "{C:attention}Wild{} cards when scored",
-                    "If already {C:attention}Wild{}, adds {C:dark_edition}Foil{},",
+                    "give {C:mult}+#1#{} Mult or become {C:attention}Wild{}",
+                    "or {C:attention}Seed{} cards when scored",
+                    "If already {C:attention}enhanced{}, adds {C:dark_edition}Foil{},",
                     "{C:dark_edition}Holographic{} or {C:dark_edition}Polychrome{} edition"
                 } 
             },
@@ -2540,7 +2557,8 @@ return {
                 name = 'Hoppip',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "First two {C:attention}discarded cards{} become {C:attention}Wild{}",
+                    "First two {C:attention}discarded cards{}",
+                    "become {C:attention}Seed{} cards",
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
@@ -2549,7 +2567,8 @@ return {
                 name = 'Skiploom',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "First three {C:attention}discarded cards{} become {C:attention}Wild{}",
+                    "First three {C:attention}discarded cards{}",
+                    "become {C:attention}Seed{} cards",
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
@@ -2558,7 +2577,8 @@ return {
                 name = 'Jumpluff',
                 text = {
                     "{C:attention}+#1#{} hand size",
-                    "All {C:attention}discarded cards{} become {C:attention}Wild{}",
+                    "All {C:attention}discarded cards{}",
+                    "become {C:attention}Seed{} cards",
                     "{S:1.1,C:red,E:2}self destructs{} on discard",
                 }
             },
@@ -3426,6 +3446,16 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
+            j_poke_roselia = {
+                name = "Roselia",
+                text = {
+                  "If the {C:attention}first{} scoring card of",
+                  "the round is {C:attention}Odd{}, retrigger",
+                  "it {C:attention}#1#{} times, otherwise it",
+                  "becomes a {C:attention}Seed{} card",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8})"
+                }
+            },
             j_poke_numel = {
                 name = "Numel",
                 text = {
@@ -3692,6 +3722,26 @@ return {
                 "{br:2}ERROR - CONTACT STEAK",
                 "{C:green}#2# in #3#{} chance to create",
                 "a {C:tarot}Tarot{} card as well"
+              }
+            },
+            j_poke_budew = {
+                name = 'Budew',
+                text = {
+                    "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
+                    "Creates a {C:dark_edition}Negative{} copy of",
+                    "{C:item}Miracle Seed{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_poke_roserade = {
+              name = "Roserade",
+              text = {
+                "If the first card in",
+                "poker hand is {C:attention}Odd",
+                "retrigger it {C:attention}#1#{} times",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:attention}Flower{} cards only require",
+                "{C:attention}3+{} suits to trigger"
               }
             },
             j_poke_buizel = {
@@ -4121,8 +4171,9 @@ return {
                 name = "Simisage",
                 text = {
                     "Applies {C:attention}Shortcut",
-                    "Each played unenhanced card has",
-                    "a {C:green}#1# in #2#{} chance to become {C:attention}Lucky{}",
+                    "Each played unenhanced card",
+                    "has a {C:green}#1# in #2#{} chance to",
+                    "become a {C:attention}Seed{} card"
                 }
             },
             j_poke_pansear = {

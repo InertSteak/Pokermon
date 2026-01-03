@@ -25,6 +25,36 @@ local hazard = {
    end,
 }
 
+local seed = {
+   key = "seed",
+   atlas = "AtlasEnhancementsBasic",
+   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+   pos = { x = 1, y = 0 },
+   config = {extra = {level = 0, level_max = 5, money = 20}},
+   loc_vars = function(self, info_queue, center)
+     return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
+   end,
+   weight = 0,
+   in_pool = function(self, args) return false end,
+   calculate = function(self, card, context)
+     if context.main_scoring and context.cardarea == G.play then
+       card.ability.extra.level = card.ability.extra.level + 1
+       if card.ability.extra.level < card.ability.extra.level_max then
+         self:set_sprites(card)
+       else
+         ease_dollars(card.ability.extra.money)
+         card:set_ability(G.P_CENTERS.m_poke_flower, nil, true)
+       end
+     end
+   end,
+   set_sprites = function(self, card, front)
+     if card and card.ability and card.ability.extra and card.ability.extra.level < card.ability.extra.level_max then
+       local x_pos = card.ability.extra.level + 1
+       card.children.center:set_sprite_pos({x = x_pos, y = 0})
+     end
+   end
+}
+
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
@@ -38,7 +68,8 @@ local flower = {
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play then
-        if poke_suit_check(context.scoring_hand, 4) then
+        local suit_number = next(SMODS.find_card('j_poke_roserade')) and 3 or 4
+        if poke_suit_check(context.scoring_hand, suit_number) then
           return
           {
             x_mult = card.ability.extra.Xmult
@@ -50,5 +81,5 @@ local flower = {
 
 return {
    name = "Enhancements",
-   list = { hazard, flower} -- should probably also add seed cards stages 0, 1, 2, 3 and 4 here... actually nvm, let's wait until we have actual art for them.
+   list = { hazard, seed, flower}
 }
