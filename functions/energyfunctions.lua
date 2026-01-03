@@ -215,7 +215,6 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
       if card.ability[k] and center.config[k] and field ~= k and not (field2 and field2 == k) then
         card.ability[k] = card.ability[k] + (center.config[k] * increase)
-		
         -- apparently Xmult and x_mult get stored from config into ability.x_mult so that's irritating
         if k == 'Xmult' then card.ability.x_mult = card.ability.x_mult + (center.config[k] * increase) end
       end
