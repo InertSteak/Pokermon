@@ -50,5 +50,5 @@ local flower = {
 
 return {
    name = "Enhancements",
-   list = { hazard, flower}
+   list = { hazard, flower} -- should probably also add seed cards stages 0, 1, 2, 3 and 4 here... actually nvm, let's wait until we have actual art for them.
 }
