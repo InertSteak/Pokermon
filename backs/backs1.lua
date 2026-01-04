@@ -173,7 +173,7 @@ local megadeck = {
 	order = 23,
   unlocked = true,
   discovered = true,
-  artist = "Catzzadilla",
+  artist = {"Catzzadilla", "Sonfive"},
 	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
