@@ -459,18 +459,6 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if energize_amount then
     energy_increase(card, 'Trans', energize_amount)
   end
-  
-  -- can be removed once this PR has been merged:
-  --    https://github.com/Steamodded/smods/pull/611
-  local to_fix = {}
-  for k,_ in pairs(G.GAME.used_jokers) do
-    if not next(SMODS.find_card(k, true)) then
-      table.insert(to_fix, k)
-    end
-  end
-  for _,k in pairs(to_fix) do
-    G.GAME.used_jokers[k] = nil
-  end
 end
 
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
