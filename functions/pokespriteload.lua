@@ -570,7 +570,7 @@ PokemonSprites = {
 {name = "mimejr", base = {pos = {x = 6, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
 {name = "happiny", base = {pos = {x = 8, y = 29}},},
 {name = "chatot", base = {pos = {x = 10, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
-{name = "spiritomb", base = {pos = {x = 12, y = 29}},},
+{name = "spiritomb", base = {pos = {x = 12, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc'}}},
 {name = "gible", base = {pos = {x = 14, y = 29}},},
 {name = "gabite", base = {pos = {x = 16, y = 29}},},
 {name = "garchomp", base = {pos = {x = 18, y = 29}},},
