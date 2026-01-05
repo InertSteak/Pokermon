@@ -889,7 +889,7 @@ PokemonSprites = {
 {name = "hoopa", base = {pos = {x = 6, y = 11}, soul_pos = {x = 7, y = 11}},gen_atlas = 6},
 {name = "hoopa_unbound", base = {pos = {x = 8, y = 11}, soul_pos = {x = 9, y = 11}},gen_atlas = 6},
 {name = "volcanion", base = {pos = {x = 0, y = 48}, soul_pos = {x = 1, y = 48}},},
-{name = "rowlet", base = {pos = {x = 2, y = 48}},},
+{name = "rowlet", base = {pos = {x = 2, y = 48}},alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "dartrix", base = {pos = {x = 4, y = 48}},},
 {name = "decidueye", base = {pos = {x = 6, y = 48}},},
 {name = "hisuian_decidueye", base = {pos = {x = 6, y = 5}},gen_atlas = 7},
