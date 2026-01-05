@@ -1123,7 +1123,7 @@ PokemonSprites = {
 {name = "kleavor", base = {pos = {x = 28, y = 59}},},
 {name = "ursaluna", base = {pos = {x = 0, y = 60}},},
 {name = "bloodmoon_ursaluna", base = {pos = {x = 0, y = 11}},gen_atlas = 8},
-{name = "basculegion", base = {pos = {{x = 2, y = 11}, {x = 4, y = 11}}},gen_atlas = 8},
+{name = "basculegion", base = {pos = {x = 2, y = 11}},gen_atlas = 8},
 {name = "sneasler", base = {pos = {x = 4, y = 60}},},
 {name = "overqwil", base = {pos = {x = 6, y = 60}},},
 {name = "enamorus", base = {pos = {x = 6, y = 11}, soul_pos =  {x = 7, y = 11}},gen_atlas = 8},
