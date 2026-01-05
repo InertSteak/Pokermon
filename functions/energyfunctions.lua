@@ -176,11 +176,13 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
     local increase = energy_values[field] * amount / colorless_penalty
     if (type(config[value]) == "number") and (type(ability[value]) == "number") then
       ability[value] = ability[value] + (config[value] * increase)
+    -- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
     elseif (type(config[value]) == "table") then
-		-- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
       for u, num in pairs(ability[value]) do
-        for w, base in pairs(config[value]) do
-          if u == w then ability[value][u] = num + (base * increase) end
+        if energy_values[u] then
+          for w, base in pairs(config[value]) do
+            if u == w then ability[value][u] = num + (base * increase) end
+          end
         end
       end
     end
@@ -193,15 +195,16 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
       increase = energy_values[field2] * amount / colorless_penalty
       if (type(config[value2]) == "number") and (type(ability[value2]) == "number") then
         ability[value2] = ability[value2] + (config[value2] * increase)
-      elseif (type(config[value2]) == "table") then
       -- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
-        for u, num in pairs(ability[value2]) do
-          for w, base in pairs(config[value2]) do
-            if u == w then ability[value2][u] = num + (base * increase) end
+      elseif (type(config[value2]) == "table") then
+        for u, num in pairs(ability[value]) do
+          if energy_values[u] then
+            for w, base in pairs(config[value2]) do
+              if u == w then ability[value2][u] = num + (base * increase) end
+            end
           end
         end
       end
-      ability[value2] = ability[value2] + (config[value2] * increase)
     end
     for k, _ in pairs(energy_values) do
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
