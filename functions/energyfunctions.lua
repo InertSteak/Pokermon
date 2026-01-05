@@ -174,20 +174,16 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
     local ability = (config == center.config) and card.ability or card.ability.extra
     -- energy calculations
     local increase = energy_values[field] * amount / colorless_penalty
-	if (type(config[value]) == number) and (type(ability[value]) == number) then
-		ability[value] = ability[value] + (config[value] * increase)
-	else
+    if (type(config[value]) == "number") and (type(ability[value]) == "number") then
+      ability[value] = ability[value] + (config[value] * increase)
+    elseif (type(config[value]) == "table") then
 		-- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
-		for u, v in pairs(ability[value]) do
-			if u ~= ("energy_count" and "again") then
-				for w, x in pairs(config[value]) do
-					if u == w then
-						ability[value][u] = v + (x * increase)
-					end
-				end
-			end
-		end
-	end
+      for u, num in pairs(ability[value]) do
+        for w, base in pairs(config[value]) do
+          if u == w then ability[value][u] = num + (base * increase) end
+        end
+      end
+    end
     -- this checks if a second value needs to be energized
     local field2, value2
     if energizable_vanilla[center.name][3] then
@@ -195,23 +191,19 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
       config = center.config[value2] ~= nil and center.config or center.config.extra
       ability = card.ability[value2] ~= nil and card.ability or card.ability.extra
       increase = energy_values[field2] * amount / colorless_penalty
-	  if (type(config[value2]) == number) and (type(ability[value2]) == number) then
-		ability[value2] = ability[value2] + (config[value2] * increase)
-	  else
-		-- Same as above, compatibility for config structure changes of vanilla jokers
-		for u, v in pairs(ability[value2]) do
-			if u ~= ("energy_count" and "again") then
-				for w, x in pairs(config[value2]) do
-					if u == w then
-						ability[value2][u] = v + (x * increase)
-					end
-				end
-			end
-		end
-	  end
+      if (type(config[value2]) == "number") and (type(ability[value2]) == "number") then
+        ability[value2] = ability[value2] + (config[value2] * increase)
+      elseif (type(config[value2]) == "table") then
+      -- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
+        for u, num in pairs(ability[value2]) do
+          for w, base in pairs(config[value2]) do
+            if u == w then ability[value2][u] = num + (base * increase) end
+          end
+        end
+      end
       ability[value2] = ability[value2] + (config[value2] * increase)
     end
-    for k, v in pairs(energy_values) do
+    for k, _ in pairs(energy_values) do
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
       if card.ability[k] and center.config[k] and field ~= k and not (field2 and field2 == k) then
         card.ability[k] = card.ability[k] + (center.config[k] * increase)
@@ -221,7 +213,7 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
     end
   else
     -- should work for remaining energizable non-vanilla, non-pokermon jokers hopefully
-    for k, v in pairs(energy_values) do
+    for k, _ in pairs(energy_values) do
       local increase = energy_values[k] / colorless_penalty
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
       if card.ability[k] and center.config[k] then
