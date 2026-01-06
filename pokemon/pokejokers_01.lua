@@ -1211,7 +1211,7 @@ local pikachu={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       local dollars = G.GAME.dollars
@@ -1255,7 +1255,7 @@ local raichu={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1, 
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       card:juice_up()
