@@ -198,6 +198,8 @@ native_evo_items = {
   "linkcable", "kingsrock", "dragonscale", "hardstone",
 }
 
+poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+
 type_sticker_applied = function(card)
   if not card then return false end
   if card.ability.grass_sticker then
@@ -1008,7 +1010,6 @@ poke_set_type_badge = function(self, card, badges)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
   local apply_type = nil
   
   if sticker_type then
@@ -1049,14 +1050,14 @@ apply_type_sticker = function(card, sticker_type)
     else
       local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
+        unlocked = true,
         discovered = true,
         loc_vars = function(self, info_queue, center)
           type_tooltip(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end
-          poke_set_type_badge(self, card, badges)          
+          poke_set_type_badge(self, card, badges)
         end,
       }, true)
     end
