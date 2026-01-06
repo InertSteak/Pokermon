@@ -323,6 +323,17 @@ SMODS.Sound({
     key = "shellchomp",
     path = "chomp.ogg",
 })
+
+for i = 1, 5 do
+  local seed_key = 'seed_'..i
+  local seed_path = 'seed_'..i..'.ogg'
+  
+  SMODS.Sound({
+    key = seed_key,
+    path = seed_path,
+  })
+end
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)
