@@ -856,68 +856,57 @@ end)
 
 -- Tooltip Credits UI
 function poke_artist_credit(artists)
-    local artist_names, artist_colours, artist_highlight_colours = {}, {}, {}
-    local add_artist_info = function(artist)
-      if type(artist) == 'table' then
-        artist = artist.name
-      end
-      local artist_info = poke_get_artist_info(artist) or {}
-      artist_names[#artist_names+1] = artist_info.display_name or artist
-      artist_colours[#artist_colours+1] = artist_info.artist_colour or G.C.FILTER
-      artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
-    end
+  if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
+  if type(artists) == 'string' then artists = { artists } end
 
-    if type(artists) == 'string' or type(artists) == 'table' and artists.name then
-        add_artist_info(artists)
-    else
-        for _, artist in ipairs(artists) do
-            add_artist_info(artist)
-        end
-    end
-
-    local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
-        {n=G.UIT.T, config={
-            text = localize('poke_credits_artist'),
-            shadow = true,
-            colour = G.C.UI.BACKGROUND_WHITE,
-            scale = 0.27}}
-    }}
-    local outline_nodes = {}
-    local outline_node = nil
-    local artist_node = nil
-
-    for i = 1, #artist_names do
-      outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colours and artist_highlight_colours[i] or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
-        
-      artist_node = {n=G.UIT.O, config={
-        object = DynaText({string = artist_names[i],
-          colours = {artist_colours[i]},
-          bump = true,
-          silent = true,
-          pop_in = 0,
-          pop_in_rate = 4,
-          shadow = true,
-          y_offset = -0.6,
-          scale =  0.27
-        })
-      }}
-      table.insert(outline_node.nodes, artist_node)
-                
-      outline_nodes[#outline_nodes + 1] = outline_node
-    end
-    
-    for j = 1, #outline_nodes do
-      table.insert(artist_credit.nodes, outline_nodes[j])
-      if #outline_nodes > 1 and j ~= #outline_nodes then
-        local amp_node = {n=G.UIT.T, config={
-          text = ' & ',
+  local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
+      {n=G.UIT.T, config={
+          text = localize('poke_credits_artist'),
           shadow = true,
           colour = G.C.UI.BACKGROUND_WHITE,
           scale = 0.27}}
-        table.insert(artist_credit.nodes, amp_node)
-      end
+  }}
+
+  local outline_nodes = {}
+
+  for _, artist in ipairs(artists) do
+    local artist_info = poke_get_artist_info(artist) or {}
+    local artist_name = artist_info.display_name or artist
+    local artist_colour = artist_info.artist_colour or G.C.FILTER
+    local artist_highlight = artist_info.highlight_colour or G.C.CLEAR
+
+    local outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
+
+    local artist_node = {n=G.UIT.O, config={
+      object = DynaText({string = artist_name,
+        colours = {artist_colour},
+        bump = true,
+        silent = true,
+        pop_in = 0,
+        pop_in_rate = 4,
+        shadow = true,
+        y_offset = -0.6,
+        scale =  0.27
+      })
+    }}
+
+    table.insert(outline_node.nodes, artist_node)
+
+    outline_nodes[#outline_nodes + 1] = outline_node
+  end
+
+  for j = 1, #outline_nodes do
+    table.insert(artist_credit.nodes, outline_nodes[j])
+    if #outline_nodes > 1 and j ~= #outline_nodes then
+      local amp_node = {n=G.UIT.T, config={
+        text = ' & ',
+        shadow = true,
+        colour = G.C.UI.BACKGROUND_WHITE,
+        scale = 0.27}}
+      table.insert(artist_credit.nodes, amp_node)
     end
-    return artist_credit
+  end
+  return artist_credit
 end
 
 function poke_designer_credit(designer_name)
