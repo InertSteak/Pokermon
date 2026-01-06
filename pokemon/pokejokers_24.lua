@@ -145,7 +145,7 @@ local pumpkaboo={
               colour = G.C.SECONDARY_SET.Spectral,
           }
         end
-      else
+      elseif context.other_card:get_id() == 11 then
         if not context.blueprint then
           return {
               message = localize('poke_boo_ex'),
@@ -257,7 +257,7 @@ local gourgeist={
               colour = G.C.SECONDARY_SET.Spectral,
           }
         end
-      else
+      elseif context.other_card:get_id() == 11 then
         if not context.blueprint then
           return {
               message = localize('poke_boo_ex'),
