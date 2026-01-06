@@ -172,7 +172,94 @@ local ceruledge={
 -- Shroodle 944
 -- Grafaiai 945
 -- Bramblin 946
+local bramblin={
+  name = "bramblin",
+  pos = {x = 0, y = 0},
+  config = {extra = {cards_drawn = 0, seed_added = 0, rank_scored = 0}, evo_rqmt = 160},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks'), math.max(0, self.config.evo_rqmt - center.ability.extra.cards_drawn)}}
+  end,
+  rarity = 1,
+  cost = 6,
+  gen = 9,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.cards_drawn = card.ability.extra.cards_drawn + #SMODS.drawn_cards
+    end
+    if context.before and not context.blueprint and card.ability.extra.seed_added <= 0 then
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == G.GAME.current_round.bramblincard.id then
+          card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
+          if card.ability.extra.rank_scored == 2 then
+            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
+            card.ability.extra.seed_added = card.ability.extra.seed_added + 1
+            break
+          end
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.rank_scored = 0
+      card.ability.extra.seed_added = 0
+    end
+    return scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
+  end,
+}
 -- Brambleghast 947
+local brambleghast={
+  name = "brambleghast",
+  pos = {x = 0, y = 0},
+  config = {extra = {chip_mod = 2, seed_added = 0, rank_scored = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * math.max(0, (G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)),
+        localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks')}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 9,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex9",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+          chips = card.ability.extra.chip_mod * math.max(0, (G.GAME.dollars + (G.GAME.dollar_buffer or 0)))
+      }
+    end
+    if context.before and not context.blueprint and card.ability.extra.seed_added <= 0 then
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == G.GAME.current_round.bramblincard.id then
+          card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
+          if card.ability.extra.rank_scored == 2 then
+            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
+            context.scoring_hand[i].ability.extra.level = 2
+            card.ability.extra.seed_added = card.ability.extra.seed_added + 1
+            break
+          end
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.rank_scored = 0
+      card.ability.extra.seed_added = 0
+    end
+  end,
+}
 -- Toedscool 948
 -- Toedscruel 949
 -- Klawf 950
@@ -391,5 +478,5 @@ local wiglett={
   end
 }
 return {name = "Pokemon Jokers 931-960", 
-        list = {charcadet, armarouge, ceruledge, tinkatink, tinkatuff, tinkaton, wiglett},
+        list = {charcadet, armarouge, ceruledge, bramblin, brambleghast, tinkatink, tinkatuff, tinkaton, wiglett},
 }

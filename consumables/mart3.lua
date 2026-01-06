@@ -308,7 +308,7 @@ local miracleseed = {
   name = "miracleseed",
   key = "miracleseed",
   set = "Item",
-  config = {max_highlighted = 2, min_highlighted = 1},
+  config = {max_highlighted = 1, min_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     return {vars = {self.config.max_highlighted}}

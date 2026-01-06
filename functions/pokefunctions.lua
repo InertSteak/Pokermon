@@ -161,6 +161,7 @@ pokermon.family = {
     {"tarountula", "spidops"},
     {"fidough", "dachsbun"},
     {"charcadet", "armarouge", "ceruledge"},
+    {"bramblin", "brambleghast"},
     {"tinkatink", "tinkatuff", "tinkaton"},
     {"wiglett", "wugtrio"},
     {"gimmighoul", "gholdengo", "gimmighoulr"},
@@ -1522,18 +1523,18 @@ poke_change_poli_suit = function()
   end
 end
 
-reset_bulba_rank = function()
-  G.GAME.current_round.bulb1card = {rank = 'Ace'}
-  local valid_bulb_cards = {}
+poke_reset_rank = function(name)
+  G.GAME.current_round[name] = {rank = 'Ace'}
+  local valid_cards = {}
   for k, v in ipairs(G.playing_cards) do
-    if v.ability.effect ~= 'Stone Card' and not SMODS.has_no_rank(v) then
-      valid_bulb_cards[#valid_bulb_cards+1] = v
+    if not SMODS.has_no_rank(v) then
+      valid_cards[#valid_cards+1] = v
     end
   end
-  if valid_bulb_cards[1] then
-    local bulb_card = pseudorandom_element(valid_bulb_cards, pseudoseed('bulb'..G.GAME.round_resets.ante))
-    G.GAME.current_round.bulb1card.rank = bulb_card.base.value
-    G.GAME.current_round.bulb1card.id = bulb_card.base.id
+  if valid_cards[1] then
+    local card = pseudorandom_element(valid_cards, pseudoseed(name..G.GAME.round_resets.ante))
+    G.GAME.current_round[name].rank = card.base.value
+    G.GAME.current_round[name].id = card.base.id
   end
 end
 
@@ -1563,21 +1564,6 @@ reset_gligar_suit = function()
   end
   local gligar_card = pseudorandom_element(gligar_suits, pseudoseed('gligar'..G.GAME.round_resets.ante))
   G.GAME.current_round.gligar_suit = gligar_card
-end
-
-reset_sneasel_rank = function()
-  G.GAME.current_round.sneaselcard = {rank = 'Ace'}
-  local valid_sneasel_cards = {}
-  for k, v in ipairs(G.playing_cards) do
-    if v.ability.effect ~= 'Stone Card' then
-      valid_sneasel_cards[#valid_sneasel_cards+1] = v
-    end
-  end
-  if valid_sneasel_cards[1] then
-    local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
-    G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
-    G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
-  end
 end
 
 poke_create_treasure = function(card, seed, megastone)

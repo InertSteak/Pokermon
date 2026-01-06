@@ -30,7 +30,7 @@ local seed = {
    atlas = "AtlasEnhancementsBasic",
    artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
    pos = { x = 1, y = 0 },
-   config = {extra = {level = 0, level_max = 5, money = 20}},
+   config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
      return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
    end,
@@ -48,7 +48,7 @@ local seed = {
      end
    end,
    set_sprites = function(self, card, front)
-     if card and card.ability and card.ability.extra and card.ability.extra.level < card.ability.extra.level_max then
+     if card and card.ability and card.ability.extra and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
        local x_pos = card.ability.extra.level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end

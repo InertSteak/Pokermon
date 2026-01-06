@@ -436,8 +436,8 @@ return {
             c_poke_miracleseed = {
                 name = "Miracle Seed",
                 text = {
-                    "Enhances {C:attention}2{} selected",
-                    "cards into {C:attention}Seed{} cards"
+                    "Enhances {C:attention}1{} selected",
+                    "card into a {C:attention}Seed{} card"
                 }
             },
             c_poke_heartscale = {
@@ -4173,7 +4173,7 @@ return {
                     "Applies {C:attention}Shortcut",
                     "Each played unenhanced card",
                     "has a {C:green}#1# in #2#{} chance to",
-                    "become a {C:attention}Seed{} card"
+                    "become a {C:attention}Lucky{} card"
                 }
             },
             j_poke_pansear = {
@@ -4897,6 +4897,27 @@ return {
                 "from another random Joker",
                 "{C:inactive,s:0.8}(Resets at end of round)",
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+              }
+            },
+            j_poke_bramblin = {
+              name = "Bramblin",
+              text = {
+                "{C:attention}Second{} scoring {C:attention}#1#{} of the round",
+                "becomes a {C:attention}Seed{} card",
+                "{C:inactive,s:0.8}(Rank changes every round){}",
+                "{C:inactive,s:0.7}(Evolves after drawing {C:attention,s:0.7}#2#{C:inactive,s:0.7} cards during Blinds){}",
+              }
+            },
+            j_poke_brambleghast = {
+              name = "Brambleghast",
+              text = {
+                "{C:chips}+#1#{} Chips for each {C:money}$1{} you have",
+                "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:attention}Second{} scoring {C:attention}#3#{} of the round",
+                "becomes a {C:attention}Seed{} card",
+                "with {C:attention}2 growths{}",
+                "{C:inactive,s:0.8}(Rank changes every round){}",
               }
             },
             j_poke_tinkatink = {

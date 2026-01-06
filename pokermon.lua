@@ -581,10 +581,12 @@ function get_flush(hand)
 end
 
 function SMODS.current_mod.reset_game_globals(run_start)
-  reset_bulba_rank()
+  local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard'}
+  for i = 1, #rank_resets do
+    poke_reset_rank(rank_resets[i])
+  end
   reset_espeon_card()
   reset_gligar_suit()
-  reset_sneasel_rank()
 end
 
 --Tutorial WIP
