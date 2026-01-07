@@ -100,7 +100,7 @@ increment_energy = function(card, etype, amount, silent)
       energize(card, etype, false, silent, amount)
     end
   -- We only need to increase c_energy_count if the colorless penalty applies to that energy in the first place
-elseif c_penalty then
+  elseif c_penalty then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.c_energy_count = card.ability.extra.c_energy_count and (card.ability.extra.c_energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
@@ -276,23 +276,10 @@ set_frac = function(card, frac, field, increased, ratio)
 end
 
 matching_energy = function(card, allow_bird)
-  local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth", "bird"}
-  if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype and (card.ability.extra.ptype ~= "Bird" or allow_bird) and not type_sticker_applied(card) then
-    if card.ability.extra.ptype == "Dark" or card.ability.extra.ptype == "dark" then
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."ness_energy"
-    else
-      return "c_poke_"..string.lower(card.ability.extra.ptype).."_energy"
-    end
-  end
-  for l, v in pairs(poketype_list) do
-    if card.ability[v.."_sticker"] then
-      if v == "dark" then
-        return "c_poke_"..v.."ness_energy"
-      else
-        return "c_poke_"..v.."_energy"
-      end
-    end
-  end
+  if not get_type(card) or (get_type(card) == "Bird" and not allow_bird) then return end
+  local etype = get_type(card) and string.lower(get_type(card))
+  local e_key = "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy'
+  if G.P_CENTERS[e_key] then return "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy' end
 end
 
 ease_poke_dollars = function(card, seed, amt, calc_only)
