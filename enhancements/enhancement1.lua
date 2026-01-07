@@ -37,7 +37,7 @@ local seed = {
    weight = 0,
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
-     if context.main_scoring and context.cardarea == G.play then
+     if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra then
       card.ability.extra.level = card.ability.extra.level + 1
       
       if card.ability.extra.level and card.ability.extra.level > 0 and card.ability.extra.level < 6 then
@@ -75,9 +75,9 @@ local flower = {
    atlas = "AtlasEnhancementsBasic",
    artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
    pos = { x = 6, y = 0 },
-   config = {extra = {Xmult = 3}},
+   config = {Xmult = 3},
    loc_vars = function(self, info_queue, center)
-     return {vars = {center.ability.extra.Xmult}}
+     return {vars = {center.ability.Xmult}}
    end,
    weight = 0,
    in_pool = function(self, args) return false end,
@@ -87,7 +87,7 @@ local flower = {
         if poke_suit_check(context.scoring_hand, suit_number) then
           return
           {
-            x_mult = card.ability.extra.Xmult
+            x_mult = card.ability.Xmult
           }
         end
      end
