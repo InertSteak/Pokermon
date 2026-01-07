@@ -576,8 +576,7 @@ base_attach.children.use = G.UIDEF.card_focus_button{
 position = "at"
 payload = '''
 local reserve_and_use = nil
-if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")) or (G.GAME.poke_save_all and not SMODS.OPENED_BOOSTER.label:find("Wish")) 
-or (card.config.center.saveable) then
+if poke_can_save_consumable(card) then
   base_attach.children.reserve = G.UIDEF.card_focus_button{
     card = card, parent = base_attach, type = 'reserve',
     func = 'can_reserve_card', button = 'Can Reserve', card_width = card_width
