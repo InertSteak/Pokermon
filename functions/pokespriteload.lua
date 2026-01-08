@@ -583,7 +583,7 @@ PokemonSprites = {
 {name = "hippowdon", base = {pos = {x = 28, y = 29}},},
 {name = "skorupi", base = {pos = {x = 0, y = 30}},},
 {name = "drapion", base = {pos = {x = 2, y = 30}},},
-{name = "croagunk", base = {pos = {x = 4, y = 30}},},
+{name = "croagunk", base = {pos = {x = 4, y = 30}}, alts = {AtlasJokersSeriesA = {artist = 'Sonfive'}}},
 {name = "toxicroak", base = {pos = {x = 6, y = 30}},},
 {name = "carnivine", base = {pos = {x = 8, y = 30}},},
 {name = "finneon", base = {pos = {x = 10, y = 30}},},
