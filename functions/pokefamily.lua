@@ -195,11 +195,20 @@ local pfm_compare = function(a, b)
         and a.form == b.form)
 end
 
+local pfm_to_family = function(a) return (type(a) ~= 'table' or a.key) and { a } or a end
+
 local family_contains = function(family, member)
   for _, v in ipairs(family) do
     if pfm_compare(v, member) then return true end
   end
   return false
+end
+
+local get_existing_family = function(family_or_member)
+  for _, v in ipairs(pfm_to_family(family_or_member)) do
+    local existing_family = poke_get_family_list(pfm_to_name(v))
+    if existing_family then return existing_family end
+  end
 end
 
 local append_to_family = function(family, new_members, insert_after, allow_duplicates)
@@ -212,7 +221,7 @@ local append_to_family = function(family, new_members, insert_after, allow_dupli
   end
 
   for i, v in ipairs(new_members) do
-    if allow_duplicates or not family_contains(family, v) then
+    if allow_duplicates or not family_contains(get_existing_family(v), v) then
       pokermon_family_map[v] = family
       if index then
         table.insert(family, index + i, v)
@@ -223,25 +232,13 @@ local append_to_family = function(family, new_members, insert_after, allow_dupli
   end
 end
 
-local get_existing_family = function(family)
-  for _, v in ipairs(family) do
-    local existing_family = poke_get_family_list(pfm_to_name(v))
-    if existing_family then return existing_family end
-  end
-end
-
 -- API Functions
 
 --- Extends an existing family, or creates a new one if none exists
-poke_add_to_family = function(insert_after, new_family, allow_duplicates)
-  if type(new_family) ~= 'table' or new_family.key then
-    new_family = { new_family }
-  end
+poke_add_to_family = function(insert_after, new_family_or_member, allow_duplicates)
+  local new_family = pfm_to_family(new_family_or_member)
 
-  local family = insert_after
-      and get_existing_family { insert_after }
-      or get_existing_family(new_family)
-      or {}
+  local family = (insert_after and get_existing_family { insert_after }) or get_existing_family(new_family) or {}
 
   append_to_family(family, new_family, insert_after, allow_duplicates)
 end
@@ -251,7 +248,7 @@ poke_get_family_list = function(name)
   return pokermon_family_map[name] or {}
 end
 
---- Returns whether any cards present share a family with the provided center 
+--- Returns whether any cards present share a family with the provided center
 poke_family_present = function(center)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
   local family_list = poke_get_family_list(center.name)
