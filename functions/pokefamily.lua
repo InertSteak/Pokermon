@@ -222,7 +222,7 @@ local append_to_family = function(family, new_members, insert_after, allow_dupli
 
   for i, v in ipairs(new_members) do
     if allow_duplicates or not family_contains(get_existing_family(v), v) then
-      pokermon_family_map[v] = family
+      pokermon_family_map[pfm_to_name(v)] = family
       if index then
         table.insert(family, index + i, v)
       else
