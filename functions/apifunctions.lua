@@ -70,8 +70,12 @@ pokermon.load_pokemon = function(item)
   SMODS.Joker(item)
 end
 
-pokermon.add_family = function(family)
-  table.insert(pokermon.family, family)
+pokermon.add_family = function(family, overwrite)
+  if overwrite then
+    poke_replace_family(family)
+  else
+    poke_add_to_family(family)
+  end
 end
 
 pokermon.Pokemon = function(item, custom_prefix, custom_atlas)

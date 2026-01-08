@@ -1,4 +1,6 @@
-pokermon.family = {
+local pokermon_family_map = {}
+
+local default_family_list = {
   { "bulbasaur", "ivysaur", "venusaur", "mega_venusaur" },
   { "charmander", "charmeleon", "charizard", "mega_charizard_x", "mega_charizard_y", },
   { "squirtle", "wartortle", "blastoise", "mega_blastoise" },
@@ -177,25 +179,112 @@ pokermon.family = {
   { "berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mystery" }
 }
 
-poke_get_family_list = function(name)
-  for _, v in ipairs(pokermon.family) do
-    for _, y in ipairs(v) do
-      if ((type(y) == "table" and y.key) or y) == name then
-        return v
+local pfm_to_name = function(a) return type(a) == 'string' and a or a.key end
+
+local pfm_compare = function(a, b)
+  return a == b or
+      (type(a) == table and type(b) == table
+        and a.key == b.key
+        and a.form == b.form)
+end
+
+--- Internal function, use `poke_add_to_family` or `poke_overwrite_family` instead
+local insert_family = function(family)
+  for _, v in ipairs(family) do
+    pokermon_family_map[pfm_to_name(v)] = family
+  end
+end
+
+local delete_family = function(family)
+  local to_remove = {}
+  for _, v in ipairs(family) do
+    local name = pfm_to_name(v)
+    local existing_family = poke_get_family_list(name)
+    for _, vv in ipairs(existing_family) do
+      to_remove[pfm_to_name(vv)] = true
+    end
+  end
+  for k, _ in pairs(to_remove) do
+    pokermon_family_map[k] = nil
+  end
+end
+
+local family_contains = function(family, member)
+  for _, v in ipairs(family) do
+    if pfm_compare(v, member) then return true end
+  end
+  return false
+end
+
+local append_to_family = function(family, new_members, insert_after, allow_duplicates)
+  local index
+  if insert_after then
+    for i, v in ipairs(family) do
+      if pfm_compare(v, insert_after) then index = i end
+      -- keep looping to find the last match
+    end
+  end
+
+  for i, v in ipairs(new_members) do
+    if allow_duplicates or not family_contains(family, v) then
+      pokermon_family_map[v] = family
+      if index then
+        table.insert(family, index + i, v)
+      else
+        table.insert(family, v)
       end
     end
   end
-  return {}
 end
 
+local get_existing_family = function(family)
+  for _, v in ipairs(family) do
+    local existing_family = poke_get_family_list(pfm_to_name(v))
+    if existing_family then return existing_family end
+  end
+end
+
+-- API Functions
+
+--- Extends an existing family, or creates a new one if none exists
+poke_add_to_family = function(new_family, insert_after, allow_duplicates)
+  if type(new_family) ~= 'table' or new_family.key then
+    new_family = { new_family }
+  end
+
+  local family = insert_after
+      and get_existing_family { insert_after }
+      or get_existing_family(new_family)
+      or {}
+
+  append_to_family(family, new_family, insert_after, allow_duplicates)
+end
+
+--- Deletes all families overlapping with the provided family, and inserts it
+poke_replace_family = function(family)
+  delete_family(family)
+  insert_family(family)
+end
+
+--- Returns the family list associated with the provided name
+poke_get_family_list = function(name)
+  return pokermon_family_map[name] or {}
+end
+
+--- Returns whether any cards present share a family with the provided center 
 poke_family_present = function(center)
   if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
   local family_list = poke_get_family_list(center.name)
   local prefix = center.poke_custom_prefix or 'poke'
   for _, fam in pairs(family_list) do
-    if G.GAME.used_jokers['j_'..prefix..'_'..((type(fam) == "table" and fam.key) or fam)] then
+    if G.GAME.used_jokers['j_' .. prefix .. '_' .. ((type(fam) == "table" and fam.key) or fam)] then
       return true
     end
   end
   return false
+end
+
+-- Initialize family map with default values
+for _, v in ipairs(default_family_list) do
+  insert_family(v)
 end
