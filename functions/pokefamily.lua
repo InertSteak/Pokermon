@@ -188,27 +188,6 @@ local pfm_compare = function(a, b)
         and a.form == b.form)
 end
 
---- Internal function, use `poke_add_to_family` or `poke_overwrite_family` instead
-local insert_family = function(family)
-  for _, v in ipairs(family) do
-    pokermon_family_map[pfm_to_name(v)] = family
-  end
-end
-
-local delete_family = function(family)
-  local to_remove = {}
-  for _, v in ipairs(family) do
-    local name = pfm_to_name(v)
-    local existing_family = poke_get_family_list(name)
-    for _, vv in ipairs(existing_family) do
-      to_remove[pfm_to_name(vv)] = true
-    end
-  end
-  for k, _ in pairs(to_remove) do
-    pokermon_family_map[k] = nil
-  end
-end
-
 local family_contains = function(family, member)
   for _, v in ipairs(family) do
     if pfm_compare(v, member) then return true end
@@ -260,12 +239,6 @@ poke_add_to_family = function(insert_after, new_family, allow_duplicates)
   append_to_family(family, new_family, insert_after, allow_duplicates)
 end
 
---- Deletes all families overlapping with the provided family, and inserts it
-poke_replace_family = function(family)
-  delete_family(family)
-  insert_family(family)
-end
-
 --- Returns the family list associated with the provided name
 poke_get_family_list = function(name)
   return pokermon_family_map[name] or {}
@@ -285,6 +258,8 @@ poke_family_present = function(center)
 end
 
 -- Initialize family map with default values
-for _, v in ipairs(default_family_list) do
-  insert_family(v)
+for _, family in ipairs(default_family_list) do
+  for _, v in ipairs(family) do
+    pokermon_family_map[pfm_to_name(v)] = family
+  end
 end
