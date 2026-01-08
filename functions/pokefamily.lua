@@ -247,7 +247,7 @@ end
 -- API Functions
 
 --- Extends an existing family, or creates a new one if none exists
-poke_add_to_family = function(new_family, insert_after, allow_duplicates)
+poke_add_to_family = function(insert_after, new_family, allow_duplicates)
   if type(new_family) ~= 'table' or new_family.key then
     new_family = { new_family }
   end

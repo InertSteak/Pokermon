@@ -74,7 +74,7 @@ pokermon.add_family = function(family, overwrite)
   if overwrite then
     poke_replace_family(family)
   else
-    poke_add_to_family(family)
+    poke_add_to_family(nil, family)
   end
 end
 
