@@ -181,6 +181,13 @@ local default_family_list = {
 
 local pfm_to_name = function(a) return type(a) == 'string' and a or a.key end
 
+-- Initialize family map with default values
+for _, family in ipairs(default_family_list) do
+  for _, v in ipairs(family) do
+    pokermon_family_map[pfm_to_name(v)] = family
+  end
+end
+
 local pfm_compare = function(a, b)
   return a == b or
       (type(a) == table and type(b) == table
@@ -255,11 +262,4 @@ poke_family_present = function(center)
     end
   end
   return false
-end
-
--- Initialize family map with default values
-for _, family in ipairs(default_family_list) do
-  for _, v in ipairs(family) do
-    pokermon_family_map[pfm_to_name(v)] = family
-  end
 end
