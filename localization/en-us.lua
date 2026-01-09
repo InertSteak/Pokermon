@@ -2964,7 +2964,7 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:purple}+#1#{} hazard level, {C:purple}+#4#{} hazard level max",
+                    "{C:purple}+#1#{} hazard level, {C:purple}+#4#{} hazard level limit",
                     "{X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Hazard{} or {C:attention}Steel{} card",
                     "{C:attention}held{} in hand",
