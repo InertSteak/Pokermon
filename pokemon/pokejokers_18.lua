@@ -262,14 +262,10 @@ local roggenrola = {
     return scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.hazard_triggered, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Boldore 525
@@ -316,14 +312,10 @@ local boldore = {
     return item_evo(self, card, context, "j_poke_gigalith")
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Gigalith 526
@@ -372,14 +364,10 @@ local gigalith = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Woobat 527

@@ -41,14 +41,10 @@ local qwilfish = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Scizor 212
@@ -950,16 +946,12 @@ local skarmory = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_max(card.ability.extra.hazard_max)
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_max(card.ability.extra.hazard_max)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_max(-card.ability.extra.hazard_max)
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_max(-card.ability.extra.hazard_max)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Houndour 228

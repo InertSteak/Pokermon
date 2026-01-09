@@ -3499,8 +3499,8 @@ return {
                 "card is destroyed",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Destroy all {C:attention}Hazard{}",
-                "cards in {C:attention}first{} played",
-                "hand after scoring",
+                "cards in {C:attention}first{} hand",
+                "after scoring",
               }
             },
             j_poke_lileep = {

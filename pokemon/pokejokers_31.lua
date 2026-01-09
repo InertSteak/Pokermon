@@ -223,15 +223,11 @@ local tarountula = {
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Spidops 918
@@ -285,15 +281,11 @@ local spidops = {
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Nymble 919

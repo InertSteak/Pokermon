@@ -369,14 +369,10 @@ local golett={
     return level_evo(self, card, context, "j_poke_golurk")
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Golurk 623
@@ -423,14 +419,10 @@ local golurk={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      poke_change_hazard_level(-card.ability.extra.hazard_level)
-    end
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Pawniard 624
