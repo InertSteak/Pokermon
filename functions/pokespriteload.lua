@@ -152,7 +152,7 @@ PokemonSprites = {
     AtlasJokersSeriesA = {artist = 'Maelmc', anim_atlas = "AtlasJokersSeriesAVoltorb"},
     AtlasJokersSeriesB = {artist = 'MyDude_YT'}
 }},
-{name = "hisuian_voltorb", base = {pos = {x = 2, y = 6}},gen_atlas = 1},
+{name = "hisuian_voltorb", base = {pos = {x = 2, y = 6}},gen_atlas = 1, alts = {AtlasJokersSeriesA = {artist = 'PigeonPie'}}},
 {name = "electrode", base = {pos = {x = 20, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc',anim_atlas = "AtlasJokersSeriesAElectrode"}}},
 {name = "hisuian_electrode", base = {pos = {x = 4, y = 6}},gen_atlas = 1},
 {name = "exeggcute", base = {pos = {x = 22, y = 6}},},
@@ -1306,6 +1306,10 @@ local poke_artist_info = {
   {url = 'https://x.com/MyDude81058128'},
   {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
   {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
+  }},
+  PigeonPie = {display_name = 'PigeonPie', artist_colour = HEX("FFED24"), highlight_colour = HEX("DE26FF"), links = {
+    {url = 'https://www.instagram.com/pigeonpie08'},
+    {url = 'https://www.tiktok.com/@pigeon_pie', account = 'pigeon_pie'}
   }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {

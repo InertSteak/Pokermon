@@ -291,7 +291,9 @@ local site_colours = {
   ['bsky'] = HEX("006AFF"),
   ['reddit'] = HEX("FF4500"),
   ['carrd'] = HEX("4071B7"),
-  ['discord'] = HEX("5865F2")
+  ['discord'] = HEX("5865F2"),
+  ['instagram'] = HEX("D60059"),
+  ['tiktok'] = HEX("283234")
 }
 
 local function get_site_colour(domain)
