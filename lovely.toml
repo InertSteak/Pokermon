@@ -797,4 +797,40 @@ position = "after"
 payload = '''if self.config.center.key == 'j_poke_unown_swarm' then return end'''
 match_indent = true
 
-
+#Hazard Level
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = 0.4,
+        func = function()
+            if #SMODS.drawn_cards > 0 then
+                SMODS.calculate_context({first_hand_drawn = not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind,
+                                        hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards,
+                                        other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards})
+                SMODS.drawn_cards = {}
+                if G.GAME.facing_blind then G.GAME.current_round.any_hand_drawn = true end
+            end
+            return true
+        end
+    }))
+'''
+position = "after"
+payload = '''
+if not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind then
+  if G.GAME.round_resets.hazard_level then
+    local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = 0.4,
+        func = function()
+          poke_add_hazards(nil, hazards, G.hand)
+          return true
+        end
+    }))
+  end
+end
+'''
+match_indent = true

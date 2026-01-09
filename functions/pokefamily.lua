@@ -78,6 +78,7 @@ local default_family_list = {
   { "poochyena", "mightyena" },
   { "wurmple", "silcoon", "beautifly", "cascoon", "dustox" },
   { "numel", "camerupt", "mega_camerupt" },
+  { "cacnea", "cacturne"},
   { "feebas", "milotic" },
   { "snorunt", "glalie", "froslass" },
   { "nosepass", "probopass" },

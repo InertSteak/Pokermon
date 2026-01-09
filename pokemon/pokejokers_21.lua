@@ -328,16 +328,16 @@ local chandelure={
 local golett={
   name = "golett",
   pos = {x = 2, y = 9},
-  config = {extra = {hazards = 4, Xmult_multi = 1.2, rounds = 5, num = 1, dem = 4}},
+  config = {extra = {hazard_level = 1, Xmult_multi = 1.2, rounds = 5, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golett')
-    return {vars = {abbr.hazards, abbr.Xmult_multi, abbr.rounds, num, dem}}
+    return {vars = {abbr.hazard_level, abbr.Xmult_multi, abbr.rounds, num, dem}}
   end,
   rarity = 3,
   cost = 7,
@@ -350,9 +350,6 @@ local golett={
   eternal_compat = true,
   hazard_poke = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or SMODS.pseudorandom_probability(card, 'golett', card.ability.extra.num, card.ability.extra.dem, 'golett') then
         if context.other_card.debuff then
@@ -371,21 +368,31 @@ local golett={
     end
     return level_evo(self, card, context, "j_poke_golurk")
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
 }
 -- Golurk 623
 local golurk={
   name = "golurk",
   pos = {x = 3, y = 9},
-  config = {extra = {hazards = 4, interval = 3, Xmult_multi = 1.4, num = 1, dem = 3}},
+  config = {extra = {hazard_level = 1, interval = 3, Xmult_multi = 1.3, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golurk')
-    return {vars = {abbr.hazards, abbr.Xmult_multi, num, dem}}
+    return {vars = {abbr.hazard_level, abbr.Xmult_multi, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -398,9 +405,6 @@ local golurk={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if SMODS.has_enhancement(context.other_card, "m_poke_hazard") or SMODS.pseudorandom_probability(card, 'golurk', card.ability.extra.num, card.ability.extra.dem, 'golurk') then
         if context.other_card.debuff then
@@ -418,6 +422,16 @@ local golurk={
       end
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
 }
 -- Pawniard 624
 local pawniard={

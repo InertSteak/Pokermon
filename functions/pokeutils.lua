@@ -498,26 +498,10 @@ tdmsg = function(tablename)
   end
 end
 
-local prev_evaluate_round = G.FUNCS.evaluate_round
-G.FUNCS.evaluate_round = function()
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      for i = #G.deck.cards, 1, -1 do
-        local card = G.deck.cards[i]
-        if SMODS.has_enhancement(card, "m_poke_hazard") then
-          card:set_ability(G.P_CENTERS.c_base, nil, true)
-        end
-      end
-      return true
-    end
-  }))
-  prev_evaluate_round()
-end
-
-poke_add_hazards = function(ratio, flat)
+poke_add_hazards = function(ratio, flat, area)
   local hazards = {}
   flat = flat or 0
+  area = area or G.deck
   local count = #G.playing_cards
   for _, v in pairs(G.playing_cards) do
     if SMODS.has_enhancement(v, "m_poke_hazard") then
@@ -527,8 +511,8 @@ poke_add_hazards = function(ratio, flat)
   local to_add = ratio and math.floor(count / ratio) or flat
   for i = 1, to_add do
     hazards[#hazards+1] = create_playing_card({
-      front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
-      center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
+      front = pseudorandom_element(G.P_CARDS, pseudoseed('hazards')), 
+      center = G.P_CENTERS.m_poke_hazard}, area, nil, nil, {G.C.PURPLE
     })
     SMODS.recalc_debuff(hazards[#hazards])
   end
@@ -548,6 +532,24 @@ poke_set_hazards = function(amount)
       card:set_ability(G.P_CENTERS.m_poke_hazard)
     end
   end
+end
+
+poke_change_hazard_max = function(mod)
+  G.GAME.hazard_max = G.GAME.hazard_max or 3
+  G.GAME.hazard_max = G.GAME.hazard_max + mod
+end
+
+poke_change_hazard_level = function(mod)
+  local max = G.GAME.hazard_max or 3
+  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level or 0
+  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level + mod
+end
+
+poke_get_hazard_level_vars = function()
+  local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level or 0)
+  local max = G.GAME.hazard_max or 3
+  local vars = {level, max}
+  return vars
 end
 
 function poke_same_suit(hand)

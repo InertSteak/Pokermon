@@ -5,7 +5,7 @@ local hazard = {
    artist = "PrincessRoxie",
    atlas = "AtlasEnhancementsBasic",
    pos = { x = 0, y = 0 },
-   config = {num = 1, dem = 6},
+   config = {num = 1, dem = 3},
    loc_vars = function(self, info_queue, center)
      local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'hazard')
      return {vars = {num, dem}}

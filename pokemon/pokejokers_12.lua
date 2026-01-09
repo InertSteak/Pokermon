@@ -1,5 +1,89 @@
 -- Cacnea 331
+local cacnea = {
+  name = "cacnea", 
+  pos = {x = 0, y = 0},
+  config = {extra = {hazard_level = 1, money_mod = 3, rounds = 5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    return {vars = {abbr.hazard_level, abbr.money_mod, abbr.rounds}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  gen = 3,
+  hazard_poke = true,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.remove_playing_cards then
+      for _, removed_card in ipairs(context.removed) do
+        local earned = ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = '$'..earned, colour = G.C.MONEY})
+      end
+    end
+    return level_evo(self, card, context, "j_poke_cacturne")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
+}
 -- Cacturne 332
+local cacturne = {
+  name = "cacturne", 
+  pos = {x = 0, y = 0},
+  config = {extra = {hazard_level = 1, money_mod = 5}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    -- just to shorten function
+    local abbr = card.ability.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+
+    return {vars = {abbr.hazard_level, abbr.money_mod}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  gen = 3,
+  hazard_poke = true,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.remove_playing_cards then
+      for _, removed_card in ipairs(context.removed) do
+        local earned = ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = '$'..earned, colour = G.C.MONEY})
+      end
+    end
+    if context.destroying_card then
+      return not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_poke_hazard') and G.GAME.current_round.hands_played == 0
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
+}
 -- Swablu 333
 -- Altaria 334
 -- Zangoose 335
@@ -568,5 +652,5 @@ local wynaut={
   end,
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, absol, wynaut},
+        list = {cacnea, cacturne, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, absol, wynaut},
 }

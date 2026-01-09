@@ -223,15 +223,15 @@ local simipour = {
 local roggenrola = {
   name = "roggenrola", 
   pos = {x = 2, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 8, hazard_triggered = 0}, evo_rqmt = 20},
+  config = {extra = {hazard_level = 1, mult_mod = 5, hazard_triggered = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
-    return {vars = {abbr.hazards, abbr.mult_mod, math.max(0, self.config.evo_rqmt - abbr.hazard_triggered)}}
+    return {vars = {abbr.hazard_level, abbr.mult_mod, math.max(0, self.config.evo_rqmt - abbr.hazard_triggered)}}
   end,
   rarity = 1,
   cost = 4,
@@ -242,9 +242,6 @@ local roggenrola = {
   hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
       if context.other_card.debuff then
           return {
@@ -264,23 +261,33 @@ local roggenrola = {
     end
     return scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.hazard_triggered, self.config.evo_rqmt)
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
 }
 -- Boldore 525
 local boldore = {
   name = "boldore", 
   pos = {x = 3, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 12}},
+  config = {extra = {hazard_level = 1, mult_mod = 10}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
     
-    return {vars = {abbr.hazards, abbr.mult_mod}}
+    return {vars = {abbr.hazard_level, abbr.mult_mod}}
   end,
   rarity = "poke_safari",
   cost = 6,
@@ -292,9 +299,6 @@ local boldore = {
   hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
       if context.other_card.debuff then
           return {
@@ -311,20 +315,30 @@ local boldore = {
     end
     return item_evo(self, card, context, "j_poke_gigalith")
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
 }
 -- Gigalith 526
 local gigalith = {
   name = "gigalith", 
   pos = {x = 4, y = 2},
-  config = {extra = {hazards = 4, mult_mod = 8, retriggers = 1}},
+  config = {extra = {hazard_level = 1, mult_mod = 7, retriggers = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
-    return {vars = {abbr.hazards, abbr.mult_mod}}
+    return {vars = {abbr.hazard_level, abbr.mult_mod}}
   end,
   rarity = 'poke_safari',
   cost = 10,
@@ -335,9 +349,6 @@ local gigalith = {
   blueprint_compat = true,
   hazard_poke = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     if context.individual and not context.end_of_round and context.cardarea == G.hand and SMODS.has_no_rank(context.other_card) then
       if context.other_card.debuff then
           return {
@@ -360,6 +371,16 @@ local gigalith = {
       }
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(card.ability.extra.hazard_level)
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      poke_change_hazard_level(-card.ability.extra.hazard_level)
+    end
+  end
 }
 -- Woobat 527
 -- Swoobat 528
