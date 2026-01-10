@@ -333,6 +333,76 @@ local miracleseed = {
   end
 }
 
+local heavyboots = {
+  name = "heavyboots",
+  key = "heavyboots",
+  set = "Item",
+  helditem = true,
+  config = {extra = {usable = true, hazard_off = false}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
+    return {vars = {}}
+  end,
+  pos = { x = 3, y = 7 },
+  soul_pos = { x = 4, y = 7 },
+  atlas = "AtlasConsumablesBasic",
+  cost = 4,
+  unlocked = true,
+  discovered = true,
+  hidden = true,
+  soul_set = "Item",
+  soul_rate = .01,
+  can_use = function(self, card)
+    return card.ability.extra.usable
+  end,
+  use = function(self, card, area, copier)
+    card.ability.extra.usable = false
+    card.ability.extra.hazard_off = true
+    card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+  end,
+  calculate = function(self, card, context)
+    if context.fix_probability and card.ability.extra.hazard_off and context.identifier == 'hazard' then
+      return {
+        numerator = 0,
+      }
+    end
+    if context.end_of_round and not card.ability.extra.usable then
+      card.ability.extra.usable = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card.children.floating_sprite:set_sprite_pos({ x = 4, y = 7 })
+      G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.1,
+        func = function()
+          card.ability.extra.hazard_off = false
+          return true
+        end
+      }))
+      
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
+  keep_on_use = function(self, card)
+    return true
+  end,
+  in_pool = function(self)
+    return true
+  end,
+  in_pool = function(self)
+    return G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0
+  end,
+}
+
 return {name = "Items 3",
-        list = {prismscale, dawnstone,duskstone, hardstone, heartscale, miracleseed}
+        list = {prismscale, dawnstone,duskstone, hardstone, heartscale, miracleseed, heavyboots}
 }

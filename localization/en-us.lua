@@ -300,6 +300,16 @@ return {
                     "{C:inactive}(Useable once per round)",
                 }
             },
+            c_poke_heavyboots = {
+                name = "Heavy-Duty Boots",
+                text = {
+                    "{C:attention}Reusable{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:attention}Hazard{} card {C:green,E:1,S:1.1}probabilities{} become", 
+                    "{C:attention}0{} until end of round",
+                    "{C:inactive}(Useable once per round)",
+                }
+            },
             c_poke_teraorb = {
                 name = "Tera Orb",
                 text = {
@@ -4392,6 +4402,7 @@ return {
             j_poke_ferroseed = {
                 name = "Ferroseed",
                 text = {
+                  "{C:purple}+#2#{} hazard level",
                   "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
                   "are also {C:attention}Steel{} cards",
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
@@ -4400,6 +4411,7 @@ return {
             j_poke_ferrothorn = {
               name = "Ferrothorn",
               text = {
+                "{C:purple}+#1#{} hazard level",
                 "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
                 "are also {C:attention}Steel{} cards",
                 "{br:2}ERROR - CONTACT STEAK",

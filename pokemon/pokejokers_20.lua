@@ -524,15 +524,16 @@ local jellicent = {
 local ferroseed={
   name = "ferroseed",
   pos = {x = 5, y = 7},
-  config = {extra = {rounds = 5}},
+  config = {extra = {rounds = 5, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     end
-    return {vars = {center.ability.extra.rounds}}
+    return {vars = {center.ability.extra.rounds, center.ability.extra.hazard_level}}
   end,
   rarity = 2,
   cost = 6,
@@ -551,20 +552,27 @@ local ferroseed={
     end
     return level_evo(self, card, context, "j_poke_ferrothorn")
   end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end
 }
 -- Ferrothorn 598
 local ferrothorn={
   name = "ferrothorn",
   pos = {x = 6, y = 7},
-  config = {extra = {retriggers = 1}},
+  config = {extra = {retriggers = 1, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     end
-    return {vars = {}}
+    return {vars = {center.ability.extra.hazard_level}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -598,6 +606,12 @@ local ferrothorn={
       }
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end
 }
 -- Klink 599
 -- Klang 600
