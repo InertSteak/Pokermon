@@ -346,6 +346,7 @@ local heavyboots = {
   pos = { x = 3, y = 7 },
   soul_pos = { x = 4, y = 7 },
   atlas = "AtlasConsumablesBasic",
+  artist = {"Emma", "Catzzadilla"},
   cost = 4,
   unlocked = true,
   discovered = true,
