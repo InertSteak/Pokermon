@@ -2803,7 +2803,7 @@ return {
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
-                    "{C:purple}+#1#{} hazard level",
+                    "{C:earth}+#1#{} hazard layer",
                     "Gain {C:chips}+#2#{} Chips when",
                     "an {C:attention}enhanced{} card",
                     "is destroyed",
@@ -2974,7 +2974,7 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:purple}+#1#{} hazard level, {C:purple}+#4#{} hazard level limit",
+                    "{C:earth}+#1#{} hazard layer, {C:purple}+#4#{} hazard layer limit",
                     "{X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Hazard{} or {C:attention}Steel{} card",
                     "{C:attention}held{} in hand",
@@ -3495,7 +3495,7 @@ return {
             j_poke_cacnea = {
               name = "Cacnea",
               text = {
-                "{C:purple}+#1#{} hazard level",
+                "{C:earth}+#1#{} hazard layer",
                 "Earn {C:money}$#2#{} when a",
                 "card is destroyed",
                 "{C:inactive}(Evolves after {C:attention}#3#{C:inactive} rounds)",
@@ -3504,7 +3504,7 @@ return {
             j_poke_cacturne = {
               name = "Cacturne",
               text = {
-                "{C:purple}+#1#{} hazard level",
+                "{C:earth}+#1#{} hazard layer",
                 "Earn {C:money}$#2#{} when a",
                 "card is destroyed",
                 "{br:2}ERROR - CONTACT STEAK",
@@ -4240,7 +4240,7 @@ return {
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
-                    "{C:purple}+#1#{} hazard level",
+                    "{C:earth}+#1#{} hazard layer",
                     "Each card with {C:attention}no rank{}",
                     "held in hand gives {C:mult}+#2#{} Mult",
                     "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
@@ -4249,7 +4249,7 @@ return {
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
-                    "{C:purple}+#1#{} hazard level",
+                    "{C:earth}+#1#{} hazard layer",
                     "Each card with {C:attention}no rank{}",
                     "held in hand gives {C:mult}+#2#{} Mult",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})"
@@ -4258,7 +4258,7 @@ return {
             j_poke_gigalith = {
                 name = "Gigalith",
                 text = {
-                    "{C:purple}+#1#{} hazard level",
+                    "{C:earth}+#1#{} hazard layer",
                     "Each card with {C:attention}no rank{}",
                     "held in hand gives {C:mult}+#2#{} Mult",
                     "and retriggers"
@@ -4402,7 +4402,7 @@ return {
             j_poke_ferroseed = {
                 name = "Ferroseed",
                 text = {
-                  "{C:purple}+#2#{} hazard level",
+                  "{C:earth}+#2#{} hazard layer",
                   "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
                   "are also {C:attention}Steel{} cards",
                   "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
@@ -4411,7 +4411,7 @@ return {
             j_poke_ferrothorn = {
               name = "Ferrothorn",
               text = {
-                "{C:purple}+#1#{} hazard level",
+                "{C:earth}+#1#{} hazard layer",
                 "{C:attention}Wild{} cards and {C:attention}Hazard{} cards",
                 "are also {C:attention}Steel{} cards",
                 "{br:2}ERROR - CONTACT STEAK",
@@ -4476,7 +4476,7 @@ return {
             j_poke_golett = {
                 name = "Golett",
                 text = {
-                  "{C:purple}+#1#{} hazard level",
+                  "{C:earth}+#1#{} hazard layer",
                   "{C:green}#4# in #5#{} chance for cards held",
                   "in hand to give {X:mult,C:white}X#2#{} Mult",
                   "Guaranteed for {C:attention}Hazard{} cards",
@@ -4486,7 +4486,7 @@ return {
             j_poke_golurk = {
                 name = "Golurk",
                 text = {
-                  "{C:purple}+#1#{} hazard level",
+                  "{C:earth}+#1#{} hazard layer",
                   "{C:green}#3# in #4#{} chance for cards held",
                   "in hand to give {X:mult,C:white}X#2#{} Mult", 
                   "Guaranteed for {C:attention}Hazard{} cards",
@@ -4865,17 +4865,17 @@ return {
             j_poke_tarountula = {
                 name = "Tarountula",
                 text = {
-                    "{C:purple}+#1#{} hazard level, {C:attention}+#3#{} hand size",
+                    "{C:earth}+#1#{} hazard layer, {C:attention}+#3#{} hand size",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_spidops = {
                 name = "Spidops",
                 text = {
-                    "{C:purple}+#1#{} hazard level, {C:attention}+#2#{} hand size",
+                    "{C:earth}+#1#{} hazard layer, {C:attention}+#2#{} hand size",
                     "When {C:attention}Blind{} is selected",
                     "gain hand size equal to",
-                    "the {C:attention}hazard level{} and",
+                    "the {C:attention}hazard layer{} and",
                     "lose {C:attention}#3# discard{}"
                 }
             },
@@ -5824,12 +5824,12 @@ return {
                 }
             },
             hazard_level = {
-              name = "Hazard Level",
+              name = "Hazard Layer",
               text = {
                   "When {C:attention}first{} hand is drawn, add",
                   "{C:attention}Hazard{} cards to hand",
-                  "equal to your {C:attention}hazard level",
-                  "{C:inactive}(Current Hazard Level {C:attention}#1#{C:inactive}/#2#){}"
+                  "equal to your {C:attention}Hazard Layer",
+                  "{C:inactive}(Current Hazard Layer {C:attention}#1#{C:inactive}/#2#){}"
               }
             },
             merge = {
