@@ -361,31 +361,24 @@ SMODS.collection_pool = function(_base_pool)
   for _, v in ipairs(_base_pool) do
     local moved = false
     if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
-      if pokermon_config.order_jokers then
-        for x, y in pairs(pokermon.dex_order_groups) do
-          if table.contains(y, v.name) then
-            inserts[#inserts+1] = v
-            moved = true
-          end
-        end
+      -- Taking pokemon jokers out of the pool to sort and re-insert
+      if pokermon_config.order_jokers and v.stage and v.stage ~= 'Other' and v.name ~= "missingno" then
+        inserts[#inserts+1] = v
+        moved = true
       end
+      -- Taking *non*-pokemon jokers out of the pool entirely if that toggle is on
       local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only_collection
+      -- Otherwise work as normal
       if not moved and not empty_vanilla then pool[#pool+1] = v end
     end
   end
 
+  -- Now sort pokemon in dex-order, then re-insert into pool
   if pokermon_config.order_jokers then
     table.sort(inserts, function(a, b) return pokermon.get_dex_number(a.name) < pokermon.get_dex_number(b.name) end)
-    for k, v in pairs(inserts) do
-      for x, y in pairs(pokermon.dex_order_groups) do
-        if table.contains(y, v.name) then
-          local next_index = pokermon.dex_order[pokermon.find_next_dex_number(v.name)]
-          if type(next_index) == "table" then next_index = next_index[1] end
-          if not table.contains(pool, v) then
-            table.insert(pool, next_index and pokermon.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
-          end
-        end
-      end
+    for i = #inserts, 1, -1 do
+      local name = (inserts[i+1] or {}).name or 'missingno'
+      table.insert(pool, pokermon.find_pool_index(pool, name) or #pool + 1, inserts[i])
     end
   end
 

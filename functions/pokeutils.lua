@@ -691,34 +691,9 @@ pokermon.find_pool_index = function(pool, key)
 end
 
 pokermon.get_dex_number = function(name)
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for x, y in ipairs(pokemon) do
-        if name == y then return i + (x - 1)/10 end
-      end
-    elseif type(pokemon) == "string" and name == pokemon then return i end
-  end
-  return #pokermon.dex_order + 1
+  return pokermon.dex_numbers[name]
 end
 
-pokermon.find_next_dex_number = function(name)
-  local dexNo = pokermon.get_dex_number(name)
-  local group_list
-  for k, v in pairs(pokermon.dex_order_groups) do
-    if table.contains(v, name) then group_list = v break end
-  end
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for _, mon in ipairs(pokemon) do
-        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
-          return i
-        end
-      end
-    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
-      return i
-    elseif pokemon == "missingno" then return i end
-  end
-end
 --- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
 poke_convert_to_set = function(element_or_list)
   if element_or_list then
