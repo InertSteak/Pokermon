@@ -3633,6 +3633,41 @@ return {
                   "sets money to {C:money}$0"
                 }
             },
+            j_poke_clamperl = {
+              name = "Clamperl",
+              text = {
+                "{C:attention}Holding {C:spectral}Ethereal {C:attention}Tag",
+                "Gain {C:attention}+#1#{} hand size while",
+                "opening {C:attention}Booster Packs{}",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
+                "{C:inactive,s:0.8}(Evolves after selling a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
+              }
+            },
+            j_poke_huntail = {
+              name = "Huntail",
+              text = {
+                "Gain {C:attention}+#1#{} hand size while",
+                "opening {C:attention}Booster Packs{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gains {X:mult,C:white}X#2#{} Mult and destroys a",
+                "random card {C:attention}held{} in hand when",
+                "a {C:tarot}Tarot{} or {C:item}Item{} card is {C:attention}sold",
+                "while opening {C:attention}Booster Packs",
+                "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
+              }
+            },
+            j_poke_gorebyss = {
+              name = "Gorebyss",
+              text = {
+                "Gain {C:attention}+#1#{} hand size while",
+                "opening {C:attention}Booster Packs{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gains {X:mult,C:white}X#2#{} Mult when a",
+                "{C:tarot}Tarot{} or {C:item}Item{} card is {C:attention}used",
+                "while opening {C:attention}Booster Packs",
+                "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
+              }
+            },
             j_poke_luvdisc = {
               name = "Luvdisc",
               text = {

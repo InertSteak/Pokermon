@@ -126,6 +126,7 @@ local default_family_list = {
   { "aron", "lairon", "aggron" },
   { "budew", "roselia", "roserade" },
   { "duskull", "dusclops", "dusknoir" },
+  {"clamperl", "huntail", "gorebyss"},
   { "lileep", "cradily" },
   { "anorith", "armaldo" },
   { "bidoof", "bibarel" },
