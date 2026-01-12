@@ -684,9 +684,9 @@ table.append = function(t1, t2)
   end
 end
 
-pokermon.find_pool_index = function(pool, key)
+pokermon.find_pool_index = function(pool, name)
   for k, v in pairs(pool) do
-    if v.key == key then return k end
+    if v.name == name then return k end
   end
 end
 
