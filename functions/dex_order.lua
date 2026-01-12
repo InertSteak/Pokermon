@@ -248,7 +248,7 @@ pokermon.dex_order = {
   "pupitar",
   { "tyranitar", "mega_tyranitar" },
   "lugia",
-  { "ho-oh" },
+  "ho_oh",
   "celebi",
   "treecko",
   "grovyle",
