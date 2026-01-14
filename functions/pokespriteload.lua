@@ -1264,6 +1264,7 @@ PokemonSprites = {
 {name = "rival", base = {pos = {x = 0, y = 2}}, others_atlas = true,},
 {name = "ruins_of_alph", base = {pos = {x = 0, y = 3}}, others_atlas = true,},
 {name = "professor", base = {pos = {x = 4, y = 1}}, others_atlas = true,},
+{name = "oologist", base = {pos = {x = 4, y = 4}}, others_atlas = true,},
 {name = "daycare", base = {pos = {x = 2,y = 4}}, others_atlas = true,},
 {name = "billion_lions", base = {pos = {x = 4, y = 3}, soul_pos = {x = 5, y = 3}}, others_atlas = true,},
   }

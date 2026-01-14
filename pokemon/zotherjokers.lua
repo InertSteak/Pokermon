@@ -302,10 +302,12 @@ local mystery_egg = {
         if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
       end
       card.ability.extra.rounds = card.ability.extra.rounds - 1
-      if (adjacent + #SMODS.find_card('c_poke_fire_energy')) > 0 and pseudorandom('egg') < (adjacent + #SMODS.find_card('c_poke_fire_energy'))/4 then
-        card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if next(SMODS.find_card('j_poke_oologist')) then
+        if (adjacent + #SMODS.find_card('c_poke_fire_energy')) > 0 and pseudorandom('egg') < (adjacent + #SMODS.find_card('c_poke_fire_energy'))/4 then
+          card.ability.extra.rounds = card.ability.extra.rounds - 1
+        end
+        card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
       end
-      card.ability.extra.rounds = card.ability.extra.rounds - adjacent/4
       if card.ability.extra.rounds <= 1 then
         local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 end
         juice_card_until(card, eval, true)
@@ -755,6 +757,43 @@ local professor={
   end
 }
 
+
+local oologist={
+  name = "oologist",
+  pos = {x = 0, y = 0},
+  config = {extra = {num = 1, dem = 20, activated = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      if not center.edition or (center.edition and not center.edition.negative) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+      end
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'oologist')
+    return {vars = {num, dem, not center.ability.extra.activated and "("..localize('k_active_ex')..")" or ''}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Other",
+  atlas = "others",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.reroll_shop and not context.blueprint and not card.ability.extra.activated then
+      if SMODS.pseudorandom_probability(card, 'oologist', card.ability.extra.num, card.ability.extra.dem, 'oologist') then
+        card.ability.extra.activated = true
+        local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_mystery_egg", edition = "e_negative"}
+        local add_card = SMODS.create_card(temp_card)
+        poke_add_shop_card(add_card, card)
+      end
+    end
+    if context.ending_shop and not context.blueprint then
+      card.ability.extra.activated = false
+    end
+  end,
+}
+
 local daycare={
   name = "daycare",
   pos = {x = 0, y = 0},
@@ -842,7 +881,7 @@ local daycare={
   end,
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare}
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist}
 
 if pokermon_config.pokemon_aprilfools then
   jlist[#jlist + 1] = billion_lions
