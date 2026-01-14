@@ -776,6 +776,7 @@ local oologist={
   cost = 8,
   stage = "Other",
   atlas = "others",
+  artist = "MyDude_YT",
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = false,
