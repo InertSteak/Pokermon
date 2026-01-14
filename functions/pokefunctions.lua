@@ -1025,7 +1025,7 @@ get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   end
   if use_deck then
     for k, v in ipairs(G.playing_cards) do
-      if not SMODS.has_no_suit(v) then
+      if not SMODS.has_no_suit(v) and not SMODS.has_any_suit(v) then
         for x, y in pairs(allowed_suits) do
           if (y.key and v:is_suit(y.key)) or v:is_suit(y) then
             valid_cards[#valid_cards+1] = v
