@@ -1435,23 +1435,43 @@ end
 poke_get_artist_sprites = function(artist)
   local sprites = {}
 
-  for _, sprite in ipairs(PokemonSprites.list) do
+  local add_sprite_to_list = function(sprite, layer, atlas_prefix, alt)
+    local anim_atlas = alt and alt.anim_atlas
+    if not alt then anim_atlas = sprite.base.anim_atlas end -- prevent base anim_atlas to be used as a fallback
 
+    local display_text = alt and alt.display_text or sprite.display_text
+    if type(display_text) == 'table' then
+      if display_text.type == nil then display_text.type = 'name_text' end
+      if display_text.set == nil then display_text.set = 'Joker' end
+      display_text = localize(display_text)
+    end
+
+    table.insert(sprites, {
+      name = sprite.name,
+      pos = sprite.base.pos,
+      soul_pos = alt and alt.soul_pos or sprite.base.soul_pos,
+      atlas_prefix = atlas_prefix,
+      display_text = display_text,
+      gen_atlas = sprite.gen_atlas,
+      others_atlas = sprite.others_atlas,
+      anim_atlas = anim_atlas,
+      layer = layer
+    })
+  end
+
+  for _, sprite in ipairs(PokemonSprites.list) do
+    if sprite.base and sprite.base.artist then
+      local layer = poke_get_artist_layer(sprite.base, artist)
+      if layer then
+        add_sprite_to_list(sprite, layer, "AtlasJokersBasic")
+      end
+    end
     if sprite.alts then
       for atlas_prefix, alt in pairs(sprite.alts) do
         local layer = poke_get_artist_layer(alt, artist)
 
         if layer then
-          table.insert(sprites, {
-            name = sprite.name,
-            pos = sprite.base.pos,
-            soul_pos = alt.soul_pos or sprite.base.soul_pos,
-            atlas_prefix = atlas_prefix,
-            gen_atlas = sprite.gen_atlas,
-            others_atlas = sprite.others_atlas,
-            anim_atlas = alt.anim_atlas,
-            layer = layer
-          })
+          add_sprite_to_list(sprite, layer, atlas_prefix, alt)
         end
       end
     end
