@@ -1261,10 +1261,10 @@ PokemonSprites = {
 {name = "jelly_donut", base = {pos = {x = 6, y = 0}}, others_atlas = true,},
 {name = "treasure_eatery", base = {pos = {x = 6, y = 2}}, others_atlas = true,},
 {name = "mystery_egg", base = {pos = {x = 0, y = 1}}, others_atlas = true,},
-{name = "rival", base = {artist = 'MyDude_YT', pos = {x = 0, y = 2}}, others_atlas = true, display_text = {key = 'j_poke_rival'}},
+{name = "rival", base = {artist = 'MyDude_YT', pos = {x = 0, y = 2}, display_text = {key = 'j_poke_rival'}}, others_atlas = true,},
 -- These sprites are set dynamically elsewhere, so these entries are just for the credits screen
-{name = "bitter_rival", base = {artist = 'MyDude_YT', pos = {x = 2, y = 2}}, others_atlas = true, display_text = {key = 'j_poke_bitter_rival'}},
-{name = "champion", base = {artist = 'MyDude_YT', pos = {x = 4, y = 2}}, others_atlas = true, display_text = {key = 'j_poke_champion'}},
+{name = "bitter_rival", base = {artist = 'MyDude_YT', pos = {x = 2, y = 2}, display_text = {key = 'j_poke_bitter_rival'}}, others_atlas = true,},
+{name = "champion", base = {artist = 'MyDude_YT', pos = {x = 4, y = 2}, display_text = {key = 'j_poke_champion'}}, others_atlas = true,},
 
 {name = "ruins_of_alph", base = {pos = {x = 0, y = 3}}, others_atlas = true,},
 {name = "professor", base = {pos = {x = 4, y = 1}}, others_atlas = true,},
@@ -1439,7 +1439,7 @@ poke_get_artist_sprites = function(artist)
     local anim_atlas = alt and alt.anim_atlas
     if not alt then anim_atlas = sprite.base.anim_atlas end -- prevent base anim_atlas to be used as a fallback
 
-    local display_text = alt and alt.display_text or sprite.display_text
+    local display_text = alt and alt.display_text or sprite.base.display_text
     if type(display_text) == 'table' then
       if display_text.type == nil then display_text.type = 'name_text' end
       if display_text.set == nil then display_text.set = 'Joker' end
