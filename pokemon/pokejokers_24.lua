@@ -83,19 +83,21 @@ local pumpkaboo={
       card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('pumpkaboo'))
     end
     card.ability.extra.jack_target = 4 + card.ability.extra.form
-    local scale = 1
-    if card.ability.extra.form == 0 then
-      scale = 0.7
-    elseif card.ability.extra.form == 1 then
-      scale = 1
-    elseif card.ability.extra.form == 2 then
-      scale = 1.1
-    elseif card.ability.extra.form == 3 then
-      scale = 1.2
+    if self.discovered then
+      local scale = 1
+      if card.ability.extra.form == 0 then
+        scale = 0.7
+      elseif card.ability.extra.form == 1 then
+        scale = 1
+      elseif card.ability.extra.form == 2 then
+        scale = 1.1
+      elseif card.ability.extra.form == 3 then
+        scale = 1.2
+      end
+      card.T.w = card.children.center.original_T.w * scale
+      card.T.h = card.children.center.original_T.h * scale
+      self:set_sprites(card)
     end
-    card.T.w = card.children.center.original_T.w * scale
-    card.T.h = card.children.center.original_T.h * scale
-    self:set_sprites(card)
   end,
   set_sprites = function(self, card, front)
     if poke_can_set_sprite(card) then
@@ -191,23 +193,26 @@ local gourgeist={
       card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('gourgeist'))
     end
     card.ability.extra.jack_target = 4 + card.ability.extra.form
-    local scale = 1
-    if card.ability.extra.form == 0 then
-      card.ability.extra.money = 2
-      scale = 0.7
-    elseif card.ability.extra.form == 1 then
-      card.ability.extra.money = 5
-      scale = 1
-    elseif card.ability.extra.form == 2 then
-      card.ability.extra.money = 8
-      scale = 1.1
-    elseif card.ability.extra.form == 3 then
-      card.ability.extra.money = 11
-      scale = 1.2
+    
+    if self.discovered then
+      local scale = 1
+      if card.ability.extra.form == 0 then
+        card.ability.extra.money = 2
+        scale = 0.7
+      elseif card.ability.extra.form == 1 then
+        card.ability.extra.money = 5
+        scale = 1
+      elseif card.ability.extra.form == 2 then
+        card.ability.extra.money = 8
+        scale = 1.1
+      elseif card.ability.extra.form == 3 then
+        card.ability.extra.money = 11
+        scale = 1.2
+      end
+      card.T.w = card.children.center.original_T.w * scale
+      card.T.h = card.children.center.original_T.h * scale
+      self:set_sprites(card)
     end
-    card.T.w = card.children.center.original_T.w * scale
-    card.T.h = card.children.center.original_T.h * scale
-    self:set_sprites(card)
   end,
   set_sprites = function(self, card, front)
     if poke_can_set_sprite(self) then
