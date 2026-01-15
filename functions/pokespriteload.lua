@@ -1304,6 +1304,7 @@ local poke_artist_info = {
 {url = 'https://bsky.app/profile/justsmolchild.bsky.social', site = 'Bluesky', account = 'justsmolchild'}
   }},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
+  KatRoman = {display_name = 'KatRoman', artist_colour = HEX('0455FE')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC"), links = {
   {url = 'https://www.youtube.com/@mydudestudios6244', account = 'MyDude Studios'},
