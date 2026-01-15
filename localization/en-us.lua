@@ -1580,6 +1580,7 @@ return {
                 name = 'Grimer',      
                 text = {
                     "{C:mult}+#1#{} Mult if deck size > {C:attention}#3#{}",
+                    "{br:4}ERROR - CONTACT STEAK",
                     "Add a random playing card",
                     "to deck at end of round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
