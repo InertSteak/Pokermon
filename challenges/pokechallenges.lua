@@ -65,7 +65,8 @@ local nuzlocke = {
             {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
         deck = {
             type = 'Challenge Deck'
@@ -121,6 +122,8 @@ local goodasgold = {
         banned_tags = {
         },
         banned_other = {
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
@@ -184,7 +187,8 @@ local parenthood = {
         },
         banned_other = {
             {id = 'bl_final_heart', type = 'blind'},
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
     }
 }
@@ -210,6 +214,7 @@ local littlecup = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
@@ -235,6 +240,7 @@ local hammertime = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
@@ -293,6 +299,7 @@ local lonesome = {
             { id = 'bl_final_heart', type = 'blind' },
             { id = 'bl_final_leaf',  type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
     }
 }
@@ -339,6 +346,9 @@ local delibird_delimma = {
             { id = 'j_to_the_moon' },
             { id = 'j_rocket' },
             { id = 'j_satellite' },
+        },
+        banned_other = {
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
     }
 }
