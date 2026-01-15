@@ -761,6 +761,7 @@ local professor={
 local oologist={
   name = "oologist",
   pos = {x = 0, y = 0},
+  artist = "MyDude_YT",
   config = {extra = {num = 1, dem = 20, activated = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
