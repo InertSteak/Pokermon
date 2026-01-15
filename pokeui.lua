@@ -472,6 +472,7 @@ local function get_series_localize_key(atlas_prefix)
     local localize_prefix = 'poke_settings_pokemon_spritesheet_'
     return localize_prefix .. string.lower(series)
   end
+  return 'poke_settings_pokemon_spritesheet_classic'
 end
 
 local function get_sprite_keys_by_artist(artist)
