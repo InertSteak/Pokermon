@@ -472,6 +472,7 @@ local function get_series_localize_key(atlas_prefix)
     local localize_prefix = 'poke_settings_pokemon_spritesheet_'
     return localize_prefix .. string.lower(series)
   end
+  return 'poke_settings_pokemon_spritesheet_basicseries'
 end
 
 local function get_sprite_keys_by_artist(artist)
@@ -480,7 +481,7 @@ local function get_sprite_keys_by_artist(artist)
   for _, sprite in ipairs(poke_get_artist_sprites(artist)) do
     local key = {}
 
-    key.display_text = localize(get_series_localize_key(sprite.atlas_prefix))
+    key.display_text = sprite.display_text or localize(get_series_localize_key(sprite.atlas_prefix))
     key.layer = sprite.layer
 
     if sprite.anim_atlas then

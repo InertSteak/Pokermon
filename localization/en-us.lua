@@ -6610,6 +6610,7 @@ return {
             poke_settings_pokemon_spritesheet = "Default Sprite Sheet (Resets Individual)",
             poke_settings_pokemon_sprites_right_click_to_change = "Right Click to Change",
             poke_settings_pokemon_spritesheet_classic = "Classic",
+            poke_settings_pokemon_spritesheet_basicseries = "Basic Series",
             poke_settings_pokemon_spritesheet_seriesa = "Series A",
             poke_settings_pokemon_spritesheet_seriesb = "Series B",
             
