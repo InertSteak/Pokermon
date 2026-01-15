@@ -534,7 +534,9 @@ local victreebel={
          context.other_card:get_id() == 6 or 
          context.other_card:get_id() == 8 or 
          context.other_card:get_id() == 10 then
+          if not context.blueprint then
            card.ability.extra.round_retriggers = card.ability.extra.round_retriggers + 1
+          end
           return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
