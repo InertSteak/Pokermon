@@ -1441,7 +1441,7 @@ poke_get_artist_sprites = function(artist)
     local anim_atlas = alt and alt.anim_atlas
     if not alt then anim_atlas = sprite.base.anim_atlas end -- prevent base anim_atlas to be used as a fallback
 
-    local display_text = alt and alt.display_text or sprite.base.display_text
+    local display_text = alt and alt.display_text or sprite.base.display_text or sprite.display_text
 
     if type(display_text) == 'table' then
       -- Default to Joker name text localization for keys, pass `false` to either type or set to disable at will
