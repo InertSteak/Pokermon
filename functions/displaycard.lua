@@ -376,6 +376,8 @@ function PokeDisplayCard:init_from_existing(key, args, x, y, w, h)
     new_args.shader = 'voucher'
   end
 
+  new_args.layer = args.layer
+
   self:init(new_args, x, y, w, h)
 end
 

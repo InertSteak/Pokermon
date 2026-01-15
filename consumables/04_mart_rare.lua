@@ -81,7 +81,7 @@ local heavyboots = {
   pos = { x = 3, y = 7 },
   soul_pos = { x = 4, y = 7 },
   atlas = "AtlasConsumablesBasic",
-  artist = {"Emma", "Catzzadilla"},
+  artist = {{name = "Emma", layer = "soul"}, {name = "Catzzadilla", layer = "center"}},
   cost = 4,
   unlocked = true,
   discovered = true,
