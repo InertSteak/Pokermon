@@ -1402,8 +1402,8 @@ poke_load_atlas = function(item)
   end
 end
 
-poke_get_artist_info = function(name)
-  return poke_artist_info[name]
+poke_get_artist_info = function(name_or_record)
+  return poke_artist_info[type(name_or_record) == 'table' and name_or_record.name or name_or_record]
 end
 
 poke_get_artist_list = function()
