@@ -1396,6 +1396,8 @@ poke_load_atlas = function(item)
         item.atlas = sprite_info.alts[atlas_prefix].anim_atlas
         item.pos = {x = 0, y = 0}
       end
+    elseif atlas_prefix == "AtlasJokersBasic" and sprite_info.base.artist then
+      item.artist = sprite_info.base.artist
     end
     if not item.animated then
       item.atlas = poke_get_atlas_string(atlas_prefix, sprite_info.gen_atlas, sprite_info.others_atlas)
