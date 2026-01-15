@@ -1440,9 +1440,17 @@ poke_get_artist_sprites = function(artist)
     if not alt then anim_atlas = sprite.base.anim_atlas end -- prevent base anim_atlas to be used as a fallback
 
     local display_text = alt and alt.display_text or sprite.base.display_text
+
     if type(display_text) == 'table' then
-      if display_text.type == nil then display_text.type = 'name_text' end
-      if display_text.set == nil then display_text.set = 'Joker' end
+      -- Default to Joker name text localization for keys, pass `false` to either type or set to disable at will
+      if display_text.key and display_text.type == nil and display_text.set == nil then
+        display_text.type = 'name_text'
+        display_text.set = 'Joker'
+      end
+      -- Support simple localizations for ex. dictionary entries, just providing a string instead of `{ _localize = 'text' }` will make it render as is
+      if display_text._localize then
+        display_text = display_text._localize
+      end
       display_text = localize(display_text)
     end
 
