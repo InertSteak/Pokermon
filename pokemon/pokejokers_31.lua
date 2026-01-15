@@ -260,24 +260,6 @@ local spidops = {
       G.hand:change_size(level)
       G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + level
     end
-    if context.joker_main and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-      local all_hazards = true
-      for k, v in pairs(context.full_hand) do
-        if not SMODS.has_enhancement(v, "m_poke_hazard") then
-          all_hazards = false
-        end
-      end
-      if all_hazards then
-        local size_up = card.ability.extra.h_size * #context.scoring_hand
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={size_up}}})
-        G.hand:change_size(size_up)
-        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + size_up
-      end
-    end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
