@@ -196,19 +196,21 @@ local nightmare = {
   discovered = true,
   use = function(self, card)
     local choice = poke_find_leftmost_or_highlighted()
-    local energy = matching_energy(choice, true) or "c_poke_colorless_energy"
-    if energy then
-      local max = (energy == "c_poke_bird_energy") and 1 or 2
-      for _ = 1, max do
-        local _card = SMODS.add_card({set = "Energy", area = G.consumeables, key = energy, skip_materialize = true, soulable = true})
-        _card:set_edition({negative = true}, true)
+    if choice then
+      local energy = matching_energy(choice, true) or "c_poke_colorless_energy"
+      if energy then
+        local max = (energy == "c_poke_bird_energy") and 1 or 2
+        for _ = 1, max do
+          local _card = SMODS.add_card({set = "Energy", area = G.consumeables, key = energy, skip_materialize = true, soulable = true})
+          _card:set_edition({negative = true}, true)
+        end
       end
+      remove(self, choice)
     end
-    remove(self, choice)
   end,
   can_use = function(self, card)
     local choice = poke_find_leftmost_or_highlighted()
-    return not choice.ability.eternal
+    return choice and not choice.ability.eternal
   end,
 }
 
