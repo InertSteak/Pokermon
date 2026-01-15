@@ -498,7 +498,7 @@ local function get_sprite_keys_by_artist(artist)
 
   -- Jokers get special treatment because we only want jokers without alts
   for _, joker in ipairs(G.P_CENTER_POOLS["Joker"]) do
-    if poke_get_artist_layer(joker, artist) and joker.stage == 'Other' then
+    if poke_get_artist_layer(joker, artist) and #poke_get_sprite_artists(joker.name) == 0 then
       keys[#keys+1] = { existing_key = joker.key, set = "Joker" }
     end
   end

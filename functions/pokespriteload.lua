@@ -1479,3 +1479,19 @@ poke_get_artist_sprites = function(artist)
 
   return sprites
 end
+
+poke_get_sprite_artists = function(name)
+  local sprite_info = PokemonSprites[name]
+  local artists = {}
+  if sprite_info then
+    if sprite_info.base.artist then
+      artists[#artists+1] = sprite_info.base.artist
+    end
+    for _, alt in pairs(sprite_info.alts or {}) do
+      if alt.artist then
+        artists[#artists+1] = alt.artist
+      end
+    end
+  end
+  return artists
+end
