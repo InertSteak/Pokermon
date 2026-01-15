@@ -1402,8 +1402,12 @@ poke_load_atlas = function(item)
   end
 end
 
-poke_get_artist_info = function(name)
-  return poke_artist_info[name]
+local artistname = function(record)
+  return type(record) == 'table' and record.name or record
+end
+
+poke_get_artist_info = function(name_or_record)
+  return poke_artist_info[artistname(name_or_record)]
 end
 
 poke_get_artist_list = function()
@@ -1421,7 +1425,7 @@ function poke_get_artist_layer(obj, by_artist)
       or { obj.artist }
 
   for _, _artist in ipairs(artists) do
-    local artist_name = type(_artist) == 'table' and _artist.name or _artist
+    local artist_name = artistname(_artist)
     if by_artist == artist_name then
       return _artist.layer or 'both'
     end
