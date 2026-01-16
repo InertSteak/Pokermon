@@ -728,34 +728,21 @@ local professor={
     end
   end,
   in_pool = function(self)
-    local grass_starters = {}
-    local fire_starters = {}
-    local water_starters = {}
-    local pseudo_starters = {}
-    local pika_eevee = {}
-    local pack_key = nil
-    for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+    local grass_found, fire_found, water_found, pseudo_found, letsgo_found
+    for _, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
       if not poke_family_present(v) then
-        if v.starter and v.ptype == "Grass" then
-          grass_starters[#grass_starters + 1] = v.key
-        end
-        if v.starter and v.ptype == "Fire" then
-          fire_starters[#fire_starters + 1] = v.key
-        end
-        if v.starter and v.ptype == "Water" then
-          water_starters[#water_starters + 1] = v.key
-        end
-        if v.pseudol then
-          pseudo_starters[#pseudo_starters + 1] = v.key
-        end
-        if v.name == "pikachu" or v.name == "eevee" then
-          pika_eevee[#pika_eevee + 1] = v.key
+        if v.starter and v.ptype == "Grass" then grass_found = true end
+        if v.starter and v.ptype == "Fire" then fire_found = true end
+        if v.starter and v.ptype == "Water" then water_found = true end
+        if v.pseudol then pseudo_found = true end
+        if v.name == "pikachu" or v.name == "eevee" then letsgo_found = true end
+
+        if grass_found and fire_found and water_found and pseudo_found and letsgo_found then
+          return true
         end
       end
     end
-    if #grass_starters == 0 or #fire_starters == 0 or #water_starters == 0 or #pseudo_starters == 0 or #pika_eevee == 0 then
-      return false
-    end
+    return false
   end
 }
 
