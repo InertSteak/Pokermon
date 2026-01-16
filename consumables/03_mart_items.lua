@@ -442,7 +442,7 @@ local duskstone = {
   name = "duskstone",
   key = "duskstone",
   set = "Item",
-  config = {extra = {money = 4, max = 30, rounds = 3, round_on_add = 1}},
+  config = {extra = {money = 4, max = 30, round_target = 3, rounds = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain_item'}
@@ -450,11 +450,11 @@ local duskstone = {
     local jokers = (G.jokers and G.jokers.cards) and #G.jokers.cards or 0
     local joker_count = 0
     for i = 1, jokers do
-      if G.jokers.cards[i].sell_cost > 1 or (G.GAME.round >= (card_info.round_on_add + card_info.rounds)) then
+      if G.jokers.cards[i].sell_cost > 1 or ((card_info.round_target - card_info.rounds) <= 0) then
         joker_count = joker_count + 1
       end
     end
-    return {vars = {card_info.money, card_info.rounds, math.max(0, card_info.round_on_add + card_info.rounds - G.GAME.round), math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
+    return {vars = {card_info.money, card_info.round_target, math.max(0, card_info.round_target - card_info.rounds), math.min(card_info.max, card_info.money * joker_count), card_info.max,}}
   end,
   pos = { x = 3, y = 4 },
   atlas = "AtlasConsumablesBasic",
@@ -469,9 +469,9 @@ local duskstone = {
     set_spoon_item(card)
     local joker_count = 0
     for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i].sell_cost > 1 or (G.GAME.round >= (card.ability.extra.round_on_add + card.ability.extra.rounds)) then
+      if G.jokers.cards[i].sell_cost > 1 or ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
         joker_count = joker_count + 1
-        if not (G.GAME.round >= card.ability.extra.round_on_add + card.ability.extra.rounds) then
+        if not ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
           poke_drain(card, G.jokers.cards[i], 1, true)
         end
       end
@@ -480,14 +480,14 @@ local duskstone = {
     ease_dollars(money)
     evo_item_use_total(self, card, area, copier)
   end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      card.ability.extra.round_on_add = G.GAME.round
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      card.ability.extra.rounds = card.ability.extra.rounds + 1
     end
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
-      if G.GAME.round >= (card.ability.extra.round_on_add + card.ability.extra.rounds) and not card.ability.extra.juiced then
+      if ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) and not card.ability.extra.juiced then
         card.ability.extra.juiced = true
         local eval = function(card) return not card.REMOVED and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
