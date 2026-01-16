@@ -219,6 +219,7 @@ local starter_tag = {
 	pos = { x = 4, y = 0 },
 	config = { type = "new_blind_choice" },
 	key = "starter_tag",
+	artist = {"Sonfive", "Catzzadilla", "InertSteak"},
   discovered = true,
   min_ante = 2,
 	loc_vars = function(self, info_queue)
