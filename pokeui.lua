@@ -938,15 +938,22 @@ function poke_designer_credit(designer_name)
     return designer_credit
 end
 
+local get_credits = function(card)
+  local center = card and card.config and card.config.center
+  if center then
+    return center.artist, center.designer
+  end
+end
+
 local prev_card_h_popup = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
-  local center = (card and card.config) and card.config.center or nil
-  if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist))
+  local artist, designer = get_credits(card)
+  if artist then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(artist))
   end
-  if center and center.designer then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
+  if designer then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(designer))
   end
   
   return ret_val
