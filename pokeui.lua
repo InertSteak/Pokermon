@@ -939,9 +939,15 @@ function poke_designer_credit(designer_name)
 end
 
 local get_credits = function(card)
-  local center = card and card.config and card.config.center
+  if not (card and card.config) then return end
+  local center = card.config.center
   if center then
     return center.artist, center.designer
+  end
+  local tag = card.config.tag
+  if tag then
+    local proto = G.P_TAGS[tag.key]
+    return proto.artist, proto.designer
   end
 end
 
