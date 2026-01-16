@@ -691,7 +691,7 @@ pokermon.find_pool_index = function(pool, name)
 end
 
 pokermon.get_dex_number = function(name)
-  return pokermon.dex_numbers[name]
+  return pokermon.dex_numbers[name] or 1026
 end
 
 --- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
