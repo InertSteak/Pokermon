@@ -6698,6 +6698,7 @@ return {
             poke_reroll_singular = "Reroll",
             poke_suit = "suit",
             poke_saved_by = "Saved by",
+            poke_and = "and", -- for displaying lists
             poke_hazards_in_deck = "Hazards in Deck",
 
             --Some infoqueue/variable stuff

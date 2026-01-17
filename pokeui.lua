@@ -858,6 +858,24 @@ poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(targe
 end)
 
 -- Tooltip Credits UI
+local divider_text = function(i, limit)
+  local div_text
+
+  -- separate by commas if 3 or more items
+  if limit > 2 then
+    div_text = ', '
+  else
+    div_text = ' '
+  end
+
+  -- add "and" to the last divider
+  if limit - 1 == i then
+    div_text = div_text .. localize('poke_and') .. ' '
+  end
+
+  return div_text
+end
+
 function poke_artist_credit(artists)
   if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
   if type(artists) == 'string' then artists = { artists } end
@@ -900,9 +918,12 @@ function poke_artist_credit(artists)
 
   for j = 1, #outline_nodes do
     table.insert(artist_credit.nodes, outline_nodes[j])
+
     if #outline_nodes > 1 and j ~= #outline_nodes then
+      local text = divider_text(j, #outline_nodes)
+
       local amp_node = {n=G.UIT.T, config={
-        text = ' & ',
+        text = text,
         shadow = true,
         colour = G.C.UI.BACKGROUND_WHITE,
         scale = 0.27}}
@@ -938,15 +959,33 @@ function poke_designer_credit(designer_name)
     return designer_credit
 end
 
+local get_credits = function(card)
+  if not (card and card.config) then return end
+  local center = card.config.center
+  if center then
+    if card.seal and center.key == 'c_base' and card.area and card.area.config.collection then
+      local seal = G.P_SEALS[card.seal]
+      return seal.artist, seal.designer
+    end
+
+    return center.artist, center.designer
+  end
+  local tag = card.config.tag
+  if tag then
+    local proto = G.P_TAGS[tag.key]
+    return proto.artist, proto.designer
+  end
+end
+
 local prev_card_h_popup = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
-  local center = (card and card.config) and card.config.center or nil
-  if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist))
+  local artist, designer = get_credits(card)
+  if artist then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(artist))
   end
-  if center and center.designer then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
+  if designer then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(designer))
   end
   
   return ret_val
