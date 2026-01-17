@@ -963,6 +963,11 @@ local get_credits = function(card)
   if not (card and card.config) then return end
   local center = card.config.center
   if center then
+    if card.seal and center.key == 'c_base' and card.area and card.area.config.collection then
+      local seal = G.P_SEALS[card.seal]
+      return seal.artist, seal.designer
+    end
+
     return center.artist, center.designer
   end
   local tag = card.config.tag
