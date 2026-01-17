@@ -858,6 +858,24 @@ poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(targe
 end)
 
 -- Tooltip Credits UI
+local divider_text = function(i, limit)
+  local div_text
+
+  -- separate by commas if 3 or more items
+  if limit > 2 then
+    div_text = ', '
+  else
+    div_text = ' '
+  end
+
+  -- add "and" to the last divider
+  if limit - 1 == i then
+    div_text = div_text .. localize('poke_and') .. ' '
+  end
+
+  return div_text
+end
+
 function poke_artist_credit(artists)
   if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
   if type(artists) == 'string' then artists = { artists } end
@@ -900,9 +918,12 @@ function poke_artist_credit(artists)
 
   for j = 1, #outline_nodes do
     table.insert(artist_credit.nodes, outline_nodes[j])
+
     if #outline_nodes > 1 and j ~= #outline_nodes then
+      local text = divider_text(j, #outline_nodes)
+
       local amp_node = {n=G.UIT.T, config={
-        text = ' & ',
+        text = text,
         shadow = true,
         colour = G.C.UI.BACKGROUND_WHITE,
         scale = 0.27}}
