@@ -109,6 +109,16 @@ return {
                     "{C:attention,T:tag_vremade_double}#1#",
                 } 
             },
+            b_poke_diceydeck = {
+                name = "Debris Deck",
+                text = {
+                    "{C:hazard}+#1#{} hazard layer and limit, {C:attention}+#1#{} hand size",
+                    "At end of each round:",
+                    "Earn {C:money}$#4#{} for each {C:attention}Hazard{}",
+                    "card in your {C:attention}full deck",
+                    "Earn no {C:attention}Interest"
+                } 
+            },
         },
         Blind = {
             bl_poke_cgoose = {
@@ -2975,7 +2985,7 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:hazard}+#1#{} hazard layer, {C:hazard}+#4#{} hazard layer limit",
+                    "{C:hazard}+#1#{} hazard layer and limit",
                     "{X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Hazard{} or {C:attention}Steel{} card",
                     "{C:attention}held{} in hand",
@@ -5444,6 +5454,16 @@ return {
                     "{C:attention}Boss Blind{} instead"
                 } 
             },
+            sleeve_poke_diceysleeve = {
+                name = "Debris Sleeve",
+                text = {
+                    "{C:hazard}+#1#{} hazard layer and limit, {C:attention}+#1#{} hand size",
+                    "At end of each round:",
+                    "Earn {C:money}$#4#{} for each {C:attention}Hazard{}",
+                    "card in your {C:attention}full deck",
+                    "Earn no {C:attention}Interest"
+                } 
+            },
         },
         Spectral = {
             c_poke_ultraball = {
@@ -5875,6 +5895,16 @@ return {
                   "{C:attention}Hazard{} cards to hand",
                   "equal to your {C:attention}Hazard Layer",
                   "{C:inactive}(Current Hazard Layer {C:attention}#1#{C:inactive}/#2#){}"
+              }
+            },
+            hazard_level_extra = {
+              name = "Hazard Layer",
+              text = {
+                  "When {C:attention}first{} hand is drawn, add",
+                  "{C:attention}Hazard{} cards to hand",
+                  "equal to your {C:attention}Hazard Layer",
+                  "{C:inactive}(Current Hazard Layer {C:attention}#1#{C:inactive}/#2#){}",
+                  "{C:inactive}(Extra hazard layers raise the limit){}"
               }
             },
             merge = {
@@ -6669,6 +6699,7 @@ return {
             poke_suit = "suit",
             poke_saved_by = "Saved by",
             poke_and = "and", -- for displaying lists
+            poke_hazards_in_deck = "Hazards in Deck",
 
             --Some infoqueue/variable stuff
             farfetchd_infoqueue = "Farfetch\'d",

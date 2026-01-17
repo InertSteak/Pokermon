@@ -37,7 +37,7 @@ local seed = {
    weight = 0,
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
-     if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra then
+     if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.ability.extra.level = card.ability.extra.level + 1
       
       if card.ability.extra.level and card.ability.extra.level > 0 and card.ability.extra.level < 6 then
@@ -63,7 +63,7 @@ local seed = {
      end
    end,
    set_sprites = function(self, card, front)
-     if card and card.ability and card.ability.extra and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
+     if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
        local x_pos = card.ability.extra.level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end
