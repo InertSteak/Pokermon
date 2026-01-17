@@ -110,9 +110,9 @@ return {
                 } 
             },
             b_poke_diceydeck = {
-                name = "Dicey Deck",
+                name = "Debris Deck",
                 text = {
-                    "{C:hazard}+#1#{} {C:dark_edition}extra{} hazard layer, {C:attention}+#1#{} hand size",
+                    "{C:hazard}+#1#{} hazard layer and limit, {C:attention}+#1#{} hand size",
                     "At end of each round:",
                     "Earn {C:money}$#4#{} for each {C:attention}Hazard{}",
                     "card in your {C:attention}full deck",
@@ -2985,7 +2985,7 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-                    "{C:hazard}+#1#{} {C:dark_edition}extra{} hazard layer",
+                    "{C:hazard}+#1#{} hazard layer and limit",
                     "{X:mult,C:white}X#2#{} Mult for each",
                     "{C:attention}Hazard{} or {C:attention}Steel{} card",
                     "{C:attention}held{} in hand",
@@ -5455,9 +5455,9 @@ return {
                 } 
             },
             sleeve_poke_diceysleeve = {
-                name = "Dicey Sleeve",
+                name = "Debris Sleeve",
                 text = {
-                    "{C:hazard}+#1#{} {C:dark_edition}extra{} hazard layer, {C:attention}+#1#{} hand size",
+                    "{C:hazard}+#1#{} hazard layer and limit, {C:attention}+#1#{} hand size",
                     "At end of each round:",
                     "Earn {C:money}$#4#{} for each {C:attention}Hazard{}",
                     "card in your {C:attention}full deck",
