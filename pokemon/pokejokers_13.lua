@@ -107,7 +107,9 @@ local clamperl={
       G.hand:change_size(card.ability.extra.h_size)
     end
     if context.ending_booster and card.ability.extra.increased_handsize then
-      card.ability.extra.increased_handsize = nil
+      if not context.blueprint then
+        card.ability.extra.increased_handsize = nil
+      end
       G.hand:change_size(-card.ability.extra.h_size)
     end
     if context.selling_card and context.card.label == "linkcable" then
@@ -165,7 +167,9 @@ local huntail ={
       card.ability.extra.increased_handsize = true
     end
     if context.ending_booster and card.ability.extra.increased_handsize then
-      card.ability.extra.increased_handsize = nil
+      if not context.blueprint then
+        card.ability.extra.increased_handsize = nil
+      end
       G.hand:change_size(-card.ability.extra.h_size)
     end
     if context.selling_card and context.card and context.card.config and (context.card.config.center.set == 'Tarot' or context.card.config.center.set == 'Item') and not context.blueprint then
@@ -222,7 +226,9 @@ local gorebyss ={
       card.ability.extra.increased_handsize = true
     end
     if context.ending_booster and card.ability.extra.increased_handsize then
-      card.ability.extra.increased_handsize = nil
+      if not context.blueprint then
+        card.ability.extra.increased_handsize = nil
+      end
       G.hand:change_size(-card.ability.extra.h_size)
     end
     
