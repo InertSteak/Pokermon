@@ -834,3 +834,32 @@ if not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind then
 end
 '''
 match_indent = true
+
+# Enhance bonus
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+    if G.GAME.current_round.discards_left > 0 and G.GAME.modifiers.money_per_discard then
+        add_round_eval_row({dollars = G.GAME.current_round.discards_left*(G.GAME.modifiers.money_per_discard), disp = G.GAME.current_round.discards_left, bonus = true, name='discards', pitch = pitch})
+        pitch = pitch + 0.06
+        dollars = dollars +  G.GAME.current_round.discards_left*(G.GAME.modifiers.money_per_discard)
+    end
+'''
+position = "after"
+payload = '''
+    if G.GAME.modifiers.money_per_enhancement then
+      local tally = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.enhance_bonus) then tally = tally + 1 end
+      end
+      if tally > 0 then
+        add_round_eval_row({dollars = tally * G.GAME.modifiers.money_per_enhancement, disp = tally * G.GAME.modifiers.money_per_enhancement, bonus = true,  name='custom',
+                            text = G.GAME.modifiers.enhance_bonus_text, number = tally, 
+                            number_colour = G.GAME.modifiers.enhance_bonus_color or G.C.FILTER, pitch = pitch})
+        pitch = pitch + 0.06
+        dollars = dollars + tally * G.GAME.modifiers.money_per_enhancement
+      end
+    end
+'''
+match_indent = true
