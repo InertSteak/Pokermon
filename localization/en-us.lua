@@ -4919,10 +4919,9 @@ return {
                 name = "Spidops",
                 text = {
                     "{C:hazard}+#1#{} hazard layer, {C:attention}+#2#{} hand size",
-                    "When {C:attention}Blind{} is selected",
-                    "gain hand size equal to",
-                    "the {C:attention}hazard layer{} and",
-                    "lose {C:attention}#3# discard{}"
+                    "Apply a random {C:attention}seal{} to",
+                    "every {C:attention}#3#th{} {C:attention}playing card {C:inactive}[#4#]{}",
+                    "added to your deck"
                 }
             },
             j_poke_fidough = {
@@ -6785,6 +6784,7 @@ return {
             poke_water_gun_ex = "Water Gun!",
             poke_sky_attack_ex = "Sky Attack!",
             poke_bug_buzz_ex = "Bug Buzz!",
+            poke_sticky_web_ex = "Sticky Web!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",

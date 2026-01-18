@@ -234,7 +234,7 @@ local tarountula = {
 local spidops = {
   name = "spidops",
   pos = {x = 13, y = 0},
-  config = {extra = {hazard_level = 1, h_size = 1, discard_minus = 1}},
+  config = {extra = {hazard_level = 1, h_size = 2, card_goal = 8, cards_added = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
@@ -242,23 +242,31 @@ local spidops = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    return {vars = {abbr.hazard_level, abbr.h_size, abbr.discard_minus}}
+    return {vars = {abbr.hazard_level, abbr.h_size, abbr.card_goal, math.max(0, abbr.card_goal - abbr.cards_added)}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 7,
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
   hazard_poke = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      ease_discard(-card.ability.extra.discard_minus)
-      local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={level}}})
-      G.hand:change_size(level)
-      G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + level
+    if context.playing_card_added and not card.getting_sliced and context.cards and not context.blueprint then
+      if context.cards and type(context.cards) == "table" and #context.cards > 0 then
+        local cards_added = {}
+        for k, v in ipairs(context.cards) do
+          card.ability.extra.cards_added = card.ability.extra.cards_added + 1
+          if card.ability.extra.cards_added == card.ability.extra.card_goal then
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_sticky_web_ex")})
+            local args = {guaranteed = true}
+            local seal_type = SMODS.poll_seal(args)
+            v:set_seal(seal_type, true)
+            card.ability.extra.cards_added = 0
+          end
+        end
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
