@@ -122,6 +122,7 @@ local clamperl={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
+      card.ability.extra.increased_handsize = nil
       G.E_MANAGER:add_event(Event({
         func = (function()
             add_tag(Tag('tag_ethereal'))
@@ -189,6 +190,11 @@ local huntail ={
       end
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      card.ability.extra.increased_handsize = nil
+    end
+  end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff and card.ability.extra.increased_handsize then
       if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
@@ -242,6 +248,11 @@ local gorebyss ={
           Xmult_mod = card.ability.extra.Xmult
         }
       end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      card.ability.extra.increased_handsize = nil
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
