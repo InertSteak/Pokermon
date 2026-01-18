@@ -6582,7 +6582,7 @@ return {
             c_poke_hammertime = "Hammertime",
             c_poke_lonesome = "Lonesome",
             c_poke_randomizer = "Randomizer",
-            c_poke_delibird_delimma = "Delibird Dilemma",
+            c_poke_delibird_dilemma = "Delibird Dilemma",
         },
         dictionary = {
             k_energy = "Energy",

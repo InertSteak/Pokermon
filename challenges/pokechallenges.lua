@@ -327,8 +327,8 @@ local randomizer = {
     },
 }
 
-local delibird_delimma = {
-    key = 'delibird_delimma',
+local delibird_dilemma = {
+    key = 'delibird_dilemma',
     rules = {
         custom = {
             { id = 'no_reward' },
@@ -354,5 +354,5 @@ local delibird_delimma = {
 }
 
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_dilemma}
 }
