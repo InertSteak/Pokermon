@@ -72,8 +72,8 @@ local nuzlocke = {
             type = 'Challenge Deck'
         },
     },
-    button_colour = G.C.GREEN,
-    text_colour = HEX('947362'),
+    button_colour = HEX('947362'),
+    text_colour = G.C.GREEN,
 }
 
 -- add joker slots when ante increases with Nuzlocke
@@ -132,8 +132,8 @@ local goodasgold = {
       type = 'Challenge Deck',
       enhancement = 'm_gold',
     },
-    button_colour = G.C.GOLD,
-    text_colour = HEX('af843e'),
+    button_colour = HEX('af843e'),
+    text_colour = G.C.GOLD,
 }
 
 local parenthood = {
@@ -195,8 +195,8 @@ local parenthood = {
             {id = 'bl_poke_mirror', type = 'blind'}
         }
     },
-    button_colour = HEX("FFF7DE"),
-    text_colour = HEX('9cce84')
+    button_colour = HEX("e7deb5"),
+    text_colour = HEX("84b56b"),
 }
 
 local littlecup = {
