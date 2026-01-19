@@ -231,6 +231,7 @@ local diceydeck = {
   end,
 	pos = { x = 10, y = 0 },
 	atlas = "AtlasDecksBasic",
+  artist = 'Catzzadilla',
   apply = function(self)
     G.E_MANAGER:add_event(Event({
       func = function()
