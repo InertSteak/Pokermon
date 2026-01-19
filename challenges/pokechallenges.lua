@@ -71,7 +71,9 @@ local nuzlocke = {
         deck = {
             type = 'Challenge Deck'
         },
-    }
+    },
+    button_colour = G.C.GREEN,
+    text_colour = HEX('947362'),
 }
 
 -- add joker slots when ante increases with Nuzlocke
@@ -130,6 +132,8 @@ local goodasgold = {
       type = 'Challenge Deck',
       enhancement = 'm_gold',
     },
+    button_colour = G.C.GOLD,
+    text_colour = HEX('af843e'),
 }
 
 local parenthood = {
@@ -190,7 +194,9 @@ local parenthood = {
             {id = 'bl_final_leaf', type = 'blind'},
             {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX("FFF7DE"),
+    text_colour = HEX('9cce84')
 }
 
 local littlecup = {
@@ -220,6 +226,8 @@ local littlecup = {
     deck = {
       type = 'Challenge Deck',
     },
+    button_colour = HEX('deb0ad'),
+    text_colour = HEX('e8d4bb')
 }
 
 local hammertime = {
@@ -251,6 +259,8 @@ local hammertime = {
         },
       type = 'Challenge Deck',
     },
+    button_colour = HEX('9AA4B7'),
+    text_colour = HEX('fc96c1')
 }
 
 local lonesome = {
@@ -301,7 +311,8 @@ local lonesome = {
             { id = 'bl_final_acorn', type = 'blind' },
             {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX('c59c4a'),
 }
 
 local randomizer = {
@@ -325,6 +336,8 @@ local randomizer = {
     deck = {
       type = 'Challenge Deck',
     },
+    button_colour = G.C.DARK_EDITION,
+    text_colour = G.C.EDITION
 }
 
 local delibird_delimma = {
@@ -350,7 +363,8 @@ local delibird_delimma = {
         banned_other = {
             {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX('de3131')
 }
 
 return {name = "Challenges", 
