@@ -3683,13 +3683,13 @@ return {
                 name = 'Relicanth',
                 text = {
                     "{C:attention}Ancient #1#s{}",
-                    "{X:attention,C:white}1+{} : {C:attention}Rightmost{} played card gives",
+                    "{X:attention,C:white}1+{} : {C:attention}Last{} played card gives",
                     "{C:chips}+#2#{} Chips when scored",
                     "{X:attention,C:white}2+{} : The bottom card of your deck",
                     "becomes a {C:attention}Stone{} card",
                     "{X:attention,C:white}3+{} : Draw the bottom card of your",
                     "deck and earn {C:money}$#3#{}",
-                    "{X:attention,C:white}4+{} : {C:attention}Rightmost{} played card gives {X:mult,C:white} X#4# {} Mult",
+                    "{X:attention,C:white}4+{} : {C:attention}Last{} played card gives {X:mult,C:white} X#4# {} Mult",
                     "when scored and is destroyed",
                     "unless it was a {C:attention}Stone{} card",
                 } 
