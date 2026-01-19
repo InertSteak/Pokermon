@@ -265,6 +265,71 @@ local gorebyss ={
   end
 }
 -- Relicanth 369
+local relicanth={
+  name = "relicanth",
+  pos = {x = 0, y = 0},
+  config = {extra = {rank = "4", chips = 40, money = 4, Xmult_multi = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
+    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips, center.ability.extra.money, center.ability.extra.Xmult_multi, }}
+  end,
+  rarity = 3,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        get_ancient_amount(context.scoring_hand, 4, card)
+      end
+      if context.joker_main and card.ability.extra.ancient_count > 1 and #G.deck.cards > 0 then
+        local bottom_card = G.deck.cards[1]
+        
+        bottom_card:set_ability(G.P_CENTERS.m_stone, nil, true)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                card:juice_up()
+                return true
+            end
+        })) 
+    
+        if card.ability.extra.ancient_count > 2 then
+          draw_card(G.deck, G.hand, nil, nil, nil, bottom_card)
+          ease_poke_dollars(card, "relicanth", card.ability.extra.money)
+        end
+      end
+      if context.after then
+        card.ability.extra.ancient_count = 0
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.ancient_count > 0 then
+      local rightmost = context.scoring_hand[#context.scoring_hand]
+      if context.other_card == rightmost then
+        local scoring_parms = {}
+        scoring_parms.chips = card.ability.extra.chips
+        if card.ability.extra.ancient_count > 3 then
+          scoring_parms.x_mult = card.ability.extra.Xmult_multi
+          scoring_parms.message = localize('poke_head_smash_ex')
+          scoring_parms.colour = G.C.XMULT
+        end
+        return scoring_parms
+      end
+    end
+    if context.destroying_card and card.ability.extra.ancient_count > 3 and not context.blueprint then
+      local rightmost = context.scoring_hand[#context.scoring_hand]
+      return context.destroying_card == rightmost and not SMODS.has_enhancement(context.destroying_card, 'm_stone')
+    end
+  end,
+  generate_ui = fossil_generate_ui,
+}
 -- Luvdisc 370
 local luvdisc={
   name = "luvdisc",
@@ -812,5 +877,5 @@ local jirachi_fixer = {
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, clamperl, huntail, gorebyss, luvdisc, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, jirachi_fixer},
+        list = {snorunt, glalie, clamperl, huntail, gorebyss, relicanth, luvdisc, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, jirachi_fixer},
 }

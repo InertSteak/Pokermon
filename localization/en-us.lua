@@ -3679,6 +3679,21 @@ return {
                 "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
               }
             },
+            j_poke_relicanth = {
+                name = 'Relicanth',
+                text = {
+                    "{C:attention}Ancient #1#s{}",
+                    "{X:attention,C:white}1+{} : {C:attention}Rightmost{} played card gives",
+                    "{C:chips}+#2#{} Chips when scored",
+                    "{X:attention,C:white}2+{} : The bottom card of your deck",
+                    "becomes a {C:attention}Stone{} card",
+                    "{X:attention,C:white}3+{} : Draw the bottom card of your",
+                    "deck and earn {C:money}$#3#{}",
+                    "{X:attention,C:white}4+{} : {C:attention}Rightmost{} played card gives {X:mult,C:white} X#4# {} Mult",
+                    "when scored and is destroyed",
+                    "unless it was a {C:attention}Stone{} card",
+                } 
+            },
             j_poke_luvdisc = {
               name = "Luvdisc",
               text = {
@@ -6785,6 +6800,7 @@ return {
             poke_sky_attack_ex = "Sky Attack!",
             poke_bug_buzz_ex = "Bug Buzz!",
             poke_sticky_web_ex = "Sticky Web!",
+            poke_head_smash_ex = "Head Smash!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",
