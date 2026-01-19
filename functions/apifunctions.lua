@@ -1,5 +1,4 @@
 pokermon.load_pokemon = function(item)
-  item.discovered = true
   if not item.key then
     item.key = item.name
   end
@@ -32,8 +31,7 @@ pokermon.load_pokemon = function(item)
       item.config.extra = {item_req = item.evo_list}
     end
   end
-  item.discovered = not pokermon_config.pokemon_discovery
-  if item.name == "unown" then item.discovered = true end
+  if not item.discovered then item.discovered = not pokermon_config.pokemon_discovery end
   local prev_load = item.load
   item.load = function(self, card, card_table, other_card)
     card_table.ability.extra.juiced = nil
