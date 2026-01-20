@@ -104,129 +104,53 @@ assert(SMODS.load_file("pokeui.lua"))()
 --Load quip file
 assert(SMODS.load_file("pokequips.lua"))()
 
---Load pokemon file
-local pfiles = NFS.getDirectoryItems(mod_dir.."pokemon")
+local load_directory = function(dirname, map_item, auto_discovery)
+  local pfiles = NFS.getDirectoryItems(mod_dir .. dirname)
 
-for _, file in ipairs(pfiles) do
-  sendDebugMessage ("The file is: "..file)
-  local pokemon, load_error = SMODS.load_file("pokemon/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_pokemon = pokemon()
-    if curr_pokemon.init then curr_pokemon:init() end
-    
-    if curr_pokemon.list and #curr_pokemon.list > 0 then
-      for i, item in ipairs(curr_pokemon.list) do
-        pokermon.load_pokemon(item)
+  for _, file in ipairs(pfiles) do
+    sendDebugMessage ("The file is: "..file)
+    local result, load_error = SMODS.load_file(dirname .. "/" ..file)
+    if not result then
+      sendDebugMessage ("The error is: "..load_error)
+    else
+      local items = result()
+      if items.init then items:init() end
+
+      if items.list and #items.list > 0 then
+        for _, item in ipairs(items.list) do
+          if auto_discovery and not item.poke_always_unlocked then
+            item.discovered = not pokermon_config.pokemon_discovery
+          end
+          map_item(item)
+        end
       end
     end
   end
 end
+
+--Load pokemon file
+load_directory("pokemon", pokermon.load_pokemon)
+
 --This is a new comment
+----Don't believe his lies
 
 --Load consumable types
-local pconsumable_types = NFS.getDirectoryItems(mod_dir.."consumable types")
-
-for _, file in ipairs(pconsumable_types) do
-  sendDebugMessage ("The file is: "..file)
-  local con_type, load_error = SMODS.load_file("consumable types/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_type = con_type()
-    if curr_type.init then curr_type:init() end
-    
-    for i, item in ipairs(curr_type.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.ConsumableType(item)
-    end
-  end
-end
+load_directory("consumable types", SMODS.ConsumableType, true)
 
 --Load consumables
-local pconsumables = NFS.getDirectoryItems(mod_dir.."consumables")
-
-for _, file in ipairs(pconsumables) do
-  sendDebugMessage ("The file is: "..file)
-  local consumable, load_error = SMODS.load_file("consumables/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_consumable = consumable()
-    if curr_consumable.init then curr_consumable:init() end
-    
-    for i, item in ipairs(curr_consumable.list) do
-      if not (item.pokeball and not pokermon_config.pokeballs) then
-        if not item.poke_always_unlocked  then
-          item.discovered = not pokermon_config.pokemon_discovery
-        end
-        SMODS.Consumable(item)
-      end
-    end
-  end
-end 
-
+load_directory("consumables", SMODS.Consumable, true)
 
 --Load boosters
-local pboosters = NFS.getDirectoryItems(mod_dir.."boosters")
-
-for _, file in ipairs(pboosters) do
-  sendDebugMessage ("The file is: "..file)
-  local booster, load_error = SMODS.load_file("boosters/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_booster = booster()
-    if curr_booster.init then curr_booster:init() end
-    
-    for i, item in ipairs(curr_booster.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Booster(item)
-    end
-  end
-end
-
-
+load_directory("boosters", SMODS.Booster, true)
 
 --Load seals
-local pseals = NFS.getDirectoryItems(mod_dir.."seals")
-
-for _, file in ipairs(pseals) do
-  sendDebugMessage ("The file is: "..file)
-  local seal, load_error = SMODS.load_file("seals/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_seal = seal()
-    if curr_seal.init then curr_seal:init() end
-    
-    for i, item in ipairs(curr_seal.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Seal(item)
-    end
-  end
-end
+load_directory("seals", SMODS.Seal, true)
 
 --Load stickers
-local pseals = NFS.getDirectoryItems(mod_dir.."stickers")
-
-for _, file in ipairs(pseals) do
-  sendDebugMessage ("The file is: "..file)
-  local sticker, load_error = SMODS.load_file("stickers/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_sticker = sticker()
-    if curr_sticker.init then curr_sticker:init() end
-    
-    for i, item in ipairs(curr_sticker.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      item.hide_badge = true
-      SMODS.Sticker(item)
-    end
-  end
-end
+load_directory("stickers", function (item)
+  item.hide_badge = true
+  SMODS.Sticker(item)
+end, true)
 
 -- Sets custom skins according to config on load
 G.E_MANAGER:add_event(Event({
@@ -237,156 +161,31 @@ G.E_MANAGER:add_event(Event({
 }))
 
 --Load editions
-local editions = NFS.getDirectoryItems(mod_dir.."editions")
-
-for _, file in ipairs(editions) do
-  sendDebugMessage ("The file is: "..file)
-  local edition, load_error = SMODS.load_file("editions/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_edition = edition()
-    if curr_edition.init then curr_edition:init() end
-    
-    for i, item in ipairs(curr_edition.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Edition(item)
-    end
-  end
-end
+load_directory("editions", SMODS.Edition, true)
 
 --Load enhancements
-local enhancements = NFS.getDirectoryItems(mod_dir.."enhancements")
-
-for _, file in ipairs(enhancements) do
-  sendDebugMessage ("The file is: "..file)
-  local enhancement, load_error = SMODS.load_file("enhancements/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_enhance = enhancement()
-    if curr_enhance.init then curr_enhance:init() end
-    
-    for i, item in ipairs(curr_enhance.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Enhancement(item)
-    end
-  end
-end
-
+load_directory("enhancements", SMODS.Enhancement, true)
 
 --Load vouchers
-local vouchers = NFS.getDirectoryItems(mod_dir.."vouchers")
-
-for _, file in ipairs(vouchers) do
-  sendDebugMessage ("The file is: "..file)
-  local voucher, load_error = SMODS.load_file("vouchers/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_voucher = voucher()
-    if curr_voucher.init then curr_voucher:init() end
-    
-    for i, item in ipairs(curr_voucher.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Voucher(item)
-    end
-  end
-end
+load_directory("vouchers", SMODS.Voucher, true)
 
 --Load blinds
-local blinds = NFS.getDirectoryItems(mod_dir.."blinds")
-
-for _, file in ipairs(blinds) do
-  sendDebugMessage ("The file is: "..file)
-  local blind, load_error = SMODS.load_file("blinds/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_blind = blind()
-    if curr_blind.init then curr_blind:init() end
-    
-    for i, item in ipairs(curr_blind.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Blind(item)
-    end
-  end
-end
+load_directory("blinds", SMODS.Blind, true)
 
 --Load tags
-local tags = NFS.getDirectoryItems(mod_dir.."tags")
-
-for _, file in ipairs(tags) do
-  sendDebugMessage ("The file is: "..file)
-  local tag, load_error = SMODS.load_file("tags/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_tag = tag()
-    if curr_tag.init then curr_tag:init() end
-    
-    for i, item in ipairs(curr_tag.list) do
-      item.discovered = not pokermon_config.pokemon_discovery
-      SMODS.Tag(item)
-    end
-  end
-end
+load_directory("tags", SMODS.Tag, true)
 
 --Load backs
-local backs = NFS.getDirectoryItems(mod_dir.."backs")
-
-for _, file in ipairs(backs) do
-  sendDebugMessage ("The file is: "..file)
-  local back, load_error = SMODS.load_file("backs/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_back = back()
-    if curr_back.init then curr_back:init() end
-    
-    for i, item in ipairs(curr_back.list) do
-      SMODS.Back(item)
-    end
-  end
-end
+load_directory("backs", SMODS.Back)
 
 --Load Sleeves
 if (SMODS.Mods["CardSleeves"] or {}).can_load then
   --Load Sleeves
-  local sleeves = NFS.getDirectoryItems(mod_dir.."sleeves")
-
-  for _, file in ipairs(sleeves) do
-    sendDebugMessage ("the file is: "..file)
-    local sleeve, load_error = SMODS.load_file("sleeves/"..file)
-    if load_error then
-      sendDebugMessage("The error is: "..load_error)
-    else
-      local curr_sleeve = sleeve()
-      if curr_sleeve.init then curr_sleeve.init() end
-      
-      for i,item in ipairs (curr_sleeve.list) do
-        CardSleeves.Sleeve(item)
-      end
-    end
-  end
+  load_directory("sleeves", CardSleeves.Sleeve)
 end
 
 --Load challenges file
-local pchallenges = NFS.getDirectoryItems(mod_dir.."challenges")
-
-for _, file in ipairs(pchallenges) do
-  local challenge, load_error = SMODS.load_file("challenges/"..file)
-  if load_error then
-    sendDebugMessage ("The error is: "..load_error)
-  else
-    local curr_challenge = challenge()
-    if curr_challenge.init then curr_challenge:init() end
-    
-    for i, item in ipairs(curr_challenge.list) do
-      SMODS.Challenge(item)
-    end
-  end
-end 
+load_directory("challenges", SMODS.Challenge)
 
 --Hook SMODS.find_card to force it to return find_joker instead (EXTREMELY CURSED)
 
