@@ -1,0 +1,107 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+
+# Localization color
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "legendary = G.C.RARITY[4],"
+position = "after"
+payload = "poke_safari = G.C.RARITY['poke_safari'], poke_mega = G.C.RARITY['poke_mega'],"
+match_indent = true
+# Localization color
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "legendary = G.C.RARITY[4],"
+position = "after"
+payload = "poke_safari = G.C.RARITY['poke_safari'], poke_mega = G.C.RARITY['poke_mega'],"
+match_indent = true
+
+# Custom challenge button text colour (to remove after SMODS adds it when SMODS PR #1173 goes through)
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, focus_args = {snap_to = not snapped}}),"
+position = 'at'
+match_indent = true
+payload = '''
+UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
+'''
+
+# Description functionality, a little hacky but it works
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if main_end then 
+    desc_nodes[#desc_nodes+1] = main_end 
+end
+'''
+position = "after"
+payload = '''
+if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
+  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+end
+'''
+match_indent = true
+
+# Custom challenge button text colour (to remove after SMODS adds it when SMODS PR #1173 goes through)
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, focus_args = {snap_to = not snapped}}),"
+position = 'at'
+match_indent = true
+payload = '''
+UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
+'''
+
+
+# Description functionality, a little hacky but it works
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if main_end then 
+    desc_nodes[#desc_nodes+1] = main_end 
+end
+'''
+position = "after"
+payload = '''
+if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
+  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+end
+'''
+match_indent = true
+
+
+# Card Effect Divider
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = "elseif part.control.X or part.control.B then"
+position = "before"
+payload = '''
+elseif part.control.br then
+  local height = 0.05
+  local gaps = 0.2
+  local mid = 0.15
+  local sides = (tonumber(part.control.br) - gaps*2 - mid) / 2
+  -- spacing
+  args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minh = height}, nodes={}}}
+  if sides < gaps then
+    args.nodes[#args.nodes+1] = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = tonumber(part.control.br), minh = height}}}
+  else
+    local temp_nodes = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TEXT_INACTIVE, minw = mid, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}}}
+    args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
+  end
+'''
+match_indent = true

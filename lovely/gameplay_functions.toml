@@ -1,0 +1,250 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+
+# Pokermon Family Stake Sticker Logic
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''
+if G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key] then
+        G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins = G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins or {}
+        G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins[G.GAME.stake] = (G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins[G.GAME.stake] or 0) + 1
+        G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins_by_key[SMODS.stake_from_index(G.GAME.stake)] = (G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key].wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
+      end
+'''
+position = "after"
+payload = '''
+if pokermon_config.previous_evo_stickers then
+  set_joker_family_win(v)
+end
+'''
+match_indent = true
+
+
+### Shiny Edition
+
+# Shiny Shader
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (self.edition and self.edition.negative) or (self.ability.name == 'Antimatter' and (self.config.center.discovered or self.bypass_discovery_center)) then
+    self.children.center:draw_shader('negative_shine', nil, self.ARGS.send_to_shader)
+end
+'''
+position = "after"
+payload = '''
+if (self.edition and self.edition.poke_shiny) and self.config.center and type(self.config.center) == "table" and not (self.config.center.stage or self.config.center.shiny) 
+and self.label ~= "e_poke_shiny" then
+    self.children.center:draw_shader('poke_shiny', nil, self.ARGS.send_to_shader)
+end
+'''
+match_indent = true
+
+# Booster functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.added_to_deck = true"
+position = "after"
+payload = '''
+if self.config.shiny_on_add and not self.debuff then
+  self.config.shiny_on_add = false
+  SMODS.change_booster_limit(1)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.added_to_deck = false"
+position = "after"
+payload = '''
+if self.edition and self.edition.poke_shiny and G.jokers then
+  if G.GAME.modifiers.poke_booster_packs then
+    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
+  else
+    G.GAME.modifiers.poke_booster_packs = 0
+  end
+end
+'''
+match_indent = true
+
+
+# Luminous Deck functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if card.ability.consumeable and not skip_materialize then card:start_materialize() end"
+position = "after"
+payload = '''
+if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
+if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card); energy_increase(card, get_type(card)) end
+'''
+match_indent = true
+
+
+## Foresight / Scry functionality
+# Scry Functionality 1
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:update_selecting_hand(dt)"
+position = "after"
+payload = '''
+    if not self.scry_view and type(create_scry_cardarea) == "function" then
+      self.scry_view = create_scry_cardarea()
+    elseif self.scry_view then
+      update_scry_cardarea(self.scry_view)
+    end
+'''
+match_indent = true
+
+# Scry Functionality 2
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+position = "at"
+payload = "if self.config.type == 'hand' or self.config.type == 'scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+match_indent = true
+overwrite = true
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+position = "at"
+payload = "if self.config.type == 'scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+match_indent = true
+overwrite = true
+
+# Scry Functionality 4
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:update_round_eval(dt)"
+position = "after"
+payload = '''
+    if G.scry_view then hide_scry_cardarea() end
+'''
+match_indent = true
+
+# Scry Functionality 5
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
+position = "after"
+payload = '''
+if G.scry_view and G.scry_view.cards then
+    t[#t+1] = G.scry_view
+end
+'''
+match_indent = true
+
+# Scry Functionality 3
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local config = {}"
+position = "before"
+payload = '''
+if card.area == G.scry_view then
+    y_off = -0.05*G.CARD_H
+    card_aligned = 'tm'
+end
+'''
+match_indent = true
+
+
+### Game Modifiers
+
+
+# Pokemon only functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then add = nil end"
+position = "after"
+payload = '''
+if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
+if v.set == 'Joker' and v.stage and not get_gen_allowed(v) then add = nil end
+if v.set == 'Joker' and v.stage and pokermon_config and not pokermon_config.hazards_on and v.hazard_poke then add = nil end
+if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
+'''
+match_indent = true
+
+
+# Enhance bonus
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+    if G.GAME.current_round.discards_left > 0 and G.GAME.modifiers.money_per_discard then
+        add_round_eval_row({dollars = G.GAME.current_round.discards_left*(G.GAME.modifiers.money_per_discard), disp = G.GAME.current_round.discards_left, bonus = true, name='discards', pitch = pitch})
+        pitch = pitch + 0.06
+        dollars = dollars +  G.GAME.current_round.discards_left*(G.GAME.modifiers.money_per_discard)
+    end
+'''
+position = "after"
+payload = '''
+    if G.GAME.modifiers.money_per_enhancement then
+      local tally = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.enhance_bonus) then tally = tally + 1 end
+      end
+      if tally > 0 then
+        add_round_eval_row({dollars = tally * G.GAME.modifiers.money_per_enhancement, disp = tally * G.GAME.modifiers.money_per_enhancement, bonus = true,  name='custom',
+                            text = G.GAME.modifiers.enhance_bonus_text, number = tally, 
+                            number_colour = G.GAME.modifiers.enhance_bonus_color or G.C.FILTER, pitch = pitch})
+        pitch = pitch + 0.06
+        dollars = dollars + tally * G.GAME.modifiers.money_per_enhancement
+      end
+    end
+'''
+match_indent = true
+
+
+# Hazard Level
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = 0.4,
+        func = function()
+            if #SMODS.drawn_cards > 0 then
+                SMODS.calculate_context({first_hand_drawn = not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind,
+                                        hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards,
+                                        other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards})
+                SMODS.drawn_cards = {}
+                if G.GAME.facing_blind then G.GAME.current_round.any_hand_drawn = true end
+            end
+            return true
+        end
+    }))
+'''
+position = "after"
+payload = '''
+if not G.GAME.current_round.any_hand_drawn and G.GAME.facing_blind then
+  if G.GAME.round_resets.hazard_level then
+    local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = 0.4,
+        func = function()
+          poke_add_hazards(nil, hazards, G.hand)
+          return true
+        end
+    }))
+  end
+end
+'''
+match_indent = true
