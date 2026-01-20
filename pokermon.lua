@@ -69,126 +69,40 @@ SMODS.Rarity{
 }
 
 --Load helper function files
-local helper, load_error = SMODS.load_file("functions/pokeutils.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/pokefamily.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/pokefunctions.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/energyfunctions.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/pokeanimations.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/dex_order.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
-
-local helper, load_error = SMODS.load_file("functions/uifunctions.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  helper()
-end
+assert(SMODS.load_file("functions/pokeutils.lua"))()
+assert(SMODS.load_file("functions/pokefamily.lua"))()
+assert(SMODS.load_file("functions/pokefunctions.lua"))()
+assert(SMODS.load_file("functions/energyfunctions.lua"))()
+assert(SMODS.load_file("functions/pokeanimations.lua"))()
+assert(SMODS.load_file("functions/dex_order.lua"))()
+assert(SMODS.load_file("functions/uifunctions.lua"))()
 
 --Load Draw Logic file
-local sprite, load_error = SMODS.load_file("functions/pokedraw.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  sprite()
-end
+assert(SMODS.load_file("functions/pokedraw.lua"))()
 
 --Load Debuff logic
-local sprite, load_error = SMODS.load_file("functions/debufffunctions.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  sprite()
-end
+assert(SMODS.load_file("functions/debufffunctions.lua"))()
 
 --Load API
-local api, load_error_api = SMODS.load_file("functions/apifunctions.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  api()
-end
+assert(SMODS.load_file("functions/apifunctions.lua"))()
 
 --Load Sprites Load
-local sprite, load_error = SMODS.load_file("functions/pokespriteload.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  sprite()
-end
+assert(SMODS.load_file("functions/pokespriteload.lua"))()
 
 --Load Sprites file
-local sprite, load_error = SMODS.load_file("pokesprites.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  sprite()
-end
+assert(SMODS.load_file("pokesprites.lua"))()
 
 --Load InputManager file
-local input_manager, load_error = SMODS.load_file("functions/inputmanager.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  input_manager()
-end
+assert(SMODS.load_file("functions/inputmanager.lua"))()
 
 --Load DisplayCard file
-local pokedex, load_error = SMODS.load_file("functions/displaycard.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  pokedex()
-end
+assert(SMODS.load_file("functions/displaycard.lua"))()
 
 --Load UI file
-local UI, load_error = SMODS.load_file("pokeui.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  UI()
-end
+assert(SMODS.load_file("pokeui.lua"))()
 
 --Load quip file
-local quip, load_error = SMODS.load_file("pokequips.lua")
-if load_error then
-  sendDebugMessage ("The error is: "..load_error)
-else
-  quip()
-end
+assert(SMODS.load_file("pokequips.lua"))()
 
 --Load pokemon file
 local pfiles = NFS.getDirectoryItems(mod_dir.."pokemon")
