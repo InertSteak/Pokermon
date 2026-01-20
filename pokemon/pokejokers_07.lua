@@ -1022,6 +1022,7 @@ local unown={
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
+  discovered = true,
   rarity = "poke_safari",
   cost = 5,
   stage = "Basic",
