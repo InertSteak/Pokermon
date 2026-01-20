@@ -252,44 +252,6 @@ end
 '''
 match_indent = true
 
-# Shortcut Pareidolia Four Fingers effects
-[[patches]]
-[patches.pattern]
-target = 'functions/misc_functions.lua'
-pattern = '''function find_joker(name, non_debuff)'''
-position = 'after'
-payload = '''
-if name == "Shortcut" then
-  local asdf = find_joker("poke_Shortcut")
-  local dsaf = find_joker("pansage")
-  local safd = find_joker("simisage")
-  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
-elseif name == "Pareidolia" then
-  local asdf = find_joker("poke_Pareidolia")
-  local dsaf = find_joker("panpour")
-  local safd = find_joker("simipour")
-  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
-elseif name == "Four Fingers" then
-  local asdf = find_joker("poke_Four_Fingers")
-  local dsaf = find_joker("pansear")
-  local safd = find_joker("simisear")
-  return (next(asdf) and asdf) or (next(dsaf) and dsaf) or (next(safd) and safd) or {}
-elseif name == "Smeared Joker" then
-  local smeared = find_joker("poke_Smeared_Joker")
-  local smeargle = find_joker("smeargle")
-  return (next(smeared) and smeared) or (next(smeargle) and smeargle) or {}
-elseif name == "poke_Shortcut" then
-  name = "Shortcut"
-elseif name == "poke_Pareidolia" then
-  name = "Pareidolia"
-elseif name == "poke_Four_Fingers" then
-  name = "Four Fingers"
-elseif name == "poke_Smeared_Joker" then
-  name = "Smeared Joker"
-end
-'''
-match_indent = true
-
 #Joker emplace patch
 [[patches]]
 [patches.pattern]
@@ -408,21 +370,17 @@ position = "at"
 payload = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_poke_jirachi_tag' then"
 match_indent = true
 
-#Probopass face
+# Aipom + Ambipom Flush Check
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = '''
-if (id > 0 and rank and rank.face) or next(find_joker("Pareidolia")) then
-    return true
-end
-'''
+target = "functions/misc_functions.lua"
+pattern = '''local four_fingers = SMODS.four_fingers('flush')'''
 position = "after"
 payload = '''
-if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
+four_fingers = (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) and 3 or four_fingers
 '''
 match_indent = true
-
+times = 1
 
 # Scry Functionality 1
 [[patches]]

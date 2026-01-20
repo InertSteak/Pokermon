@@ -630,6 +630,60 @@ function poke_suit_check(hand, num)
   return suit_count >= num
 end
 
+-- Elemental Monkeys Hooks (and Probopass teehee)
+local four_fingers_ref = SMODS.four_fingers
+function SMODS.four_fingers(hand_type)
+  if next(SMODS.find_card('j_poke_pansear')) or next(SMODS.find_card('j_poke_simisear')) then
+    return 4
+  end
+  return four_fingers_ref(hand_type)
+end
+
+local shortcut_ref = SMODS.shortcut
+function SMODS.shortcut()
+  if next(SMODS.find_card('j_poke_pansage')) or next(SMODS.find_card('j_poke_simisage')) then
+    return true
+  end
+  return shortcut_ref()
+end
+
+local is_face_ref = Card.is_face
+function Card:is_face(from_boss)
+  if self.debuff and not from_boss then return end
+  if not self:get_id() then return end
+
+  if next(SMODS.find_card('j_poke_panpour')) or next(SMODS.find_card('j_poke_simipour')) then return true end
+  if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
+
+  return is_face_ref(self, from_boss)
+end
+
+-- Smeared Check Hook
+local smeared_ref = SMODS.smeared_check
+function SMODS.smeared_check(card, suit)
+  if next(SMODS.find_card('j_poke_smeargle')) then
+    if (card.base.suit == 'Hearts' or card.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
+      return true
+    elseif (card.base.suit == 'Spades' or card.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
+      return true
+    end
+  end
+  return smeared_ref(card, suit)
+end
+
+-- Ambipom Straight Hand-Part Override
+SMODS.PokerHandPart:take_ownership('_straight',
+  {
+    func = function(hand)
+      local min
+      if (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) then min = 3 end
+      return get_straight(hand, min or SMODS.four_fingers('straight'), SMODS.shortcut(), SMODS.wrap_around_straight())
+    end
+  },
+  true
+)
+-- Ambipom Flush Check done via lovely patch for the sake of efficiency
+
 set_joker_family_win = function(card)
   local keys = get_family_keys(card)
   for _, v in pairs(keys) do
