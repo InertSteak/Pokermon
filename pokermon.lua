@@ -474,30 +474,6 @@ for _, file in ipairs(pchallenges) do
   end
 end 
 
---Hook SMODS.find_card to force it to return find_joker instead (EXTREMELY CURSED)
-
-local scuffed_af = SMODS.find_card
-function SMODS.find_card(key, count_debuffed)
-	if key == "j_shortcut" then
-		local bruh = find_joker("Shortcut")
-		return bruh
-  -- I'll join in on this cursed party
-  elseif key == "j_four_fingers" then
-    local ret = scuffed_af("j_poke_pansear")
-    if #ret > 0 then return ret end
-    ret = scuffed_af("j_poke_simisear")
-    if #ret > 0 then return ret end
-  elseif key == "j_pareidolia" then
-    local ret = scuffed_af("j_poke_panpour")
-    if #ret > 0 then return ret end
-    ret = scuffed_af("j_poke_simipour")
-    if #ret > 0 then return ret end
-  elseif key == "j_smeared" then
-    local ret = scuffed_af("j_poke_smeargle")
-    if #ret > 0 then return ret end
-  end
-	return scuffed_af(key, count_debuffed)
-end
 
 local set_edition = Card.set_edition
 function Card:set_edition(edition, immediate, silent)
@@ -526,46 +502,6 @@ function Card:remove()
     SMODS.change_booster_limit(-1)
   end
   return removed(self)
-end
-
---Pokerhand jokers
-SMODS.PokerHandPart:take_ownership('_straight', 
-    { 
-      func = function(hand) 
-        local max = 5
-        if next(SMODS.find_card('j_four_fingers')) then max = 4 end
-        if (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) then max = 3 end
-        return get_straight(hand, max, not not next(SMODS.find_card('j_shortcut'))) 
-      end
-    },
-    true 
-)
-
-local prev_flush = get_flush
-function get_flush(hand)
-  local ret = prev_flush(hand)
-  if #ret <= 0 then
-    ret = {}
-    local aipom = (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) 
-    local suits = SMODS.Suit.obj_buffer
-    if #hand < (5 - (aipom and 2 or 0)) then return ret else
-      for j = 1, #suits do
-        local t = {}
-        local suit = suits[j]
-        local flush_count = 0
-        for i=1, #hand do
-          if hand[i]:is_suit(suit, nil, true) then flush_count = flush_count + 1;  t[#t+1] = hand[i] end 
-        end
-        if flush_count >= (5 - (aipom and 2 or 0)) then
-          table.insert(ret, t)
-          return ret
-        end
-      end
-      return {}
-    end
-  else
-    return ret
-  end
 end
 
 function SMODS.current_mod.reset_game_globals(run_start)
