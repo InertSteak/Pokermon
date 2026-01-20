@@ -832,7 +832,7 @@ local lickitung={
 local koffing={
   name = "koffing", 
   pos = {x = 4, y = 8},
-  config = {extra = {mult = 12, rounds = 3, volatile = 'left'}},
+  config = {extra = {mult = 12, rounds = 2, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -898,24 +898,17 @@ local weezing={
               return true
           end
         })) 
-    
-        local target = nil
-        for i = 1, #context.full_hand do
-          if not SMODS.in_scoring(context.full_hand[i], context.scoring_hand) then
-            target = context.full_hand[i]
-            break
-          end
-        end
-        
-        if target then
-          poke_remove_card(target, card)
-        end
-      
         return {
           message = localize("poke_explosion_ex"),
           colour = G.C.MULT,
           mult_mod = card.ability.extra.mult
         }
+      end
+    end
+    if context.selling_self and not context.blueprint then
+      if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+        G.GAME.blind:disable()
       end
     end
   end

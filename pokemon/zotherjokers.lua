@@ -903,7 +903,7 @@ local repel={
   end,
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist, repel}
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist}
 
 if pokermon_config.pokemon_aprilfools then
   jlist[#jlist + 1] = billion_lions

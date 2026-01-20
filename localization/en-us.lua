@@ -1797,10 +1797,11 @@ return {
                 name = 'Weezing',      
                 text = {
                     "{C:attention}Volatile Left{}",
-                    "{C:mult}+#1#{} Mult and destroys",
-                    "{C:attention}first unscored{} card",
-                    "in played hand then",
+                    "{C:mult}+#1#{} Mult then",
                     "debuff self this round",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Sell this card to {C:attention}disable{}",
+                    "the current {C:attention}Boss Blind{}",
                 } 
             },
             j_poke_rhyhorn = {
