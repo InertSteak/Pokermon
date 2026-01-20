@@ -396,7 +396,7 @@ G.FUNCS.toggle_pokermon_skins = function()
         SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
         G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
       else
-        SMODS.Stake:take_ownership(k, { atlas = "chips" }, true)
+        SMODS.Stake:take_ownership(k, { atlas = "chips", prefix_config = { key = { mod = false } } }, true)
         G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
       end
     end
