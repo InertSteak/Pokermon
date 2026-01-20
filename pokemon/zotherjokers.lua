@@ -871,7 +871,39 @@ local daycare={
   end,
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist}
+local repel={
+  name = "repel", 
+  pos = {x = 0, y = 0}, 
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'tag_d_six', set = 'Tag'}
+  end,
+  rarity = 2, 
+  cost = 6, 
+  stage = "Other",
+  atlas = "placeholder_joker",
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.selling_self and not context.blueprint then
+      if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+        G.GAME.blind:disable()
+      end
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            add_tag(Tag('tag_d_six'))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
+    end
+  end,
+}
+
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist, repel}
 
 if pokermon_config.pokemon_aprilfools then
   jlist[#jlist + 1] = billion_lions

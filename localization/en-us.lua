@@ -1787,18 +1787,20 @@ return {
             j_poke_koffing = {
                 name = 'Koffing',      
                 text = {
-                    "Sell this card to reduce the",
-                    "score requirement of the",
-                    "current {C:attention}Boss Blind{} by {C:attention}half{}",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                    "{C:attention}Volatile Left{}",
+                    "{C:mult}+#1#{} Mult then",
+                    "debuff self this round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds not debuffed)",
                 } 
             },
             j_poke_weezing = {
                 name = 'Weezing',      
                 text = {
-                    "Sell this card to {C:attention}disable{} the",
-                    "current {C:attention}Boss Blind{} and reduce",
-                    "the score requirement by {C:attention}half{}",
+                    "{C:attention}Volatile Left{}",
+                    "{C:mult}+#1#{} Mult and destroys",
+                    "{C:attention}first unscored{} card",
+                    "in played hand then",
+                    "debuff self this round",
                 } 
             },
             j_poke_rhyhorn = {
@@ -3688,9 +3690,9 @@ return {
                     "becomes a {C:attention}Stone{} card",
                     "{X:attention,C:white}3+{} : Draw the bottom card of your",
                     "deck and earn {C:money}$#3#{}",
-                    "{X:attention,C:white}4+{} : {C:attention}Last{} scored card gives {X:mult,C:white} X#4# {} Mult",
-                    "and is destroyed unless",
-                    "it was a {C:attention}Stone{} card",
+                    "{X:attention,C:white}4+{} : {C:attention}Last{} scored card gives {X:mult,C:white} X#4# {} Mult.",
+                    "Then destroy it if it",
+                    "wasn't a {C:attention}Stone{} card",
                 } 
             },
             j_poke_luvdisc = {
@@ -5279,6 +5281,14 @@ return {
                 "adjacent Pokemon Jokers",
                 "{C:inactive,s:0.8}(Excludes Baby and Legendary Jokers){}"
               }
+            },
+            j_poke_repel = {
+                name = 'Repel',      
+                text = {
+                    "Sell this card to {C:attention}disable{}",
+                    "the current {C:attention}Boss Blind{}",
+                    "and create a {C:attention}D6 Tag{}"
+                } 
             },
             j_poke_billion_lions = {
                 name = 'A Billion Lions',

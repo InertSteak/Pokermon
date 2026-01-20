@@ -832,24 +832,37 @@ local lickitung={
 local koffing={
   name = "koffing", 
   pos = {x = 4, y = 8},
-  config = {extra = {rounds = 4}},
+  config = {extra = {mult = 12, rounds = 3, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.rounds}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    end
+		return {vars = {center.ability.extra.mult, center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 5, 
   stage = "Basic", 
   ptype = "Dark",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
-  eternal_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.selling_self and not context.blueprint then
-      if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
-        G.GAME.blind.chips = G.GAME.blind.chips/2
-        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
       end
     end
     return level_evo(self, card, context, "j_poke_weezing")
@@ -859,24 +872,50 @@ local koffing={
 local weezing={
   name = "weezing", 
   pos = {x = 5, y = 8}, 
+  config = {extra = {mult = 18, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    end
+    return {vars = {center.ability.extra.mult}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   ptype = "Dark",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
-  eternal_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.selling_self and not context.blueprint then
-      if G.GAME.blind and G.GAME.blind:get_type() == 'Boss' then 
-        G.GAME.blind.chips = G.GAME.blind.chips/2
-        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
-        G.GAME.blind:disable()
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+              card.ability.fainted = G.GAME.round
+              card:set_debuff()
+              return true
+          end
+        })) 
+    
+        local target = nil
+        for i = 1, #context.full_hand do
+          if not SMODS.in_scoring(context.full_hand[i], context.scoring_hand) then
+            target = context.full_hand[i]
+            break
+          end
+        end
+        
+        if target then
+          poke_remove_card(target, card)
+        end
+      
+        return {
+          message = localize("poke_explosion_ex"),
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
       end
     end
   end
