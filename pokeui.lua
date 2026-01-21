@@ -892,7 +892,7 @@ function poke_artist_credit(artists)
 
   for _, artist in ipairs(artists) do
     local artist_info = poke_get_artist_info(artist) or {}
-    local artist_name = artist_info.display_name or artist
+    local artist_name = artist_info.display_name or (type(artist) == 'table' and artist.name) or artist
     local artist_colour = artist_info.artist_colour or G.C.FILTER
     local artist_highlight = artist_info.highlight_colour or G.C.CLEAR
 

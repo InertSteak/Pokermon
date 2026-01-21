@@ -287,7 +287,7 @@ PokemonSprites = {
 {name = "slowking", base = {pos = {x = 6, y = 13}},},
 {name = "galarian_slowking", base = {pos = {x = 6, y = 4}},gen_atlas = 2},
 {name = "misdreavus", base = {pos = {x = 8, y = 13}},},
-{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, alts = {AtlasJokersSeriesA = {artist = {name = 'Catzzadilla', layer = 'center'}, {name = 'LocalThunk', layer = 'center'}}},gen_atlas = 2},
+{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, alts = {AtlasJokersSeriesA = {artist = {{name = 'Catzzadilla', layer = 'center'}, {name = 'LocalThunk', layer = 'center'}}}},gen_atlas = 2},
 {name = "wobbuffet", base = {pos = {x = 12, y = 13}},},
 {name = "girafarig", base = {pos = {x = 14, y = 13}},},
 {name = "pineco", base = {pos = {x = 16, y = 13}},},
