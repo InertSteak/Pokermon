@@ -173,6 +173,15 @@ local function populate_cardareas(keys, options)
 end
 
 function poke_create_UIBox_your_collection(args)
+  -- Fix for cards not realizing they're in a collection,
+  -- because the collection gets initialized *after* the cards do
+  -- -- Vanilla cards work without this because the joker collection is nested within a second overlay
+  local handle_overlay_menu = false
+  if not G.OVERLAY_MENU then
+    G.OVERLAY_MENU = true
+    handle_overlay_menu = true
+  end
+
   args = args or {}
 
   local keys = args.keys or {}
@@ -235,6 +244,9 @@ function poke_create_UIBox_your_collection(args)
     }
   end
 
+  -- Avoids crashing when `G.FUNCS.overlay_menu` tries to call the remove method
+  if handle_overlay_menu then G.OVERLAY_MENU = nil end
+
   return nodes
 end
 
@@ -279,7 +291,9 @@ local site_colours = {
   ['bsky'] = HEX("006AFF"),
   ['reddit'] = HEX("FF4500"),
   ['carrd'] = HEX("4071B7"),
-  ['discord'] = HEX("5865F2")
+  ['discord'] = HEX("5865F2"),
+  ['instagram'] = HEX("D60059"),
+  ['tiktok'] = HEX("283234")
 }
 
 local function get_site_colour(domain)
@@ -347,31 +361,24 @@ SMODS.collection_pool = function(_base_pool)
   for _, v in ipairs(_base_pool) do
     local moved = false
     if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
-      if pokermon_config.order_jokers then
-        for x, y in pairs(pokermon.dex_order_groups) do
-          if table.contains(y, v.name) then
-            inserts[#inserts+1] = v
-            moved = true
-          end
-        end
+      -- Taking pokemon jokers out of the pool to sort and re-insert
+      if pokermon_config.order_jokers and v.stage and v.stage ~= 'Other' and v.name ~= "missingno" then
+        inserts[#inserts+1] = v
+        moved = true
       end
+      -- Taking *non*-pokemon jokers out of the pool entirely if that toggle is on
       local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only_collection
+      -- Otherwise work as normal
       if not moved and not empty_vanilla then pool[#pool+1] = v end
     end
   end
 
+  -- Now sort pokemon in dex-order, then re-insert into pool
   if pokermon_config.order_jokers then
     table.sort(inserts, function(a, b) return pokermon.get_dex_number(a.name) < pokermon.get_dex_number(b.name) end)
-    for k, v in pairs(inserts) do
-      for x, y in pairs(pokermon.dex_order_groups) do
-        if table.contains(y, v.name) then
-          local next_index = pokermon.dex_order[pokermon.find_next_dex_number(v.name)]
-          if type(next_index) == "table" then next_index = next_index[1] end
-          if not table.contains(pool, v) then
-            table.insert(pool, next_index and pokermon.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
-          end
-        end
-      end
+    for i = #inserts, 1, -1 do
+      local name = (inserts[i+1] or {}).name or 'missingno'
+      table.insert(pool, pokermon.find_pool_index(pool, name) or #pool + 1, inserts[i])
     end
   end
 
@@ -379,38 +386,19 @@ SMODS.collection_pool = function(_base_pool)
   return pool
 end
 
-pokermon.find_pool_index = function(pool, key)
-    for k, v in pairs(pool) do
-      if v.key == key then return k end
+
+-- Toggle function for Stake + Sticker Skins
+G.FUNCS.toggle_pokermon_skins = function()
+  local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
+  for k, _ in pairs(G.P_STAKES) do
+    if table.contains(vanilla_stakes, k) then
+      if pokermon_config.stake_skins then
+        SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["poke_pokestakes_stickers"]
+      else
+        SMODS.Stake:take_ownership(k, { atlas = "chips", prefix_config = { key = { mod = false } } }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = G.ASSET_ATLAS["stickers"]
+      end
     end
-end
-
-pokermon.get_dex_number = function(name)
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for x, y in ipairs(pokemon) do
-        if name == y then return i + (x - 1)/10 end
-      end
-    elseif type(pokemon) == "string" and name == pokemon then return i end
-  end
-  return #pokermon.dex_order + 1
-end
-
-pokermon.find_next_dex_number = function(name)
-  local dexNo = pokermon.get_dex_number(name)
-  local group_list
-  for k, v in pairs(pokermon.dex_order_groups) do
-    if table.contains(v, name) then group_list = v break end
-  end
-  for i, pokemon in ipairs(pokermon.dex_order) do
-    if type(pokemon) == 'table' then
-      for _, mon in ipairs(pokemon) do
-        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
-          return i
-        end
-      end
-    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
-      return i
-    elseif pokemon == "missingno" then return i end
   end
 end

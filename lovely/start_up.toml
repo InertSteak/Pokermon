@@ -1,0 +1,106 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+#Nested check
+[[patches]]
+[patches.module]
+source = "setup.lua"
+before = "main.lua"
+name = "pokermon.setup"
+
+
+# Splash Screen
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['j_joker'])"
+position = "after"
+payload = '''
+if pokermon_config.pokemon_splash then
+  local pokemon = {}
+  for k, v in pairs(G.P_CENTERS) do
+    if v.set == 'Joker' and v.stage and v.discovered then
+      table.insert(pokemon, v)
+    end
+  end
+  if #pokemon > 0 then
+    local chosen = math.random(#pokemon)
+    local chosencard = pokemon[chosen]
+    SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, chosencard)
+  end
+end
+'''
+match_indent = true
+
+
+# Replace start menu logo with Pokermon
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+G.SPLASH_LOGO = Sprite(0, 0, 
+    13*SC_scale, 
+    13*SC_scale*(G.ASSET_ATLAS["balatro"].py/G.ASSET_ATLAS["balatro"].px),
+    G.ASSET_ATLAS["balatro"], {x=0,y=0})
+'''
+position = "after"
+payload = '''
+    if pokermon_config.pokemon_title then
+      local poke_logo = pokermon_config.pokemon_aprilfools and "poke_smeargle_logo" or "poke_logo"
+      G.SPLASH_LOGO = Sprite(0, 0, 
+          13/333*389*SC_scale, 
+          13/333*389*SC_scale*(G.ASSET_ATLAS[poke_logo].py/G.ASSET_ATLAS[poke_logo].px),
+          G.ASSET_ATLAS[poke_logo], {x=0.0,y=0})
+    end
+'''
+match_indent = true
+overwrite = true
+
+
+# Replace start menu card with unown
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+local replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)
+'''
+position = "at"
+payload = '''
+local replace_card = nil
+if pokermon_config.pokemon_title then
+  local poke_atlas_string = nil
+  if G.ASSET_ATLAS["poke_"..pokermon_config.pokemon_spritesheet_atlas.."TitleCard"] then
+    poke_atlas_string = "poke_"..pokermon_config.pokemon_spritesheet_atlas.."TitleCard"
+  else
+    poke_atlas_string = "poke_AtlasJokersBasicTitleCard"
+  end
+  replace_card = PokeDisplayCard({atlas = poke_atlas_string, pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}, suppress_text = true}, self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale)
+else
+  replace_card = Card(self.title_top.T.x, self.title_top.T.y, 1.2*G.CARD_W*SC_scale, 1.2*G.CARD_H*SC_scale, G.P_CARDS.S_A, G.P_CENTERS.c_base)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "replace_card.states.visible = false"
+position = "after"
+payload = '''
+if pokermon_config.pokemon_title then
+  replace_card.seal = nil
+end
+'''
+match_indent = true
+
+
+#Tutorial Functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local row_dollars_chips = G.HUD:get_UIE_by_ID('row_dollars_chips')"
+position = "at"
+payload = "local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID('row_dollars_chips')"
+match_indent = true

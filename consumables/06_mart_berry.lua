@@ -140,11 +140,7 @@ local berry_juice_planet = {
     table.sort(temp_hands, sort_function)
     
     local upgrade_handname = temp_hands[1].handname
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(upgrade_handname, 'poker_hands'),chips = G.GAME.hands[upgrade_handname].chips, 
-        mult = G.GAME.hands[upgrade_handname].mult, level=G.GAME.hands[upgrade_handname].level})
-    level_up_hand(card, upgrade_handname)
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+    SMODS.smart_level_up_hand(card, upgrade_handname)
   end
 }
 

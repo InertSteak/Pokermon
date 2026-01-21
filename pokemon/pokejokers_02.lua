@@ -1082,13 +1082,13 @@ local mankey={
 local primeape={
   name = "primeape", 
   pos = {x = 4, y = 4}, 
-  config = {extra = {mult_mod = 5, chip_mod = 7, primes_played = 0}, evo_rqmt = 25},
+  config = {extra = {mult_mod = 5, chip_mod = 7, primes_played = 0}, evo_rqmt = 29},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local primes_left = math.max(0, self.config.evo_rqmt - card.ability.extra.primes_played)
     return {vars = {card.ability.extra.mult_mod, card.ability.extra.chip_mod, primes_left}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 9, 
   stage = "One", 
   ptype = "Fighting",

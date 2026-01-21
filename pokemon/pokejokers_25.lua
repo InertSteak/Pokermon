@@ -278,26 +278,20 @@ local lycanroc_dusk={
           first_odd = context.scoring_hand[i]
         end
       end
-      if context.other_card == first_even and not card.ability.extra.even_triggered then
-        card.ability.extra.even_triggered = true  
+      if context.other_card == first_even then  
         return {
               message = localize('k_again_ex'),
               repetitions = card.ability.extra.retriggers,
               card = card
           }
       end
-      if context.other_card == first_odd and not card.ability.extra.odd_triggered then
-        card.ability.extra.odd_triggered = true  
+      if context.other_card == first_odd then 
         return {
               message = localize('k_again_ex'),
               repetitions = card.ability.extra.retriggers,
               card = card
           }
       end
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.even_triggered = nil
-      card.ability.extra.odd_triggered = nil
     end
   end,
 }

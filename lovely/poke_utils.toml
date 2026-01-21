@@ -1,0 +1,326 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Evolution functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.perish_tally == 1 then"
+position = "at"
+payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.ability.perish_tally = 0"
+position = "after"
+payload = '''
+if self.edition and self.edition.poke_shiny then
+  SMODS.change_booster_limit(-1)
+end
+'''
+match_indent = true
+
+
+# Drain functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)"
+position = "after"
+payload = '''
+if self.sell_cost < 1 then self.sell_cost = 1 end
+if self.ability.name == "unown" then self.sell_cost = 0 end
+'''
+match_indent = true
+
+
+
+### POKEMON SPECIFIC PATCHES
+
+
+## Lapras
+#Lapras fix
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if G.shop and not G.shop.alignment.offset.py then"
+position = "after"
+payload = "if G.GAME.lapras_skip then G.shop.alignment.offset.y = -5.3 end"
+match_indent = true
+
+
+## Xatu
+# (Can this be a take_ownership thing?????)
+# Resize Booster Pack UI for new options & Xatu - Resize Pack for All Planets
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "booster_obj = self.config.center"
+position = "after"
+payload = '''
+if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
+  self.ability.extra = #G.P_CENTER_POOLS.Planet
+elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
+  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
+end
+'''
+match_indent = true
+
+# Xatu Make All Planets Appear
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
+position = "at"
+payload = '''
+if next(find_joker("xatu")) then
+    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+elseif G.GAME.used_vouchers.v_telescope and i == 1 then
+'''
+match_indent = true
+overwrite = true
+
+
+## Misdreavus
+# Check for over-drained chips (in UI creation)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif card_type == 'Default' or card_type == 'Enhanced' then"
+position = "after"
+payload = "poke_stabilize_chip_drain(self)"
+match_indent = true
+
+# Add nominal drain UI
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "elseif self.ability.set == 'Joker' then -- all remaining jokers"
+position = "before"
+payload = '''
+if loc_vars.nominal_chips then
+  loc_vars.nominal_chips = loc_vars.nominal_chips - (self.ability.nominal_drain or 0)
+  if not loc_vars.bonus_chips and (self.ability.bonus ~= 0 or self.ability.perma_bonus ~= 0) then
+      loc_vars.bonus_chips = bonus_chips
+  end
+end
+'''
+match_indent = true
+
+# Add nominal drain functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
+position = "at"
+payload = '''
+  poke_stabilize_chip_drain(self)
+  return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
+'''
+match_indent = true
+
+
+## Gligar
+# Delay debuff shader until after trigger
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = "if self.debuff then"
+position = "at"
+payload = "if self.debuff and not self.delay_debuff_sprites then"
+match_indent = true
+
+
+## Houndour
+# Post Discard context
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+check_for_unlock({type = 'discard_custom', cards = cards})
+'''
+position = "after"
+payload = '''
+if not hook then
+  SMODS.calculate_context({post_discard = true})
+end
+'''
+match_indent = true
+
+
+## Smeargle
+# Smeargle fix with copy effects
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+new_card:set_base(other.config.card)
+'''
+position = "after"
+payload = '''
+if other.config.center.name == "smeargle" then
+  other.ability.extra.copy_joker = nil
+  other.ability.extra.copy_pos = 0
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+for k, v in pairs(other.ability) do
+    if type(v) == 'table' then 
+        new_card.ability[k] = copy_table(v)
+    else
+        new_card.ability[k] = v
+    end
+end
+'''
+position = "after"
+payload = '''
+if other.config.center.name == "ruins_of_alph" then
+  new_card.ability.extra.forms = {}
+  new_card.ability.extra.merged = 0
+end
+if new_card.config.center == G.P_CENTERS.m_poke_seed then
+  new_card:set_sprites(new_card.config.center)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "colour = part.control.V and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+position = "at"
+payload = "colour = part.control.V and args.vars.colours and args.vars.colours[tonumber(part.control.V)] or not part.control.C and args.text_colour or loc_colour(part.control.C or nil, args.default_col),"
+match_indent = true
+
+#Tooltip loc_vars fix
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if vars_only then return loc_vars, main_start, main_end end"
+position = "before"
+payload = '''
+if vars_only and type(self.ability.loc_vars_replacement) == "table" then
+  loc_vars = self.ability.loc_vars_replacement
+end
+'''
+match_indent = true
+
+
+## Jirachi
+#Jirachi tag fix
+[[patches]]
+[patches.pattern]
+target = "tag.lua"
+pattern = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' then"
+position = "at"
+payload = "if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_poke_jirachi_tag' then"
+match_indent = true
+
+
+## Aipom
+# Aipom + Ambipom Flush Check
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''local four_fingers = SMODS.four_fingers('flush')'''
+position = "after"
+payload = '''
+four_fingers = (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) and 3 or four_fingers
+'''
+match_indent = true
+times = 1
+
+
+## Garbodor
+# Garbodor functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "G.GAME.current_round.discards_used = G.GAME.current_round.discards_used + 1"
+position = "after"
+payload = '''
+G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "G.GAME.round_resets.ante = G.GAME.round_resets.ante + mod"
+position = "after"
+payload = '''
+G.GAME.poke_ante_discards_used = 0
+'''
+match_indent = true
+
+
+## Zorua
+# Zorua Rental Incompatibility
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+self.ability.rental = _rental
+self:set_cost()
+'''
+position = "at"
+payload = '''
+if self.config.center.rental_compat ~= false and not self.ability.rental then 
+    self.ability.rental = _rental
+    self:set_cost()
+end
+'''
+match_indent = true
+overwrite = true
+
+
+## Gothita
+#Gothita line functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') > 0 then self.cost = 0 end
+'''
+position = "after"
+payload = '''
+if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - 1 * #find_joker('rotom')) end
+if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.rotom_discount or 0) * #find_joker('rotomdex')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end
+if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('gothitelle') > 0 then self.cost = 0 end
+'''
+match_indent = true
+
+
+## Missingno
+#fix booster pack choices being deducted when a consumable in the jokers area is used
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if area == G.consumeables then"
+position = "at"
+payload = "if area == G.consumeables or area == G.jokers then"
+match_indent = true
+
+
+## Unown Swarm
+# Unown Swarm Stickers
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = '''order = 40,
+    func = function(self, layer)'''
+position = "after"
+payload = '''if self.config.center.key == 'j_poke_unown_swarm' then return end'''
+match_indent = true

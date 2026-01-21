@@ -65,12 +65,15 @@ local nuzlocke = {
             {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
         deck = {
             type = 'Challenge Deck'
         },
-    }
+    },
+    button_colour = HEX('947362'),
+    text_colour = G.C.GREEN,
 }
 
 -- add joker slots when ante increases with Nuzlocke
@@ -121,12 +124,16 @@ local goodasgold = {
         banned_tags = {
         },
         banned_other = {
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
       type = 'Challenge Deck',
       enhancement = 'm_gold',
     },
+    button_colour = HEX('af843e'),
+    text_colour = G.C.GOLD,
 }
 
 local parenthood = {
@@ -184,9 +191,12 @@ local parenthood = {
         },
         banned_other = {
             {id = 'bl_final_heart', type = 'blind'},
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX("e7deb5"),
+    text_colour = HEX("84b56b"),
 }
 
 local littlecup = {
@@ -210,11 +220,14 @@ local littlecup = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
       type = 'Challenge Deck',
     },
+    button_colour = HEX('deb0ad'),
+    text_colour = HEX('e8d4bb')
 }
 
 local hammertime = {
@@ -235,6 +248,7 @@ local hammertime = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
@@ -245,6 +259,8 @@ local hammertime = {
         },
       type = 'Challenge Deck',
     },
+    button_colour = HEX('9AA4B7'),
+    text_colour = HEX('fc96c1')
 }
 
 local lonesome = {
@@ -293,8 +309,10 @@ local lonesome = {
             { id = 'bl_final_heart', type = 'blind' },
             { id = 'bl_final_leaf',  type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX('c59c4a'),
 }
 
 local randomizer = {
@@ -318,6 +336,8 @@ local randomizer = {
     deck = {
       type = 'Challenge Deck',
     },
+    button_colour = G.C.DARK_EDITION,
+    text_colour = G.C.EDITION
 }
 
 local delibird_delimma = {
@@ -339,8 +359,12 @@ local delibird_delimma = {
             { id = 'j_to_the_moon' },
             { id = 'j_rocket' },
             { id = 'j_satellite' },
+        },
+        banned_other = {
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX('de3131')
 }
 
 return {name = "Challenges", 

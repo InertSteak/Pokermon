@@ -200,15 +200,15 @@ local overqwil = {
 local tarountula = {
   name = "tarountula",
   pos = {x = 12, y = 0},
-  config = {extra = {hazards = 4, rounds = 3, h_size = 1}},
+  config = {extra = {hazard_level = 1, rounds = 4, h_size = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
-    return {vars = {abbr.hazards, abbr.rounds, abbr.h_size}}
+    return {vars = {abbr.hazard_level, abbr.rounds, abbr.h_size}}
   end,
   rarity = 1,
   cost = 5,
@@ -219,68 +219,63 @@ local tarountula = {
   hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
     return level_evo(self, card, context, "j_poke_spidops")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Spidops 918
 local spidops = {
   name = "spidops",
   pos = {x = 13, y = 0},
-  config = {extra = {hazards = 4, h_size = 1, h_max = 8, h_total = 0}},
+  config = {extra = {hazard_level = 1, h_size = 2, card_goal = 8, cards_added = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards', vars = {abbr.hazards}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
-    return {vars = {abbr.hazards, abbr.h_size, abbr.h_max, abbr.h_total}}
+    return {vars = {abbr.hazard_level, abbr.h_size, abbr.card_goal, math.max(0, abbr.card_goal - abbr.cards_added)}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 7,
   stage = "One",
   ptype = "Grass",
   atlas = "Pokedex9",
   gen = 9,
   hazard_poke = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.setting_blind then
-      poke_set_hazards(card.ability.extra.hazards)
-    end
-    if context.joker_main and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-      local all_hazards = true
-      for k, v in pairs(context.full_hand) do
-        if not SMODS.has_enhancement(v, "m_poke_hazard") then
-          all_hazards = false
+    if context.playing_card_added and not card.getting_sliced and context.cards and not context.blueprint then
+      if context.cards and type(context.cards) == "table" and #context.cards > 0 then
+        local cards_added = {}
+        for k, v in ipairs(context.cards) do
+          card.ability.extra.cards_added = card.ability.extra.cards_added + 1
+          if card.ability.extra.cards_added == card.ability.extra.card_goal then
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_sticky_web_ex")})
+            local args = {guaranteed = true}
+            local seal_type = SMODS.poll_seal(args)
+            v:set_seal(seal_type, true)
+            card.ability.extra.cards_added = 0
+          end
         end
       end
-      if all_hazards then
-        local size_up = card.ability.extra.h_size * #context.scoring_hand
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={size_up}}})
-        G.hand:change_size(size_up)
-        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + size_up
-      end
-    end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
   end
 }
 -- Nymble 919
@@ -353,8 +348,8 @@ local dachsbun={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
-  rarity = 2,
-  cost = 5,
+  rarity = "poke_safari",
+  cost = 7,
   stage = "One",
   ptype = "Fairy",
   atlas = "Pokedex9",

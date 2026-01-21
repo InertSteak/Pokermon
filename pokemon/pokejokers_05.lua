@@ -562,6 +562,7 @@ local lapras={
           G.STATE_COMPLETE = false
           G.GAME.current_round.used_packs = {}
           G.GAME.current_round.reroll_cost_increase = 0
+          G.GAME.current_round.free_rerolls = G.GAME.round_resets.free_rerolls
           calculate_reroll_cost(true)
           return true
         end,
@@ -592,7 +593,7 @@ local ditto={
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 8, 
   stage = "Basic",
   ptype = "Colorless",
@@ -659,7 +660,7 @@ local eevee={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.joker_main and G.GAME.current_round.hands_played == 0 then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,

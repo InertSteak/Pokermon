@@ -20,6 +20,7 @@ local joker_pool_toggles = {
 
 local misc_no_restart_toggles = {
   {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards", tooltip = {set = 'Other', key = 'shinyplayingcard_tooltip'}},
+  {ref_value = "stake_skins", label = "poke_settings_stake_skins", tooltip = {set = 'Other', key = 'stake_skins_tooltip'}, callback = G.FUNCS.toggle_pokermon_skins},
   {ref_value = "detailed_tooltips", label = "poke_settings_pokemon_detailed_tooltips", tooltip = {set = 'Other', key = 'detailed_tooltips_tooltip'}},
   {ref_value = "previous_evo_stickers", label = "poke_settings_previous_evo_stickers", tooltip = {set = 'Other', key = 'previous_evo_stickers_tooltip'}},
   {ref_value = "order_jokers", label = "poke_settings_order_jokers", tooltip = {set = 'Other', key = 'order_jokers_tooltip'}},
@@ -49,6 +50,7 @@ local create_menu_toggles = function (parent, toggles)
           label = localize(v.label),
           ref_table = pokermon_config,
           ref_value = v.ref_value,
+          callback = v.callback,
     })
     if v.tooltip then
       parent.nodes[#parent.nodes].config.detailed_tooltip = v.tooltip
@@ -470,6 +472,7 @@ local function get_series_localize_key(atlas_prefix)
     local localize_prefix = 'poke_settings_pokemon_spritesheet_'
     return localize_prefix .. string.lower(series)
   end
+  return 'poke_settings_pokemon_spritesheet_basicseries'
 end
 
 local function get_sprite_keys_by_artist(artist)
@@ -478,7 +481,7 @@ local function get_sprite_keys_by_artist(artist)
   for _, sprite in ipairs(poke_get_artist_sprites(artist)) do
     local key = {}
 
-    key.display_text = localize(get_series_localize_key(sprite.atlas_prefix))
+    key.display_text = sprite.display_text or localize(get_series_localize_key(sprite.atlas_prefix))
     key.layer = sprite.layer
 
     if sprite.anim_atlas then
@@ -496,15 +499,17 @@ local function get_sprite_keys_by_artist(artist)
 
   -- Jokers get special treatment because we only want jokers without alts
   for _, joker in ipairs(G.P_CENTER_POOLS["Joker"]) do
-    if poke_get_artist_layer(joker, artist) and joker.stage == 'Other' then
-      keys[#keys+1] = { existing_key = joker.key, set = "Joker" }
+    local layer = poke_get_artist_layer(joker, artist)
+    if layer and joker.stage == 'Other' then
+      keys[#keys+1] = { existing_key = joker.key, set = "Joker", layer = layer }
     end
   end
 
   local add_pool_to_keys = function(pool)
     for _, item in pairs(pool) do
-      if poke_get_artist_layer(item, artist) then
-        keys[#keys+1] = { existing_key = item.key, set = item.set }
+      local layer = poke_get_artist_layer(item, artist)
+      if layer then
+        keys[#keys+1] = { existing_key = item.key, set = item.set, layer = layer }
       end
     end
   end
@@ -518,9 +523,11 @@ local function get_sprite_keys_by_artist(artist)
   add_pool_to_keys(G.P_CENTER_POOLS["Booster"])
   add_pool_to_keys(G.P_CENTER_POOLS["Seal"])
   add_pool_to_keys(G.P_CENTER_POOLS["Tag"])
+  add_pool_to_keys(G.P_BLINDS)
 
   if artist == 'Sonfive' then
     keys[#keys+1] = { display_text = "Main Menu Logo", atlas = "poke_logo", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
+    keys[#keys+1] = { display_text = "Pokermon Logo", atlas = "poke_logo_alt", pos = { x = 0, y = 0 }, w = G.CARD_H*1.80092593 }
   end
 
   return keys
@@ -642,8 +649,9 @@ local function open_pokedex(target)
     local menu = G.SETTINGS.paused and 'pokedex_back' or nil
     if menu and G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders') then poke_joker_page = G.OVERLAY_MENU:get_UIE_by_ID('cycle_shoulders').children[1].children[1].config.ref_table.current_option end
     if menu and target.config.center.poke_multi_item then menu = 'your_collection_consumables' end
+    G.SETTINGS.paused = true
     G.FUNCS.overlay_menu {
-      definition = create_UIBox_pokedex_jokers(get_family_keys(target.config.center.name, target.config.center.poke_custom_prefix, target), menu),
+      definition = create_UIBox_pokedex_jokers(get_family_keys(target), menu),
     }
     G.CONTROLLER:update_focus()
   end
@@ -674,7 +682,7 @@ SMODS.Keybind({ key = "openPokedex", key_pressed = "p", action = open_pokedex_fr
 local G_UIDEF_use_and_sell_buttons_ref=G.UIDEF.use_and_sell_buttons
     function G.UIDEF.use_and_sell_buttons(card)
         if (card.area == G.pack_cards and G.pack_cards) and card.ability.consumeable then --Add a use button
-            if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket")) or (G.GAME.poke_save_all and not SMODS.OPENED_BOOSTER.label:find("Wish")) or (card.ability.name == 'megastone') then
+            if poke_can_save_consumable(card) then
                 return {
                     n=G.UIT.ROOT, config = {padding = -0.1,  colour = G.C.CLEAR}, nodes={
                       {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, minh = 0.7*card.T.h, maxw = 0.7*card.T.w - 0.15, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_use_consumeable'}, nodes={
@@ -850,69 +858,79 @@ poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(targe
 end)
 
 -- Tooltip Credits UI
+local divider_text = function(i, limit)
+  local div_text
+
+  -- separate by commas if 3 or more items
+  if limit > 2 then
+    div_text = ', '
+  else
+    div_text = ' '
+  end
+
+  -- add "and" to the last divider
+  if limit - 1 == i then
+    div_text = div_text .. localize('poke_and') .. ' '
+  end
+
+  return div_text
+end
+
 function poke_artist_credit(artists)
-    local artist_names, artist_colours, artist_highlight_colours = {}, {}, {}
-    local add_artist_info = function(artist)
-      if type(artist) == 'table' then
-        artist = artist.name
-      end
-      local artist_info = poke_get_artist_info(artist) or {}
-      artist_names[#artist_names+1] = artist_info.display_name or artist
-      artist_colours[#artist_colours+1] = artist_info.artist_colour or G.C.FILTER
-      artist_highlight_colours[#artist_highlight_colours+1] = artist_info.highlight_colour
-    end
+  if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
+  if type(artists) == 'string' then artists = { artists } end
 
-    if type(artists) == 'string' or type(artists) == 'table' and artists.name then
-        add_artist_info(artists)
-    else
-        for _, artist in ipairs(artists) do
-            add_artist_info(artist)
-        end
-    end
-
-    local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
-        {n=G.UIT.T, config={
-            text = localize('poke_credits_artist'),
-            shadow = true,
-            colour = G.C.UI.BACKGROUND_WHITE,
-            scale = 0.27}}
-    }}
-    local outline_nodes = {}
-    local outline_node = nil
-    local artist_node = nil
-
-    for i = 1, #artist_names do
-      outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight_colours and artist_highlight_colours[i] or G.C.CLEAR, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
-        
-      artist_node = {n=G.UIT.O, config={
-        object = DynaText({string = artist_names[i],
-          colours = {artist_colours[i]},
-          bump = true,
-          silent = true,
-          pop_in = 0,
-          pop_in_rate = 4,
-          shadow = true,
-          y_offset = -0.6,
-          scale =  0.27
-        })
-      }}
-      table.insert(outline_node.nodes, artist_node)
-                
-      outline_nodes[#outline_nodes + 1] = outline_node
-    end
-    
-    for j = 1, #outline_nodes do
-      table.insert(artist_credit.nodes, outline_nodes[j])
-      if #outline_nodes > 1 and j ~= #outline_nodes then
-        local amp_node = {n=G.UIT.T, config={
-          text = ' & ',
+  local artist_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
+      {n=G.UIT.T, config={
+          text = localize('poke_credits_artist'),
           shadow = true,
           colour = G.C.UI.BACKGROUND_WHITE,
           scale = 0.27}}
-        table.insert(artist_credit.nodes, amp_node)
-      end
+  }}
+
+  local outline_nodes = {}
+
+  for _, artist in ipairs(artists) do
+    local artist_info = poke_get_artist_info(artist) or {}
+    local artist_name = artist_info.display_name or artist
+    local artist_colour = artist_info.artist_colour or G.C.FILTER
+    local artist_highlight = artist_info.highlight_colour or G.C.CLEAR
+
+    local outline_node = {n=G.UIT.C, config={align = "m", colour = artist_highlight, r = 0.05, padding = 0.03, res = 0.15}, nodes = {}}
+
+    local artist_node = {n=G.UIT.O, config={
+      object = DynaText({string = artist_name,
+        colours = {artist_colour},
+        bump = true,
+        silent = true,
+        pop_in = 0,
+        pop_in_rate = 4,
+        shadow = true,
+        y_offset = -0.6,
+        scale =  0.27
+      })
+    }}
+
+    table.insert(outline_node.nodes, artist_node)
+
+    outline_nodes[#outline_nodes + 1] = outline_node
+  end
+
+  for j = 1, #outline_nodes do
+    table.insert(artist_credit.nodes, outline_nodes[j])
+
+    if #outline_nodes > 1 and j ~= #outline_nodes then
+      local text = divider_text(j, #outline_nodes)
+
+      local amp_node = {n=G.UIT.T, config={
+        text = text,
+        shadow = true,
+        colour = G.C.UI.BACKGROUND_WHITE,
+        scale = 0.27}}
+      table.insert(artist_credit.nodes, amp_node)
     end
-    return artist_credit
+  end
+  return artist_credit
 end
 
 function poke_designer_credit(designer_name)
@@ -941,15 +959,33 @@ function poke_designer_credit(designer_name)
     return designer_credit
 end
 
+local get_credits = function(card)
+  if not (card and card.config) then return end
+  local center = card.config.center
+  if center then
+    if card.seal and center.key == 'c_base' and card.area and card.area.config.collection then
+      local seal = G.P_SEALS[card.seal]
+      return seal.artist, seal.designer
+    end
+
+    return center.artist, center.designer
+  end
+  local tag = card.config.tag
+  if tag then
+    local proto = G.P_TAGS[tag.key]
+    return proto.artist, proto.designer
+  end
+end
+
 local prev_card_h_popup = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
-  local center = (card and card.config) and card.config.center or nil
-  if center and center.artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(center.artist))
+  local artist, designer = get_credits(card)
+  if artist then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(artist))
   end
-  if center and center.designer then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(center.designer))
+  if designer then
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(designer))
   end
   
   return ret_val
@@ -958,19 +994,23 @@ end
 local cuibbp = create_UIBox_blind_popup
 function create_UIBox_blind_popup(blind, discovered, vars)
   local ret = cuibbp(blind, discovered, vars)
-  local nodes = {}
-  if blind.artist then
-    nodes[#nodes+1] = poke_artist_credit(blind.artist)
-  end
-  if blind.designer then
-    nodes[#nodes+1] = poke_designer_credit(blind.designer)
-  end
   if blind.artist or blind.designer then
+    local nodes = {}
+    if blind.artist then
+      nodes[#nodes+1] = poke_artist_credit(blind.artist)
+    end
+    if blind.designer then
+      nodes[#nodes+1] = poke_designer_credit(blind.designer)
+    end
     table.insert(ret.nodes,
-      {n=G.UIT.R, config={align = "cm"}, nodes = nodes}
+      {n=G.UIT.R, config = {align = "cm"}, nodes = {
+        {n=G.UIT.R, config = {align = "cm", r = 1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8), padding = 0.05}, nodes = {
+          {n=G.UIT.C, config = {minw = 0.2}},
+          {n=G.UIT.C, nodes = nodes},
+          {n=G.UIT.C, config = {minw = 0.2}},
+        }}
+      }}
     )
   end
-  ret.n = G.UIT.R
-  ret.config.colour = G.C.BLACK
-  return {n=G.UIT.ROOT, config={align = "cm", padding = 0.05, colour = lighten(G.C.JOKER_GREY, 0.5), r = 0.1, emboss = 0.05}, nodes={ret}}
+  return ret
 end

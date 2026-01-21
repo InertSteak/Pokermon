@@ -173,7 +173,7 @@ local megadeck = {
 	order = 23,
   unlocked = true,
   discovered = true,
-  artist = "Catzzadilla",
+  artist = {"Catzzadilla", "Sonfive"},
 	config = {vouchers = { "v_reroll_surplus", "v_reroll_glut", "v_crystal_ball"}, consumables = {'c_poke_megastone'}, shop_size = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {localize("megastone_variable"), localize{type = 'name_text', key = 'v_reroll_surplus', set = 'Voucher'}, localize{type = 'name_text', key = 'v_reroll_glut', set = 'Voucher'},
@@ -219,7 +219,37 @@ local vendingdeck = {
   end,
 }
 
-local dList = {luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck}
+local diceydeck = {
+	name = "diceydeck",
+	key = "diceydeck",  
+	order = 17,
+  unlocked = true,
+  discovered = true,
+	config = {no_interest = true, hazard_layer = 1, hazard_layer_max = 1, h_size = 1, money = 1},
+  loc_vars = function(self, info_queue, center)
+    return {vars = {self.config.hazard_layer, self.config.hazard_layer_max, self.config.h_size, self.config.money}}
+  end,
+	pos = { x = 10, y = 0 },
+	atlas = "AtlasDecksBasic",
+  artist = 'Catzzadilla',
+  apply = function(self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        poke_change_hazard_max(self.config.hazard_layer_max)
+        poke_change_hazard_level(self.config.hazard_layer)
+        G.hand:change_size(self.config.h_size)
+        
+        G.GAME.modifiers.enhance_bonus = 'm_poke_hazard'
+        G.GAME.modifiers.money_per_enhancement = self.config.money
+        G.GAME.modifiers.enhance_bonus_text = localize('poke_hazards_in_deck')
+        G.GAME.modifiers.enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
+        return true
+      end
+    }))
+  end,
+}
+
+local dList = {luminousdeck, telekineticdeck, ampeddeck, futuredeck, stadiumdeck, megadeck, vendingdeck, diceydeck}
 
 if pokermon_config.pokeballs then
   table.insert(dList, 1, pokemondeck)

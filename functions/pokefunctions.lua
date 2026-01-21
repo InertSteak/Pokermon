@@ -1,180 +1,3 @@
-pokermon.family = {
-    {"bulbasaur","ivysaur","venusaur","mega_venusaur"},
-    {"charmander","charmeleon","charizard","mega_charizard_x","mega_charizard_y",},
-    {"squirtle","wartortle","blastoise","mega_blastoise"},
-    {"caterpie","metapod","butterfree"},
-    {"weedle","kakuna","beedrill","mega_beedrill"},
-    {"pidgey","pidgeotto","pidgeot","mega_pidgeot"},
-    {"rattata","raticate"},
-    {"spearow","fearow"},
-    {"ekans","arbok"},
-    {"pichu", "pikachu","raichu"},
-    {"sandshrew","sandslash"},
-    {"nidoranf","nidorina","nidoqueen"},
-    {"nidoranm","nidorino","nidoking"},
-    {"cleffa", "clefairy","clefable"},
-    {"vulpix","ninetales"},
-    {"igglybuff", "jigglypuff","wigglytuff"},
-    {"zubat","golbat", "crobat"},
-    {"oddish","gloom","vileplume", "bellossom"},
-    {"paras","parasect"},
-    {"venonat","venomoth"},
-    {"diglett","dugtrio"},
-    {"meowth","persian"},
-    {"psyduck","golduck"},
-    {"mankey","primeape", "annihilape"},
-    {"growlithe","arcanine"},
-    {"poliwag","poliwhirl","poliwrath", "politoed"},
-    {"abra","kadabra","alakazam","mega_alakazam"},
-    {"machop","machoke","machamp"},
-    {"bellsprout","weepinbell","victreebel"},
-    {"tentacool","tentacruel"},
-    {"geodude","graveler","golem"},
-    {"ponyta","rapidash"},
-    {"slowpoke", "slowbro", "slowking", "shell", "mega_slowbro"},
-    {"magnemite","magneton", "magnezone"},
-    {"doduo","dodrio"},
-    {"seel","dewgong"},
-    {"grimer","muk"},
-    {"shellder","cloyster"},
-    {"gastly","haunter","gengar","mega_gengar",},
-    {"onix","steelix", "mega_steelix"},
-    {"drowzee","hypno"},
-    {"krabby","kingler"},
-    {"voltorb","electrode"},
-    {"exeggcute","exeggutor"},
-    {"cubone","marowak"},
-    {"koffing","weezing"},
-    {"rhyhorn","rhydon", "rhyperior"},
-    {"horsea","seadra", "kingdra"},
-    {"goldeen","seaking"},
-    {"staryu","starmie"},
-    {"scyther", "scizor", "mega_scizor", "kleavor"},
-    {"mimejr", "mrmime"},
-    {"tauros", "taurosh"},
-    {"kangaskhan", "mega_kangaskhan"},
-    {"elekid", "electabuzz", "electivire"},
-    {"magby", "magmar", "magmortar"},
-    {"tangela", "tangrowth"},
-    {"smoochum", "jynx"},
-    {"pinsir", "mega_pinsir"},
-    {"magikarp","gyarados", "mega_gyarados"},
-    {"munchlax", "snorlax"},
-    {"aerodactyl", "mega_aerodactyl"},
-    {"happiny", "chansey", "blissey"},
-    {"lickitung", "lickilicky"},
-    {"porygon", "porygon2", "porygonz"},
-    {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
-    {"omanyte","omastar"},
-    {"kabuto","kabutops"},
-    {"dratini","dragonair","dragonite"},
-    {"mewtwo","mega_mewtwo_x","mega_mewtwo_y"},
-    {"chikorita", "bayleef", "meganium"},
-    {"cyndaquil", "quilava", "typhlosion"},
-    {"totodile", "croconaw", "feraligatr"},
-    {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
-    {"poochyena", "mightyena"},
-    {"wurmple", "silcoon", "beautifly", "cascoon", "dustox"},
-    {"numel", "camerupt", "mega_camerupt"},
-    {"feebas", "milotic"},
-    {"snorunt", "glalie", "froslass"},
-    {"nosepass", "probopass"},
-    {"beldum", "metang", "metagross"},
-    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_invis", "jirachi_fixer"},
-    {"sentret", "furret"},
-    {"hoothoot", "noctowl"},
-    {"ledyba", "ledian"},
-    {"spinarak", "ariados"},
-    {"mareep", "flaaffy", "ampharos", "mega_ampharos"},
-    {"wooper", "quagsire"},
-    {"sneasel", "weavile"},
-    {"teddiursa", "ursaring", "ursaluna"},
-    {"remoraid", "octillery"},
-    {"aipom", "ambipom"},
-    {"heracross", "mega_heracross"},
-    {"togepi", "togetic", "togekiss"},
-    {"yanma", "yanmega"},
-    {"natu", "xatu"},
-    {"azurill", "marill", "azumarill"},
-    {"phanpy", "donphan"},
-    {"girafarig", "farigiraf"},
-    {"murkrow", "honchkrow"},
-    {"bonsly", "sudowoodo", "weird_tree"},
-    {"hoppip", "skiploom", "jumpluff"},
-    {"stantler", "wyrdeer"},
-    {"sunkern", "sunflora"},
-    {"houndour", "houndoom", "mega_houndoom"},
-    {"misdreavus", "mismagius"},
-    {"wynaut", "wobbuffet"},
-    {"pineco", "forretress"},
-    {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
-    {"gligar", "gliscor"},
-    {"slugma", "magcargo"},
-    {"chinchou", "lanturn"},
-    {"swinub", "piloswine", "mamoswine"},
-    {"snubbull", "granbull"},
-    {"mantyke", "mantine"},
-    {"larvitar", "pupitar", "tyranitar", "mega_tyranitar"},
-    {"treecko", "grovyle", "sceptile"},
-    {"torchic", "combusken", "blaziken"},
-    {"mudkip", "marshtomp", "swampert"},
-    {"zigzagoon", "linoone"},
-    {"shroomish", "breloom"},
-    {"aron","lairon","aggron"},
-    {"duskull", "dusclops", "dusknoir"},
-    {"lileep", "cradily"},
-    {"anorith", "armaldo"},
-    {"bidoof", "bibarel"},
-    {"kricketot", "kricketune"},
-    {"buizel", "floatzel"},
-    {"buneary", "lopunny", "mega_lopunny"},
-    {"riolu", "lucario"},
-    {"rotom", "rotomh", "rotomw", "rotomf", "rotomfan", "rotomm"},
-    {"shaymin", "shaymin_sky"},
-    {"gothita", "gothorita", "gothitelle"},
-    {"vanillite", "vanillish", "vanilluxe"},
-    {"frillish", "jellicent"},
-    {"elgyem", "beheeyem"},
-    {"trubbish", "garbodor"},
-    {"litwick", "lampent", "chandelure"},
-    {"drilbur", "excadrill"},
-    {"pansage", "simisage"},
-    {"pansear", "simisear"},
-    {"panpour", "simipour"},
-    {"golett", "golurk"},
-    {"pawniard", "bisharp", "kingambit"},
-    {"roggenrola", "boldore", "gigalith"},
-    {"ferroseed", "ferrothorn"},
-    {"zorua", "zoroark"},
-    {"deino", "zweilous", "hydreigon"},
-    {"litleo", "pyroar"},
-    {{key = "pumpkaboo", form = 0}, {key = "pumpkaboo", form = 1}, {key = "pumpkaboo", form = 2}, {key = "pumpkaboo", form = 3},
-     {key = "gourgeist", form = 0}, {key = "gourgeist", form = 1}, {key = "gourgeist", form = 2}, {key = "gourgeist", form = 3},
-    },
-    {"grubbin", "charjabug", "vikavolt"},
-    {"rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk"},
-    {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
-    {"hisuian_qwilfish", "overqwil"},
-    {"nickit", "thievul"},
-    {"yamper","boltund"},
-    {"tarountula", "spidops"},
-    {"fidough", "dachsbun"},
-    {"charcadet", "armarouge", "ceruledge"},
-    {"tinkatink", "tinkatuff", "tinkaton"},
-    {"wiglett", "wugtrio"},
-    {"gimmighoul", "gholdengo", "gimmighoulr"},
-    {"ruins_of_alph"},
-  --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
-    {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
-    {{key = "unown", form = "A"},{key = "unown", form = "B"},{key = "unown", form = "C"}, {key = "unown", form = "D"}, {key = "unown", form = "E"}, {key = "unown", form = "F"},
-     {key = "unown", form = "G"}, {key = "unown", form = "H"}, {key = "unown", form = "I"}, {key = "unown", form = "J"}, {key = "unown", form = "K"}, {key = "unown", form = "L"},
-     {key = "unown", form = "M"}, {key = "unown", form = "N"}, {key = "unown", form = "O"}, {key = "unown", form = "P"}, {key = "unown", form = "Q"}, {key = "unown", form = "R"},
-     {key = "unown", form = "S"}, {key = "unown", form = "T"}, {key = "unown", form = "U"}, {key = "unown", form = "V"}, {key = "unown", form = "W"}, {key = "unown", form = "X"}, 
-     {key = "unown", form = "Y"}, {key = "unown", form = "Z"}, {key = "unown", form = "ZEx"}, {key = "unown", form = "ZQu"}
-    },
-    {"berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mystery"}
-}
-
 extended_family = {
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
@@ -195,6 +18,8 @@ native_evo_items = {
   "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
   "linkcable", "kingsrock", "dragonscale", "hardstone",
 }
+
+poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
 
 type_sticker_applied = function(card)
   if not card then return false end
@@ -232,8 +57,7 @@ find_pokemon_type = function(target_type, exclude_card)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
-      if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) 
-      and v ~= exclude_card then
+      if is_type(v, target_type) and v ~= exclude_card then
         table.insert(found, v)
       end
     end
@@ -242,11 +66,7 @@ find_pokemon_type = function(target_type, exclude_card)
 end
 
 is_type = function(card, target_type)
-  if get_type(card) == target_type or card.ability[string.lower(target_type).."_sticker"] then
-    return true
-  else
-    return false
-  end
+  return card and get_type(card) == target_type
 end
 
 get_type = function(card)
@@ -463,18 +283,6 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if energize_amount then
     energy_increase(card, 'Trans', energize_amount)
   end
-  
-  -- can be removed once this PR has been merged:
-  --    https://github.com/Steamodded/smods/pull/611
-  local to_fix = {}
-  for k,_ in pairs(G.GAME.used_jokers) do
-    if not next(SMODS.find_card(k, true)) then
-      table.insert(to_fix, k)
-    end
-  end
-  for _,k in pairs(to_fix) do
-    G.GAME.used_jokers[k] = nil
-  end
 end
 
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
@@ -670,14 +478,13 @@ get_highest_evo = function(card)
     local evos = HIGHEST_EVO_OVERRIDES[name]
     return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
   end
-  
+  -- if already at highest stage, return early
+  if POKE_STAGES[card.config.center.stage].next == nil then return end
+
   -- find the pokermon's family list
   local family = poke_get_family_list(name)
   -- if pokermon isn't in a family, return false
-  if #family < 2 then return false
-  -- if already at highest stage, return false
-  elseif POKE_STAGES[G.P_CENTERS[prefix..name].stage].next == nil then return false end
-
+  if #family < 2 then return false end
   -- Check for max evo in family list, ignoring megas and aux pokermon
   local max = #family
   local max_evo_name = (type(family[max]) == "table" and family[max].key) or family[max]
@@ -690,14 +497,19 @@ get_highest_evo = function(card)
   end
   max_stage = G.P_CENTERS[prefix..max_evo_name].stage
 
+  -- check if max stage is the same as card's, and check split evo weirdness
+  if max_stage ~= "Legendary" and card.config.center.stage == max_stage then return
+  elseif max_stage ~= "Legendary" and POKE_STAGES[card.config.center.stage].next == max_stage
+    and get_previous_evo_from_center(G.P_CENTERS[prefix..max_evo_name], true) ~= card.config.center_key then return
+  end
+
   -- find pokermon in family list with max stage
   local evos = {max_evo_name}
   for _, v in pairs(family) do
     local curr_name = (type(v) == "table" and v.key) or v
-    if G.P_CENTERS[prefix..curr_name].stage == max_stage
-      and not G.P_CENTERS[prefix..curr_name].stage == "Legendary"
-      and not G.P_CENTERS[prefix..curr_name].aux_poke
-      and curr_name ~= max_evo_name then
+    if G.P_CENTERS[prefix..curr_name].stage == max_stage and curr_name ~= max_evo_name
+      and G.P_CENTERS[prefix..curr_name].stage ~= "Legendary"
+      and G.P_CENTERS[prefix..curr_name].aux_poke ~= true then
         table.insert(evos, curr_name)
     end
   end
@@ -770,12 +582,12 @@ get_previous_evo_from_center = function(center, full_key)
   return full_key and "j_"..prefix.."_"..prev or prev
 end
 
-get_family_keys = function(cardname, custom_prefix, card)
+get_family_keys = function(card)
   local keys = {}
-  local line = poke_get_family_list(cardname)
-  local prefix = custom_prefix or 'poke'
-  local full_prefix = 'j_'..prefix..'_'
-  if card.config.center.poke_multi_item then full_prefix = 'c_'..prefix..'_' end
+  local center = card.config.center
+  local line = poke_get_family_list(center.name)
+  local prefix = center.poke_custom_prefix or 'poke'
+  local full_prefix = (center.poke_multi_item and 'c_' or 'j_')..prefix..'_'
   if #line > 1 then
     for i = 1, #line do
       if type(line[i]) == "table" then
@@ -787,10 +599,10 @@ get_family_keys = function(cardname, custom_prefix, card)
       end
     end
   else
-    table.insert(keys, full_prefix..cardname)
+    table.insert(keys, full_prefix..center.name)
   end
   for k, v in pairs(extended_family) do
-    if k == cardname then
+    if k == center.name then
       for _, y in pairs(v) do
         if type(y) == "table" then
           if y.item then
@@ -805,26 +617,26 @@ get_family_keys = function(cardname, custom_prefix, card)
       end
     end
   end
-  if cardname == "smeargle" then
+  if center.name == "smeargle" then
     if card.ability.extra.copy_joker then
       table.insert(keys, card.ability.extra.copy_joker.config.center_key)
     end
   end
-  if cardname == "ruins_of_alph" then
+  if center.name == "ruins_of_alph" then
     for _, v in pairs(card.ability.extra.forms) do
       local form = {key = "j_poke_unown", form = v}
       table.insert(keys, form)
     end
   end
-  local evo_item_keys = get_evo_item_keys(card, prefix)
+  local evo_item_keys = get_evo_item_keys(card)
   table.append(keys, evo_item_keys)
   return keys
 end
 
-get_evo_item_keys = function(card, prefix)
-  prefix = prefix or card.config.center.poke_custom_prefix
+get_evo_item_keys = function(card)
   local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
+    local prefix = card.config.center.poke_custom_prefix
     local item_key, evo_item_prefix
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
@@ -841,52 +653,9 @@ get_evo_item_keys = function(card, prefix)
   return keys
 end
 
-pokemon_in_pool = function (self)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then
-      return true
-  end
-  local name
-  if not self.name and self.ability.name then
-    name = self.ability.name
-  else
-    name = self.name or "bulbasaur"
-  end
-  if (name == "dreepy" or name == "drakloak" or name == "dragapult") and not G.P_CENTERS['j_poke_dreepy_dart'] then
-    return false
-  end
-  if name == "ruins_of_alph" and not G.P_CENTERS['j_poke_unown'] then
-    return false
-  end
-  local found_other
-  local in_family
-  for k, v in ipairs(pokermon.family) do
-    for l, p in ipairs(v) do
-      local cur_name = (type(p) == "table" and p.key) or p
-      if cur_name ~= name and next(find_joker(cur_name)) then
-        found_other = true 
-      elseif cur_name == name then
-        in_family = true
-      end
-    end
-    if in_family and found_other then
-      return false
-    end
-    found_other = false
-    in_family = false
-  end
-  if next(find_joker(name)) then
-    return false
-  else
-    if self.enhancement_gate and G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-          if v.config.center.key == self.enhancement_gate then
-              return true
-          end
-      end
-      return false
-    end
-    return true
-  end
+---@deprecated functionality is handled by generation code instead
+pokemon_in_pool = function()
+  return true
 end
 
 evo_item_use = function(self, card, area, copier)
@@ -1062,7 +831,6 @@ poke_set_type_badge = function(self, card, badges)
 end
 
 apply_type_sticker = function(card, sticker_type)
-  local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
   local apply_type = nil
   
   if sticker_type then
@@ -1103,37 +871,56 @@ apply_type_sticker = function(card, sticker_type)
     else
       local badge = G.P_CENTERS[card.config.center_key].set_badges
       SMODS.Joker:take_ownership(card.config.center_key, {
-        unlocked = true, 
+        unlocked = true,
         discovered = true,
         loc_vars = function(self, info_queue, center)
           type_tooltip(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end
-          poke_set_type_badge(self, card, badges)          
+          poke_set_type_badge(self, card, badges)
         end,
       }, true)
     end
   end
 end
 
-get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude_keys)
+get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
   local poke_keys = {}
-  local pokearea = area or G.jokers
   local poke_key
   exclude_keys = exclude_keys or {}
-  
+
   if pokerarity then
-    if string.lower(pokerarity) == "common" then pokerarity = 1 end
-    if string.lower(pokerarity) == "uncommon" then pokerarity = 2 end
-    if string.lower(pokerarity) == "rare" then pokerarity = 3 end
+    local rarities = { common = 1, uncommon = 2, rare = 3, legendary = 4 }
+    if type(pokerarity) == 'table' then
+      for k, v in ipairs(pokerarity) do
+        pokerarity[k] = type(v) == 'string' and rarities[v:lower()] or v
+      end
+    elseif type(pokerarity) == 'string' then
+      pokerarity = rarities[pokerarity:lower()] or pokerarity
+    end
   end
-    
+
+  local valid_stages = poke_convert_to_set(stage)
+  local valid_rarities = poke_convert_to_set(pokerarity)
+
   for k, v in pairs(G.P_CENTERS) do
-    if v.stage and v.stage ~= "Other" and not (stage and v.stage ~= stage) and not (pokerarity and v.rarity ~= pokerarity) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and v:in_pool() and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
+    if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
+       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
-      table.insert(poke_keys, v.key)
+
+      if v.enhancement_gate then
+        if G.playing_cards then
+          for kk, vv in pairs(G.playing_cards) do
+            if SMODS.has_enhancement(vv, v.enhancement_gate) then
+              table.insert(poke_keys, v.key)
+              break
+            end
+          end
+        end
+      else
+        table.insert(poke_keys, v.key)
+      end
     end
   end
   
@@ -1144,6 +931,15 @@ get_random_poke_key = function(pseed, stage, pokerarity, area, poketype, exclude
   end
 
   return poke_key
+end
+
+get_random_poke_key_options = function(options)
+  local pseed = options.seed or options.pseed or options.key_append
+  local stage = options.stage or options.pokestage
+  local pokerarity = options.rarity or options.pokerarity
+  local poketype = options.type or options.poketype
+  local exclude_keys = options.exclude_keys
+  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys)
 end
 
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
@@ -1229,7 +1025,7 @@ get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   end
   if use_deck then
     for k, v in ipairs(G.playing_cards) do
-      if not SMODS.has_no_suit(v) then
+      if not SMODS.has_no_suit(v) and not SMODS.has_any_suit(v) then
         for x, y in pairs(allowed_suits) do
           if (y.key and v:is_suit(y.key)) or v:is_suit(y) then
             valid_cards[#valid_cards+1] = v
@@ -1413,29 +1209,6 @@ fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars,
   end
 end
 
-poke_get_family_list = function(name)
-  for _, v in ipairs(pokermon.family) do
-    for _, y in ipairs(v) do
-      if ((type(y) == "table" and y.key) or y) == name then
-        return v
-      end
-    end
-  end
-  return {}
-end
-
-poke_family_present = function(center)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
-  local family_list = poke_get_family_list(center.name)
-  for _, fam in pairs(family_list) do
-    if G.GAME.used_jokers["j_poke_"..((type(fam) == "table" and fam.key) or fam)] then
-      return true
-    end
-  end
-  return false
-end
-
-
 -- code copied from function G.FUNCS.draw_from_deck_to_hand(e)
 poke_draw_one = function()
   SMODS.drawn_cards = SMODS.drawn_cards or {}
@@ -1548,18 +1321,18 @@ poke_change_poli_suit = function()
   end
 end
 
-reset_bulba_rank = function()
-  G.GAME.current_round.bulb1card = {rank = 'Ace'}
-  local valid_bulb_cards = {}
+poke_reset_rank = function(name)
+  G.GAME.current_round[name] = {rank = 'Ace'}
+  local valid_cards = {}
   for k, v in ipairs(G.playing_cards) do
-    if v.ability.effect ~= 'Stone Card' and not SMODS.has_no_rank(v) then
-      valid_bulb_cards[#valid_bulb_cards+1] = v
+    if not SMODS.has_no_rank(v) then
+      valid_cards[#valid_cards+1] = v
     end
   end
-  if valid_bulb_cards[1] then
-    local bulb_card = pseudorandom_element(valid_bulb_cards, pseudoseed('bulb'..G.GAME.round_resets.ante))
-    G.GAME.current_round.bulb1card.rank = bulb_card.base.value
-    G.GAME.current_round.bulb1card.id = bulb_card.base.id
+  if valid_cards[1] then
+    local card = pseudorandom_element(valid_cards, pseudoseed(name..G.GAME.round_resets.ante))
+    G.GAME.current_round[name].rank = card.base.value
+    G.GAME.current_round[name].id = card.base.id
   end
 end
 
@@ -1589,21 +1362,6 @@ reset_gligar_suit = function()
   end
   local gligar_card = pseudorandom_element(gligar_suits, pseudoseed('gligar'..G.GAME.round_resets.ante))
   G.GAME.current_round.gligar_suit = gligar_card
-end
-
-reset_sneasel_rank = function()
-  G.GAME.current_round.sneaselcard = {rank = 'Ace'}
-  local valid_sneasel_cards = {}
-  for k, v in ipairs(G.playing_cards) do
-    if v.ability.effect ~= 'Stone Card' then
-      valid_sneasel_cards[#valid_sneasel_cards+1] = v
-    end
-  end
-  if valid_sneasel_cards[1] then
-    local sneasel_card = pseudorandom_element(valid_sneasel_cards, pseudoseed('sneasel'..G.GAME.round_resets.ante))
-    G.GAME.current_round.sneaselcard.rank = sneasel_card.base.value
-    G.GAME.current_round.sneaselcard.id = sneasel_card.base.id
-  end
 end
 
 poke_create_treasure = function(card, seed, megastone)
@@ -1678,163 +1436,8 @@ get_ancient_amount = function(hand, id, append_to_card)
   return count
 end
 
---[[ Putting this here for later use
-{C:inactive,s:0.8}(Copy effect ends if copied Joker removed){}
--- Zorua 570
-local zorua = {
-  name = "zorua", 
-  pos = { x = 6, y = 5 },
-  soul_pos = { x = 8, y = 12 },
-  config = {extra = {hidden_key = nil, rounds = 5, copy_joker = nil, copy_pos = 0}},
-  rarity = 3,
-  cost = 8,
-  stage = "Basic",
-  ptype = "Dark",
-  atlas = "Pokedex5",
-  blueprint_compat = true,
-  rental_compat = false,
-  calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.once = true
-    end
-    if context.setting_blind and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
-      card.ability.extra.copy_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.extra.copy_pos = #G.jokers.cards
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-    end
-
-    local other_joker = G.jokers.cards[card.ability.extra.copy_pos]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-      local other_joker_ret = other_joker:calculate_joker(context)
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
-    end
-    return level_evo(self, card, context, "j_poke_zoroark")
-  end,
-  set_card_type_badge = function(self, card, badges)
-    local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
-    local card_type_colour = get_type_colour(card.config.center or card.config, card)
-    if card.area and card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card_type = SMODS.Rarity:get_rarity_badge(_o.rarity)
-      card_type_colour = get_type_colour(_o, card)
-    end
-    badges[#badges + 1] = create_badge(card_type, card_type_colour, nil, 1.2)
-  end,
-  set_sprites = function(self, card, front)
-    if card.ability and card.ability.extra and card.ability.extra.hidden_key then
-      self:set_ability(card)
-    end
-  end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if not type_sticker_applied(card) then
-      apply_type_sticker(card, "Dark")
-    end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-    else
-      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-      card.children.center:set_sprite_pos(self.pos)
-    end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or card
-    card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-    local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local temp_ability = card.ability
-      card.ability = _o.config
-      _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
-      card.ability = temp_ability
-      local textDyna = full_UI_table.name[1].nodes[1].config.object
-      textDyna.string = textDyna.string .. localize("poke_illusion")
-      textDyna.config.string = {textDyna.string}
-      textDyna.strings = {}
-      textDyna:update_text(true)
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-      local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
-      for i = #info_queue, 1, -1 do
-        if info_queue[i].set == "Other" and info_queue[i].key and poketype_list[info_queue[i].key] then
-          table.remove(info_queue, i)
-        end
-      end
-    else
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-      end
-      card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-      card.ability.blueprint_compat_check = nil
-      local main_end = (card.area and card.area == G.jokers) and {
-        {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-          {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-            {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-          }}
-        }}
-      } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
-      desc_nodes[#desc_nodes+1] = main_end
-    end
-  end,
-  load = function(self, card, card_table, other_card)
-    card.has_loaded = true
-  end,
-  update = function(self, card, dt)
-    if card.has_loaded then
-      card.ability.extra.copy_joker = G.jokers.cards[card.ability.extra.copy_pos]
-      card.has_loaded = false
-    end
-    if card.ability.extra.copy_joker and card.ability.extra.copy_joker ~= G.jokers.cards[card.ability.extra.copy_pos] then
-      local found = nil
-      for i=1, #G.jokers.cards do
-        if card.ability.extra.copy_joker == G.jokers.cards[i] then
-          card.ability.extra.copy_pos = i
-          found = true
-          break
-        end
-      end
-      if not found then
-        card.ability.extra.copy_joker = nil
-        card.ability.extra.copy_pos = 0
-      end
-    end
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local other_joker = G.jokers.cards[card.ability.extra.copy_pos]
-      local copy_compatible = other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat
-      local right_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff and right_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if copy_compatible and not card.debuff then
-        card.children.center.atlas = other_joker.children.center.atlas
-        card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-        if other_joker.children.floating_sprite then
-          card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
-          card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
-        else
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-          card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-        end
-      else
-        card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-      end
-    elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
-      self:set_ability(card)
-    end
-  end,
-}
-]]--
+poke_can_save_consumable = function(card)
+  return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket"))
+      or (G.GAME.poke_save_all and not (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Wish")))
+      or (card.config.center.saveable)
+end

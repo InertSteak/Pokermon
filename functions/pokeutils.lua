@@ -410,6 +410,9 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
   for i = 1, #cards do
     if t.mod_conv then
       poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
+      if t.mod_conv == 'm_poke_seed' then
+        cards[i]:set_sprites(cards[i].config.center)
+      end
     end
     if t.edition then
       poke_conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)
@@ -495,26 +498,10 @@ tdmsg = function(tablename)
   end
 end
 
-local prev_evaluate_round = G.FUNCS.evaluate_round
-G.FUNCS.evaluate_round = function()
-  G.E_MANAGER:add_event(Event({
-    trigger = 'immediate',
-    func = function()
-      for i = #G.deck.cards, 1, -1 do
-        local card = G.deck.cards[i]
-        if SMODS.has_enhancement(card, "m_poke_hazard") then
-          card:set_ability(G.P_CENTERS.c_base, nil, true)
-        end
-      end
-      return true
-    end
-  }))
-  prev_evaluate_round()
-end
-
-poke_add_hazards = function(ratio, flat)
+poke_add_hazards = function(ratio, flat, area)
   local hazards = {}
   flat = flat or 0
+  area = area or G.deck
   local count = #G.playing_cards
   for _, v in pairs(G.playing_cards) do
     if SMODS.has_enhancement(v, "m_poke_hazard") then
@@ -524,8 +511,8 @@ poke_add_hazards = function(ratio, flat)
   local to_add = ratio and math.floor(count / ratio) or flat
   for i = 1, to_add do
     hazards[#hazards+1] = create_playing_card({
-      front = pseudorandom_element(G.P_CARDS, pseudoseed('qwilfish')), 
-      center = G.P_CENTERS.m_poke_hazard}, G.deck, nil, nil, {G.C.PURPLE
+      front = pseudorandom_element(G.P_CARDS, pseudoseed('hazards')), 
+      center = G.P_CENTERS.m_poke_hazard}, area, nil, nil, {G.C.PURPLE
     })
     SMODS.recalc_debuff(hazards[#hazards])
   end
@@ -545,6 +532,24 @@ poke_set_hazards = function(amount)
       card:set_ability(G.P_CENTERS.m_poke_hazard)
     end
   end
+end
+
+poke_change_hazard_max = function(mod)
+  G.GAME.hazard_max = G.GAME.hazard_max or 3
+  G.GAME.hazard_max = G.GAME.hazard_max + mod
+end
+
+poke_change_hazard_level = function(mod)
+  local max = G.GAME.hazard_max or 3
+  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level or 0
+  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level + mod
+end
+
+poke_get_hazard_level_vars = function()
+  local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level or 0)
+  local max = G.GAME.hazard_max or 3
+  local vars = {level, max}
+  return vars
 end
 
 function poke_same_suit(hand)
@@ -604,7 +609,7 @@ function poke_suit_check(hand, num)
   
   for k, v in pairs(hand) do
     for x, y in pairs(SMODS.Suits) do
-      if not SMODS.has_any_suit(v) and v:is_suit(y.key) and not suits[y.key] then
+      if not SMODS.has_any_suit(v) and v:is_suit(y.key, true) and not suits[y.key] then
         suits[y.key] = true
         suit_count = suit_count + 1
         break
@@ -625,12 +630,66 @@ function poke_suit_check(hand, num)
   return suit_count >= num
 end
 
+-- Elemental Monkeys Hooks (and Probopass teehee)
+local four_fingers_ref = SMODS.four_fingers
+function SMODS.four_fingers(hand_type)
+  if next(SMODS.find_card('j_poke_pansear')) or next(SMODS.find_card('j_poke_simisear')) then
+    return 4
+  end
+  return four_fingers_ref(hand_type)
+end
+
+local shortcut_ref = SMODS.shortcut
+function SMODS.shortcut()
+  if next(SMODS.find_card('j_poke_pansage')) or next(SMODS.find_card('j_poke_simisage')) then
+    return true
+  end
+  return shortcut_ref()
+end
+
+local is_face_ref = Card.is_face
+function Card:is_face(from_boss)
+  if self.debuff and not from_boss then return end
+  if not self:get_id() then return end
+
+  if next(SMODS.find_card('j_poke_panpour')) or next(SMODS.find_card('j_poke_simipour')) then return true end
+  if next(SMODS.find_card('j_poke_probopass')) and self.ability.name == 'Stone Card' then return true end
+
+  return is_face_ref(self, from_boss)
+end
+
+-- Smeared Check Hook
+local smeared_ref = SMODS.smeared_check
+function SMODS.smeared_check(card, suit)
+  if next(SMODS.find_card('j_poke_smeargle')) then
+    if (card.base.suit == 'Hearts' or card.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
+      return true
+    elseif (card.base.suit == 'Spades' or card.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
+      return true
+    end
+  end
+  return smeared_ref(card, suit)
+end
+
+-- Ambipom Straight Hand-Part Override
+SMODS.PokerHandPart:take_ownership('_straight',
+  {
+    func = function(hand)
+      local min
+      if (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SMODS.find_card('j_poke_ambipom')))) then min = 3 end
+      return get_straight(hand, min or SMODS.four_fingers('straight'), SMODS.shortcut(), SMODS.wrap_around_straight())
+    end
+  },
+  true
+)
+-- Ambipom Flush Check done via lovely patch for the sake of efficiency
+
 set_joker_family_win = function(card)
-  local keys = get_family_keys(card.config.center.name, card.config.center.poke_custom_prefix, card)
+  local keys = get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
-    if G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker
-        or card.config.center.aux_poke and card.config.center.stage == G.P_CENTERS[v].stage then
+    if (G.P_CENTERS[v] and G.P_CENTERS[v].set == 'Joker' and G.P_CENTERS[v].auto_sticker)
+        or (card.config.center.aux_poke and (G.P_CENTERS[v] and card.config.center.stage == G.P_CENTERS[v].stage)) then
       -- This is the bit that tracks joker wins
       G.PROFILES[G.SETTINGS.profile].joker_usage[v] = G.PROFILES[G.SETTINGS.profile].joker_usage[v]
           or {count = 1, order = G.P_CENTERS[v]['order'], wins = {}, losses = {}, wins_by_key = {}, losses_by_key = {}}
@@ -676,5 +735,31 @@ end
 table.append = function(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
+  end
+end
+
+pokermon.find_pool_index = function(pool, name)
+  for k, v in pairs(pool) do
+    if v.name == name then return k end
+  end
+end
+
+pokermon.get_dex_number = function(name)
+  return pokermon.dex_numbers[name] or 1026
+end
+
+--- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
+poke_convert_to_set = function(element_or_list)
+  if element_or_list then
+    local set
+    if type(element_or_list) == 'table' then
+      for _, v in ipairs(element_or_list) do
+        set = set or {}
+        set[v] = true
+      end
+    else
+      set = { [element_or_list] = true }
+    end
+    return set
   end
 end

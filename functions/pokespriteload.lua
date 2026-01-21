@@ -152,7 +152,7 @@ PokemonSprites = {
     AtlasJokersSeriesA = {artist = 'Maelmc', anim_atlas = "AtlasJokersSeriesAVoltorb"},
     AtlasJokersSeriesB = {artist = 'MyDude_YT'}
 }},
-{name = "hisuian_voltorb", base = {pos = {x = 2, y = 6}},gen_atlas = 1},
+{name = "hisuian_voltorb", base = {pos = {x = 2, y = 6}},gen_atlas = 1, alts = {AtlasJokersSeriesA = {artist = 'PigeonPie'}}},
 {name = "electrode", base = {pos = {x = 20, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc',anim_atlas = "AtlasJokersSeriesAElectrode"}}},
 {name = "hisuian_electrode", base = {pos = {x = 4, y = 6}},gen_atlas = 1},
 {name = "exeggcute", base = {pos = {x = 22, y = 6}},},
@@ -287,7 +287,7 @@ PokemonSprites = {
 {name = "slowking", base = {pos = {x = 6, y = 13}},},
 {name = "galarian_slowking", base = {pos = {x = 6, y = 4}},gen_atlas = 2},
 {name = "misdreavus", base = {pos = {x = 8, y = 13}},},
-{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, alts = {AtlasJokersSeriesA = {artist = {{name = 'Catzzadilla', layer = 'center'}, {name = 'LocalThunk', layer = 'center'}},}},gen_atlas = 2},
+{name = "unown", base = {pos = {x = 0, y = 0}, soul_pos = {x = 1, y = 0}}, alts = {AtlasJokersSeriesA = {artist = {name = 'Catzzadilla', layer = 'center'}, {name = 'LocalThunk', layer = 'center'}}},gen_atlas = 2},
 {name = "wobbuffet", base = {pos = {x = 12, y = 13}},},
 {name = "girafarig", base = {pos = {x = 14, y = 13}},},
 {name = "pineco", base = {pos = {x = 16, y = 13}},},
@@ -482,7 +482,7 @@ PokemonSprites = {
 {name = "huntail", base = {pos = {x = 12, y = 24}},},
 {name = "gorebyss", base = {pos = {x = 14, y = 24}},},
 {name = "relicanth", base = {pos = {x = 16, y = 24}},},
-{name = "luvdisc", base = {pos = {x = 18, y = 24}},},
+{name = "luvdisc", base = {pos = {x = 18, y = 24}}, alts = {AtlasJokersSeriesA = {artist = 'Emma'}}},
 {name = "bagon", base = {pos = {x = 20, y = 24}},},
 {name = "shelgon", base = {pos = {x = 22, y = 24}},},
 {name = "salamence", base = {pos = {x = 24, y = 24}},},
@@ -539,8 +539,8 @@ PokemonSprites = {
 {name = "rampardos", base = {pos = {x = 6, y = 27}},},
 {name = "shieldon", base = {pos = {x = 8, y = 27}},},
 {name = "bastiodon", base = {pos = {x = 10, y = 27}},},
-{name = "burmy", base = {pos = {x = 12, y = 27}},},
-{name = "wormadam", base = {pos = {x = 14, y = 27}},},
+{name = "burmy", base = {pos = {x = 0, y = 0}},gen_atlas = 4},
+{name = "wormadam", base = {pos = {x = 6, y = 0}},gen_atlas = 4},
 {name = "mothim", base = {pos = {x = 16, y = 27}},},
 {name = "combee", base = {pos = {x = 18, y = 27}},},
 {name = "vespiquen", base = {pos = {x = 20, y = 27}},},
@@ -548,9 +548,9 @@ PokemonSprites = {
 {name = "buizel", base = {pos = {x = 24, y = 27}},},
 {name = "floatzel", base = {pos = {x = 26, y = 27}},},
 {name = "cherubi", base = {pos = {x = 28, y = 27}},},
-{name = "cherrim", base = {pos = {x = 0, y = 28}},},
-{name = "shellos", base = {pos = {x = 2, y = 28}},},
-{name = "gastrodon", base = {pos = {x = 4, y = 28}},},
+{name = "cherrim", base = {pos = {x = 0, y = 1}},gen_atlas = 4},
+{name = "shellos", base = {pos = {{x = 4, y = 1}, {x = 6, y = 1}}},gen_atlas = 4},
+{name = "gastrodon", base = {pos = {{x = 8, y = 1}, {x = 10, y = 1}}},gen_atlas = 4},
 {name = "ambipom", base = {pos = {x = 6, y = 28}},},
 {name = "drifloon", base = {pos = {x = 8, y = 28}},},
 {name = "drifblim", base = {pos = {x = 10, y = 28}},},
@@ -570,7 +570,7 @@ PokemonSprites = {
 {name = "mimejr", base = {pos = {x = 6, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
 {name = "happiny", base = {pos = {x = 8, y = 29}},},
 {name = "chatot", base = {pos = {x = 10, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
-{name = "spiritomb", base = {pos = {x = 12, y = 29}},},
+{name = "spiritomb", base = {pos = {x = 12, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'Maelmc', soul_pos = {x = 13, y = 29}}}},
 {name = "gible", base = {pos = {x = 14, y = 29}},},
 {name = "gabite", base = {pos = {x = 16, y = 29}},},
 {name = "garchomp", base = {pos = {x = 18, y = 29}},},
@@ -583,7 +583,7 @@ PokemonSprites = {
 {name = "hippowdon", base = {pos = {x = 28, y = 29}},},
 {name = "skorupi", base = {pos = {x = 0, y = 30}},},
 {name = "drapion", base = {pos = {x = 2, y = 30}},},
-{name = "croagunk", base = {pos = {x = 4, y = 30}},},
+{name = "croagunk", base = {pos = {x = 4, y = 30}}, alts = {AtlasJokersSeriesA = {artist = 'Sonfive'}}},
 {name = "toxicroak", base = {pos = {x = 6, y = 30}},},
 {name = "carnivine", base = {pos = {x = 8, y = 30}},},
 {name = "finneon", base = {pos = {x = 10, y = 30}},},
@@ -663,7 +663,7 @@ PokemonSprites = {
 {name = "musharna", base = {pos = {x = 14, y = 34}},},
 {name = "pidove", base = {pos = {x = 16, y = 34}},},
 {name = "tranquill", base = {pos = {x = 18, y = 34}},},
-{name = "unfezant", base = {pos = {x = 20, y = 34}},},
+{name = "unfezant", base = {pos = {{x = 0, y = 0}, {x = 2, y = 0}}},gen_atlas = 5},
 {name = "blitzle", base = {pos = {x = 22, y = 34}},},
 {name = "zebstrika", base = {pos = {x = 24, y = 34}},},
 {name = "roggenrola", base = {pos = {x = 26, y = 34}}, alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
@@ -694,7 +694,7 @@ PokemonSprites = {
 {name = "petilil", base = {pos = {x = 14, y = 36}},},
 {name = "lilligant", base = {pos = {x = 16, y = 36}},},
 {name = "hisuian_lilligant", base = {pos = {x = 10, y = 8}},gen_atlas = 5},
-{name = "basculin", base = {pos = {x = 18, y = 36}},},
+{name = "basculin", base = {pos = {x = 4, y = 0}},gen_atlas = 5},
 {name = "sandile", base = {pos = {x = 20, y = 36}},},
 {name = "krokorok", base = {pos = {x = 22, y = 36}},},
 {name = "krookodile", base = {pos = {x = 24, y = 36}},},
@@ -735,8 +735,8 @@ PokemonSprites = {
 {name = "vanillite", base = {pos = {x = 22, y = 38}},},
 {name = "vanillish", base = {pos = {x = 24, y = 38}},},
 {name = "vanilluxe", base = {pos = {x = 26, y = 38}},},
-{name = "deerling", base = {pos = {x = 28, y = 38}},},
-{name = "sawsbuck", base = {pos = {x = 0, y = 39}},},
+{name = "deerling", base = {pos = {x = 2, y = 1}},gen_atlas = 5},
+{name = "sawsbuck", base = {pos = {x = 10, y = 1}},gen_atlas = 5},
 {name = "emolga", base = {pos = {x = 2, y = 39}},},
 {name = "karrablast", base = {pos = {x = 4, y = 39}},},
 {name = "escavalier", base = {pos = {x = 6, y = 39}},},
@@ -825,23 +825,43 @@ PokemonSprites = {
 {name = "talonflame", base = {pos = {x = 4, y = 44}}, alts = {AtlasJokersSeriesA = {artist = 'Alber_Pro'}}},
 {name = "scatterbug", base = {pos = {x = 6, y = 44}},},
 {name = "spewpa", base = {pos = {x = 8, y = 44}},},
-{name = "vivillon", base = {pos = {x = 10, y = 44}},},
+{name = "vivillon", base = {pos = {
+  {x = 2, y = 0},
+  {x = 4, y = 0},
+  {x = 6, y = 0},
+  {x = 8, y = 0},
+  {x = 10, y = 0},
+  {x = 0, y = 1},
+  {x = 2, y = 1},
+  {x = 4, y = 1},
+  {x = 6, y = 1},
+  {x = 8, y = 1},
+  {x = 10, y = 1},
+  {x = 0, y = 2},
+  {x = 2, y = 2},
+  {x = 4, y = 2},
+  {x = 6, y = 2},
+  {x = 8, y = 2},
+  {x = 10, y = 2},
+  {x = 0, y = 3},
+  {x = 2, y = 3},
+  {x = 4, y = 3}}},gen_atlas = 6},
 {name = "litleo", base = {pos = {x = 12, y = 44}},alts = {AtlasJokersSeriesA = {artist = 'Xenellia'}}},
-{name = "pyroar", base = {pos = {{x = 4, y = 3}, {x= 6, y = 3}}}, gen_atlas = 6,},
-{name = "flabebe", base = {pos = {{x = 8, y = 3}, {x = 10, y = 3}, {x = 0, y = 4}, {x = 2, y = 4}, {x = 4, y = 4}}},gen_atlas = 6},
-{name = "floette", base = {pos = {{x = 6, y = 4}, {x = 8, y = 4}, {x = 10, y = 4}, {x = 0, y = 5}, {x = 2, y = 5}}},gen_atlas = 6},
-{name = "floette_eternal", base = {pos = {x = 4, y = 5}},gen_atlas = 6},
-{name = "florges", base = {pos = {{x = 6, y = 5}, {x = 8, y = 5}, {x = 10, y = 5}, {x = 0, y = 5}, {x = 2, y = 5}}},gen_atlas = 6},
+{name = "pyroar", base = {pos = {{x = 6, y = 3}, {x= 8, y = 3}}}, gen_atlas = 6,},
+{name = "flabebe", base = {pos = {{x = 10, y = 3}, {x = 0, y = 4}, {x = 2, y = 4}, {x = 4, y = 4}, {x = 6, y = 4}}},gen_atlas = 6},
+{name = "floette", base = {pos = {{x = 8, y = 4}, {x = 10, y = 4}, {x = 0, y = 5}, {x = 2, y = 5}, {x = 4, y = 5}}},gen_atlas = 6},
+{name = "floette_eternal", base = {pos = {x = 6, y = 5}},gen_atlas = 6},
+{name = "florges", base = {pos = {{x = 8, y = 5}, {x = 10, y = 5}, {x = 0, y = 6}, {x = 2, y = 6}, {x = 4, y = 6}}},gen_atlas = 6},
 {name = "skiddo", base = {pos = {x = 22, y = 44}},},
 {name = "gogoat", base = {pos = {x = 24, y = 44}},},
 {name = "pancham", base = {pos = {x = 26, y = 44}},},
 {name = "pangoro", base = {pos = {x = 28, y = 44}},},
-{name = "furfrou", base = {pos = {x = 0, y = 45}},},
+{name = "furfrou", base = {pos = {x = 6, y = 6}},gen_atlas = 6},
 {name = "espurr", base = {pos = {x = 2, y = 45}},},
-{name = "meowstic", base = {pos = {x = 4, y = 45}},},
+{name = "meowstic", base = {pos = {x = 2, y = 8}},gen_atlas = 6},
 {name = "honedge", base = {pos = {x = 6, y = 45}},},
 {name = "doublade", base = {pos = {x = 8, y = 45}},},
-{name = "aegislash", base = {pos = {x = 10, y = 45}},},
+{name = "aegislash", base = {pos = {x = 6, y = 8}},gen_atlas = 6},
 {name = "spritzee", base = {pos = {x = 12, y = 45}},},
 {name = "aromatisse", base = {pos = {x = 14, y = 45}},},
 {name = "swirlix", base = {pos = {x = 16, y = 45}},},
@@ -866,30 +886,30 @@ PokemonSprites = {
 {name = "carbink", base = {pos = {x = 24, y = 46}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "goomy", base = {pos = {x = 26, y = 46}},},
 {name = "sliggoo", base = {pos = {x = 28, y = 46}},},
-{name = "hisuian_sliggoo", base = {pos = {x = 0, y = 12}},gen_atlas = 6},
+{name = "hisuian_sliggoo", base = {pos = {x = 2, y = 12}},gen_atlas = 6},
 {name = "goodra", base = {pos = {x = 0, y = 47}},},
-{name = "hisuian_goodra", base = {pos = {x = 2, y = 12}},gen_atlas = 6},
+{name = "hisuian_goodra", base = {pos = {x = 4, y = 12}},gen_atlas = 6},
 {name = "klefki", base = {pos = {x = 2, y = 47}},},
 {name = "phantump", base = {pos = {x = 4, y = 47}},},
 {name = "trevenant", base = {pos = {x = 6, y = 47}},},
-{name = "pumpkaboo", base = {pos = {x = 0, y = 9}},gen_atlas = 6},
-{name = "gourgeist", base = {pos = {x = 8, y = 9}},gen_atlas = 6},
+{name = "pumpkaboo", base = {pos = {x = 2, y = 9}},gen_atlas = 6},
+{name = "gourgeist", base = {pos = {x = 10, y = 9}},gen_atlas = 6},
 {name = "bergmite", base = {pos = {x = 12, y = 47}},},
 {name = "avalugg", base = {pos = {x = 14, y = 47}},},
-{name = "hisuian_avalugg", base = {pos = {x = 4, y = 12}},gen_atlas = 6},
+{name = "hisuian_avalugg", base = {pos = {x = 6, y = 12}},gen_atlas = 6},
 {name = "noibat", base = {pos = {x = 16, y = 47}},},
 {name = "noivern", base = {pos = {x = 18, y = 47}},},
-{name = "xerneas", base = {pos = {x = 6, y = 10}, soul_pos = {x = 7, y = 10}},gen_atlas = 6},
+{name = "xerneas", base = {pos = {x = 8, y = 10}, soul_pos = {x = 9, y = 10}},gen_atlas = 6},
 {name = "yveltal", base = {pos = {x = 22, y = 47}, soul_pos = {x = 23, y = 47}},},
-{name = "zygarde", base = {pos = {x = 2, y = 11}, soul_pos = {x = 3, y = 11}},gen_atlas = 6},
-{name = "zygarde_10", base = {pos = {x = 0, y = 11}, soul_pos = {x = 1, y = 11}},gen_atlas = 6},
-{name = "zygarde_complete", base = {pos = {x = 4, y = 11}, soul_pos = {x = 5, y = 11}},gen_atlas = 6},
+{name = "zygarde", base = {pos = {x = 4, y = 11}, soul_pos = {x = 5, y = 11}},gen_atlas = 6},
+{name = "zygarde_10", base = {pos = {x = 2, y = 11}, soul_pos = {x = 3, y = 11}},gen_atlas = 6},
+{name = "zygarde_complete", base = {pos = {x = 6, y = 11}, soul_pos = {x = 7, y = 11}},gen_atlas = 6},
 {name = "diancie", base = {pos = {x = 26, y = 47}, soul_pos = {x = 27, y = 47}},},
-{name = "mega_diancie", base = {pos = {x = 10, y = 11}, soul_pos = {x = 11, y = 11}},gen_atlas = 6},
-{name = "hoopa", base = {pos = {x = 6, y = 11}, soul_pos = {x = 7, y = 11}},gen_atlas = 6},
-{name = "hoopa_unbound", base = {pos = {x = 8, y = 11}, soul_pos = {x = 9, y = 11}},gen_atlas = 6},
+{name = "mega_diancie", base = {pos = {x = 0, y = 12}, soul_pos = {x = 1, y = 12}},gen_atlas = 6},
+{name = "hoopa", base = {pos = {x = 8, y = 11}, soul_pos = {x = 9, y = 11}},gen_atlas = 6},
+{name = "hoopa_unbound", base = {pos = {x = 10, y = 11}, soul_pos = {x = 11, y = 11}},gen_atlas = 6},
 {name = "volcanion", base = {pos = {x = 0, y = 48}, soul_pos = {x = 1, y = 48}},},
-{name = "rowlet", base = {pos = {x = 2, y = 48}},},
+{name = "rowlet", base = {pos = {x = 2, y = 48}},alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "dartrix", base = {pos = {x = 4, y = 48}},},
 {name = "decidueye", base = {pos = {x = 6, y = 48}},},
 {name = "hisuian_decidueye", base = {pos = {x = 6, y = 5}},gen_atlas = 7},
@@ -909,14 +929,14 @@ PokemonSprites = {
 {name = "vikavolt", base = {pos = {x = 4, y = 49}},},
 {name = "crabrawler", base = {pos = {x = 6, y = 49}},},
 {name = "crabominable", base = {pos = {x = 8, y = 49}},},
-{name = "oricorio", base = {pos = {x = 10, y = 49}},},
+{name = "oricorio", base = {pos = {x = 0, y = 0}},gen_atlas = 7},
 {name = "cutiefly", base = {pos = {x = 12, y = 49}},},
 {name = "ribombee", base = {pos = {x = 14, y = 49}},},
 {name = "rockruff", base = {pos = {x = 16, y = 49}},},
 {name = "lycanroc_day", base = {pos = {x = 8, y = 0}},gen_atlas = 7},
 {name = "lycanroc_night", base = {pos = {x = 10, y = 0}},gen_atlas = 7},
 {name = "lycanroc_dusk", base = {pos = {x = 0, y = 1}},gen_atlas = 7},
-{name = "wishiwashi", base = {pos = {x = 20, y = 49}},},
+{name = "wishiwashi", base = {pos = {x = 2, y = 1}},gen_atlas = 7},
 {name = "mareanie", base = {pos = {x = 22, y = 49}},},
 {name = "toxapex", base = {pos = {x = 24, y = 49}},},
 {name = "mudbray", base = {pos = {x = 26, y = 49}},},
@@ -944,7 +964,7 @@ PokemonSprites = {
 {name = "pyukumuku", base = {pos = {x = 10, y = 51}}, alts = {AtlasJokersSeriesA = {artist = 'Gappie'}}},
 {name = "typenull", base = {pos = {x = 12, y = 51}, soul_pos =  {x = 13, y = 51}},},
 {name = "silvally", base = {pos = {x = 6, y = 1}, soul_pos =  {x = 7, y = 1}},gen_atlas = 7},
-{name = "minior", base = {pos = {x = 16, y = 51}, soul_pos =  {x = 17, y = 51}},},
+{name = "minior", base = {pos = {x = 6, y = 3}, soul_pos =  {x = 7, y = 3}},gen_atlas = 7},
 {name = "komala", base = {pos = {x = 18, y = 51}},},
 {name = "turtonator", base = {pos = {x = 20, y = 51}},},
 {name = "togedemaru", base = {pos = {x = 22, y = 51}},},
@@ -1033,7 +1053,7 @@ PokemonSprites = {
 {name = "arrokuda", base = {pos = {x = 10, y = 56}},},
 {name = "barraskewda", base = {pos = {x = 12, y = 56}},},
 {name = "toxel", base = {pos = {x = 14, y = 56}},},
-{name = "toxtricity", base = {pos = {x = 16, y = 56}},},
+{name = "toxtricity", base = {pos = {x = 6, y = 0}},gen_atlas = 8},
 {name = "gmax_toxtricity", base = {pos = {x = 14, y = 12}, soul_pos = {x = 15, y = 12}},gen_atlas = 8},
 {name = "sizzlipede", base = {pos = {x = 18, y = 56}},},
 {name = "centiskorch", base = {pos = {x = 20, y = 56}},},
@@ -1057,16 +1077,16 @@ PokemonSprites = {
 {name = "mrrime", base = {pos = {x = 20, y = 57}},},
 {name = "runerigus", base = {pos = {x = 22, y = 57}},},
 {name = "milcery", base = {pos = {x = 24, y = 57}},},
-{name = "alcremie", base = {pos = {x = 26, y = 57}},},
+{name = "alcremie", base = {pos = {x = 10, y = 0}},gen_atlas = 8},
 {name = "gmax_alcremie", base = {pos = {x = 6, y = 13}, soul_pos = {x = 7, y = 13}},gen_atlas = 8},
 {name = "falinks", base = {pos = {x = 28, y = 57}},},
 {name = "pincurchin", base = {pos = {x = 0, y = 58}},},
 {name = "snom", base = {pos = {x = 2, y = 58}},},
 {name = "frosmoth", base = {pos = {x = 4, y = 58}},},
 {name = "stonjourner", base = {pos = {x = 6, y = 58}},},
-{name = "eiscue", base = {pos = {x = 8, y = 58}},},
-{name = "indeedee", base = {pos = {x = 10, y = 58}},},
-{name = "morpeko", base = {pos = {x = 12, y = 58}},},
+{name = "eiscue", base = {pos = {x = 8, y = 8}},gen_atlas = 8},
+{name = "indeedee", base = {pos = {x = 12, y = 8}},gen_atlas = 8},
+{name = "morpeko", base = {pos = {x = 0, y = 9}},gen_atlas = 8},
 {name = "cufant", base = {pos = {x = 14, y = 58}},},
 {name = "copperajah", base = {pos = {x = 16, y = 58}},},
 {name = "gmax_copperajah", base = {pos = {x = 8, y = 13}, soul_pos = {x = 9, y = 13}},gen_atlas = 8},
@@ -1103,7 +1123,7 @@ PokemonSprites = {
 {name = "kleavor", base = {pos = {x = 28, y = 59}},},
 {name = "ursaluna", base = {pos = {x = 0, y = 60}},},
 {name = "bloodmoon_ursaluna", base = {pos = {x = 0, y = 11}},gen_atlas = 8},
-{name = "basculegion", base = {pos = {x = 2, y = 60}},},
+{name = "basculegion", base = {pos = {x = 2, y = 11}},gen_atlas = 8},
 {name = "sneasler", base = {pos = {x = 4, y = 60}},},
 {name = "overqwil", base = {pos = {x = 6, y = 60}},},
 {name = "enamorus", base = {pos = {x = 6, y = 11}, soul_pos =  {x = 7, y = 11}},gen_atlas = 8},
@@ -1127,13 +1147,13 @@ PokemonSprites = {
 {name = "pawmo", base = {pos = {x = 12, y = 61}},},
 {name = "pawmot", base = {pos = {x = 14, y = 61}},},
 {name = "tandemaus", base = {pos = {x = 16, y = 61}},},
-{name = "maushold", base = {pos = {x = 18, y = 61}},},
+{name = "maushold", base = {pos = {x = 6, y = 0}},gen_atlas = 9},
 {name = "fidough", base = {pos = {x = 20, y = 61}},},
 {name = "dachsbun", base = {pos = {x = 22, y = 61}},},
 {name = "smoliv", base = {pos = {x = 24, y = 61}},},
 {name = "dolliv", base = {pos = {x = 26, y = 61}},},
 {name = "arboliva", base = {pos = {x = 28, y = 61}},},
-{name = "squawkabilly", base = {pos = {x = 0, y = 62}},},
+{name = "squawkabilly", base = {pos = {x = 8, y = 0}},gen_atlas = 9},
 {name = "nacli", base = {pos = {x = 2, y = 62}},},
 {name = "naclstack", base = {pos = {x = 4, y = 62}},},
 {name = "garganacl", base = {pos = {x = 6, y = 62}},},
@@ -1166,7 +1186,7 @@ PokemonSprites = {
 {name = "wugtrio", base = {pos = {x = 0, y = 64}},},
 {name = "bombirdier", base = {pos = {x = 2, y = 64}},},
 {name = "finizen", base = {pos = {x = 4, y = 64}},},
-{name = "palafin", base = {pos = {x = 6, y = 64}},},
+{name = "palafin", base = {pos = {x = 6, y = 1}},gen_atlas = 9},
 {name = "varoom", base = {pos = {x = 8, y = 64}},},
 {name = "revavroom", base = {pos = {x = 10, y = 64}},},
 {name = "cyclizar", base = {pos = {x = 12, y = 64}},},
@@ -1180,7 +1200,7 @@ PokemonSprites = {
 {name = "cetitan", base = {pos = {x = 28, y = 64}},},
 {name = "veluza", base = {pos = {x = 0, y = 65}},},
 {name = "dondozo", base = {pos = {x = 2, y = 65}},},
-{name = "tatsugiri", base = {pos = {x = 4, y = 65}},},
+{name = "tatsugiri", base = {pos = {x = 0, y = 3}},gen_atlas = 9},
 {name = "annihilape", base = {pos = {x = 6, y = 65}},},
 {name = "clodsire", base = {pos = {x = 8, y = 65}},},
 {name = "farigiraf", base = {pos = {x = 10, y = 65}},},
@@ -1241,9 +1261,15 @@ PokemonSprites = {
 {name = "jelly_donut", base = {pos = {x = 6, y = 0}}, others_atlas = true,},
 {name = "treasure_eatery", base = {pos = {x = 6, y = 2}}, others_atlas = true,},
 {name = "mystery_egg", base = {pos = {x = 0, y = 1}}, others_atlas = true,},
-{name = "rival", base = {pos = {x = 0, y = 2}}, others_atlas = true,},
+{name = "rival", base = {artist = 'MyDude_YT', pos = {x = 0, y = 2}, display_text = {key = 'j_poke_rival'}}, others_atlas = true,},
+-- These sprites are set dynamically elsewhere, so these entries are just for the credits screen
+{name = "bitter_rival", base = {artist = 'MyDude_YT', pos = {x = 2, y = 2}, display_text = {key = 'j_poke_bitter_rival'}}, others_atlas = true,},
+{name = "champion", base = {artist = 'MyDude_YT', pos = {x = 4, y = 2}, display_text = {key = 'j_poke_champion'}}, others_atlas = true,},
+
 {name = "ruins_of_alph", base = {pos = {x = 0, y = 3}}, others_atlas = true,},
 {name = "professor", base = {pos = {x = 4, y = 1}}, others_atlas = true,},
+{name = "oologist", base = {pos = {x = 4, y = 4}}, others_atlas = true,},
+{name = "daycare", base = {pos = {x = 2,y = 4}}, others_atlas = true,},
 {name = "billion_lions", base = {pos = {x = 4, y = 3}, soul_pos = {x = 5, y = 3}}, others_atlas = true,},
   }
 }
@@ -1272,11 +1298,13 @@ local poke_artist_info = {
   Dudelings = {display_name = 'Dudelings', artist_colour = HEX("F0493A"), links = {
     {url = 'https://dudelings.carrd.co/', account = 'Dudelings'}
   }},
+  Emma = {display_name = 'Emma', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("F5A9B8")},
   Gappie = {display_name = 'Gappie', artist_colour = HEX('FFE062'), links = {
 {url = 'https://x.com/just_smol_child'},
 {url = 'https://bsky.app/profile/justsmolchild.bsky.social', site = 'Bluesky', account = 'justsmolchild'}
   }},
   InertSteak = {display_name = 'InertSteak', artist_colour = HEX('77A5BC'), highlight_colour = HEX('C1C3C2')},
+  KatRoman = {display_name = 'KatRoman', artist_colour = HEX('0455FE')},
   Maelmc = {display_name = 'Maelmc', artist_colour = HEX("EA6F22")},
   MyDude_YT = {display_name = 'MyDude YT', artist_colour = HEX("FFFFFF"), highlight_colour = HEX("4428BC"), links = {
   {url = 'https://www.youtube.com/@mydudestudios6244', account = 'MyDude Studios'},
@@ -1284,6 +1312,10 @@ local poke_artist_info = {
   {url = 'https://x.com/MyDude81058128'},
   {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
   {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
+  }},
+  PigeonPie = {display_name = 'PigeonPie', artist_colour = HEX("FFED24"), highlight_colour = HEX("DE26FF"), links = {
+    {url = 'https://www.instagram.com/pigeonpie08'},
+    {url = 'https://www.tiktok.com/@pigeon_pie', account = 'pigeon_pie'}
   }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {
@@ -1366,6 +1398,8 @@ poke_load_atlas = function(item)
         item.atlas = sprite_info.alts[atlas_prefix].anim_atlas
         item.pos = {x = 0, y = 0}
       end
+    elseif atlas_prefix == "AtlasJokersBasic" and sprite_info.base.artist then
+      item.artist = sprite_info.base.artist
     end
     if not item.animated then
       item.atlas = poke_get_atlas_string(atlas_prefix, sprite_info.gen_atlas, sprite_info.others_atlas)
@@ -1376,8 +1410,12 @@ poke_load_atlas = function(item)
   end
 end
 
-poke_get_artist_info = function(name)
-  return poke_artist_info[name]
+local artistname = function(record)
+  return type(record) == 'table' and record.name or record
+end
+
+poke_get_artist_info = function(name_or_record)
+  return poke_artist_info[artistname(name_or_record)]
 end
 
 poke_get_artist_list = function()
@@ -1395,7 +1433,7 @@ function poke_get_artist_layer(obj, by_artist)
       or { obj.artist }
 
   for _, _artist in ipairs(artists) do
-    local artist_name = type(_artist) == 'table' and _artist.name or _artist
+    local artist_name = artistname(_artist)
     if by_artist == artist_name then
       return _artist.layer or 'both'
     end
@@ -1405,27 +1443,71 @@ end
 poke_get_artist_sprites = function(artist)
   local sprites = {}
 
-  for _, sprite in ipairs(PokemonSprites.list) do
+  local add_sprite_to_list = function(sprite, layer, atlas_prefix, alt)
+    local anim_atlas = alt and alt.anim_atlas
+    if not alt then anim_atlas = sprite.base.anim_atlas end -- prevent base anim_atlas to be used as a fallback
 
+    local display_text = alt and alt.display_text or sprite.base.display_text or sprite.display_text
+
+    if type(display_text) == 'table' then
+      -- Default to Joker name text localization for keys, pass `false` to either type or set to disable at will
+      if display_text.key and display_text.type == nil and display_text.set == nil then
+        display_text.type = 'name_text'
+        display_text.set = 'Joker'
+      end
+      -- Support simple localizations for ex. dictionary entries, just providing a string instead of `{ _localize = 'text' }` will make it render as is
+      if display_text._localize then
+        display_text = display_text._localize
+      end
+      display_text = localize(display_text)
+    end
+
+    table.insert(sprites, {
+      name = sprite.name,
+      pos = sprite.base.pos,
+      soul_pos = alt and alt.soul_pos or sprite.base.soul_pos,
+      atlas_prefix = atlas_prefix,
+      display_text = display_text,
+      gen_atlas = sprite.gen_atlas,
+      others_atlas = sprite.others_atlas,
+      anim_atlas = anim_atlas,
+      layer = layer
+    })
+  end
+
+  for _, sprite in ipairs(PokemonSprites.list) do
+    if sprite.base and sprite.base.artist then
+      local layer = poke_get_artist_layer(sprite.base, artist)
+      if layer then
+        add_sprite_to_list(sprite, layer, "AtlasJokersBasic")
+      end
+    end
     if sprite.alts then
       for atlas_prefix, alt in pairs(sprite.alts) do
         local layer = poke_get_artist_layer(alt, artist)
 
         if layer then
-          table.insert(sprites, {
-            name = sprite.name,
-            pos = sprite.base.pos,
-            soul_pos = alt.soul_pos or sprite.base.soul_pos,
-            atlas_prefix = atlas_prefix,
-            gen_atlas = sprite.gen_atlas,
-            others_atlas = sprite.others_atlas,
-            anim_atlas = alt.anim_atlas,
-            layer = layer
-          })
+          add_sprite_to_list(sprite, layer, atlas_prefix, alt)
         end
       end
     end
   end
 
   return sprites
+end
+
+poke_get_sprite_artists = function(name)
+  local sprite_info = PokemonSprites[name]
+  local artists = {}
+  if sprite_info then
+    if sprite_info.base.artist then
+      artists[#artists+1] = sprite_info.base.artist
+    end
+    for _, alt in pairs(sprite_info.alts or {}) do
+      if alt.artist then
+        artists[#artists+1] = alt.artist
+      end
+    end
+  end
+  return artists
 end

@@ -92,6 +92,7 @@ local bellossom={
         info_queue[#info_queue+1] = G.P_CENTERS.e_holo
       end
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_seed
     end
 		return {vars = {center.ability.extra.mult}}
   end,
@@ -109,17 +110,24 @@ local bellossom={
           local upgrade = pseudorandom(pseudoseed('bellossom'))
           if poke_is_odd(v) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
-              if v.ability.name == 'Wild Card' and not v.edition then
+              if v.config.center ~= G.P_CENTERS.c_base and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
                 v:set_edition(edition, true, true)
               end
-              v:set_ability(G.P_CENTERS.m_wild, nil, true)
-              G.E_MANAGER:add_event(Event({
-                  func = function()
-                      v:juice_up()
-                      return true
-                  end
-              })) 
+              if v.config.center == G.P_CENTERS.c_base then
+                local enhancements = {'m_wild', 'm_poke_seed'}
+                local enhancement = pseudorandom_element(enhancements, pseudorandom(pseudoseed('wildorseed')))
+                v:set_ability(G.P_CENTERS[enhancement], nil, true)
+                if enhancement == 'm_poke_seed' then
+                  v:set_sprites(v.config.center)
+                end
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        v:juice_up()
+                        return true
+                    end
+                })) 
+              end
           else
             v.bellossom_score = true
           end
@@ -393,7 +401,7 @@ local hoppip={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
@@ -409,7 +417,7 @@ local hoppip={
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2]}
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
@@ -437,7 +445,7 @@ local skiploom={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
@@ -453,7 +461,7 @@ local skiploom={
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
@@ -481,7 +489,7 @@ local jumpluff={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     end
     return {vars = {center.ability.extra.h_size}}
   end,
@@ -500,7 +508,7 @@ local jumpluff={
       for k, v in pairs(context.full_hand) do
         if v then table.insert(target, v) end
       end
-      poke_convert_cards_to(target, {mod_conv = 'm_wild'})
+      poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
       G.E_MANAGER:add_event(Event({
         func = function()
           remove(self, card, context, true)
@@ -824,16 +832,9 @@ local umbreon={
         end
       end
     end
-    if context.pre_discard and not context.blueprint and not context.hook then
+    if context.pre_discard and G.GAME.current_round.discards_used <= 0 and not context.blueprint and not context.hook then
       local text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-      local can_level = nil
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        can_level = to_big(G.GAME.hands[card.ability.extra.hand_played].level) > to_big(1)
-      else
-        can_level = G.GAME.hands[card.ability.extra.hand_played].level > 1
-      end
-      if can_level and G.GAME.hands[card.ability.extra.hand_played] == G.GAME.hands[text] then
-        level_up_hand(card, card.ability.extra.hand_played, nil, -1)
+      if G.GAME.hands[card.ability.extra.hand_played] == G.GAME.hands[text] then
         local highest_played = 0
         local highest_hands = {}
         for handname, values in pairs(G.GAME.hands) do
@@ -1021,6 +1022,7 @@ local unown={
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
+  discovered = true,
   rarity = "poke_safari",
   cost = 5,
   stage = "Basic",
@@ -1104,13 +1106,16 @@ local unown={
       card.ability.extra.form = form
       self:set_sprites(card)
       
-      card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
+      self:set_nature(card)
       
       if poke_is_in_collection(card) then
         local edition = {negative = true}
         card:set_edition(edition, true, true)
       end
     end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
   end,
   set_sprites = function(self, card, front)
     card.children.center:set_sprite_pos({x = 0, y = 0})
@@ -1554,7 +1559,7 @@ local granbull = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult_multi2}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Fairy",

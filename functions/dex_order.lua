@@ -248,7 +248,7 @@ pokermon.dex_order = {
   "pupitar",
   { "tyranitar", "mega_tyranitar" },
   "lugia",
-  { "ho-oh" },
+  "ho_oh",
   "celebi",
   "treecko",
   "grovyle",
@@ -1026,3 +1026,15 @@ pokermon.dex_order = {
   "pecharunt",
   "missingno",
 }
+
+pokermon.dex_numbers = {}
+-- Dex ordering pokemon in add-ons
+for i, pokemon in ipairs (pokermon.dex_order) do
+  if type(pokemon) == "table" then
+    for j, mon in ipairs(pokemon) do
+      pokermon.dex_numbers[mon] = i + (j - 1) / 10
+    end
+  else
+    pokermon.dex_numbers[pokemon] = i
+  end
+end

@@ -41,11 +41,12 @@ local mantyke={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
-      local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_devil')
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          SMODS.add_card{set = 'Tarot', key = 'c_devil', edition = 'e_negative'}
+          return true
+        end
+      }))
     end
     return level_evo(self, card, context, "j_poke_mantine")
   end

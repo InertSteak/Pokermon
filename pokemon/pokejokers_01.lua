@@ -988,9 +988,6 @@ local rattata={
     end
     return level_evo(self, card, context, "j_poke_raticate")
   end,
-  in_pool = function(self)
-    return pokemon_in_pool(self)
-  end
 }
 -- Raticate 020
 local raticate={
@@ -1214,7 +1211,7 @@ local pikachu={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       local dollars = G.GAME.dollars
@@ -1258,7 +1255,7 @@ local raichu={
   ptype = "Lightning",
   atlas = "Pokedex1",
   gen = 1, 
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
       card:juice_up()
@@ -1317,7 +1314,8 @@ local sandshrew={
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
-                  G.hand:emplace(copy)
+                  local area = context.poke_removed_at_end and G.deck or G.hand
+                  area:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
                   playing_card_joker_effects({copy})
@@ -1377,7 +1375,7 @@ local sandslash={
                     center.ability.extra.glass_limit - center.ability.extra.glass_restored, 
                     colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6, 
   enhancement_gate = 'm_glass',
   stage = "One", 
@@ -1396,7 +1394,8 @@ local sandslash={
                   copy:add_to_deck()
                   G.deck.config.card_limit = G.deck.config.card_limit + 1
                   table.insert(G.playing_cards, copy)
-                  G.hand:emplace(copy)
+                  local area = context.poke_removed_at_end and G.deck or G.hand
+                  area:emplace(copy)
                   copy.states.visible = nil
                   copy:start_materialize()
                   playing_card_joker_effects({copy})

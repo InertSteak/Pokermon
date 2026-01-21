@@ -1,12 +1,6 @@
 pokermon.load_pokemon = function(item)
-  item.discovered = true
   if not item.key then
     item.key = item.name
-  end
-  if not item.custom_pool_func then
-    item.in_pool = function(self)
-      return pokemon_in_pool(self)
-    end
   end
   if not item.config then
     item.config = {}
@@ -37,8 +31,7 @@ pokermon.load_pokemon = function(item)
       item.config.extra = {item_req = item.evo_list}
     end
   end
-  item.discovered = not pokermon_config.pokemon_discovery
-  if item.name == "unown" then item.discovered = true end
+  if not item.discovered then item.discovered = not pokermon_config.pokemon_discovery end
   local prev_load = item.load
   item.load = function(self, card, card_table, other_card)
     card_table.ability.extra.juiced = nil
@@ -76,7 +69,7 @@ pokermon.load_pokemon = function(item)
 end
 
 pokermon.add_family = function(family)
-  table.insert(pokermon.family, family)
+  poke_add_to_family(nil, family)
 end
 
 pokermon.Pokemon = function(item, custom_prefix, custom_atlas)
