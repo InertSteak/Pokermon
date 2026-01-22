@@ -123,6 +123,7 @@ local default_family_list = {
   { "mudkip", "marshtomp", "swampert" },
   { "zigzagoon", "linoone" },
   { "shroomish", "breloom" },
+  { "nincada", "ninjask", "shedinja" },
   { "aron", "lairon", "aggron" },
   { "budew", "roselia", "roserade" },
   { "duskull", "dusclops", "dusknoir" },

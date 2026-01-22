@@ -94,8 +94,192 @@ local breloom={
 -- Vigoroth 288
 -- Slaking 289
 -- Nincada 290
+local nincada={
+  name = "nincada",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 65, chips_minus = 5, num = 1, dem = 2}, },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'multi_evolution'}
+    end
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'nincada')
+    return {vars = {center.ability.extra.chips, center.ability.extra.chips_minus, num, dem}}
+  end,
+  rarity = 2,
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        local sub = nil
+        for k, v in ipairs(context.scoring_hand) do
+          if v:get_id() == 9 or v:get_id() == 11 then
+            sub = true
+            break
+          end
+        end
+        if sub then
+          if not context.blueprint and card.ability.extra.chips > 0 then
+            card.ability.extra.chips = math.max(0, card.ability.extra.chips - card.ability.extra.chips_minus)
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}}, colour = G.C.CHIPS})
+          end
+          if SMODS.pseudorandom_probability(card, 'nincada', card.ability.extra.num, card.ability.extra.dem, 'nincada') and
+             #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then 
+            local set = pseudorandom_element(SMODS.ConsumableTypes, pseudoseed('adacnin'))
+            SMODS.add_card{set = set.key}
+          end
+        end
+        if card.ability.extra.chips > 0 then
+          return {
+            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+            colour = G.C.CHIPS,
+            chip_mod = card.ability.extra.chips
+          }
+        end
+      end
+    end
+    
+    local evo = scaling_evo(self, card, context, "j_poke_ninjask", (card.ability.extra.chips <= 0) and 1 or 0, 1)
+    if evo and type(evo) == "table" then
+      if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+        G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            local copy = copy_card(card)
+            copy:add_to_deck()
+            G.jokers:emplace(copy)
+            poke_evolve(copy, 'j_poke_shedinja', true)
+            copy.states.visible = nil
+            G.GAME.joker_buffer = 0
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                  copy:start_materialize()
+                  return true
+              end
+            })) 
+            return true
+          end
+        })) 
+      end
+    end
+    return evo
+  end,
+}
 -- Ninjask 291
+local ninjask={
+  name = "ninjask",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 13, num = 1, dem = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'ninjask')
+    return {vars = {center.ability.extra.mult_mod, num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind and SMODS.pseudorandom_probability(card, 'ninjask', card.ability.extra.num, card.ability.extra.dem, 'ninjask') then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+            add_tag(Tag('tag_skip'))
+            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+            return true
+        end)
+      }))
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_played == 0 then
+      if context.other_card:get_id() == 9 or context.other_card:get_id() == 11 then
+        local earned = ease_poke_dollars(card, "ninjask", card.ability.extra.money_mod, true)
+        return {
+          mult = card.ability.extra.mult_mod,
+          dollars = earned,
+          card = card
+        }
+      end
+    end
+  end,
+}
 -- Shedinja 292
+local shedinja={
+  name = "shedinja",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if (context.end_of_round and not G.GAME.blind.boss) and context.game_over and not context.blueprint then
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              G.hand_text_area.blind_chips:juice_up()
+              G.hand_text_area.game_chips:juice_up()
+              play_sound('tarot1')
+              return true
+          end
+      }))
+      
+      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+      
+      return {
+          message = localize('k_saved_ex'),
+          saved = localize('poke_saved_by')..' '..(G.localization.descriptions.Joker[card.config.center.key].name),
+          colour = G.C.RED
+      }
+    end
+    
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and card.ability.extra.Xmult > 1 then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    
+    if context.ending_shop and not context.blueprint then
+      local fire_count = #find_pokemon_type("Fire", nil, "shedinja")
+      local earth_count = #find_pokemon_type("Earth", nil, "shedinja")
+      local dark_count = #find_pokemon_type("Dark", nil, "shedinja")
+      local psychic_count = #find_pokemon_type("Psychic", nil, "shedinja")
+      if fire_count > 0 or earth_count > 0 or dark_count > 0 or psychic_count > 0 then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            remove(self, card, context, true)
+            return true
+          end
+        }))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
+      end
+    end
+  end,
+}
 -- Whismur 293
 -- Loudred 294
 -- Exploud 295
@@ -196,5 +380,5 @@ local nosepass={
 }
 -- Skitty 300
 return {name = "Pokemon Jokers 271-300", 
-        list = {shroomish, breloom, azurill, nosepass},
+        list = {shroomish, breloom, nincada, ninjask, shedinja, azurill, nosepass},
 }

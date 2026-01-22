@@ -3423,6 +3423,40 @@ return {
                   "{C:attention}+#3#{} hand size this round"
                 }
             }, 
+            j_poke_nincada = {
+                name = "Nincada",
+                text = {
+                  "{C:chips}+#1#{} Chips, {C:attention}Multi Evolution{}",
+                  "{C:chips}-#2#{} Chips and {C:green}#3# in #4#{} chance to create",
+                  "a random {C:attention}Consumable{} if poker hand",
+                  "contains a {C:attention}9{} or {C:attention}Jack{}",
+                  "{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}0{C:inactive,s:0.8} Chips)",
+                }
+            }, 
+            j_poke_ninjask = {
+                name = "Ninjask",
+                text = {
+                  "When Blind is selected {C:green}#2# in #3#{}",
+                  "chance to create a {C:attention}Speed Tag{}",
+                  "{br:2.5}ERROR - CONTACT STEAK",
+                  "Each {C:attention}9{} and {C:attention}Jack{} in {C:attention}first{}",
+                  "played hand gives {C:mult}+#1#{} Mult",
+                }
+            },
+            j_poke_shedinja = {
+                name = "Shedinja",
+                text = {
+                  "Prevents Death on",
+                  "{C:attention}non-Boss Blinds{}, gain {X:mult,C:white}X#2#{} Mult",
+                  "for each Death prevented",
+                  "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+                  "{br:2.5}ERROR - CONTACT STEAK",
+                  "{S:1.1,C:red,E:2}self destructs{} if you",
+                  "have a {X:fire,C:white}Fire{}, {X:dark,C:white}Dark{}, {X:earth,C:white}Earth{}, or",
+                  "{X:psychic,C:white}Psychic{} Joker at end of {C:attention}shop",
+                  "{C:inactive}(Excludes Shedinjas){}"
+                }
+            },
             j_poke_azurill = {
                 name = 'Azurill',
                 text = {
@@ -6070,6 +6104,22 @@ return {
                   "This Joker comes with",
                   "a {C:attention}#1#{}",
                   "{C:inactive}(Must have room){}"
+                }
+            },
+            holding_joker = {
+                name = "Holding",
+                text = {
+                  "This Joker comes with",
+                  "a {C:attention}#1#{} Joker",
+                  "{C:inactive,s:0.8}(Requires empty Joker slot){}"
+                }
+            },
+            multi_evolution = {
+                name = "Multi Evolution",
+                text = {
+                  "This Joker evolves",
+                  "into {C:attention}2{} separate Jokers",
+                  "{C:inactive,s:0.8}(Requires empty Joker slot){}"
                 }
             },
             eeveelution = {
