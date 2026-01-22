@@ -3436,7 +3436,7 @@ return {
             j_poke_ninjask = {
                 name = "Ninjask",
                 text = {
-                  "When Blind is selected {C:green}#2# in #3#{}",
+                  "When Blind is selected, {C:green}#2# in #3#{}",
                   "chance to create a {C:attention}Speed Tag{}",
                   "{br:2.5}ERROR - CONTACT STEAK",
                   "Each {C:attention}9{} and {C:attention}Jack{} in {C:attention}first{}",
