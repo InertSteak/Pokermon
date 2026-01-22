@@ -509,7 +509,7 @@ return {
                 }
             },
             c_poke_oven = {
-                name = "전자레인지",
+                name = "히트",
                 text = {
                   "{C:attention}블라인드{} 중에 사용 시",
                   "이번 라운드에 {C:attention}+#1#{} 버리기 횟수를 얻습니다",
@@ -519,7 +519,7 @@ return {
                 }
             },
             c_poke_washing_machine = {
-                name = "세탁기",
+                name = "워시",
                 text = {
                   "{C:attention}블라인드{} 중에 사용 시",
                   "이번 라운드에 {C:attention}+#1#{} 핸드 횟수를 얻습니다",
@@ -529,7 +529,7 @@ return {
                 }
             },
             c_poke_fridge = {
-                name = "냉장고",
+                name = "프로스트",
                 text = {
                   "무작위 {C:attention}소모품{} {C:attention}2{}개를 생성합니다",
                   "{C:inactive}(공간이 있어야 함)",
@@ -539,7 +539,7 @@ return {
                 }
             },
             c_poke_fan = {
-                name = "선풍기",
+                name = "스핀",
                 text = {
                   "{C:blue}커먼{} 조커를 최대",
                   "{C:attention}2{}장 생성합니다",
@@ -550,7 +550,7 @@ return {
                 }
             },
             c_poke_lawn_mower = {
-                name = "잔디깎이",
+                name = "커트",
                 text = {
                   "{C:attention}블라인드{} 중에 사용 시",
                   "이번 라운드에 핸드 크기 {C:attention}+#1#{}를 얻습니다",
@@ -661,7 +661,7 @@ return {
                 },
             },
             c_poke_bird_energy = {
-                name = "새 에너지",
+                name = "비행 에너지",
                 text = {
                   ""
                 },
@@ -1966,7 +1966,7 @@ return {
                 text = {
                     "{C:chips}+#2#{} 칩",
                     "{C:attention}첨벙{} 효과 적용",
-                    "{C:inactive,s:0.8}(#1# 라운드 후 진화){}",
+                    "{C:inactive,s:0.8}(진화 {C:attention,s:0.8}#1#{C:inactive,s:0.8} 라운드 후){}",
                 } 
             },
             j_poke_gyarados = {
@@ -3413,6 +3413,16 @@ return {
                     "{C:inactive}(현재 {X:mult,C:white}X#1#{C:inactive} 배수)"
                 }
             },
+            j_poke_roselia = {
+                name = "로젤리아",
+                text = {
+                    "이번 라운드의 {C:attention}첫 번째{} 점수 카드가",
+                    "{C:attention}홀수{}라면 {C:attention}#1#{}회 재발동,",
+                    "그렇지 않으면 {C:attention}씨앗{} 카드가 됨",
+                    "{C:inactive,s:0.8}({C:attention,s:0.8}빛의 돌{C:inactive,s:0.8}로 진화)",
+                }
+                },
+
             j_poke_numel = {
                 name = "둔타",
                 text = {
@@ -3440,6 +3450,28 @@ return {
                 "{C:inactive}(현재 {X:mult,C:white} X#1# {C:inactive} 배수)"
               }
             },
+            j_poke_cacnea = {
+            name = "선인왕",
+            text = {
+                "{C:hazard}+#1#{} 위험 레이어",
+                "카드가 파괴될 때마다",
+                "{C:money}$#2#{} 획득",
+                "{C:inactive}({C:attention}#3#{C:inactive} 라운드 후 진화)",
+            }
+            },
+            j_poke_cacturne = {
+            name = "밤선인",
+            text = {
+                "{C:hazard}+#1#{} 위험 레이어",
+                "카드가 파괴될 때마다",
+                "{C:money}$#2#{} 획득",
+                "{br:2}ERROR - CONTACT STEAK",
+                "점수 계산 후",
+                "{C:attention}첫 번째{} 핸드의 모든",
+                "{C:attention}위험{} 카드를 파괴",
+            }
+            },
+
             j_poke_lileep = {
                 name = "릴링",
                 text = {
@@ -5437,8 +5469,8 @@ return {
             Grass = { name = "타입", text = { "{X:grass,C:white}풀{}" } },
             Fire = { name = "타입", text = { "{X:fire,C:white}불꽃{}" } },
             Water = { name = "타입", text = { "{X:water,C:white}물{}" } },
-            Lightning = { name = "타입", text = { "{X:lightning,C:black}번개{}" } },
-            Psychic = { name = "타입", text = { "{X:psychic,C:white}초능력{}" } },
+            Lightning = { name = "타입", text = { "{X:lightning,C:black}전기{}" } },
+            Psychic = { name = "타입", text = { "{X:psychic,C:white}에스퍼{}" } },
             Fighting = { name = "타입", text = { "{X:fighting,C:white}격투{}" } },
             Colorless = { name = "타입", text = { "{X:colorless,C:white}노말{}" } },
             Dark = { name = "타입", text = { "{X:dark,C:white}악{}" } },
