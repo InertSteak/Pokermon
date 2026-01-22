@@ -11,13 +11,6 @@ local bidoof={
   name = "bidoof",
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, rerolls_to_evolve = 7}, evo_rqmt = 7},
-  loc_txt = {
-    name = "Bidoof",
-    text = {
-      "{C:attention}#1#{} free {C:green}Reroll{} per shop",
-      "{C:inactive,s:0.8}(Evolves after rerolling {C:attention,s:0.8}#2#{C:inactive,s:0.8} times){}"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.rerolls_to_evolve}}
@@ -49,15 +42,6 @@ local bibarel={
   name = "bibarel",
   pos = {x = 0, y = 0},
   config = {extra = {rerolls = 1, increase = 1}},
-  loc_txt = {
-    name = "Bibarel",
-    text = {
-      "{C:attention}#1#{} free {C:green}#3#{} per shop",
-      "{br:2}ERROR - CONTACT STEAK",
-      "Free {C:green}Rerolls{} increase by {C:attention}#2#",
-      "when {C:attention}Boss Blind{} is defeated"
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rerolls, center.ability.extra.increase, center.ability.extra.rerolls > 1 and localize('poke_reroll_plural') or localize('poke_reroll_singular')}}
