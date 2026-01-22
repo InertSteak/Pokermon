@@ -3796,6 +3796,22 @@ return {
                     "{C:attention}destroy{} it",
                 }
             },
+            j_poke_bidoof = {
+                name = "Bidoof",
+                text = {
+                    "{C:attention}#1#{} free {C:green}Reroll{} per shop",
+                    "{C:inactive,s:0.8}(Evolves after rerolling {C:attention,s:0.8}#2#{C:inactive,s:0.8} times){}"
+                }
+            },
+            j_poke_bibarel = {
+                name = "Bibarel",
+                text = {
+                    "{C:attention}#1#{} free {C:green}#3#{} per shop",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Free {C:green}Rerolls{} increase by {C:attention}#2#",
+                    "when {C:attention}Boss Blind{} is defeated"
+                }
+            },
             j_poke_kricketot = {
               name = "Kricketot",
               text = {
