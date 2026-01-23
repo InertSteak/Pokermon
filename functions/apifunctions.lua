@@ -28,7 +28,7 @@ pokermon.load_pokemon = function(item)
     if item.config and item.config.extra then
       item.config.extra.evo_list = item.evo_list
     elseif item.config then
-      item.config.extra = {item_req = item.evo_list}
+      item.config.extra = {evo_list = item.evo_list}
     end
   end
   if not item.discovered then item.discovered = not pokermon_config.pokemon_discovery end
