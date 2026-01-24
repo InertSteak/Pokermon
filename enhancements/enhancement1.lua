@@ -49,14 +49,18 @@ local seed = {
           }
         else
           return {
-            message = localize('k_upgrade_ex'),
-            sound = 'poke_seed_'..card.ability.extra.level,
             extra = {
-              func = function() 
-                if card.ability.extra.level < card.ability.extra.level_max then
+              message = localize('k_upgrade_ex'),
+              sound = 'poke_seed_' .. card.ability.extra.level,
+            },
+            func = function()
+              G.E_MANAGER:add_event(Event({
+                func = function()
                   self:set_sprites(card)
+                  return true
                 end
-              end}
+              }))
+            end,
           }
         end
       end
