@@ -39,32 +39,44 @@ local seed = {
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.ability.extra.level = card.ability.extra.level + 1
-      
-      if card.ability.extra.level and card.ability.extra.level > 0 and card.ability.extra.level < 6 then
-        if card.ability.extra.level == 5 then
+
+      local level, level_max = card.ability.extra.level, card.ability.extra.level_max
+
+      if level and level > 0 and level <= level_max then
+        if level == level_max then
           return {
-            message = localize('k_upgrade_ex'),
-            sound = 'poke_seed_'..card.ability.extra.level,
-            extra = {func = function() ease_dollars(card.ability.extra.money); card:set_ability(G.P_CENTERS.m_poke_flower, nil, true) end}
+            extra = {
+              message = localize('k_upgrade_ex'),
+              sound = 'poke_seed_'..level,
+            },
+            func = function()
+              ease_dollars(card.ability.extra.money);
+              card:set_ability(G.P_CENTERS.m_poke_flower, nil, true)
+            end
           }
         else
           return {
-            message = localize('k_upgrade_ex'),
-            sound = 'poke_seed_'..card.ability.extra.level,
             extra = {
-              func = function() 
-                if card.ability.extra.level < card.ability.extra.level_max then
-                  self:set_sprites(card)
+              message = localize('k_upgrade_ex'),
+              sound = 'poke_seed_'..level,
+            },
+            func = function()
+              G.E_MANAGER:add_event(Event({
+                func = function()
+                  self:set_sprites(card, nil, level)
+                  return true
                 end
-              end}
+              }))
+            end,
           }
         end
       end
      end
    end,
-   set_sprites = function(self, card, front)
-     if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
-       local x_pos = card.ability.extra.level + 1
+   set_sprites = function(self, card, front, level)
+     level = level or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
+     if level then
+       local x_pos = level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end
    end
