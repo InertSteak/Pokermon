@@ -187,7 +187,6 @@ local roselia={
       if G.GAME.current_round.hands_played == 0 and not poke_is_odd(context.scoring_hand[1]) then
         local _card = context.scoring_hand[1]
         _card:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-        _card:set_sprites(_card.config.center)
         G.E_MANAGER:add_event(Event({
             func = function()
                 _card:juice_up()
