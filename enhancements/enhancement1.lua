@@ -73,8 +73,6 @@ local seed = {
           }
         end
       end
-
-      card.temp_level = nil
      end
    end,
    set_sprites = function(self, card, front)
