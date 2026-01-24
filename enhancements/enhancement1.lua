@@ -53,6 +53,7 @@ local seed = {
             end
           }
         else
+          local level = card.ability.extra.level
           return {
             extra = {
               message = localize('k_upgrade_ex'),
@@ -61,7 +62,7 @@ local seed = {
             func = function()
               G.E_MANAGER:add_event(Event({
                 func = function()
-                  self:set_sprites(card)
+                  self:set_sprites(card, nil, level)
                   return true
                 end
               }))
@@ -71,9 +72,10 @@ local seed = {
       end
      end
    end,
-   set_sprites = function(self, card, front)
-     if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
-       local x_pos = card.ability.extra.level + 1
+   set_sprites = function(self, card, front, level)
+     level = level or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
+     if level then
+       local x_pos = level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end
    end
