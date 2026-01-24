@@ -28,7 +28,7 @@ local hazard = {
 local seed = {
    key = "seed",
    atlas = "AtlasEnhancementsBasic",
-   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+   artist = 'MyDude_YT',
    pos = { x = 1, y = 0 },
    config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
@@ -85,7 +85,7 @@ local seed = {
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
-   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+   artist = 'MyDude_YT',
    pos = { x = 6, y = 0 },
    config = {Xmult_flower = 3},
    loc_vars = function(self, info_queue, center)
@@ -108,5 +108,5 @@ local flower = {
 
 return {
    name = "Enhancements",
-   list = { hazard, seed, flower}
+   list = { hazard, seed, flower} -- Would be nice to add all of the seed stages here since they are now more detailed than just numbers in the corner
 }

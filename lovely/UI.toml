@@ -21,16 +21,7 @@ position = "after"
 payload = "poke_safari = G.C.RARITY['poke_safari'], poke_mega = G.C.RARITY['poke_mega'],"
 match_indent = true
 
-# Custom challenge button text colour (to remove after SMODS adds it when SMODS PR #1173 goes through)
-[[patches]]
-[patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, focus_args = {snap_to = not snapped}}),"
-position = 'at'
-match_indent = true
-payload = '''
-UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
-'''
+
 
 # Description functionality, a little hacky but it works
 [[patches]]
@@ -49,16 +40,7 @@ end
 '''
 match_indent = true
 
-# Custom challenge button text colour (to remove after SMODS adds it when SMODS PR #1173 goes through)
-[[patches]]
-[patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, focus_args = {snap_to = not snapped}}),"
-position = 'at'
-match_indent = true
-payload = '''
-UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
-'''
+
 
 
 # Description functionality, a little hacky but it works
