@@ -81,7 +81,6 @@ local seed = {
      if level then
        local x_pos = level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
-       card.temp_level = nil
      end
    end
 }
