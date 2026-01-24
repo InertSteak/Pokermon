@@ -11,7 +11,7 @@
   "display_name": "Pokermon",
 	"version": "3.6.0-0122a",
 	"dependencies": [
-			"Steamodded (>=1.0.0~BETA-1016c)",
+			"Steamodded (>=1.0.0~BETA-1323b)",
       "Lovely (>=0.7)"
 	],
   "conflicts": [],
