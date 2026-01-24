@@ -199,8 +199,8 @@ local bramblin={
         if context.scoring_hand[i]:get_id() == G.GAME.current_round.bramblincard.id then
           card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
           if card.ability.extra.rank_scored == 2 then
-            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
+            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed)
+            context.scoring_hand[i]:juice_up()
             card.ability.extra.seed_added = card.ability.extra.seed_added + 1
             break
           end
@@ -245,9 +245,10 @@ local brambleghast={
         if context.scoring_hand[i]:get_id() == G.GAME.current_round.bramblincard.id then
           card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
           if card.ability.extra.rank_scored == 2 then
-            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
+            context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed)
             context.scoring_hand[i].ability.extra.level = 2
+            context.scoring_hand[i]:set_sprites(G.P_CENTERS.m_poke_seed)
+            context.scoring_hand[i]:juice_up()
             card.ability.extra.seed_added = card.ability.extra.seed_added + 1
             break
           end
