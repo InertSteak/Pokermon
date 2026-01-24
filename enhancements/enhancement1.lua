@@ -40,12 +40,14 @@ local seed = {
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.ability.extra.level = card.ability.extra.level + 1
 
-      if card.ability.extra.level and card.ability.extra.level > 0 and card.ability.extra.level < 6 then
-        if card.ability.extra.level == 5 then
+      local level, level_max = card.ability.extra.level, card.ability.extra.level_max
+
+      if level and level > 0 and level <= level_max then
+        if level == level_max then
           return {
             extra = {
               message = localize('k_upgrade_ex'),
-              sound = 'poke_seed_'..card.ability.extra.level,
+              sound = 'poke_seed_'..level,
             },
             func = function()
               ease_dollars(card.ability.extra.money);
@@ -53,11 +55,10 @@ local seed = {
             end
           }
         else
-          local level = card.ability.extra.level
           return {
             extra = {
               message = localize('k_upgrade_ex'),
-              sound = 'poke_seed_' .. card.ability.extra.level,
+              sound = 'poke_seed_'..level,
             },
             func = function()
               G.E_MANAGER:add_event(Event({
