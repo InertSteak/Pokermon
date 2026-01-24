@@ -38,6 +38,7 @@ local seed = {
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
+      card.temp_level = card.temp_level or card.ability.extra.level -- If this card has yet to score this hand, snapshot the starting level to handle delayed set_sprites calls
       card.ability.extra.level = card.ability.extra.level + 1
 
       local level, level_max = card.ability.extra.level, card.ability.extra.level_max
@@ -63,7 +64,8 @@ local seed = {
             func = function()
               G.E_MANAGER:add_event(Event({
                 func = function()
-                  self:set_sprites(card, nil, level)
+                  card.temp_level = level
+                  self:set_sprites(card)
                   return true
                 end
               }))
@@ -73,11 +75,13 @@ local seed = {
       end
      end
    end,
-   set_sprites = function(self, card, front, level)
-     level = level or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
+   set_sprites = function(self, card, front)
+    local level = card.temp_level
+        or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
      if level then
        local x_pos = level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
+       card.temp_level = nil
      end
    end
 }
