@@ -847,7 +847,7 @@ local koffing={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
@@ -887,7 +887,7 @@ local weezing={
   atlas = "Pokedex1",
   gen = 1,
   blueprint_compat = true,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
