@@ -138,7 +138,7 @@ PokemonSprites = {
 {name = "shellder", base = {pos = {x = 28, y = 5}},},
 {name = "cloyster", base = {pos = {x = 0, y = 6}},},
 {name = "gastly", base = {pos = {x = 2, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
-{name = "haunter", base = {pos = {x = 4, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 5, y = 6}}}},
+{name = "haunter", base = {pos = {x = 4, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 5, y = 6, apply_edition = true}}}},
 {name = "gengar", base = {pos = {x = 6, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 7, y = 6}}}},
 {name = "mega_gengar", base = {pos = {x = 4, y = 1}, soul_pos = {x = 5, y = 1}},gen_atlas = 1, alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "gmax_gengar", base = {pos = {x = 10, y = 7}, soul_pos = {x = 11, y = 7}},gen_atlas = 1},
@@ -180,7 +180,7 @@ PokemonSprites = {
 {name = "staryu", base = {pos = {x = 28, y = 7}},alts = {AtlasJokersSeriesA = {artist = {'Chartreuse_Chamber', 'Xenellia'}}}},
 {name = "starmie", base = {pos = {x = 0, y = 8}},alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Chartreuse_Chamber'}}}},
 {name = "mega_starmie", base = {pos = {x = 10, y = 9}, soul_pos = {x = 11, y = 9}}, gen_atlas = 1},
-{name = "mrmime", base = {pos = {x = 2, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering', soul_pos = {x = 3, y = 8}}}},
+{name = "mrmime", base = {pos = {x = 2, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering', soul_pos = {x = 3, y = 8, apply_edition = true}}}},
 {name = "galarian_mrmime", base = {pos = {x = 6, y = 5}},gen_atlas = 1},
 {name = "scyther", base = {pos = {x = 4, y = 8}},},
 {name = "jynx", base = {pos = {x = 6, y = 8}},},
@@ -343,7 +343,7 @@ PokemonSprites = {
 {name = "larvitar", base = {pos = {x = 10, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "pupitar", base = {pos = {x = 12, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "tyranitar", base = {pos = {x = 14, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
-{name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}}}},
+{name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}, soul_pos = {x = 5, y = 4, apply_edition = true}}}},
 {name = "lugia", base = {pos = {x = 16, y = 16}, soul_pos = {x = 17, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = 'Tovivi', layer = 'center'}}}},
 {name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
 {name = "celebi", base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
@@ -1389,8 +1389,10 @@ poke_load_atlas = function(item)
     local atlas_prefix = poke_get_atlas_prefix(item.name, sprite_info)
     if sprite_info.alts and sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].artist then
       item.artist = sprite_info.alts[atlas_prefix].artist
-      if sprite_info.alts[atlas_prefix].soul_pos then
-        item.soul_pos = sprite_info.alts[atlas_prefix].soul_pos
+      local soul_pos = sprite_info.alts[atlas_prefix].soul_pos
+      if soul_pos then
+        item.soul_pos = soul_pos
+        item.poke_apply_soul_edition = soul_pos.apply_edition
       end
       if sprite_info.alts[atlas_prefix].anim_atlas then
         item.animated = true
