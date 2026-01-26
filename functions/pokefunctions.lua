@@ -1046,6 +1046,24 @@ get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   end
 end
 
+get_poke_target_card_enhancements = function(seed, num, options)
+  local enhancements = {}
+  local enhance_options = options or {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}       
+  
+  for i = 1, num do
+    local enhancement = pseudorandom_element(enhance_options, pseudoseed(seed))
+    enhancements[#enhancements + 1] = enhancement
+    
+    for j = 1, #enhance_options do
+      if enhance_options[j] == enhancement then
+        table.remove(enhance_options, j)
+      end
+    end
+  end
+  
+  return enhancements
+end
+
 add_target_cards_to_vars = function(vars, targets)
   for i=1, #targets do
     vars[#vars+1] = localize(targets[i].value or "Ace", 'ranks')

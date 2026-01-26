@@ -1136,21 +1136,20 @@ return {
             j_poke_zubat = {
                 name = "Zubat",
                 text = {
-                    "Gains {C:mult}+#2#{} Mult for each",
-                    "{C:attention}Enhanced{} card in poker hand",
+                    "If played hand is exactly {C:attention}1{}",
+                    "{C:attention}Enhanced{} card, gain {C:mult}+#2#{} Mult",
+                    "and remove card {C:attention}Enhancement",
                     "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
                 }
             },
             j_poke_golbat = {
                 name = "Golbat",
                 text = {
-                    "Gain {C:chips}+#4#{} for scoring {C:attention}Bonus{} / {C:attention}Stone{} cards",
-                    "{C:mult}+#2#{} for scoring {C:attention}Mult{} / {C:attention}Wild{} cards",
-                    "{X:mult,C:white}X#6#{} for scoring {C:attention}Steel{} / {C:attention}Glass{} cards",
-                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards,",
+                    "Gains {C:mult}+#2#{} Mult for each",
+                    "{C:attention}Enhanced{} card in poker hand",
                     "removes card {C:attention}Enhancement",
-                    "{C:inactive,s:0.9}(Currently {C:chips,s:0.9}+#3#{C:inactive,s:0.9}, {C:mult,s:0.9}+#1#{C:inactive,s:0.9}, {X:mult,C:white,s:0.9}X#5#{C:inactive,s:0.9}, {C:money,s:0.9}$#7#{C:inactive,s:0.9} at end of round)",
-                    "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#9#{C:inactive,s:0.8} Enhancements)",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#3#{C:inactive,s:0.8} Enhancements)",
                 } 
             },
             j_poke_oddish = {
@@ -2395,11 +2394,11 @@ return {
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {
-                    "Gain {C:chips}+#4#{} for scoring {C:attention}Bonus{} / {C:attention}Stone{} cards",
-                    "{C:mult}+#2#{} for scoring {C:attention}Mult{} / {C:attention}Wild{} cards",
-                    "{X:mult,C:white}X#6#{} for scoring {C:attention}Steel{} / {C:attention}Glass{} cards",
-                    "{C:money}$#8#{} for scoring {C:attention}Gold{} / {C:attention}Lucky{} cards",
-                    "Then {C:attention}Randomize{} scoring card {C:dark_edition}Enhancements",
+                    "{C:attention}Leech List",  
+                    "For each scoring {C:attention}Enhancement{} gain",
+                    "{C:mult}+#2#{} Mult, {C:chips}+#4#{} Chips, {X:mult,C:white}X#6#{} Mult, or",
+                    "{C:money}$#8#{} payout at end of round",
+                    "removes card {C:attention}Enhancement",
                     "{C:inactive,s:0.9}(Currently {C:chips,s:0.9}+#3#{}, {C:mult,s:0.9}+#1#{}, {X:mult,C:white,s:0.9}X#5#{}, {C:money,s:0.9}$#7#{C:inactive,s:0.9} at end of round)"
                 } 
             },
@@ -3538,6 +3537,18 @@ return {
                 "a {C:attention}Mult{} card is scored",
                 "resets at end of round",
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+              }
+            },
+            j_poke_spinda = {
+              name = "Spinda",
+              text = {
+                "{C:attention}Holding Wheel of Fortune{}",
+                "{C:attention}Rank Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                "{C:attention}Enhance Nature: {C:inactive}({C:attention}#1#, #2#, #3#{C:inactive}){}",
+                "{br:3}ERROR - CONTACT STEAK",
+                "Each played card with a",
+                "{C:attention}Nature rank{} becomes a random",
+                "{C:attention}Nature Enhancement{} when scored",
               }
             },
             j_poke_cacnea = {
@@ -6054,6 +6065,15 @@ return {
                     "{C:green}15%{} - {C:dark_edition}Polychrome{} {C:attention}Gift Card",
                 }
             },
+            bat_leech = {
+                name = "Leech List",
+                text = {
+                    "{C:attention}Bonus{} / {C:attention}Stone{} - {C:chips}Chips",
+                    "{C:attention}Steel{} / {C:attention}Glass{} / {C:attention}Flower{} - {X:mult,C:white}X{} Mult",
+                    "{C:attention}Gold{} - {C:money}${} payout",
+                    "{C:attention}Other{} - {C:mult}Mult"
+                }
+            },
             dril_treasure = {
                 name = "Treasure",
                 text = {
@@ -6877,6 +6897,7 @@ return {
             poke_bug_buzz_ex = "Bug Buzz!",
             poke_sticky_web_ex = "Sticky Web!",
             poke_head_smash_ex = "Head Smash!",
+            poke_teeter_dance = "Teeter Dance!",
             
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",
@@ -6891,6 +6912,16 @@ return {
             poke_dragon_badge = "Dragon",
             poke_earth_badge = "Earth",
             poke_bird_badge = "Bird",
+            
+            poke_m_bonus = "Bonus",
+            poke_m_mult = "Mult",
+            poke_m_wild = "Wild",
+            poke_m_glass = "Glass",
+            poke_m_steel = "Steel",
+            poke_m_stone = "Stone",
+            poke_m_gold = "Gold",
+            poke_m_lucky = "Lucky",
+            poke_m_poke_seed = "Seed"
             
         },
         --These are the Labels

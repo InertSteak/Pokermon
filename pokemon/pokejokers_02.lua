@@ -403,7 +403,7 @@ local wigglytuff={
 local zubat={
   name = "zubat", 
   pos = {x = 1, y = 3},
-  config = {extra = {mult = 0, mult_mod = 1}, evo_rqmt = 12},
+  config = {extra = {mult = 0, mult_mod = 2}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, self.config.evo_rqmt}}
@@ -418,22 +418,28 @@ local zubat={
   perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local enhanced = 0
-        for k, v in pairs(context.scoring_hand) do
-          if v.config.center ~= G.P_CENTERS.c_base then
-           enhanced = enhanced + 1
-          end
-        end
+      if context.before and #context.scoring_hand == 1 then
+        local scoring_card = context.scoring_hand[1]
         
-        if enhanced > 0 and not context.blueprint then
-          card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * enhanced)
+        if scoring_card.config.center ~= G.P_CENTERS.c_base and not scoring_card.debuff and not scoring_card.vampired then
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+          scoring_card.vampired = true
+          scoring_card:set_ability(G.P_CENTERS.c_base, nil, true)
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  scoring_card:juice_up()
+                  scoring_card.vampired = nil
+                  return true
+              end
+          })) 
+          
           return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod * enhanced}},
+            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod}},
             colour = G.C.MULT
           }
         end
       end
+      
       if context.joker_main and card.ability.extra.mult > 0 then
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
@@ -449,12 +455,11 @@ local zubat={
 local golbat={
   name = "golbat", 
   pos = {x = 2, y = 3},
-  config = {extra = {mult = 0, mult_mod = 2, chips = 0, chip_mod = 15, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1, eaten = 0}, evo_rqmt = 20},
+  config = {extra = {mult = 0, mult_mod = 2, eaten = 0}, evo_rqmt = 16},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local eating_left = math.max(0, self.config.evo_rqmt - card.ability.extra.eaten)
-    return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.Xmult, card.ability.extra.Xmult_mod,
-                    card.ability.extra.money, card.ability.extra.money_mod, eating_left}}
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, eating_left}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
@@ -467,26 +472,13 @@ local golbat={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       local m_count = 0 
-      local c_count = 0 
-      local x_count = 0 
-      local d_count = 0
       local enhanced = {}
       for k, v in ipairs(context.scoring_hand) do
           if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
               enhanced[#enhanced+1] = v
               v.vampired = true
-              if v.config.center == G.P_CENTERS.m_mult or v.config.center == G.P_CENTERS.m_wild then
-                m_count = m_count + 1
-              end
-              if v.config.center == G.P_CENTERS.m_bonus or v.config.center == G.P_CENTERS.m_stone then
-                c_count = c_count + 1
-              end
-              if v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_glass then
-                x_count = x_count + 1
-              end
-              if v.config.center == G.P_CENTERS.m_gold or v.config.center == G.P_CENTERS.m_lucky then
-                d_count = d_count + 1
-              end
+              m_count = m_count + 1
+
               v:set_ability(G.P_CENTERS.c_base, nil, true)
               G.E_MANAGER:add_event(Event({
                   func = function()
@@ -500,38 +492,22 @@ local golbat={
       end
 
       if #enhanced > 0 then 
-          if m_count > 0 then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * m_count
-          end
-          if c_count > 0 then
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * c_count
-          end
-          if x_count > 0 then
-            card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * x_count
-          end
-          if d_count > 0 then
-            card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod * d_count
-          end
+        if m_count > 0 then
+          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * m_count
+        end
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.joker_main and card.ability.extra.mult > 0 then
         return {
           message = localize("poke_screech_ex"),
-          colour = G.C.BLACK,
+          colour = G.C.MULT,
           mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.chips,
-          Xmult_mod = card.ability.extra.Xmult
         }
       end
     end
     return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
-  calc_dollar_bonus = function(self, card)
-    if card.ability.extra.money > 0 then
-      return ease_poke_dollars(card, "Golbat", card.ability.extra.money, true)
-    end
-	end
 }
 -- Oddish 043
 local oddish={

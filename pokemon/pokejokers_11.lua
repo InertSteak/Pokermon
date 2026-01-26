@@ -349,10 +349,75 @@ local mega_camerupt={
 -- Spoink 325
 -- Grumpig 326
 -- Spinda 327
+local spinda={
+  name = "spinda",
+  pos = {x = 0, y = 0},
+  config = {extra = {enhancements = {"m_bonus", "m_mult", "m_wild"}, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local card_vars = {}
+    for i = 1, #center.ability.extra.enhancements do
+      local enhance_name = localize('poke_'..center.ability.extra.enhancements[i])
+      card_vars[#card_vars + 1] = enhance_name
+    end
+    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Wheel of Fortune"}}
+    return {vars = card_vars}
+  end,
+  rarity = 2,
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      local natures = 0
+      for _, scored_card in ipairs(context.scoring_hand) do
+        for i=1, #card.ability.extra.targets do
+          if scored_card:get_id() == card.ability.extra.targets[i].id then
+              natures = natures + 1
+              local enhancement = pseudorandom_element(card.ability.extra.enhancements, pseudoseed('spinda'))
+              scored_card:set_ability(enhancement, nil, true)
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      scored_card:juice_up()
+                      return true
+                  end
+              }))
+          end
+        end
+      end
+      if natures > 0 then
+        return {
+            message = localize('poke_teeter_dance_ex'),
+            colour = G.ARGS.LOC_COLOURS["colorless"]
+        }
+      end
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.enhancements = get_poke_target_card_enhancements("spinda", 3, {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky", "m_poke_seed"})
+    card.ability.extra.targets = get_poke_target_card_ranks("spinda", 3, card.ability.extra.targets)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      SMODS.add_card{set = 'Tarot', key = 'c_wheel_of_fortune'}
+    end
+  end,
+}
 -- Trapinch 328
 -- Vibrava 329
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {aron, lairon, aggron, roselia, numel, camerupt, mega_camerupt},
+  list = {aron, lairon, aggron, roselia, numel, camerupt, mega_camerupt, spinda},
 }

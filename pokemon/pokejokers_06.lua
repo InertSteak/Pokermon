@@ -765,6 +765,7 @@ local crobat={
   config = {extra = {mult = 0, mult_mod = 2, chips = 0, chip_mod = 15, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'bat_leech'}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
   end,
   rarity = "poke_safari", 
@@ -775,7 +776,7 @@ local crobat={
   gen = 2,
   blueprint_compat = true,
   perishable_compat = false,
-  calculate = function(self, card, context)
+calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       local m_count = 0 
       local c_count = 0 
@@ -783,33 +784,31 @@ local crobat={
       local d_count = 0
       local enhanced = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff then 
+          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
               enhanced[#enhanced+1] = v
-              if v.config.center == G.P_CENTERS.m_mult or v.config.center == G.P_CENTERS.m_wild then
-                m_count = m_count + 1
-              end
-              if v.config.center == G.P_CENTERS.m_bonus or v.config.center == G.P_CENTERS.m_stone then
+              v.vampired = true
+              
+              if SMODS.has_enhancement(v, 'm_bonus') or SMODS.has_enhancement(v, 'm_stone') then
                 c_count = c_count + 1
               end
-              if v.config.center == G.P_CENTERS.m_steel or v.config.center == G.P_CENTERS.m_glass then
+              if SMODS.has_enhancement(v, 'm_steel') or SMODS.has_enhancement(v, 'm_glass') or SMODS.has_enhancement(v, 'm_poke_flower') then
                 x_count = x_count + 1
               end
-              if v.config.center == G.P_CENTERS.m_gold or v.config.center == G.P_CENTERS.m_lucky then
+              if SMODS.has_enhancement(v, 'm_gold') then
                 d_count = d_count + 1
               end
-              local enhancement_type = pseudorandom(pseudoseed('crobat'))
-              if enhancement_type > .875 then v:set_ability(G.P_CENTERS.m_bonus, nil, true)
-              elseif enhancement_type > .75 then v:set_ability(G.P_CENTERS.m_mult, nil, true)
-              elseif enhancement_type > .625 then v:set_ability(G.P_CENTERS.m_wild, nil, true)
-              elseif enhancement_type > .50 then v:set_ability(G.P_CENTERS.m_glass, nil, true)
-              elseif enhancement_type > .375 then v:set_ability(G.P_CENTERS.m_steel, nil, true)
-              elseif enhancement_type > .25 then v:set_ability(G.P_CENTERS.m_stone, nil, true)
-              elseif enhancement_type > .125 then v:set_ability(G.P_CENTERS.m_gold, nil, true)
-              else v:set_ability(G.P_CENTERS.m_lucky, nil, true)
+              
+              if not SMODS.has_enhancement(v, 'm_bonus') and not SMODS.has_enhancement(v, 'm_stone') and not SMODS.has_enhancement(v, 'm_steel')
+              and not SMODS.has_enhancement(v, 'm_glass') and not SMODS.has_enhancement(v, 'm_poke_flower') and not SMODS.has_enhancement(v, 'm_gold') 
+              or (SMODS.has_enhancement(v, 'm_mult') or SMODS.has_enhancement(v, 'm_wild')) then
+                m_count = m_count + 1
               end
+              
+              v:set_ability(G.P_CENTERS.c_base, nil, true)
               G.E_MANAGER:add_event(Event({
                   func = function()
                       v:juice_up()
+                      v.vampired = nil
                       return true
                   end
               })) 
@@ -834,7 +833,7 @@ local crobat={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
-          message = localize("poke_screech_ex"), 
+          message = localize("poke_screech_ex"),
           colour = G.C.BLACK,
           mult_mod = card.ability.extra.mult,
           chip_mod = card.ability.extra.chips,

@@ -472,7 +472,7 @@ local kingler={
 local voltorb={
   name = "voltorb", 
   pos = {x = 8, y = 7}, 
-  config = {extra = {Xmult = 2, rounds = 4, volatile = 'right'}},
+  config = {extra = {Xmult = 1.75, rounds = 4, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -514,7 +514,7 @@ local voltorb={
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
-  config = {extra = {Xmult = 2.5, money = 3, volatile = 'right'}},
+  config = {extra = {Xmult = 2.25, money = 3, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
