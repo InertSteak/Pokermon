@@ -372,6 +372,7 @@ local safety_first = {
     rules = {
         custom = {
             { id = 'no_shop_jokers' },
+            { id = 'no_energy'}
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
@@ -389,18 +390,6 @@ local safety_first = {
             {id = 'c_pluto'},
             {id = 'c_black_hole'},
             {id = 'c_poke_moonstone'},
-            {id = 'c_poke_grass_energy'},
-            {id = 'c_poke_fire_energy'},
-            {id = 'c_poke_water_energy'},
-            {id = 'c_poke_lightning_energy'},
-            {id = 'c_poke_psychic_energy'},
-            {id = 'c_poke_fighting_energy'},
-            {id = 'c_poke_colorless_energy'},
-            {id = 'c_poke_darkness_energy'},
-            {id = 'c_poke_metal_energy'},
-            {id = 'c_poke_fairy_energy'},
-            {id = 'c_poke_dragon_energy'},
-            {id = 'c_poke_earth_energy'},
             {id = 'c_poke_double_rainbow_energy'},
             {id = 'c_poke_transformation'},
             {id = 'c_poke_teraorb'},

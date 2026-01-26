@@ -59,7 +59,11 @@ end
 
 local create_pocket_card = function(self, card, i)
     if i == 1 then
-      return create_energy(self, card)
+      if not G.GAME.modifiers.no_energy then
+        return create_energy(self, card)
+      else
+        return create_item('pocket')
+      end
     elseif i == 2 and card.from_tag and G.GAME.round_resets.ante >= 5 and not next(SMODS.find_card('c_poke_megastone')) then
       local mega = pseudorandom(pseudoseed('pocket'))
       if mega > .75 then
