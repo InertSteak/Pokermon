@@ -431,20 +431,14 @@ local safety_first = {
             { id = 'bl_final_bell', type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
             {id = 'bl_poke_mirror', type = 'blind'},
-            {id = 'bl_arm', type = 'blind'},
             {id = 'bl_eye', type = 'blind'},
             {id = 'bl_club', type = 'blind'},
             {id = 'bl_window', type = 'blind'},
             {id = 'bl_head', type = 'blind'},
             {id = 'bl_goad', type = 'blind'},
-            {id = 'bl_water', type = 'blind'},
-            {id = 'bl_fish', type = 'blind'},
-            {id = 'bl_mouth', type = 'blind'},
             {id = 'bl_plant', type = 'blind'},
-            {id = 'bl_tooth', type = 'blind'},
             {id = 'bl_mark', type = 'blind'},
             {id = 'bl_poke_gray_godfather', type = 'blind'},
-            {id = 'bl_poke_iridescent_hacker', type = 'blind'}
         }
     },
     deck = {
