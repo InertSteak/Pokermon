@@ -1146,7 +1146,7 @@ return {
                 name = "Golbat",
                 text = {
                     "Gains {C:mult}+#2#{} Mult for each",
-                    "{C:attention}Enhanced{} card in poker hand",
+                    "{C:attention}Enhanced{} card in poker hand,",
                     "removes card {C:attention}Enhancement",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves after eating {C:attention,s:0.8}#3#{C:inactive,s:0.8} Enhancements)",
@@ -2397,7 +2397,7 @@ return {
                     "{C:attention}Leech List",  
                     "For each scoring {C:attention}Enhancement{} gain",
                     "{C:mult}+#2#{} Mult, {C:chips}+#4#{} Chips, {X:mult,C:white}X#6#{} Mult, or",
-                    "{C:money}$#8#{} payout at end of round",
+                    "{C:money}$#8#{} payout at end of round,",
                     "removes card {C:attention}Enhancement",
                     "{C:inactive,s:0.9}(Currently {C:chips,s:0.9}+#3#{}, {C:mult,s:0.9}+#1#{}, {X:mult,C:white,s:0.9}X#5#{}, {C:money,s:0.9}$#7#{C:inactive,s:0.9} at end of round)"
                 } 
