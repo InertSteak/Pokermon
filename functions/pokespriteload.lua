@@ -138,7 +138,7 @@ PokemonSprites = {
 {name = "shellder", base = {pos = {x = 28, y = 5}},},
 {name = "cloyster", base = {pos = {x = 0, y = 6}},},
 {name = "gastly", base = {pos = {x = 2, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
-{name = "haunter", base = {pos = {x = 4, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 5, y = 6}}}},
+{name = "haunter", base = {pos = {x = 4, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 5, y = 6, apply_edition = true}}}},
 {name = "gengar", base = {pos = {x = 6, y = 6}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT', soul_pos = {x = 7, y = 6}}}},
 {name = "mega_gengar", base = {pos = {x = 4, y = 1}, soul_pos = {x = 5, y = 1}},gen_atlas = 1, alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "gmax_gengar", base = {pos = {x = 10, y = 7}, soul_pos = {x = 11, y = 7}},gen_atlas = 1},
@@ -1389,8 +1389,10 @@ poke_load_atlas = function(item)
     local atlas_prefix = poke_get_atlas_prefix(item.name, sprite_info)
     if sprite_info.alts and sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].artist then
       item.artist = sprite_info.alts[atlas_prefix].artist
-      if sprite_info.alts[atlas_prefix].soul_pos then
-        item.soul_pos = sprite_info.alts[atlas_prefix].soul_pos
+      local soul_pos = sprite_info.alts[atlas_prefix].soul_pos
+      if soul_pos then
+        item.soul_pos = soul_pos
+        item.poke_apply_soul_edition = soul_pos.apply_edition
       end
       if sprite_info.alts[atlas_prefix].anim_atlas then
         item.animated = true
