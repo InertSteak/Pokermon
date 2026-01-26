@@ -28,7 +28,7 @@ local hazard = {
 local seed = {
    key = "seed",
    atlas = "AtlasEnhancementsBasic",
-   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+   artist = 'MyDude_YT',
    pos = { x = 1, y = 0 },
    config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
@@ -38,33 +38,48 @@ local seed = {
    in_pool = function(self, args) return false end,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
+      card.temp_level = card.temp_level or card.ability.extra.level -- If this card has yet to score this hand, snapshot the starting level to handle delayed set_sprites calls
       card.ability.extra.level = card.ability.extra.level + 1
-      
-      if card.ability.extra.level and card.ability.extra.level > 0 and card.ability.extra.level < 6 then
-        if card.ability.extra.level == 5 then
+
+      local level, level_max = card.ability.extra.level, card.ability.extra.level_max
+
+      if level and level > 0 and level <= level_max then
+        if level == level_max then
           return {
-            message = localize('k_upgrade_ex'),
-            sound = 'poke_seed_'..card.ability.extra.level,
-            extra = {func = function() ease_dollars(card.ability.extra.money); card:set_ability(G.P_CENTERS.m_poke_flower, nil, true) end}
+            extra = {
+              message = localize('k_upgrade_ex'),
+              sound = 'poke_seed_'..level,
+            },
+            func = function()
+              ease_dollars(card.ability.extra.money);
+              card:set_ability(G.P_CENTERS.m_poke_flower, nil, true)
+            end
           }
         else
           return {
-            message = localize('k_upgrade_ex'),
-            sound = 'poke_seed_'..card.ability.extra.level,
             extra = {
-              func = function() 
-                if card.ability.extra.level < card.ability.extra.level_max then
+              message = localize('k_upgrade_ex'),
+              sound = 'poke_seed_'..level,
+            },
+            func = function()
+              G.E_MANAGER:add_event(Event({
+                func = function()
+                  card.temp_level = level
                   self:set_sprites(card)
+                  return true
                 end
-              end}
+              }))
+            end,
           }
         end
       end
      end
    end,
    set_sprites = function(self, card, front)
-     if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.level and card.ability.extra.level < card.ability.extra.level_max then
-       local x_pos = card.ability.extra.level + 1
+    local level = card.temp_level
+        or card and card.ability and type(card.ability.extra) == 'table' and card.ability.extra.level
+     if level then
+       local x_pos = level + 1
        card.children.center:set_sprite_pos({x = x_pos, y = 0})
      end
    end
@@ -73,7 +88,7 @@ local seed = {
 local flower = {
    key = "flower",
    atlas = "AtlasEnhancementsBasic",
-   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+   artist = 'MyDude_YT',
    pos = { x = 6, y = 0 },
    config = {Xmult_flower = 3},
    loc_vars = function(self, info_queue, center)
@@ -96,5 +111,5 @@ local flower = {
 
 return {
    name = "Enhancements",
-   list = { hazard, seed, flower}
+   list = { hazard, seed, flower} -- Would be nice to add all of the seed stages here since they are now more detailed than just numbers in the corner
 }

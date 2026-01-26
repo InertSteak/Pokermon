@@ -200,7 +200,12 @@ local bramblin={
           card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
           if card.ability.extra.rank_scored == 2 then
             context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                context.scoring_hand[i]:juice_up()
+                return true
+              end
+            }))
             card.ability.extra.seed_added = card.ability.extra.seed_added + 1
             break
           end
@@ -246,8 +251,13 @@ local brambleghast={
           card.ability.extra.rank_scored = card.ability.extra.rank_scored + 1
           if card.ability.extra.rank_scored == 2 then
             context.scoring_hand[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-            context.scoring_hand[i]:set_sprites(context.scoring_hand[i].config.center)
             context.scoring_hand[i].ability.extra.level = 2
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                context.scoring_hand[i]:juice_up()
+                return true
+              end
+            }))
             card.ability.extra.seed_added = card.ability.extra.seed_added + 1
             break
           end

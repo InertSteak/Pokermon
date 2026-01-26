@@ -939,6 +939,7 @@ local miracleseed = {
       G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
     end
     juice_flip(card, true)
+    poke_unhighlight_cards()
   end,
   in_pool = function(self)
     return true

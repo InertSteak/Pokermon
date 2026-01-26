@@ -45,7 +45,7 @@ local shiny = ({
       SMODS.change_booster_limit(-1)
     end,
     on_load = function(card)
-      if card.config.center.atlas and G.ASSET_ATLAS[card.config.center.atlas..'Shiny'] then
+      if card.config.center.atlas and G.ASSET_ATLAS[card.config.center.atlas..'Shiny'] and type(card.config.center.atlas) == 'string' then
         local old_atlas = card.config.center.atlas
         card.config.center.atlas = card.config.center.atlas..'Shiny'
         card:set_sprites(card.config.center)
