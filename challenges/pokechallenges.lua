@@ -429,7 +429,6 @@ local safety_first = {
         },
         banned_other = {
             { id = 'bl_final_bell', type = 'blind' },
-            { id = 'bl_final_leaf',  type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
             {id = 'bl_poke_mirror', type = 'blind'},
             {id = 'bl_arm', type = 'blind'},
@@ -440,12 +439,10 @@ local safety_first = {
             {id = 'bl_goad', type = 'blind'},
             {id = 'bl_water', type = 'blind'},
             {id = 'bl_fish', type = 'blind'},
-            {id = 'bl_house', type = 'blind'},
             {id = 'bl_mouth', type = 'blind'},
             {id = 'bl_plant', type = 'blind'},
             {id = 'bl_tooth', type = 'blind'},
             {id = 'bl_mark', type = 'blind'},
-            {id = 'bl_poke_rocket', type = 'blind'},
             {id = 'bl_poke_gray_godfather', type = 'blind'},
             {id = 'bl_poke_iridescent_hacker', type = 'blind'}
         }
