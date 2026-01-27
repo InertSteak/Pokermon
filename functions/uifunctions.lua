@@ -293,7 +293,8 @@ local site_colours = {
   ['carrd'] = HEX("4071B7"),
   ['discord'] = HEX("5865F2"),
   ['instagram'] = HEX("D60059"),
-  ['tiktok'] = HEX("283234")
+  ['tiktok'] = HEX("283234"),
+  ['deviantart'] = HEX('00E59B')
 }
 
 local function get_site_colour(domain)
