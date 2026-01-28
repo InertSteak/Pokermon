@@ -5553,8 +5553,7 @@ return {
             sleeve_poke_diceysleeve_alt = {
                 name = "Debris Sleeve",
                 text = {
-                    "All {C:attention}Hazards{} are created",
-                    "with {C:dark_edition}Negative{} edition",
+                    "All {C:attention}Hazards{} give {C:attention}+1{} hand size",
                 } 
             },
         },
