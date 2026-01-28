@@ -37,23 +37,27 @@ get_next_stage = function(stage)
   return (POKE_STAGES[stage] or {}).next
 end
 
-HIGHEST_EVO_OVERRIDES = {}
-PREVIOUS_EVO_OVERRIDES = {}
+poke_get_evo_overrides = function(name)
+  for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
+    for i, evo_stage in ipairs(evo_line) do
+      local pokemon_in_stage = type(evo_stage) == 'table'
+          and evo_stage or { evo_stage }
 
-for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
-  for i, evo_stage in ipairs(evo_line) do
-    local pokemon_in_stage = type(evo_stage) == 'table'
-        and evo_stage or { evo_stage }
-
-    for _, pokemon in ipairs(pokemon_in_stage) do
-      if i > 1 then
-        PREVIOUS_EVO_OVERRIDES[pokemon] = evo_line[1]
-      end
-      if i < #evo_line then
-        HIGHEST_EVO_OVERRIDES[pokemon] = evo_line[#evo_line]
+      for _, pokemon in ipairs(pokemon_in_stage) do
+        if pokemon == name then
+          local overrides = {}
+          if i > 1 then
+            overrides.previous_evo = evo_line[1]
+          end
+          if i < #evo_line then
+            overrides.highest_evo = evo_line[#evo_line]
+          end
+          return overrides
+        end
       end
     end
   end
+  return {}
 end
 
 -- Aliases for compatibility:
@@ -61,3 +65,6 @@ end
 poketype_list = POKE_TYPES
 
 native_evo_items = POKE_NATIVE_EVO_ITEMS
+
+HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).highest_evo end})
+PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
