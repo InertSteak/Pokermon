@@ -1,12 +1,5 @@
 POKE_TYPES = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
 
-POKE_NATIVE_EVO_ITEMS = {
-  "firestone", "waterstone", "leafstone", "thunderstone",
-  "dawnstone", "shinystone", "moonstone", "duskstone",
-  "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
-  "linkcable", "kingsrock", "dragonscale", "hardstone",
-}
-
 POKE_STAGES = {
   ["Baby"] = { prev = nil, next = "Basic" },
   ["Basic"] = { prev = "Baby", next = "One" },
@@ -15,6 +8,13 @@ POKE_STAGES = {
   ["Legendary"] = { prev = "Legendary", next = "Legendary" },
   ["Mega"] = { prev = nil, next = nil },
   ["???"] = { prev = nil, next = nil },
+}
+
+POKE_NATIVE_EVO_ITEMS = {
+  "firestone", "waterstone", "leafstone", "thunderstone",
+  "dawnstone", "shinystone", "moonstone", "duskstone",
+  "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
+  "linkcable", "kingsrock", "dragonscale", "hardstone",
 }
 
 POKE_EVO_OVERRIDES = {
