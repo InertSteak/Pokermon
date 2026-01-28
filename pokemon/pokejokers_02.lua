@@ -418,10 +418,16 @@ local zubat={
   perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and #context.scoring_hand == 1 then
-        local scoring_card = context.scoring_hand[1]
+      if context.before then
+        local scoring_card = nil
+        for i = 1, #context.scoring_hand do
+          if context.scoring_hand[i].config.center ~= G.P_CENTERS.c_base then
+            scoring_card = context.scoring_hand[i]
+            break
+          end
+        end
         
-        if scoring_card.config.center ~= G.P_CENTERS.c_base and not scoring_card.debuff and not scoring_card.vampired then
+        if scoring_card and not scoring_card.debuff and not scoring_card.vampired then
           card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
           scoring_card.vampired = true
           scoring_card:set_ability(G.P_CENTERS.c_base, nil, true)
@@ -461,7 +467,7 @@ local golbat={
     local eating_left = math.max(0, self.config.evo_rqmt - card.ability.extra.eaten)
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, eating_left}}
   end,
-  rarity = "poke_safari", 
+  rarity = 3, 
   cost = 8, 
   stage = "One", 
   ptype = "Dark",
