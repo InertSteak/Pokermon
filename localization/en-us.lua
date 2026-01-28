@@ -5550,6 +5550,13 @@ return {
                     "Earn no {C:attention}Interest"
                 } 
             },
+            sleeve_poke_diceysleeve_alt = {
+                name = "Debris Sleeve",
+                text = {
+                    "All {C:attention}Hazards{} are created",
+                    "with {C:dark_edition}Negative{} edition",
+                } 
+            },
         },
         Spectral = {
             c_poke_ultraball = {

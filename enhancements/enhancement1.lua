@@ -23,6 +23,12 @@ local hazard = {
       end
     end
    end,
+   set_ability = function(self, card, initial, delay_sprites)
+     if initial and G.GAME.modifiers.negative_hazards then
+       local edition = {negative = true}
+       card:set_edition(edition, true)
+     end
+   end
 }
 
 local seed = {
