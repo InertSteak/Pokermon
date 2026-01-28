@@ -12,15 +12,6 @@ extended_family = {
   rotomm = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
 }
 
-native_evo_items = {
-  "firestone", "waterstone", "leafstone", "thunderstone",
-  "dawnstone", "shinystone", "moonstone", "duskstone",
-  "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
-  "linkcable", "kingsrock", "dragonscale", "hardstone",
-}
-
-poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-
 type_sticker_applied = function(card)
   if not card then return false end
   for _, poketype in ipairs(poketype_list) do
@@ -410,32 +401,6 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
-POKE_STAGES = {
-  ["Baby"] = { prev = nil, next = "Basic" },
-  ["Basic"] = { prev = "Baby", next = "One" },
-  ["One"] = { prev = "Basic", next = "Two" },
-  ["Two"] = { prev = "One", next = nil },
-  ["Legendary"] = { prev = "Legendary", next = "Legendary" },
-  ["Mega"] = { prev = nil, next = nil },
-}
-
-poke_add_stage = function (stage, prev_stage, next_stage)
-  POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
-end
-
-get_previous_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).prev
-end
-
-get_next_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).next
-end
-
-HIGHEST_EVO_OVERRIDES = {
-  ["cosmog"] = { "solgaleo", "lunala" },
-  ["cosmoem"] = { "solgaleo", "lunala" },
-  ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
-}
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
@@ -513,13 +478,6 @@ get_previous_from_mega = function(name, prefix, full_key)
   local prev_key = "j_"..prefix.."_"..prev
   return G.P_CENTERS["j_"..prefix.."_"..prev] and (full_key and prev_key or prev)
 end
-
-PREVIOUS_EVO_OVERRIDES = {
-  ["solgaleo"] = "cosmoem",
-  ["lunala"] = "cosmoem",
-  ["urshifu_single_strike"] = "kubfu",
-  ["urshifu_rapid_strike"] = "kubfu",
-}
 
 get_previous_evo = function(card, full_key)
   local center = card.config.center
