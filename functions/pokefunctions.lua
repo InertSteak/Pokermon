@@ -14,9 +14,9 @@ extended_family = {
 
 type_sticker_applied = function(card)
   if not card then return false end
-  for _, poketype in ipairs(poketype_list) do
-    if card.ability[poketype:lower() .. '_sticker'] then
-      return poketype
+  for _, ptype in ipairs(POKE_TYPES) do
+    if card.ability[ptype:lower() .. '_sticker'] then
+      return ptype
     end
   end
   return false
