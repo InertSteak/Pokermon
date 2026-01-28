@@ -23,34 +23,12 @@ poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "
 
 type_sticker_applied = function(card)
   if not card then return false end
-  if card.ability.grass_sticker then
-    return "Grass"
-  elseif card.ability.fire_sticker then
-    return "Fire"
-  elseif card.ability.water_sticker then
-    return "Water"
-  elseif card.ability.lightning_sticker then
-    return "Lightning"
-  elseif card.ability.psychic_sticker then
-    return "Psychic"
-  elseif card.ability.fighting_sticker then
-    return "Fighting"
-  elseif card.ability.colorless_sticker then
-    return "Colorless"
-  elseif card.ability.dark_sticker then
-    return "Dark"
-  elseif card.ability.metal_sticker then
-    return "Metal"
-  elseif card.ability.fairy_sticker then
-    return "Fairy"
-  elseif card.ability.dragon_sticker then
-    return "Dragon"
-  elseif card.ability.earth_sticker then
-    return "Earth"
-  else
-    return false
+  for _, poketype in ipairs(poketype_list) do
+    if card.ability[poketype:lower() .. '_sticker'] then
+      return poketype
+    end
   end
-  
+  return false
 end
 
 find_pokemon_type = function(target_type, exclude_card, exclude_name)
