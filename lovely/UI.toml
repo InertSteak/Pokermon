@@ -51,25 +51,6 @@ payload = '''
 UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
 '''
 
-
-# Description functionality, a little hacky but it works
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''
-if main_end then 
-    desc_nodes[#desc_nodes+1] = main_end 
-end
-'''
-position = "after"
-payload = '''
-if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
-  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
-end
-'''
-match_indent = true
-
-
 # Card Effect Divider
 [[patches]]
 [patches.pattern]

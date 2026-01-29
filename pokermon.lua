@@ -69,6 +69,7 @@ SMODS.Rarity{
 }
 
 --Load helper function files
+assert(SMODS.load_file("functions/pokeconstants.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
@@ -217,6 +218,21 @@ function Card:remove()
   return removed(self)
 end
 
+--To support Debris sleeve combo
+local card_set_ability_old = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
+      self.ability.card_limit = self.ability.card_limit - 1
+  end
+  local ret = card_set_ability_old(self, center, initial, delay_sprites)
+  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
+      if not self.ability then self.ability = {} end
+      self.ability.card_limit = (self.ability.card_limit or 0) + 1
+  end
+  return ret
+end
+
+
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
     if G.GAME.modifiers.no_energy then
@@ -230,6 +246,8 @@ function SMODS.current_mod.reset_game_globals(run_start)
   end
   reset_espeon_card()
   reset_gligar_suit()
+  
+  poke_reset_type('cattype', {'skitty', 'delcatty'})
 end
 
 --Tutorial WIP

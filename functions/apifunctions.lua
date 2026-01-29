@@ -95,3 +95,7 @@ pokermon.Juice = function(item, custom_prefix, set)
   end
   SMODS.Consumable(item)
 end
+
+pokermon.add_stage = function(stage, prev_stage, next_stage)
+  POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
+end

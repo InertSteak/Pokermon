@@ -213,7 +213,130 @@ local simipour = {
   end,
 }
 -- Munna 517
+local munna={
+  name = "munna",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 5, scry = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.scry}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 5,
+  item_req = "moonstone",
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local rank_match = nil
+      local suit_match = nil
+      for i = 1, #G.scry_view.cards do
+        local scry_card = G.scry_view.cards[i]
+        if not scry_card.debuff then
+          --Suit check
+          if not SMODS.has_no_suit(context.other_card) and not SMODS.has_no_suit(scry_card) and not suit_match then
+            if SMODS.has_any_suit(scry_card) or context.other_card:is_suit(scry_card.base.suit) then
+              suit_match = true
+            end
+          end
+          --Rank check
+          if not SMODS.has_no_rank(context.other_card) and not SMODS.has_no_rank(scry_card) and not rank_match then
+            if context.other_card:get_id() == scry_card:get_id() then
+              rank_match = true
+            end
+          end
+          if suit_match and rank_match then break end
+        end
+      end
+      
+      if suit_match or rank_match then
+        return {
+          mult = card.ability.extra.mult_mod,
+          card = card
+        }
+      end
+    end
+    return item_evo(self, card, context, "j_poke_musharna")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+  end,
+}
 -- Musharna 518
+local musharna={
+  name = "musharna",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_multi = 1.5, scry = 2, scry_added = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.scry,}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 5,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      local psy_count = #find_pokemon_type("Psychic")
+      if psy_count > 0 then
+        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + (psy_count * card.ability.extra.scry)
+        card.ability.extra.scry_added = (psy_count * card.ability.extra.scry)
+        card:juice_up()
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      card.ability.extra.scry_added = 0
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local rank_match = nil
+      local suit_match = nil
+      for i = 1, #G.scry_view.cards do
+        local scry_card = G.scry_view.cards[i]
+        if not scry_card.debuff then
+          --Suit check
+          if not SMODS.has_no_suit(context.other_card) and not SMODS.has_no_suit(scry_card) and not suit_match then
+            if SMODS.has_any_suit(scry_card) or context.other_card:is_suit(scry_card.base.suit) then
+              suit_match = true
+            end
+          end
+          --Rank check
+          if not SMODS.has_no_rank(context.other_card) and not SMODS.has_no_rank(scry_card) and not rank_match then
+            if context.other_card:get_id() == scry_card:get_id() then
+              rank_match = true
+            end
+          end
+          if suit_match and rank_match then break end
+        end
+      end
+      
+      if suit_match or rank_match then
+        return {
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
+      end
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not from_debuff and card.ability.extra.scry_added > 0 then
+      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+    end
+  end,
+}
 -- Pidove 519
 -- Tranquill 520
 -- Unfezant 521
@@ -466,5 +589,5 @@ local excadrill={
 -- Sewaddle 540
 return {
   name = "Pokemon Jokers 511-540",
-  list = {pansage, simisage, pansear, simisear, panpour, simipour, roggenrola, boldore, gigalith, drilbur, excadrill },
+  list = {pansage, simisage, pansear, simisear, panpour, simipour, munna, musharna, roggenrola, boldore, gigalith, drilbur, excadrill },
 }

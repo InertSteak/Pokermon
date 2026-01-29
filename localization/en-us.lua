@@ -1136,9 +1136,10 @@ return {
             j_poke_zubat = {
                 name = "Zubat",
                 text = {
-                    "If played hand is exactly {C:attention}1{}",
-                    "{C:attention}Enhanced{} card, gain {C:mult}+#2#{} Mult",
-                    "and remove card {C:attention}Enhancement",
+                    "Gains {C:mult}+#2#{} Mult if played hand",
+                    "contains a scoring {C:attention}Enhanced{} card,",
+                    "removes card {C:attention}Enhancement{} from",
+                    "first scoring {C:attention}Enhanced{} card",
                     "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
                 }
             },
@@ -2345,7 +2346,7 @@ return {
             j_poke_hoothoot = {
                 name = 'Hoothoot',
                 text = {
-                    "{C:purple}+#1# Foresight ",
+                    "{C:purple}+#1# Foresight",
                     "Each {C:attention}Foreseen{} card",
                     "gives their total Chips",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
@@ -3456,6 +3457,22 @@ return {
                   "{C:inactive}(Excludes Shedinjas){}"
                 }
             },
+            j_poke_makuhita = {
+                name = "Makuhita",
+                text = {
+                  "When {C:attention}Blind{} is selected,",
+                  "gain {C:chips}+#1#{} hand",
+                  "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+                }
+            },
+            j_poke_hariyama = {
+                name = "Hariyama",
+                text = {
+                  "When {C:attention}Blind{} is selected,",
+                  "gain {C:chips}+#1#{} hand for each",
+                  "{X:fighting,C:white}Fighting{} Joker you have",
+                }
+            },
             j_poke_azurill = {
                 name = 'Azurill',
                 text = {
@@ -3473,6 +3490,26 @@ return {
                     "gives {X:mult,C:white} X#1# {} Mult when scored",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Thunder Stone{C:inactive,s:0.8})"
                 } 
+            },
+            j_poke_skitty = {
+                name = "Skitty",
+                text = {
+                  "Copies ability of",
+                  "{B:1,V:2}#1#{} Joker",
+                  "to the right",
+                  "{C:inactive,s:0.8}(Type changes every round){}",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_delcatty = {
+                name = "Delcatty",
+                text = {
+                  "Copies ability of",
+                  "{B:1,V:2}#1#{} Joker",
+                  "to the right",
+                  "with {C:pink}+#2#{} Energy",
+                  "{C:inactive,s:0.8}(Type changes every round){}",
+                }
             },
             j_poke_aron = {
                 name = 'Aron',
@@ -4359,6 +4396,30 @@ return {
                     "Leftmost unenhanced card with the",
                     "lowest base Chips in played hand",
                     "becomes a {C:attention}Bonus{} card",
+                }
+            },
+            j_poke_munna = {
+                name = "Munna",
+                text = {
+                  "{C:purple}+#2# Foresight",
+                  "Played cards that share",
+                  "a {C:attention}rank{} or {C:attention}suit{} with",
+                  "{C:attention}Foreseen{} cards give",
+                  "{C:mult}+#1#{} Mult {C:attention}when scored",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
+                }
+            },
+            j_poke_musharna = {
+                name = "Musharna",
+                text = {
+                  "When {C:attention}Blind{} is selected, gain",
+                  "{C:purple}+#2# Foresight{} this round for",
+                  "each {X:psychic,C:white}Psychic{} type you have",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Played cards that share",
+                  "a {C:attention}rank{} or {C:attention}suit{} with",
+                  "{C:attention}Foreseen{} cards give",
+                  "{X:mult,C:white} X#1# {} Mult {C:attention}when scored",
                 }
             },
             j_poke_roggenrola = {
@@ -5547,6 +5608,12 @@ return {
                     "Earn {C:money}$#4#{} for each {C:attention}Hazard{}",
                     "card in your {C:attention}full deck",
                     "Earn no {C:attention}Interest"
+                } 
+            },
+            sleeve_poke_diceysleeve_alt = {
+                name = "Debris Sleeve",
+                text = {
+                    "All {C:attention}Hazards{} give {C:attention}+1{} hand size",
                 } 
             },
         },
@@ -6984,7 +7051,7 @@ return {
            ch_c_poke_add_joker_slots = {"{C:attention}+1{} Joker Slot when Boss Blind defeated {C:inactive}(up to 5)"},
            ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
            ch_c_apply_randomizer = {"Pokemon Jokers evolve into random Pokemon Jokers"},
-           ch_c_no_energy = {"Energy no longer appears in the {C:attention}shop"},
+           ch_c_no_energy = {"Energy cards no longer appear in the {C:attention}shop"},
         },
     }
 }

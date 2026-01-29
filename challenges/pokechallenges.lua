@@ -72,8 +72,8 @@ local nuzlocke = {
             type = 'Challenge Deck'
         },
     },
-    button_colour = HEX('947362'),
-    text_colour = G.C.GREEN,
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 -- add joker slots when ante increases with Nuzlocke
@@ -132,8 +132,8 @@ local goodasgold = {
       type = 'Challenge Deck',
       enhancement = 'm_gold',
     },
-    button_colour = HEX('af843e'),
-    text_colour = G.C.GOLD,
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local parenthood = {
@@ -195,8 +195,8 @@ local parenthood = {
             {id = 'bl_poke_mirror', type = 'blind'}
         }
     },
-    button_colour = HEX("e7deb5"),
-    text_colour = HEX("84b56b"),
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local littlecup = {
@@ -226,8 +226,8 @@ local littlecup = {
     deck = {
       type = 'Challenge Deck',
     },
-    button_colour = HEX('deb0ad'),
-    text_colour = HEX('e8d4bb')
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local hammertime = {
@@ -259,8 +259,8 @@ local hammertime = {
         },
       type = 'Challenge Deck',
     },
-    button_colour = HEX('9AA4B7'),
-    text_colour = HEX('fc96c1')
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local lonesome = {
@@ -312,7 +312,8 @@ local lonesome = {
             {id = 'bl_poke_mirror', type = 'blind'}
         }
     },
-    button_colour = HEX('c59c4a'),
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local randomizer = {
@@ -336,8 +337,8 @@ local randomizer = {
     deck = {
       type = 'Challenge Deck',
     },
-    button_colour = G.C.DARK_EDITION,
-    text_colour = G.C.EDITION
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local delibird_delimma = {
@@ -364,7 +365,8 @@ local delibird_delimma = {
             {id = 'bl_poke_mirror', type = 'blind'}
         }
     },
-    button_colour = HEX('de3131')
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local safety_first = {
@@ -445,8 +447,8 @@ local safety_first = {
       type = 'Challenge Deck',
       enhancement = 'm_poke_hazard'
     },
-    button_colour = HEX('fde700'),
-    text_colour = G.C.L_BLACK
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 return {name = "Challenges", 
