@@ -245,6 +245,8 @@ function SMODS.current_mod.reset_game_globals(run_start)
   end
   reset_espeon_card()
   reset_gligar_suit()
+  
+  poke_reset_type('cattype', {'skitty', 'delcatty'})
 end
 
 --Tutorial WIP

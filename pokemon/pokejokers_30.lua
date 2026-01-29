@@ -300,10 +300,18 @@ local wyrdeer={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    if card.ability.extra.scry_added > 0 then
+      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
+    else
+      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    if card.ability.extra.scry_added > 0 then
+      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
+    else
+      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    end
   end,
 }
 -- Kleavor 900
