@@ -69,6 +69,7 @@ SMODS.Rarity{
 }
 
 --Load helper function files
+assert(SMODS.load_file("functions/pokeconstants.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
