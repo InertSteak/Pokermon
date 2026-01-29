@@ -401,33 +401,6 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
-POKE_STAGES = {
-  ["Baby"] = { prev = nil, next = "Basic" },
-  ["Basic"] = { prev = "Baby", next = "One" },
-  ["One"] = { prev = "Basic", next = "Two" },
-  ["Two"] = { prev = "One", next = nil },
-  ["Legendary"] = { prev = "Legendary", next = "Legendary" },
-  ["Mega"] = { prev = nil, next = nil },
-  ["???"] = { prev = nil, next = nil },
-}
-
-poke_add_stage = function (stage, prev_stage, next_stage)
-  POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
-end
-
-get_previous_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).prev
-end
-
-get_next_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).next
-end
-
-HIGHEST_EVO_OVERRIDES = {
-  ["cosmog"] = { "solgaleo", "lunala" },
-  ["cosmoem"] = { "solgaleo", "lunala" },
-  ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
-}
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
