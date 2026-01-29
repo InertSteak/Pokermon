@@ -401,6 +401,33 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
+POKE_STAGES = {
+  ["Baby"] = { prev = nil, next = "Basic" },
+  ["Basic"] = { prev = "Baby", next = "One" },
+  ["One"] = { prev = "Basic", next = "Two" },
+  ["Two"] = { prev = "One", next = nil },
+  ["Legendary"] = { prev = "Legendary", next = "Legendary" },
+  ["Mega"] = { prev = nil, next = nil },
+  ["???"] = { prev = nil, next = nil },
+}
+
+poke_add_stage = function (stage, prev_stage, next_stage)
+  POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
+end
+
+get_previous_stage = function(stage)
+  return (POKE_STAGES[stage] or {}).prev
+end
+
+get_next_stage = function(stage)
+  return (POKE_STAGES[stage] or {}).next
+end
+
+HIGHEST_EVO_OVERRIDES = {
+  ["cosmog"] = { "solgaleo", "lunala" },
+  ["cosmoem"] = { "solgaleo", "lunala" },
+  ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
+}
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
@@ -1287,6 +1314,27 @@ poke_reset_rank = function(name)
     local card = pseudorandom_element(valid_cards, pseudoseed(name..G.GAME.round_resets.ante))
     G.GAME.current_round[name].rank = card.base.value
     G.GAME.current_round[name].id = card.base.id
+  end
+end
+
+poke_reset_type = function(name, exclude_names)
+  G.GAME.current_round[name] = "Grass"
+  local valid_types = {}
+  for k, v in ipairs(G.jokers.cards) do
+    local excluded = nil
+    for i = 1, #exclude_names do
+      if v.ability.name == exclude_names[i] then
+        excluded = true
+        break
+      end
+    end
+    
+    if get_type(v) and not excluded then
+      valid_types[#valid_types + 1] = get_type(v)
+    end
+  end
+  if #valid_types > 0 then
+    G.GAME.current_round[name] = pseudorandom_element(valid_types, pseudoseed(name..G.GAME.round_resets.ante))
   end
 end
 

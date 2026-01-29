@@ -227,7 +227,7 @@ local shedinja={
   rarity = "poke_safari",
   cost = 8,
   gen = 3,
-  stage = "One",
+  stage = "???",
   ptype = "Psychic",
   atlas = "Pokedex3",
   perishable_compat = true,
@@ -284,7 +284,58 @@ local shedinja={
 -- Loudred 294
 -- Exploud 295
 -- Makuhita 296
+local makuhita={
+  name = "makuhita",
+  pos = {x = 0, y = 0},
+  config = {extra = {hands = 1, rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.hands, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      ease_hands_played(card.ability.extra.hands)
+      card:juice_up()
+    end
+    return level_evo(self, card, context, "j_poke_hariyama")
+  end,
+}
 -- Hariyama 297
+local hariyama={
+  name = "hariyama",
+  pos = {x = 0, y = 0},
+  config = {extra = {hands = 1, Xmult = 2, hand_req = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.hands, center.ability.extra.Xmult, center.ability.extra.hand_req}}
+  end,
+  rarity = 2,
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Fighting",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local hands = card.ability.extra.hands * #find_pokemon_type("Fighting")
+      ease_hands_played(hands)
+      card:juice_up()
+    end
+  end,
+}
+
 -- Azurill 298
 local azurill ={
   name = "azurill",
@@ -379,6 +430,76 @@ local nosepass={
   end
 }
 -- Skitty 300
+local skitty={
+  name = "skitty",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 6,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
+    return {vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  item_req = "moonstone",
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    local evo = item_evo(self, card, context, "j_poke_delcatty")
+    if not evo then
+      local other_joker = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
+          other_joker = G.jokers.cards[i + 1] 
+        end
+      end
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
+      if ret then
+          ret.colour = G.C.BLUE
+      end
+      return ret
+    else
+      return evo
+    end
+  end,
+  update = function(self, card, dt)
+    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+      local other_joker = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
+          other_joker = G.jokers.cards[i + 1] 
+        end
+      end
+      card.ability.blueprint_compat = (other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
+    end
+  end,
+  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    type_tooltip(self, info_queue, card)
+    local highlight_colour = card.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
+    local _c = card and card.config.center or card
+    if not full_UI_table.name then
+      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+    end
+    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
+    card.ability.blueprint_compat_check = nil
+    local main_end = (card.area and card.area == G.jokers) and {
+      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
+          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
+        }}
+      }}
+    } or nil
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
+    desc_nodes[#desc_nodes+1] = main_end
+  end,
+}
 return {name = "Pokemon Jokers 271-300", 
-        list = {shroomish, breloom, nincada, ninjask, shedinja, azurill, nosepass},
+        list = {shroomish, breloom, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
 }
