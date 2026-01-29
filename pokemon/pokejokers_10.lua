@@ -481,7 +481,7 @@ local skitty={
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     type_tooltip(self, info_queue, card)
-    local highlight_colour = card.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local highlight_colour = (G.GAME.current_round.cattype or "Grass") ~= "Lightning" and G.C.WHITE or G.C.BLACK
     local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
     local _c = card and card.config.center or card
     if not full_UI_table.name then
