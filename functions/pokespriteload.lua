@@ -1318,12 +1318,12 @@ local poke_artist_info = {
     {url = 'https://www.tiktok.com/@pigeon_pie', account = 'pigeon_pie'}
   }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
-  PurpleZaffre = {display_name = 'PurpleZaffre', artist_colour = G.C.WHITE, highlight_colour = HEX("6441A5"), links = {
+  --[[PurpleZaffre = {display_name = 'PurpleZaffre', artist_colour = G.C.WHITE, highlight_colour = HEX("6441A5"), links = {
     {url = 'https://www.purplezaffre.com/', site = 'Website', account = 'PurpleZaffre.com', colour = HEX("6441A5")},
     {url = 'https://www.deviantart.com/purplezaffre', site = 'Deviantart', account = 'PurpleZaffre'},
     {url = 'https://bsky.app/profile/purplezaffre.bsky.social', site = 'Bluesky', account = 'PurpleZaffre'},
     {URL = 'https://x.com/PurpleZaffre'}
-  }},
+  }}, --]]
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {
     {url = 'https://redhaering.carrd.co/', account = 'RedHaering'}
   }},
