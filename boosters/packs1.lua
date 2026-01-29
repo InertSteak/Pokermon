@@ -45,6 +45,7 @@ local poll_evo_item = function(seed)
   if #evo_item_key_list > 1 then
     return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
   end
+  return evo_item_key_list[1]
 end
 
 local create_item = function(seed)
