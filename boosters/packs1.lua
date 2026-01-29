@@ -38,13 +38,14 @@ local poll_evo_item = function(seed)
   end
   local evo_item_key_list = {}
   for key, _ in pairs(evo_item_key_set) do
-    if not G.GAME.used_jokers[key] and (not (type(G.P_CENTERS[key].in_pool) == 'function') or G.P_CENTERS[key]:in_pool()) then
+    if G.P_CENTERS[key] and not G.GAME.used_jokers[key] and not G.GAME.banned_keys[key] and (not (type(G.P_CENTERS[key].in_pool) == 'function') or G.P_CENTERS[key]:in_pool()) then
       evo_item_key_list[#evo_item_key_list+1] = key
     end
   end
   if #evo_item_key_list > 1 then
     return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
   end
+  return evo_item_key_list[1]
 end
 
 local create_item = function(seed)
