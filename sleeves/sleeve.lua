@@ -397,8 +397,8 @@ local diceysleeve = {
     end
     return {key = curr_key, vars = {self.config.hazard_layer, self.config.hazard_layer_max, self.config.h_size, self.config.money}}
   end,
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_sleeve",
+	pos = { x = 10, y = 1 },
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     if self.get_current_deck_key() == "b_poke_diceydeck" then
       G.GAME.modifiers.negative_hazards = true
