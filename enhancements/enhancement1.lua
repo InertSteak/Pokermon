@@ -34,8 +34,7 @@ local seed = {
    loc_vars = function(self, info_queue, center)
      return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
    end,
-   weight = 0,
-   in_pool = function(self, args) return false end,
+   weight = 5,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.temp_level = card.temp_level or card.ability.extra.level -- If this card has yet to score this hand, snapshot the starting level to handle delayed set_sprites calls
