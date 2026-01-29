@@ -391,8 +391,8 @@ local diceysleeve = {
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hazard_layer, self.config.hazard_layer_max, self.config.h_size, self.config.money}}
   end,
-	pos = { x = 0, y = 0 },
-	atlas = "placeholder_sleeve",
+	pos = { x = 10, y = 1 },
+	atlas = "AtlasDecksBasic",
   apply = function(self)
     G.E_MANAGER:add_event(Event({
       func = function()
