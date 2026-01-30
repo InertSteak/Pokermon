@@ -168,10 +168,14 @@ local jelly_donut={
     if context.setting_blind then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card("Energy", G.pack_cards, nil, nil, true, true, "c_poke_colorless_energy", nil)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        G.GAME.consumeable_buffer = 0
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+            func = function()
+              SMODS.add_card{set = "energy", key = "c_poke_colorless_energy"}
+              G.GAME.consumeable_buffer = 0
+              return true
+            end
+        })) 
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = G.ARGS.LOC_COLOURS.pink})
       else
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.MULT})
