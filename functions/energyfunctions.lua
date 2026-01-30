@@ -91,7 +91,7 @@ increment_energy = function(card, etype, amount, silent)
   -- checking if the colorless penalty applies
   local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not is_type(card, "Colorless") and etype == "Colorless")
   -- the regular energy increment
-  if (energy_matches(card, etype, c_penalty and false or true)) then
+  if (energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.energy_count = card.ability.extra.energy_count and (card.ability.extra.energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
