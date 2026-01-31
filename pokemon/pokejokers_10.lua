@@ -313,10 +313,10 @@ local makuhita={
 local hariyama={
   name = "hariyama",
   pos = {x = 0, y = 0},
-  config = {extra = {hands = 1, Xmult = 2, hand_req = 4}},
+  config = {extra = {hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.hands, center.ability.extra.Xmult, center.ability.extra.hand_req}}
+    return {vars = {center.ability.extra.hands}}
   end,
   rarity = 2,
   cost = 7,
