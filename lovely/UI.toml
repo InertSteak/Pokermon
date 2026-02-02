@@ -77,3 +77,16 @@ elseif part.control.br then
   end
 '''
 match_indent = true
+
+# Make room for more than 3 banned Boss Blinds in Challenges
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = "local temp_blind =  SMODS.create_sprite(0,0,1,1, G.ANIMATION_ATLAS[v.atlas or ''] or  'blind_chips',  v.pos) "
+position = "at"
+payload = '''
+local blind_size = #challenge.restrictions.banned_other > 3
+    and 1.6 - 0.4 * math.sqrt(#challenge.restrictions.banned_other) or 1
+local temp_blind =  SMODS.create_sprite(0,0,blind_size,blind_size, G.ANIMATION_ATLAS[v.atlas or ''] or  'blind_chips',  v.pos) 
+'''
+match_indent = true
