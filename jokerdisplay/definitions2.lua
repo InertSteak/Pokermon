@@ -1421,15 +1421,12 @@ jd_def["j_poke_piloswine"] = {
 }
 
 --	Corsola
-jd_def["j_poke_corsola"] = { 
+jd_def["j_poke_corsola"] = {
     text = {
         { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
     },
-    text_config = { colour = G.C.MULT },
-calc_function = function(card)
-card.joker_display_values.mult = card.ability.extra.mult_mod * card.ability.extra.corsola_tally
-end
+text_config = { colour = G.C.MULT },
 }
 
 --	Remoraid
