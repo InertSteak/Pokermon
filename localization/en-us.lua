@@ -2943,11 +2943,9 @@ return {
             j_poke_corsola = {
               name = 'Corsola',
               text = {
-                "{C:mult}+#1#{} Mult for each {C:attention}Enhanced{}",
-                "card in your {C:attention}full deck",
-                "{br:2}ERROR - CONTACT STEAK",
-                "Create a {C:attention}Basic{} {X:water,C:white}Water{} Joker if poker",
-                "hand contains {C:attention}5 Enhanced{} cards",
+                "When {C:attention}Blind{} is selected, gain {C:mult}+#1#{} Mult",
+                "for each {X:water,C:white}Water{} Joker you have,",
+                "then create a {C:attention}Basic{} {X:water,C:white}Water{} Joker",
                 "{C:inactive,s:0.8}(Must have room)",
                 "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
               }
