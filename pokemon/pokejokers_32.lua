@@ -241,8 +241,9 @@ local brambleghast={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.joker_main then
+      local dollars = (SMODS.Mods["Talisman"] or {}).can_load and to_number(G.GAME.dollars) or G.GAME.dollars
       return {
-          chips = card.ability.extra.chip_mod * math.max(0, (G.GAME.dollars + (G.GAME.dollar_buffer or 0)))
+          chips = card.ability.extra.chip_mod * math.max(0, (dollars + (G.GAME.dollar_buffer or 0)))
       }
     end
     if context.before and not context.blueprint and card.ability.extra.seed_added <= 0 then
