@@ -24,25 +24,18 @@ local mew ={
     if context.ending_shop then
       if pseudorandom('mew') < card.ability.extra.percent/100 then
         --create random joker
-        local _card = create_card('Joker', G.consumeables, nil, nil, nil, nil, nil)
-        local edition = {negative = true}
-        _card:set_edition(edition, true)
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
+        local joker = SMODS.add_card{set = 'Joker', edition = 'e_negative'}
+        SMODS.calculate_effect({ message = localize('k_plus_joker'), colour = G.C.BLUE }, joker)
       else
         --create random consumable and apply negative
         local sets = {{set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE}, {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, 
                       {set = "Item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink}}
         local creation = pseudorandom_element(sets, pseudoseed('mewcreate'))
         
-        local _card = create_card(creation.set, G.consumeables, nil, nil, nil, nil, nil)
-        local edition = {negative = true}
-        _card:set_edition(edition, true)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = creation.message, colour = creation.colour})
+        local consum = SMODS.add_card{set = creation.set, edition = 'e_negative'}
+        SMODS.calculate_effect({ message = creation.message, colour = creation.colour }, consum)
       end
+      card:juice_up()
     end
   end,
 }
