@@ -305,20 +305,21 @@ local electivire={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if ((context.selling_card) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
-      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
-      card:set_cost()
-      G.E_MANAGER:add_event(Event({
-        func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
-        end}))
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {1 + card.ability.extra.Xmult_mod * card.sell_cost}}, 
-          colour = G.C.MULT,
-          Xmult_mod = 1 + card.ability.extra.Xmult_mod * card.sell_cost
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        scalar_table = card.ability.extra,
+        scalar_value = 'money_mod',
+        scaling_message = {
+          message = localize('k_val_up'),
         }
-      end
+      })
+      card:set_cost()
+    end
+    if context.joker_main then
+      return {
+        Xmult = 1 + card.ability.extra.Xmult_mod * card.sell_cost
+      }
     end
   end
 }
