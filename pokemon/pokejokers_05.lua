@@ -1243,30 +1243,27 @@ local snorlax={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      return true
+      local leftovers = SMODS.add_card({ set = 'Item', key = 'c_poke_leftovers' })
+      SMODS.calculate_effect({ message = localize('poke_plus_pokeitem') }, leftovers)
     end
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      local count = find_joker('leftovers')
-      if #count > 0 then
-        card.ability.extra.Xmult = card.ability.extra.Xmult + (card.ability.extra.Xmult_mod * #count)
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.RED
-        }
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      local count = #SMODS.find_card('c_poke_leftovers')
+      if count > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * count
+          end,
+          message_colour = G.C.RED,
+        })
       end
     end
   end
