@@ -701,7 +701,7 @@ local corsola={
           func = function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
-            SMODS.add_card({ set = 'Joker', key = create_random_poke_joker('corsola', "Basic", nil, nil, "Water") })
+            SMODS.add_card({ set = 'Joker', key = get_random_poke_key('corsola', "Basic", nil, nil, "Water") })
             return true
           end
         }))
