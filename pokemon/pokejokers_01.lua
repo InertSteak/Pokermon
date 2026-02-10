@@ -20,28 +20,36 @@ local bulbasaur={
   starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-            end
-            earned = earned + card.ability.extra.money_mod
-            earned = ease_poke_dollars(card, "bulba", earned)
-            return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
-              card = card
-            }
-          end
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        if not context.blueprint then
+          SMODS.scale_card(card, {
+            ref_value = 'earned',
+            scalar_value = 'money_mod',
+            no_message = true,
+          })
         end
+
+        local earned = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
+        }
+      end
     end
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
@@ -70,34 +78,46 @@ local ivysaur={
   gen = 1, 
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local more
-            if pseudorandom('bulba') < .50 then
-              more = 0
-            else
-              more = 1
-            end
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
-            end
-            earned = earned + card.ability.extra.money_mod + more
-            earned = ease_poke_dollars(card, "ivy", earned)
-            return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
-              card = card
-            }
-          end
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        local more
+        if pseudorandom('bulba') < .50 then
+          more = 0
+        else
+          more = 1
         end
+
+        if not context.blueprint then
+          SMODS.scale_card(card, {
+            ref_value = 'earned',
+            scalar_value = 'money_mod',
+            operation = function(ref_table, ref_value, initial, change)
+              ref_table[ref_value] = initial + change + more
+            end,
+            no_message = true,
+          })
+        end
+
+        local earned = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
+        }
+      end
     end
     return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
@@ -125,29 +145,28 @@ local venusaur={
   ptype = "Grass",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-            end
-            
-            earned = earned + card.ability.extra.money_mod
-            earned = ease_poke_dollars(card, "venu", earned)
-            return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
-                card = card
-            }
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        local earned = ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
           end
-        end
+        }
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -212,22 +231,18 @@ local charmander={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.MULT
-            }
-        end
-      elseif context.joker_main then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-      end
+    if context.before and not context.blueprint
+        and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -258,22 +273,18 @@ local charmeleon={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.MULT
-            }
-        end
-      elseif context.joker_main then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-      end
+    if context.before and not context.blueprint
+        and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -303,19 +314,17 @@ local charizard={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+    if context.joker_main then
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
-          message = "Fire Blast!", 
+          message = "Fire Blast!",
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
           Xmult_mod = card.ability.extra.Xmult
         }
       else
-        return { 
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}},
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
+        return {
+          mult = card.ability.extra.mult
         }
       end
     end
@@ -404,18 +413,19 @@ local squirtle={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-      if context.joker_main then
-        return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.before and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        operation = function(ref_table, ref_value, initial, change)
+          ref_table[ref_value] = initial + change * G.GAME.current_round.hands_left
+        end,
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     return scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
   end,
@@ -452,18 +462,19 @@ local wartortle={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + (2 * G.GAME.current_round.hands_left)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-      if context.joker_main then
-        return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.before and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        operation = function(ref_table, ref_value, initial, change)
+          ref_table[ref_value] = initial + change * G.GAME.current_round.hands_left
+        end,
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     return scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
   end,
@@ -498,14 +509,10 @@ local blastoise={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return{
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.hands_left)
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)

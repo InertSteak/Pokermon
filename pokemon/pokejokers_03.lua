@@ -728,22 +728,17 @@ local ponyta={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS,
-            card = card
-        }
-      end
-      if context.joker_main and card.ability.extra.chips > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.before and not context.blueprint and next(context.poker_hands['Straight']) then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        message_colour = G.C.CHIPS,
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
@@ -766,23 +761,18 @@ local rapidash={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and context.cardarea == G.jokers and next(context.poker_hands['Straight']) then
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        card.ability.extra.chip_mod = card.ability.extra.chip_mod + 1
-        return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS,
-            card = card
-        }
-      end
-      if context.joker_main and card.ability.extra.chips > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.before and not context.blueprint and next(context.poker_hands['Straight']) then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        message_colour = G.C.CHIPS,
+      })
+      card.ability.extra.chip_mod = card.ability.extra.chip_mod + 1
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
   end,
 }

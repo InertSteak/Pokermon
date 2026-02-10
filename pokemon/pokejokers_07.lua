@@ -908,7 +908,7 @@ local murkrow={
 local slowking={
   name = "slowking",
   pos = {x = 7, y = 4},
-  config = {extra = {Xmult_multi = 1, Xmult_multi2 = 0.2, oXmult = 1}},
+  config = {extra = {Xmult_multi = 1, Xmult_multi2 = 0.2, Xmult_multi1 = 1 }},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, }}
@@ -923,27 +923,20 @@ local slowking={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.oXmult = card.ability.extra.Xmult_multi
+    if context.before and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult_multi',
+        scalar_value = 'Xmult_multi2',
+        message_colour = G.C.XMULT,
+      })
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        card.ability.extra.Xmult_multi = card.ability.extra.Xmult_multi + card.ability.extra.Xmult_multi2
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.XMULT
-        }
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 13 then
+    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 13 then
       return {
-          x_mult = card.ability.extra.Xmult_multi,
-          colour = G.C.RED,
-          card = card
+        x_mult = card.ability.extra.Xmult_multi,
       }
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult_multi = card.ability.extra.oXmult
+      card.ability.extra.Xmult_multi = card.ability.extra.Xmult_multi1
       return {
         message = localize('k_reset'),
         colour = G.C.RED
