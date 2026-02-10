@@ -20,28 +20,26 @@ local bulbasaur={
   starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-            end
-            earned = earned + card.ability.extra.money_mod
-            earned = ease_poke_dollars(card, "bulba", earned)
-            return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
-              card = card
-            }
-          end
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        if not context.blueprint then
+          SMODS.scale_card(card, {
+            ref_value = 'earned',
+            scalar_value = 'money_mod',
+            no_message = true,
+          })
         end
+
+        return {
+          dollars = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true),
+        }
+      end
     end
     return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
@@ -70,34 +68,36 @@ local ivysaur={
   gen = 1, 
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local more
-            if pseudorandom('bulba') < .50 then
-              more = 0
-            else
-              more = 1
-            end
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
-            end
-            earned = earned + card.ability.extra.money_mod + more
-            earned = ease_poke_dollars(card, "ivy", earned)
-            return {
-              message = localize('$')..earned,
-              colour = G.C.MONEY,
-              card = card
-            }
-          end
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        local more
+        if pseudorandom('bulba') < .50 then
+          more = 0
+        else
+          more = 1
         end
+
+        if not context.blueprint then
+          SMODS.scale_card(card, {
+            ref_value = 'earned',
+            scalar_value = 'money_mod',
+            operation = function(ref_table, ref_value, initial, change)
+              ref_table[ref_value] = initial + change + more
+            end,
+            no_message = true,
+          })
+        end
+
+        return {
+          dollars = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true),
+        }
+      end
     end
     return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
@@ -125,29 +125,18 @@ local venusaur={
   ptype = "Grass",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
-        if not context.end_of_round and not context.before and not context.after then
-          if context.other_card.debuff then
-            return {
-              message = localize("k_debuffed"),
-              colour = G.C.RED,
-              card = card,
-            }
-          else
-            local earned = 0
-            if not context.blueprint then
-              card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
-            end
-            
-            earned = earned + card.ability.extra.money_mod
-            earned = ease_poke_dollars(card, "venu", earned)
-            return {
-                message = localize('$')..earned,
-                colour = G.C.MONEY,
-                card = card
-            }
-          end
-        end
+    if context.individual and context.cardarea == G.hand and not context.end_of_round
+        and context.other_card:get_id() == G.GAME.current_round.bulb1card.id then
+      if context.other_card.debuff then
+        return {
+          message = localize("k_debuffed"),
+          colour = G.C.RED,
+        }
+      else
+        return {
+          dollars = ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true),
+        }
+      end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
