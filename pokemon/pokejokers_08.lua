@@ -89,57 +89,82 @@ local scizor={
       juice_card_until(card, eval, true)
     end
     if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      card.ability.extra.selected = true
       local my_pos = nil
       for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] == card then my_pos = i; break end
+        if G.jokers.cards[i] == card then my_pos = i; break end
       end
       if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
-          local sliced_card = G.jokers.cards[my_pos+1]
-          sliced_card.getting_sliced = true
-          if (sliced_card.config.center.rarity ~= 1 and sliced_card.config.center.rarity ~=2) then
-            if card.edition then
-              if card.edition.chips then
-                card.ability.extra.scizor_chips = card.ability.extra.scizor_chips + card.edition.chips
-              end
-              if card.edition.mult then
-                card.ability.extra.mult = card.ability.extra.mult + card.edition.mult
-              end
-              if card.edition.x_mult then
-                card.ability.extra.scizor_Xmult = card.ability.extra.scizor_Xmult * card.edition.x_mult
-              end
+        local sliced_card = G.jokers.cards[my_pos + 1]
+        sliced_card.getting_sliced = true
+        if (sliced_card.config.center.rarity ~= 1 and sliced_card.config.center.rarity ~= 2) then
+          if card.edition then
+            if card.edition.chips then
+              SMODS.scale_card(card, {
+                ref_value = 'scizor_chips',
+                scalar_table = card.edition,
+                scalar_value = 'chips',
+                no_message = true,
+              })
             end
-            local edition = nil
-            if sliced_card.edition and (sliced_card.edition.foil or sliced_card.edition.holo or sliced_card.edition.polychrome) then
-              edition = sliced_card.edition
-            else
-              edition = poll_edition('wheel_of_fortune', nil, true, true)
+            if card.edition.mult then
+              SMODS.scale_card(card, {
+                ref_value = 'mult',
+                scalar_table = card.edition,
+                scalar_value = 'mult',
+                no_message = true,
+              })
             end
-            card:set_edition(edition, true)
+            if card.edition.x_mult then
+              SMODS.scale_card(card, {
+                ref_value = 'scizor_Xmult',
+                scalar_table = card.edition,
+                scalar_value = 'x_mult',
+                operation = 'X',
+                no_message = true,
+              })
+            end
           end
-          
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-          
-          G.GAME.joker_buffer = G.GAME.joker_buffer - 1
-          G.E_MANAGER:add_event(Event({func = function()
-              G.GAME.joker_buffer = 0
-              card:juice_up(0.8, 0.8)
-              sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
-              play_sound('slice1', 0.96+math.random()*0.08)
-          return true end }))
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED, no_juice = true})
-      end
-      card.ability.extra.selected = true
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+          local edition = nil
+          if sliced_card.edition and (sliced_card.edition.foil or sliced_card.edition.holo or sliced_card.edition.polychrome) then
+            edition = sliced_card.edition
+          else
+            edition = poll_edition('wheel_of_fortune', nil, true, true)
+          end
+          card:set_edition(edition, true)
+        end
+
+        G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            SMODS.scale_card(card, {
+              ref_value = 'mult',
+              scalar_value = 'mult_mod',
+              no_message = true,
+            })
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+            return true
+          end
+        }))
+
         return {
-          message = localize("poke_x_scissor_ex"),
-          colour = G.ARGS.LOC_COLOURS.metal,
-          mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.scizor_chips,
-          Xmult_mod = card.ability.extra.scizor_Xmult
+          message = localize("k_upgrade_ex"),
+          colour = G.C.RED,
+          no_juice = true
         }
       end
+    end
+    if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.scizor_chips > 0 or card.ability.extra.scizor_Xmult > 1) then
+      return {
+        message = localize("poke_x_scissor_ex"),
+        colour = G.ARGS.LOC_COLOURS.metal,
+        mult_mod = card.ability.extra.mult,
+        chip_mod = card.ability.extra.scizor_chips,
+        Xmult_mod = card.ability.extra.scizor_Xmult
+      }
     end
   end,
   megas = { "mega_scizor" },
