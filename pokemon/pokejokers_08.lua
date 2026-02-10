@@ -684,38 +684,38 @@ local corsola={
   calculate = function(self, card, context)
     if context.setting_blind then
       if not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * #find_pokemon_type("Water"))
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * #find_pokemon_type("Water")
+          end,
+          message_colour = G.C.MULT
+        })
       end
       if (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
         G.GAME.joker_buffer = G.GAME.joker_buffer + 1
         G.E_MANAGER:add_event(Event({
           trigger = 'after',
           delay = 0.2,
-          func = function() 
+          func = function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
-            local _card = create_random_poke_joker('corsola', "Basic", nil, nil, "Water")
-            _card:add_to_deck()
-            G.jokers:emplace(_card)
-        return true end }))
-        
-        
-        
+            SMODS.add_card({ set = 'Joker', key = create_random_poke_joker('corsola', "Basic", nil, nil, "Water") })
+            return true
+          end
+        }))
+
         return {
-            message = localize('k_plus_joker'),
-            colour = G.C.BLUE,
+          message = localize('k_plus_joker'),
+          colour = G.C.BLUE,
         }
       end
     end
     if context.joker_main then
-      if card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+      return {
+        mult = card.ability.extra.mult
+      }
     end
   end
 }
