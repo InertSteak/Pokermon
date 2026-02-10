@@ -399,18 +399,16 @@ local teddiursa={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.skipping_booster and not context.blueprint then
-      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT
+      })
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult, 
-          card = card
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -440,24 +438,24 @@ local ursaring={
   calculate = function(self, card, context)
     if context.skipping_booster then
       if not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          no_message = true,
+        })
       end
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+
+      SMODS.calculate_effect({ message = localize('k_upgrade_ex'), colour = G.C.MULT },
+        context.blueprint_card or card)
+
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
+        SMODS.add_card({ set = 'Item', key_append = 'ursa' })
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult, 
-          card = card
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return item_evo(self, card, context, "j_poke_ursaluna")
   end,
