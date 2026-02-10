@@ -415,7 +415,7 @@ local lugia={
           operation = function(ref_table, ref_value, initial, change)
             ref_table[ref_value] = initial + change * math.floor(card.ability.extra.drawn / card.ability.extra.to_draw)
           end,
-          colour = G.C.XMULT
+          message_colour = G.C.XMULT
         })
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
       end
