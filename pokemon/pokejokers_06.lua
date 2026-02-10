@@ -779,16 +779,15 @@ local crobat={
         if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
           v.vampired = true
 
-          for enh, _ in pairs(SMODS.get_enhancements(v)) do
-            if enh == 'm_bonus' or enh == 'm_stone' then
-              c_count = c_count + 1
-            elseif enh == 'm_steel' or enh == 'm_glass' or enh == 'm_poke_flower' then
-              x_count = x_count + 1
-            elseif enh == 'm_gold' then
-              d_count = d_count + 1
-            else
-              m_count = m_count + 1
-            end
+          local enh = v.config.center.key
+          if enh == 'm_bonus' or enh == 'm_stone' then
+            c_count = c_count + 1
+          elseif enh == 'm_steel' or enh == 'm_glass' or enh == 'm_poke_flower' then
+            x_count = x_count + 1
+          elseif enh == 'm_gold' then
+            d_count = d_count + 1
+          else
+            m_count = m_count + 1
           end
 
           v:set_ability(G.P_CENTERS.c_base, nil, true)
