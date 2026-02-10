@@ -201,22 +201,18 @@ local charmander={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.MULT
-            }
-        end
-      elseif context.joker_main then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-      end
+    if context.before and not context.blueprint
+        and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -247,22 +243,18 @@ local charmeleon={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            return {
-              message = localize('k_upgrade_ex'),
-              colour = G.C.MULT
-            }
-        end
-      elseif context.joker_main then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-      end
+    if context.before and not context.blueprint
+        and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -292,19 +284,17 @@ local charizard={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+    if context.joker_main then
       if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
         return {
-          message = "Fire Blast!", 
+          message = "Fire Blast!",
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
           Xmult_mod = card.ability.extra.Xmult
         }
       else
-        return { 
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}},
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
+        return {
+          mult = card.ability.extra.mult
         }
       end
     end
