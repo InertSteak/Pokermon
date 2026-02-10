@@ -904,8 +904,11 @@ local meowth={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
       card.ability.extra.triggers = card.ability.extra.triggers + 1
-      card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MONEY})
+      SMODS.scale_card(card, {
+        ref_value = 'money',
+        scalar_value = 'money_mod',
+        message_colour = G.C.MONEY,
+      })
     end
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
@@ -938,8 +941,11 @@ local persian={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.triggers < card.ability.extra.limit and not context.blueprint then
       card.ability.extra.triggers = card.ability.extra.triggers + 1
-      card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MONEY})
+      SMODS.scale_card(card, {
+        ref_value = 'money',
+        scalar_value = 'money_mod',
+        message_colour = G.C.MONEY,
+      })
     end
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
