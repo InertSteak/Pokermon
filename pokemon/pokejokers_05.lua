@@ -1379,17 +1379,17 @@ local dratini={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
-      if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-      end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        no_message = true,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -1412,17 +1412,17 @@ local dragonair={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
-      if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-      end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        no_message = true,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -1444,21 +1444,15 @@ local dragonite={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
-    if context.repetition and context.cardarea == G.play and context.scoring_hand and context.full_hand and #context.full_hand == 1 then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+    if context.repetition and context.cardarea == G.play and #context.full_hand == 1 then
+      return {
+        repetitions = card.ability.extra.retriggers
+      }
     end
   end,
 }
