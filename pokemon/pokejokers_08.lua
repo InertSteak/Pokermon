@@ -1178,29 +1178,31 @@ local kingdra={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint then
-      if context.other_card:get_id() == 6 then
-        local has_king = false
-        for i = 1, #G.hand.cards do 
-          if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
-        end
-        if has_king then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        else
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint
+        and context.other_card:get_id() == 6 then
+      local has_king = false
+      for i = 1, #G.hand.cards do
+        if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
+      end
+      if has_king then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+        })
+      else
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+        })
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize("poke_twister_ex"),
-          colour = G.C.XMULT,
-          mult_mod = card.ability.extra.mult,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.Xmult > 1) then
+      return {
+        message = localize("poke_twister_ex"),
+        colour = G.C.XMULT,
+        mult_mod = card.ability.extra.mult,
+        Xmult_mod = card.ability.extra.Xmult
+      }
     end
   end,
 }
