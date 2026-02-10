@@ -36,8 +36,18 @@ local bulbasaur={
           })
         end
 
+        local earned = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
-          dollars = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true),
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
         }
       end
     end
@@ -94,8 +104,18 @@ local ivysaur={
           })
         end
 
+        local earned = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
-          dollars = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true),
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
         }
       end
     end
@@ -133,8 +153,18 @@ local venusaur={
           colour = G.C.RED,
         }
       else
+        local earned = ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
-          dollars = ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true),
+          dollars = earned,
+          func = function()
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+              end
+            }))
+          end
         }
       end
     end
