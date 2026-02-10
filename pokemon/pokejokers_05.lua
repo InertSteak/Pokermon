@@ -1106,7 +1106,7 @@ local kabutops={
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult_original = 2}},
+  config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult1 = 2}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -1123,48 +1123,51 @@ local aerodactyl={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.Xmult_original = card.ability.extra.Xmult
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        get_ancient_amount(context.scoring_hand, 14, card)
-          
-        if card.ability.extra.ancient_count > 2 and not context.blueprint then
-          local target = nil
-          for k, v in pairs(context.scoring_hand) do
-            if v:get_id() == 14 and v.config.center == G.P_CENTERS.c_base then
-              target = v
-              break
-            end
-          end
-          if target then
-            poke_convert_cards_to(target, {mod_conv = 'm_glass'}, true, true)
+    if context.before then
+      get_ancient_amount(context.scoring_hand, 14, card)
+
+      if card.ability.extra.ancient_count > 2 and not context.blueprint then
+        local target = nil
+        for k, v in pairs(context.scoring_hand) do
+          if v:get_id() == 14 and v.config.center == G.P_CENTERS.c_base then
+            target = v
+            break
           end
         end
-      end
-    
-      if context.joker_main and card.ability.extra.ancient_count > 0 then
-        if card.ability.extra.ancient_count > 1 and not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+        if target then
+          poke_convert_cards_to(target, { mod_conv = 'm_glass' }, true, true)
         end
-        
-        if card.ability.extra.ancient_count > 3 and not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult * 2
-        end
-        
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-      if context.after then
-        card.ability.extra.ancient_count = 0
       end
     end
+
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 1 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          no_message = true,
+        })
+      end
+
+      if card.ability.extra.ancient_count > 3 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult',
+          no_message = true,
+        })
+      end
+
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+
+    if context.after then
+      card.ability.extra.ancient_count = 0
+    end
+
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult_original
+      card.ability.extra.Xmult = card.ability.extra.Xmult1
       return {
         message = localize('k_reset'),
         colour = G.C.RED
