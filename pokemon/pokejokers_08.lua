@@ -480,34 +480,36 @@ local slugma={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        card.ability.extra.hands = card.ability.extra.hands - 1
-        if card.ability.extra.hands == 1 then
-          local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
-        if card.ability.extra.hands == 0 then
-          if G.hand and G.hand.cards and G.hand.cards[1] then
-            card.ability.extra.remove = true
-          end
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          card.ability.extra.hands = card.ability.extra.hand_reset
-        end
+    if context.before and not context.blueprint then
+      card.ability.extra.hands = card.ability.extra.hands - 1
+      if card.ability.extra.hands == 1 then
+        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
       end
-      if context.after and card.ability.extra.remove and not context.blueprint then
-        card.ability.extra.remove = false
-        poke_remove_card(G.hand.cards[1], card)
+      if card.ability.extra.hands == 0 then
+        card.ability.extra.hands = card.ability.extra.hand_reset
+
+        if G.hand.cards[1] then
+          card.ability.extra.remove = true
+        end
+
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
       end
     end
+    if context.after and card.ability.extra.remove and not context.blueprint then
+      card.ability.extra.remove = false
+      poke_remove_card(G.hand.cards[1], card)
+    end
     if context.joker_main then
-      return{
-        message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-        colour = G.C.CHIPS,
-        chip_mod = card.ability.extra.chips
+      return {
+        chips = card.ability.extra.chips
       }
     end
     return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.chips, self.config.evo_rqmt)
@@ -533,34 +535,36 @@ local magcargo={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        card.ability.extra.hands = card.ability.extra.hands - 1
-        if card.ability.extra.hands == 1 then
-          local eval = function(card) return card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
-        if card.ability.extra.hands == 0 then
-          if G.hand and G.hand.cards and G.hand.cards[1] then
-            card.ability.extra.remove = true
-          end
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          card.ability.extra.hands = card.ability.extra.hand_reset
-        end
+    if context.before and not context.blueprint then
+      card.ability.extra.hands = card.ability.extra.hands - 1
+      if card.ability.extra.hands == 1 then
+        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
       end
-      if context.after and card.ability.extra.remove and not context.blueprint then
-        card.ability.extra.remove = false
-        poke_remove_card(G.hand.cards[1], card)
+      if card.ability.extra.hands == 0 then
+        card.ability.extra.hands = card.ability.extra.hand_reset
+
+        if G.hand.cards[1] then
+          card.ability.extra.remove = true
+        end
+
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
       end
     end
+    if context.after and card.ability.extra.remove and not context.blueprint then
+      card.ability.extra.remove = false
+      poke_remove_card(G.hand.cards[1], card)
+    end
     if context.joker_main then
-      return{
-        message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-        colour = G.C.CHIPS,
-        chip_mod = card.ability.extra.chips
+      return {
+        chips = card.ability.extra.chips
       }
     end
   end,
