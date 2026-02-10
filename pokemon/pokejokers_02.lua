@@ -417,42 +417,39 @@ local zubat={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local scoring_card = nil
-        for i = 1, #context.scoring_hand do
-          if context.scoring_hand[i].config.center ~= G.P_CENTERS.c_base then
-            scoring_card = context.scoring_hand[i]
-            break
+    if context.before and not context.blueprint then
+      local scoring_card = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i].config.center ~= G.P_CENTERS.c_base then
+          scoring_card = context.scoring_hand[i]
+          break
+        end
+      end
+
+      if scoring_card and not scoring_card.debuff and not scoring_card.vampired then
+        scoring_card.vampired = true
+        scoring_card:set_ability(G.P_CENTERS.c_base, nil, true)
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            scoring_card:juice_up()
+            scoring_card.vampired = nil
+            return true
           end
-        end
-        
-        if scoring_card and not scoring_card.debuff and not scoring_card.vampired then
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-          scoring_card.vampired = true
-          scoring_card:set_ability(G.P_CENTERS.c_base, nil, true)
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  scoring_card:juice_up()
-                  scoring_card.vampired = nil
-                  return true
-              end
-          })) 
-          
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult_mod}},
-            colour = G.C.MULT
-          }
-        end
+        }))
+
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_key = 'a_mult',
+          message_colour = G.C.MULT,
+        })
       end
-      
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult 
-        }
-      end
+    end
+
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
   end
@@ -476,12 +473,10 @@ local golbat={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.before and not context.blueprint then
-      local m_count = 0 
-      local enhanced = {}
+    if context.before and not context.blueprint then
+      local m_count = 0
       for k, v in ipairs(context.scoring_hand) do
-          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
-              enhanced[#enhanced+1] = v
+          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
               v.vampired = true
               m_count = m_count + 1
 
@@ -492,25 +487,28 @@ local golbat={
                       v.vampired = nil
                       return true
                   end
-              })) 
+              }))
               card.ability.extra.eaten = card.ability.extra.eaten + 1
           end
       end
 
-      if #enhanced > 0 then 
-        if m_count > 0 then
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * m_count
-        end
+      if m_count > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * m_count
+          end,
+          no_message = true,
+        })
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize("poke_screech_ex"),
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult,
-        }
-      end
+    if context.joker_main and card.ability.extra.mult > 0 then
+      return {
+        message = localize("poke_screech_ex"),
+        colour = G.C.MULT,
+        mult_mod = card.ability.extra.mult,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,

@@ -769,70 +769,71 @@ local crobat={
   gen = 2,
   blueprint_compat = true,
   perishable_compat = false,
-calculate = function(self, card, context)
+  calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.before and not context.blueprint then
-      local m_count = 0 
-      local c_count = 0 
-      local x_count = 0 
+      local m_count = 0
+      local c_count = 0
+      local x_count = 0
       local d_count = 0
-      local enhanced = {}
       for k, v in ipairs(context.scoring_hand) do
-          if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then 
-              enhanced[#enhanced+1] = v
-              v.vampired = true
-              
-              if SMODS.has_enhancement(v, 'm_bonus') or SMODS.has_enhancement(v, 'm_stone') then
-                c_count = c_count + 1
-              end
-              if SMODS.has_enhancement(v, 'm_steel') or SMODS.has_enhancement(v, 'm_glass') or SMODS.has_enhancement(v, 'm_poke_flower') then
-                x_count = x_count + 1
-              end
-              if SMODS.has_enhancement(v, 'm_gold') then
-                d_count = d_count + 1
-              end
-              
-              if not SMODS.has_enhancement(v, 'm_bonus') and not SMODS.has_enhancement(v, 'm_stone') and not SMODS.has_enhancement(v, 'm_steel')
-              and not SMODS.has_enhancement(v, 'm_glass') and not SMODS.has_enhancement(v, 'm_poke_flower') and not SMODS.has_enhancement(v, 'm_gold') 
-              or (SMODS.has_enhancement(v, 'm_mult') or SMODS.has_enhancement(v, 'm_wild')) then
-                m_count = m_count + 1
-              end
-              
-              v:set_ability(G.P_CENTERS.c_base, nil, true)
-              G.E_MANAGER:add_event(Event({
-                  func = function()
-                      v:juice_up()
-                      v.vampired = nil
-                      return true
-                  end
-              })) 
+        if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
+          v.vampired = true
+
+          for enh, _ in pairs(SMODS.get_enhancements(v)) do
+            if enh == 'm_bonus' or enh == 'm_stone' then
+              c_count = c_count + 1
+            elseif enh == 'm_steel' or enh == 'm_glass' or enh == 'm_poke_flower' then
+              x_count = x_count + 1
+            elseif enh == 'm_gold' then
+              d_count = d_count + 1
+            else
+              m_count = m_count + 1
+            end
           end
+
+          v:set_ability(G.P_CENTERS.c_base, nil, true)
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              v:juice_up()
+              v.vampired = nil
+              return true
+            end
+          }))
+        end
       end
 
-      if #enhanced > 0 then 
-          if m_count > 0 then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * m_count
-          end
-          if c_count > 0 then
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod * c_count
-          end
-          if x_count > 0 then
-            card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod * x_count
-          end
-          if d_count > 0 then
-            card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_mod * d_count
-          end
+      local scale_crobat = function(base, mod, count)
+        SMODS.scale_card(card, {
+          ref_value = base,
+          scalar_value = mod,
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * count
+          end,
+          no_message = true,
+        })
+      end
+
+      if m_count > 0 then
+        scale_crobat('mult', 'mult_mod', m_count)
+      end
+      if c_count > 0 then
+        scale_crobat('chips', 'chip_mod', c_count)
+      end
+      if x_count > 0 then
+        scale_crobat('Xmult', 'Xmult_mod', x_count)
+      end
+      if d_count > 0 then
+        scale_crobat('money', 'money_mod', d_count)
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize("poke_screech_ex"),
-          colour = G.C.BLACK,
-          mult_mod = card.ability.extra.mult,
-          chip_mod = card.ability.extra.chips,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        message = localize("poke_screech_ex"),
+        colour = G.C.BLACK,
+        mult_mod = card.ability.extra.mult,
+        chip_mod = card.ability.extra.chips,
+        Xmult_mod = card.ability.extra.Xmult
+      }
     end
   end,
   calc_dollar_bonus = function(self, card)
