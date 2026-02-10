@@ -467,30 +467,26 @@ local sentret={
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
+    if context.before and not context.blueprint then
+      if card.ability.extra.last_hand ~= context.scoring_name then
         card.ability.extra.last_hand = G.GAME.last_hand_played
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
-      elseif context.before and not context.blueprint and card.ability.extra.last_hand == context.scoring_name then
+
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_colour = G.C.MULT,
+        })
+      else
         card.ability.extra.mult = 0
         return {
           message = localize('k_reset'),
-          card = card
         }
       end
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
-      end
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
   end,
@@ -516,24 +512,19 @@ local furret={
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
-        card.ability.extra.last_hand = G.GAME.last_hand_played
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
-      end
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
-        end
-      end
+    if context.before and not context.blueprint and card.ability.extra.last_hand ~= context.scoring_name then
+      card.ability.extra.last_hand = G.GAME.last_hand_played
+
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -779,16 +770,15 @@ local crobat={
         if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
           v.vampired = true
 
-          for enh, _ in pairs(SMODS.get_enhancements(v)) do
-            if enh == 'm_bonus' or enh == 'm_stone' then
-              c_count = c_count + 1
-            elseif enh == 'm_steel' or enh == 'm_glass' or enh == 'm_poke_flower' then
-              x_count = x_count + 1
-            elseif enh == 'm_gold' then
-              d_count = d_count + 1
-            else
-              m_count = m_count + 1
-            end
+          local enh = v.config.center.key
+          if enh == 'm_bonus' or enh == 'm_stone' then
+            c_count = c_count + 1
+          elseif enh == 'm_steel' or enh == 'm_glass' or enh == 'm_poke_flower' then
+            x_count = x_count + 1
+          elseif enh == 'm_gold' then
+            d_count = d_count + 1
+          else
+            m_count = m_count + 1
           end
 
           v:set_ability(G.P_CENTERS.c_base, nil, true)
@@ -1259,22 +1249,24 @@ local mareep={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main and card.ability.extra.Xmult > 0 then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     if context.playing_card_added and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+      })
     end
     if context.remove_playing_cards and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}}})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_minus',
+        operation = '-',
+        message_key = 'a_xmult_minus'
+      })
     end
     return scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
@@ -1298,22 +1290,24 @@ local flaaffy={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 0 and card.ability.extra.Xmult ~= 1  then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main and card.ability.extra.Xmult > 0 then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     if context.playing_card_added and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+      })
     end
     if context.remove_playing_cards and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_minus
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_minus}}})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_minus',
+        operation = '-',
+        message_key = 'a_xmult_minus'
+      })
     end
     return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,

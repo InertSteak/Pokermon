@@ -169,15 +169,10 @@ local entei={
       local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     if context.pre_discard and #context.full_hand == 4 and G.GAME.current_round.discards_used == 0 and not context.blueprint then
       local target = pseudorandom_element(context.full_hand, pseudoseed('entei'))
@@ -186,10 +181,14 @@ local entei={
       delay(0.6)
     end
     if context.discard and context.other_card and context.other_card.entei_destroy and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        message_colour = G.C.XMULT
+      })
+
       return {
-          remove = true
+        remove = true
       }
     end
   end,
@@ -410,24 +409,21 @@ local lugia={
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-        card.ability.extra.Xmult = card.ability.extra.Xmult + (card.ability.extra.Xmult_mod * math.floor(card.ability.extra.drawn/card.ability.extra.to_draw))
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * math.floor(card.ability.extra.drawn / card.ability.extra.to_draw)
+          end,
+          message_colour = G.C.XMULT
+        })
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.XMULT
-        }
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.Xmult > 1 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
-        end
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
   end,
 }
