@@ -1238,30 +1238,25 @@ local phanpy={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if #context.scoring_hand >= 5 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.RED,
-            card = card
-          }
-        else
-          card.ability.extra.Xmult = card.ability.extra.Xmult2
-          return {
-            message = localize('k_reset'),
-            colour = G.C.RED
-          }
-        end
-      end
-      if context.joker_main and card.ability.extra.Xmult > 1 then
+    if context.before and not context.blueprint then
+      if #context.scoring_hand >= 5 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.RED,
+        })
+      else
+        card.ability.extra.Xmult = card.ability.extra.Xmult2
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          message = localize('k_reset'),
+          colour = G.C.RED
         }
       end
+    end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     return level_evo(self, card, context, "j_poke_donphan")
   end
@@ -1285,30 +1280,25 @@ local donphan={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        if #context.scoring_hand >= 5 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.RED,
-            card = card
-          }
-        else
-          card.ability.extra.Xmult = card.ability.extra.Xmult2
-          return {
-            message = localize('k_reset'),
-            colour = G.C.RED
-          }
-        end
-      end
-      if context.joker_main and card.ability.extra.Xmult > 1 then
+    if context.before and not context.blueprint then
+      if #context.scoring_hand >= 5 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.RED,
+        })
+      else
+        card.ability.extra.Xmult = card.ability.extra.Xmult2
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
+          message = localize('k_reset'),
+          colour = G.C.RED
         }
       end
+    end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
   end
 }
