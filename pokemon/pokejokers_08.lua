@@ -881,31 +881,18 @@ local mantine={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
-      if SMODS.has_enhancement(context.other_card, 'm_gold') then 
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        if context.cardarea == G.play then
-          return {
-            card = card,
-            colour = G.C.CHIPS,
-            message = localize('k_upgrade_ex'),
-          }
-        else
-          return {
-              message = localize("k_upgrade_ex"),
-              colour = G.C.CHIPS,
-              card = card
-          }
-        end
+      if SMODS.has_enhancement(context.other_card, 'm_gold') then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
   end
