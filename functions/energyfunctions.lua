@@ -89,7 +89,7 @@ end
 increment_energy = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   -- checking if the colorless penalty applies
-  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not is_type(card, "Colorless") and etype == "Colorless")
+  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- the regular energy increment
   if (energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
