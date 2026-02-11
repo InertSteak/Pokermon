@@ -169,25 +169,25 @@ local huntail ={
       card.ability.extra.increased_handsize = nil
       G.hand:change_size(-card.ability.extra.h_size)
     end
-    if context.selling_card and context.card and context.card.config and (context.card.config.center.set == 'Tarot' or context.card.config.center.set == 'Item') and not context.blueprint then
+    if context.selling_card and (context.card.config.center.set == 'Tarot' or context.card.config.center.set == 'Item') and not context.blueprint then
       if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-       or G.STATE == G.STATES.STANDARD_PACK then 
-         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
-         if #G.hand.cards > 0 then
-           local target = pseudorandom_element(G.hand.cards, pseudoseed('huntail'))
-           poke_remove_card(target, card)
-         end
+          or G.STATE == G.STATES.STANDARD_PACK then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.XMULT,
+        })
+
+        if #G.hand.cards > 0 then
+          local target = pseudorandom_element(G.hand.cards, pseudoseed('huntail'))
+          poke_remove_card(target, card)
+        end
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -231,23 +231,22 @@ local gorebyss ={
       card.ability.extra.increased_handsize = nil
       G.hand:change_size(-card.ability.extra.h_size)
     end
-    
+
     if context.using_consumeable and (context.consumeable.ability.set == 'Tarot' or context.consumeable.ability.set == 'Item') and not context.blueprint then
       if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
-       or G.STATE == G.STATES.STANDARD_PACK then 
-         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
+          or G.STATE == G.STATES.STANDARD_PACK then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.XMULT,
+        })
       end
     end
-    
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
