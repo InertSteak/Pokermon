@@ -391,28 +391,32 @@ local beldum={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        local has_ace = false
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
-        end
-        if has_ace or context.scoring_name == "Four of a Kind" then
-          if has_ace and context.scoring_name == "Four of a Kind" then
-            card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
-          else
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          end
-        end
+    if context.before and not context.blueprint then
+      local has_ace = false
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == 14 then has_ace = true; break end
       end
-      if context.joker_main then
-        
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips,
-        }
+
+      if has_ace then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
       end
+      if context.scoring_name == "Four of a Kind" then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
+      end
+    end
+
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, self.config.evo_rqmt)
   end,
@@ -435,28 +439,31 @@ local metang={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        local ace_count = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
-        end
-        if ace_count > 1 or context.scoring_name == "Four of a Kind" then
-          if ace_count > 1 and context.scoring_name == "Four of a Kind" then
-            card.ability.extra.chips = card.ability.extra.chips + 2 * card.ability.extra.chip_mod
-          else
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          end
-        end
+    if context.before and not context.blueprint then
+      local ace_count = 0
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == 14 then ace_count = ace_count + 1 end
       end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips,
-          card = card
-        }
+
+      if ace_count > 1 then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
       end
+      if context.scoring_name == "Four of a Kind" then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          no_message = true,
+        })
+      end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
     return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, self.config.evo_rqmt)
   end,
@@ -479,23 +486,17 @@ local metagross={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips,
-          card = card
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
-    if context.individual and context.cardarea == G.play and not context.end_of_round and context.scoring_name and context.scoring_name == "Four of a Kind" then
+    if context.individual and context.cardarea == G.play and context.scoring_name == "Four of a Kind" then
       local total_chips = poke_total_chips(context.other_card)
-      local Xmult = (total_chips)^(1/4)
+      local Xmult = (total_chips)^(1 / 4)
       if Xmult > 0 then
         return {
-          x_mult = Xmult,
-          card = card
+          x_mult = Xmult
         }
       end
     end
