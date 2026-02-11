@@ -73,8 +73,10 @@ local weavile = {
   calculate = function(self, card, context)
     if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
       context.full_hand[1].to_be_removed_by = card
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+      })
       ease_poke_dollars(card, "weavile", card.ability.extra.money)
       card:juice_up()
     end
@@ -84,23 +86,18 @@ local weavile = {
         remove = true
       }
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult ~= 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      if G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
-        card.ability.extra.Xmult = card.ability.extra.Xmult2
-        return {
-          message = localize('k_reset'),
-          colour = G.C.RED
-        }
-      end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint
+        and G.GAME.blind.boss and card.ability.extra.Xmult > 1 then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
     end
   end
 }
