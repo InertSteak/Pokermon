@@ -29,11 +29,7 @@ local bulbasaur={
         }
       else
         if not context.blueprint then
-          SMODS.scale_card(card, {
-            ref_value = 'earned',
-            scalar_value = 'money_mod',
-            no_message = true,
-          })
+          card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
         end
 
         local earned = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true)
@@ -94,14 +90,7 @@ local ivysaur={
         end
 
         if not context.blueprint then
-          SMODS.scale_card(card, {
-            ref_value = 'earned',
-            scalar_value = 'money_mod',
-            operation = function(ref_table, ref_value, initial, change)
-              ref_table[ref_value] = initial + change + more
-            end,
-            no_message = true,
-          })
+          card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
         end
 
         local earned = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true)
