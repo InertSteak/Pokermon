@@ -259,38 +259,32 @@ local vanillite={
   atlas = "Pokedex5",
   gen = 5,
   volatile = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.triggered = true
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
         }
-      end
-      if card.ability.extra.triggered and context.after and not context.blueprint then
-        card.ability.extra.triggered = false
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    remove(self, card, context)
-                    return true
-                end
-            })) 
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_vanillish")
@@ -315,41 +309,32 @@ local vanillish={
   atlas = "Pokedex5",
   gen = 5,
   volatile = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.level_up = true
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.triggered = true
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
         }
-      end
-      if card.ability.extra.triggered and context.after and not context.blueprint then
-        card.ability.extra.triggered = false
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    remove(self, card, context)
-                    return true
-                end
-            })) 
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_vanilluxe")
@@ -370,51 +355,43 @@ local vanilluxe={
   ptype = "Water",
   atlas = "Pokedex5",
   gen = 5,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-      if context.after and not context.blueprint then
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    remove(self, card, context)
-                    return true
-                end
-            }))
-            G.E_MANAGER:add_event(Event({
-                func = (function()
-                    play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-                    play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-                    return true
-                end)
-              }))
-            for i = 1, card.ability.extra.tags do
-              G.E_MANAGER:add_event(Event({
-                func = (function()
-                    add_tag(Tag('tag_double'))
-                    return true
-                end)
-              }))
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+            for _ = 1, card.ability.extra.tags do
+              add_tag(Tag('tag_double'))
             end
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+            play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+            return true
+          end)
+        }))
+
+        return {
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
+        }
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
   end
