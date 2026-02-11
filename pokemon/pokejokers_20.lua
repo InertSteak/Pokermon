@@ -405,93 +405,80 @@ local vanilluxe={
 -- Amoonguss 591
 -- Frillish 592
 local frillish = {
-	name = "frillish", 
-	pos = {x = 0, y = 7},
-	config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
-	loc_vars = function(self, info_queue, center)
-		type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
-	end,
+  name = "frillish",
+  pos = {x = 0, y = 7},
+  config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
+  end,
   designer = "Hwang2760",
-	rarity = 2,
-	cost = 7,
-	stage = "Basic", 
-	ptype = "Water",
-	atlas = "Pokedex5",
-	gen = 5,
-	blueprint_compat = true,
-	perishable_compat = false,
-	calculate = function(self, card, context)
-		if context.cardarea == G.jokers then
-			if context.discard and not context.blueprint then
-				if context.other_card:is_face() then
-					card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-					return {
-						message = localize('k_upgrade_ex'),
-						colour = G.C.CHIPS,
-						delay = 0.45,
-					}
-				end
-			end
-
-			if context.scoring_hand and context.joker_main and card.ability.extra.chips > 0 then
-				return {
-					message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-					colour = G.C.CHIPS,
-					chip_mod = card.ability.extra.chips
-				}
-			end
-		end
-		return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
-	end,
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex5",
+  gen = 5,
+  blueprint_compat = true,
+  perishable_compat = false,
+  calculate = function(self, card, context)
+    if context.discard and not context.blueprint
+        and context.other_card:is_face() then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        message_colour = G.C.CHIPS,
+        message_delay = 0.45
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
 }
 
 -- Jellicent 593
 local jellicent = {
-	name = "jellicent", 
-	pos = {x = 1, y = 7},
-	config = {extra = {chips = 60, chip_mod = 4}},
-	loc_vars = function(self, info_queue, center)
-		type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
-	end,
+  name = "jellicent",
+  pos = {x = 1, y = 7},
+  config = {extra = {chips = 60, chip_mod = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
+  end,
   designer = "Hwang2760",
-	rarity = "poke_safari", 
-	cost = 10,
-	stage = "One", 
-	ptype = "Water",
-	atlas = "Pokedex5",
-	gen = 5,
-	blueprint_compat = true,
-	perishable_compat = false,
-	calculate = function(self, card, context)
-		if context.cardarea == G.jokers then
-			if context.discard and not context.blueprint then
-				if context.other_card:is_face() then
-					local card_id = context.other_card:get_id() 
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex5",
+  gen = 5,
+  blueprint_compat = true,
+  perishable_compat = false,
+  calculate = function(self, card, context)
+    if context.discard and not context.blueprint
+        and context.other_card:is_face() then
+      local card_id = context.other_card:get_id()
 
-					if card_id == 12 or card_id == 13 then
-						card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * 2)
-					else
-						card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-					end
-
-					return {
-						message = localize('k_upgrade_ex'),
-						colour = G.C.CHIPS,
-						delay = 0.45,
-					}
-				end
-			end
-
-			if context.scoring_hand and context.joker_main then
-				return {
-					message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-					colour = G.C.CHIPS,
-					chip_mod = card.ability.extra.chips
-				}
-			end
-		end
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        operation = function(ref_table, ref_value, initial, modifier)
+          local multi = (card_id == 12 or card_id == 13) and 2 or 1
+          ref_table[ref_value] = initial + modifier * multi
+        end,
+        message_colour = G.C.CHIPS,
+        message_delay = 0.45
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
 	end,
 }
 -- Alomomola 594
