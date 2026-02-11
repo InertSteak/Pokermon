@@ -69,9 +69,6 @@ remove = function(self, card, context, check_shiny)
     card.getting_sliced = nil
     return
   end
-  if check_shiny and card.edition and card.edition.poke_shiny then
-    SMODS.change_booster_limit(-1)
-  end
   play_sound('tarot1')
   card.T.r = -0.2
   card:juice_up(0.3, 0.4)
