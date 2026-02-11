@@ -116,7 +116,7 @@ local nincada={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main then
+    if context.before then
       local has_nine_or_jack = false
       for k, v in ipairs(context.scoring_hand) do
         if v:get_id() == 9 or v:get_id() == 11 then
@@ -129,7 +129,7 @@ local nincada={
         if not context.blueprint and card.ability.extra.chips > 0 then
           SMODS.scale_card(card, {
             ref_value = 'chips',
-            scalar_value = 'chip_minus',
+            scalar_value = 'chips_minus',
             operation = function(ref_table, ref_value, initial, modifier)
               ref_table[ref_value] = math.max(0, initial - modifier)
             end,
@@ -137,13 +137,16 @@ local nincada={
             message_colour = G.C.CHIPS
           })
         end
+
         if SMODS.pseudorandom_probability(card, 'nincada', card.ability.extra.num, card.ability.extra.dem, 'nincada') and
             #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           local set = pseudorandom_element(SMODS.ConsumableTypes, pseudoseed('adacnin'))
           SMODS.add_card { set = set.key }
         end
       end
+    end
 
+    if context.joker_main then
       return {
         chips = card.ability.extra.chips
       }
