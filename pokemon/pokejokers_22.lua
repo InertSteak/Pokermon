@@ -95,7 +95,9 @@ local hydreigon={
     end
     if context.destroy_card and context.scoring_name == "Three of a Kind" and not context.blueprint
         and context.cardarea == 'unscored' then
-      return true
+      return {
+        remove = true
+      }
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
