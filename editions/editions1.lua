@@ -29,20 +29,16 @@ local shiny = ({
     end,
     on_apply = function(card)
       G.P_CENTERS.e_poke_shiny.on_load(card)
-      
+
       --we don't want to do this in the collection screen
-      if card.area and card.area.config and not card.area.config.collection then
-        if card.area == G.pack_cards or card.area == G.shop_jokers then
-          card.config.shiny_on_add = true
-        else
-          SMODS.change_booster_limit(1)
-        end
-      elseif not card.area then
-        card.config.shiny_on_add = true
+      if card.added_to_deck then
+        SMODS.change_booster_limit(1)
       end
     end,
     on_remove = function(card)
-      SMODS.change_booster_limit(-1)
+      if card.added_to_deck then
+        SMODS.change_booster_limit(-1)
+      end
     end,
     on_load = function(card)
       if card.config.center.atlas and G.ASSET_ATLAS[card.config.center.atlas..'Shiny'] and type(card.config.center.atlas) == 'string' then

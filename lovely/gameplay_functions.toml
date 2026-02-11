@@ -51,8 +51,7 @@ target = "card.lua"
 pattern = "self.added_to_deck = true"
 position = "after"
 payload = '''
-if self.config.shiny_on_add and not self.debuff then
-  self.config.shiny_on_add = false
+if self.edition and self.edition.poke_shiny then
   SMODS.change_booster_limit(1)
 end
 '''
@@ -64,12 +63,8 @@ target = "card.lua"
 pattern = "self.added_to_deck = false"
 position = "after"
 payload = '''
-if self.edition and self.edition.poke_shiny and G.jokers then
-  if G.GAME.modifiers.poke_booster_packs then
-    G.GAME.modifiers.poke_booster_packs = G.GAME.modifiers.poke_booster_packs - 1
-  else
-    G.GAME.modifiers.poke_booster_packs = 0
-  end
+if self.edition and self.edition.poke_shiny then
+  SMODS.change_booster_limit(-1)
 end
 '''
 match_indent = true

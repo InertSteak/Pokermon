@@ -1162,19 +1162,18 @@ local poochyena={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_colour = G.C.MULT
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_mightyena")
@@ -1200,19 +1199,21 @@ local mightyena={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_scaling_mod * #find_pokemon_type("Dark")))
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier + #find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
+          end,
+          message_colour = G.C.MULT
+        })
       end
     end
   end,

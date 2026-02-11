@@ -209,15 +209,6 @@ G.P_CENTERS.e_polychrome.get_weight = function(self)
   return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
 end
 
---To remove the booster slot from shinies
-local removed = Card.remove
-function Card:remove()
-  if self.edition and self.edition.poke_shiny and not self.debuff and self.area and (self.area == G.jokers or self.area == G.hand or self.area == G.play) then
-    SMODS.change_booster_limit(-1)
-  end
-  return removed(self)
-end
-
 --To support Debris sleeve combo
 local card_set_ability_old = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
