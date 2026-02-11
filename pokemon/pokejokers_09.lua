@@ -1210,7 +1210,7 @@ local mightyena={
           ref_value = 'mult',
           scalar_value = 'mult_mod',
           operation = function(ref_table, ref_value, initial, modifier)
-            ref_table[ref_value] = initial + modifier * #find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
+            ref_table[ref_value] = initial + modifier + #find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
           end,
           message_colour = G.C.MULT
         })
