@@ -116,36 +116,39 @@ local nincada={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local sub = nil
-        for k, v in ipairs(context.scoring_hand) do
-          if v:get_id() == 9 or v:get_id() == 11 then
-            sub = true
-            break
-          end
-        end
-        if sub then
-          if not context.blueprint and card.ability.extra.chips > 0 then
-            card.ability.extra.chips = math.max(0, card.ability.extra.chips - card.ability.extra.chips_minus)
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}}, colour = G.C.CHIPS})
-          end
-          if SMODS.pseudorandom_probability(card, 'nincada', card.ability.extra.num, card.ability.extra.dem, 'nincada') and
-             #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then 
-            local set = pseudorandom_element(SMODS.ConsumableTypes, pseudoseed('adacnin'))
-            SMODS.add_card{set = set.key}
-          end
-        end
-        if card.ability.extra.chips > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-            colour = G.C.CHIPS,
-            chip_mod = card.ability.extra.chips
-          }
+    if context.joker_main then
+      local has_nine_or_jack = false
+      for k, v in ipairs(context.scoring_hand) do
+        if v:get_id() == 9 or v:get_id() == 11 then
+          has_nine_or_jack = true
+          break
         end
       end
+
+      if has_nine_or_jack then
+        if not context.blueprint and card.ability.extra.chips > 0 then
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_minus',
+            operation = function(ref_table, ref_value, initial, modifier)
+              ref_table[ref_value] = math.max(0, initial - modifier)
+            end,
+            message_key = 'a_chips_minus',
+            message_colour = G.C.CHIPS
+          })
+        end
+        if SMODS.pseudorandom_probability(card, 'nincada', card.ability.extra.num, card.ability.extra.dem, 'nincada') and
+            #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          local set = pseudorandom_element(SMODS.ConsumableTypes, pseudoseed('adacnin'))
+          SMODS.add_card { set = set.key }
+        end
+      end
+
+      return {
+        chips = card.ability.extra.chips
+      }
     end
-    
+
     local evo = scaling_evo(self, card, context, "j_poke_ninjask", (card.ability.extra.chips <= 0) and 1 or 0, 1)
     if evo and type(evo) == "table" then
       if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
@@ -160,13 +163,13 @@ local nincada={
             G.GAME.joker_buffer = 0
             G.E_MANAGER:add_event(Event({
               func = function()
-                  copy:start_materialize()
-                  return true
+                copy:start_materialize()
+                return true
               end
-            })) 
+            }))
             return true
           end
-        })) 
+        }))
       end
     end
     return evo
