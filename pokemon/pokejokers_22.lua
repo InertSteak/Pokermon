@@ -88,33 +88,21 @@ local hydreigon={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-      if context.after and context.scoring_name == "Three of a Kind" and not context.blueprint then
-        for k, v in pairs(context.full_hand) do
-          if not SMODS.in_scoring(v, context.scoring_hand) then
-            poke_remove_card(v, card)
-          end
-        end
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
-    --[[
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Three of a Kind" then
-        return {
-          x_mult = card.ability.extra.Xmult_multi,
-          card = card
-        }
-    end]]--
+    if context.destroy_card and context.scoring_name == "Three of a Kind" and not context.blueprint
+        and context.cardarea == 'unscored' then
+      return true
+    end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+        })
       end
     end
   end
