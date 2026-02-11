@@ -445,23 +445,26 @@ local pawniard={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.remove_playing_cards and not context.blueprint then
-        local face_cards = 0
-        for _, removed_card in ipairs(context.removed) do
-            if removed_card:is_face() then face_cards = face_cards + 1 end
-        end
-        if face_cards > 0 then
-            card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult}}, colour = G.C.XMULT }
-        end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+      local face_cards = 0
+      for _, removed_card in ipairs(context.removed) do
+        if removed_card:is_face() then face_cards = face_cards + 1 end
       end
+      if face_cards > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier * face_cards
+          end,
+          message_key = 'a_xmult',
+          message_colour = G.C.XMULT
+        })
+      end
+    end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
@@ -501,33 +504,32 @@ local bisharp={
       local eval = function() return G.GAME.current_round.hands_played == 0 end
       juice_card_until(card, eval, true)
     end
-    
     if context.remove_playing_cards and not context.blueprint then
-        local face_cards = 0
-        for _, removed_card in ipairs(context.removed) do
-            if removed_card:is_face() then face_cards = face_cards + 1 end
-            if removed_card:get_id() == 13 then card.ability.extra.kings_destroyed = card.ability.extra.kings_destroyed + 1 end
-        end
-        if face_cards > 0 then
-            card.ability.extra.Xmult = card.ability.extra.Xmult + face_cards * card.ability.extra.Xmult_mod
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult}}, colour = G.C.XMULT }
-        end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+      local face_cards = 0
+      for _, removed_card in ipairs(context.removed) do
+        if removed_card:is_face() then face_cards = face_cards + 1 end
+        if removed_card:get_id() == 13 then card.ability.extra.kings_destroyed = card.ability.extra.kings_destroyed + 1 end
+      end
+      if face_cards > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier * face_cards
+          end,
+          message_key = 'a_xmult',
+          message_colour = G.C.XMULT
+        })
       end
     end
-    if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:is_face() and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-      context.full_hand[1].bisharp_remove = card
-      card:juice_up()
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
-    if context.destroy_card and context.destroy_card.bisharp_remove == card and not context.blueprint then
-      context.destroy_card.to_be_removed_by = nil
+    if context.destroy_card and #context.full_hand == 1 and context.destroy_card == context.full_hand[1] and context.full_hand[1]:is_face()
+        and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      card:juice_up()
       return {
         remove = true
       }
