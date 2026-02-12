@@ -90,3 +90,12 @@ local blind_size = #challenge.restrictions.banned_other > 3
 local temp_blind =  SMODS.create_sprite(0,0,blind_size,blind_size, G.ANIMATION_ATLAS[v.atlas or ''] or  'blind_chips',  v.pos) 
 '''
 match_indent = true
+
+# Fix floating point number formatting
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''if num < 0.01 then return tostring(num) end'''
+position = "at"
+payload = '''if num < 0.01 then return string.format("%.0f", num) end'''
+match_indent = true
