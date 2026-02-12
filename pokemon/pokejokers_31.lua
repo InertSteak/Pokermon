@@ -302,32 +302,25 @@ local fidough={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local contains = false
-        for i=1, #context.scoring_hand do
-          if context.scoring_hand[i]:get_id() == card.ability.extra.id then
-            contains = true
-            break
-          end
-        end
-        if contains then
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-          card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS,
-            card = card
-          }
-        end
+    if context.before then
+      local contains = false
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == card.ability.extra.id then contains = true; break end
       end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
+      if contains then
+        card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
+
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          message_colour = G.C.CHIPS
+        })
       end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     return scaling_evo(self, card, context, "j_poke_dachsbun", #find_pokemon_type("Fire"), 1)
   end,
@@ -356,32 +349,28 @@ local dachsbun={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        local contains = false
-        for i=1, #context.scoring_hand do
-          if context.scoring_hand[i]:get_id() == card.ability.extra.id then
-            contains = true
-            break
-          end
-        end
-        if contains then
-          card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod + (#find_pokemon_type("Fire") * 2)
-          card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS,
-            card = card
-          }
-        end
+    if context.before then
+      local contains = false
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:get_id() == card.ability.extra.id then contains = true; break end
       end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
+      if contains then
+        card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
+
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          operation = function (ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier + #find_pokemon_type("Fire") * 2
+          end,
+          message_colour = G.C.CHIPS
+        })
       end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)

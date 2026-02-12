@@ -27,25 +27,24 @@ local charcadet={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
-      if context.after and not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+    if context.after and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        message_colour = G.C.MULT
+      })
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.mult = card.ability.extra.mult_original
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
     end
     return item_evo(self, card, context)
   end,
@@ -69,29 +68,21 @@ local armarouge={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-      if context.after and not context.blueprint then
-        local starting_Xmult = card.ability.extra.Xmult
-        if card.ability.extra.Xmult >= 2 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.Xmult_mod
-        else
-          card.ability.extra.Xmult = 1
-        end
-        if card.ability.extra.Xmult ~= starting_Xmult then 
-          return {
-            message = localize{type='variable',key='a_xmult_minus',vars={card.ability.extra.Xmult_mod}},
-            colour = G.C.RED,
-            card = card
-          }
-        end
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    if context.after and card.ability.extra.Xmult > 1 and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        operation = function(ref_table, ref_value, initial, modifier)
+          ref_table[ref_value] = math.max(1, initial - modifier)
+        end,
+        message_key = 'a_xmult_minus',
+        message_colour = G.C.RED
+      })
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult2
@@ -124,35 +115,32 @@ local ceruledge={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-      if context.after and not context.blueprint then
-        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              local drain_jokers = {}
-              for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i] ~= card and G.jokers.cards[i].sell_cost > 1 then
-                  drain_jokers[#drain_jokers + 1] = G.jokers.cards[i]
-                end
-              end
-              if #drain_jokers > 0 then
-                poke_drain(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
-              end
-              return true
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    if context.after and not context.blueprint then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          local drain_jokers = {}
+          for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i] ~= card and G.jokers.cards[i].sell_cost > 1 then
+              drain_jokers[#drain_jokers+1] = G.jokers.cards[i]
+            end
           end
-        })) 
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.MULT
-        }
-      end
+          if #drain_jokers > 0 then
+            poke_drain(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
+          end
+          return true
+        end
+      }))
+
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        message_colour = G.C.MULT
+      })
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult2
