@@ -1249,7 +1249,7 @@ local mareep={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and card.ability.extra.Xmult > 0 then
+    if context.joker_main and card.ability.extra.Xmult >= 0.01 then
       return {
         Xmult = card.ability.extra.Xmult
       }
@@ -1290,7 +1290,7 @@ local flaaffy={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and card.ability.extra.Xmult > 0 then
+    if context.joker_main and card.ability.extra.Xmult >= 0.01 then
       return {
         Xmult = card.ability.extra.Xmult
       }

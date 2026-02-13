@@ -18,7 +18,7 @@ local ampharos={
   eternal_compat = true,
   poke_custom_values_to_keep = {"Xmult"},
   calculate = function(self, card, context)
-    if context.joker_main and card.ability.extra.Xmult > 0 then
+    if context.joker_main and card.ability.extra.Xmult >= 0.01 then
       return {
         Xmult = card.ability.extra.Xmult
       }
