@@ -266,7 +266,84 @@ local aggron = {
 -- Plusle 311
 -- Minun 312
 -- Volbeat 313
+local volbeat={
+  name = "volbeat",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0, chip_mod = 6, Xmult_mod = 0.1, Xmult = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+  end,
+  rarity = 2,
+  cost = 5,
+  gen = 1,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult,
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Planet' then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        message_key = 'a_chips',
+        message_colour = G.C.CHIPS
+      })
+      if #find_pokemon_type("Grass", card) > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_key = 'a_xmult',
+          message_colour = G.C.XMULT,
+        })
+      end
+    end
+  end,
+}
 -- Illumise 314
+local illumise={
+  name = "illumise",
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+      local grass_count = #find_pokemon_type("Grass")
+      for i = 1, grass_count do
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          G.E_MANAGER:add_event(Event({
+            func = (function()
+                local planet = SMODS.add_card{set = 'Planet'}
+                SMODS.calculate_effect({ message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet}, planet)
+                G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+        end
+      end
+    end
+  end,
+}
 -- Roselia 315
 local roselia={
   name = "roselia",
@@ -529,5 +606,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, roselia, numel, camerupt, mega_camerupt, spinda},
+  list = {delcatty, aron, lairon, aggron, volbeat, illumise, roselia, numel, camerupt, mega_camerupt, spinda},
 }

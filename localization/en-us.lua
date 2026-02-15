@@ -3536,6 +3536,25 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
+            j_poke_volbeat = {
+              name = "Volbeat",
+              text = {
+                "Gains {C:chips}+#2#{} Chips when",
+                "you use a {C:planet}Planet{} card",
+                "{br:2}ERROR - CONTACT STEAK",
+                "If you have another {X:grass,C:white}Grass{}",
+                "Joker, gains {X:mult,C:white} X#4# {} Mult as well",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips, {X:mult,C:white} X#3# {C:inactive} Mult)"
+              }
+            },
+            j_poke_illumise = {
+              name = "Illumise",
+              text = {
+                "When {C:attention}Blind{} is selected,",
+                "create a {C:planet}Planet{} card for",
+                "each {X:grass,C:white}Grass{} Joker you have"
+              }
+            },
             j_poke_roselia = {
                 name = "Roselia",
                 text = {
