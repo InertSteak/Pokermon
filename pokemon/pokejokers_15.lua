@@ -64,6 +64,7 @@ local lopunny={
   config = {extra = {mult = 5, Xmult = 2,scry = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.scry}}
   end,
   designer = "King_Alloy",
@@ -128,6 +129,7 @@ local mega_lopunny={
   config = {extra = {scry = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     local hand = localize('poke_none')
     if G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
       local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
