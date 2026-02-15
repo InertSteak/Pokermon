@@ -3552,7 +3552,8 @@ return {
               text = {
                 "When {C:attention}Blind{} is selected,",
                 "create a {C:planet}Planet{} card for",
-                "each {X:grass,C:white}Grass{} Joker you have"
+                "each {X:grass,C:white}Grass{} Joker you have",
+                "{C:inactive}(Must have room){}",
               }
             },
             j_poke_roselia = {
