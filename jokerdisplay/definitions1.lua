@@ -3126,11 +3126,11 @@ jd_def["j_poke_aerodactyl"] = {
         end
     end
     if count >= 4 then
-      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod) * 2
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult1 + card.ability.extra.Xmult_mod) * 2
     elseif count < 4 and count >= 2 then
-      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod)
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult1 + card.ability.extra.Xmult_mod)
     elseif count == 1 then 
-      card.joker_display_values.Xmult = card.ability.extra.Xmult_original
+      card.joker_display_values.Xmult = card.ability.extra.Xmult1
     else
       card.joker_display_values.Xmult = 1
     end
