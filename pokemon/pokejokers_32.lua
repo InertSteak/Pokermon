@@ -41,10 +41,7 @@ local charcadet={
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.mult = card.ability.extra.mult_original
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
     end
     return item_evo(self, card, context)
   end,
