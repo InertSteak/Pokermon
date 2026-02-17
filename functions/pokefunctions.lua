@@ -637,7 +637,7 @@ evo_item_use = function(self, card, area, copier)
     local applied = false
     local evolve = false
     for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
+      if applied ~= true and not v.debuff then
         if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name and not v.ability.extra.evolve then
           evolve = true
         elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" and not v.ability.extra.evolve then
@@ -663,6 +663,7 @@ highlighted_evo_item = function(self, card, area, copier)
     local evolve = false
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
     local choice = G.jokers.highlighted[1]
+    if choice.debuff then return false end
     if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and type(choice.ability.extra.item_req) ~= "table" and choice.ability.extra.item_req == self.name and 
        not choice.ability.extra.evolve then
       evolve = true
