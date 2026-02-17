@@ -640,7 +640,7 @@ local cubone={
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     end
     local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
-    return {vars = {card.ability.extra.mult, card.ability.extra.mult * ((G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub')), consumables_left}}
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * (poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -661,7 +661,7 @@ local cubone={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #G.consumeables.cards + #find_joker('thickclub')
+        local count = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
         if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * count}}, 
@@ -687,8 +687,7 @@ local marowak={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     end
-    local count = (G.consumeables and #G.consumeables.cards) or 0 
-    count = count + #find_joker('thickclub')
+    local count = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.card_limit, 
                     1 + (center.ability.extra.Xmult_mod * count)}}
   end,
@@ -703,7 +702,7 @@ local marowak={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #G.consumeables.cards + #find_joker('thickclub')
+        local count = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
         if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * count)}}, 

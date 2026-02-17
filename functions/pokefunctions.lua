@@ -87,6 +87,48 @@ remove = function(self, card, context, check_shiny)
   return true
 end
 
+poke_fake_evolve = function(card, evolve_message, set_sprites)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if card.evolution_timer then return true end
+        card.evolution_timer = 0
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 1.5,
+            delay = 2.0,
+            func = (function(t) return t end)
+        }))
+        if set_sprites then
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              card:set_sprites(card.config.center)
+              return true
+            end
+          }))
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 2.25,
+            delay = 1.0,
+            func = (function(t) return t end)
+        }))
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card.evolution_timer = nil
+            play_sound('tarot1')
+            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            return true
+          end
+        }))
+        return true
+      end
+    }))
+end
+
 poke_evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.apply_randomizer and not transformation then
     to_key = get_random_poke_key('randomizer')
@@ -1412,4 +1454,19 @@ poke_can_save_consumable = function(card)
   return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket"))
       or (G.GAME.poke_save_all and not (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Wish")))
       or (card.config.center.saveable)
+end
+
+poke_get_consumeable_count = function()
+  if G.STAGE ~= G.STAGES.RUN then return 0 end
+  local count = 0
+  local areas = {G.jokers.cards, G.consumeables.cards}
+  for i = 1, #areas do
+    local area = areas[i]
+    for j = 1, #area do
+      if area[j].ability.consumeable then
+        count = count + 1
+      end
+    end
+  end
+  return count
 end

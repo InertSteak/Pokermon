@@ -2422,16 +2422,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = 0
-        if G.consumeables then
-            for i = 1, #G.consumeables.cards do
-                if G.consumeables.cards[i].ability.name == "thickclub" then
-                    consumables = consumables + 2
-                elseif G.consumeables.cards[i].ability.name ~= "thickclub" then
-                    consumables = consumables + 1
-                end
-            end
-        end
+        local consumables = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2449,18 +2440,8 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local clubs = 0
-        local consumables = 0
-        if G.consumeables then
-            for i = 1, #G.consumeables.cards do
-                if G.consumeables.cards[i].ability.name == "thickclub" then
-                    clubs = clubs + 1
-                elseif G.consumeables.cards[i].ability.name ~= "thickclub" then
-                    consumables = consumables + 1
-                end
-            end
-        end
-        Xmult = 1 + (card.ability.extra.Xmult_mod*consumables) + (card.ability.extra.Xmult_mod*2*clubs)
+        local consumables = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
+        Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end
 }
