@@ -12,6 +12,14 @@ position = "at"
 payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
 match_indent = true
 
+# Evolution context
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "SMODS.calculate_context({end_of_round = true, game_over = game_over, beat_boss = G.GAME.blind.boss })"
+position = "after"
+payload = "SMODS.calculate_context({evolution = true})"
+match_indent = true
 
 # Drain functionality
 [[patches]]
@@ -51,7 +59,12 @@ pattern = "booster_obj = self.config.center"
 position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
-  self.ability.extra = #G.P_CENTER_POOLS.Planet
+  local xatu_count = 0
+  local xatu_pool = get_current_pool("Planet")
+  for i = 1, #xatu_pool do
+    if xatu_pool[i] ~= "UNAVAILABLE" then xatu_count = xatu_count + 1 end
+  end
+  self.ability.extra = xatu_count
 elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
   self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
@@ -66,7 +79,15 @@ pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
 position = "at"
 payload = '''
 if next(find_joker("xatu")) then
-    local _planet = G.P_CENTER_POOLS.Planet[i].key
+    local pos = 0
+    local xatu_pool = get_current_pool("Planet")
+    for j = i, #xatu_pool do
+      if xatu_pool[j] ~= "UNAVAILABLE" then
+        pos = j
+        break
+      end
+    end
+    local _planet = G.P_CENTER_POOLS.Planet[pos].key
     _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
 elseif G.GAME.used_vouchers.v_telescope and i == 1 then
 '''

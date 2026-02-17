@@ -2475,7 +2475,9 @@ return {
                 name = 'Xatu',
                 text = {
                     "{C:planet}Planet{} cards give an extra level",
-                    "{C:planet}Celestial Packs{} contain every {C:planet}Planet{} card",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:planet}Celestial Packs{} contain every",
+                    "{C:attention}available{} {C:planet}Planet{} card"
                 }
             },
             j_poke_mareep = {
