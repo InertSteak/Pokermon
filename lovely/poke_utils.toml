@@ -12,15 +12,6 @@ position = "at"
 payload = "if self.ability.perish_tally and self.ability.perish_tally == 1 and not (self.ability and self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.rounds and self.ability.extra.rounds <= 1) then"
 match_indent = true
 
-# Evolution context
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "SMODS.calculate_context({end_of_round = true, game_over = game_over, beat_boss = G.GAME.blind.boss })"
-position = "after"
-payload = "SMODS.calculate_context({evolution = true})"
-match_indent = true
-
 # Drain functionality
 [[patches]]
 [patches.pattern]
