@@ -214,7 +214,7 @@ jd_def["j_poke_blaziken"] = {
   end,
   mod_function = function(card, mod_joker)
     if mod_joker.ability.extra.cards_discarded >= mod_joker.ability.extra.discard_target then
-      return { x_mult = ((card.config.center.ptype and card.config.center.ptype == "Fire" or card.config.center.ptype == "Fighting") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+      return { x_mult = ((is_type(card, "Fire") or is_type(card, "Fighting")) and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     else
       return { xmult = nil }
     end
