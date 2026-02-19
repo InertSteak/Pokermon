@@ -50,21 +50,24 @@ local trubbish={
         chips = card.ability.extra.chips
       }
     end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier * G.GAME.current_round.discards_left
+          end,
+          message_colour = G.C.CHIPS
+        })
+      
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 then
-      SMODS.scale_card(card, {
-        ref_value = 'chips',
-        scalar_value = 'chip_mod',
-        operation = function(ref_table, ref_value, initial, modifier)
-          ref_table[ref_value] = initial + modifier * G.GAME.current_round.discards_left
-        end,
-        message_colour = G.C.CHIPS
-      })
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
-      if card.ability.extra.triggers >= self.config.evo_rqmt and not next(find_joker("everstone")) then
-        poke_evolve(card, "j_poke_garbodor")
-      end
       return ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
     end
   end,
@@ -108,18 +111,20 @@ local garbodor={
           message_colour = G.C.CHIPS
         })
       end
-      if (G.GAME.poke_ante_discards_used or 0) == 0 and G.GAME.blind.boss then
-        G.E_MANAGER:add_event(Event({
-          func = (function()
-            add_tag(Tag('tag_garbage'))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
-          end)
-        }))
-      end
     end
   end,
+  calc_dollar_bonus = function(self, card)
+    if (G.GAME.poke_ante_discards_used or 0) == 0 and G.GAME.blind.boss then
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          add_tag(Tag('tag_garbage'))
+          play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+          play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+          return true
+        end)
+      }))
+    end
+  end
 }
 -- Zorua 570
 local zorua = {

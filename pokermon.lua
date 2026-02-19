@@ -244,5 +244,12 @@ end
 local old_end = end_round
 function end_round()
   old_end()
-  SMODS.calculate_context({evolution = true})
+  G.E_MANAGER:add_event(Event({
+    trigger = 'after',
+    delay = 0.2,
+    func = function()
+      SMODS.calculate_context({evolution = true})
+      return true
+    end
+  }))
 end
