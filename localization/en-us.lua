@@ -1308,9 +1308,9 @@ return {
             j_poke_poliwag = {
                 name = "Poliwag",
                 text = {
-                    "Played {V:1}#3#{} cards give {C:mult}+#1#{} Mult",
-                    "when scored",
-                    "Suit changes in order after scoring",
+                    "Played {V:1}#3#{} cards give",
+                    "{C:mult}+#1#{} Mult when scored,",
+                    "suit{} cycles after scoring",
                     "{C:inactive,s:0.8}(#4#, #5#, #6#, #7#){}",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 } 
@@ -1318,9 +1318,9 @@ return {
             j_poke_poliwhirl = {
                 name = "Poliwhirl",
                 text = {
-                    "Played {V:1}#2#{} cards give {C:mult}+#1#{} Mult",
-                    "when scored",
-                    "Suit changes in order after scoring",
+                    "Played {V:1}#2#{} cards give",
+                    "{C:mult}+#1#{} Mult when scored",
+                    "suit cycles after scoring",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#){}",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Water Stone{C:inactive,s:0.8} or {C:attention,s:0.8}King's Rock{C:inactive,s:0.8})"
                 } 
@@ -1329,8 +1329,8 @@ return {
                 name = "Poliwrath",
                 text = {
                     "Played {V:1}#2#{} cards give {C:mult}+#7#{} Mult",
-                    "and {X:mult,C:white}X#1#{} Mult when scored",
-                    "Suit changes in order after scoring",
+                    "and {X:mult,C:white}X#1#{} Mult when scored,",
+                    "suit cycles after scoring",
                     "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#)"
                 } 
             },
@@ -2395,12 +2395,12 @@ return {
             j_poke_crobat = {
                 name = 'Crobat',
                 text = {
-                    "{C:attention}Leech List",  
                     "For each scoring {C:attention}Enhancement{} gain",
                     "{C:mult}+#2#{} Mult, {C:chips}+#4#{} Chips, {X:mult,C:white}X#6#{} Mult, or",
-                    "{C:money}$#8#{} payout at end of round,",
+                    "increase payout by {C:money}$#8#{},",
                     "removes card {C:attention}Enhancement",
-                    "{C:inactive,s:0.9}(Currently {C:chips,s:0.9}+#3#{}, {C:mult,s:0.9}+#1#{}, {X:mult,C:white,s:0.9}X#5#{}, {C:money,s:0.9}$#7#{C:inactive,s:0.9} at end of round)"
+                    "{C:inactive,s:0.9}(Value based on Enhancement type){}",
+                    "{C:inactive,s:0.9}(Currently {C:chips,s:0.9}+#3#{C:inactive,s:0.9}, {C:mult,s:0.9}+#1#{C:inactive,s:0.9}, {X:mult,C:white,s:0.9}X#5#{C:inactive,s:0.9}, {C:money,s:0.9}$#7#{C:inactive,s:0.9} at end of round)"
                 } 
             },
             j_poke_chinchou = {
@@ -2569,12 +2569,11 @@ return {
             j_poke_politoed = {
                 name = 'Politoed',
                 text = {
-                    "Played {V:1}#2#{} cards give {C:mult}+#1#{} Mult when scored",
-                    "{br:5}ERROR - CONTACT STEAK",
-                    "Retrigger {V:1}#2#{} cards based on",
-                    "how many {X:water,C:white}Water{} Jokers you have",
-                    "{C:inactive,s:0.8}({C:attention,s:0.8}#7#{C:inactive,s:0.8} Retrigger(s) divided evenly between scoring cards){}",
-                    "{s:0.8}Suit cycles after scoring {C:inactive,s:0.8}(#3#, #4#, #5#, #6#)",
+                    "Retrigger first scoring {V:1}#2#{}",
+                    "then retrigger it again for",
+                    "each {X:water,C:white}Water{} Joker you have,",
+                    "suit cycles after scoring",
+                    "{C:inactive,s:0.8}(#3#, #4#, #5#, #6#)"
                 } 
             },
             j_poke_hoppip = {
@@ -6153,7 +6152,7 @@ return {
                 }
             },
             bat_leech = {
-                name = "Leech List",
+                name = "Conversion List",
                 text = {
                     "{C:attention}Bonus{} / {C:attention}Stone{} - {C:chips}Chips",
                     "{C:attention}Steel{} / {C:attention}Glass{} / {C:attention}Flower{} - {X:mult,C:white}X{} Mult",

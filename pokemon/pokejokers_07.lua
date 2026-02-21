@@ -327,12 +327,12 @@ local weird_tree={
 local politoed={
   name = "politoed", 
   pos = {x = 4, y = 3}, 
-  config = {extra = {mult = 7, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1,}},
+  config = {extra = {retriggers = 1, suits = {"Spades", "Hearts", "Clubs", "Diamonds"}, indice = 1,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, localize(G.GAME.poke_poli_suit or "Spades",'suits_singular'),  
+    return {vars = {center.ability.extra.retriggers, localize(G.GAME.poke_poli_suit or "Spades",'suits_singular'),  
                     colours = {G.C.SUITS[G.GAME.poke_poli_suit or "Spades"]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
-                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), #find_pokemon_type("Water")}}
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.retriggers + #find_pokemon_type("Water")}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -353,40 +353,20 @@ local politoed={
         G.GAME.poke_poli_suit_change_triggered = false
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      local scoring_suit = G.GAME.poke_poli_suit or "Spades"
-      if context.other_card:is_suit(scoring_suit) then
-        return {
-          colour = G.C.MULT,
-          mult = card.ability.extra.mult,
-          card = card
-        }
-      end
-    end
     if context.repetition and not context.end_of_round and context.cardarea == G.play then
       local scoring_suit = G.GAME.poke_poli_suit or "Spades"
-      if context.other_card:is_suit(scoring_suit) then
-        local total = #find_pokemon_type("Water")
-        local cards = #context.scoring_hand
-        local pos = 0
-        local remainder = 0
-        local retriggers = 0
-        for i=1, #context.scoring_hand do
-          if context.scoring_hand[i] == context.other_card then
-            pos = i
-            break
-          end
+      local first_suit = nil
+      for i = 1, #context.scoring_hand do
+        if context.scoring_hand[i]:is_suit(scoring_suit) then
+          first_suit = context.scoring_hand[i]
+          break
         end
-        retriggers = math.floor(total/cards)
-        remainder = total % cards
-        if pos <= remainder then retriggers = retriggers + 1 end
-        if retriggers > 0 then
-          return {
-            message = localize('k_again_ex'),
-            repetitions = retriggers,
-            card = card
-          }
-        end
+      end
+      if first_suit and first_suit == context.other_card then
+        local poli_retriggers = card.ability.extra.retriggers + #find_pokemon_type("Water")
+        return {
+          repetitions = poli_retriggers
+        }
       end
     end
   end,
