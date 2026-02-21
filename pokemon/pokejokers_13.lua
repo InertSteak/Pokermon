@@ -625,8 +625,8 @@ local jirachi_invis = {
         copy:add_to_deck()
         G.jokers:emplace(copy)
         copy:start_materialize()
-        
-        remove(self, card, context)
+
+        SMODS.destroy_cards(card, nil, nil, true)
       end
     end
   end,

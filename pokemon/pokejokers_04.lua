@@ -79,8 +79,9 @@ local gastly={
           eligible_card:set_edition(edition, true)
         end
       end
-      remove(self, card, context)
-      
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end
@@ -137,9 +138,9 @@ local haunter={
           eligible_card:set_edition(edition, true)
         end
       end
-        
-      remove(self, card, context)
-      
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end
