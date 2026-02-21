@@ -171,7 +171,7 @@ local jelly_donut={
         G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
         G.E_MANAGER:add_event(Event({
             func = function()
-              SMODS.add_card{set = "energy", key = "c_poke_colorless_energy"}
+              SMODS.add_card{set = "Energy", key = "c_poke_colorless_energy"}
               G.GAME.consumeable_buffer = 0
               return true
             end
