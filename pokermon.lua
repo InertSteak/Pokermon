@@ -241,6 +241,12 @@ function SMODS.current_mod.reset_game_globals(run_start)
   poke_reset_type('cattype', {'skitty', 'delcatty'})
 end
 
+function SMODS.current_mod.calculate(self, context)
+  if context.after then
+    poke_change_poli_suit()
+  end
+end
+
 local old_end = end_round
 function end_round()
   old_end()
