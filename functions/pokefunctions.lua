@@ -1276,22 +1276,13 @@ poke_load_individual_sprite = function(self, card, card_table, other_card)
 end
 
 poke_change_poli_suit = function()
-  if not G.GAME.poke_poli_suit_change_triggered then
+  if G.GAME.poke_poli_suit then
     local suits = {"Spades", "Hearts", "Clubs", "Diamonds"}
-    if G.GAME.poke_poli_suit then
-      for i = 1, #suits do
-        if suits[i] == G.GAME.poke_poli_suit then
-          if i == #suits then
-            G.GAME.poke_poli_suit = suits[1]
-          else
-            G.GAME.poke_poli_suit = suits[i+1]
-          end
-          break
-        end
-      end
-    else
-      G.GAME.poke_poli_suit = "Hearts"
-    end
+    local i = get_index(suits, G.GAME.poke_poli_suit)
+    if i == #suits then i = 0 end
+    G.GAME.poke_poli_suit = suits[i+1]
+  else
+    G.GAME.poke_poli_suit = "Hearts"
   end
 end
 

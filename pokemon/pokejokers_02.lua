@@ -1186,33 +1186,11 @@ local poliwag={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if not context.blueprint then
-          poke_change_poli_suit()
-          G.GAME.poke_poli_suit_change_triggered = true
-        end
-      end
-      if context.after and G.GAME.poke_poli_suit_change_triggered then
-        G.GAME.poke_poli_suit_change_triggered = false
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play then
-      local scoring_suit = G.GAME.poke_poli_suit or "Spades"
-      if context.other_card:is_suit(scoring_suit) then
-        if context.other_card.debuff then
-          return {
-            message = localize("k_debuffed"),
-            colour = G.C.RED,
-            card = card,
-          }
-        else
-          return {
-            mult = card.ability.extra.mult,
-            card = card
-          }
-        end
-      end
+    if context.individual and context.cardarea == G.play
+        and context.other_card:is_suit(G.GAME.poke_poli_suit or "Spades") then
+      return {
+        mult = card.ability.extra.mult,
+      }
     end
     return level_evo(self, card, context, "j_poke_poliwhirl")
   end,

@@ -342,18 +342,7 @@ local politoed={
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if not context.blueprint then
-          poke_change_poli_suit()
-          G.GAME.poke_poli_suit_change_triggered = true
-        end
-      end
-      if context.after and G.GAME.poke_poli_suit_change_triggered then
-        G.GAME.poke_poli_suit_change_triggered = false
-      end
-    end
-    if context.repetition and not context.end_of_round and context.cardarea == G.play then
+    if context.repetition and context.cardarea == G.play then
       local scoring_suit = G.GAME.poke_poli_suit or "Spades"
       local first_suit = nil
       for i = 1, #context.scoring_hand do
