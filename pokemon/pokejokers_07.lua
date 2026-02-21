@@ -1023,22 +1023,14 @@ local unown={
         end
       end
       if context.after and card.ability.extra.triggered and next(SMODS.find_card("j_poke_ruins_of_alph")) and not context.blueprint then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            remove(self, card, context)
-            return true
-          end
-        }))
+        SMODS.destroy_cards(card, nil, nil, true)
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          remove(self, card, context)
-          return true
-        end
-      }))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_flees_ex")})
+      SMODS.destroy_cards(card, nil, nil, true)
+      return {
+        message = localize("poke_flees_ex")
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
