@@ -62,11 +62,6 @@ copy_scaled_values = function(card)
   return values
 end
 
----@deprecated use `SMODS.destroy_cards` instead
-remove = function(self, card, context, check_shiny)
-  SMODS.destroy_cards(card, nil, nil, true)
-end
-
 poke_fake_evolve = function(card, evolve_message, set_sprites)
     G.E_MANAGER:add_event(Event({
       func = function()
@@ -606,11 +601,6 @@ get_evo_item_keys = function(card)
     end
   end
   return keys
-end
-
----@deprecated functionality is handled by generation code instead
-pokemon_in_pool = function()
-  return true
 end
 
 evo_item_use = function(self, card, area, copier)
