@@ -24,11 +24,6 @@ POKE_EVO_OVERRIDES = {
 
 -- Helper functions/getters for accessing constants
 
----@deprecated use `pokermon.add_stage` instead
-poke_add_stage = function (stage, prev_stage, next_stage)
-  pokermon.add_stage(stage, prev_stage, next_stage)
-end
-
 get_previous_stage = function(stage)
   return (POKE_STAGES[stage] or {}).prev
 end
@@ -59,12 +54,3 @@ poke_get_evo_overrides = function(name)
   end
   return {}
 end
-
--- Aliases for compatibility:
-
-poketype_list = POKE_TYPES
-
-native_evo_items = POKE_NATIVE_EVO_ITEMS
-
-HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).highest_evo end})
-PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
