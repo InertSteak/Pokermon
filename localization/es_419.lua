@@ -484,54 +484,54 @@ return {
                 }
             },
             c_poke_oven = {
-                name = "Microwave",
+                name = "Microondas",
                 text = {
-                  "Gain {C:attention}+#1#{} discard this round",
-                  "if used during the {C:attention}Blind",
+                  "Gana {C:attention}+#1#{} descarte por esta ronda",
+                  "si lo usaste durante una {C:attention}ciega",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost",
-                  "or selected {C:attention}Rotom"
+                  "Transforma al {C:attention}Rotom{} más a la",
+                  "izquierda o seleccionado"
                 }
             },
             c_poke_washing_machine = {
-                name = "Washing Machine",
+                name = "Lavadora",
                 text = {
-                  "Gain {C:attention}+#1#{} hand this round",
-                  "if used during the {C:attention}Blind",
+                  "Gana {C:attention}+#1#{} mano por esta ronda",
+                  "si lo usaste durante una {C:attention}ciega",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost",
-                  "or selected {C:attention}Rotom"
+                  "Transforma al {C:attention}Rotom{} más a la",
+                  "izquierda o seleccionado"
                 }
             },
             c_poke_fridge = {
-                name = "Fridge",
+                name = "Nevera",
                 text = {
-                  "Create {C:attention}2{} random {C:attention}Consumables",
-                  "{C:inactive}(Must have room)",
+                  "Crea {C:attention}2{} {C:attention}consumibles{} al azar",
+                  "{C:inactive}(Debe haber espacio)",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost",
-                  "or selected {C:attention}Rotom"
+                  "Transforma al {C:attention}Rotom{} más a la",
+                  "izquierda o seleccionado"
                 }
             },
             c_poke_fan = {
-                name = "Fan",
+                name = "Ventilador",
                 text = {
-                  "Create up to {C:attention}2{}",
-                  "{C:blue}Common{} Jokers",
-                  "{C:inactive}(Must have room)",
+                  "Crea hasta {C:attention}2{}",
+                  "comodines {C:blue}comunes{}",
+                  "{C:inactive}(Debe haber espacio)",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost",
-                  "or selected {C:attention}Rotom"
+                  "Transforma al {C:attention}Rotom{} más a la",
+                  "izquierda o seleccionado"
                 }
             },
             c_poke_lawn_mower = {
-                name = "Lawn Mower",
+                name = "Podadora de césped",
                 text = {
-                  "Gain {C:attention}+#1#{} hand size this round",
-                  "if used during the {C:attention}Blind",
+                  "Gana {C:attention}+#1#{} tamaño de mano por esta",
+                  "ronda si lo usaste durante una {C:attention}ciega",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Transforms leftmost",
-                  "or selected {C:attention}Rotom"
+                  "Transforma al {C:attention}Rotom{} más a la",
+                  "izquierda o seleccionado"
                 }
             },
         },
