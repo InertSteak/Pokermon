@@ -98,4 +98,5 @@ end
 
 pokermon.add_stage = function(stage, prev_stage, next_stage)
   POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
+  poke_setup_stage(stage)
 end
