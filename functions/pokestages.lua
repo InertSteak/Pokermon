@@ -39,7 +39,7 @@ end
   ```
   ["Fire Types"] = function(center) return center.ptype == "Fire" end,
   ```
-  makes you equally likely to hit a Slugma as you are to hit Ho-oh
+  will make you equally likely to hit a Slugma as you are to hit Ho-oh
 
   ]]
 
@@ -47,8 +47,19 @@ local get_rarity = function(center)
   return ({ "Common", "Uncommon", "Rare", "Legendary" })[center.rarity] or center.rarity
 end
 
+-- Custom Pool for Rarity-dependent Joker Generation
+SMODS.ObjectType {
+  key = "Pokemon",
+  default = 'j_poke_caterpie',
+  rarities = {
+    { key = "Common" },
+    { key = "Uncommon" },
+    { key = "Rare" },
+    { key = "poke_safari" },
+  }
+}
+
 POKE_CUSTOM_POOLS = {
-  ["Pokemon"] = function() return true end, -- Pools are already filtered to Pokermon Jokers
   ["Mystery Egg"] = function(center)
     local stage, rarity = center.stage, get_rarity(center)
     return (stage == "Baby" or stage == "Basic")
@@ -70,6 +81,7 @@ end
 local function add_pools_to_center(center)
   if not center.stage or not POKE_STAGES[center.stage] or center.aux_poke then return end
   center.pools = center.pools or {}
+  center.pools['Pokemon'] = true
   center.pools['Stage ' .. center.stage] = true
 
   for pool, is_member in pairs(POKE_CUSTOM_POOLS) do
