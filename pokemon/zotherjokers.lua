@@ -137,9 +137,7 @@ local tall_grass={
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
-            local _card = create_random_poke_joker("tallgrass", nil, "common")
-            _card:add_to_deck()
-            G.jokers:emplace(_card)
+            SMODS.add_card({ set = "Pokemon", rarity = "Common", key_append = "tallgrass" })
             return true end }))
           delay(0.6)
         end
