@@ -47,7 +47,10 @@ local get_rarity = function(center)
   return ({ "Common", "Uncommon", "Rare", "Legendary" })[center.rarity] or center.rarity
 end
 
--- Custom Pool for Rarity-dependent Joker Generation
+--- Custom Pool for Rarity-dependent Joker Generation
+-- Note: there is currently a bug where specifying
+-- rarities for custom pools has to be done with 1, 2,
+-- and 3 for the vanilla rarities
 SMODS.ObjectType {
   key = "Pokemon",
   default = 'j_poke_caterpie',
