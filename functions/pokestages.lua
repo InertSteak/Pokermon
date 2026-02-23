@@ -42,7 +42,7 @@ POKE_CUSTOM_POOLS = {
 }
 
 local function add_pools_to_center(center)
-  if not center.stage or not POKE_STAGES[center.stage] then return end
+  if not center.stage or not POKE_STAGES[center.stage] or center.aux_poke then return end
   center.pools = center.pools or {}
   center.pools['Stage ' .. center.stage] = true
 end
