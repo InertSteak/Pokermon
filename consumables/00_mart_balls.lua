@@ -21,11 +21,9 @@ local pokeball = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        play_sound('timpani')
-        local _card = create_random_poke_joker("pokeball", "Basic")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
-        return true end }))
+      play_sound('timpani')
+      SMODS.add_card({ set = "Stage Basic", key_append = "pokeball" })
+    return true end }))
     delay(0.6)
   end
 }
@@ -56,11 +54,9 @@ local greatball = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        play_sound('timpani')
-        local _card = create_random_poke_joker("greatball", "One")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
-        return true end }))
+      play_sound('timpani')
+      SMODS.add_card({ set = "Stage One", key_append = "greatball" })
+    return true end }))
     delay(0.6)
   end
 }
@@ -90,11 +86,9 @@ local ultraball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        play_sound('timpani')
-        local _card = create_random_poke_joker("ultraball", "Two")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
-        return true end }))
+      play_sound('timpani')
+      SMODS.add_card({ set = "Stage Two", key_append = "ultraball" })
+    return true end }))
     delay(0.6)
   end
 }
@@ -122,11 +116,9 @@ local masterball = {
   end,
   use = function(self, card, area, copier)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        play_sound('timpani')
-        local _card = create_random_poke_joker("masterball", "Legendary")
-        _card:add_to_deck()
-        G.jokers:emplace(_card)
-        return true end }))
+      play_sound('timpani')
+      SMODS.add_card({ set = "Stage Legendary", key_append = "masterball" })
+    return true end }))
     delay(0.6)
   end
 }
