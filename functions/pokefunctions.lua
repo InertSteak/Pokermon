@@ -51,7 +51,7 @@ get_type = function(card)
 end
 
 copy_scaled_values = function(card)
-  local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
+  local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
       if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) or card.config.center.copy_scaled then

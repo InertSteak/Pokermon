@@ -216,13 +216,13 @@ local simipour = {
 local munna={
   name = "munna",
   pos = {x = 0, y = 0},
-  config = {extra = {mult_mod = 5, scry = 2}},
+  config = {extra = {Xmult_multi = 1, Xmult_mod = 0.05, scry = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.scry}}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_mod, center.ability.extra.scry}}
   end,
-  rarity = 2,
-  cost = 6,
+  rarity = 3,
+  cost = 7,
   gen = 5,
   item_req = "moonstone",
   stage = "Basic",
@@ -231,35 +231,42 @@ local munna={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  copy_scaled = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.play then
-      local rank_match = nil
-      local suit_match = nil
-      for i = 1, #G.scry_view.cards do
-        local scry_card = G.scry_view.cards[i]
-        if not scry_card.debuff then
-          --Suit check
-          if not SMODS.has_no_suit(context.other_card) and not SMODS.has_no_suit(scry_card) and not suit_match then
-            if SMODS.has_any_suit(scry_card) or context.other_card:is_suit(scry_card.base.suit) then
-              suit_match = true
-            end
-          end
-          --Rank check
-          if not SMODS.has_no_rank(context.other_card) and not SMODS.has_no_rank(scry_card) and not rank_match then
-            if context.other_card:get_id() == scry_card:get_id() then
-              rank_match = true
-            end
-          end
-          if suit_match and rank_match then break end
+    if context.before then
+      local eaten = 0
+      for k, v in ipairs(G.scry_view.cards) do
+        if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
+            local true_card = G.deck.cards[#G.deck.cards - k + 1]
+            v.vampired = true
+            eaten = eaten + 1
+
+            v:set_ability(G.P_CENTERS.c_base, nil, true)
+            true_card:set_ability(G.P_CENTERS.c_base, nil, true)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    v:juice_up()
+                    v.vampired = nil
+                    return true
+                end
+            }))
         end
       end
-      
-      if suit_match or rank_match then
-        return {
-          mult = card.ability.extra.mult_mod,
-          card = card
-        }
+      if eaten > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult_multi',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + (change * eaten)
+          end,
+          no_message = true,
+        })
       end
+    end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult_multi
+      }
     end
     return item_evo(self, card, context, "j_poke_musharna")
   end,
@@ -274,7 +281,7 @@ local munna={
 local musharna={
   name = "musharna",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_multi = 1.5, scry = 2, scry_added = 0}},
+  config = {extra = {Xmult_multi = 1, scry = 2, scry_added = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.scry,}}
@@ -301,34 +308,10 @@ local musharna={
       G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
       card.ability.extra.scry_added = 0
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play then
-      local rank_match = nil
-      local suit_match = nil
-      for i = 1, #G.scry_view.cards do
-        local scry_card = G.scry_view.cards[i]
-        if not scry_card.debuff then
-          --Suit check
-          if not SMODS.has_no_suit(context.other_card) and not SMODS.has_no_suit(scry_card) and not suit_match then
-            if SMODS.has_any_suit(scry_card) or context.other_card:is_suit(scry_card.base.suit) then
-              suit_match = true
-            end
-          end
-          --Rank check
-          if not SMODS.has_no_rank(context.other_card) and not SMODS.has_no_rank(scry_card) and not rank_match then
-            if context.other_card:get_id() == scry_card:get_id() then
-              rank_match = true
-            end
-          end
-          if suit_match and rank_match then break end
-        end
-      end
-      
-      if suit_match or rank_match then
+    if context.individual and context.cardarea == G.scry_view and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.end_of_round and not context.other_card.debuff then
         return {
-          x_mult = card.ability.extra.Xmult_multi,
-          card = card
+          x_mult = card.ability.extra.Xmult_multi
         }
-      end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)

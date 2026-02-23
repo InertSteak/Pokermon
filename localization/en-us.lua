@@ -4420,11 +4420,12 @@ return {
             j_poke_munna = {
                 name = "Munna",
                 text = {
-                  "{C:purple}+#2# Foresight",
-                  "Played cards that share",
-                  "a {C:attention}rank{} or {C:attention}suit{} with",
-                  "{C:attention}Foreseen{} cards give",
-                  "{C:mult}+#1#{} Mult {C:attention}when scored",
+                  "{C:purple}+#3# Foresight",
+                  "When hand is played, gain",
+                  "{X:mult,C:white} X#2# {} Mult for each",
+                  "{C:attention}Enhanced Foreseen{} card,",
+                  "removes card {C:attention}Enhancement",
+                  "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult){}",
                   "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Moon Stone{C:inactive,s:0.8})",
                 }
             },
@@ -4435,10 +4436,9 @@ return {
                   "{C:purple}+#2# Foresight{} this round for",
                   "each {X:psychic,C:white}Psychic{} type you have",
                   "{br:3}ERROR - CONTACT STEAK",
-                  "Played cards that share",
-                  "a {C:attention}rank{} or {C:attention}suit{} with",
-                  "{C:attention}Foreseen{} cards give",
-                  "{X:mult,C:white} X#1# {} Mult {C:attention}when scored",
+                  "Each {C:attention}Enhanced Foreseen{}",
+                  "card gives {X:mult,C:white} X#1# {} Mult",
+                  "{C:inactive,s:0.8}({X:mult,C:white,s:0.8} X {C:inactive,s:0.8} Mult inherited from {C:attention,s:0.8}Munna{C:inactive,s:0.8}){}",
                 }
             },
             j_poke_roggenrola = {
