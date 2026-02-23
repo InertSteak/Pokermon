@@ -540,7 +540,7 @@ local ruins_of_alph={
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
         end
       elseif card.ability.extra.merged >= 5 then
-        reward_card = create_random_poke_joker("alph", nil, "poke_safari", G.jokers)
+        reward_card = SMODS.create_card({ set = "Joker", rarity = "poke_safari", key_append = "alph" })
       end
       if reward_card then
         reward_card:add_to_deck()
