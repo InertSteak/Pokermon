@@ -310,15 +310,10 @@ local totodile = {
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.chips = 0
-      local evolve = level_evo(self, card, context, "j_poke_croconaw")
-      if evolve then
-        return evolve
-      else
-        return {
-          message = localize('k_reset'),
-          colour = G.C.CHIPS
-        }
-      end
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
     end
     return level_evo(self, card, context, "j_poke_croconaw")
   end,
@@ -370,16 +365,12 @@ local croconaw = {
     end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.chips = 0
-      local evolve = level_evo(self, card, context, "j_poke_feraligatr")
-      if evolve then
-        return evolve
-      else
-        return {
-          message = localize('k_reset'),
-          colour = G.C.CHIPS
-        }
-      end
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
     end
+    return level_evo(self, card, context, "j_poke_feraligatr")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
