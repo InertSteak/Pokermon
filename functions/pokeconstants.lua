@@ -1,15 +1,5 @@
 POKE_TYPES = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
 
-POKE_STAGES = {
-  ["Baby"] = { prev = nil, next = "Basic" },
-  ["Basic"] = { prev = "Baby", next = "One" },
-  ["One"] = { prev = "Basic", next = "Two" },
-  ["Two"] = { prev = "One", next = nil },
-  ["Legendary"] = { prev = "Legendary", next = "Legendary" },
-  ["Mega"] = { prev = nil, next = nil },
-  ["???"] = { prev = nil, next = nil },
-}
-
 POKE_NATIVE_EVO_ITEMS = {
   "firestone", "waterstone", "leafstone", "thunderstone",
   "dawnstone", "shinystone", "moonstone", "duskstone",
@@ -23,14 +13,6 @@ POKE_EVO_OVERRIDES = {
 }
 
 -- Helper functions/getters for accessing constants
-
-get_previous_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).prev
-end
-
-get_next_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).next
-end
 
 poke_get_evo_overrides = function(name)
   for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
