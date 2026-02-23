@@ -29,11 +29,26 @@ end
 
 -- Joker Pools
 
+--[[
+
+  Note: If you don't specify rarities when using `SMODS.ObjectType` to create a new pool,
+  all of the members are treated equally and the usual rarity poll is omitted
+
+  this includes both Safari and Legendary Jokers that are in your pool.
+  A custom pool consisting of:
+  ```
+  ["Fire Types"] = function(center) return center.ptype == "Fire" end,
+  ```
+  makes you equally likely to hit a Slugma as you are to hit Ho-oh
+
+  ]]
+
 local get_rarity = function(center)
   return ({ "Common", "Uncommon", "Rare", "Legendary" })[center.rarity] or center.rarity
 end
 
 POKE_CUSTOM_POOLS = {
+  ["Pokemon"] = function() return true end, -- Pools are already filtered to Pokermon Jokers
   ["Mystery Egg"] = function(center)
     local stage, rarity = center.stage, get_rarity(center)
     return (stage == "Baby" or stage == "Basic")
@@ -41,10 +56,27 @@ POKE_CUSTOM_POOLS = {
   end,
 }
 
+poke_setup_custom_pool = function(pool)
+  SMODS.ObjectType {
+    key = pool,
+    default = 'j_poke_caterpie'
+  }
+end
+
+for pool, _ in pairs(POKE_CUSTOM_POOLS) do
+  poke_setup_custom_pool(pool)
+end
+
 local function add_pools_to_center(center)
   if not center.stage or not POKE_STAGES[center.stage] or center.aux_poke then return end
   center.pools = center.pools or {}
   center.pools['Stage ' .. center.stage] = true
+
+  for pool, is_member in pairs(POKE_CUSTOM_POOLS) do
+    if is_member(center) then
+      center.pools[pool] = true
+    end
+  end
 end
 
 local smods_center_inject = SMODS.Center.inject
