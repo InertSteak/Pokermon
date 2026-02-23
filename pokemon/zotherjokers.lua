@@ -315,11 +315,7 @@ local mystery_egg = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local poke_key = get_random_poke_key_options {
-        stage = { "Baby", "Basic" },
-        rarity = { "Common", "Uncommon", "Rare" },
-        key_append = 'egg'
-      }
+      local poke_key = poke_poll_center_key({ set = "Mystery Egg", key_append = 'egg' })
       local center = G.P_CENTERS[poke_key]
       -- common hatches in 2 turns
       -- uncommon hatches in 2 or 3 turns

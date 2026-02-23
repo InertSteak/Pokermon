@@ -68,6 +68,9 @@ POKE_CUSTOM_POOLS = {
     return (stage == "Baby" or stage == "Basic")
         and (rarity == "Common" or rarity == "Uncommon" or rarity == "Rare")
   end,
+  ["Corsola"] = function(center)
+    return center.stage == "Basic" and center.ptype == "Water"
+  end,
 }
 
 poke_setup_custom_pool = function(pool)
@@ -103,4 +106,23 @@ SMODS.Center.inject = function(self, ...)
 
   ---@diagnostic disable-next-line: need-check-nil
   return smods_center_inject(self, ...)
+end
+
+-- used for generating just a random key without the card.
+poke_poll_center_key = function(options)
+  -- Code taken from `create_card`.
+  local type = options.type or options.set or 'Joker'
+  local rarity = ({ ['Common'] = 1, ['Uncommon'] = 2, ['Rare'] = 3, ['Legendary'] = 4 })[options.rarity] or options.rarity
+  local legendary = rarity == 4
+  local key_append = options.key_append or options.seed
+
+  local pool, pool_key = get_current_pool(type, rarity, legendary, key_append)
+  local new_key = pseudorandom_element(pool, pseudoseed(pool_key))
+  local it = 1
+  while new_key == 'UNAVAILABLE' do
+    it = it + 1
+    new_key = pseudorandom_element(pool, pseudoseed(pool_key .. '_resample' .. it))
+  end
+
+  return new_key
 end
