@@ -1080,6 +1080,9 @@ local unown={
       card.children.floating_sprite:set_sprite_pos(forms[card.ability.extra.form])
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 -- Wobbuffet 202
 local wobbuffet={
