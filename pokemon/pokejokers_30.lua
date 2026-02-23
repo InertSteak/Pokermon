@@ -227,6 +227,9 @@ local dreepy_dart={
       local edition = {negative = true}
       card:set_edition(edition, true, true)
     end
+  end,
+  in_pool = function(self)
+    return false
   end
 }
 -- Zacian 888
