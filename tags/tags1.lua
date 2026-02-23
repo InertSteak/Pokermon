@@ -97,10 +97,10 @@ local stage_one_tag = {
 	apply = function(self, tag, context)
     if context and context.type == "store_joker_create" then
       local card = SMODS.create_card {
-				set = "Stage One",
-				area = context.area,
-				key_append = "stage1tag"
-			}
+        set = "Stage One",
+        area = context.area,
+        key_append = "stage1tag"
+      }
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.C.GREEN,function() 
@@ -131,9 +131,12 @@ local safari_tag = {
 	end,
 	apply = function(self, tag, context)
     if context and context.type == "store_joker_create" then
-      local card = nil
-      
-      card = create_random_poke_joker("safaritag", nil, "poke_safari", context.area)
+      local card = SMODS.create_card {
+        set = "Joker",
+        rarity = "poke_safari",
+        area = context.area,
+        key_append = "safaritag"
+      }
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.ARGS.LOC_COLOURS.safari,function() 
