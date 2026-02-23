@@ -96,9 +96,11 @@ local stage_one_tag = {
 	end,
 	apply = function(self, tag, context)
     if context and context.type == "store_joker_create" then
-      local card = nil
-      
-      card = create_random_poke_joker("stage1tag", "One", nil, context.area)
+      local card = SMODS.create_card {
+				set = "Stage One",
+				area = context.area,
+				key_append = "stage1tag"
+			}
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.C.GREEN,function() 
