@@ -4659,10 +4659,11 @@ return {
             j_poke_lampent = {
               name = "Lampent",
               text = {
-                "Adds this Joker's sell value to Mult",
-                "{br:3.5}ERROR - CONTACT STEAK",
                 "{C:attention}Drain {C:money}$#1#{} from all other",
                 "Jokers at end of round",
+                "{br:3.5}ERROR - CONTACT STEAK",
+                "Adds this Joker's",
+                "sell value to Mult",
                 "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dusk Stone{C:inactive,s:0.8})"
               }
@@ -4670,10 +4671,11 @@ return {
             j_poke_chandelure = {
                 name = "Chandelure",
                 text = {
-                    "Adds this Joker's sell value to Mult",
-                    "{br:3.5}ERROR - CONTACT STEAK",
                     "Each Joker with {C:money}$1{} sell",
                     "value gives {X:mult,C:white} X#1# {} Mult",
+                    "{br:3.5}ERROR - CONTACT STEAK",
+                    "Adds this Joker's",
+                    "sell value to Mult",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 }
             },
