@@ -3897,6 +3897,43 @@ return {
                     "{C:attention}destroy{} it",
                 }
             },
+            j_poke_deoxys = {
+                name = "Deoxys",
+                text = {
+                  "If {C:attention}first discard{} of",
+                  "round has only {C:attention}1{} card,",
+                  "add a {C:attention}DNA{} seal to it",
+                  "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
+                }
+            },
+            j_poke_deoxys_attack = {
+                name = "Deoxys (Attack)",
+                text = {
+                  "{C:attention}DNA{} seals give an extra",
+                  "permanent {X:mult,C:white}X#1#{} Mult",
+                  "to copied cards",
+                  "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
+                }
+            },
+            j_poke_deoxys_speed = {
+                name = "Deoxys (Speed)",
+                text = {
+                  "{C:attention}DNA{} seals give an extra",
+                  "permanent {C:attention}retrigger",
+                  "to copied cards",
+                  "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
+                }
+            },
+            j_poke_deoxys_defense = {
+                name = "Deoxys (Defense)",
+                text = {
+                  "{C:attention}DNA{} seals give an extra",
+                  "permanent {C:money}$#2#{} payout",
+                  "at end of round",
+                  "to copied cards",
+                  "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
+                }
+            },
             j_poke_bidoof = {
                 name = "Bidoof",
                 text = {
@@ -5705,6 +5742,22 @@ return {
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },
+            c_poke_meteorite = {
+                name = "Meteorite",
+                text = {
+                  "{C:attention}Reusable{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Destroys {C:attention}#1#{} random cards",
+                  "remaining in {C:attention}deck{} and",
+                  "level up {C:attention}last played{} hand",
+                  "{C:inactive}(Last hand: {C:attention}#2#{C:inactive})",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Transforms leftmost or selected",
+                  "{C:attention}Deoxys{} into {C:attention}#3# Forme",
+                  "{C:inactive,s:0.8}({C:attention,s:0.8}Forme{C:inactive,s:0.8} changes on {C:green,s:0.8}Reroll{C:inactive,s:0.8}){}",
+                }
+            },
+            
             c_poke_fake_banker = {
                 name = 'Money Wish',
                 text = {
@@ -6583,6 +6636,17 @@ return {
                   "in hand when cards are scored"
                 }
             },
+                        
+            --back to cursed            
+            poke_dna_seal_seal = {
+              name = "DNA Seal",
+              text = {
+                "If played hand is",
+                "exactly {C:attention}1{} card, creates",
+                "a {C:attention}Sealess{} copy",
+              }
+            },
+            
             --[[
             grass_sticker = {
                 name = "Type",
@@ -6988,6 +7052,11 @@ return {
             poke_head_smash_ex = "Head Smash!",
             poke_teeter_dance = "Teeter Dance!",
             
+            poke_attack_forme = "Attack",
+            poke_defense_forme = "Defense",
+            poke_speed_forme = "Speed",
+            poke_normal_forme = "Normal",
+            
             poke_grass_badge = "Grass",
             poke_fire_badge = "Fire",
             poke_water_badge = "Water",
@@ -7018,6 +7087,7 @@ return {
         labels = {
             poke_pink_seal_seal = "Pink Seal",
             poke_silver_seal = "Silver Seal",
+            poke_dna_seal_seal = "DNA Seal",
 
             poke_shiny = "Shiny",
 

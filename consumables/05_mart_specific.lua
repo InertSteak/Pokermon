@@ -181,7 +181,128 @@ local heartscale = {
   end
 }
 
-local list = {leek, dubious_disc, heartscale}
+local meteorite = {
+  name = "meteorite",
+  key = "meteorite",
+  set = "Spectral",
+  saveable = true,
+  helditem = true,
+  config = {extra = {destroy = 2, forme = "Normal", usable = true}},
+  loc_vars = function(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
+    return {vars = {center.ability.extra.destroy, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none"), 
+                    localize('poke_'..string.lower(center.ability.extra.forme)..'_forme')}}
+  end,
+  pos = { x = 5, y = 7 },
+  soul_pos = { x = 6, y = 7 },
+  atlas = "AtlasConsumablesBasic",
+  cost = 3,
+  unlocked = true,
+  discovered = true,
+  hidden = true,
+  soul_set = "Planet",
+  soul_rate = .2,
+  no_collection = true,
+  use = function(self, card, area, copier)
+    card.ability.extra.usable = false
+    card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+    
+    local destroyed_cards = {}
+    local temp_deck = {}
+
+    for _, playing_card in ipairs(G.deck.cards) do temp_deck[#temp_deck + 1] = playing_card end
+    table.sort(temp_deck,
+        function(a, b)
+            return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card
+        end
+    )
+
+    pseudoshuffle(temp_deck, 'meteor')
+
+    for i = 1, card.ability.extra.destroy do destroyed_cards[#destroyed_cards + 1] = temp_deck[i] end
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.4,
+        func = function()
+            play_sound('tarot1')
+            card:juice_up(0.3, 0.5)
+            return true
+        end
+    }))
+    SMODS.destroy_cards(destroyed_cards)
+    
+    SMODS.smart_level_up_hand(card, G.GAME.last_hand_played)
+    
+    local deoxys = poke_find_card("j_poke_deoxys", true)
+    if not deoxys then
+      deoxys = poke_find_card("j_poke_deoxys")
+    end
+    if deoxys then
+      local forme_list = {"Attack", "Defense", "Speed", "Normal"}
+      local curr_index = 0
+      for i = 1, #forme_list do
+        if forme_list[i] == card.ability.extra.forme then
+          curr_index = i
+          break
+        end
+      end
+      if deoxys.ability.extra.form ~= curr_index then
+        deoxys.ability.extra.form = curr_index
+        poke_fake_evolve(deoxys, localize("poke_transform_success"), true)
+      end
+    end
+  end,
+  calculate = function(self, card, context)
+    if context.reroll_shop then
+      local forme_list = {"Attack", "Defense", "Speed", "Normal"}
+      local next_index = 0
+      for i = 1, #forme_list do
+        if forme_list[i] == card.ability.extra.forme then
+          next_index = i + 1
+          if next_index > #forme_list then next_index = 1 end
+          break
+        end
+      end
+
+      card.ability.extra.forme = forme_list[next_index]
+
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_'..string.lower(card.ability.extra.forme)..'_forme')})
+    end
+    if context.end_of_round and not card.ability.extra.usable then
+      card.ability.extra.usable = true
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      card.children.floating_sprite:set_sprite_pos({ x = 6, y = 7 })
+    end
+  end,
+  can_use = function(self, card)
+      if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
+       or G.STATE == G.STATES.STANDARD_PACK then 
+        if (#G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit) and card.area == G.pack_cards then return false end
+      end
+      return G.deck and #G.deck.cards > 0 and G.GAME.last_hand_played and card.ability.extra.usable
+  end,
+  set_sprites = function(self, card, front)
+    if card.no_load_reusable_sprite then
+      card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
+      card.no_load_reusable_sprite = nil
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    if not card_table.ability.extra.usable then
+      card.no_load_reusable_sprite = true
+    end
+  end,
+  in_pool = function(self)
+    return next(SMODS.find_card('j_poke_deoxys'))
+  end,
+  keep_on_use = function(self, card)
+    return true
+  end,
+}
+
+
+local list = {leek, dubious_disc, heartscale, meteorite}
 
 return {name = "AtlasConsumablesBasic 5",
         list = list

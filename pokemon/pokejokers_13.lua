@@ -872,10 +872,66 @@ local jirachi_fixer = {
 }
 
 -- Deoxys 386
+local deoxys={
+  name = "deoxys",
+  pos = {x = 0, y = 0},
+  config = {extra = {form = 4, Xmult_multi = 0.25, money_mod = 2, retriggers = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_meteorite
+    info_queue[#info_queue+1] = {key = 'poke_dna_seal_seal', set = 'Other'}
+    local alt_key = nil
+    if center.ability.extra.form == 1 then
+      alt_key = 'j_poke_deoxys_attack'
+    elseif center.ability.extra.form == 2 then
+      alt_key = 'j_poke_deoxys_defense'
+    elseif center.ability.extra.form == 3 then
+      alt_key = 'j_poke_deoxys_speed'
+    end
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money_mod}, key = alt_key}
+  end,
+  rarity = 4,
+  cost = 20,
+  gen = 3,
+  stage = "Legendary",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint and card.ability.extra.form == 4 then
+      local eval = function() return G.GAME.current_round.discards_used == 0 and card.ability.extra.form == 4 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    if context.discard and not context.blueprint and card.ability.extra.form == 4 then
+      if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 then
+        local target = {context.full_hand[1]}
+        poke_convert_cards_to(target, {seal = "poke_dna_seal"})
+      end
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.form == 1 then
+      card.children.floating_sprite:set_sprite_pos({x = 5, y = 3})
+    elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
+      card.children.floating_sprite:set_sprite_pos({x = 7, y = 3})
+    elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then
+      card.children.floating_sprite:set_sprite_pos({x = 9, y = 3})
+    else
+      card.children.floating_sprite:set_sprite_pos({x = 3, y = 3})
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    self:set_sprites(card)
+  end,
+}
 -- Turtwig 387
 -- Grotle 388
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, clamperl, huntail, gorebyss, relicanth, luvdisc, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, jirachi_fixer},
+        list = {snorunt, glalie, clamperl, huntail, gorebyss, relicanth, luvdisc, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, 
+                jirachi_fixer, deoxys},
 }

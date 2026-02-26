@@ -123,6 +123,85 @@ local silver = {
   end
 }
 
+local dna_seal = {
+	name = "dna_seal",
+	key = "dna_seal",
+	badge_colour = HEX("f81020"), --fire
+	atlas = "AtlasStickersBasic",
+  pos = {x = 6, y = 1},
+  config = {},
+  loc_vars = function(self, info_queue, center)    
+    return {vars = {}}
+  end,
+	calculate = function(self, card, context)
+		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and #context.full_hand == 1 then
+      G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+      local card_copied = copy_card(context.full_hand[1], nil, nil, G.playing_card)
+      card_copied:add_to_deck()
+      G.deck.config.card_limit = G.deck.config.card_limit + 1
+      table.insert(G.playing_cards, card_copied)
+      G.hand:emplace(card_copied)
+      card_copied:set_seal(nil)
+      card_copied.states.visible = nil
+      
+      local deoxys_found = SMODS.find_card('j_poke_deoxys')
+      local Xmult = 0
+      local Money = 0
+      local Retriggers = 0
+      for i = 1, #deoxys_found do
+        local form = deoxys_found[i].ability.extra.form
+        if form == 1 then
+          Xmult = Xmult + deoxys_found[i].ability.extra.Xmult_multi
+        end
+        if form == 2 then
+          Money = Money + deoxys_found[i].ability.extra.money_mod
+        end
+        if form == 3 then
+          Retriggers = Retriggers + deoxys_found[i].ability.extra.retriggers
+        end
+      end
+      
+      if Xmult > 0 then
+       card_copied.ability.perma_x_mult = card_copied.ability.perma_x_mult or 1
+       card_copied.ability.perma_x_mult = card_copied.ability.perma_x_mult + Xmult
+      end
+      
+      if Money > 0 then
+       card_copied.ability.perma_h_dollars = card_copied.ability.perma_h_dollars or 0
+       card_copied.ability.perma_h_dollars = card_copied.ability.perma_h_dollars + Money
+      end
+      
+      if Retriggers > 0 then
+       card_copied.ability.perma_repetitions = card_copied.ability.perma_repetitions or 0
+       card_copied.ability.perma_repetitions = card_copied.ability.perma_repetitions + Retriggers
+      end
+        
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              card_copied:start_materialize()
+              return true
+          end
+      }))
+      return {
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          func = function() -- This is for timing purposes, it runs after the message
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      SMODS.calculate_context({ playing_card_added = true, cards = { card_copied } })
+                      return true
+                  end
+              }))
+          end
+      }
+		end
+	end,
+  no_collection = true,
+  in_pool = function(self)
+    return false
+  end
+}
+
 return {name = "Pokemon Consumables",
-        list = {pink_seal, silver}
+        list = {pink_seal, silver, dna_seal}
 }
