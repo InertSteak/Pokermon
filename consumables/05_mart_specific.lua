@@ -187,6 +187,7 @@ local meteorite = {
   set = "Spectral",
   saveable = true,
   helditem = true,
+  artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
   config = {extra = {destroy = 2, forme = "Normal", usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
