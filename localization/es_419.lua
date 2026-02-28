@@ -3517,10 +3517,10 @@ return {
             j_poke_illumise = {
               name = "Illumise",
               text = {
-                "Crea una carta de {C:planet}planeta{} por",
-                "cada comodín tipo {X:grass,C:white}Planta{} que tengas",
-                "cuando se selecciona la {C:attention}ciega{}",
-                "{C:inactive}(Debe haber espacio){}",
+				"Cuando se selecciona la {C:attention}ciega{},",
+				"crea una carta de {C:planet}planeta{} por",
+				"cada comodín tipo {X:grass,C:white}Planta{} que tengas",
+				"{C:inactive}(Debe haber espacio){}",
               }
             },
             j_poke_roselia = {
@@ -4384,11 +4384,12 @@ return {
             j_poke_munna = {
                 name = "Munna",
                 text = {
-                  "{C:purple}+#2# Profecía",
-                  "Las cartas que tienen la misma",
-                  "{C:attention}categoría{} o el mismo {C:attention}palo{} que",
-                  "una carta {C:attention}profetizada{} otorgan",
-                  "{C:mult}+#1#{} multi {C:attention}cuando anotan",
+                  "{C:purple}+#3# Profecía",
+                  "Cuando juegas una mano,",
+                  "gana {X:mult,C:white} X#2# {} multi por cada",
+                  "carta {C:attention}mejorada profetizada{} y",
+                  "remueve las {C:attention}mejoras",
+                  "{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi){}",
                   "{C:inactive}(Evoluciona con una {C:attention}Piedra Lunar{C:inactive})",
                 }
             },
@@ -4399,10 +4400,9 @@ return {
                   "{C:purple}+#2# Profecía{} por esta ronda por cada",
                   "comodín tipo {X:psychic,C:white}Psíquico{} que tengas",
                   "{br:3}ERROR - CONTACT STEAK",
-                  "Las cartas que tienen la misma",
-                  "{C:attention}categoría{} o el mismo {C:attention}palo{} que",
-                  "una carta {C:attention}profetizada{} otorgan",
-                  "{X:mult,C:white} X#1# {} multi {C:attention}cuando anotan",
+                  "Cada carta {C:attention}mejorada profetizada{}",
+                  "otorga {X:mult,C:white} X#1# {} multi",
+                  "{C:inactive}({X:mult,C:white} X {C:inactive} multi heredado de {C:attention}Munna{C:inactive}){}",
                 }
             },
             j_poke_roggenrola = {
@@ -4621,11 +4621,11 @@ return {
             j_poke_lampent = {
               name = "Lampent",
               text = {
-                "Agrega el valor de venta",
-				"de este comodín a multi",
-				"{br:3.5}ERROR - CONTACT STEAK",
 				"{C:attention}Drena {C:money}#1# ${} de todos los demás",
 				"comodines al final de la ronda",
+				"{br:3.5}ERROR - CONTACT STEAK",
+                "Agrega el valor de venta",
+				"de este comodín a multi",
 				"{C:inactive}(Actual {C:mult}+#2#{C:inactive} multi){}",
 				"{C:inactive}(Evoluciona con una {C:attention}Piedra Noche{C:inactive})"
               }
@@ -4633,10 +4633,10 @@ return {
             j_poke_chandelure = {
                 name = "Chandelure",
                 text = {
-                    "Agrega el valor de venta","de este comodín a multi",
-					"{br:3.5}ERROR - CONTACT STEAK",
 					"Cada comodín con {C:money}1 ${} de valor",
 					"de venta otorga {X:mult,C:white} X#1# {} multi",
+					"{br:3.5}ERROR - CONTACT STEAK",
+                    "Agrega el valor de venta","de este comodín a multi",
 					"{C:inactive}(Actual {C:mult}+#2#{C:inactive} multi){}",
                 }
             },
