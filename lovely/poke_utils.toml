@@ -49,15 +49,14 @@ target = "card.lua"
 pattern = "booster_obj = self.config.center"
 position = "after"
 payload = '''
-if self.ability.name:find('Celestial') and next(find_joker("xatu")) then
-  local xatu_count = 0
-  local xatu_pool = get_current_pool("Planet")
-  for i = 1, #xatu_pool do
-    if xatu_pool[i] ~= "UNAVAILABLE" then xatu_count = xatu_count + 1 end
-  end
-  self.ability.extra = xatu_count
+if self.ability.name:find('Celestial') and next(SMODS.find_card("j_poke_xatu")) then
+    local xatu_count = 0
+    for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+        if not G.GAME.banned_keys[v.key] and SMODS.is_poker_hand_visible(v.config.hand_type) then xatu_count = xatu_count + 1 end
+    end
+    self.ability.extra = xatu_count
 elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-  self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
+    self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
 '''
 match_indent = true
@@ -69,14 +68,14 @@ target = '=[SMODS _ "src/game_object.lua"]'
 pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
 position = "at"
 payload = '''
-if next(find_joker("xatu")) then
+if next(SMODS.find_card("j_poke_xatu")) then
     local pos = 0
-    local xatu_pool = get_current_pool("Planet")
-    for j = i, #xatu_pool do
-      if xatu_pool[j] ~= "UNAVAILABLE" then
-        pos = j
-        break
-      end
+    for j = i, #G.P_CENTER_POOLS.Planet do
+        local _curr_planet = G.P_CENTER_POOLS.Planet[j]
+        if not G.GAME.banned_keys[_curr_planet.key] and SMODS.is_poker_hand_visible(_curr_planet.config.hand_type) then
+            pos = j
+            break
+        end
     end
     local _planet = G.P_CENTER_POOLS.Planet[pos].key
     _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
