@@ -410,6 +410,9 @@ local taurosh={
         }
       end
     end
+  end,
+  in_pool = function(self)
+    return false
   end
 }
 -- Magikarp 129

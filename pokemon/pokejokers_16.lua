@@ -920,6 +920,9 @@ local rotomh={
       end
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local rotomw={
@@ -980,6 +983,9 @@ local rotomw={
       end
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local rotomf={
@@ -1040,6 +1046,9 @@ local rotomf={
       end
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local rotomfan={
@@ -1124,6 +1133,9 @@ local rotomfan={
       end
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 
 local rotomm={
@@ -1174,6 +1186,9 @@ local rotomm={
       end
     end
   end,
+  in_pool = function(self)
+    return false
+  end
 }
 
 -- Uxie 480
