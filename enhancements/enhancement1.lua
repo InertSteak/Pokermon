@@ -32,6 +32,7 @@ local seed = {
    pos = { x = 1, y = 0 },
    config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
      return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
    end,
    weight = 5,
