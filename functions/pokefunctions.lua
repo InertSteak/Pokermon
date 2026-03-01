@@ -40,7 +40,7 @@ is_type = function(card, target_type)
 end
 
 get_type = function(card)
-  if card.ability then
+  if card and card.ability then
     local sticker = type_sticker_applied(card)
     if sticker then
       return sticker

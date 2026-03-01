@@ -17,7 +17,7 @@ local transformation = {
   discovered = true,
   can_use = function(self, card)
     local choice = poke_find_leftmost_or_highlighted()
-    return get_type(choice)
+    return choice and get_type(choice) or false
   end,
   use = function(self, card, area, copier)
     local choice = poke_find_leftmost_or_highlighted()
