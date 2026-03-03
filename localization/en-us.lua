@@ -1917,7 +1917,7 @@ return {
             j_poke_scyther = {
                 name = 'Scyther',      
                 text = {
-                    "When Blind is selected, destroy Joker",
+                    "When {C:attention}Blind{} is selected, destroy Joker",
                     "to the right and gain {C:mult}+#2#{} Mult",
                     "Gain {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{}",
                     "if it was {C:rare}Rare{} or higher",
@@ -3565,6 +3565,29 @@ return {
                   "it {C:attention}#1#{} times, otherwise it",
                   "becomes a {C:attention}Seed{} card",
                   "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Shiny Stone{C:inactive,s:0.8})"
+                }
+            },
+            j_poke_carvanha = {
+              name = "Carvanha",
+              text = {
+                "When {C:attention}Blind{} is selected, destroy",
+                "Joker to the right",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:red,C:white}X#1#{} Mult if played {C:attention}poker hand{} has",
+                "already been played this round",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} Jokers destroyed)",
+              }
+            },
+            j_poke_sharpedo = {
+                name = "Sharpedo",
+                text = {
+                  "When {C:attention}Blind{} is selected, destroy",
+                  "Joker to the right and",
+                  "create a {C:spectral}Spectral{} card",
+                  "{C:inactive}(Must have room)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{X:red,C:white}X#1#{} Mult if played {C:attention}poker hand{} has",
+                  "already been played this round",
                 }
             },
             j_poke_numel = {

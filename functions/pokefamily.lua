@@ -129,6 +129,7 @@ local default_family_list = {
   { "makuhita", "hariyama"},
   { "aron", "lairon", "aggron" },
   { "budew", "roselia", "roserade" },
+  { "carvanha", "sharpedo"},
   { "duskull", "dusclops", "dusknoir" },
   {"clamperl", "huntail", "gorebyss"},
   { "lileep", "cradily" },
