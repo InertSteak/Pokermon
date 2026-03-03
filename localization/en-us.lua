@@ -7146,7 +7146,8 @@ return {
            ch_c_no_energy = {"Energy cards no longer appear in the {C:attention}shop"},
            ch_c_poke_mystery_dungeon = {"Start with an Eternal Joker"},
            ch_c_poke_mystery_dungeon2 = {"Applies a random Pokermon Deck effect"},
-           ch_c_poke_mystery_dungeon3 = {"Resets at {C:attention}"..tostring(utc_midnight()).."{} every day"},
+           ch_c_poke_mystery_dungeon3 = {"Resets at {C:attention}"..tostring(os.date("%H:%M", 0)).."{} every day"},
         },
     }
 }
+
