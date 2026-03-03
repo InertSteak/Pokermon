@@ -3582,7 +3582,7 @@ return {
                 name = "Sharpedo",
                 text = {
                   "When {C:attention}Blind{} is selected, destroy",
-                  "Joker to the right and",
+                  "Joker to the right to",
                   "create a {C:spectral}Spectral{} card",
                   "{C:inactive}(Must have room)",
                   "{br:2}ERROR - CONTACT STEAK",
