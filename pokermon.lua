@@ -260,15 +260,6 @@ function SMODS.current_mod.calculate(self, context)
   end
 end
 
-function utc_midnight()
-  local z = os.date("%z")          -- e.g. "+0000"
-  local hh = z:sub(2,3)
-  local mm = z:sub(4,5)
-
-  local reset_time = hh .. ":" .. mm
-  return(reset_time)
-end
-
 local old_end = end_round
 function end_round()
   old_end()
@@ -280,4 +271,5 @@ function end_round()
       return true
     end
   }))
+
 end
