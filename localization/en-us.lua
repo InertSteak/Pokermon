@@ -6846,6 +6846,7 @@ return {
             c_poke_randomizer = "Randomizer",
             c_poke_delibird_delimma = "Delibird Dilemma",
             c_poke_safety_first = "Safety First",
+            c_poke_mystery_dungeon = "Mystery Dungeon",
         },
         dictionary = {
             k_energy = "Energy",
@@ -7143,6 +7144,9 @@ return {
            ch_c_poke_nuzlocke = {"First shop of each Ante contains a {C:attention}Buffoon Pack"},
            ch_c_apply_randomizer = {"Pokemon Jokers evolve into random Pokemon Jokers"},
            ch_c_no_energy = {"Energy cards no longer appear in the {C:attention}shop"},
+           ch_c_poke_mystery_dungeon = {"Start with an Eternal Joker"},
+           ch_c_poke_mystery_dungeon2 = {"Applies a random Pokermon Deck effect"},
+           ch_c_poke_mystery_dungeon3 = {"Resets at {C:attention}"..tostring(utc_midnight()).."{} every day"},
         },
     }
 }
