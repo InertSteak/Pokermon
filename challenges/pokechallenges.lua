@@ -461,31 +461,32 @@ local mystery_dungeon = {
     },
   },
   apply = function (self)
-    local target_id = "Pokermon"
-    local pokermon_decks = {}
-    for i, v in ipairs(G.P_CENTER_POOLS.Back) do
-        if v.mod and v.mod.id == target_id then
-            table.insert(pokermon_decks, v)
-        end
-    end
-    local deck = (pseudorandom_element(pokermon_decks, "poke_"..tostring(os.date("!%d%m%Y"))) or {}).original_key
-    if deck == "vendingdeck" then
-        G.GAME.modifiers.vending = true
-    else
-        Back(G.P_CENTERS['b_poke_'..deck]):apply_to_run()
-    end
-
     G.E_MANAGER:add_event(Event({
-    func = function()
+      func = function()
+        local target_id = "Pokermon"
+        local pokermon_decks = {}
+        for i, v in ipairs(G.P_CENTER_POOLS.Back) do
+            if v.mod and v.mod.id == target_id and not v.legacy_deck then
+                pokermon_decks[#pokermon_decks + 1] = v
+            end
+        end
+      
+        local deck = (pseudorandom_element(pokermon_decks, pseudoseed("poke_"..tostring(os.date("!%d%m%Y")))) or {}).original_key
+        
+        if deck == "vendingdeck" then
+            G.GAME.modifiers.vending = true
+        else
+            Back(G.P_CENTERS['b_poke_'..deck]):apply_to_run()
+        end
         local card = SMODS.add_card( { area = G.jokers, set = "Joker"})
         SMODS.Stickers["eternal"]:apply(card, true)
         
         return true
-    end
-        }))
+      end
+    }))
   end,
-    button_colour = HEX('0064B2'),
-    text_colour = HEX("FFCB01"),
+  button_colour = HEX('0064B2'),
+  text_colour = HEX("FFCB01"),
 }
 
 return {name = "Challenges", 
