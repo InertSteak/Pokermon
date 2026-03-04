@@ -389,7 +389,120 @@ local roselia={
 -- Gulpin 316
 -- Swalot 317
 -- Carvanha 318
+local carvanha={
+  name = "carvanha",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2, eaten = 0,}, evo_rqmt = 3},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult,  math.max(0, self.config.evo_rqmt - center.ability.extra.eaten)}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.ending_shop then
+      card.ability.extra.selected = false
+      local eval = function() return not card.ability.extra.selected end
+      juice_card_until(card, eval, true)
+    end
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      card.ability.extra.selected = true
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then
+        local sliced_card = G.jokers.cards[my_pos + 1]
+        sliced_card.getting_sliced = true
+        
+        card.ability.extra.eaten = card.ability.extra.eaten + 1
+        
+        G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+            return true
+          end
+        }))
+      end
+    end
+    if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
+      return 
+      {
+        xmult = card.ability.extra.Xmult
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_sharpedo", card.ability.extra.eaten, self.config.evo_rqmt)
+  end,
+}
 -- Sharpedo 319
+local sharpedo={
+  name = "sharpedo",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.ending_shop then
+      card.ability.extra.selected = false
+      local eval = function() return not card.ability.extra.selected end
+      juice_card_until(card, eval, true)
+    end
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      card.ability.extra.selected = true
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then
+        local sliced_card = G.jokers.cards[my_pos + 1]
+        sliced_card.getting_sliced = true
+        
+        G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+            return true
+          end
+        }))
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          local spectral = SMODS.add_card{set = 'Spectral'}
+          SMODS.calculate_effect({ message = localize('k_plus_spectral') }, spectral)
+        end
+      end
+    end
+    if context.joker_main and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then
+      return 
+      {
+        xmult = card.ability.extra.Xmult
+      }
+    end
+  end,
+}
 -- Wailmer 320
 -- Wailord 321
 -- Numel 322
@@ -606,5 +719,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, volbeat, illumise, roselia, numel, camerupt, mega_camerupt, spinda},
+  list = {delcatty, aron, lairon, aggron, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, spinda},
 }
