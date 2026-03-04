@@ -99,3 +99,37 @@ SMODS.DrawStep {
   end,
   conditions = { vortex = false, facing = 'front' },
 }
+
+SMODS.DrawStep {
+  key = 'mystery_dungeon_back',
+  order = 5,
+  func = function (card, layer)
+    -- Draws Mystery Dungeon's current deck on top of the challenge deck sprite
+    if G.GAME.poke_mystery_dungeon_deck_key and card.children.back then
+      local deck_key = G.GAME.poke_mystery_dungeon_deck_key
+
+      G.poke_shared_back_sprites = G.poke_shared_back_sprites or {}
+      local deck_sprite = G.poke_shared_back_sprites[deck_key]
+
+      if not deck_sprite then
+        local deck = G.P_CENTERS[G.GAME.poke_mystery_dungeon_deck_key]
+        local atlas = deck.atlas or 'centers'
+        local pos = deck.pos or {x = 0, y = 0}
+
+        deck_sprite = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, atlas, pos)
+        G.poke_shared_back_sprites[deck_key] = deck_sprite
+      end
+
+      if card.area and card.area.config.type == 'deck' and card.rank > 3 then
+        -- Turns the bottom cards in your deck darker to imitate depth
+        local prev_overlay = G.BRUTE_OVERLAY -- This is usually `nil` but lets save it just in case
+        G.BRUTE_OVERLAY = card.back_overlay
+        deck_sprite:draw_from(card.children.back)
+        G.BRUTE_OVERLAY = prev_overlay
+      else
+        deck_sprite:draw_shader('dissolve', nil, nil, nil, card.children.back)
+      end
+    end
+  end,
+  conditions = { vortex = false, facing = 'back' },
+}
