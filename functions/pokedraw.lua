@@ -100,12 +100,19 @@ SMODS.DrawStep {
   conditions = { vortex = false, facing = 'front' },
 }
 
+local sprite_equals = function(sprite, atlas, x, y)
+  return sprite.atlas.name == atlas
+      and sprite.sprite_pos.x == (x or 0)
+      and sprite.sprite_pos.y == (y or 0)
+end
+
 SMODS.DrawStep {
   key = 'mystery_dungeon_back',
   order = 5,
   func = function (card, layer)
     -- Draws Mystery Dungeon's current deck on top of the challenge deck sprite
-    if G.GAME.poke_mystery_dungeon_deck_key and card.children.back then
+    if G.GAME.poke_mystery_dungeon_deck_key and card.children.back
+        and sprite_equals(card.children.back, 'centers', 0, 4) then -- Filter for Challenge Deck sprite
       local deck_key = G.GAME.poke_mystery_dungeon_deck_key
 
       G.poke_shared_back_sprites = G.poke_shared_back_sprites or {}
