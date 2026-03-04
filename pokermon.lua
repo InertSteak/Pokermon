@@ -246,6 +246,18 @@ function SMODS.current_mod.calculate(self, context)
   if context.after then
     poke_change_poli_suit()
   end
+  if G.GAME.modifiers.vending == true then
+    if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                add_tag(Tag('tag_voucher'))
+                play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
+    end
+  end
 end
 
 local old_end = end_round
@@ -259,4 +271,5 @@ function end_round()
       return true
     end
   }))
+
 end
