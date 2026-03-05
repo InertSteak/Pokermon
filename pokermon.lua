@@ -232,7 +232,7 @@ function SMODS.current_mod.reset_game_globals(run_start)
     end
   end
 
-  local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard'}
+  local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard', 'wingullcard'}
   for i = 1, #rank_resets do
     poke_reset_rank(rank_resets[i])
   end

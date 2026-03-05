@@ -6,7 +6,79 @@
 -- Taillow 276
 -- Swellow 277
 -- Wingull 278
+local wingull={
+  name = "wingull",
+  pos = {x = 0, y = 0},
+  config = {extra = {money_mod = 4,rounds = 4,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money_mod, center.ability.extra.rounds, localize(G.GAME.current_round.wingullcard and G.GAME.current_round.wingullcard.rank or "Ace", 'ranks')}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.wingullcard.id then
+      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true)
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+      return {
+        dollars = earned,
+        func = function() -- This is for timing purposes, it runs after the dollar manipulation
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+        end
+      }
+    end
+    return level_evo(self, card, context, "j_poke_pelipper")
+  end,
+}
 -- Pelipper 279
+local pelipper={
+  name = "pelipper",
+  pos = {x = 0, y = 0},
+  config = {extra = {money_mod = 4, water_money = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money_mod, center.ability.extra.water_money, localize(G.GAME.current_round.wingullcard and G.GAME.current_round.wingullcard.rank or "Ace", 'ranks')}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.wingullcard.id then
+      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true) + #find_pokemon_type("Water")
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+      return {
+        dollars = earned,
+        func = function() -- This is for timing purposes, it runs after the dollar manipulation
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+        end
+      }
+    end
+    return level_evo(self, card, context, "j_poke_pelipper")
+  end,
+}
 -- Ralts 280
 -- Kirlia 281
 -- Gardevoir 282
@@ -507,5 +579,5 @@ local skitty={
   end,
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {shroomish, breloom, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
+        list = {wingull, pelipper, shroomish, breloom, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
 }

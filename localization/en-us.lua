@@ -3405,6 +3405,26 @@ return {
                   "are {C:attention}Nature{} cards"
                 }
             },
+            j_poke_wingull = {
+              name = "Wingull",
+              text = {
+                "Earn {C:money}$#1#{} for each",
+                "discarded {C:attention}#3#{}, rank",
+                "changes every round",
+                "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
+              }
+            }, 
+            j_poke_pelipper = {
+              name = "Pelipper",
+              text = {
+                "Earn {C:money}$#1#{} for each",
+                "discarded {C:attention}#3#{}, rank",
+                "changes every round",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Earn {C:money}$#2#{} extra for each",
+                "{X:water,C:white}Water{} Joker you have"
+              }
+            }, 
             j_poke_shroomish = {
                 name = "Shroomish",
                 text = {
@@ -3802,6 +3822,42 @@ return {
               text = {
                 "{C:attention}Holding {C:hearts}Heart Scale",
                 "Applies {C:attention}Splash",
+              }
+            },
+            j_poke_bagon = {
+              name = "Bagon",
+              text = {
+                "{C:attention}-#2#{} hand size",
+                "Gives {C:mult}+#1#{} Mult for each",
+                "{C:attention}Straight{} played this run",
+                "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult){}",
+                "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#3#{C:inactive,s:0.8} Straights){}"
+              }
+            },
+            j_poke_shelgon = {
+              name = "Shelgon",
+              text = {
+                "{C:attention}-#2#{} hand size",
+                "Gives {C:mult}+#1#{} Mult for each",
+                "{C:attention}Straight{} played this run",
+                "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "If played hand is a {C:attention}Straight{}",
+                "reduce {C:attention}rounds{} by {C:attention}1",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)"
+              }
+            },
+            j_poke_salamence = {
+              name = "Salamence",
+              text = {
+                "{C:attention}+#2#{} hand size",
+                "When {C:attention}Blind{} is selected, gain {C:attention}+#3#",
+                "hand size this round for every",
+                "{C:attention}#4# Straights{} played this run",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gives {C:mult}+#1#{} Mult for each",
+                "{C:attention}Straight{} played this run",
+                "{C:inactive}(Currently {C:mult}+#5#{C:inactive} Mult){}",
               }
             },
             j_poke_beldum = {
