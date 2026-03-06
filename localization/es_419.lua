@@ -38,7 +38,7 @@ return {
                 name = "Baraja luminosa",
                 text = {
                     "Todos los comodines son",
-					"creados con {C:pink}1 Energía{} y",
+					"creados con {C:pink}1 energía{} y",
 					"con un sticker de un {C:pink}Tipo{} al azar"
                 }
             },
@@ -86,10 +86,10 @@ return {
             b_poke_diceydeck = {
                 name = "Baraja tramposa",
                 text = {
-                    "{C:hazard}+#1#{} nivel de trampas y límite, {C:attention}+#1#{} tamaño de mano",
+                    "{C:hazard}+#1# nivel de trampas y límite{}, {C:attention}+#1#{} tamaño de mano",
                     "Al final de cada ronda:",
                     "Gana {C:money}#4# ${} por cada carta",
-                    "{C:attention}trampa{} en tu {C:attention}baraja completa",
+                    "{C:hazard}trampa{} en tu {C:attention}baraja completa",
                     "No ganas {C:attention}intereses"
                 } 
             },
@@ -289,7 +289,7 @@ return {
                     "Es {C:attention}reusable{}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "La {C:green,E:1,S:1.1}probabilidad{} de que",
-					"las cartas {C:attention}trampa{}",
+					"las cartas {C:hazard}trampa{}",
 					"se destruyan se vuelve {C:attention}0",
 					"hasta el final de la ronda",
                     "{C:inactive}(Usable una vez por ronda)",
@@ -1854,7 +1854,7 @@ return {
             j_poke_scyther = {
                 name = 'Scyther',      
                 text = {
-                    "Cuando la ciega es seleccionada, destruye al",
+                    "Cuando se selecciona la {C:attention}ciega{}, destruye al",
 					"comodín de la derecha y obtiene {C:mult}+#2#{} multi",
 					"Obtiene edición {C:dark_edition}laminado{}, {C:dark_edition}holográfico{}, o",
 					"{C:dark_edition}polícromo{} si era {C:rare}Rara{} o superior",
@@ -2725,8 +2725,9 @@ return {
             j_poke_gligar = {
                 name = 'Gligar',
                 text = {
-                    "Las cartas jugadas otorgan {X:mult,C:white}X#1#{} multi",
-					"por cada {V:1}#2#{} {C:attention}en tu mano{}",
+                    "Las cartas jugadas",
+					"otorgan {X:mult,C:white}X#1#{} multi por",
+					"cada {V:1}#2#{} {C:attention}en tu mano{}",
 					"{C:inactive}(El palo cambia cada ronda)",
 					"{C:inactive}(Actual {X:mult,C:white}X#3#{C:inactive} multi)",
 					"{C:inactive}(Evoluciona con una {C:attention}Piedra Noche{C:inactive})",
@@ -2768,7 +2769,7 @@ return {
             j_poke_qwilfish = {
                 name = 'Qwilfish',
                 text = {
-                    "{C:purple}+#1# Nivel de trampas",
+                    "{C:hazard}+#1# Nivel de trampas",
                     "Obtiene {C:chips}+#2#{} fichas cuando",
                     "una carta {C:attention}mejorada{}",
                     "es destruida",
@@ -2778,7 +2779,7 @@ return {
             j_poke_scizor = {
                 name = 'Scizor',
                 text = {
-                    "Cuando la ciega es seleccionada, destruye al",
+                    "Cuando se selecciona la {C:attention}ciega{}, destruye al",
 					"comodín de la derecha y obtiene {C:mult}+#4#{} multi",
 					"Obtiene edición {C:dark_edition}laminado{}, {C:dark_edition}holográfico{}, o","{C:dark_edition}polícromo{} si era {C:red}Rara{} o superior","{C:attention}Acumula{} los efectos de las ediciones que obtiene","{C:inactive,s:0.8}(Obtiene la misma edición del comodín destruido si tenía){}","{C:inactive}(Actual {C:mult}+#1#{} {C:inactive}multi, {C:chips}+#2#{} {C:inactive}fichas, {X:mult,C:white}X#3#{} {C:inactive}multi)"
                 } 
@@ -2937,9 +2938,9 @@ return {
             j_poke_skarmory = {
                 name = 'Skarmory',
                 text = {
-					"{C:purple}+#1# Nivel y límite de trampas",
+					"{C:hazard}+#1# Nivel y límite de trampas",
                     "{X:mult,C:white}X#2#{} multi por cada",
-                    "carta {C:attention}trampa{} o {C:attention}de acero{}",
+                    "carta {C:hazard}trampa{} o {C:attention}de acero{}",
                     "{C:attention}en tu mano{}",
                     "{C:inactive}(Actual {X:mult,C:white}X#3#{C:inactive} multi)",
                 }
@@ -3533,6 +3534,29 @@ return {
                   "{C:inactive}(Evoluciona con una {C:attention}Piedra Día{C:inactive})"
                 }
             },
+            j_poke_carvanha = {
+              name = "Carvanha",
+              text = {
+                "Cuando se selecciona la {C:attention}ciega{},",
+                "destruye al comodín a la derecha",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:red,C:white}X#1#{} multi si la {C:attention}mano jugada{} ya",
+                "ha sido jugada en esta ronda",
+                "{C:inactive,s:0.9}(Evoluciona tras destruir {C:attention,s:0.9}#2#{C:inactive,s:0.9} comodines)",
+              }
+            },
+            j_poke_sharpedo = {
+                name = "Sharpedo",
+                text = {
+                  "Cuando se selecciona la {C:attention}ciega{},",
+                  "destruye al comodín a la derecha",
+                  "y crea una carta {C:spectral}espectral{}",
+                  "{C:inactive}(Debe haber espacio)",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "{X:red,C:white}X#1#{} multi si la {C:attention}mano jugada{} ya",
+                  "ha sido jugada en esta ronda",
+                }
+            },
 			j_poke_numel = {
                 name = "Numel",
                 text = {
@@ -3576,7 +3600,7 @@ return {
             j_poke_cacnea = {
               name = "Cacnea",
               text = {
-                "{C:hazard}+#1#{} Nivel de trampas",
+                "{C:hazard}+#1# Nivel de trampas",
                 "Gana {C:money}#2# ${} cuando una",
                 "carta es destruida",
                 "{C:inactive}(Evoluciona tras {C:attention}#3#{C:inactive} rondas)",
@@ -3585,12 +3609,12 @@ return {
             j_poke_cacturne = {
               name = "Cacturne",
               text = {
-                "{C:hazard}+#1#{} Nivel de trampas",
+                "{C:hazard}+#1# Nivel de trampas",
                 "Gana {C:money}#2# ${} cuando una",
                 "carta es destruida",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Destruye todas las cartas",
-                "{C:attention}trampa{} en la {C:attention}primera{} mano",
+                "{C:hazard}trampa{} en la {C:attention}primera{} mano",
                 "tras jugar una mano",
               }
             },
@@ -3860,6 +3884,42 @@ return {
 					"solo {C:attention}1{} carta, la {C:attention}destruye{}",
                 }
             },
+            j_poke_deoxys = {
+                name = "Deoxys",
+                text = {
+                  "Si el {C:attention}primer descarte{} de",
+                  "la ronda tiene solo {C:attention}1{} carta,",
+                  "le añade un sello {C:attention}ADN{}",
+                  "{C:inactive}(Se transforma con","{C:inactive}una carta de {C:planet}Meteorito{C:inactive}){}"
+                }
+            },
+            j_poke_deoxys_attack = {
+                name = "Deoxys (Ataque)",
+                text = {
+                  "Los sellos {C:attention}ADN{} crean copias",
+                  "con {X:mult,C:white}X#1#{} multi adicional",
+				  "para siempre",
+                  "{C:inactive}(Se transforma con","{C:inactive}una carta de {C:planet}Meteorito{C:inactive}){}"
+                }
+            },
+            j_poke_deoxys_speed = {
+                name = "Deoxys (Velocidad)",
+                text = {
+                  "Los sellos {C:attention}ADN{} crean copias",
+                  "que se {C:attention}reactivan 1 vez",
+                  "{C:attention}adicional",
+                  "{C:inactive}(Se transforma con","{C:inactive}una carta de {C:planet}Meteorito{C:inactive}){}"
+                }
+            },
+            j_poke_deoxys_defense = {
+                name = "Deoxys (Defensa)",
+                text = {
+                  "Los sellos {C:attention}ADN{} crean copias",
+                  "que otorgan {C:money}#2# ${} de pago",
+                  "adicional al final de la ronda",
+                  "{C:inactive}(Se transforma con","{C:inactive}una carta de {C:planet}Meteorito{C:inactive}){}"
+                }
+            },
             j_poke_bidoof = {
                 name = "Bidoof",
                 text = {
@@ -4059,7 +4119,7 @@ return {
                 text = {
                     "Si la mano jugada es solo un(a) {C:attention}#3#{}, lo",
 					"destruye, gana {C:money}#4# ${} y obtiene {X:mult,C:white}X#1#{} multi",
-					"{C:inactive}(Se restablece cuando la {C:attention}ciega jefe{C:inactive} es derrotada)",
+					"{C:inactive,s:0.9}(Se restablece cuando la {C:attention,s:0.9}ciega jefe{C:inactive,s:0.9} es derrotada)",
 					"{C:inactive,s:0.8}(La categoría cambia cada ronda){}",
 					"{C:inactive}(Actual {X:mult,C:white}X#2#{C:inactive} multi){}",
                 }
@@ -4174,8 +4234,9 @@ return {
             j_poke_gliscor = {
                 name = 'Gliscor',
                 text = {
-                    "Las cartas jugadas otorgan {X:mult,C:white}X#1#{} multi",
-					"por cada {V:1}#2#{} o carta debilitada",
+					"Las cartas jugadas",
+					"otorgan {X:mult,C:white}X#1#{} multi por cada",
+					"{V:1}#2#{} o carta debilitada",
 					"{C:attention}en tu mano{}",
 					"{C:inactive, s:0.8}(El palo cambia cada ronda)",
 					"{C:inactive}(Actual {X:mult,C:white}X#3#{C:inactive} multi)",
@@ -4200,8 +4261,8 @@ return {
 					"{X:mult,C:white} X#2# {} multi por cada carta de",
 					"{C:pink}energía{} usada en esta {C:attention}partida{}",
 					"{br:2}text needs to be here to work",
-					"Crea una {C:pink}Energía",
-					"cuando usas una {C:pink}Energía",
+					"Crea una {C:pink}energía",
+					"cuando usas una {C:pink}energía",
 					"{C:inactive}(Debe haber espacio)",
 					"{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
                 } 
@@ -4408,7 +4469,7 @@ return {
             j_poke_roggenrola = {
                 name = "Roggenrola",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas",
+                    "{C:hazard}+#1# Nivel de trampas",
                     "Cada carta {C:attention}sin categoría{}",
                     "{C:attention}en tu mano{} otorga {C:mult}+#2#{} multi",
                     "{C:inactive}(Evoluciona tras activarse {C:attention}#3#{C:inactive} veces)",
@@ -4417,7 +4478,7 @@ return {
             j_poke_boldore = {
                 name = "Boldore",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas",
+                    "{C:hazard}+#1# Nivel de trampas",
                     "Cada carta {C:attention}sin categoría{}",
                     "{C:attention}en tu mano{} otorga {C:mult}+#2#{} multi",
 					"{C:inactive}(Evoluciona con un {C:attention}Cordón Unión{C:inactive})"
@@ -4426,7 +4487,7 @@ return {
             j_poke_gigalith = {
                 name = "Gigalith",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas",
+                    "{C:hazard}+#1# Nivel de trampas",
                     "Cada carta {C:attention}sin categoría{}",
                     "{C:attention}en tu mano{} otorga {C:mult}+#2#{} multi",
                     "y se reactiva"
@@ -4566,8 +4627,8 @@ return {
             j_poke_ferroseed = {
                 name = "Ferroseed",
                 text = {
-                  "{C:hazard}+#2#{} Nivel de trampas",
-                  "Las cartas {C:attention}versátiles{} y {C:attention}trampa{}",
+                  "{C:hazard}+#2# Nivel de trampas",
+                  "Las cartas {C:attention}versátiles{} y {C:hazard}trampa{}",
                   "también son {C:attention}cartas de acero{}",
                   "{C:inactive}(Evoluciona tras {C:attention}#1#{C:inactive} rondas)",
                 }
@@ -4575,8 +4636,8 @@ return {
             j_poke_ferrothorn = {
               name = "Ferrothorn",
               text = {
-                "{C:hazard}+#1#{} Nivel de trampas",
-                "Las cartas {C:attention}versátiles{} y {C:attention}trampa{}",
+                "{C:hazard}+#1# Nivel de trampas",
+                "Las cartas {C:attention}versátiles{} y {C:hazard}trampa{}",
                 "también son {C:attention}cartas de acero{}",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Si la mano jugada contiene",
@@ -4643,20 +4704,20 @@ return {
             j_poke_golett = {
                 name = "Golett",
                 text = {
-                  "{C:purple}+#1# Nivel de trampas",
+                  "{C:hazard}+#1# Nivel de trampas",
                   "{C:green}#4# en #5#{} probabilidades para cada carta",
                   "{C:attention}en tu mano{} de otorgar {X:mult,C:white}X#2#{} multi",
-                  "Garantizado para cartas {C:attention}trampa{}",
+                  "Garantizado para cartas {C:hazard}trampa{}",
                   "{C:inactive}(Evoluciona tras {C:attention}#3#{C:inactive} rondas)"
 				}
             },
             j_poke_golurk = {
                 name = "Golurk",
                 text = {
-                  "{C:purple}+#1# Nivel de trampas",
+                  "{C:hazard}+#1# Nivel de trampas",
                   "{C:green}#3# en #4#{} probabilidades para cada carta",
                   "{C:attention}en tu mano{} de otorgar {X:mult,C:white}X#2#{} multi", 
-                  "Garantizado para cartas {C:attention}trampa{}",
+                  "Garantizado para cartas {C:hazard}trampa{}",
 				}
             },
             j_poke_pawniard = {
@@ -4725,6 +4786,7 @@ return {
 					"también contiene un {C:attention}rey{} o {C:attention}reina{}"
                 } 
             },
+			-- quiero mi espurr :c
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
@@ -4981,10 +5043,10 @@ return {
             j_poke_hisuian_qwilfish = {
                 name = "Qwilfish (de Hisui)",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas",
+                    "{C:hazard}+#1# Nivel de trampas",
 					"{C:inactive}(1 por cada #2# cartas en tu baraja)",
 					"Obtiene {C:chips}+#3#{} fichas cuando una",
-					"{C:attention}carta trampa{} es sacada",
+					"carta {C:hazard}trampa{} es sacada",
 					"{C:inactive}(Evoluciona cuando tiene",
 					"{C:chips}+#4#{C:inactive} / +#5# fichas)",
                 }
@@ -4992,7 +5054,13 @@ return {
             j_poke_overqwil = {
                 name = "Overqwil",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas","{C:inactive}(1 por cada #2# cartas en tu baraja)","Obtiene {C:chips}+#3#{} fichas cuando una","{C:attention}carta trampa{} es sacada","{br:3}ERROR - CONTACT STEAK","{C:attention}Divide a la mitad{} las fichas tras jugar una mano","{C:inactive}(Actual {C:chips}+#4#{C:inactive} fichas)",
+                    "{C:hazard}+#1# Nivel de trampas",
+					"{C:inactive}(1 por cada #2# cartas en tu baraja)"
+					,"Obtiene {C:chips}+#3#{} fichas cuando una",
+					"carta {C:hazard}trampa{} es sacada",
+					"{br:3}ERROR - CONTACT STEAK",
+					"{C:attention}Divide a la mitad{} las fichas tras jugar una mano",
+					"{C:inactive}(Actual {C:chips}+#4#{C:inactive} fichas)",
                 }
             },
             j_poke_wyrdeer = {
@@ -5033,7 +5101,7 @@ return {
             j_poke_tarountula = {
                 name = "Tarountula",
                 text = {
-                    "{C:purple}+#1# Nivel de trampas{}",
+                    "{C:hazard}+#1# Nivel de trampas{}",
 					"{C:attention}+#3#{} tamaño de mano",
                     "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
 				}
@@ -5041,7 +5109,7 @@ return {
             j_poke_spidops = {
                 name = "Spidops",
                 text = {
-					"{C:purple}+#1# Nivel de trampas",
+					"{C:hazard}+#1# Nivel de trampas",
 					"{C:attention}+#2#{} tamaño de mano",
                     "Agrega un {C:attention}sello{} al azar a cada",
                     "{C:attention}octava{} {C:attention}carta de juego {C:inactive}[#4#]{}",
@@ -5268,13 +5336,13 @@ return {
                 text = {
 					"{C:attention}Pokémon{} de la misma",
 					"línea evolutiva pueden aparecer",
-					"{C:inactive}(Actual {C:mult}+#1#{C:inactive} multi)"
                 } 
             },
             j_poke_rotomdex = {
                 name = 'RotomDex',
                 text = {
-                    "Los {C:attention}paquetes potenciadores{} cuestan {C:money}1 ${} menos",
+                    "Los {C:attention}paquetes potenciadores{}",
+					"cuestan {C:money}1 ${} menos",
                     "por cada {C:pink}tipo{} diferente",
                     "de tus comodines",
                     "{C:inactive}(Actual {C:money}#1# ${C:inactive} menos)"
@@ -5584,17 +5652,17 @@ return {
             sleeve_poke_diceysleeve = {
                 name = "Funda tramposa",
                 text = {
-                    "{C:hazard}+#1#{} nivel de trampas y límite, {C:attention}+#1#{} tamaño de mano",
+                    "{C:hazard}+#1# nivel de trampas y límite{}, {C:attention}+#1#{} tamaño de mano",
                     "Al final de cada ronda:",
                     "Gana {C:money}#4# ${} por cada carta",
-                    "{C:attention}trampa{} en tu {C:attention}baraja completa",
+                    "{C:hazard}trampa{} en tu {C:attention}baraja completa",
                     "No ganas {C:attention}intereses"
                 } 
             },
             sleeve_poke_diceysleeve_alt = {
                 name = "Funda tramposa",
                 text = {
-                    "Todas las {C:attention}trampas{} otorgan {C:attention}+1{} tamaño de mano",
+                    "Todas las {C:hazard}trampas{} otorgan {C:attention}+1{} tamaño de mano",
                 } 
             },
         },
@@ -5658,6 +5726,22 @@ return {
 					"cualquier {C:pink}tipo{} {C:red}d{C:attention}o{C:green}s{} {C:red}v{C:attention}e{C:green}c{C:blue}e{C:purple}s{}",
 					"No ganas intereses esta ronda","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
+            },
+            c_poke_meteorite = {
+                name = "Meteorito",
+                text = {
+                  "Es {C:attention}reusable{}",
+                  "{br:2}ERROR - CONTACT STEAK",
+                  "Destruye {C:attention}#1#{} cartas restantes",
+                  "de tu {C:attention}baraja{} al azar y",
+                  "sube de nivel la {C:attention}última mano jugada{}",
+                  "{C:inactive}(Última mano: {C:attention}#2#{C:inactive})",
+                  "{br:3}ERROR - CONTACT STEAK",
+                  "Transforma al {C:attention}Deoxys{} más a la",
+                  "izquierda o seleccionado",
+				  "a su {C:attention}Forma #3#",
+                  "{C:inactive,s:0.9}(La {C:attention,s:0.9}Forma{C:inactive,s:0.9} cambia con cada {C:green,s:0.9}cambio{C:inactive,s:0.9}){}",
+                }
             },
             c_poke_fake_banker = {
                 name = 'Deseo de Dinero',
@@ -5997,8 +6081,8 @@ return {
               name = "Nivel de trampas",
               text = {
                   "Cuando sacas la {C:attention}primera{} mano, agrega",
-                  "tantas cartas {C:attention}trampa{} a tu mano",
-                  "como tu {C:attention}nivel de trampas",
+                  "tantas cartas {C:hazard}trampa{} a tu mano",
+                  "como tu {C:hazard}nivel de trampas",
                   "{C:inactive}(Nivel de trampas actual {C:attention}#1#{C:inactive}/#2#){}"
               }
             },
@@ -6006,8 +6090,8 @@ return {
               name = "Nivel de trampas",
               text = {
                   "Cuando sacas la {C:attention}primera{} mano, agrega",
-                  "tantas cartas {C:attention}trampa{} a tu mano",
-                  "igual a tu {C:attention}nivel de trampas",
+                  "tantas cartas {C:hazard}trampa{} a tu mano",
+                  "igual a tu {C:hazard}nivel de trampas",
                   "{C:inactive}(Nivel de trampas actual {C:attention}#1#{C:inactive}/#2#){}",
                   "{C:inactive}(Nivel de trampas extra aumentan el límite){}"
               }
@@ -6103,7 +6187,7 @@ return {
                     "{C:green}20%{} - {C:attention}2 {C:item}Piedras {C:attention}evolutivas",
                     "{C:green}15%{} - {C:money}10 ${}              ",
                     "{C:green}4%{} - {C:money}20 ${}             ",
-                    "{C:green}1%{} - {C:attention}Megapiedra     ",
+                    "{C:green}1%{} - {C:attention}Megapiedra       ",
                 }
             },
             pickup = {
@@ -6322,7 +6406,7 @@ return {
             hazards_on_tooltip = {
               name = "Cartas trampa permitidas",
               text = {
-                "Aparecerán comodines {C:attention}Pokémon{}","que agreguen {C:purple}cartas trampa{}"
+                "Aparecerán comodines {C:attention}Pokémon{}","que agreguen cartas {C:hazard}trampa{}"
               }
             },
             shinyplayingcard_tooltip = {
@@ -6471,6 +6555,15 @@ return {
 				  "y es {C:attention}descartada{} si está en",
 				  "{C:attention}en tu mano{} cuando anotas fichas"
                 }
+            },
+            poke_dna_seal_seal = {
+              name = "Sello ADN",
+              text = {
+                "Si la mano jugada solo",
+                "tiene {C:attention}esta carta{}, crea",
+                "una copia {C:attention}sin sello{}",
+				"cuando anota"
+              }
             },
             --[[
             grass_sticker = {
@@ -6626,7 +6719,7 @@ return {
                 text = {
                     "Cuando se selecciona la {C:attention}ciega{},",
 					"{C:attention}#1#{} cartas sin mejora en tu baraja",
-                    "se vuelven {C:attention}cartas trampa{}",
+                    "se vuelven cartas {C:hazard}trampa{}",
                 },
             },
         },
@@ -6649,6 +6742,7 @@ return {
 			c_poke_randomizer = "Randomizado",
             c_poke_delibird_delimma = "Dilema de Delibird",
             c_poke_safety_first = "Seguridad primero",
+            c_poke_mystery_dungeon = "Mundo Misterioso",
         },
         dictionary = {
             k_energy = "Energía",
@@ -6855,6 +6949,11 @@ return {
             poke_head_smash_ex = "¡Topetazo!",
             poke_teeter_dance = "¡Danza del caos!",
 			
+            poke_attack_forme = "Ataque",
+            poke_defense_forme = "Defensa",
+            poke_speed_forme = "Velocidad",
+            poke_normal_forme = "Normal",
+			
             poke_grass_badge = "Planta",
             poke_fire_badge = "Fuego",
             poke_water_badge = "Agua",
@@ -6884,7 +6983,8 @@ return {
         labels = {
             poke_pink_seal_seal = "Sello rosado",
             poke_silver_seal = "Sello plateado",
-
+            poke_dna_seal_seal = "Sello ADN",
+			
             poke_shiny = "Variocolor",
 
             grass_sticker = "Tera",
@@ -6939,6 +7039,9 @@ return {
            ch_c_poke_nuzlocke = {"La primera tienda en cada apuesta contiene un {C:attention}Paquete de Bufón"},
 		   ch_c_apply_randomizer = {"Los comodines Pokémon evolucionan en otros Pokémon aleatorios"},
 		   ch_c_no_energy = {"Las cartas de energía no aparecerán en la {C:attention}tienda"},
+           ch_c_poke_mystery_dungeon = {"Empieza con un comodín eterno"},
+           ch_c_poke_mystery_dungeon2 = {"Aplica el efecto de una baraja de Pokermon al azar"},
+           ch_c_poke_mystery_dungeon3 = {"Se restablece a las {C:attention}"..tostring(os.date("%I:%M %p", 0)).."{} cada día"},
         },
     }
 }
