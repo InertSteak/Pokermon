@@ -2080,8 +2080,9 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
-                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card {C:inactive,s:0.7}(Trigger {C:attention,s:0.7}#3#{C:inactive,s:0.7} times to evolve)",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
+                    "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
                 } 
             },
             j_poke_omastar = {
@@ -2101,7 +2102,8 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : {C:chips}+#2#{} Chips",
                     "{X:attention,C:white}2+{} : {}Scoring {C:attention}#1#s{} permanently gain {C:chips}+#3#{} Chips",
-                    "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips {C:inactive,s:0.8}(Trigger {C:attention,s:0.8}#5#{C:inactive,s:0.8} times to evolve)",
+                    "{X:attention,C:white}3+{} : {C:chips}+#4#{} Chips",
+                    "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#5#{C:inactive,s:0.8} times to evolve)"
                 } 
             },
             j_poke_kabutops = {
@@ -3843,7 +3845,7 @@ return {
                 "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult){}",
                 "{br:2}ERROR - CONTACT STEAK",
                 "If played hand is a {C:attention}Straight{}",
-                "reduce {C:attention}rounds{} by {C:attention}1",
+                "reduce {C:attention}rounds{} to {C:attention}Evolve{} by {C:attention}1",
                 "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)"
               }
             },
