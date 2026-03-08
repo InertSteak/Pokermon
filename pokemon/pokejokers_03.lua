@@ -842,17 +842,15 @@ local mega_slowbro={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        card.ability.extra.hands_played = card.ability.extra.hands_played + 1
-        local xmult_total = card.ability.extra.Xmult + (card.ability.extra.hands_played * card.ability.extra.Xmult_mod)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {xmult_total}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = xmult_total
-        }
-      end
-    elseif (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
+    if context.before then
+      card.ability.extra.hands_played = card.ability.extra.hands_played + 1
+    end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult + card.ability.extra.hands_played * card.ability.extra.Xmult_mod
+      }
+    end
+    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not context.blueprint then
       card.ability.extra.hands_played = 0
       return {
         message = localize('k_reset'),
