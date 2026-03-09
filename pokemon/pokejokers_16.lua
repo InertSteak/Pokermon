@@ -720,6 +720,78 @@ local porygonz={
   end
 }
 -- Gallade 475
+local gallade={
+  name = "gallade",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_mod = 0.7, e_limit = 1, num = 1, dem = 3, e_level = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local energized = 0
+    if G.jokers then
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) >= center.ability.extra.e_level then
+          energized = energized + 1
+        end
+      end
+    end
+    local total = 1 + (center.ability.extra.Xmult_mod * energized)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'gallade')
+    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.e_limit, total, num, dem, center.ability.extra.e_level}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 4,
+  stage = "Two",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and next(context.poker_hands['Pair']) then
+      local energized = 0
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) >= card.ability.extra.e_level then
+          energized = energized + 1
+        end
+      end
+      local total = 1 + (card.ability.extra.Xmult_mod * energized)
+      return 
+      {
+        Xmult = total
+      }
+    end
+    
+    if context.using_consumeable and context.consumeable.ability.set == 'Item' then
+      if SMODS.pseudorandom_probability(card, 'gallade', card.ability.extra.num, card.ability.extra.dem, 'gallade') then
+        local e_jokers = {}
+        for k, v in ipairs(G.jokers.cards) do
+          if can_apply_energy(v, 'Trans') then
+            e_jokers[#e_jokers + 1] = v
+          end
+        end
+        if #e_jokers > 0 then
+          local energize_joker = pseudorandom_element(e_jokers, "gallade_energy")
+          energy_increase(energize_joker, "Trans")
+        end
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = card.ability.extra.e_limit
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 0
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
+    end
+  end
+}
 -- Probopass 476
 local probopass={
   name = "probopass",
@@ -1193,7 +1265,7 @@ local rotomm={
 
 -- Uxie 480
 return {name = "Pokemon Jokers 451-480", 
-        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, probopass, dusknoir,
-          froslass, rotom, rotomh, rotomw, rotomf, rotomfan, rotomm
+        list = {mantyke, weavile, magnezone, lickilicky, rhyperior, tangrowth, electivire, magmortar, togekiss, yanmega, leafeon, glaceon, gliscor, mamoswine, porygonz, gallade,
+                probopass, dusknoir, froslass, rotom, rotomh, rotomw, rotomf, rotomfan, rotomm
         },
 }

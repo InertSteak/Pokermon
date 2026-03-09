@@ -80,8 +80,208 @@ local pelipper={
   end,
 }
 -- Ralts 280
+local ralts={
+  name = "ralts",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 5,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Psychic Energy"}}
+    local energized = 0
+    if G.jokers then
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+    end
+    local total = center.ability.extra.mult_mod * energized
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, total}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and next(context.poker_hands['Pair']) then
+      local energized = 0
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+      local total = card.ability.extra.mult_mod * energized
+      return 
+      {
+        mult = total
+      }
+    end
+    return level_evo(self, card, context, "j_poke_kirlia")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local energy = SMODS.add_card{ set = 'Energy', key = 'c_poke_psychic_energy'}
+      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, energy)
+    end
+  end,
+}
 -- Kirlia 281
+local kirlia={
+  name = "kirlia",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 8, e_limit = 1, planets_used = 0}, evo_rqmt = 15},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local energized = 0
+    if G.jokers then
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+    end
+    local total = center.ability.extra.mult_mod * energized
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.e_limit, total, math.max(0, self.config.evo_rqmt - center.ability.extra.planets_used)}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  item_req = "dawnstone",
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and next(context.poker_hands['Pair']) then
+      local energized = 0
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+      local total = card.ability.extra.mult_mod * energized
+      return 
+      {
+        mult = total
+      }
+    end
+    if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
+      card.ability.extra.planets_used = card.ability.extra.planets_used + 1
+    end
+    local evo = item_evo(self, card, context, "j_poke_gallade")
+    if not evo then
+      return scaling_evo(self, card, context, "j_poke_gardevoir", card.ability.extra.planets_used, self.config.evo_rqmt)
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = card.ability.extra.e_limit
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 0
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
+    end
+  end
+}
 -- Gardevoir 282
+local gardevoir={
+  name = "gardevoir",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult_mod = 0.3, e_limit = 1, hand_level = 6}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_black_hole'}
+      if not center.edition or (center.edition and not center.edition.negative) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+      end
+    end
+    local energized = 0
+    if G.jokers then
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+    end
+    local hands = 0
+    for k, v in pairs(G.GAME.hands) do
+      local level = v.level
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        level = to_number(level)
+      end
+      if level >= center.ability.extra.hand_level then
+        hands = hands + 1
+      end
+    end
+    local total = 1 + (center.ability.extra.Xmult_mod * (hands + energized))
+    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.e_limit, total, center.ability.extra.hand_level}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 3,
+  stage = "Two",
+  ptype = "Psychic",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and next(context.poker_hands['Pair']) then
+      local energized = 0
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+      local hands = 0
+      for k, v in pairs(G.GAME.hands) do
+        local level = v.level
+        if (SMODS.Mods["Talisman"] or {}).can_load then
+          level = to_number(level)
+        end
+        if level >= card.ability.extra.hand_level then
+          hands = hands + 1
+        end
+      end
+      local total = 1 + (card.ability.extra.Xmult_mod * (hands + energized))
+      return 
+      {
+        Xmult = total
+      }
+    end
+    if context.selling_card and context.card.config.center.set == 'Joker' and get_total_energy(context.card) > 0 then
+      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_black_hole', edition = 'e_negative'}
+      SMODS.calculate_effect({ message = localize('k_plus_spectral') }, bhole)
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = card.ability.extra.e_limit
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if not G.GAME.energy_plus then
+      G.GAME.energy_plus = 0
+    else
+      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
+    end
+  end
+}
 -- Surskit 283
 -- Masquerain 284
 -- Shroomish 285
@@ -579,5 +779,5 @@ local skitty={
   end,
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {wingull, pelipper, shroomish, breloom, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
+        list = {wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
 }

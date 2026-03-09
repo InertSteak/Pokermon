@@ -3427,6 +3427,41 @@ return {
                 "{X:water,C:white}Water{} Joker you have"
               }
             }, 
+            j_poke_ralts = {
+              name = "Ralts",
+              text = {
+                "{C:attention}Holding{} {X:psychic,C:white}Psychic{} {C:pink}Energy",
+                "{C:mult}+#1#{} Mult for each {C:pink}Energized{}",
+                "Joker if played hand",
+                "contains a {C:attention}Pair",
+                "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            }, 
+            j_poke_kirlia = {
+              name = "Kirlia",
+              text = {
+                "{C:pink}+#2#{} Energy Limit",
+                "{C:mult}+#1#{} Mult for each {C:pink}Energized{}",
+                "Joker if played hand",
+                "contains a {C:attention}Pair",
+                "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after using {C:attention,s:0.8}#4#{C:planet,s:0.8} Planet {C:inactive,s:0.8}cards)",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8}){}"
+              }
+            }, 
+            j_poke_gardevoir = {
+              name = "Gardevoir",
+              text = {
+                "{C:pink}+#2#{} Energy Limit",
+                "When you sell an {C:pink}Energized{} Joker,",
+                "create a {C:dark_edition}Negative{} {C:spectral}Black Hole{} card",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:mult,C:white}X#1#{} Mult for each {C:pink}Energized{}",
+                "Joker and each level {C:attention}#4#+{} hand",
+                "{C:inactive}(Currently {X:mult,C:white} X#3#{C:inactive} Mult)",
+              }
+            }, 
             j_poke_shroomish = {
                 name = "Shroomish",
                 text = {
@@ -3558,6 +3593,27 @@ return {
                     "{C:attention}poker hand{}, then destroy them",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
+            },
+            j_poke_meditite = {
+              name = "Meditite",
+              text = {
+                "{C:mult}+#1#{} Mult for each {C:attention}empty",
+                "consumable slot when",
+                "{C:attention}#3#{} discards remaining",
+                "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            },
+            j_poke_medicham = {
+              name = "Medicham",
+              text = {
+                "Applies {C:attention}Sixth Sense{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:mult}+#1#{} Mult for each {C:attention}empty",
+                "consumable slot when",
+                "{C:attention}#3#{} discards remaining",
+                "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+              }
             },
             j_poke_volbeat = {
               name = "Volbeat",
@@ -4357,6 +4413,19 @@ return {
                     "{C:inactive}(Must have room)",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
                 } 
+            },
+            j_poke_gallade = {
+              name = "Gallade",
+              text = {
+                "{C:pink}+#2#{} Energy Limit",
+                "{C:green}#4# in #5#{} chance to {C:pink}Energize{} a random",
+                "Joker when an {C:item}Item{} is used",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:mult,C:white}X#1#{} Mult for each Joker with",
+                "{C:attention}#6#+{} Energy Count if played",
+                "hand contains a {C:attention}Pair",
+                "{C:inactive}(Currently {X:mult,C:white} X#3#{C:inactive} Mult)",
+              }
             },
             j_poke_probopass = {
                 name = 'Probopass',      
