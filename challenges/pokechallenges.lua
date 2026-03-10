@@ -484,12 +484,14 @@ local mystery_dungeon = {
             Back(G.P_CENTERS[deck_key]):apply_to_run()
           end
 
+          G.GAME.poke_mystery_dungeon_deck_key = deck_key
+
           G.E_MANAGER:add_event(Event({
             func = function()
               play_sound('tarot1')
               G.deck.cards[1]:juice_up(0.3, 0.3)
               -- Handles drawing the new deck sprite on top of the challenge deck
-              G.GAME.poke_mystery_dungeon_deck_key = deck_key
+              poke_set_mystery_dungeon_back_sprites()
               return true
             end
           }))
