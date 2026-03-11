@@ -382,7 +382,7 @@ PokemonSprites = {
 {name = "pelipper", base = {pos = {x = 16, y = 18}},},
 {name = "ralts", base = {pos = {x = 18, y = 18}},},
 {name = "kirlia", base = {pos = {x = 20, y = 18}},},
-{name = "gardevoir", base = {pos = {x = 22, y = 18}},alts = {AtlasJokersSeriesA = {art = 'Sunny'}}},
+{name = "gardevoir", base = {pos = {x = 22, y = 18}},alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "mega_gardevoir", base = {pos = {x = 6, y = 4}, soul_pos = {x = 7, y = 4}},gen_atlas = 3},
 {name = "surskit", base = {pos = {x = 24, y = 18}},},
 {name = "masquerain", base = {pos = {x = 26, y = 18}},},
