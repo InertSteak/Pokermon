@@ -370,8 +370,127 @@ local luvdisc={
   end,
 }
 -- Bagon 371
+local bagon={
+  name = "bagon",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 3, h_size = 1, triggers = 0}, evo_rqmt = 5},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, math.max(0, self.config.evo_rqmt - center.ability.extra.triggers), total}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if context.scoring_hand and context.scoring_name == "Straight" and not context.blueprint then
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
+      end
+      local total = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+      return
+      {
+        mult = total
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_shelgon", card.ability.extra.triggers, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end
+}
 -- Shelgon 372
+local shelgon={
+  name = "shelgon",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 3, h_size = 2, rounds = 8}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, center.ability.extra.rounds, total}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "One",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      if context.scoring_hand and context.scoring_name == "Straight" and not context.blueprint and card.ability.extra.rounds > 0 then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
+      end
+      local total = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+      return
+      {
+        mult = total
+      }
+    end
+    return level_evo(self, card, context, "j_poke_salamence")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end
+}
 -- Salamence 373
+local salamence={
+  name = "salamence",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 5, h_size = 2, h_size_temp = 1, divisor = 5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local total = G.GAME.hands["Straight"].played * center.ability.extra.mult_mod
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.h_size, center.ability.extra.h_size_temp, center.ability.extra.divisor, total}}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 3,
+  stage = "Two",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+        local hand_size = math.floor(G.GAME.hands["Straight"].played/card.ability.extra.divisor)
+        if hand_size > 0 then
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={hand_size}}})
+          G.hand:change_size(hand_size)
+          G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + hand_size
+        end
+    end
+    if context.joker_main then
+      local total = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+      return
+      {
+        mult = total
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+  end
+}
 -- Beldum 374
 local beldum={
   name = "beldum", 
@@ -932,6 +1051,6 @@ local deoxys={
 -- Torterra 389
 -- Chimchar 390
 return {name = "Pokemon Jokers 361-390", 
-        list = {snorunt, glalie, clamperl, huntail, gorebyss, relicanth, luvdisc, beldum, metang, metagross, jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, 
-                jirachi_fixer, deoxys},
+        list = {snorunt, glalie, clamperl, huntail, gorebyss, relicanth, luvdisc, bagon, shelgon, salamence, beldum, metang, metagross, 
+                jirachi, jirachi_banker, jirachi_booster, jirachi_power, jirachi_invis, jirachi_fixer, deoxys},
 }

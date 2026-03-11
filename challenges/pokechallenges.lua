@@ -451,6 +451,65 @@ local safety_first = {
     text_colour = HEX("FFCB01"),
 }
 
-return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first}
+local mystery_dungeon = {
+  key = "mystery_dungeon",
+  rules = {
+    custom = {
+      {id = 'poke_mystery_dungeon'},
+      {id = 'poke_mystery_dungeon2'},
+      {id = 'poke_mystery_dungeon3'},
+    },
+  },
+  apply = function (self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        local target_id = "Pokermon"
+        local pokermon_decks = {}
+        for i, v in ipairs(G.P_CENTER_POOLS.Back) do
+            if v.mod and v.mod.id == target_id and not v.legacy_deck then
+                pokermon_decks[#pokermon_decks + 1] = v
+            end
+        end
+
+        local seed = "poke_"..tostring(os.date("!%d%m%Y"))
+
+        local deck = pseudorandom_element(pokermon_decks, seed)
+
+        if deck then
+          local deck_key = deck.key
+
+          if deck_key == "b_poke_vendingdeck" then
+            G.GAME.modifiers.vending = true
+          else
+            Back(G.P_CENTERS[deck_key]):apply_to_run()
+          end
+
+          G.GAME.poke_mystery_dungeon_deck_key = deck_key
+
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              play_sound('tarot1')
+              G.deck.cards[1]:juice_up(0.3, 0.3)
+              -- Handles drawing the new deck sprite on top of the challenge deck
+              poke_set_mystery_dungeon_back_sprites()
+              return true
+            end
+          }))
+        end
+
+        local card = SMODS.add_card({area = G.jokers, set = "Joker"})
+        SMODS.Stickers["eternal"]:apply(card, true)
+
+        return true
+      end
+    }))
+  end,
+  button_colour = HEX('0064B2'),
+  text_colour = HEX("FFCB01"),
 }
+
+return {name = "Challenges", 
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+}
+
+

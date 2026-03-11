@@ -99,3 +99,50 @@ SMODS.DrawStep {
   end,
   conditions = { vortex = false, facing = 'front' },
 }
+
+local sprite_matches = function(sprite, atlas, x, y)
+  return sprite.atlas.name == atlas
+      and sprite.sprite_pos.x == (x or 0)
+      and sprite.sprite_pos.y == (y or 0)
+end
+
+local function should_apply_mystery_dungeon_back_sprite(card)
+  return G.GAME.poke_mystery_dungeon_deck_key
+      and card.children.back
+      and sprite_matches(card.children.back, 'centers', 0, 4) -- Filter for Challenge Deck sprite
+end
+
+local function apply_mystery_dungeon_back_sprite(card)
+  if card.children.back then card.children.back:remove() end
+
+  local deck = G.P_CENTERS[G.GAME.poke_mystery_dungeon_deck_key]
+  local atlas = deck.atlas or 'centers'
+  local pos = deck.pos or {x = 0, y = 0}
+
+  card.children.back = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, atlas, pos)
+  card.children.back.states.hover = card.states.hover
+  card.children.back.states.click = card.states.click
+  card.children.back.states.drag = card.states.drag
+  card.children.back.states.collide.can = false
+  card.children.back:set_role({major = card, role_type = 'Glued', draw_major = card})
+end
+
+local function handle_mystery_dungeon_sprites(card)
+  if should_apply_mystery_dungeon_back_sprite(card) then
+    apply_mystery_dungeon_back_sprite(card)
+  end
+end
+
+-- Changes the back sprite during the Mystery Dungeon challenge to match your random deck
+local card_set_sprites_ref = Card.set_sprites
+function Card:set_sprites(_center, _front)
+  card_set_sprites_ref(self, _center, _front)
+  handle_mystery_dungeon_sprites(self)
+end
+
+-- Manually update cards that have been created before the random deck was applied
+function poke_set_mystery_dungeon_back_sprites()
+  for _, card in ipairs(G.I.CARD) do
+    handle_mystery_dungeon_sprites(card)
+  end
+end

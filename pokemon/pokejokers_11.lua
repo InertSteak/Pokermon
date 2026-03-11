@@ -260,7 +260,91 @@ local aggron = {
   end
 }
 -- Meditite 307
+local meditite={
+  name = "meditite",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 7,rounds = 5, d_remaining = 0,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local total = 0
+    if G.consumeables and G.GAME and G.GAME.current_round and G.GAME.current_round.discards_left == center.ability.extra.d_remaining then
+      total = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards) * center.ability.extra.mult_mod
+    end
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.d_remaining, total}}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      local total = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards) * card.ability.extra.mult_mod
+      return {
+        mult = total
+      }
+    end
+    return level_evo(self, card, context, "j_poke_medicham")
+  end,
+}
 -- Medicham 308
+local medicham={
+  name = "medicham",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 12, d_remaining = 0,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_sixth_sense', config={}}
+    local total = 0
+    if G.consumeables and G.GAME and G.GAME.current_round and G.GAME.current_round.discards_left == center.ability.extra.d_remaining then
+      total = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards) * center.ability.extra.mult_mod
+    end
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.d_remaining, total}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Fighting",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      local total = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards) * card.ability.extra.mult_mod
+      return {
+        mult = total
+      }
+    end
+    if context.destroy_card and not context.blueprint then
+      if #context.full_hand == 1 and context.destroy_card == context.full_hand[1] and context.full_hand[1]:get_id() == 6 and G.GAME.current_round.hands_played == 0 then
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card { set = 'Spectral'}
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+                return {
+                    message = localize('k_plus_spectral'),
+                    colour = G.C.SECONDARY_SET.Spectral,
+                    remove = true
+                }
+            end
+            return {
+                remove = true
+            }
+        end
+      end
+  end,
+}
 -- Electrike 309
 -- Manectric 310
 -- Plusle 311
@@ -719,5 +803,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, spinda},
 }
