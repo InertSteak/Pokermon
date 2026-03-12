@@ -21,6 +21,7 @@ local item = {
  	},
   collection_row = {6, 6},
   shop_rate = 4,
+  select_card = 'consumeables',
   default = "c_poke_pokeball"
 }
 
