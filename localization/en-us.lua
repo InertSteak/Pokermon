@@ -4647,7 +4647,7 @@ return {
                 text = {
                   "When {C:attention}Blind{} is selected, gain",
                   "{C:purple}+#2# Foresight{} this round for",
-                  "each {X:psychic,C:white}Psychic{} type you have",
+                  "each {X:psychic,C:white}Psychic{} Joker you have",
                   "{br:3}ERROR - CONTACT STEAK",
                   "Each {C:attention}Enhanced Foreseen{}",
                   "card gives {X:mult,C:white} X#1# {} Mult",
