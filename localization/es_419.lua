@@ -3382,6 +3382,63 @@ return {
                   "cartas de {C:attention}naturaleza{}"
                 }
             },
+            j_poke_wingull = {
+              name = "Wingull",
+              text = {
+                "Gana {C:money}#1# ${} por cada",
+                "{C:attention}#3#{} descartado(a)",
+                "{s:0.9}La categoría cambia cada ronda",
+                "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+              }
+            }, 
+            j_poke_pelipper = {
+              name = "Pelipper",
+              text = {
+                "Gana {C:money}#1# ${} por cada",
+                "{C:attention}#3#{} descartado(a)",
+                "{s:0.9}La categoría cambia cada ronda",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gana {C:money}#2# ${} más por cada",
+                "comodín tipo {X:water,C:white}Agua{} que tengas"
+              }
+            }, 
+            j_poke_ralts = {
+              name = "Ralts",
+              text = {
+                "{C:attention}Equipado con{} {C:pink}Energía {X:psychic,C:white}Psíquica{}",
+                "{C:mult}+#1#{} multi por cada comodín",
+                "{C:pink}energizado{} si la mano jugada",
+                "contiene un {C:attention}Par",
+                "{C:inactive}(Actual {C:mult}+#3#{C:inactive} multi)",
+                "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+              }
+            }, 
+            j_poke_kirlia = {
+              name = "Kirlia",
+              text = {
+                "{C:pink}+#2#{} Límite de energía",
+                "{C:mult}+#1#{} multi por cada comodín",
+                "{C:pink}energizado{} si la mano jugada",
+                "contiene un {C:attention}Par",
+                "{C:inactive}(Actual {C:mult}+#3#{C:inactive} multi)",
+                "{C:inactive}(Evoluciona tras usar",
+				"{C:attention}#4# {C:inactive}cartas de {C:planet}planeta{C:inactive})",
+                "{C:inactive}(Evoluciona con una {C:attention}Piedra Alba{C:inactive}){}"
+              }
+            }, 
+            j_poke_gardevoir = {
+              name = "Gardevoir",
+              text = {
+                "{C:pink}+#2#{} Límite de energía",
+                "Cuando vendes un comodín {C:pink}energizado{},",
+                "crea un {C:spectral}Agujero negro{} {C:dark_edition}negativo{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:mult,C:white}X#1#{} multi por cada comodín",
+                "{C:pink}energizado{} y cada mano",
+				"con nivel {C:attention}#4# o más{}",
+                "{C:inactive}(Actual {X:mult,C:white} X#3#{C:inactive} multi)",
+              }
+            }, 
             j_poke_shroomish = {
                 name = "Shroomish",
                 text = {
@@ -3503,6 +3560,27 @@ return {
                 text = {
                     "Obtiene {X:mult,C:white}X#2#{} multi por cada {C:attention}carta","{C:attention}de acero{}, {C:attention}piedra{} y {C:attention}oro{} en la mano","de póker, y luego las destruye","{C:inactive}(Actual {X:mult,C:white}X#1#{C:inactive} multi)"
                 }
+            },
+            j_poke_meditite = {
+              name = "Meditite",
+              text = {
+                "{C:mult}+#1#{} multi por cada ranura",
+                "de consumible {C:attention}vacía{} cuando",
+                "tienes {C:attention}#3#{} descartes restantes",
+                "{C:inactive}(Actual {C:mult}+#4#{C:inactive} multi)",
+                "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+              }
+            },
+            j_poke_medicham = {
+              name = "Medicham",
+              text = {
+                "Aplica {C:attention}Sexto sentido{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{C:mult}+#1#{} multi por cada ranura",
+                "de consumible {C:attention}vacía{} cuando",
+                "tienes {C:attention}#3#{} descartes restantes",
+                "{C:inactive}(Actual {C:mult}+#4#{C:inactive} multi)",
+              }
             },
             j_poke_volbeat = {
               name = "Volbeat",
@@ -3794,6 +3872,44 @@ return {
               text = {
                 "{C:attention}Equipado con {C:hearts}Escama Corazón",
                 "Aplica {C:attention}Salpicadura",
+              }
+            },
+            j_poke_bagon = {
+              name = "Bagon",
+              text = {
+                "{C:attention}-#2#{} tamaño de mano",
+                "Otorga {C:mult}+#1#{} multi por cada",
+                "{C:attention}Escalera{} jugada en esta partida",
+                "{C:inactive}(Actual {C:mult}+#4#{C:inactive} multi){}",
+                "{C:inactive}(Evoluciona tras jugar {C:attention}#3#{C:inactive} Escaleras){}"
+              }
+            },
+            j_poke_shelgon = {
+              name = "Shelgon",
+              text = {
+                "{C:attention}-#2#{} tamaño de mano",
+                "Otorga {C:mult}+#1#{} multi por cada",
+                "{C:attention}Escalera{} jugada en esta partida",
+                "{C:inactive}(Actual {C:mult}+#4#{C:inactive} multi){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Si la mano jugada es una {C:attention}Escalera{},",
+                "reduce las {C:attention}rondas necesarias{} para",
+				"{C:attention}evolucionar{} en {C:attention}1",
+                "{C:inactive}(Evoluciona tras {C:attention}#3#{C:inactive} rondas)"
+              }
+            },
+            j_poke_salamence = {
+              name = "Salamence",
+              text = {
+                "{C:attention}+#2#{} tamaño de mano",
+                "Cuando se selecciona la {C:attention}ciega{}, otorga",
+				"{C:attention}+#3#{} tamaño de mano por esta ronda",
+				"por cada {C:attention}#4# Escaleras{} jugadas",
+				"en esta partida",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Otorga {C:mult}+#1#{} multi por cada",
+                "{C:attention}Escalera{} jugada en esta partida",
+                "{C:inactive}(Actual {C:mult}+#5#{C:inactive} multi){}",
               }
             },
             j_poke_beldum = {
@@ -4266,6 +4382,19 @@ return {
 					"{C:inactive}(Debe haber espacio)",
 					"{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
                 } 
+            },
+            j_poke_gallade = {
+              name = "Gallade",
+              text = {
+                "{C:pink}+#2#{} Límite de energía",
+                "{C:green}#4# en #5#{} probabilidades de {C:pink}energizar{} un",
+                "comodín al azar cuando un {C:item}objeto{} es usado",
+                "{br:2}ERROR - CONTACT STEAK",
+                "{X:mult,C:white}X#1#{} multi por cada comodín",
+                "energizado {C:attention}#6# o más{} veces si la",
+                "mano jugada contiene un {C:attention}Par",
+                "{C:inactive}(Actual {X:mult,C:white} X#3#{C:inactive} multi)",
+              }
             },
             j_poke_probopass = {
                 name = 'Probopass',      
@@ -5279,8 +5408,8 @@ return {
                 text = {
                   "{X:red,C:white}X#1#{} multi",
                   "Si la mano jugada tiene el único",
-                  "{C:attention}rey{} en tu {C:attention}baraja completa{}, cada",
-                  "carta que {C:attention}no es de figura{} otorga la mitad",
+                  "{C:attention}rey{} en tu {C:attention}baraja completa{}, cada carta",
+                  "que {C:attention}no es de figura{} otorga la mitad",
                   "del {X:mult,C:white}X{} multi de este comodín",
 				  "cuando anota"
                 }
