@@ -243,9 +243,11 @@ function SMODS.current_mod.reset_game_globals(run_start)
 end
 
 function SMODS.current_mod.calculate(self, context)
+  -- Poliwag line suit
   if context.after then
     poke_change_poli_suit()
   end
+  -- Vending deck
   if G.GAME.modifiers.vending == true then
     if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
         G.E_MANAGER:add_event(Event({
@@ -256,6 +258,20 @@ function SMODS.current_mod.calculate(self, context)
                 return true
             end
         }))
+    end
+  end
+  --Hazard level
+  if context.first_hand_drawn then
+    if G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0 then
+      local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+      G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.4,
+          func = function()
+            poke_add_hazards(nil, hazards, G.hand)
+            return true
+          end
+      }))
     end
   end
 end
