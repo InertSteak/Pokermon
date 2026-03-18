@@ -2,12 +2,12 @@
 local delcatty={
   name = "delcatty",
   pos = {x = 0, y = 0},
-  config = {extra = {mult_mod = 6, energy_buff = 1}},
+  config = {extra = {energy_buff = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
     local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod * #find_pokemon_type("Colorless"), 
+    return {vars = {G.GAME.current_round.cattype or "Grass", center.ability.extra.energy_buff, 
             colours = {type_colour, highlight_colour}}}
   end,
   rarity = "poke_safari",

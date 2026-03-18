@@ -798,7 +798,7 @@ local nosepass={
 local skitty={
   name = "skitty",
   pos = {x = 0, y = 0},
-  config = {extra = {mult_mod = 6,}},
+  config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
