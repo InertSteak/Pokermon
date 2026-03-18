@@ -848,6 +848,7 @@ return {
                 text = {
                     "{C:chips}+#3#{} hand, {C:chips}+#1#{} Chips",
                     "{C:chips}+#2#{} Chips for each remaining hand",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)",
                 } 
             },
             j_poke_mega_blastoise = {

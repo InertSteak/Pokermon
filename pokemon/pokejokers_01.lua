@@ -477,7 +477,8 @@ local blastoise={
   config = {extra = {chips = 120, chip_mod = 25, hands = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands}}
+		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands, 
+                    center.ability.extra.chip_mod * G.GAME.current_round.hands_left}}
   end,
   rarity = "poke_safari", 
   cost = 10, 

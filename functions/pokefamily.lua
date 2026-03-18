@@ -128,6 +128,7 @@ local default_family_list = {
   { "mudkip", "marshtomp", "swampert" },
   { "zigzagoon", "linoone" },
   { "shroomish", "breloom" },
+  { "slakoth", "vigoroth", "slaking"},
   { "nincada", "ninjask", "shedinja" },
   { "makuhita", "hariyama"},
   { "aron", "lairon", "aggron" },
