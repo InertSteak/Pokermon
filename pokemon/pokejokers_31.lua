@@ -253,7 +253,6 @@ local spidops = {
   calculate = function(self, card, context)
     if context.playing_card_added and not card.getting_sliced and context.cards and not context.blueprint then
       if context.cards and type(context.cards) == "table" and #context.cards > 0 then
-        local cards_added = {}
         for k, v in ipairs(context.cards) do
           card.ability.extra.cards_added = card.ability.extra.cards_added + 1
           if card.ability.extra.cards_added == card.ability.extra.card_goal then

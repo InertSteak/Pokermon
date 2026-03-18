@@ -174,11 +174,11 @@ local jynx={
               G.deck:emplace(copy)
               card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
               copy.jynx = true
-              cards_added[#cards_added] = copy
+              cards_added[#cards_added + 1] = copy
             end
           end
         end
-        if cards_added then playing_card_joker_effects(cards_added); end
+        if cards_added then playing_card_joker_effects(cards_added) end
       end
     end
     if context.setting_blind then
