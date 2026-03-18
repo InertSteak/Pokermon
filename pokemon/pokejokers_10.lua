@@ -367,15 +367,6 @@ local slakoth={
   name = "slakoth",
   pos = {x = 0, y = 0},
   config = {extra = {mult = 15, hands = 1, rounds = 5}},
-  loc_txt = {
-    name = "Slakoth",
-    text = {
-      "{C:mult}+#1#{} Mult",
-      "{C:attention}-#3#{} hands this round",
-      "when hand is played",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.hands, center.ability.extra.money}}
@@ -407,14 +398,6 @@ local vigoroth={
   name = "vigoroth",
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_mod = 0.5, rounds = 4}},
-  loc_txt = {
-    name = "Vigoroth",
-    text = {
-      "{X:mult,C:white} X#1# {} Mult for each remaining hand",
-      "{C:inactive,s:0.8}(Currently {X:mult,C:white,s:0.8} X#2# {C:inactive,s:0.8} Mult){}",
-      "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds without discarding)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_mod, 1 + math.max(0, (center.ability.extra.Xmult_mod * G.GAME.current_round.hands_left)), center.ability.extra.rounds}}
@@ -444,14 +427,6 @@ local slaking={
   name = "slaking",
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 4, hands = 1, }},
-  loc_txt = {
-    name = "Slaking",
-    text = {
-      "{X:mult,C:white} X#1# {} Mult",
-      "{C:attention}-#2#{} hands this round",
-      "when hand is played",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.hands}}

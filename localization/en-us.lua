@@ -3480,6 +3480,31 @@ return {
                   "{C:attention}+#3#{} hand size this round"
                 }
             }, 
+            j_poke_slakoth = {
+                name = "Slakoth",
+                text = {
+                  "{C:mult}+#1#{} Mult",
+                  "{C:attention}-#3#{} hand this round",
+                  "when hand is played",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                }
+            }, 
+            j_poke_vigoroth = {
+                name = "Vigoroth",
+                text = {
+                  "{X:mult,C:white} X#1# {} Mult for each remaining hand",
+                  "{C:inactive,s:0.8}(Currently {X:mult,C:white,s:0.8} X#2# {C:inactive,s:0.8} Mult){}",
+                  "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds without discarding)",
+                }
+            }, 
+            j_poke_slaking = {
+                name = "Slaking",
+                text = {
+                  "{X:mult,C:white} X#1# {} Mult",
+                  "{C:attention}-#2#{} hand this round",
+                  "when hand is played",
+                }
+            }, 
             j_poke_nincada = {
                 name = "Nincada",
                 text = {
