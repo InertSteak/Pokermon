@@ -1078,7 +1078,7 @@ volatile_active = function(self, card, direction)
   local self_pos = 0
   local normal_pos = 0
   for i = 1, #G.jokers.cards do
-    local volatile = G.jokers.cards[i].config.center.volatile
+    local volatile = G.jokers.cards[i].ability and G.jokers.cards[i].ability.extra and type(G.jokers.cards[i].ability.extra) == 'table' and G.jokers.cards[i].ability.extra.volatile
     if G.jokers.cards[i] == card then
       self_pos = i
     end
