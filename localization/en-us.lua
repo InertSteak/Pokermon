@@ -7227,7 +7227,7 @@ return {
             poke_bug_buzz_ex = "Bug Buzz!",
             poke_sticky_web_ex = "Sticky Web!",
             poke_head_smash_ex = "Head Smash!",
-            poke_teeter_dance = "Teeter Dance!",
+            poke_teeter_dance_ex = "Teeter Dance!",
             
             poke_attack_forme = "Attack",
             poke_defense_forme = "Defense",

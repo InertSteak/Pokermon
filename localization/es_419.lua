@@ -7076,7 +7076,7 @@ return {
             poke_bug_buzz_ex = "¡Zumbido!",
             poke_sticky_web_ex = "¡Red pegajosa!",
             poke_head_smash_ex = "¡Topetazo!",
-            poke_teeter_dance = "¡Danza del caos!",
+            poke_teeter_dance_ex = "¡Danza del caos!",
 			
             poke_attack_forme = "Ataque",
             poke_defense_forme = "Defensa",
