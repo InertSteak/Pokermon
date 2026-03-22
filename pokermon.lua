@@ -274,6 +274,10 @@ function SMODS.current_mod.calculate(self, context)
       }))
     end
   end
+  --Garbodor
+  if context.pre_discard and not context.hook then
+    G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+  end
 end
 
 local old_end = end_round

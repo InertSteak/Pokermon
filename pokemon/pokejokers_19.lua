@@ -76,7 +76,7 @@ local trubbish={
 local garbodor={
   name = "garbodor",
   pos = {x = 5, y = 5},
-  config = {extra = {chips = 0,chip_mod = 5,triggers = 0}},
+  config = {extra = {chips = 0,chip_mod = 5,triggers = 0, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -111,10 +111,14 @@ local garbodor={
           message_colour = G.C.CHIPS
         })
       end
+      if (G.GAME.poke_ante_discards_used or 0) == 0 and G.GAME.blind.boss then
+        card.ability.extra.active = true
+      end
     end
   end,
   calc_dollar_bonus = function(self, card)
-    if (G.GAME.poke_ante_discards_used or 0) == 0 and G.GAME.blind.boss then
+    if card.ability.extra.active then
+      card.ability.extra.active = false
       G.E_MANAGER:add_event(Event({
         func = (function()
           add_tag(Tag('tag_garbage'))

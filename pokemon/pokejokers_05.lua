@@ -164,7 +164,12 @@ local jynx={
         for k, v in ipairs(context.cards) do
           if type(v) == "table" then
             if v.jynx then
-              v.jynx = nil
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      v.jynx = nil
+                      return true
+                  end
+              }))
             else
               local card_to_copy = v
               local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
@@ -172,7 +177,7 @@ local jynx={
               G.deck.config.card_limit = G.deck.config.card_limit + 1
               table.insert(G.playing_cards, copy)
               G.deck:emplace(copy)
-              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
               copy.jynx = true
               cards_added[#cards_added + 1] = copy
             end
