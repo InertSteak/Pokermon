@@ -1446,7 +1446,7 @@ local mega_steelix={
   atlas = "Megas",
   gen = 2,
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_steel") 
