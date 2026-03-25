@@ -1272,17 +1272,16 @@ local raichu={
 local sandshrew={
   name = "sandshrew", 
   pos = {x = 0, y = 2},
-  config = {extra = {rounds = 5, chip_mod = 25, sandshrew_tally = 0, glass_restored = 0}},
+  config = {extra = {rounds = 4, chip_mod = 25, sandshrew_tally = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     end
-		return {vars = {center.ability.extra.rounds, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, 
-                    colours = {center.ability.extra.glass_restored ~= 0 and G.C.UI.TEXT_INACTIVE}}}
+		return {vars = {center.ability.extra.rounds, center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally,}}
   end,
   rarity = 1, 
-  cost = 5,
+  cost = 4,
   enhancement_gate = 'm_glass',
   stage = "Basic", 
   ptype = "Earth",
@@ -1290,37 +1289,6 @@ local sandshrew={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored <= 0 and not context.blueprint then
-      local card_to_copy = nil
-      for k, v in ipairs(context.removed) do
-        if (SMODS.has_enhancement(v, 'm_glass') or v.glass_trigger) and card.ability.extra.glass_restored <= 0 then
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  local copy = copy_card(v, nil, nil, G.playing_card)
-                  copy:add_to_deck()
-                  G.deck.config.card_limit = G.deck.config.card_limit + 1
-                  table.insert(G.playing_cards, copy)
-                  local area = context.poke_removed_at_end and G.deck or G.hand
-                  area:emplace(copy)
-                  copy.states.visible = nil
-                  copy:start_materialize()
-                  playing_card_joker_effects({copy})
-                  return true
-              end
-          }))
-          
-          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
-        end
-      end
-      if card_to_copy then
-        return {
-          message = localize('k_copied_ex'),
-          colour = G.C.CHIPS,
-          card = card,
-          playing_cards_created = {true}
-        }
-      end
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
@@ -1328,12 +1296,6 @@ local sandshrew={
           colour = G.C.CHIPS,
           chip_mod = card.ability.extra.chip_mod * card.ability.extra.sandshrew_tally 
         }
-      end
-    end
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      if card.ability.extra.glass_restored > 0 then
-        card.ability.extra.glass_restored = 0
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
       end
     end
     return level_evo(self, card, context, "j_poke_sandslash")
@@ -1351,15 +1313,14 @@ local sandshrew={
 local sandslash={
   name = "sandslash", 
   pos = {x = 1, y = 2},
-  config = {extra = {chip_mod = 40, sandshrew_tally = 0, glass_restored = 0, glass_limit = 2}},
+  config = {extra = {chip_mod = 40, sandshrew_tally = 0, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     end
-		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, center.ability.extra.glass_limit, 
-                    center.ability.extra.glass_limit - center.ability.extra.glass_restored, 
-                    colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'sandslash')
+		return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * center.ability.extra.sandshrew_tally, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 6, 
@@ -1370,37 +1331,6 @@ local sandslash={
   ptype = "Earth",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
-      local card_to_copy = nil
-      for k, v in ipairs(context.removed) do
-        if (SMODS.has_enhancement(v, 'm_glass') or v.glass_trigger) and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  local copy = copy_card(v, nil, nil, G.playing_card)
-                  copy:add_to_deck()
-                  G.deck.config.card_limit = G.deck.config.card_limit + 1
-                  table.insert(G.playing_cards, copy)
-                  local area = context.poke_removed_at_end and G.deck or G.hand
-                  area:emplace(copy)
-                  copy.states.visible = nil
-                  copy:start_materialize()
-                  playing_card_joker_effects({copy})
-                  return true
-              end
-          }))
-          
-          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
-        end
-      end
-      if card_to_copy then
-        return {
-          message = localize('k_copied_ex'),
-          colour = G.C.CHIPS,
-          card = card,
-          playing_cards_created = {true}
-        }
-      end
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {
@@ -1410,13 +1340,12 @@ local sandslash={
         }
       end
     end
-    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      if card.ability.extra.glass_restored > 0 then
-        card.ability.extra.glass_restored = 0
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+    if context.discard and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.blueprint then
+      if SMODS.pseudorandom_probability(card, 'sandslash', card.ability.extra.num, card.ability.extra.dem, 'sandslash') then
+        local target = {context.other_card}
+        poke_convert_cards_to(target, {mod_conv = 'm_glass'})
       end
     end
-    return level_evo(self, card, context, "j_poke_sandslash")
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then

@@ -601,22 +601,11 @@ jd_def["j_poke_sandshrew"] = {
     { text = "+" },
     { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
   },
-  reminder_text = {
-    {text = "[", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
-    {text = "/", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
-    {text = "]", colour = G.C.GREY},
-  },
   text_config = { colour = G.C.CHIPS },
   calc_function = function(card)
     local chips
-    local count = card.ability.extra.glass_restored
-    local limit = 1
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-    card.joker_display_values.count = count
-    card.joker_display_values.limit = limit
   end
 }
 
@@ -625,25 +614,11 @@ jd_def["j_poke_sandslash"] = {
     { text = "+" },
     { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
   },
-  reminder_text = {
-    {text = "[", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
-    {text = "/", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
-    {text = "]", colour = G.C.GREY},
-  },
   text_config = { colour = G.C.CHIPS },
   calc_function = function(card)
     local chips
-    local count = card.ability.extra.glass_restored
-    local limit = card.ability.extra.glass_limit
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-    if count > limit then
-      count = limit
-    end
-    card.joker_display_values.count = count
-    card.joker_display_values.limit = limit
   end
 }
 
@@ -2422,7 +2397,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2440,7 +2415,7 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local consumables = poke_get_consumeable_count() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end

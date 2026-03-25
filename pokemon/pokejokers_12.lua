@@ -563,6 +563,82 @@ local dusclops={
 }
 -- Tropius 357
 -- Chimecho 358
+local chimecho={
+  name = "chimecho",
+  pos = {x = 0, y = 0},
+  config = {extra = {glass_restored = 0, glass_limit = 2}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
+    return {vars = {center.ability.extra.glass_limit, center.ability.extra.glass_limit - center.ability.extra.glass_restored,
+                    colours = {center.ability.extra.glass_restored >= center.ability.extra.glass_limit and G.C.UI.TEXT_INACTIVE}}}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  enhancement_gate = 'm_glass',
+  calculate = function(self, card, context)
+    if context.remove_playing_cards and card.ability.extra.glass_restored < card.ability.extra.glass_limit and not context.blueprint then
+      local card_to_copy = nil
+      for k, v in ipairs(context.removed) do
+        if (SMODS.has_enhancement(v, 'm_glass') or v.glass_trigger) and card.ability.extra.glass_restored < card.ability.extra.glass_limit then
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  local copy = copy_card(v, nil, nil, G.playing_card)
+                  copy:add_to_deck()
+                  G.deck.config.card_limit = G.deck.config.card_limit + 1
+                  table.insert(G.playing_cards, copy)
+                  local area = context.poke_removed_at_end and G.deck or G.hand
+                  area:emplace(copy)
+                  copy.states.visible = nil
+                  copy:start_materialize()
+                  playing_card_joker_effects({copy})
+                  return true
+              end
+          }))
+          
+          card.ability.extra.glass_restored = card.ability.extra.glass_restored + 1
+        end
+      end
+      if card_to_copy then
+        return {
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          card = card,
+          playing_cards_created = {true}
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      if card.ability.extra.glass_restored > 0 then
+        card.ability.extra.glass_restored = 0
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+      G.E_MANAGER:add_event(Event({func = function()
+        for k, v in pairs(G.I.CARD) do
+            if v.set_cost then v:set_cost() end
+        end
+        return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end
+}
 -- Absol 359
 local absol={
   name = "absol",
@@ -644,5 +720,5 @@ local wynaut={
   end,
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, absol, wynaut},
+        list = {cacnea, cacturne, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
 }

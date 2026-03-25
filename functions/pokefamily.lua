@@ -86,6 +86,7 @@ local default_family_list = {
   { "snorunt", "glalie", "froslass" },
   { "nosepass", "probopass" },
   {"skitty", "delcatty"},
+  {"chingling", "chimecho"},
   { "beldum", "metang", "metagross" },
   { "jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_invis", "jirachi_fixer" },
   { { key = "deoxys", form = 4 }, { key = "deoxys", form = 1 }, { key = "deoxys", form = 2 }, { key = "deoxys", form = 3 }},

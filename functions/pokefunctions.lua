@@ -1419,7 +1419,8 @@ poke_can_save_consumable = function(card)
       or (card.config.center.saveable)
 end
 
-poke_get_consumeable_count = function()
+poke_get_consumeables = function()
+  local consumeables = {}
   if G.STAGE ~= G.STAGES.RUN then return 0 end
   local count = 0
   local areas = {G.jokers.cards, G.consumeables.cards}
@@ -1427,9 +1428,9 @@ poke_get_consumeable_count = function()
     local area = areas[i]
     for j = 1, #area do
       if area[j].ability.consumeable then
-        count = count + 1
+        consumeables[#consumeables + 1] = area[j]
       end
     end
   end
-  return count
+  return consumeables
 end
