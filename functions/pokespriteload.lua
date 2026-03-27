@@ -1311,7 +1311,8 @@ local poke_artist_info = {
   {url = 'https://www.reddit.com/user/My_Dude_CBC/', account = 'My_Dude_CBC'},
   {url = 'https://x.com/MyDude81058128'},
   {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
-  {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
+  {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")},
+  {url = 'https://ko-fi.com/mydudestudios', account = 'MyDude', site = 'Ko-fi', colour = HEX("72A5F2")}
   }},
   PigeonPie = {display_name = 'PigeonPie', artist_colour = HEX("FFED24"), highlight_colour = HEX("DE26FF"), links = {
     {url = 'https://www.instagram.com/pigeonpie08'},
