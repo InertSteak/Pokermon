@@ -3229,7 +3229,7 @@ return {
             j_poke_celebi = {
                 name = "Celebi",
                 text = {
-                    "{C:attention}-#2#{} Ante after skipping {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{}",
+                    "{C:attention}-#2#{} Ante every {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{} skipped",
                     "{C:inactive}(Required skips increase each time)",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{X:mult,C:white} X#4# {} Mult for each round played",
@@ -4090,7 +4090,7 @@ return {
                 name = "Deoxys (Speed)",
                 text = {
                   "{C:attention}DNA{} seals give an extra",
-                  "permanent {C:attention}retrigger",
+                  "permanent {C:chips}+#3#{} Chips",
                   "to copied cards",
                   "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
                 }
@@ -5940,13 +5940,11 @@ return {
                 text = {
                   "{C:attention}Reusable{}",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Destroys {C:attention}#1#{} random cards",
-                  "remaining in {C:attention}deck{} and",
-                  "level up {C:attention}last played{} hand",
-                  "{C:inactive}(Last hand: {C:attention}#2#{C:inactive})",
+                  "Destroys {C:attention}1{} random card",
+                  "remaining in {C:attention}deck{}",
                   "{br:3}ERROR - CONTACT STEAK",
                   "Transforms leftmost or selected",
-                  "{C:attention}Deoxys{} into {C:attention}#3# Forme",
+                  "{C:attention}Deoxys{} into {C:attention}#1# Forme",
                   "{C:inactive,s:0.8}({C:attention,s:0.8}Forme{C:inactive,s:0.8} changes on {C:green,s:0.8}Reroll{C:inactive,s:0.8}){}",
                 }
             },

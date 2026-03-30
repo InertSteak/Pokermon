@@ -188,11 +188,10 @@ local meteorite = {
   saveable = true,
   helditem = true,
   artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
-  config = {extra = {destroy = 2, forme = "Normal", usable = true}},
+  config = {extra = {destroy = 1, forme = "Normal", usable = true}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'endless'}
-    return {vars = {center.ability.extra.destroy, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none"), 
-                    localize('poke_'..string.lower(center.ability.extra.forme)..'_forme')}}
+    return {vars = {localize('poke_'..string.lower(center.ability.extra.forme)..'_forme')}}
   end,
   pos = { x = 5, y = 7 },
   soul_pos = { x = 6, y = 7 },
@@ -232,9 +231,7 @@ local meteorite = {
         end
     }))
     SMODS.destroy_cards(destroyed_cards)
-    
-    SMODS.smart_level_up_hand(card, G.GAME.last_hand_played)
-    
+        
     local deoxys = poke_find_card("j_poke_deoxys", true)
     if not deoxys then
       deoxys = poke_find_card("j_poke_deoxys")
@@ -281,7 +278,7 @@ local meteorite = {
        or G.STATE == G.STATES.STANDARD_PACK then 
         if (#G.consumeables.cards + G.GAME.consumeable_buffer >= G.consumeables.config.card_limit) and card.area == G.pack_cards then return false end
       end
-      return G.deck and #G.deck.cards > 0 and G.GAME.last_hand_played and card.ability.extra.usable
+      return G.deck and #G.deck.cards > 0 and card.ability.extra.usable
   end,
   set_sprites = function(self, card, front)
     if card.no_load_reusable_sprite then

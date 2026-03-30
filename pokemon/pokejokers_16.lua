@@ -723,7 +723,7 @@ local porygonz={
 local gallade={
   name = "gallade",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_mod = 0.7, e_limit = 1, num = 1, dem = 3, e_level = 3}},
+  config = {extra = {Xmult_mod = 0.5, e_limit = 1, num = 1, dem = 3, e_level = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local energized = 0

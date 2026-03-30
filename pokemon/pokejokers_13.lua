@@ -994,7 +994,7 @@ local jirachi_fixer = {
 local deoxys={
   name = "deoxys",
   pos = {x = 0, y = 0},
-  config = {extra = {form = 4, Xmult_multi = 0.25, money_mod = 2, retriggers = 1}},
+  config = {extra = {form = 4, Xmult_multi = 0.25, money_mod = 2, chip_mod = 40}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     
@@ -1008,7 +1008,7 @@ local deoxys={
     elseif center.ability.extra.form == 3 then
       alt_key = 'j_poke_deoxys_speed'
     end
-    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money_mod}, key = alt_key}
+    return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.money_mod, center.ability.extra.chip_mod}, key = alt_key}
   end,
   rarity = 4,
   cost = 20,

@@ -1754,10 +1754,11 @@ jd_def["j_poke_celebi"] = {
     { text = "[", colour = G.C.GREY },
     { ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY },
     { text = "/", colour = G.C.GREY },
-    { ref_table ="card.ability.extra", ref_value = "skip_target", colour = G.C.ORANGE },
+    { ref_table ="card.joker_display_values", ref_value = "skip_target", colour = G.C.ORANGE },
     { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
+    card.joker_display_values.skip_target = (G.GAME.celebi_skips or 1)
     card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
   end
 }

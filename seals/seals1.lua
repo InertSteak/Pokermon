@@ -147,7 +147,7 @@ local dna_seal = {
       local deoxys_found = SMODS.find_card('j_poke_deoxys')
       local Xmult = 0
       local Money = 0
-      local Retriggers = 0
+      local Chips = 0
       for i = 1, #deoxys_found do
         local form = deoxys_found[i].ability.extra.form
         if form == 1 then
@@ -157,7 +157,7 @@ local dna_seal = {
           Money = Money + deoxys_found[i].ability.extra.money_mod
         end
         if form == 3 then
-          Retriggers = Retriggers + deoxys_found[i].ability.extra.retriggers
+          Chips = Chips + deoxys_found[i].ability.extra.chip_mod
         end
       end
       
@@ -171,9 +171,9 @@ local dna_seal = {
        card_copied.ability.perma_h_dollars = card_copied.ability.perma_h_dollars + Money
       end
       
-      if Retriggers > 0 then
-       card_copied.ability.perma_repetitions = card_copied.ability.perma_repetitions or 0
-       card_copied.ability.perma_repetitions = card_copied.ability.perma_repetitions + Retriggers
+      if Chips > 0 then
+       card_copied.ability.perma_bonus = card_copied.ability.perma_bonus or 0
+       card_copied.ability.perma_bonus = card_copied.ability.perma_bonus + Chips
       end
         
       G.E_MANAGER:add_event(Event({
