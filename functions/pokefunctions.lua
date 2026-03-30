@@ -1421,7 +1421,7 @@ end
 
 poke_get_consumeables = function()
   local consumeables = {}
-  if G.STAGE ~= G.STAGES.RUN then return 0 end
+  if G.STAGE ~= G.STAGES.RUN then return consumeables end
   local count = 0
   local areas = {G.jokers.cards, G.consumeables.cards}
   for i = 1, #areas do
