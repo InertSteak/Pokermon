@@ -5681,6 +5681,29 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult, {C:attention}#3#{C:inactive} lions)"
                 } 
             },
+            j_poke_spiclops = {
+                name = "Spiclops",
+                text = {
+                    "{C:hazard}+#1#{} hazard layer, {C:attention}+#2#{} hand size",
+                    "Apply a random {C:attention}seal{} to",
+                    "every {C:attention}#3#th{} {C:attention}playing card {C:inactive}[#4#]{}",
+                    "added to your deck",
+                    "When {C:attention}Blind{} is selected",
+                    "gain hand size equal to the {C:attention}hazard level{} and",
+                    "lose {C:attention}1 discard{}",
+                    "If first played hand is",
+                    "all {C:attention} Hazard{} cards, gain",
+                    "{C:attention{}+1{} hand size this round for",
+                    "each card in that hand",
+                    "Adds a {C:blue}Blue{} seal to every third",
+                    "{C:attention}Hazard Card held{} in hand",
+                    "at end of round",
+                    "For every #5# {C:inactive}[#6#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
+                    "most played hand {C:inactive}(Must have room){}"
+
+                }
+            },
             j_poke_miror_budicolo = {
                 name = "Ludicolo",
                 text = {
