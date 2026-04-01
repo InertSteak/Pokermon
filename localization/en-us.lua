@@ -730,7 +730,14 @@ return {
                     "and earns {C:money}$#3#{} after",
                     "growing {C:attention}#1#{} {C:inactive}[#2#]{} times",
                 },
-            }
+            },
+            m_poke_ludicolo = {
+                name = "Ludicolo",
+                text = {
+                    "Does something awesome",
+                    "when held in hand"
+                },
+            },
         },
         Stake = {
             stake_poke_diamond = {
@@ -5674,6 +5681,22 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult, {C:attention}#3#{C:inactive} lions)"
                 } 
             },
+            j_poke_ludicolo = {
+                name = "Ludicolo",
+                text = {
+                    "Adds itself to",
+                    "your deck??"
+                },
+            },
+            j_poke_capture_disc = {
+                name = "Capture Disc",
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult",
+                    "when {C:attention}shaken{}, resets",
+                    "at end of round",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                },
+            },
             --[[ Egg dynatext, not used right now
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
@@ -7271,7 +7294,9 @@ return {
             poke_m_stone = "Stone",
             poke_m_gold = "Gold",
             poke_m_lucky = "Lucky",
-            poke_m_poke_seed = "Seed"
+            poke_m_poke_seed = "Seed",
+
+            poke_ludicolo_ex = "Ludicolo!",
             
         },
         --These are the Labels
