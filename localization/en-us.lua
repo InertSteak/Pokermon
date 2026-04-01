@@ -5681,7 +5681,7 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult, {C:attention}#3#{C:inactive} lions)"
                 } 
             },
-            j_poke_ludicolo = {
+            j_poke_miror_budicolo = {
                 name = "Ludicolo",
                 text = {
                     "Adds itself to",

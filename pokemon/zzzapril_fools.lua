@@ -167,7 +167,11 @@ local jlist = {
 }
 
 if pokermon_config.pokemon_aprilfools then
-  return {name = "Other Jokers",
+  return {name = "April Fool Jokers",
     list = jlist
+  }
+else
+  return {name = "April Fool Jokers",
+    list = {}
   }
 end
