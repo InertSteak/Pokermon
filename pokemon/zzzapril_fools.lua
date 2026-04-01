@@ -88,6 +88,140 @@ local miror_budicolo = {
   end,
 }
 
+local spiclops = {
+  name = "spiclops",
+  config = {extra = {hazard_level = 1, h_size = 4, card_goal = 8, cards_added = 0, planet_goal = 2, hazards_drawn = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local vars = {
+      card.ability.extra.hazard_level,
+      card.ability.extra.h_size,
+      card.ability.extra.card_goal,
+      card.ability.extra.cards_added,
+      card.ability.extra.planet_goal,
+      card.ability.extra.hazards_drawn
+    }
+    return {vars = vars}
+  end,
+  rarity = 3,
+  cost = 10,
+  stage = "Legendary",
+  blueprint_compat = true,
+  eternal_compat = true,
+  set_card_type_badge = function(self, card, badges)
+              badges[#badges + 1] =
+                create_badge('Legendary', G.C.PURPLE, G.C.WHITE, 1)
+            end,
+  calculate = function(self, card, context)
+
+    -- Apply a random seal to every 8th card playing added to the deck
+    if context.playing_card_added and not card.getting_sliced and context.cards and not context.blueprint then
+      if context.cards and type(context.cards) == "table" and #context.cards > 0 then
+        local cards_added = {}
+        for k, v in ipairs(context.cards) do
+          card.ability.extra.cards_added = card.ability.extra.cards_added + 1
+          if card.ability.extra.cards_added == card.ability.extra.card_goal then
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_sticky_web_ex")})
+            local args = {guaranteed = true}
+            local seal_type = SMODS.poll_seal(args)
+            v:set_seal(seal_type, true)
+            card.ability.extra.cards_added = 0
+          end
+        end
+      end
+    end
+
+    -- Increase hand size by the current hazard level, and lose a discard
+    if context.setting_blind then
+      ease_discard(-1)
+      local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={level}}})
+      G.hand:change_size(level)
+      G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + level
+    end
+
+    -- Increase hand size by 1 for each hazard in the scoring hand at the start of the round.
+    if context.joker_main and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      local all_hazards = true
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.has_enhancement(v, "m_poke_hazard") then
+          all_hazards = false
+        end
+      end
+      if all_hazards then
+        local size_up = #context.scoring_hand
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={size_up}}})
+        G.hand:change_size(size_up)
+        G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + size_up
+      end
+    end
+
+    -- Blue seal on every 3rd hazard in hand.
+    if context.end_of_round and not context.individual and not context.repetition then
+      local hazard_count = 0
+      if G.hand and G.hand.cards and #G.hand.cards > 0 then
+        for i=1, #G.hand.cards do
+          if SMODS.has_enhancement(G.hand.cards[i], "m_poke_hazard") then
+            hazard_count = hazard_count + 1
+            if hazard_count % 3 == 0 then
+              G.hand.cards[i]:set_seal("Blue", nil, true)
+            end
+          end
+        end
+      end
+    end
+
+    -- For every 2 hazards drawn, add a planet card
+    if context.hand_drawn then
+      local count = 0
+      for k, v in pairs(G.hand.cards) do
+        if SMODS.has_enhancement(v, "m_poke_hazard") then
+          count = count + 1
+        end
+      end
+      if count > 0 then
+        if not context.blueprint then
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn + count
+        end
+        if card.ability.extra.hazards_drawn >= card.ability.extra.planet_goal and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          count = math.floor(card.ability.extra.hazards_drawn/card.ability.extra.planet_goal )
+          card.ability.extra.hazards_drawn = card.ability.extra.hazards_drawn % card.ability.extra.planet_goal 
+          local _planet, _hand, _tally = nil, nil, 0
+          for k, v in ipairs(G.handlist) do
+              if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                  _hand = v
+                  _tally = G.GAME.hands[v].played
+              end
+          end
+          if _hand then
+              for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                  if v.config.hand_type == _hand then
+                      _planet = v.key
+                  end
+              end
+          end
+          for i = 1, count do
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+              local _card = create_card('Planet', G.consumeables, nil, nil, nil, nil, _planet)
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet })
+            end
+          end
+        end
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end
+}
+
 function capture_disc_load(self,card)
   local card_drag_orig = card.drag
 
@@ -162,6 +296,7 @@ local capture_disc = {
 
 local jlist = {
   billion_lions,
+  spiclops,
   miror_budicolo,
   capture_disc,
 }
