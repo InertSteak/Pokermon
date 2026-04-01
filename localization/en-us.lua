@@ -730,7 +730,14 @@ return {
                     "and earns {C:money}$#3#{} after",
                     "growing {C:attention}#1#{} {C:inactive}[#2#]{} times",
                 },
-            }
+            },
+            m_poke_ludicolo = {
+                name = "Ludicolo",
+                text = {
+                    "Does something awesome",
+                    "when held in hand"
+                },
+            },
         },
         Stake = {
             stake_poke_diamond = {
@@ -1013,9 +1020,6 @@ return {
                 text = {
                     "{C:chips}+#2#{} Chips for each {C:attention}Glass{} card",
                     "in your {C:attention}full deck",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "{V:1}Add a copy of the first {C:attention,V:1}Glass{V:1} card",
-                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)"
                 } 
@@ -1023,11 +1027,12 @@ return {
             j_poke_sandslash = {
                 name = "Sandslash",
                 text = {
+                    "{C:green}#3# in #4#{} chance for each",
+                    "discarded {C:attention}Enhanced{} card",
+                    "to become a {C:attention}Glass{} card",
+                    "{br:3}ERROR - CONTACT STEAK",
                     "{C:chips}+#1#{} Chips for each {C:attention}Glass{} card",
                     "in your {C:attention}full deck",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "{V:1}Add a copy of the first {C:attention,V:1}#3#{} {C:inactive}[#4#]{} {C:attention,V:1}Glass{V:1} cards",
-                    "{V:1}shattered each round to hand",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                 } 
             },
@@ -3231,7 +3236,7 @@ return {
             j_poke_celebi = {
                 name = "Celebi",
                 text = {
-                    "{C:attention}-#2#{} Ante after skipping {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{}",
+                    "{C:attention}-#2#{} Ante every {C:attention}#1#{} {C:inactive}[#3#]{} {C:attention}Blinds{} skipped",
                     "{C:inactive}(Required skips increase each time)",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{X:mult,C:white} X#4# {} Mult for each round played",
@@ -3840,6 +3845,16 @@ return {
                 "{C:inactive}(Evolves with a {C:attention}Linking Cord{C:inactive})",
               }
             },
+            j_poke_chimecho = {
+              name = "Chimecho",
+              text = { 
+                "{C:attention}Vouchers{} in the shop are {C:attention}free",
+                "{br:3}ERROR - CONTACT STEAK",
+                "{V:1}Add a copy of the first",
+                "{C:attention,V:1}#1#{} {C:inactive}[#2#]{} {C:attention,V:1}Glass{V:1} cards destroyed",
+                "{V:1}each round to hand",
+              }
+            },
             j_poke_absol = {
                 name = "Absol",
                 text = {
@@ -4082,7 +4097,7 @@ return {
                 name = "Deoxys (Speed)",
                 text = {
                   "{C:attention}DNA{} seals give an extra",
-                  "permanent {C:attention}retrigger",
+                  "permanent {C:chips}+#3#{} Chips",
                   "to copied cards",
                   "{C:inactive,s:0.8}(Transforms with a {C:planet,s:0.8}Meteorite{C:inactive,s:0.8} card){}"
                 }
@@ -4225,6 +4240,15 @@ return {
                 name = "Honchkrow",
                 text = {
                   "Each {X:dark,C:white}Dark{} Joker gives {X:mult,C:white}X#1#{} Mult",
+                }
+            },
+            j_poke_chingling = {
+                name = 'Chingling',
+                text = {
+                    "{C:attention}Baby{}, {X:mult,C:white} X#1# {} Mult",
+                    "Creates a {C:dark_edition}Negative{} copy of",
+                    "{C:tarot}Justice{} at end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_bonsly = {
@@ -5680,6 +5704,22 @@ return {
 
                 }
             },
+            j_poke_miror_budicolo = {
+                name = "Ludicolo",
+                text = {
+                    "Adds itself to",
+                    "your deck??"
+                },
+            },
+            j_poke_capture_disc = {
+                name = "Capture Disc",
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult",
+                    "when {C:attention}shaken{}, resets",
+                    "at end of round",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                },
+            },
             --[[ Egg dynatext, not used right now
             j_poke_mystery_egg = {
                 name = "Mystery Egg",
@@ -5946,13 +5986,11 @@ return {
                 text = {
                   "{C:attention}Reusable{}",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Destroys {C:attention}#1#{} random cards",
-                  "remaining in {C:attention}deck{} and",
-                  "level up {C:attention}last played{} hand",
-                  "{C:inactive}(Last hand: {C:attention}#2#{C:inactive})",
+                  "Destroys {C:attention}1{} random card",
+                  "remaining in {C:attention}deck{}",
                   "{br:3}ERROR - CONTACT STEAK",
                   "Transforms leftmost or selected",
-                  "{C:attention}Deoxys{} into {C:attention}#3# Forme",
+                  "{C:attention}Deoxys{} into {C:attention}#1# Forme",
                   "{C:inactive,s:0.8}({C:attention,s:0.8}Forme{C:inactive,s:0.8} changes on {C:green,s:0.8}Reroll{C:inactive,s:0.8}){}",
                 }
             },
@@ -7279,7 +7317,9 @@ return {
             poke_m_stone = "Stone",
             poke_m_gold = "Gold",
             poke_m_lucky = "Lucky",
-            poke_m_poke_seed = "Seed"
+            poke_m_poke_seed = "Seed",
+
+            poke_ludicolo_ex = "Ludicolo!",
             
         },
         --These are the Labels
