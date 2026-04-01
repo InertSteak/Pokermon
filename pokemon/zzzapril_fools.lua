@@ -103,7 +103,7 @@ local spiclops = {
     }
     return {vars = vars}
   end,
-  rarity = 3,
+  rarity = 2,
   cost = 10,
   stage = "Legendary",
   blueprint_compat = true,
