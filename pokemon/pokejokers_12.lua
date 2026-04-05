@@ -77,7 +77,122 @@ local cacturne = {
   end
 }
 -- Swablu 333
+local swablu={
+  name = "swablu",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0,chip_mod = 2,money_mod = 1,}, evo_rqmt = 36},
+  loc_txt = {
+    name = "Swablu",
+    text = {
+      "When you draw a {C:attention}9",
+      "during the {C:attention}Blind{}, gain",
+      "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+      "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 9 then
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS
+          })
+          local earned = ease_poke_dollars(card, "swablu", card.ability.extra.money_mod)
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  G.GAME.dollar_buffer = 0
+                  return true
+              end
+          }))
+        end
+      end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_altaria", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+}
 -- Altaria 334
+local altaria={
+  name = "altaria",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0,chip_mod = 4,money_mod = 1, chip_mod_extra = 2, money_mod_extra = 1}},
+  loc_txt = {
+    name = "Altaria",
+    text = {
+      "When you draw a {C:attention}9",
+      "during the {C:attention}Blind{}, gain",
+      "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+      "{br:2}ERROR - CONTACT STEAK",
+      "Gain an extra {C:chips}+#4#{} Chips and",
+      "earn an extra {C:money}$#5#{} if you",
+      "have another {X:dragon,C:white}Dragon{} Joker",
+      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+    }
+  },
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, center.ability.extra.chip_mod_extra, center.ability.extra.money_mod_extra}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  stage = "One",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 9 then
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            operation = function(ref_table, ref_value, initial, change)
+              ref_table[ref_value] = initial + change + (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
+            end,
+            message_colour = G.C.CHIPS
+          })
+          local extra = (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.money_mod_extra or 0)
+          local earned = ease_poke_dollars(card, "swablu", card.ability.extra.money_mod + extra)
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  G.GAME.dollar_buffer = 0
+                  return true
+              end
+          }))
+        end
+      end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+  end,
+}
 -- Zangoose 335
 -- Seviper 336
 -- Lunatone 337
@@ -720,5 +835,5 @@ local wynaut={
   end,
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
 }

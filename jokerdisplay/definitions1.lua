@@ -473,7 +473,7 @@ retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_ca
 
 jd_def["j_poke_spearow"] = {
     text = {
-        { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        { ref_table = "card.ability.extra", ref_value = "cards_drawn", colour = G.C.ORANGE },
         {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },
@@ -484,7 +484,7 @@ jd_def["j_poke_spearow"] = {
 
 jd_def["j_poke_fearow"] = {
     text = {
-        { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        { ref_table = "card.ability.extra", ref_value = "cards_drawn", colour = G.C.ORANGE },
         {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },

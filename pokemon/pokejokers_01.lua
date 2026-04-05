@@ -1007,10 +1007,11 @@ local raticate={
 local spearow={
   name = "spearow", 
   pos = {x = 7, y = 1},
-  config = {extra = {rounds = 4, card_threshold = 20, cards_scored = 0, upgrade = false}},
+  config = {extra = {triggers = 0, card_threshold = 30, cards_drawn = 0, upgrade = false}, evo_rqmt = 3},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.rounds, center.ability.extra.card_threshold, math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_scored), 
+    return {vars = {math.max(0, self.config.evo_rqmt - center.ability.extra.triggers), center.ability.extra.card_threshold, 
+                    math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_drawn), 
                     center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
   end,
   rarity = 1, 
@@ -1025,40 +1026,41 @@ local spearow={
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.before and card.ability.extra.upgrade then
-        card.ability.extra.upgrade = false
-        card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
-        return {
-          card = card,
-          level_up = true,
-          message = localize('k_level_up_ex')
-        }
-      end
-      if context.joker_main and not context.blueprint then
-        card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
-          card.ability.extra.upgrade = true
-          local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
+    
+    if context.before and card.ability.extra.upgrade and not context.blueprint then
+      card.ability.extra.upgrade = false
+      card.ability.extra.triggers = card.ability.extra.triggers + 1
+      return {
+        card = card,
+        level_up = true,
+        message = localize('k_level_up_ex')
+      }
+    end
+    
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.cards_drawn = card.ability.extra.cards_drawn + #SMODS.drawn_cards
+      if card.ability.extra.cards_drawn >= card.ability.extra.card_threshold then
+        card.ability.extra.upgrade = true
+        local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+        card.ability.extra.cards_drawn = card.ability.extra.cards_drawn % card.ability.extra.card_threshold
       end
     end
-    return level_evo(self, card, context, "j_poke_fearow")
+    return scaling_evo(self, card, context, "j_poke_fearow", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
 }
 -- Fearow 022
 local fearow={
   name = "fearow", 
   pos = {x = 8, y = 1}, 
-  config = {extra = {card_threshold = 15, cards_scored = 0, upgrade = false}},
+  config = {extra = {card_threshold = 30, cards_drawn = 0, upgrade = false, d_size = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.card_threshold, math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_scored), 
-                    center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or ''}}
+    return {vars = {center.ability.extra.card_threshold, math.max(0, center.ability.extra.card_threshold - center.ability.extra.cards_drawn), 
+                    center.ability.extra.upgrade and "("..localize('k_active_ex')..")" or '', center.ability.extra.d_size}}
   end,
-  rarity = 2, 
-  cost = 5, 
+  rarity = "poke_safari", 
+  cost = 6, 
   stage = "One", 
   atlas = "Pokedex1",
   gen = 1,
@@ -1069,28 +1071,34 @@ local fearow={
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.before and card.ability.extra.upgrade then
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold then
-          card.ability.extra.cards_scored = card.ability.extra.cards_scored - card.ability.extra.card_threshold
-        end
-        card.ability.extra.upgrade = false
-        return {
-          card = card,
-          level_up = true,
-          message = localize('k_level_up_ex')
-        }
-      end
-      if context.joker_main and not context.blueprint then
-        card.ability.extra.cards_scored = card.ability.extra.cards_scored + #context.scoring_hand
-        if card.ability.extra.cards_scored >= card.ability.extra.card_threshold and not card.ability.extra.upgrade then
-          card.ability.extra.upgrade = true
-          local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
+    
+    if context.before and card.ability.extra.upgrade and not context.blueprint then
+      card.ability.extra.upgrade = false
+      return {
+        card = card,
+        level_up = true,
+        message = localize('k_level_up_ex')
+      }
+    end
+    
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.cards_drawn = card.ability.extra.cards_drawn + #SMODS.drawn_cards
+      if card.ability.extra.cards_drawn >= card.ability.extra.card_threshold then
+        card.ability.extra.upgrade = true
+        local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+        card.ability.extra.cards_drawn = card.ability.extra.cards_drawn % card.ability.extra.card_threshold
       end
     end
   end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
+    ease_discard(card.ability.extra.d_size)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
+    ease_discard(-card.ability.extra.d_size)
+  end
 }
 -- Ekans 023
 local ekans={

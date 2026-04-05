@@ -82,6 +82,7 @@ local default_family_list = {
   { "ralts", "kirlia", "gardevoir", "gallade"},
   { "numel", "camerupt", "mega_camerupt" },
   { "cacnea", "cacturne"},
+  { "swablu", "altaria"},
   { "feebas", "milotic" },
   { "snorunt", "glalie", "froslass" },
   { "nosepass", "probopass" },
