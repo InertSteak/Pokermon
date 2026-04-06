@@ -151,9 +151,6 @@ local gholdengo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.before then
-      card.ability.extra.future_dollars = G.GAME.dollars
-    end
     if context.joker_main then
       return {
         message = localize('poke_make_it_rain'),
@@ -176,7 +173,10 @@ local gholdengo={
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_multi',
-          operation = 'X',
+          operation = function(ref_table, ref_value, initial, scalar_value)
+            local to_big = to_big or function(x) return x end
+            SMODS.multiplicative_scaling(ref_table, ref_value, to_big(initial), to_big(scalar_value))
+          end,
           no_message = true,
         })
         
