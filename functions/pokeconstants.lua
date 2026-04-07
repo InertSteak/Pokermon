@@ -7,6 +7,7 @@ POKE_STAGES = {
   ["Two"] = { prev = "One", next = nil },
   ["Legendary"] = { prev = "Legendary", next = "Legendary" },
   ["Mega"] = { prev = nil, next = nil },
+  ["Other"] = { prev = nil, next = nil },
   ["???"] = { prev = nil, next = nil },
 }
 
