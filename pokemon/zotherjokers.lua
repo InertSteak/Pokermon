@@ -166,7 +166,10 @@ local jelly_donut={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.setting_blind then
-      card.ability.extra.rounds = card.ability.extra.rounds - 1
+      if not context.blueprint then
+        card.ability.extra.rounds = card.ability.extra.rounds - 1
+      end
+      
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
         G.E_MANAGER:add_event(Event({
@@ -207,10 +210,10 @@ local treasure_eatery={
   stage = "Other",
   atlas = "others",
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.setting_blind then
+    if context.setting_blind and not context.blueprint then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
         if get_type(G.jokers.cards[#G.jokers.cards]) then
