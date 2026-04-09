@@ -3416,6 +3416,29 @@ return {
                   "are {C:attention}Nature{} cards"
                 }
             },
+            j_poke_taillow = {
+              name = "Taillow",
+              text = {
+                "When you draw an {C:attention}Ace{} during",
+                "the {C:attention}Blind{}, gain {C:mult}+#2#{} Mult",
+                "resets at end of round",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+              }
+            }, 
+            j_poke_swellow = {
+              name = "Swellow",
+              text = {
+                "When {C:attention}Boss Blind{} is selected,",
+                "the top {C:attention}2{} cards of your",
+                "deck become {C:attention}Aces",
+                "{br:2}ERROR - CONTACT STEAK",
+                "When you draw an {C:attention}Ace{} during",
+                "the {C:attention}Blind{}, gain {C:mult}+#2#{} Mult",
+                "resets at end of round",
+                "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+              }
+            }, 
             j_poke_wingull = {
               name = "Wingull",
               text = {
@@ -3763,6 +3786,28 @@ return {
                 "after scoring",
               }
             },
+            j_poke_swablu = {
+              name = "Swablu",
+              text = {
+                "When you draw a {C:attention}9",
+                "during the {C:attention}Blind{}, gain",
+                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+              }
+            },
+            j_poke_altaria = {
+              name = "Altaria",
+              text = {
+                "When you draw a {C:attention}9",
+                "during the {C:attention}Blind{}, gain",
+                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gain an extra {C:chips}+#4#{} Chips and",
+                "earn an extra {C:money}$#5#{} if you",
+                "have another {X:dragon,C:white}Dragon{} Joker",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+              }
+            },
             j_poke_lileep = {
                 name = "Lileep",
                 text = {
@@ -3975,7 +4020,6 @@ return {
             j_poke_salamence = {
               name = "Salamence",
               text = {
-                "{C:attention}+#2#{} hand size",
                 "When {C:attention}Blind{} is selected, gain {C:attention}+#3#",
                 "hand size this round for every",
                 "{C:attention}#4# Straights{} played this run",

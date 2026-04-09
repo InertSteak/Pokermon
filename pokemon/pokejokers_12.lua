@@ -81,15 +81,6 @@ local swablu={
   name = "swablu",
   pos = {x = 0, y = 0},
   config = {extra = {chips = 0,chip_mod = 2,money_mod = 1,}, evo_rqmt = 36},
-  loc_txt = {
-    name = "Swablu",
-    text = {
-      "When you draw a {C:attention}9",
-      "during the {C:attention}Blind{}, gain",
-      "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
-      "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, self.config.evo_rqmt}}
@@ -136,19 +127,6 @@ local altaria={
   name = "altaria",
   pos = {x = 0, y = 0},
   config = {extra = {chips = 0,chip_mod = 4,money_mod = 1, chip_mod_extra = 2, money_mod_extra = 1}},
-  loc_txt = {
-    name = "Altaria",
-    text = {
-      "When you draw a {C:attention}9",
-      "during the {C:attention}Blind{}, gain",
-      "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
-      "{br:2}ERROR - CONTACT STEAK",
-      "Gain an extra {C:chips}+#4#{} Chips and",
-      "earn an extra {C:money}$#5#{} if you",
-      "have another {X:dragon,C:white}Dragon{} Joker",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, center.ability.extra.chip_mod_extra, center.ability.extra.money_mod_extra}}

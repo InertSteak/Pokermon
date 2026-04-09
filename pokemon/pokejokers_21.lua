@@ -474,18 +474,6 @@ local bisharp={
   name = "bisharp",
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,kings_destroyed = 0}, evo_rqmt = 3},
-  loc_txt = {
-    name = "Bisharp",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult when a",
-      "{C:attention}face{} card is destroyed",
-      "{br:2}ERROR - CONTACT STEAK",
-      "If first played hand is a",
-      "single {C:attention}face{} card, destroy it",
-      "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
-      "{C:inactive,s:0.8}(Evolves after destroying {C:attention,s:0.8}#3#{C:inactive,s:0.8} Kings)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.kings_destroyed)}}

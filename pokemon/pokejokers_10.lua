@@ -4,7 +4,113 @@
 -- Nuzleaf 274
 -- Shiftry 275
 -- Taillow 276
+local taillow={
+  name = "taillow",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 4,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+  
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 14 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+    return level_evo(self, card, context, "j_poke_swellow")
+  end,
+}
 -- Swellow 277
+local swellow={
+  name = "swellow",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 6,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and context.blind.boss then
+      card.ability.extra.active = true
+    end
+    if context.drawing_cards and not context.blueprint and card.ability.extra.active then
+      for i = 1, 2 do
+        local top = G.deck.cards[#G.deck.cards - i + 1]
+        if top then
+          SMODS.change_base(top, nil, "Ace")
+        end
+      end
+      card.ability.extra.active = nil
+    end
+  
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+  
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 14 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+  end,
+}
 -- Wingull 278
 local wingull={
   name = "wingull",
@@ -866,5 +972,6 @@ local skitty={
   end,
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
+        list = {taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
+                makuhita, hariyama, azurill, nosepass, skitty},
 }
