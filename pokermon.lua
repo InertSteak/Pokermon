@@ -74,6 +74,7 @@ if SMODS.Attribute then
   SMODS.Attribute { key = "holding" }
   SMODS.Attribute { key = "item" }
   SMODS.Attribute { key = "types" }
+  SMODS.Attribute { key = "volatile" }
 end
 
 --Load helper function files
