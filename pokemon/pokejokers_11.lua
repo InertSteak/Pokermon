@@ -360,7 +360,7 @@ local volbeat={
   end,
   rarity = 2,
   cost = 5,
-  gen = 1,
+  gen = 3,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex3",
