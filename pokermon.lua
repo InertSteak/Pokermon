@@ -70,6 +70,12 @@ SMODS.Rarity{
 
 --Load Custom Attributes
 if SMODS.Attribute then
+  SMODS.Attribute { key = "round_evo" }
+  SMODS.Attribute { key = "scaling_evo" }
+  SMODS.Attribute { key = "item_evo" }
+  SMODS.Attribute { key = "type_evo" }
+  SMODS.Attribute { key = "trigger_evo" }
+  SMODS.Attribute { key = "condition_evo" }
   SMODS.Attribute { key = "starter" }
   SMODS.Attribute { key = "holding" }
   SMODS.Attribute { key = "item" }

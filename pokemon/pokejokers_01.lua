@@ -55,7 +55,7 @@ local bulbasaur={
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
-  attributes = {"starter", "hand_size", "passive", "rank", "economy"},
+  attributes = {"starter", "hand_size", "passive", "rank", "economy", "trigger_evo"},
 }
 -- Ivysaur 002
 local ivysaur={
@@ -117,7 +117,7 @@ local ivysaur={
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
-  attributes = {"starter", "hand_size", "passive", "rank", "economy"},
+  attributes = {"starter", "hand_size", "passive", "rank", "economy", "trigger_evo"},
 }
 -- Venusaur 003
 local venusaur={
@@ -236,7 +236,7 @@ local charmander={
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
-  attributes = {"starter", "discard", "passive", "mult", "scaling"},
+  attributes = {"starter", "discard", "passive", "mult", "scaling", "scaling_evo"},
 }
 -- Charmeleon 005
 local charmeleon={
@@ -279,7 +279,7 @@ local charmeleon={
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
-  attributes = {"starter", "discard", "passive", "mult", "scaling"},
+  attributes = {"starter", "discard", "passive", "mult", "scaling", "scaling_evo"},
 }
 -- Charizard 006
 local charizard={
@@ -429,7 +429,7 @@ local squirtle={
       ease_hands_played(-to_decrease)
     end
   end,
-  attributes = {"starter", "hands", "passive", "chips", "scaling"},
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "scaling_evo"},
 }
 -- Wartortle 008
 local wartortle={
@@ -479,7 +479,7 @@ local wartortle={
       ease_hands_played(-to_decrease)
     end
   end,
-  attributes = {"starter", "hands", "passive", "chips", "scaling"},
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "scaling_evo"},
 }
 -- Blastoise 009
 local blastoise={
@@ -581,7 +581,7 @@ local caterpie={
     end
     return level_evo(self, card, context, "j_poke_metapod")
   end,
-  attributes = {"mult"},
+  attributes = {"mult", "round_evo"},
 }
 -- Metapod 011
 local metapod={
@@ -611,7 +611,7 @@ local metapod={
     end
     return level_evo(self, card, context, "j_poke_butterfree")
   end,
-  attributes = {"mult"},
+  attributes = {"mult", "round_evo"},
 }
 -- Butterfree 012
 local butterfree={
@@ -670,7 +670,7 @@ local weedle={
     end
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
-  attributes = {"chips"},
+  attributes = {"chips", "round_evo"},
 }
 -- Kakuna 014
 local kakuna={
@@ -700,7 +700,7 @@ local kakuna={
     end
     return level_evo(self, card, context, "j_poke_beedrill")
   end,
-  attributes = {"chips"},
+  attributes = {"chips", "round_evo"},
 }
 -- Beedrill 015
 local beedrill={
@@ -812,7 +812,7 @@ local pidgey={
     end
     return level_evo(self, card, context, "j_poke_pidgeotto")
   end,
-  attributes = {"rank", "suit", "mult"},
+  attributes = {"rank", "suit", "mult", "round_evo"},
 }
 -- Pidgeotto 017
 local pidgeotto={
@@ -864,7 +864,7 @@ local pidgeotto={
     end
     return level_evo(self, card, context, "j_poke_pidgeot")
   end,
-  attributes = {"rank", "suit", "mult"},
+  attributes = {"rank", "suit", "mult", "round_evo"},
 }
 -- Pidgeot 018
 local pidgeot={
@@ -998,7 +998,7 @@ local rattata={
     end
     return level_evo(self, card, context, "j_poke_raticate")
   end,
-  attributes = {"retrigger"},
+  attributes = {"retrigger", "round_evo"},
 }
 -- Raticate 020
 local raticate={
@@ -1074,7 +1074,7 @@ local spearow={
     end
     return scaling_evo(self, card, context, "j_poke_fearow", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
-  attributes = {"hand_type"},
+  attributes = {"hand_type", "trigger_evo"},
 }
 -- Fearow 022
 local fearow={
@@ -1156,7 +1156,7 @@ local ekans={
     end
     return level_evo(self, card, context, "j_poke_arbok")
   end,
-  attributes = {"hand_type", "mult"},
+  attributes = {"hand_type", "mult", "round_evo"},
 }
 -- Arbok 024
 local arbok={
@@ -1262,7 +1262,7 @@ local pikachu={
     end
     return item_evo(self, card, context, "j_poke_raichu")
   end,
-  attributes = {"mult", "economy"},
+  attributes = {"mult", "economy", "item_evo"},
 }
 -- Raichu 026
 local raichu={
@@ -1348,7 +1348,7 @@ local sandshrew={
       end
     end
   end,
-  attributes = {"chips", "enhancements", "full_deck"},
+  attributes = {"chips", "enhancements", "full_deck", "round_evo"},
 }
 -- Sandslash 028
 local sandslash={
@@ -1433,7 +1433,7 @@ local nidoranf={
     end
     return level_evo(self, card, context, "j_poke_nidorina")
   end,
-  attributes = {"chips", "rank", "queen"},
+  attributes = {"chips", "rank", "queen", "round_evo"},
 }
 -- Nidorina 030
 local nidorina={
@@ -1474,7 +1474,7 @@ local nidorina={
     end
     return item_evo(self, card, context, "j_poke_nidoqueen")
   end,
-  attributes = {"chips", "rank", "queen"},
+  attributes = {"chips", "rank", "queen", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 01-30",

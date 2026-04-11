@@ -86,7 +86,7 @@ local gastly={
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
-  attributes = {"chance", "editions"},
+  attributes = {"chance", "editions", "round_evo"},
 }
 -- Haunter 093
 local haunter={
@@ -146,7 +146,7 @@ local haunter={
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
-  attributes = {"chance", "editions"},
+  attributes = {"chance", "editions", "item_evo"},
 }
 -- Gengar 094
 local gengar={
@@ -297,7 +297,7 @@ local onix={
     end
     return type_evo(self, card, context, "j_poke_steelix", "metal")
   end,
-  attributes = {"modify_card", "enhancements"},
+  attributes = {"modify_card", "enhancements", "type_evo"},
 }
 -- Drowzee 096
 local drowzee={
@@ -339,7 +339,7 @@ local drowzee={
       card.ability.extra.planets_used = planets_used
     end
   end,
-  attributes = {"xmult", "planet"},
+  attributes = {"xmult", "planet", "condition_evo"},
 }
 -- Hypno 097
 local hypno={
@@ -421,7 +421,7 @@ local krabby={
     end
     return level_evo(self, card, context, "j_poke_kingler")
   end,
-  attributes = {"chips", "face"},
+  attributes = {"chips", "face", "round_evo"},
 }
 -- Kingler 099
 local kingler={
@@ -520,7 +520,7 @@ local voltorb={
     end
     return level_evo(self, card, context, "j_poke_electrode")
   end,
-  attributes = {"xmult", "volatile"},
+  attributes = {"xmult", "volatile", "round_evo"},
 }
 -- Electrode 101
 local electrode={
@@ -602,7 +602,7 @@ local exeggcute={
     end
     return item_evo(self, card, context, "j_poke_exeggutor")
   end,
-  attributes = {"mult", "suit", "hearts", "chance"},
+  attributes = {"mult", "suit", "hearts", "chance", "item_evo"},
 }
 -- Exeggutor 103
 local exeggutor={
@@ -691,7 +691,7 @@ local cubone={
     end
     return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
-  attributes = {"mult", "holding"},
+  attributes = {"mult", "holding", "condition_evo"},
 }
 -- Marowak 105
 local marowak={
@@ -857,7 +857,7 @@ local lickitung={
     end
     return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
   end,
-  attributes = {"xmult", "rank", "jack"},
+  attributes = {"xmult", "rank", "jack", "trigger_evo"},
 }
 -- Koffing 109
 local koffing={
@@ -898,7 +898,7 @@ local koffing={
     end
     return level_evo(self, card, context, "j_poke_weezing")
   end,
-  attributes = {"mult", "volatile"},
+  attributes = {"mult", "volatile", "round_evo"},
 }
 -- Weezing 110
 local weezing={
@@ -978,7 +978,7 @@ local rhyhorn={
     end
     return level_evo(self, card, context, "j_poke_rhydon")
   end,
-  attributes = {"enhancements", "modify_card", "chips", "perma_bonus"},
+  attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "round_evo"},
 }
 -- Rhydon 112
 local rhydon={
@@ -1034,7 +1034,7 @@ local rhydon={
     end
     return item_evo(self, card, context, "j_poke_rhyperior")
   end,
-  attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "retrigger"},
+  attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "retrigger", "item_evo"},
 }
 -- Chansey 113
 local chansey={
@@ -1096,7 +1096,7 @@ local chansey={
     end
     return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
   end,
-  attributes = {"enhancements", "generation"},
+  attributes = {"enhancements", "generation", "condition_evo"},
 }
 -- Tangela 114
 local tangela={
@@ -1164,7 +1164,7 @@ local tangela={
     end
     return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
-  attributes = {"enhancements", "chips", "mult", "economy", "chance"},
+  attributes = {"enhancements", "chips", "mult", "economy", "chance", "trigger_evo"},
 }
 -- Kangaskhan 115
 local kangaskhan={
@@ -1290,7 +1290,7 @@ local horsea={
     end
     return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
-  attributes = {"mult", "rank", "six", "scaling"},
+  attributes = {"mult", "rank", "six", "scaling", "scaling_evo"},
 }
 -- Seadra 117
 local seadra={
@@ -1331,7 +1331,7 @@ local seadra={
     end
     return type_evo(self, card, context, "j_poke_kingdra", "dragon")
   end,
-  attributes = {"mult", "rank", "six", "king", "scaling"},
+  attributes = {"mult", "rank", "six", "king", "scaling", "type_evo"},
 }
 -- Goldeen 118
 local goldeen={
@@ -1363,7 +1363,7 @@ local goldeen={
     end
     return level_evo(self, card, context, "j_poke_seaking")
   end,
-  attributes = {"enhancements", "retrigger"},
+  attributes = {"enhancements", "retrigger", "round_evo"},
 }
 -- Seaking 119
 local seaking={
@@ -1437,7 +1437,7 @@ local staryu={
     end
     return item_evo(self, card, context, "j_poke_starmie")
   end,
-  attributes = {"mult", "economy", "suit", "diamonds"},
+  attributes = {"mult", "economy", "suit", "diamonds", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 91-120", 

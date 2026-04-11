@@ -33,7 +33,7 @@ local poliwhirl={
     end
     return item_evo(self, card, context)
   end,
-  attributes = {"mult", "suit"},
+  attributes = {"mult", "suit", "item_evo"},
 }
 -- Poliwrath 062
 local poliwrath={
@@ -108,7 +108,7 @@ local abra={
     end
     return level_evo(self, card, context, "j_poke_kadabra")
   end,
-  attributes = {"chance", "tarot", "item", "hand_type"},
+  attributes = {"chance", "tarot", "item", "hand_type", "round_evo"},
 }
 -- Kadabra 064
 local kadabra={
@@ -161,7 +161,7 @@ local kadabra={
     end
     return item_evo(self, card, context, "j_poke_alakazam")
   end,
-  attributes = {"chance", "tarot", "item", "hand_type"},
+  attributes = {"chance", "tarot", "item", "hand_type", "item_evo"},
 }
 -- Alakazam 065
 local alakazam={
@@ -328,7 +328,7 @@ local machop={
     end
     ease_discard(card.ability.extra.discards)
   end,
-  attributes = {"mult", "passive", "hands", "discard"},
+  attributes = {"mult", "passive", "hands", "discard", "round_evo"},
 }
 -- Machoke 067
 local machoke={
@@ -379,7 +379,7 @@ local machoke={
     end
     ease_discard(card.ability.extra.discards)
   end,
-  attributes = {"mult", "passive", "hands", "discard"},
+  attributes = {"mult", "passive", "hands", "discard", "item_evo"},
 }
 -- Machamp 068
 local machamp={
@@ -454,7 +454,7 @@ local bellsprout={
     end
     return level_evo(self, card, context, "j_poke_weepinbell")
   end,
-  attributes = {"chips", "rank", "two", "four", "six", "eight", "ten"},
+  attributes = {"chips", "rank", "two", "four", "six", "eight", "ten", "round_evo"},
 }
 -- Weepinbell 070
 local weepinbell={
@@ -487,7 +487,7 @@ local weepinbell={
     end
     return item_evo(self, card, context, "j_poke_victreebel")
   end,
-  attributes = {"chips", "rank", "two", "four", "six", "eight", "ten"},
+  attributes = {"chips", "rank", "two", "four", "six", "eight", "ten", "item_evo"},
 }
 -- Victreebel 071
 local victreebel={
@@ -563,7 +563,7 @@ local tentacool={
     end
     return level_evo(self, card, context, "j_poke_tentacruel")
   end,
-  attributes = {"mult", "rank", "ten"},
+  attributes = {"mult", "rank", "ten", "round_evo"},
 }
 -- Tentacruel 073
 local tentacruel={
@@ -625,7 +625,7 @@ local geodude={
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
   end,
-  attributes = {"chips", "hand_size"},
+  attributes = {"chips", "hand_size", "round_evo"},
 }
 -- Graveler 075
 local graveler={
@@ -665,7 +665,7 @@ local graveler={
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
   end,
-  attributes = {"chips", "hand_size"},
+  attributes = {"chips", "hand_size", "item_evo"},
 }
 -- Golem 076
 local golem={
@@ -734,7 +734,7 @@ local ponyta={
     end
     return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
-  attributes = {"chips", "hand_type", "scaling"},
+  attributes = {"chips", "hand_type", "scaling", "scaling_evo"},
 }
 -- Rapidash 078
 local rapidash={
@@ -819,7 +819,7 @@ local slowpoke={
     end
     return evo
   end,
-  attributes = {"xmult", "hands"},
+  attributes = {"xmult", "hands", "trigger_evo", "item_evo"},
 }
 -- Slowbro 080
 local slowbro={
@@ -968,7 +968,7 @@ local magnemite={
     end
     return level_evo(self, card, context, "j_poke_magneton")
   end,
-  attributes = {"xmult", "enhancements"},
+  attributes = {"xmult", "enhancements", "round_evo"},
 }
 -- Magneton 082
 local magneton={
@@ -1015,7 +1015,7 @@ local magneton={
     end
     return item_evo(self, card, context, "j_poke_magnezone")
   end,
-  attributes = {"xmult", "enhancements", "types"},
+  attributes = {"xmult", "enhancements", "types", "item_evo"},
 }
 -- Farfetch'd 083
 local farfetchd={
@@ -1098,7 +1098,7 @@ local doduo={
     end
     return level_evo(self, card, context, "j_poke_dodrio")
   end,
-  attributes = {"mult", "face"},
+  attributes = {"mult", "face", "round_evo"},
 }
 -- Dodrio 085
 local dodrio={
@@ -1190,7 +1190,7 @@ local seel={
     end
     return level_evo(self, card, context, "j_poke_dewgong")
   end,
-  attributes = {"chance", "modify_card", "seals", "hands"},
+  attributes = {"chance", "modify_card", "seals", "hands", "round_evo"},
 }
 -- Dewgong 087
 local dewgong={
@@ -1253,7 +1253,7 @@ local grimer={
     end
     return level_evo(self, card, context, "j_poke_muk")
   end,
-  attributes = {"mult", "full_deck", "generation"},
+  attributes = {"mult", "full_deck", "generation", "round_evo"},
 }
 -- Muk 089
 local muk={
@@ -1344,7 +1344,7 @@ local shellder={
     end
     return item_evo(self, card, context, "j_poke_cloyster")
   end,
-  attributes = {"chance", "retrigger"},
+  attributes = {"chance", "retrigger", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 61-90", 
