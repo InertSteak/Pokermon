@@ -72,6 +72,8 @@ SMODS.Rarity{
 if SMODS.Attribute then
   SMODS.Attribute { key = "starter" }
   SMODS.Attribute { key = "holding" }
+  SMODS.Attribute { key = "item" }
+  SMODS.Attribute { key = "types" }
 end
 
 --Load helper function files
