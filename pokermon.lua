@@ -69,8 +69,10 @@ SMODS.Rarity{
 }
 
 --Load Custom Attributes
-SMODS.Attribute { key = "starter" }
-SMODS.Attribute { key = "holding" }
+if SMODS.Attribute then
+  SMODS.Attribute { key = "starter" }
+  SMODS.Attribute { key = "holding" }
+end
 
 --Load helper function files
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
