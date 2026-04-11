@@ -1190,7 +1190,7 @@ local seel={
     end
     return level_evo(self, card, context, "j_poke_dewgong")
   end,
-  attributes = {"chance", "seals", "hands"},
+  attributes = {"chance", "modify_card", "seals", "hands"},
 }
 -- Dewgong 087
 local dewgong={
@@ -1218,7 +1218,7 @@ local dewgong={
       juice_card_until(card, eval, true)
     end
   end,
-  attributes = {"seals", "hands"},
+  attributes = {"modify_card", "seals", "hands"},
 }
 -- Grimer 088
 local grimer={
