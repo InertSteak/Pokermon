@@ -31,6 +31,7 @@ local ampharos={
     end
   end,
   megas = { "mega_ampharos" },
+  attributes = {"xmult", "scaling"},
 }
 local mega_ampharos={
   name = "mega_ampharos",
@@ -71,6 +72,7 @@ local mega_ampharos={
       }
     end
   end,
+  attributes = {"xmult", "hand_size", "full_deck", "hands", "discard"},
 }
 -- Bellossom 182
 local bellossom={
@@ -153,7 +155,8 @@ local bellossom={
           end
       end
     end
-  end
+  end,
+  attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "modify_card", "enhancements", "editions"},
 }
 -- Marill 183
 local marill={
@@ -203,6 +206,7 @@ local marill={
     end
     return scaling_evo(self, card, context, "j_poke_azumarill", card.ability.extra.bonus_scored, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "enhancements", "condition_evo"},
 }
 -- Azumarill 184
 local azumarill={
@@ -247,6 +251,7 @@ local azumarill={
       end
     end
   end,
+  attributes = {"xmult", "enhancements"},
 }
 -- Sudowoodo 185
 local sudowoodo={
@@ -284,6 +289,7 @@ local sudowoodo={
       }
     end
   end,
+  attributes = {"face", "retrigger"},
 }
 
 local weird_tree={
@@ -321,7 +327,8 @@ local weird_tree={
   end,
   in_pool = function(self)
     return not (next(SMODS.find_card('j_poke_sudowoodo')) or next(SMODS.find_card('j_poke_bonsly')))
-  end
+  end,
+  attributes = {"types"},
 }
 -- Politoed 186
 local politoed={
@@ -359,6 +366,7 @@ local politoed={
       end
     end
   end,
+  attributes = {"retrigger", "suit", "types", "joker"},
 }
 -- Hoppip 187
 local hoppip={
@@ -402,7 +410,8 @@ local hoppip={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"passive", "hand_size", "discard", "modify_card", "enhancements", "round_evo"},
 }
 -- Skiploom 188
 local skiploom={
@@ -446,7 +455,8 @@ local skiploom={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"passive", "hand_size", "discard", "modify_card", "enhancements", "round_evo"},
 }
 -- Jumpluff 189
 local jumpluff={
@@ -492,7 +502,8 @@ local jumpluff={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"passive", "hand_size", "discard", "modify_card", "enhancements"},
 }
 -- Aipom 190
 local aipom={
@@ -538,7 +549,8 @@ local aipom={
 		if not G.GAME.before_play_buffer then
 			G.hand:unhighlight_all()
 		end
-  end, 
+  end,
+  attributes = {"passive", "hand_type", "condition_evo"},
 }
 -- Sunkern 191
 local sunkern={
@@ -570,6 +582,7 @@ local sunkern={
     end
     return item_evo(self, card, context, "j_poke_sunflora")
   end,
+  attributes = {"economy", "hands", "item_evo"},
 }
 -- Sunflora 192
 local sunflora={
@@ -598,7 +611,8 @@ local sunflora={
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
-	end
+	end,
+  attributes = {"economy", "hands", "discard"},
 }
 -- Yanma 193
 local yanma={
@@ -641,6 +655,7 @@ local yanma={
     end
     return scaling_evo(self, card, context, "j_poke_yanmega", card.ability.extra.scored, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "mult", "rank", "three", "six", "chance", "trigger_evo"},
 }
 -- Wooper 194
 local wooper={
@@ -684,6 +699,7 @@ local wooper={
     end
     return level_evo(self, card, context, "j_poke_quagsire")
   end,
+  attributes = {"mult", "face", "round_evo"},
 }
 -- Quagsire 195
 local quagsire={
@@ -727,6 +743,7 @@ local quagsire={
     end
     return level_evo(self, card, context, "j_poke_quagsire")
   end,
+  attributes = {"mult", "face"},
 }
 -- Espeon 196
 local espeon={
@@ -760,6 +777,7 @@ local espeon={
       }
     end
   end,
+  attributes = {"retrigger", "rank", "xmult", "suit"},
 }
 -- Umbreon 197
 local umbreon={
@@ -834,7 +852,8 @@ local umbreon={
       end
       card.ability.extra.hand_played = pseudorandom_element(visible_hands, pseudoseed('umbreon'))
     end
-  end
+  end,
+  attributes = {"discard", "hand_type"},
 }
 -- Murkrow 198
 local murkrow={
@@ -869,7 +888,8 @@ local murkrow={
       end
     end
     return item_evo(self, card, context, "j_poke_honchkrow")
-  end
+  end,
+  attributes = {"xmult", "types", "joker", "item_evo"},
 }
 -- Slowking 199
 local slowking={
@@ -909,7 +929,8 @@ local slowking={
         colour = G.C.RED
       }
     end
-  end
+  end,
+  attributes = {"xmult", "rank", "king", "scaling", "hands", "reset"},
 }
 -- Misdreavus 200
 local misdreavus = {
@@ -966,6 +987,7 @@ local misdreavus = {
     end
     return item_evo(self, card, context, "j_poke_mismagius")
   end,
+  attributes = {"face", "modify_card", "scaling", "chips", "item_evo"},
 }
 -- Unown 201
 local unown={
@@ -1082,7 +1104,8 @@ local unown={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"rank", "mult", "nature"},
 }
 -- Wobbuffet 202
 local wobbuffet={
@@ -1149,6 +1172,7 @@ local wobbuffet={
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.retriggers}}
     desc_nodes[#desc_nodes+1] = main_end
   end,
+  attributes = {"retrigger", "rank", "six", "seven", "eight", "nine", "ten", "volatile"},
 }
 -- Girafarig 203
 local girafarig={
@@ -1209,6 +1233,7 @@ local girafarig={
     end
     return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.death_used, 1)
   end,
+  attributes = {"face", "xmult", "hand_type", "condition_evo"},
 }
 -- Pineco 204
 local pineco={
@@ -1251,6 +1276,7 @@ local pineco={
     end
     return level_evo(self, card, context, "j_poke_forretress")
   end,
+  attributes = {"chips", "volatile", "round_evo"},
 }
 -- Forretress 205
 local forretress={
@@ -1299,6 +1325,7 @@ local forretress={
       end
     end
   end,
+  attributes = {"chips", "volatile", "enhancements", "round_evo"},
 }
 -- Dunsparce 206
 local dunsparce={
@@ -1334,7 +1361,8 @@ local dunsparce={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
     end
     return level_evo(self, card, context, "j_poke_dudunsparce")
-  end
+  end,
+  attributes = {"reroll", "round_evo"},
 }
 -- Gligar 207
 local gligar = {
@@ -1381,7 +1409,8 @@ local gligar = {
       end
     end
     return item_evo(self, card, context, "j_poke_gliscor")
-  end
+  end,
+  attributes = {"xmult", "suit", "item_evo"},
 }
 -- Steelix 208
 local steelix={
@@ -1429,6 +1458,7 @@ local steelix={
     end
   end,
   megas = { "mega_steelix" },
+  attributes = {"modify_card", "enhancements"},
 }
 local mega_steelix={
   name = "mega_steelix",
@@ -1467,7 +1497,8 @@ local mega_steelix={
           if playing_card:is_suit(card.ability.extra.suit) then diamond_tally = diamond_tally + 1 end
       end
       return diamond_tally > 0 and card.ability.extra.money * diamond_tally or nil
-  end
+  end,
+  attributes = {"modify_card", "enhancements", "suit", "diamonds", "economy", "full_deck"},
 }
 -- Snubbull 209
 local snubbull = {
@@ -1503,7 +1534,8 @@ local snubbull = {
       end
     end
     return level_evo(self, card, context, "j_poke_granbull")
-  end
+  end,
+  attributes = {"xmult", "face", "round_evo"},
 }
 -- Granbull 210
 local granbull = {
@@ -1543,8 +1575,8 @@ local granbull = {
         }
       end
     end
-  end
-
+  end,
+  attributes = {"xmult", "face"},
 }
 
 return {name = "Pokemon Jokers 181-210",
