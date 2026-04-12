@@ -81,6 +81,10 @@ if SMODS.Attribute then
   SMODS.Attribute { key = "item" }
   SMODS.Attribute { key = "types" }
   SMODS.Attribute { key = "volatile" }
+  SMODS.Attribute { key = "energy" }
+  SMODS.Attribute { key = "energy_count" }
+  SMODS.Attribute { key = "energy_limit" }
+  SMODS.Attribute { key = "ancient" }
 end
 
 --Load helper function files
