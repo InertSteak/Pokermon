@@ -1144,7 +1144,7 @@ local togetic={
     end
     return item_evo(self, card, context, "j_poke_togekiss")
   end,
-  attributes = {"baby", "tarot", "generation", "round_evo"},
+  attributes = {"enhancements", "chance", "chips", "xmult", "item_evo"},
 }
 -- Natu 177
 local natu = {
