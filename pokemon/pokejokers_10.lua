@@ -50,6 +50,7 @@ local taillow={
     end
     return level_evo(self, card, context, "j_poke_swellow")
   end,
+  attributes = {"rank", "ace", "mult", "scaling", "reset", "round_evo"},
 }
 -- Swellow 277
 local swellow={
@@ -110,6 +111,7 @@ local swellow={
       }
     end
   end,
+  attributes = {"rank", "ace", "mult", "scaling", "reset", "boss_blind", "modify_card"},
 }
 -- Wingull 278
 local wingull={
@@ -147,6 +149,7 @@ local wingull={
     end
     return level_evo(self, card, context, "j_poke_pelipper")
   end,
+  attributes = {"rank", "discard", "economy", "round_evo"},
 }
 -- Pelipper 279
 local pelipper={
@@ -184,6 +187,7 @@ local pelipper={
     end
     return level_evo(self, card, context, "j_poke_pelipper")
   end,
+  attributes = {"rank", "discard", "economy", "types", "joker"},
 }
 -- Ralts 280
 local ralts={
@@ -235,6 +239,7 @@ local ralts={
       SMODS.calculate_effect({ message = localize('poke_plus_energy') }, energy)
     end
   end,
+  attributes = {"holding", "mult", "energy_count", "joker", "hand_type", "round_evo"},
 }
 -- Kirlia 281
 local kirlia={
@@ -299,7 +304,8 @@ local kirlia={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
     end
-  end
+  end,
+  attributes = {"mult", "energy_count", "joker", "hand_type", "passive", "energy_limit", "item_evo", "condition_evo"},
 }
 -- Gardevoir 282
 local gardevoir={
@@ -386,7 +392,8 @@ local gardevoir={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
     end
-  end
+  end,
+  attributes = {"mult", "xmult", "energy_count", "joker", "passive", "energy_limit", "generation", "spectral"},
 }
 -- Surskit 283
 -- Masquerain 284
@@ -430,6 +437,7 @@ local shroomish={
     end
     return scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_defeated, self.config.evo_rqmt)
   end,
+  attributes = {"hands", "discard", "hand_size", "condition_evo"},
 }
 -- Breloom 286
 local breloom={
@@ -466,7 +474,8 @@ local breloom={
       end
       card:juice_up()
     end
-  end
+  end,
+  attributes = {"hands", "discard", "hand_size"},
 }
 -- Slakoth 287
 local slakoth={
@@ -498,6 +507,7 @@ local slakoth={
     end
     return level_evo(self, card, context, "j_poke_vigoroth")
   end,
+  attributes = {"mult", "hands", "round_evo"},
 }
 -- Vigoroth 288
 local vigoroth={
@@ -527,6 +537,7 @@ local vigoroth={
       return level_evo(self, card, context, "j_poke_slaking")
     end
   end,
+  attributes = {"xmult", "hands", "condition_evo"},
 }
 -- Slaking 289
 local slaking={
@@ -557,6 +568,7 @@ local slaking={
       }
     end
   end,
+  attributes = {"xmult", "hands"},
 }
 -- Nincada 290
 local nincada={
@@ -642,6 +654,7 @@ local nincada={
     end
     return evo
   end,
+  attributes = {"chips", "chance", "rank", "nine", "jack", "scaling", "scaling_evo"},
 }
 -- Ninjask 291
 local ninjask={
@@ -685,6 +698,7 @@ local ninjask={
       end
     end
   end,
+  attributes = {"chance", "tag", "rank", "nine", "jack", "mult", "hands"},
 }
 -- Shedinja 292
 local shedinja={
@@ -750,6 +764,7 @@ local shedinja={
       end
     end
   end,
+  attributes = {"prevents_death", "xmult", "scaling", "types"},
 }
 -- Whismur 293
 -- Loudred 294
@@ -779,6 +794,7 @@ local makuhita={
     end
     return level_evo(self, card, context, "j_poke_hariyama")
   end,
+  attributes = {"hands", "round_evo"},
 }
 -- Hariyama 297
 local hariyama={
@@ -805,6 +821,7 @@ local hariyama={
       card:juice_up()
     end
   end,
+  attributes = {"hands", "types", "joker"},
 }
 
 -- Azurill 298
@@ -851,6 +868,7 @@ local azurill ={
     end
     return level_evo(self, card, context, "j_poke_marill")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Nosepass 299
 local nosepass={
@@ -898,7 +916,8 @@ local nosepass={
       end
     end
     return item_evo(self, card, context, "j_poke_probopass")
-  end
+  end,
+  attributes = {"face", "modify_card", "enhancements", "xmult", "item_evo"},
 }
 -- Skitty 300
 local skitty={
@@ -970,6 +989,7 @@ local skitty={
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
     desc_nodes[#desc_nodes+1] = main_end
   end,
+  attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
         list = {taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
