@@ -38,7 +38,7 @@ local mew ={
       card:juice_up()
     end
   end,
-  attributes = {"generation", "editions", "tarot", "spectral", "item", "joker", "chance"},
+  attributes = {"generation", "editions", "tarot", "spectral", "item", "joker"},
 }
 -- Chikorita 152
 local chikorita = {
