@@ -1307,7 +1307,7 @@ local muk={
       card:juice_up()
     end
   end,
-  attributes = {"mult", "full_deck", "generation"},
+  attributes = {"mult", "full_deck", "generation", "destroy_card"},
 }
 -- Shellder 090
 local shellder={
