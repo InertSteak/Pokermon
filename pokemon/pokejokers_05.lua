@@ -1366,7 +1366,7 @@ local zapdos={
       end
     end
   end,
-  attributes = {"xmult", "scaling", "economy"},
+  attributes = {"xmult"},
 }
 -- Moltres 146
 local moltres={
