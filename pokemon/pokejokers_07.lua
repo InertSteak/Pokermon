@@ -1576,7 +1576,7 @@ local granbull = {
       end
     end
   end,
-  attributes = {"xmult", "face"},
+  attributes = {"xmult", "face", "rank", "queen"},
 }
 
 return {name = "Pokemon Jokers 181-210",
