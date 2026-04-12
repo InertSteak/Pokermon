@@ -466,7 +466,7 @@ local magikarp={
     end
     return level_evo(self, card, context, "j_poke_gyarados")
   end,
-  attributes = {"chips", "passive", "round_evo"},
+  attributes = {"chips", "passive", "applies", "round_evo"},
 }
 -- Gyarados 130
 local gyarados={

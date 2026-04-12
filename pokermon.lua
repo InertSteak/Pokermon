@@ -89,6 +89,7 @@ if SMODS.Attribute then
   SMODS.Attribute { key = "baby" }
   SMODS.Attribute { key = "nature" }
   SMODS.Attribute { key = "hazards" }
+  SMODS.Attribute { key = "applies" }
 end
 
 --Load helper function files

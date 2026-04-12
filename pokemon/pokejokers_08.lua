@@ -1542,7 +1542,7 @@ local smeargle={
           or 'incompatible'
     end
   end,
-  attributes = {"copying", "suit", "diamonds", "hearts", "clubs", "spades"},
+  attributes = {"copying", "applies", "suit", "diamonds", "hearts", "clubs", "spades"},
 }
 -- Tyrogue 236
 local tyrogue={
