@@ -192,7 +192,7 @@ local default_family_list = {
     { key = "unown", form = "S" }, { key = "unown", form = "T" }, { key = "unown", form = "U" }, { key = "unown", form = "V" }, { key = "unown", form = "W" }, { key = "unown", form = "X" },
     { key = "unown", form = "Y" }, { key = "unown", form = "Z" }, { key = "unown", form = "ZEx" }, { key = "unown", form = "ZQu" }
   },
-  { "berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mystery" }
+  { "berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy" }
 }
 
 local pfm_to_name = function(a) return type(a) == 'string' and a or a.key end
