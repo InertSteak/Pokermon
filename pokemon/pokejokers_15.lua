@@ -19,6 +19,7 @@ local ambipom={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  attributes = {"passive", "hand_type"},
 }
 -- Drifloon 425
 -- Drifblim 426
@@ -56,6 +57,7 @@ local buneary={
     end
     return level_evo(self, card, context, "j_poke_lopunny")
   end,
+  attributes = {"mult", "round_evo"},
 }
 -- Lopunny 428
 local lopunny={
@@ -120,6 +122,7 @@ local lopunny={
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
   megas = { "mega_lopunny" },
+  attributes = {"foresight", "mult", "xmult", "rank"},
 }
 -- Mega Lopunny 428-1
 local mega_lopunny={
@@ -171,6 +174,7 @@ local mega_lopunny={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "xmult", "hand_type"},
 }
 
 -- Mismagius 429
@@ -236,6 +240,7 @@ local mismagius = {
       end
     end
   end,
+  attributes = {"face", "modify_card", "scaling", "chance", "perma_bonus", "chips"},
 }
 -- Honchkrow 430
 local honchkrow={
@@ -269,7 +274,8 @@ local honchkrow={
         Xmult_mod = card.ability.extra.Xmult_multi
       }
     end
-  end
+  end,
+  attributes = {"types", "joker", "xmult"},
 }
 -- Glameow 431
 -- Purugly 432
@@ -317,6 +323,7 @@ local chingling={
     end
     return level_evo(self, card, context, "j_poke_chimecho")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Stunky 434
 -- Skuntank 435
@@ -362,7 +369,8 @@ local bonsly={
       playing_card_joker_effects({created_card})
     end
     return level_evo(self, card, context, "j_poke_sudowoodo")
-  end
+  end,
+  attributes = {"baby", "generation", "face", "enhancements", "round_evo"},
 }
 -- Mime Jr. 439
 local mimejr={
@@ -408,7 +416,8 @@ local mimejr={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_mime_ex"), colour = G.C.CHIPS})
     end
     return level_evo(self, card, context, "j_poke_mrmime")
-  end
+  end,
+  attributes = {"baby", "modify_card", "seals", "round_evo"},
 }
 -- Happiny 440
 local happiny={
@@ -460,6 +469,7 @@ local happiny={
     end
     return level_evo(self, card, context, "j_poke_chansey")
   end,
+  attributes = {"baby", "tarot", "generation", "chance", "round_evo"},
 }
 -- Chatot 441
 -- Spiritomb 442
@@ -510,6 +520,7 @@ local munchlax={
     end
     return level_evo(self, card, context, "j_poke_snorlax")
   end,
+  attributes = {"baby", "item", "generation", "round_evo"},
 }
 -- Riolu 447
 local riolu={
@@ -558,6 +569,7 @@ local riolu={
     end
     return level_evo(self, card, context, "j_poke_lucario")
   end,
+  attributes = {"baby", "spectral", "generation", "round_evo"},
 }
 -- Lucario 448
 local lucario={
@@ -593,6 +605,7 @@ local lucario={
       end
     end
   end,
+  attributes = {"editions", "xmult"},
 }
 -- Hippopotas 449
 -- Hippowdon 450

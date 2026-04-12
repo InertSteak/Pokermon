@@ -49,7 +49,8 @@ local mantyke={
       }))
     end
     return level_evo(self, card, context, "j_poke_mantine")
-  end
+  end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Snover 459
 -- Abomasnow 460
@@ -99,7 +100,8 @@ local weavile = {
         colour = G.C.RED
       }
     end
-  end
+  end,
+  attributes = {"rank", "destroy_card", "economy", "xmult", "scaling", "reset", "boss_blind"},
 }
 -- Magnezone 462
 local magnezone={
@@ -131,7 +133,8 @@ local magnezone={
           card = card
         }
     end
-  end
+  end,
+  attributes = {"xmult", "enhancements", "types", "joker"},
 }
 -- Lickilicky 463
 local lickilicky={
@@ -177,7 +180,8 @@ local lickilicky={
         }
       end
     end
-  end
+  end,
+  attributes = {"xmult", "rank", "jack"},
 }
 -- Rhyperior 464
 local rhyperior={
@@ -217,7 +221,8 @@ local rhyperior={
         card = card
       }
     end
-  end
+  end,
+  attributes = {"chips", "perma_bonus", "modify_card", "enhancements", "retrigger", "types", "joker"},
 }
 -- Tangrowth 465
 local tangrowth={
@@ -280,6 +285,7 @@ local tangrowth={
         end
     end
   end,
+  attributes = {"chips", "mult", "economy", "enhancements", "chance"},
 }
 -- Electivire 466
 local electivire={
@@ -318,7 +324,8 @@ local electivire={
         Xmult = 1 + card.ability.extra.Xmult_mod * card.sell_cost
       }
     end
-  end
+  end,
+  attributes = {"sell_value", "scaling", "economy", "xmult"},
 }
 -- Magmortar 467
 local magmortar={
@@ -367,7 +374,8 @@ local magmortar={
         Xmult_mod = card.ability.extra.Xmult
       }
     end
-  end
+  end,
+  attributes = {"discard", "destroy_card", "mult", "scaling", "xmult"},
 }
 -- Togekiss 468
 local togekiss={
@@ -421,6 +429,7 @@ local togekiss={
       }
     end
   end,
+  attributes = {"enhancements", "chance", "passive", "chance_mod", "chips", "xmult"},
 }
 -- Yanmega 469
 local yanmega={
@@ -463,6 +472,7 @@ local yanmega={
       end
     end
   end,
+  attributes = {"chips", "mult", "rank", "three", "six", "chance", "retrigger"},
 }
 -- Leafeon 470
 local leafeon={
@@ -505,7 +515,8 @@ local leafeon={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"scaling", "hand_size", "enhancements"},
 }
 -- Glaceon 471
 local glaceon={
@@ -534,6 +545,7 @@ local glaceon={
       end
     end
   end,
+  attributes = {"chance", "generation", "enhancements"},
 }
 -- Gliscor 472
 local gliscor = {
@@ -578,7 +590,8 @@ local gliscor = {
         }
       end
     end
-  end
+  end,
+  attributes = {"suit", "xmult"},
 }
 -- Mamoswine 473
 local mamoswine={
@@ -653,6 +666,7 @@ local mamoswine={
       end
     end
   end,
+  attributes = {"mult", "enhancements", "chance", "economy"},
 }
 -- Porygon-Z 474
 local porygonz={
@@ -717,7 +731,8 @@ local porygonz={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
-  end
+  end,
+  attributes = {"energy_limit", "energy", "generation", "xmult", "passive"},
 }
 -- Gallade 475
 local gallade={
@@ -790,7 +805,8 @@ local gallade={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
     end
-  end
+  end,
+  attributes = {"energy_limit", "chance", "energy_count", "item", "xmult", "hand_type", "passive"},
 }
 -- Probopass 476
 local probopass={
@@ -818,7 +834,8 @@ local probopass={
           card = card
       }
     end
-  end
+  end,
+  attributes = {"modify_card", "enhancements", "face", "xmult", "passive"},
 }
 -- Dusknoir 477
 local dusknoir={
@@ -852,7 +869,8 @@ local dusknoir={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.spectral_rate = math.max(0, G.GAME.spectral_rate - card.ability.extra.spec_up)
-  end
+  end,
+  attributes = {"hands", "spectral", "retrigger", "passive"},
 }
 -- Froslass 478
 local froslass={
@@ -895,6 +913,7 @@ local froslass={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
+  attributes = {"economy", "passive", "item", "generation"},
 }
 -- Rotom 479
 local rotom={
@@ -947,7 +966,8 @@ local rotom={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"chance", "item", "generation", "passive", "economy"},
 }
 
 local rotomh={
@@ -994,7 +1014,8 @@ local rotomh={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "discard", "modify_card", "enhancements"},
 }
 
 local rotomw={
@@ -1057,7 +1078,8 @@ local rotomw={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "economy", "modify_card", "enhancements"},
 }
 
 local rotomf={
@@ -1120,7 +1142,8 @@ local rotomf={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation"},
 }
 
 local rotomfan={
@@ -1207,7 +1230,8 @@ local rotomfan={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "destroy_card", "tag"},
 }
 
 local rotomm={
@@ -1260,7 +1284,8 @@ local rotomm={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "modify_card"},
 }
 
 -- Uxie 480
