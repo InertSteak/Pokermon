@@ -259,7 +259,7 @@ local mega_gengar ={
       }))
     end
   end,
-  attributes = {"tag", "editions"},
+  attributes = {"tag"},
 }
 -- Onix 095
 local onix={
