@@ -1015,7 +1015,7 @@ local magneton={
     end
     return item_evo(self, card, context, "j_poke_magnezone")
   end,
-  attributes = {"xmult", "enhancements", "types", "item_evo"},
+  attributes = {"xmult", "enhancements", "types", "joker", "item_evo"},
 }
 -- Farfetch'd 083
 local farfetchd={

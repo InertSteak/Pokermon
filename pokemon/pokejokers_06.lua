@@ -911,7 +911,7 @@ local lanturn={
       end
     end
   end,
-  attributes = {"chips", "economy", "hand_type", "types"},
+  attributes = {"chips", "economy", "hand_type", "types", "joker"},
 }
 -- Pichu 172
 local pichu={
