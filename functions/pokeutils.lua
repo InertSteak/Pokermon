@@ -227,39 +227,11 @@ poke_vary_rank = function(card, decrease, seed, immediate)
 
   local next_rank = nil
   if decrease == nil then
-    -- randomize rank (decrease is nil)
-    local poss_ranks = {}
-    for _, v in pairs(G.P_CARDS) do
-      if v.suit == card.base.suit then
-        table.insert(poss_ranks, v.value)
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'random_rank'))
-    end
+    next_rank = pseudorandom_element(SMODS.Ranks, pseudoseed(seed or 'random_rank')).key
   elseif decrease then
-    -- only need to do this due to prev being a bad table (should be fixed in the next update)
-    local poss_ranks = {}
-    for _, v in pairs(SMODS.Ranks[card.base.value].prev) do
-      if SMODS.Ranks[v] and type(SMODS.Ranks[v].next) == "table" then
-        for _, _r in pairs(SMODS.Ranks[v].next) do
-          if _r == card.base.value then
-            table.insert(poss_ranks, v)
-            break
-          end
-        end
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'decrease_rank'))
-    end
-
-    -- once prev table is fixed can use this:
-    --[[
     if #SMODS.Ranks[card.base.value].prev > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].prev, pseudoseed(seed or 'decrease_rank'))
     end
-    --]]
   else
     if #SMODS.Ranks[card.base.value].next > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].next, pseudoseed(seed or 'increase_rank'))
