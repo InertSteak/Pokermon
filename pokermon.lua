@@ -85,6 +85,8 @@ if SMODS.Attribute then
   SMODS.Attribute { key = "energy_count" }
   SMODS.Attribute { key = "energy_limit" }
   SMODS.Attribute { key = "ancient" }
+  SMODS.Attribute { key = "foresight" }
+  SMODS.Attribute { key = "baby" }
 end
 
 --Load helper function files
