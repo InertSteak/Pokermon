@@ -339,7 +339,7 @@ local drowzee={
       card.ability.extra.planets_used = planets_used
     end
   end,
-  attributes = {"xmult", "planet", "condition_evo"},
+  attributes = {"xmult", "scaling", "planet", "condition_evo"},
 }
 -- Hypno 097
 local hypno={
@@ -392,7 +392,7 @@ local hypno={
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
   end,
-  attributes = {"xmult", "planet", "holding"},
+  attributes = {"xmult", "scaling", "planet", "holding"},
 }
 -- Krabby 098
 local krabby={
