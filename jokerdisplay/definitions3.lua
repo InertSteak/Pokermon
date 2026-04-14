@@ -398,6 +398,7 @@ jd_def["j_poke_linoone"] = {
     card.joker_display_values.localized_text = localize('Straight', 'poker_hands')
   end
 }
+
 --	Wurmple
 --	Silcoon
 --	Beautifly
@@ -412,7 +413,63 @@ jd_def["j_poke_linoone"] = {
 --	Taillow
 --	Swellow
 --	Wingull
+jd_def["j_poke_wingull"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD},
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "wingull_card", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    local money = 0
+    local hand = G.hand.highlighted
+    for _, playing_card in pairs(hand) do
+      if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card:get_id() and playing_card:get_id() == G.GAME.current_round.wingullcard.id  then
+        money = money + card.ability.extra.money_mod
+      end
+    end
+    if G.GAME.current_round.discards_left  > 0 then
+      card.joker_display_values.money = money
+    else
+      card.joker_display_values.money = 0
+    end
+    card.joker_display_values.wingull_card = localize(G.GAME.current_round.wingullcard.rank, 'ranks')
+  end
+}
+
 --	Pelipper
+jd_def["j_poke_pelipper"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD},
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "wingull_card", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    local money = 0
+    -- local water_jokers = #find_pokemon_type("Water", card)
+    local water_jokers = #find_pokemon_type("Water")
+    local hand = G.hand.highlighted
+    for _, playing_card in pairs(hand) do
+      if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card:get_id() and playing_card:get_id() == G.GAME.current_round.wingullcard.id  then
+        money = money + (card.ability.extra.money_mod + (card.ability.extra.water_money * water_jokers))
+      end
+    end
+    if G.GAME.current_round.discards_left  > 0 then
+      card.joker_display_values.money = money
+    else
+      card.joker_display_values.money = 0
+    end
+    card.joker_display_values.wingull_card = localize(G.GAME.current_round.wingullcard.rank, 'ranks')
+  end
+}
+
 --	Ralts
 --	Kirlia
 --	Gardevoir
