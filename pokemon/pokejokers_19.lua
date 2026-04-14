@@ -71,6 +71,7 @@ local trubbish={
       return ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
     end
   end,
+  attributes = {"discard", "economy", "chips", "scaling", "trigger_evo"},
 }
 -- Garbodor 569
 local garbodor={
@@ -128,7 +129,8 @@ local garbodor={
         end)
       }))
     end
-  end
+  end,
+  attributes = {"discard", "economy", "chips", "scaling", "tag", "generation"},
 }
 -- Zorua 570
 local zorua = {
@@ -278,6 +280,7 @@ local zorua = {
       self:set_ability(card)
     end
   end,
+  attributes = {"copying", "round_evo"},
 }
 return {name = "Pokemon Jokers 541-570", 
         list = {trubbish, garbodor, zorua},

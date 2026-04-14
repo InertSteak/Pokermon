@@ -33,7 +33,8 @@ local deino={
       end
     end
     return scaling_evo(self, card, context, "j_poke_zweilous", card.ability.extra.hand_played, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"xmult", "hand_type", "trigger_evo"},
 }
 -- Zweilous 634
 local zweilous={
@@ -67,7 +68,8 @@ local zweilous={
       end
     end
     return scaling_evo(self, card, context, "j_poke_hydreigon", card.ability.extra.hand_played, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"xmult", "hand_type", "trigger_evo"},
 }
 -- Hydreigon 635
 local hydreigon={
@@ -107,7 +109,8 @@ local hydreigon={
         })
       end
     end
-  end
+  end,
+  attributes = {"xmult", "hand_type", "destroy_card", "scaling"},
 }
 -- Larvesta 636
 -- Volcarona 637

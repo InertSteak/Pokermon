@@ -53,6 +53,7 @@ local shaymin={
     end
     return scaling_evo(self, card, context, "j_poke_shaymin_sky", card.ability.extra.flowers_scored, self.config.evo_rqmt, localize("poke_transform_success"))
   end,
+  attributes = {"hands", "modify_card", "enhancements"},
 }
 
 local shaymin_sky={
@@ -92,7 +93,8 @@ local shaymin_sky={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"modify_card", "enhancements", "passive"},
 }
 -- Arceus 493
 -- Victini 494
