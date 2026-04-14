@@ -133,6 +133,28 @@ jd_def["j_poke_unown_swarm"] = {
   end
 }
 
+jd_def["j_poke_oologist"] = {
+  reminder_text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'oologist')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+    if card.ability.extra.activated == false then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end
+}
+
 -- Rival
 -- jd_def["j_poke_rival"] = {
 --     text = {
