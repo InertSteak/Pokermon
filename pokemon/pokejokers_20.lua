@@ -165,7 +165,7 @@ local gothita={
       end
       return true end }))
   end,
-  attributes = {"passive", "planet", "economy", "round_evo"},
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothorita 575
 local gothorita={
@@ -200,7 +200,7 @@ local gothorita={
       end
       return true end }))
   end,
-  attributes = {"passive", "planet", "economy", "round_evo"},
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothitelle 576
 local gothitelle={
@@ -237,7 +237,7 @@ local gothitelle={
       end
       return true end }))
   end,
-  attributes = {"passive", "planet", "economy"},
+  attributes = {"passive", "planet", "economy", "space"},
 }
 -- Solosis 577
 -- Duosion 578

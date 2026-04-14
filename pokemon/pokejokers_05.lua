@@ -35,7 +35,7 @@ local starmie={
       end
     end
   end,
-  attributes = {"mult", "economy", "suit", "diamonds"},
+  attributes = {"mult", "economy", "suit", "diamonds", "space"},
 }
 -- Mr Mime 122
 local mrmime={

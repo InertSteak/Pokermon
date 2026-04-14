@@ -1437,7 +1437,7 @@ local staryu={
     end
     return item_evo(self, card, context, "j_poke_starmie")
   end,
-  attributes = {"mult", "economy", "suit", "diamonds", "item_evo"},
+  attributes = {"mult", "economy", "suit", "diamonds", "space", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 91-120", 

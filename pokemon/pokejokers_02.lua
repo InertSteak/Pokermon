@@ -187,7 +187,7 @@ local clefairy={
     end
     return item_evo(self, card, context, "j_poke_clefable")
   end,
-  attributes = {"mult", "suit", "clubs", "item_evo"},
+  attributes = {"mult", "suit", "clubs", "space", "item_evo"},
 }
 -- Clefable 036
 local clefable={
@@ -231,7 +231,7 @@ local clefable={
       end
     end
   end,
-  attributes = {"mult", "suit", "clubs", "reset"},
+  attributes = {"mult", "suit", "clubs", "reset", "space"},
 }
 -- Vulpix 037
 local vulpix={

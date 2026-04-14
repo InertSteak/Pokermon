@@ -992,7 +992,7 @@ local cleffa={
     end
     return level_evo(self, card, context, "j_poke_clefairy")
   end,
-  attributes = {"baby", "tarot", "generation", "round_evo"},
+  attributes = {"baby", "tarot", "generation", "space", "round_evo"},
 }
 -- Igglybuff 174
 local igglybuff={

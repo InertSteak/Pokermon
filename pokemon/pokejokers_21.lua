@@ -81,7 +81,7 @@ local elgyem={
       card.ability.extra.current_planet_count = #uniques
     end
   end,
-  attributes = {"planet", "generation", "condition_evo"},
+  attributes = {"planet", "generation", "space", "condition_evo"},
 }
 -- Beheeyem 606
 local beheeyem={
@@ -182,7 +182,7 @@ local beheeyem={
       end
     end
   end,
-  attributes = {"planet", "generation"},
+  attributes = {"planet", "generation", "space"},
 }
 -- Litwick 607
 local litwick={

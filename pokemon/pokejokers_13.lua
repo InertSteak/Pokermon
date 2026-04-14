@@ -1058,7 +1058,7 @@ local deoxys={
   add_to_deck = function(self, card, from_debuff)
     self:set_sprites(card)
   end,
-  attributes = {"discard", "seals", "perma_bonus", "chips", "xmult", "economy"}
+  attributes = {"discard", "seals", "perma_bonus", "chips", "xmult", "economy", "space"}
 }
 -- Turtwig 387
 -- Grotle 388
