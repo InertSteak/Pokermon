@@ -51,7 +51,8 @@ local wugtrio={
         end
       end
     end
-  end
+  end,
+  attributes = {"xmult", "chips", "hand_type", "rank", "five", "six", "seven"},
 }
 -- Bombirdier 962
 -- Finizen 963
@@ -100,7 +101,8 @@ local annihilape={
         }
       end
     end
-  end
+  end,
+  attributes = {"chips", "mult", "rank", "two", "three", "five", "seven"},
 }
 -- Clodsire 980
 -- Farigiraf 981
@@ -168,6 +170,7 @@ local farigiraf={
       end
     end
   end,
+  attributes = {"holding", "face", "xmult", "hand_type"},
 }
 -- Dudunsparce 982
 local dudunsparce={
@@ -234,6 +237,7 @@ local dudunsparce={
     SMODS.change_booster_limit(-card.ability.extra.card_slots)
     SMODS.change_voucher_limit(-card.ability.extra.card_slots)
   end,
+  attributes = {"passive"},
 }
 -- Kingambit 983
 local kingambit={
@@ -288,6 +292,7 @@ local kingambit={
       end
     end
   end,
+  attributes = {"xmult", "rank", "king", "face", "full_deck"},
 }
 -- Great Tusk 984
 -- Scream Tail 985

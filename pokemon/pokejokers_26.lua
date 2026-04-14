@@ -117,6 +117,7 @@ local mimikyu={
       card.ability.extra.disguise = true
     end
   end,
+  attributes = {"chips", "suit", "hearts", "prevents_death"},
 }
 -- Bruxish 779
 -- Drampa 780

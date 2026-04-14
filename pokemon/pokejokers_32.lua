@@ -45,6 +45,7 @@ local charcadet={
     end
     return item_evo(self, card, context)
   end,
+  attributes = {"mult", "scaling", "reset", "item_evo"},
 }
 -- Armarouge 936
 local armarouge={
@@ -89,6 +90,7 @@ local armarouge={
       }
     end
   end,
+  attributes = {"xmult", "scaling", "reset"},
 }
 -- Ceruledge 937
 local ceruledge={
@@ -147,6 +149,7 @@ local ceruledge={
       }
     end
   end,
+  attributes = {"xmult", "scaling", "reset", "drain"},
 }
 -- Tadbulb 938
 -- Bellibolt 939
@@ -203,6 +206,7 @@ local bramblin={
     end
     return scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
   end,
+  attributes = {"rank", "modify_card", "enhancements", "condition_evo"},
 }
 -- Brambleghast 947
 local brambleghast={
@@ -255,6 +259,7 @@ local brambleghast={
       card.ability.extra.seed_added = 0
     end
   end,
+  attributes = {"rank", "modify_card", "enhancements", "chips"},
 }
 -- Toedscool 948
 -- Toedscruel 949
@@ -312,7 +317,8 @@ local tinkatink={
         SMODS.debuff_card(v,false, 'tinkatink'..card.unique_val)
       end
     end
-  end
+  end,
+  attributes = {"mult", "enhancements", "round_evo"},
 }
 -- Tinkatuff 958
 local tinkatuff={
@@ -361,7 +367,8 @@ local tinkatuff={
         SMODS.debuff_card(v,false, 'tinkatuff'..card.unique_val)
       end
     end
-  end
+  end,
+  attributes = {"mult", "enhancements", "round_evo"},
 }
 -- Tinkaton 959
 local tinkaton={
@@ -415,7 +422,8 @@ local tinkaton={
         SMODS.debuff_card(v,false, 'tinkaton'..card.unique_val)
       end
     end
-  end
+  end,
+  attributes = {"mult", "enhancements", "passive", "modify_card"},
 }
 -- Wiglett 960
 local wiglett={
@@ -471,7 +479,8 @@ local wiglett={
       end
     end
     return level_evo(self, card, context, "j_poke_wugtrio")
-  end
+  end,
+  attributes = {"mult", "chips", "hand_type", "rank", "five", "six", "seven", "round_evo"},
 }
 return {name = "Pokemon Jokers 931-960", 
         list = {charcadet, armarouge, ceruledge, bramblin, brambleghast, tinkatink, tinkatuff, tinkaton, wiglett},

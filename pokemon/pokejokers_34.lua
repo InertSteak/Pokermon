@@ -85,7 +85,8 @@ local gimmighoul={
         end
       end
     end
-  end
+  end,
+  attributes = {"enhancements", "economy", "condition_evo"},
 }
 local gimmighoulr={
   name = "gimmighoulr",
@@ -130,7 +131,8 @@ local gimmighoulr={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"economy"},
 }
 -- Gholdengo 1000
 local gholdengo={
@@ -197,7 +199,8 @@ local gholdengo={
         colour = G.C.RED
       }
     end
-  end
+  end,
+  attributes = {"enhancements", "economy", "xmult"},
 }
 -- Wo-Chien 1001
 -- Chien-Pao 1002

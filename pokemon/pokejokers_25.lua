@@ -45,6 +45,7 @@ local grubbin={
     end
     return level_evo(self, card, context, "j_poke_charjabug")
   end,
+  attributes = {"mult", "types", "round_evo"},
 }
 -- Charjabug 737
 local charjabug={
@@ -81,6 +82,7 @@ local charjabug={
     end
     return item_evo(self, card, context, "j_poke_vikavolt")
   end,
+  attributes = {"mult", "types", "joker", "item_evo"},
 }
 -- Vikavolt 738
 local vikavolt={
@@ -117,7 +119,8 @@ local vikavolt={
         }
       end
     end
-  end
+  end,
+  attributes = {"mult", "xmult", "types", "joker"},
 }
 -- Crabrawler 739
 -- Crabominable 740
@@ -164,6 +167,7 @@ local rockruff={
     end
     if evo then return evo end
   end,
+  attributes = {"mult", "face", "condition_evo"},
 }
 -- Lycanroc 745
 local lycanroc_day={
@@ -208,6 +212,7 @@ local lycanroc_day={
       end
     end
   end,
+  attributes = {"mult", "rank", "two", "four", "six", "eight", "ten", "hands", "chips"},
 }
 
 local lycanroc_night={
@@ -241,6 +246,7 @@ local lycanroc_night={
       }
     end
   end,
+  attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "boss_blind", "hands", "discard", "hand_size"},
 }
 
 local lycanroc_dusk={
@@ -294,6 +300,7 @@ local lycanroc_dusk={
       end
     end
   end,
+  attributes = {"mult", "face", "rank", "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "retrigger"},
 }
 -- Wishiwashi 746
 -- Mareanie 747
