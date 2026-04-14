@@ -28,6 +28,7 @@ local miltank={
       return ease_poke_dollars(card, "miltank", earned, true)
     end
   end,
+  attributes = {"types", "joker", "economy"},
 }
 -- Blissey 242
 local blissey={
@@ -85,7 +86,8 @@ local blissey={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
-  end
+  end,
+  attributes = {"enhancements", "generation"},
 }
 -- Raikou 243
 local raikou={
@@ -144,6 +146,7 @@ local raikou={
       end
     end
   end,
+  attributes = {"modify_card", "rank", "economy", "hands"},
 }
 -- Entei 244
 local entei={
@@ -192,6 +195,7 @@ local entei={
       }
     end
   end,
+  attributes = {"discard", "destroy_card", "xmult", "scaling"},
 }
 -- Suicune 245
 local suicune={
@@ -228,6 +232,7 @@ local suicune={
       end
     end
   end,
+  attributes = {"chips", "modify_card", "perma_bonus"},
 }
 -- Larvitar 246
 local larvitar={
@@ -265,6 +270,7 @@ local larvitar={
     end
     return scaling_evo(self, card, context, "j_poke_pupitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
 -- Pupitar 247
 local pupitar={
@@ -301,6 +307,7 @@ local pupitar={
     end
     return scaling_evo(self, card, context, "j_poke_tyranitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
 -- Tyranitar 248
 local tyranitar={
@@ -345,6 +352,7 @@ local tyranitar={
     end
   end,
   megas = { "mega_tyranitar" },
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "xmult"},
 }
 local mega_tyranitar={
   name = "mega_tyranitar",
@@ -385,6 +393,7 @@ local mega_tyranitar={
       }
     end
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus"},
 }
 -- Lugia 249
 local lugia={
@@ -426,6 +435,7 @@ local lugia={
       }
     end
   end,
+  attributes = {"xmult", "scaling"},
 }
 -- Ho-oh 250
 local ho_oh={
@@ -485,6 +495,7 @@ local ho_oh={
       juice_card_until(card, eval, true)
     end
   end,
+  attributes = {"generation"},
 }
 -- Celebi 251
 local celebi = {
@@ -527,6 +538,7 @@ local celebi = {
       end
     end
   end,
+  attributes = {"skip", "xmult"},
 }
 -- Treecko 252
 local treecko={
@@ -591,6 +603,7 @@ local treecko={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("treecko", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
 -- Grovyle 253
 local grovyle={
@@ -660,6 +673,7 @@ local grovyle={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("grovyle", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
 -- Sceptile 254
 local sceptile={
@@ -720,6 +734,7 @@ local sceptile={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("sceptile", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "types"},
 }
 -- Torchic 255
 local torchic={
@@ -778,6 +793,7 @@ local torchic={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("torchic", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
 -- Combusken 256
 local combusken={
@@ -835,6 +851,7 @@ local combusken={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("combusken", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
 -- Blaziken 257
 local blaziken={
@@ -924,6 +941,7 @@ local blaziken={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("blaziken", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "xmult", "types"},
 }
 -- Mudkip 258
 local mudkip={
@@ -987,6 +1005,7 @@ local mudkip={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("mudkip", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
 -- Marshtomp 259
 local marshtomp={
@@ -1050,6 +1069,7 @@ local marshtomp={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
 -- Swampert 260
 local swampert={
@@ -1141,6 +1161,7 @@ local swampert={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("swampert", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "types", "tarot", "generation"},
 }
 -- Poochyena 261
 local poochyena={
@@ -1178,6 +1199,7 @@ local poochyena={
     end
     return level_evo(self, card, context, "j_poke_mightyena")
   end,
+  attributes = {"mult", "scaling", "round_evo"},
 }
 -- Mightyena 262
 local mightyena={
@@ -1217,6 +1239,7 @@ local mightyena={
       end
     end
   end,
+  attributes = {"mult", "scaling", "types"},
 }
 -- Zigzagoon 263
 local zigzagoon={
@@ -1263,6 +1286,7 @@ local zigzagoon={
     end
     return level_evo(self, card, context, "j_poke_linoone")
   end,
+  attributes = {"chance", "generation", "item", "round_evo"},
 }
 -- Linoone 264
 local linoone={
@@ -1309,6 +1333,7 @@ local linoone={
       end
     end
   end,
+  attributes = {"chance", "generation", "item", "hand_type"},
 }
 -- Wurmple 265
 local wurmple={
@@ -1369,6 +1394,7 @@ local wurmple={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
   end,
+  attributes = {"chips", "mult", "nature", "suit", "condition_evo"},
 }
 -- Silcoon 266
 local silcoon={
@@ -1415,6 +1441,7 @@ local silcoon={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
+  attributes = {"mult", "nature", "suit", "condition_evo"},
 }
 -- Beautifly 267
 local beautifly={
@@ -1469,6 +1496,7 @@ local beautifly={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
+  attributes = {"mult", "nature", "suit", "chance", "hand_type"},
 }
 -- Cascoon 268
 local cascoon={
@@ -1515,6 +1543,7 @@ local cascoon={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
   end,
+  attributes = {"chips", "nature", "suit", "condition_evo"},
 }
 -- Dustox 269
 local dustox={
@@ -1572,6 +1601,7 @@ local dustox={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('dustox', true, 'Spades', {'Spades', 'Clubs'})
   end,
+  attributes = {"chips", "nature", "suit", "xmult"},
 }
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 

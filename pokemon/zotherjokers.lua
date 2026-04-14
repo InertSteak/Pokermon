@@ -11,6 +11,7 @@ local pokedex={
   stage = "Other",
   atlas = "others",
   blueprint_compat = false,
+  attributes = {"passive"},
 }
 
 local rotomdex={ 
@@ -62,7 +63,8 @@ local rotomdex={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"types", "joker", "economy"},
 }
 
 local everstone={ 
@@ -103,6 +105,7 @@ local everstone={
         end
     end
   end,
+  attributes = {"xmult"},
 }
 
 local tall_grass={
@@ -145,7 +148,8 @@ local tall_grass={
         end
       end
     end
-  end
+  end,
+  attributes = {"generation", "enhancements", "joker"},
 }
 
 local jelly_donut={
@@ -192,7 +196,8 @@ local jelly_donut={
         }
       end
     end
-  end
+  end,
+  attributes = {"generation", "energy", "food"},
 }
 
 local treasure_eatery={
@@ -231,7 +236,8 @@ local treasure_eatery={
         }
       end
     end
-  end
+  end,
+  attributes = {"types"},
 }
 
 function is_egg_helper(card)
@@ -345,7 +351,8 @@ local mystery_egg = {
       end
       card.ability.extra.key = center.key
     end
-  end
+  end,
+  attributes = {"energy_count"},
 }
 local rival = {
   name = "rival",
@@ -452,7 +459,8 @@ local rival = {
     else
       card.children.center:set_sprite_pos({x = 0, y = 2})
     end
-  end
+  end,
+  attributes = {"skip", "economy", "boss_blind", "tag", "generation"},
 }
 
 local ruins_of_alph={
@@ -552,6 +560,7 @@ local ruins_of_alph={
       end
     end
   end,
+  attributes = {"joker", "generation", "mult", "scaling"},
 }
 
 local unown_swarm={
@@ -630,7 +639,8 @@ local unown_swarm={
       front_card:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
       card.front_card = front_card
     end
-  end
+  end,
+  attributes = {"joker", "xmult", "mult"},
 }
 
 local professor={
@@ -690,7 +700,8 @@ local professor={
       end
     end
     return false
-  end
+  end,
+  attributes = {"tag", "generation", "on_sell"},
 }
 
 
@@ -729,6 +740,7 @@ local oologist={
       card.ability.extra.activated = false
     end
   end,
+  attributes = {"joker", "generation", "reroll"},
 }
 
 local daycare={
@@ -816,6 +828,7 @@ local daycare={
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {}}
     desc_nodes[#desc_nodes+1] = main_end
   end,
+  attributes = {"joker", "generation", "on_sell"},
 }
 
 local repel={
@@ -848,6 +861,7 @@ local repel={
       }))
     end
   end,
+  attributes = {"tag", "generation", "boss_blind", "on_sell"},
 }
 
 local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist}

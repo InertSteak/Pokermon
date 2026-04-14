@@ -128,6 +128,7 @@ local zoroark = {
       self:set_ability(card)
     end
   end,
+  attributes = {"copying"},
 }
 -- Minccino 572
 -- Cinccino 573
@@ -163,7 +164,8 @@ local gothita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothorita 575
 local gothorita={
@@ -197,7 +199,8 @@ local gothorita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothitelle 576
 local gothitelle={
@@ -234,6 +237,7 @@ local gothitelle={
       end
       return true end }))
   end,
+  attributes = {"passive", "planet", "economy", "space"},
 }
 -- Solosis 577
 -- Duosion 578
@@ -288,7 +292,8 @@ local vanillite={
       end
     end
     return level_evo(self, card, context, "j_poke_vanillish")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanillish 583
 local vanillish={
@@ -338,7 +343,8 @@ local vanillish={
       end
     end
     return level_evo(self, card, context, "j_poke_vanilluxe")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanilluxe 584
 local vanilluxe={
@@ -394,7 +400,8 @@ local vanilluxe={
         })
       end
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "tag", "generation"},
 }
 -- Deerling 585
 -- Sawsbuck 586
@@ -438,6 +445,7 @@ local frillish = {
     end
     return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "scaling", "discard", "face", "scaling_evo"},
 }
 
 -- Jellicent 593
@@ -480,6 +488,7 @@ local jellicent = {
       }
     end
 	end,
+  attributes = {"chips", "scaling", "discard", "face", "rank", "king", "queen"},
 }
 -- Alomomola 594
 -- Joltik 595
@@ -521,7 +530,8 @@ local ferroseed={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "round_evo"},
 }
 -- Ferrothorn 598
 local ferrothorn={
@@ -575,7 +585,8 @@ local ferrothorn={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "hand_type", "retrigger"},
 }
 -- Klink 599
 -- Klang 600

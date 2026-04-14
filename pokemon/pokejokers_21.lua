@@ -81,6 +81,7 @@ local elgyem={
       card.ability.extra.current_planet_count = #uniques
     end
   end,
+  attributes = {"planet", "generation", "space", "condition_evo"},
 }
 -- Beheeyem 606
 local beheeyem={
@@ -180,7 +181,8 @@ local beheeyem={
         if added then card:juice_up() end
       end
     end
-  end
+  end,
+  attributes = {"planet", "generation", "space"},
 }
 -- Litwick 607
 local litwick={
@@ -224,7 +226,8 @@ local litwick={
       end
     end
     return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"drain", "mult", "sell_value", "condition_evo"},
 }
 -- Lampent 608
 local lampent={
@@ -267,7 +270,8 @@ local lampent={
       end
     end
     return item_evo(self, card, context, "j_poke_chandelure")
-  end
+  end,
+  attributes = {"drain", "mult", "sell_value", "joker", "item_evo"},
 }
 -- Chandelure 609
 local chandelure={
@@ -310,7 +314,8 @@ local chandelure={
           Xmult_mod = card.ability.extra.Xmult_multi
         }
     end
-  end
+  end,
+  attributes = {"xmult", "mult", "sell_value", "joker"},
 }
 -- Axew 610
 -- Fraxure 611
@@ -373,7 +378,8 @@ local golett={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "xmult", "chance", "round_evo"},
 }
 -- Golurk 623
 local golurk={
@@ -423,7 +429,8 @@ local golurk={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "xmult", "chance"},
 }
 -- Pawniard 624
 local pawniard={
@@ -468,6 +475,7 @@ local pawniard={
     end
     return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "face", "scaling", "scaling_evo"},
 }
 -- Bisharp 625
 local bisharp={
@@ -524,6 +532,7 @@ local bisharp={
     end
     return scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "face", "hands", "destroy_card", "scaling", "condition_evo"},
 }
 -- Bouffalant 626
 -- Rufflet 627

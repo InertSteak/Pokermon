@@ -20,6 +20,7 @@ local pansage = {
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisage")
   end,
+  attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
 -- Simisage 512
 local simisage = {
@@ -65,6 +66,7 @@ local simisage = {
       end
     end
   end,
+  attributes = {"applies", "passive", "hand_type", "modify_card", "enhancements", "chance"},
 }
 -- Pansear 513
 local pansear = {
@@ -88,6 +90,7 @@ local pansear = {
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisear")
   end,
+  attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
 -- Simisear 514
 local simisear = {
@@ -146,6 +149,7 @@ local simisear = {
       end
     end
   end,
+  attributes = {"applies", "passive", "hand_type", "generation", "tarot", "destroy_card"},
 }
 -- Panpour 515
 local panpour = {
@@ -169,6 +173,7 @@ local panpour = {
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simipour")
   end,
+  attributes = {"applies", "passive", "modify_card", "face", "item_evo"},
 }
 -- Simipour 516
 local simipour = {
@@ -211,6 +216,7 @@ local simipour = {
       end
     end
   end,
+  attributes = {"applies", "passive", "modify_card", "face", "enhancements"},
 }
 -- Munna 517
 local munna={
@@ -276,6 +282,7 @@ local munna={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "enhancements", "modify_card", "xmult", "item_evo"},
 }
 -- Musharna 518
 local musharna={
@@ -319,6 +326,7 @@ local musharna={
       G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
     end
   end,
+  attributes = {"foresight", "enhancements", "xmult", "joker", "types"},
 }
 -- Pidove 519
 -- Tranquill 520
@@ -372,7 +380,8 @@ local roggenrola = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "trigger_evo"},
 }
 -- Boldore 525
 local boldore = {
@@ -422,7 +431,8 @@ local boldore = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "item_evo"},
 }
 -- Gigalith 526
 local gigalith = {
@@ -474,7 +484,8 @@ local gigalith = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "retrigger"},
 }
 -- Woobat 527
 -- Swoobat 528
@@ -517,6 +528,7 @@ local drilbur={
     end
     return scaling_evo(self, card, context, "j_poke_excadrill", card.ability.extra.stones_destroyed, self.config.evo_rqmt)
   end,
+  attributes = {"enhancements", "destroy_card", "generation", "item", "economy", "trigger_evo"},
 }
 -- Excadrill 530
 local excadrill={
@@ -559,6 +571,7 @@ local excadrill={
       end
     end
   end,
+  attributes = {"enhancements", "destroy_card", "generation", "item", "economy", "full_deck", "mult"},
 }
 -- Audino 531
 -- Timburr 532

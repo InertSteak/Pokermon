@@ -214,6 +214,7 @@ local missingno ={
       end
     end
   end,
+  attributes = {"tag", "generation"},
 }
 
 return {name = "Missingno", 

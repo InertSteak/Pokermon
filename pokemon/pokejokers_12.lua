@@ -34,7 +34,8 @@ local cacnea = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "economy", "round_evo"},
 }
 -- Cacturne 332
 local cacturne = {
@@ -74,7 +75,8 @@ local cacturne = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "economy", "destroy_card", "hands"},
 }
 -- Swablu 333
 local swablu={
@@ -121,6 +123,7 @@ local swablu={
     end
     return scaling_evo(self, card, context, "j_poke_altaria", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"rank", "nine", "chips", "economy", "scaling", "scaling_evo"},
 }
 -- Altaria 334
 local altaria={
@@ -170,6 +173,7 @@ local altaria={
       }
     end
   end,
+  attributes = {"rank", "nine", "chips", "economy", "scaling", "types", "joker"},
 }
 -- Zangoose 335
 -- Seviper 336
@@ -252,6 +256,7 @@ local lileep={
     return scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
 }
 -- Cradily 346
 local cradily={
@@ -328,6 +333,7 @@ local cradily={
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "eight", "hand_size", "sell_value", "chips", "economy"},
 }
 -- Anorith 347
 local anorith={
@@ -396,6 +402,7 @@ local anorith={
     return scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "trigger_evo"},
 }
 -- Armaldo 348
 local armaldo={
@@ -491,6 +498,7 @@ local armaldo={
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "enhancements", "xmult"},
 }
 -- Feebas 349
 local feebas={
@@ -528,7 +536,8 @@ local feebas={
       }
     end
     return item_evo(self, card, context, "j_poke_milotic")
-  end
+  end,
+  attributes = {"mult", "passive", "applies", "item_evo"},
 }
 -- Milotic 350
 local milotic={
@@ -563,7 +572,8 @@ local milotic={
         card = card
       }
     end
-  end
+  end,
+  attributes = {"retrigger", "suit"},
 }
 -- Castform 351
 -- Kecleon 352
@@ -600,6 +610,7 @@ local duskull={
     end
     return level_evo(self, card, context, "j_poke_dusclops")
   end,
+  attributes = {"retrigger", "hands", "round_evo"},
 }
 -- Dusclops 356
 local dusclops={
@@ -653,6 +664,7 @@ local dusclops={
     end
     return item_evo(self, card, context, "j_poke_dusknoir")
   end,
+  attributes = {"retrigger", "hands", "destroy_card", "spectral", "item_evo"},
 }
 -- Tropius 357
 -- Chimecho 358
@@ -730,7 +742,8 @@ local chimecho={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"enhancements", "generation"},
 }
 -- Absol 359
 local absol={
@@ -766,6 +779,7 @@ local absol={
       }
     end
   end,
+  attributes = {"xmult", "mod_chance"},
 }
 -- Wynaut 360
 local wynaut={
@@ -811,6 +825,7 @@ local wynaut={
     end
     return level_evo(self, card, context, "j_poke_wobbuffet")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
         list = {cacnea, cacturne, swablu, altaria, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},

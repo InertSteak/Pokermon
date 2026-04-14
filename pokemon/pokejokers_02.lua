@@ -39,7 +39,8 @@ local nidoqueen={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"hand_size", "passive", "chips", "rank", "queen"},
 }
 -- Nidoran-M 032
 local nidoranm={
@@ -73,7 +74,8 @@ local nidoranm={
       end
     end
     return level_evo(self, card, context, "j_poke_nidorino")
-  end
+  end,
+  attributes = {"mult", "rank", "king", "round_evo"},
 }
 -- Nidorino 033
 local nidorino={
@@ -111,7 +113,8 @@ local nidorino={
       end
     end
     return item_evo(self, card, context, "j_poke_nidoking")
-  end
+  end,
+  attributes = {"mult", "rank", "king", "item_evo"},
 }
 -- Nidoking 034
 local nidoking={
@@ -150,7 +153,8 @@ local nidoking={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"hand_size", "passive", "mult", "rank", "king"},
 }
 -- Clefairy 035
 local clefairy={
@@ -182,7 +186,8 @@ local clefairy={
       end
     end
     return item_evo(self, card, context, "j_poke_clefable")
-  end
+  end,
+  attributes = {"mult", "suit", "clubs", "space", "item_evo"},
 }
 -- Clefable 036
 local clefable={
@@ -225,7 +230,8 @@ local clefable={
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
       end
     end
-  end
+  end,
+  attributes = {"mult", "suit", "clubs", "reset", "space"},
 }
 -- Vulpix 037
 local vulpix={
@@ -273,7 +279,8 @@ local vulpix={
       end 
     end
     return item_evo(self, card, context, "j_poke_ninetales")
-  end
+  end,
+  attributes = {"chance", "rank", "nine", "tarot", "generation", "item_evo"},
 }
 -- Ninetales 038
 local ninetales={
@@ -331,7 +338,8 @@ local ninetales={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
-  end
+  end,
+  attributes = {"chance", "rank", "nine", "tarot", "generation", "holding"},
 }
 -- Jigglypuff 039
 local jigglypuff={
@@ -366,7 +374,8 @@ local jigglypuff={
       end
     end
     return item_evo(self, card, context, "j_poke_wigglytuff")
-  end
+  end,
+  attributes = {"chips", "mult", "suit", "spades", "item_evo"},
 }
 -- Wigglytuff 040
 local wigglytuff={
@@ -397,7 +406,8 @@ local wigglytuff={
         }
       end
     end
-  end
+  end,
+  attributes = {"chips", "mult", "suit", "spades"},
 }
 -- Zubat 041
 local zubat={
@@ -452,7 +462,8 @@ local zubat={
       }
     end
     return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"mult", "modify_card", "enhancements", "scaling", "scaling_evo"},
 }
 -- Golbat 042
 local golbat={
@@ -512,6 +523,7 @@ local golbat={
     end
     return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "modify_card", "enhancements", "scaling", "scaling_evo"},
 }
 -- Oddish 043
 local oddish={
@@ -548,7 +560,8 @@ local oddish={
       end
     end
     return level_evo(self, card, context, "j_poke_gloom")
-  end
+  end,
+  attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "round_evo"},
 }
 -- Gloom 044
 local gloom={
@@ -591,7 +604,8 @@ local gloom={
       end
     end
     return item_evo(self, card, context)
-  end
+  end,
+  attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "item_evo"},
 }
 -- Vileplume 045
 local vileplume={
@@ -642,7 +656,8 @@ local vileplume={
           end
       end
     end
-  end
+  end,
+  attributes = {"mult", "xmult", "rank", "ace", "three", "five", "seven", "nine"},
 }
 -- Paras 046
 local paras={
@@ -675,7 +690,8 @@ local paras={
       }
     end
     return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"mult", "hand_type", "scaling", "scaling_evo"},
 }
 -- Parasect 047
 local parasect={
@@ -719,7 +735,8 @@ local parasect={
         mult = card.ability.extra.mult
       }
     end
-  end
+  end,
+  attributes = {"mult", "hand_type", "scaling"},
 }
 -- Venonat 048
 local venonat={
@@ -746,6 +763,7 @@ local venonat={
     end
     return level_evo(self, card, context, "j_poke_venomoth")
   end,
+  attributes = {"mod_chance", "passive", "round_evo"},
 }
 -- Venomoth 049
 local venomoth={
@@ -771,6 +789,7 @@ local venomoth={
       }
     end
   end,
+  attributes = {"mod_chance", "passive"},
 }
 -- Diglett 050
 local diglett={
@@ -826,7 +845,8 @@ local diglett={
       end
     end
     return level_evo(self, card, context, "j_poke_dugtrio")
-  end
+  end,
+  attributes = {"chips", "hand_type", "mult", "rank", "two", "three", "four", "round_evo"},
 }
 -- Dugtrio 051
 local dugtrio={
@@ -881,7 +901,8 @@ local dugtrio={
         end
       end
     end
-  end
+  end,
+  attributes = {"chips", "hand_type", "xmult", "rank", "two", "three", "four"},
 }
 -- Meowth 052
 local meowth={
@@ -917,7 +938,8 @@ local meowth={
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
-	end
+	end,
+  attributes = {"economy", "enhancements", "scaling", "scaling_evo"},
 }
 -- Persian 053
 local persian={
@@ -957,7 +979,8 @@ local persian={
       payout = payout * 2
     end
     return ease_poke_dollars(card, "persian", payout, true)
-	end
+	end,
+  attributes = {"economy", "enhancements", "scaling", "chance"},
 }
 -- Psyduck 054
 local psyduck={
@@ -985,6 +1008,7 @@ local psyduck={
     end
     return level_evo(self, card, context, "j_poke_golduck")
   end,
+  attributes = {"economy", "face", "round_evo"},
 }
 -- Golduck 055
 local golduck={
@@ -1026,6 +1050,7 @@ local golduck={
       }
     end
   end,
+  attributes = {"economy", "face", "modify_card", "enhancements"},
 }
 -- Mankey 056
 local mankey={
@@ -1057,7 +1082,8 @@ local mankey={
       end
     end
     return level_evo(self, card, context, "j_poke_primeape")
-  end
+  end,
+  attributes = {"chips", "mult", "rank", "two", "three", "five", "seven", "round_evo"},
 }
 -- Primeape 057
 local primeape={
@@ -1091,7 +1117,8 @@ local primeape={
       end
     end
     return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"chips", "mult", "rank", "two", "three", "five", "seven", "trigger_evo"},
 }
 -- Growlithe 058
 local growlithe={
@@ -1125,6 +1152,7 @@ local growlithe={
     end
     return item_evo(self, card, context, "j_poke_arcanine")
   end,
+  attributes = {"mult", "hand_type", "item_evo"},
 }
 -- Arcanine 059
 local arcanine={
@@ -1166,6 +1194,7 @@ local arcanine={
       end
     end
   end,
+  attributes = {"xmult", "hand_type", "modify_card", "enhancements"},
 }
 -- Poliwag 060
 local poliwag={
@@ -1194,6 +1223,7 @@ local poliwag={
     end
     return level_evo(self, card, context, "j_poke_poliwhirl")
   end,
+  attributes = {"mult", "suit", "round_evo"},
 }
 
 return {name = "Pokemon Jokers 31-60", 

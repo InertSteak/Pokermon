@@ -54,7 +54,8 @@ local bulbasaur={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive", "rank", "economy", "trigger_evo"},
 }
 -- Ivysaur 002
 local ivysaur={
@@ -115,7 +116,8 @@ local ivysaur={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive", "rank", "economy", "trigger_evo"},
 }
 -- Venusaur 003
 local venusaur={
@@ -165,6 +167,7 @@ local venusaur={
     G.hand:change_size(-card.ability.extra.h_size)
   end,
   megas = { "mega_venusaur" },
+  attributes = {"starter", "hand_size", "passive", "rank", "economy"},
 }
 -- Mega Venusaur 003-1
 local mega_venusaur = {
@@ -188,7 +191,8 @@ local mega_venusaur = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive"},
 }
 -- Charmander 004
 local charmander={
@@ -231,7 +235,8 @@ local charmander={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-  end
+  end,
+  attributes = {"starter", "discard", "passive", "mult", "scaling", "scaling_evo"},
 }
 -- Charmeleon 005
 local charmeleon={
@@ -273,7 +278,8 @@ local charmeleon={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-  end
+  end,
+  attributes = {"starter", "discard", "passive", "mult", "scaling", "scaling_evo"},
 }
 -- Charizard 006
 local charizard={
@@ -316,6 +322,7 @@ local charizard={
     ease_discard(-card.ability.extra.d_size)
   end,
   megas = {"mega_charizard_x", "mega_charizard_y"},
+  attributes = {"starter", "discard", "passive", "mult", "xmult"},
 }
 -- Mega Charizard X 006-1
 local mega_charizard_x = {
@@ -344,7 +351,8 @@ local mega_charizard_x = {
         }
       end
     end
-  end
+  end,
+  attributes = {"starter", "discard", "xmult"},
 }
 -- Mega Charizard Y 006-2
 local mega_charizard_y = {
@@ -370,7 +378,8 @@ local mega_charizard_y = {
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-  end
+  end,
+  attributes = {"starter", "discard", "passive"},
 }
 -- Squirtle 007
 local squirtle={
@@ -420,6 +429,7 @@ local squirtle={
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "scaling_evo"},
 }
 -- Wartortle 008
 local wartortle={
@@ -469,6 +479,7 @@ local wartortle={
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "scaling_evo"},
 }
 -- Blastoise 009
 local blastoise={
@@ -507,7 +518,8 @@ local blastoise={
       ease_hands_played(-to_decrease)
     end
   end,
-  megas = {"mega_blastoise"}
+  megas = {"mega_blastoise"},
+  attributes = {"starter", "hands", "passive", "chips"},
 }
 -- Mega Blastoise 009-1
 local mega_blastoise = {
@@ -539,6 +551,7 @@ local mega_blastoise = {
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive"},
 }
 -- Caterpie 010
 local caterpie={
@@ -568,6 +581,7 @@ local caterpie={
     end
     return level_evo(self, card, context, "j_poke_metapod")
   end,
+  attributes = {"mult", "round_evo"},
 }
 -- Metapod 011
 local metapod={
@@ -597,6 +611,7 @@ local metapod={
     end
     return level_evo(self, card, context, "j_poke_butterfree")
   end,
+  attributes = {"mult", "round_evo"},
 }
 -- Butterfree 012
 local butterfree={
@@ -624,7 +639,8 @@ local butterfree={
         }
       end
     end
-  end
+  end,
+  attributes = {"mult"},
 }
 -- Weedle 013
 local weedle={
@@ -654,6 +670,7 @@ local weedle={
     end
     return level_evo(self, card, context, "j_poke_kakuna")
   end,
+  attributes = {"chips", "round_evo"},
 }
 -- Kakuna 014
 local kakuna={
@@ -683,6 +700,7 @@ local kakuna={
     end
     return level_evo(self, card, context, "j_poke_beedrill")
   end,
+  attributes = {"chips", "round_evo"},
 }
 -- Beedrill 015
 local beedrill={
@@ -711,7 +729,8 @@ local beedrill={
       end
     end
   end,
-  megas = {"mega_beedrill"}
+  megas = {"mega_beedrill"},
+  attributes = {"chips"},
 }
 -- Mega Beedrill 015-1
 local mega_beedrill = {
@@ -740,7 +759,8 @@ local mega_beedrill = {
         }
       end
     end
-  end
+  end,
+  attributes = {"chips"},
 }
 -- Pidgey 016
 local pidgey={
@@ -792,6 +812,7 @@ local pidgey={
     end
     return level_evo(self, card, context, "j_poke_pidgeotto")
   end,
+  attributes = {"rank", "suit", "mult", "round_evo"},
 }
 -- Pidgeotto 017
 local pidgeotto={
@@ -843,6 +864,7 @@ local pidgeotto={
     end
     return level_evo(self, card, context, "j_poke_pidgeot")
   end,
+  attributes = {"rank", "suit", "mult", "round_evo"},
 }
 -- Pidgeot 018
 local pidgeot={
@@ -893,7 +915,8 @@ local pidgeot={
       end
     end
   end,
-  megas = {"mega_pidgeot"}
+  megas = {"mega_pidgeot"},
+  attributes = {"rank", "suit", "mult"},
 }
 -- Mega Pidgeot 018-1
 local mega_pidgeot = {
@@ -945,6 +968,7 @@ local mega_pidgeot = {
       end
     end
   end,
+  attributes = {"rank", "suit", "xmult"},
 }
 -- Rattata 019
 local rattata={
@@ -974,6 +998,7 @@ local rattata={
     end
     return level_evo(self, card, context, "j_poke_raticate")
   end,
+  attributes = {"retrigger", "round_evo"},
 }
 -- Raticate 020
 local raticate={
@@ -1001,7 +1026,8 @@ local raticate={
         }
       end
     end
-  end
+  end,
+  attributes = {"retrigger"},
 }
 -- Spearow 021
 local spearow={
@@ -1048,6 +1074,7 @@ local spearow={
     end
     return scaling_evo(self, card, context, "j_poke_fearow", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "trigger_evo"},
 }
 -- Fearow 022
 local fearow={
@@ -1098,7 +1125,8 @@ local fearow={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-  end
+  end,
+  attributes = {"hand_type", "discard", "passive"},
 }
 -- Ekans 023
 local ekans={
@@ -1128,6 +1156,7 @@ local ekans={
     end
     return level_evo(self, card, context, "j_poke_arbok")
   end,
+  attributes = {"hand_type", "mult", "round_evo"},
 }
 -- Arbok 024
 local arbok={
@@ -1185,6 +1214,7 @@ local arbok={
       end
     end
   end,
+  attributes = {"hand_type", "mult", "ace", "tarot", "generation", "rank"},
 }
 -- Pikachu 025
 local pikachu={
@@ -1231,7 +1261,8 @@ local pikachu={
       end
     end
     return item_evo(self, card, context, "j_poke_raichu")
-  end
+  end,
+  attributes = {"mult", "economy", "item_evo"},
 }
 -- Raichu 026
 local raichu={
@@ -1274,7 +1305,8 @@ local raichu={
         end
       end
     end
-  end
+  end,
+  attributes = {"mult", "economy"},
 }
 -- Sandshrew 027
 local sandshrew={
@@ -1315,7 +1347,8 @@ local sandshrew={
         if SMODS.has_enhancement(v, 'm_glass') then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
       end
     end
-  end
+  end,
+  attributes = {"chips", "enhancements", "full_deck", "round_evo"},
 }
 -- Sandslash 028
 local sandslash={
@@ -1362,7 +1395,8 @@ local sandslash={
         if SMODS.has_enhancement(v, 'm_glass') then card.ability.extra.sandshrew_tally = card.ability.extra.sandshrew_tally + 1 end
       end
     end
-  end
+  end,
+  attributes = {"chips", "enhancements", "full_deck", "discard", "chance", "modify_card"},
 }
 -- Nidoran-F 029
 local nidoranf={
@@ -1398,7 +1432,8 @@ local nidoranf={
       end
     end
     return level_evo(self, card, context, "j_poke_nidorina")
-  end
+  end,
+  attributes = {"chips", "rank", "queen", "round_evo"},
 }
 -- Nidorina 030
 local nidorina={
@@ -1438,7 +1473,8 @@ local nidorina={
       end
     end
     return item_evo(self, card, context, "j_poke_nidoqueen")
-  end
+  end,
+  attributes = {"chips", "rank", "queen", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 01-30",

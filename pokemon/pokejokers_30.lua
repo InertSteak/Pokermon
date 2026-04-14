@@ -63,6 +63,7 @@ local dreepy={
     end
     return scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
   end,
+  attributes = {"sell_value", "joker", "suit", "condition_evo"},
 }
 -- Drakloak 886
 local drakloak={
@@ -117,7 +118,8 @@ local drakloak={
       end
       card.ability.extra.total_sell_value = sell_cost
     end
-  end
+  end,
+  attributes = {"xmult", "sell_value", "joker", "hand_type", "condition_evo"},
 }
 -- Dragapult 887
 local dragapult={
@@ -178,7 +180,8 @@ local dragapult={
       end
       card.ability.extra.total_sell_value = sell_cost
     end
-  end
+  end,
+  attributes = {"xmult", "sell_value", "joker", "hand_type", "generation"},
 }
 local dreepy_dart={
   name = "dreepy_dart",
@@ -230,7 +233,8 @@ local dreepy_dart={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"sell_value", "joker", "suit"},
 }
 -- Zacian 888
 -- Zamazenta 889
@@ -316,6 +320,7 @@ local wyrdeer={
       G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
     end
   end,
+  attributes = {"foresight", "mult", "hands", "reset"}
 }
 -- Kleavor 900
 local kleavor={
@@ -395,7 +400,8 @@ local kleavor={
         mult = card.ability.extra.mult
       }
     end
-  end
+  end,
+  attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
 }
 return {name = "Pokemon Jokers 871-900", 
         list = {dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},

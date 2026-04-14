@@ -44,7 +44,8 @@ local qwilfish = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "chips", "scaling", "enhancements"},
 }
 -- Scizor 212
 local scizor={
@@ -167,6 +168,7 @@ local scizor={
     end
   end,
   megas = { "mega_scizor" },
+  attributes = {"destroy_card", "mult", "editions", "scaling", "chips", "xmult"},
 }
 
 local mega_scizor={
@@ -212,6 +214,7 @@ local mega_scizor={
       end
     end
   end,
+  attributes = {"destroy_card", "joker", "xmult"},
 }
 -- Shuckle 213
 local shuckle={
@@ -251,6 +254,7 @@ local shuckle={
       end
     end
   end,
+  attributes = {"destroy_card", "generation", "item"},
 }
 -- Heracross 214
 local heracross = {
@@ -289,6 +293,7 @@ local heracross = {
     end
   end,
   megas = { "mega_heracross" },
+  attributes = {"rank", "xmult"},
 }
 local mega_heracross={
   name = "mega_heracross",
@@ -343,6 +348,7 @@ local mega_heracross={
         })) 
     end
   end,
+  attributes = {"retrigger"},
 }
 -- Sneasel 215
 local sneasel = {
@@ -377,7 +383,8 @@ local sneasel = {
       }
     end
     return item_evo(self, card, context, "j_poke_weavile")
-  end
+  end,
+  attributes = {"rank", "destroy_card", "economy", "item_evo"},
 }
 -- Teddiursa 216
 local teddiursa={
@@ -412,6 +419,7 @@ local teddiursa={
     end
     return scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "scaling", "scaling_evo"},
 }
 -- Ursaring 217
 local ursaring={
@@ -459,6 +467,7 @@ local ursaring={
     end
     return item_evo(self, card, context, "j_poke_ursaluna")
   end,
+  attributes = {"mult", "scaling", "item", "generation", "item_evo"},
 }
 -- Slugma 218
 local slugma={
@@ -514,6 +523,7 @@ local slugma={
     end
     return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "scaling", "destroy_card", "hands", "scaling_evo"},
 }
 -- Magcargo 219
 local magcargo={
@@ -568,6 +578,7 @@ local magcargo={
       }
     end
   end,
+  attributes = {"chips", "scaling", "destroy_card", "hands"},
 }
 -- Swinub 220
 local swinub={
@@ -613,6 +624,7 @@ local swinub={
       return ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
     end
   end,
+  attributes = {"mult", "enhancements", "chance", "economy", "round_evo"},
 }
 -- Piloswine 221
 local piloswine={
@@ -661,6 +673,7 @@ local piloswine={
       return ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
     end
   end,
+  attributes = {"mult", "enhancements", "chance", "economy", "trigger_evo"},
 }
 -- Corsola 222
 local corsola={
@@ -717,7 +730,8 @@ local corsola={
         mult = card.ability.extra.mult
       }
     end
-  end
+  end,
+  attributes = {"mult", "scaling", "types", "joker", "generation"},
 }
 -- Remoraid 223
 local remoraid={
@@ -750,7 +764,8 @@ local remoraid={
       }
     end
     return level_evo(self, card, context, "j_poke_octillery")
-  end
+  end,
+  attributes = {"retrigger", "hands", "round_evo"},
 }
 -- Octillery 224
 local octillery={
@@ -797,7 +812,8 @@ local octillery={
         end
       end
     end
-  end
+  end,
+  attributes = {"retrigger", "rank", "eight"},
 }
 -- Delibird 225
 local delibird={
@@ -858,7 +874,8 @@ local delibird={
       end
     end
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_gift_ex'), colour = G.C.GREEN})
-  end
+  end,
+  attributes = {"economy", "generation", "item", "joker", "tag"},
 }
 -- Mantine 226
 local mantine={
@@ -895,7 +912,8 @@ local mantine={
         })
       end
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "enhancements"},
 }
 -- Skarmory 227
 local skarmory = {
@@ -959,7 +977,8 @@ local skarmory = {
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_max(-card.ability.extra.hazard_max)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "xmult", "enhancements"},
 }
 -- Houndour 228
 local houndour={
@@ -1024,6 +1043,7 @@ local houndour={
     end
     return level_evo(self, card, context, "j_poke_houndoom")
   end,
+  attributes = {"discard", "modify_card", "perma_bonus", "mult", "round_evo"},
 }
 -- Houndoom 229
 local houndoom={
@@ -1101,6 +1121,7 @@ local houndoom={
     end
   end,
   megas = { "mega_houndoom" },
+  attributes = {"holding", "discard", "modify_card", "perma_bonus", "mult"},
 }
 
 local mega_houndoom={
@@ -1172,6 +1193,7 @@ local mega_houndoom={
       }
     end
   end,
+  attributes = {"discard", "xmult", "scaling", "reset"},
 }
 -- Kingdra 230
 local kingdra={
@@ -1218,6 +1240,7 @@ local kingdra={
       }
     end
   end,
+  attributes = {"mult", "xmult", "rank", "six", "king", "scaling"},
 }
 -- Phanpy 231
 local phanpy={
@@ -1259,7 +1282,8 @@ local phanpy={
       }
     end
     return level_evo(self, card, context, "j_poke_donphan")
-  end
+  end,
+  attributes = {"xmult", "scaling", "reset", "round_evo"},
 }
 -- Donphan 232
 local donphan={
@@ -1300,7 +1324,8 @@ local donphan={
         Xmult = card.ability.extra.Xmult
       }
     end
-  end
+  end,
+  attributes = {"xmult", "scaling", "reset"},
 }
 -- Porygon2 233
 local porygon2={
@@ -1358,7 +1383,8 @@ local porygon2={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 2
     end
-  end
+  end,
+  attributes = {"energy_limit", "generation", "energy", "types", "item_evo"},
 }
 -- Stantler 234
 local stantler={
@@ -1413,6 +1439,7 @@ local stantler={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "mult", "trigger_evo"},
 }
 -- Smeargle 235
 local smeargle={
@@ -1515,6 +1542,7 @@ local smeargle={
           or 'incompatible'
     end
   end,
+  attributes = {"copying", "applies", "suit", "diamonds", "hearts", "clubs", "spades"},
 }
 -- Tyrogue 236
 local tyrogue={
@@ -1598,7 +1626,8 @@ local tyrogue={
       forced_key = "j_poke_hitmontop"
     end
     return level_evo(self, card, context, forced_key)
-  end
+  end,
+  attributes = {"baby", "hands", "discard", "generation", "destroy_card", "round_evo"},
 }
 -- Hitmontop 237
 local hitmontop={
@@ -1629,7 +1658,8 @@ local hitmontop={
         scalar_value = 'Xmult_mod',
       })
     end
-  end
+  end,
+  attributes = {"xmult", "scaling", "full_deck"},
 }
 -- Smoochum 238
 local smoochum ={
@@ -1677,6 +1707,7 @@ local smoochum ={
     end
     return evo
   end,
+  attributes = {"baby", "tag", "generation", "round_evo"},
 }
 -- Elekid 239
 local elekid ={
@@ -1724,6 +1755,7 @@ local elekid ={
     end
     return evo
   end,
+  attributes = {"baby", "tag", "generation", "round_evo"},
 }
 -- Magby 240
 local magby={
@@ -1766,7 +1798,8 @@ local magby={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
-  end
+  end,
+  attributes = {"baby", "discard", "round_evo"},
 }
 
 return {name = "Pokemon Jokers 211-240",
