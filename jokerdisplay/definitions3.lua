@@ -453,7 +453,6 @@ jd_def["j_poke_pelipper"] = {
   },
   calc_function = function(card)
     local money = 0
-    -- local water_jokers = #find_pokemon_type("Water", card)
     local water_jokers = #find_pokemon_type("Water")
     local hand = G.hand.highlighted
     for _, playing_card in pairs(hand) do
@@ -567,7 +566,48 @@ jd_def["j_poke_aggron"] = {
 }
 
 --	Meditite
+jd_def["j_poke_meditite"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    local empty_consumable_slots = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards)
+    if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      card.joker_display_values.mult = empty_consumable_slots * card.ability.extra.mult_mod
+    else
+      card.joker_display_values.mult = 0
+    end
+  end
+}
+
 --	Medicham
+jd_def["j_poke_medicham"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+    { text = " +", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text",},
+  },
+  calc_function = function(card)
+    local empty_consumable_slots = math.max(0, G.consumeables.config.card_limit - #G.consumeables.cards)
+    local _, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local sixth_sense_eval = #scoring_hand == 1 and scoring_hand[1]:get_id() == 6
+    card.joker_display_values.count = sixth_sense_eval and 1 or 0
+    card.joker_display_values.localized_text = "(" .. localize("6", "ranks")..")"
+
+    if G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
+      card.joker_display_values.mult = empty_consumable_slots * card.ability.extra.mult_mod
+    else
+      card.joker_display_values.mult = 0
+    end
+
+  end
+}
+
 --	Electrike
 --	Manectric
 --	Plusle
