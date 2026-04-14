@@ -415,8 +415,8 @@ jd_def["j_poke_linoone"] = {
 --	Wingull
 jd_def["j_poke_wingull"] = {
   text = {
-    { text = "+$", colour = G.C.GOLD},
-    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
     { text = "(" },
@@ -443,8 +443,8 @@ jd_def["j_poke_wingull"] = {
 --	Pelipper
 jd_def["j_poke_pelipper"] = {
   text = {
-    { text = "+$", colour = G.C.GOLD},
-    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD  },
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
   },
   reminder_text = {
     { text = "(" },
@@ -470,8 +470,93 @@ jd_def["j_poke_pelipper"] = {
 }
 
 --	Ralts
+jd_def["j_poke_ralts"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    local mult = 0
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) > 0 then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      mult = card.ability.extra.mult_mod * energized_jokers
+    end
+    card.joker_display_values.mult = mult
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Kirlia
+jd_def["j_poke_kirlia"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    local mult = 0
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) > 0 then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      mult = card.ability.extra.mult_mod * energized_jokers
+    end
+    card.joker_display_values.mult = mult
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Gardevoir
+jd_def["j_poke_gardevoir"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    local level_target = card.ability.extra.hand_level
+    local leveled_hands = 0
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) > 0 then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    for k, v in pairs(G.GAME.hands) do
+      local level = v.level
+      if (SMODS.Mods["Talisman"] or {}).can_load then
+        level = to_number(level)
+      end
+      if level >= level_target then
+        leveled_hands = leveled_hands + 1
+      end
+    end
+    card.joker_display_values.Xmult = 1 + card.ability.extra.Xmult_mod * (energized_jokers + leveled_hands)
+  end
+}
+
 --	Surskit
 --	Masquerain
 --	Shroomish

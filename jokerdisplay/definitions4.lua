@@ -792,6 +792,47 @@ jd_def["j_poke_porygonz"] = {
 }
 
 --	Gallade
+jd_def["j_poke_gallade"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    local energize_target = card.ability.extra.e_level
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) >= energize_target then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * energized_jokers)
+    else
+      card.joker_display_values.Xmult = 1
+    end
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gallade')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem }}
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Probopass
 jd_def["j_poke_probopass"] = { 
     text = {
