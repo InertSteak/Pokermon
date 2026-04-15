@@ -961,7 +961,6 @@ local misdreavus = {
         return {
           message = localize('k_eroded_ex'),
           colour = G.C.CHIPS,
-          card = context.other_card,
           func = function()
             SMODS.scale_card(card, {
               ref_value = 'chips',
