@@ -612,8 +612,59 @@ jd_def["j_poke_slaking"] = {
 }
 
 --	Nincada
+jd_def["j_poke_nincada"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("9", "ranks") .. "," .. localize("Jack", "ranks") .. ")"
+  end
+}
+
 --	Ninjask
+jd_def["j_poke_ninjask"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local triggers = 0
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 9 or scoring_card:get_id() == 11 then
+          triggers = triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    if G.GAME.current_round.hands_played == 0 then
+      card.joker_display_values.mult = card.ability.extra.mult_mod * triggers
+    else
+      card.joker_display_values.mult = 0
+    end
+    card.joker_display_values.localized_text = "(" .. localize("9", "ranks") .. "," .. localize("Jack", "ranks") .. ")"
+  end
+}
+
 --	Shedinja
+jd_def["j_poke_shedinja"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Whismur
 --	Loudred
 --	Exploud
