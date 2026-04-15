@@ -932,7 +932,41 @@ jd_def["j_poke_volbeat"] = {
 --	Gulpin
 --	Swalot
 --	Carvanha
+jd_def["j_poke_carvanha"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  calc_function = function(card)
+    local text, _, _ = JokerDisplay.evaluate_hand()
+    local is_card_sharp_hand = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text] and
+      G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
+    card.joker_display_values.x_mult = is_card_sharp_hand and card.ability.extra.Xmult or 1
+  end
+}
+
 --	Sharpedo
+jd_def["j_poke_sharpedo"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  calc_function = function(card)
+    local text, _, _ = JokerDisplay.evaluate_hand()
+    local is_card_sharp_hand = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text] and
+      G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
+    card.joker_display_values.x_mult = is_card_sharp_hand and card.ability.extra.Xmult or 1
+  end
+}
+
 --	Wailmer
 --	Wailord
 --	Numel
