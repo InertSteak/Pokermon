@@ -290,6 +290,17 @@ jd_def["j_poke_honchkrow"] = {
 --	Glameow
 --	Purugly
 --	Chingling
+jd_def["j_poke_chingling"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Stunky
 --	Skuntank
 --	Bronzor

@@ -1499,6 +1499,16 @@ jd_def["j_poke_dusclops"] = {
 
 --	Tropius
 --	Chimecho
+jd_def["j_poke_chimecho"] = {
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "glass_restored", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "glass_limit", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+}
+
 --	Absol
 jd_def["j_poke_absol"] = {
   text = {
