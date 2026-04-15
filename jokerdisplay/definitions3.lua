@@ -1218,7 +1218,97 @@ jd_def["j_poke_altaria"] = {
 --	Lileep
 --	Cradily
 --	Anorith
+jd_def["j_poke_anorith"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local mult = 0
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 7 then
+          count = count + 1
+        end
+      end
+    end
+    if count >= 1 then
+      mult = card.ability.extra.mult
+    end
+    card.joker_display_values.mult = mult
+    card.joker_display_values.localized_text = "(" .. localize("7", "ranks") .. ")"
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'anorinth')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+  end
+}
+
 --	Armaldo
+jd_def["j_poke_armaldo"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+    { text = " " },
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local mult = 0
+    local Xmult = 1
+    local count = 0
+    local enhanced_seven_tally = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 7 then
+          count = count + 1
+        end
+      end
+    end
+    if count >= 1 then
+      mult = card.ability.extra.mult
+    end
+    if count >= 4 then
+      for k, v in pairs(G.playing_cards) do
+        if v:get_id() == 7 and v.config.center ~= G.P_CENTERS.c_base then
+          enhanced_seven_tally = enhanced_seven_tally + 1
+          Xmult = 1 + (card.ability.extra.Xmult_multi * enhanced_seven_tally)
+        end
+      end
+    end
+    card.joker_display_values.mult = mult
+    card.joker_display_values.Xmult = Xmult
+    card.joker_display_values.localized_text = "(" .. localize("7", "ranks") .. ")"
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'armaldo')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+  end
+}
+
 --	Feebas
 jd_def["j_poke_feebas"] = {
     text = {
