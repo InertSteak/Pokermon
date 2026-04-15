@@ -848,6 +848,19 @@ jd_def["j_poke_medicham"] = {
 --	Plusle
 --	Minun
 --	Volbeat
+jd_def["j_poke_volbeat"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Illumise
 --	Roselia
 --	Gulpin
