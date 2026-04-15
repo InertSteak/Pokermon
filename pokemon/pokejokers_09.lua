@@ -328,25 +328,19 @@ local tyranitar={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
-      context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-      local drained_vals = math.min(card.ability.extra.chip_mod_minus, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
-      if drained_vals > 0 then
-        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
-      end
-      local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod_minus- drained_vals)
-      if drain_bonus > 0 then
-        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
-        drained_vals = drained_vals + drain_bonus
-      end
-      if drained_vals > 0 then
-        card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex'), colour = G.C.CHIPS})
-        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
-        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi
+    if context.individual and context.cardarea == G.play and context.scoring_name == "Full House" then
+
+      local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod_minus)
+
+      if drained_chips > 0 then
+        context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 1) + card.ability.extra.Xmult_multi
         return {
-          extra = {message = localize('k_upgrade_ex'), colour = G.C.XMULT},
+          message = localize('k_eroded_ex'),
           colour = G.C.CHIPS,
-          card = card
+          extra = {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.XMULT
+          },
         }
       end
     end
