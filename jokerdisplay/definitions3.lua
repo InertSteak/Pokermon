@@ -562,8 +562,41 @@ jd_def["j_poke_gardevoir"] = {
 --	Shroomish
 --	Breloom
 --	Slakoth
+jd_def["j_poke_slakoth"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+}
+
 --	Vigoroth
+jd_def["j_poke_vigoroth"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  calc_function = function(card)
+    local hands_left = G.GAME.current_round.hands_left
+    card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * hands_left)
+  end
+}
+
 --	Slaking
+jd_def["j_poke_slaking"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Nincada
 --	Ninjask
 --	Shedinja
