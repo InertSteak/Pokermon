@@ -1554,6 +1554,56 @@ jd_def["j_poke_gorebyss"] = {
 }
 
 --	Relicanth
+jd_def["j_poke_relicanth"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+    { text = " " },
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local four_count = 0
+    local chips = 0
+    local money = 0
+    local Xmult = 1
+    local last_card_triggers = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local last_card = JokerDisplay.calculate_rightmost_card(scoring_hand)
+    if last_card then
+      last_card_triggers = JokerDisplay.calculate_card_triggers(last_card, scoring_hand)
+    end
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 4 then
+          four_count = four_count + 1
+        end
+      end
+    end
+    if four_count >= 1 then
+      chips = card.ability.extra.chips * last_card_triggers
+    end
+    if four_count >= 3 then
+      money = card.ability.extra.money
+    end
+    if four_count >= 4 then
+      Xmult = (card.ability.extra.Xmult_multi ^ last_card_triggers) or 1
+    end
+    card.joker_display_values.chips = chips
+    card.joker_display_values.money = money
+    card.joker_display_values.Xmult = Xmult
+    card.joker_display_values.localized_text = "(" .. localize("4", "ranks") .. ")"
+  end
+}
 --	Luvdisc
 jd_def["j_poke_luvdisc"] = {
   scoring_function = function(playing_card, scoring_hand, joker_card)
