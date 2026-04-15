@@ -776,7 +776,46 @@ jd_def["j_poke_mega_camerupt"] = {
 --	Cacnea
 --	Cacturne
 --	Swablu
+jd_def["j_poke_swablu"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money_mod", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(Draw " .. localize("9", "ranks")..")"
+  end
+}
+
 --	Altaria
+jd_def["j_poke_altaria"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local dragon_count = #find_pokemon_type("Dragon")
+    if is_type(card, "Dragon") then
+        dragon_count= dragon_count - 1
+    end
+    if dragon_count >= 1 then
+      card.joker_display_values.money = card.ability.extra.money_mod + card.ability.extra.money_mod_extra
+    else
+      card.joker_display_values.money = card.ability.extra.money_mod
+    end
+    card.joker_display_values.localized_text = "(Draw " .. localize("9", "ranks")..")"
+  end
+}
+
 --	Zangoose
 --	Seviper
 --	Lunatone
