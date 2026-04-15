@@ -400,10 +400,136 @@ jd_def["j_poke_linoone"] = {
 }
 
 --	Wurmple
+jd_def["j_poke_wurmple"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " or ", colour = G.C.GREY },
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+}
+
 --	Silcoon
+jd_def["j_poke_silcoon"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "nature_suit1" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature_suit1 = localize(card.ability.extra.targets[1].suit, 'suits_plural')
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children[2] then
+      reminder_text.children[2].config.colour = lighten(G.C.SUITS[card.ability.extra.targets[1].suit], 0.35)
+    end
+    return false
+  end
+}
+
 --	Beautifly
+jd_def["j_poke_beautifly"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "nature_suit1" },
+    { text = ")" },
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'beautifly')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+    card.joker_display_values.nature_suit1 = localize(card.ability.extra.targets[1].suit, 'suits_plural')
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children[2] then
+      reminder_text.children[2].config.colour = lighten(G.C.SUITS[card.ability.extra.targets[1].suit], 0.35)
+    end
+    return false
+  end
+}
+
 --	Cascoon
+jd_def["j_poke_cascoon"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "nature_suit1" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature_suit1 = localize(card.ability.extra.targets[1].suit, 'suits_plural')
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children[2] then
+      reminder_text.children[2].config.colour = lighten(G.C.SUITS[card.ability.extra.targets[1].suit], 0.35)
+    end
+    return false
+  end
+}
+
 --	Dustox
+jd_def["j_poke_dustox"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " " },
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "nature_suit1" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    local playing_hand = next(G.play.cards)
+    local nature_suit_count, all_cards = 0, 0
+    for _, playing_card in ipairs(G.hand.cards) do
+      if playing_hand or not playing_card.highlighted then
+        all_cards = all_cards + 1
+        if playing_card.facing and not (playing_card.facing == 'back') and playing_card:is_suit(card.ability.extra.targets[1].suit, nil, true) then
+          nature_suit_count = nature_suit_count + 1
+        end
+      end
+    end
+    if nature_suit_count >= all_cards then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
+    end
+
+    card.joker_display_values.nature_suit1 = localize(card.ability.extra.targets[1].suit, 'suits_plural')
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children[2] then
+      reminder_text.children[2].config.colour = lighten(G.C.SUITS[card.ability.extra.targets[1].suit], 0.35)
+    end
+    return false
+  end
+}
+
 --	Lotad
 --	Lombre
 --	Ludicolo
