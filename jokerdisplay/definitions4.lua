@@ -99,6 +99,25 @@ jd_def["j_poke_budew"] = {
 }
 
 --	Roserade
+jd_def["j_poke_roserade"] = {
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks") .. "," .. localize("3", "ranks") .. "," .. localize("5", "ranks") .. "," ..
+    localize("5", "ranks") .. "," .. localize("7", "ranks") .. "," .. localize("9", "ranks") .. ")"
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if first_card:get_id() == 3 or first_card:get_id() == 5 or first_card:get_id() == 7 or first_card:get_id() == 9 or first_card:get_id() == 14 then
+      return first_card and playing_card == first_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    else
+      return 0
+    end
+  end
+}
+
 --	Cranidos
 --	Rampardos
 --	Shieldon

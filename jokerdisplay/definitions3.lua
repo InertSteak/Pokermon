@@ -1055,6 +1055,46 @@ jd_def["j_poke_volbeat"] = {
 
 --	Illumise
 --	Roselia
+jd_def["j_poke_roselia"] = {
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "active", scale = 0.3 },
+      { text = ")", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 },
+    }
+  },
+  calc_function = function(card)
+    if G.GAME.current_round.hands_played == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+    card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks") .. "," .. localize("3", "ranks") .. "," .. localize("5", "ranks") .. "," ..
+    localize("5", "ranks") .. "," .. localize("7", "ranks") .. "," .. localize("9", "ranks") .. ")"
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if G.GAME.current_round.hands_played == 0 and (first_card:get_id() == 3 or first_card:get_id() == 5 or first_card:get_id() == 7 or first_card:get_id() == 9 or first_card:get_id() == 14) then
+      return first_card and playing_card == first_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    else
+      return 0
+    end
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if extra and extra.children and extra.children[1] then
+      if card.joker_display_values.active == localize("jdis_active") then
+        extra.children[1].children[2].config.colour = G.C.GREEN
+      else
+        extra.children[1].children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
+
 --	Gulpin
 --	Swalot
 --	Carvanha
