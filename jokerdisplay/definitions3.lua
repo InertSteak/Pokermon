@@ -411,7 +411,21 @@ jd_def["j_poke_linoone"] = {
 --	Nuzleaf
 --	Shiftry
 --	Taillow
+jd_def["j_poke_taillow"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT},
+  },
+}
+
 --	Swellow
+jd_def["j_poke_swellow"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT},
+  },
+}
+
 --	Wingull
 jd_def["j_poke_wingull"] = {
   text = {
@@ -852,6 +866,7 @@ jd_def["j_poke_volbeat"] = {
   text = {
     { text = "+", colour = G.C.CHIPS },
     { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " " },
     {
       border_nodes = {
         { text = "X" },
