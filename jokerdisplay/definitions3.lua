@@ -1826,3 +1826,26 @@ jd_def["j_poke_jirachi_power"] = {
 -- }
 
 --	Deoxys
+jd_def["j_poke_deoxys"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    if G.GAME.current_round.discards_used == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.joker_display_values.active == localize("jdis_active") then
+        reminder_text.children[2].config.colour = G.C.GREEN
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
