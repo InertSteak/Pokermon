@@ -1176,8 +1176,38 @@ jd_def["j_poke_gorebyss"] = {
 --	Relicanth
 --	Luvdisc
 --	Bagon
+jd_def["j_poke_bagon"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+  end
+}
+
 --	Shelgon
+jd_def["j_poke_shelgon"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+  end
+}
+
 --	Salamence
+jd_def["j_poke_salamence"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
+  },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME.hands["Straight"].played * card.ability.extra.mult_mod
+  end
+}
+
 --	Beldum
 jd_def["j_poke_beldum"] = {
     text = {
