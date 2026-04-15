@@ -1260,6 +1260,12 @@ jd_def["j_poke_gorebyss"] = {
 
 --	Relicanth
 --	Luvdisc
+jd_def["j_poke_luvdisc"] = {
+  scoring_function = function(playing_card, scoring_hand, joker_card)
+    return true
+  end
+}
+
 --	Bagon
 jd_def["j_poke_bagon"] = {
   text = {
