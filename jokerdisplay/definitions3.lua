@@ -1216,7 +1216,86 @@ jd_def["j_poke_altaria"] = {
 --	Baltoy
 --	Claydol
 --	Lileep
+jd_def["j_poke_lileep"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local eight_count = 0
+    local triggers = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 8 then
+          eight_count = eight_count + 1
+        end
+      end
+    end
+    if eight_count >= 3 then
+      local playing_hand = next(G.play.cards)
+      for i, playing_card in ipairs(G.hand.cards) do
+        if playing_hand or not playing_card.highlighted then
+          if not (playing_card.facing == 'back') and not playing_card.debuff then
+            triggers = triggers + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+          end
+        end
+      end
+    end
+    card.joker_display_values.chips = triggers * card.ability.extra.chip_mod
+    card.joker_display_values.localized_text = "(" .. localize("8", "ranks") .. ")"
+  end
+}
+
 --	Cradily
+jd_def["j_poke_cradily"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+    { text = " +$", colour = G.C.GOLD},
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    local eight_count = 0
+    local triggers = 0
+    local money = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 8 then
+          eight_count = eight_count + 1
+        end
+      end
+    end
+    if eight_count >= 3 then
+      local playing_hand = next(G.play.cards)
+      for i, playing_card in ipairs(G.hand.cards) do
+        if playing_hand or not playing_card.highlighted then
+          if not (playing_card.facing == 'back') and not playing_card.debuff then
+            triggers = triggers + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+          end
+        end
+      end
+    end
+    if eight_count > 3 then
+      local highest_sell = 0
+      for k, v in ipairs(G.consumeables.cards) do
+        if v.sell_cost > highest_sell then highest_sell = v.sell_cost end
+      end
+      money = highest_sell
+    end
+    card.joker_display_values.chips = triggers * card.ability.extra.chip_mod
+    card.joker_display_values.money = money
+    card.joker_display_values.localized_text = "(" .. localize("8", "ranks") .. ")"
+  end
+}
+
 --	Anorith
 jd_def["j_poke_anorith"] = {
   text = {
