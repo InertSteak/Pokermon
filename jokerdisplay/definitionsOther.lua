@@ -36,7 +36,8 @@ jd_def["j_poke_everstone"] = {
         card.joker_display_values.localized_baby = localize({type = "name_text", set = "Other", key = "baby"})
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = ((card.config.center.stage == "Basic" or card.config.center.stage == "Baby") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+      return { x_mult = ((card.config.center.stage == "Baby" and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker)) or
+      (card.config.center.stage == "Basic" and mod_joker.ability.extra.Xmult_multi2 ^ JokerDisplay.calculate_joker_triggers(mod_joker)) or nil) }
     end
 }
 
