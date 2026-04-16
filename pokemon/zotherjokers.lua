@@ -385,82 +385,68 @@ local rival = {
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.skip_blind and card.ability.extra.form < 2 and not context.blueprint then
-      if card.ability.extra.form == 1 then
-        card.ability.extra.money2 = card.ability.extra.money2 + card.ability.extra.money_mod2
-      else
-        card.ability.extra.money1 = card.ability.extra.money1 + card.ability.extra.money_mod1
-      end
-      
+    local form = card.ability.extra.form
+
+    if context.skip_blind and form < 2 and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = form == 0 and 'money1' or 'money2',
+        scalar_value = form == 0 and 'money_mod1' or 'money_mod2',
+        message_colour = G.C.MONEY,
+      })
+    end
+
+    if context.joker_main and form == 2 then
       return {
-        message = localize('k_upgrade_ex'),
-        colour = G.C.MONEY
+        Xmult = 1 + G.GAME.skips * card.ability.extra.Xmult_mod
       }
     end
-    
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.form > 1 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {1 + G.GAME.skips * card.ability.extra.Xmult_mod}}, 
-            colour = G.C.XMULT,
-            Xmult_mod =  1 + G.GAME.skips * card.ability.extra.Xmult_mod
-          }
-        end
-      end
-    end
 
-    if (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
-      G.GAME.rival_losses = G.GAME.rival_losses + 1
+    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not context.blueprint then
+      if form < 2 then
+        G.GAME.rival_losses = (G.GAME.rival_losses or 0) + 1
 
-      local money = card.ability.extra.money1
-      if card.ability.extra.form == 1 then
-        money = card.ability.extra.money2
-      end
-      if card.ability.extra.form < 2 then
+        local money = form == 0
+            and card.ability.extra.money1
+            or card.ability.extra.money2
+
         ease_poke_dollars(card, 'rival', money)
+
+        SMODS.destroy_cards(card, nil, nil, true)
       else
         G.E_MANAGER:add_event(Event({
           func = (function()
-              add_tag(Tag('tag_skip'))
-              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-              return true
+            add_tag(Tag('tag_skip'))
+            play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+            return true
           end)
         }))
       end
 
-      if card.ability.extra.form < 2 then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            remove(self, card, context, true)
-            return true
-          end
-        }))
-      end
-
       return {
-          message = localize("poke_smell_ya")
+        message = localize("poke_smell_ya")
       }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      G.GAME.rival_losses = G.GAME.rival_losses or 0
-      card.ability.extra.form = G.GAME.rival_losses
+      card.ability.extra.form = math.min(2, G.GAME.rival_losses or 0)
       self:set_sprites(card)
     end
   end,
   set_sprites = function(self, card, front)
-    if card.ability and card.ability.extra and card.ability.extra.form and card.ability.extra.form > 1 then
-      card.children.center:set_sprite_pos({x = 4, y = 2})
-    elseif card.ability and card.ability.extra and card.ability.extra.form and card.ability.extra.form == 1 then
-      card.children.center:set_sprite_pos({x = 2, y = 2})
-    else
-      card.children.center:set_sprite_pos({x = 0, y = 2})
+    if card.ability and card.ability.extra and card.ability.extra.form then
+      local form = card.ability.extra.form
+      local sprite_pos = ({
+        [0] = {x = 0, y = 2},
+        [1] = {x = 2, y = 2},
+        [2] = {x = 4, y = 2},
+      })[form]
+
+      card.children.center:set_sprite_pos(sprite_pos)
     end
   end,
-  attributes = {"skip", "economy", "boss_blind", "tag", "generation"},
+  attributes = {"skip", "economy", "boss_blind", "tag", "generation", "scaling"},
 }
 
 local ruins_of_alph={
