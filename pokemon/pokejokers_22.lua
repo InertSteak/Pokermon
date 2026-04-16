@@ -95,11 +95,12 @@ local hydreigon={
         Xmult = card.ability.extra.Xmult
       }
     end
-    if context.destroy_card and context.scoring_name == "Three of a Kind" and not context.blueprint
-        and context.cardarea == 'unscored' then
-      return {
-        remove = true
-      }
+    if context.after and context.scoring_name == "Three of a Kind" and not context.blueprint then
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.in_scoring(v, context.scoring_hand) then
+          poke_remove_card(v, card)
+        end
+      end
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
