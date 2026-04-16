@@ -1103,27 +1103,36 @@ poke_total_chips = function(card)
 end
 
 poke_drain = function(card, target, amount, one_way)
-  local amt = amount
-  local amt_drained = 0
-  if target.sell_cost == 1 then return end
-  target.ability.extra_value = target.ability.extra_value or 0
-  if target.sell_cost <= amt then
-    amt_drained = amt_drained + target.sell_cost - 1
-    target.ability.extra_value = target.ability.extra_value - amt_drained
-  else
-     target.ability.extra_value = target.ability.extra_value - amt
-     amt_drained = amt
-  end
-  
-  if amt_drained > 0 then
+  local drain_amount = math.min(target.sell_cost - 1, amount)
+
+  if drain_amount > 0 then
+    SMODS.scale_card(target, {
+      ref_table = target.ability,
+      ref_value = 'extra_value',
+      operation = function(ref_table, ref_value, initial)
+        ref_table[ref_value] = initial - drain_amount
+      end,
+      scaling_message = {
+        message = localize('poke_val_down'),
+        colour = G.C.RED
+      }
+    })
     target:set_cost()
-    card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+
     if not one_way then
-      card.ability.extra_value = card.ability.extra_value or 0
-      card.ability.extra_value = card.ability.extra_value + amt_drained
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        operation = function(ref_table, ref_value, initial)
+          ref_table[ref_value] = initial + drain_amount
+        end,
+        scaling_message = {
+          message = localize('k_val_up'),
+          colour = G.C.MONEY
+        }
+      })
       card:set_cost()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
-    end    
+    end
   end
 end
 

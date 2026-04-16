@@ -206,28 +206,24 @@ local litwick={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local Mult = card.ability.extra.mult
-        if card.sell_cost >= card.ability.extra.sell_goal then
-          Mult = 3 * card.ability.extra.mult
-        end
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-          colour = G.C.MULT,
-          mult_mod = Mult
-        }
+    if context.joker_main then
+      local mult = card.ability.extra.mult
+      if card.sell_cost >= card.ability.extra.sell_goal then
+        mult = mult * 3
       end
+      return {
+        mult = mult
+      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
       local adjacent = poke_get_adjacent_jokers(card)
-      for i = 1, #adjacent do 
-        poke_drain(card, adjacent[i], card.ability.extra.money_minus)
+      for _, v in ipairs(adjacent) do
+        poke_drain(card, v, card.ability.extra.money_minus)
       end
     end
     return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
   end,
-  attributes = {"drain", "mult", "sell_value", "condition_evo"},
+  attributes = {"drain", "mult", "sell_value", "scaling", "scaling_evo"},
 }
 -- Lampent 608
 local lampent={
@@ -252,26 +248,21 @@ local lampent={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}},
-          colour = G.C.MULT,
-          mult_mod = card.sell_cost
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.sell_cost
+      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local adjacent = poke_get_adjacent_jokers(card)
-      for i = 1, #G.jokers.cards do 
-        if G.jokers.cards[i] ~= card then
-          poke_drain(card, G.jokers.cards[i], card.ability.extra.money_minus)
+      for _, v in ipairs(G.jokers.cards) do
+        if v ~= card then
+          poke_drain(card, v, card.ability.extra.money_minus)
         end
       end
     end
     return item_evo(self, card, context, "j_poke_chandelure")
   end,
-  attributes = {"drain", "mult", "sell_value", "joker", "item_evo"},
+  attributes = {"drain", "mult", "sell_value", "joker", "scaling", "item_evo"},
 }
 -- Chandelure 609
 local chandelure={
@@ -292,27 +283,15 @@ local chandelure={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}}, 
-          colour = G.C.MULT,
-          mult_mod = card.sell_cost
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.sell_cost
+      }
     end
-    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost < 2 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              context.other_joker:juice_up(0.5, 0.5)
-              return true
-          end
-        })) 
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
+    if context.other_joker and context.other_joker.sell_cost < 2 then
+      return {
+        Xmult = card.ability.extra.Xmult_multi
+      }
     end
   end,
   attributes = {"xmult", "mult", "sell_value", "joker"},
