@@ -469,80 +469,72 @@ local ruins_of_alph={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.mult > 0 then
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            colour = G.C.MULT,
-            mult_mod = card.ability.extra.mult
-          }
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+    if context.after then
+      local unowns = SMODS.find_card("j_poke_unown")
+      local added = nil
+      for k, v in pairs(unowns) do
+        if v.ability.extra.triggered and not v.ability.extra.merged then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            no_message = true,
+          })
+          card.ability.extra.merged = card.ability.extra.merged + 1
+          v.ability.extra.merged = true
+          table.insert(card.ability.extra.forms, v.ability.extra.form)
+          added = true
         end
       end
-      if context.after then
-        local unowns = SMODS.find_card("j_poke_unown")
-        local added = nil
-        for k, v in pairs(unowns) do
-          if v.ability.extra.triggered and not v.ability.extra.merged then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            card.ability.extra.merged = card.ability.extra.merged + 1
-            v.ability.extra.merged = true
-            table.insert(card.ability.extra.forms, v.ability.extra.form)
-            added = true
-          end
-        end
-        if added then table.sort(card.ability.extra.forms) end
-      end
+      if added then table.sort(card.ability.extra.forms) end
     end
     if context.setting_blind and not context.blueprint then
-      for i = 1, 3 do
-        G.E_MANAGER:add_event(Event({func = function()
-          local temp_card = {set = "Joker", area = G.jokers, key = "j_poke_unown"}
-          local new_card = SMODS.create_card(temp_card)
-          local edition = {negative = true}
-          new_card:set_edition(edition, true)
-          new_card.cost = 0
-          new_card.sell_cost = 0
-          new_card:add_to_deck()
-          G.jokers:emplace(new_card)
-          new_card:start_materialize()
-        return true end }))
+      for _ = 1, 3 do
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            local unown = SMODS.add_card({set = 'Joker', key = 'j_poke_unown', edition = 'e_negative'})
+            return true
+          end
+        }))
       end
     end
     if context.selling_self and not context.blueprint then
-      local temp_card = nil
-      local reward_card = nil
       if card.ability.extra.merged >= 28 then
-        temp_card = {set = "Joker", area = G.jokers, key = "j_poke_unown_swarm"}
-        reward_card = SMODS.create_card(temp_card)
-        local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_soul')
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+        SMODS.add_card({set = "Joker", key = "j_poke_unown_swarm"})
+        local soul = SMODS.add_card({set = 'Spectral', key = 'c_soul'})
+
+        SMODS.calculate_effect({
+          message = localize('k_plus_spectral'),
+          colour = G.C.SECONDARY_SET.Spectral
+        }, soul)
       elseif card.ability.extra.merged >= 20 then
-        temp_card = {set = "Joker", area = G.jokers, key = "j_brainstorm"}
-        reward_card = SMODS.create_card(temp_card)
+        SMODS.add_card({set = "Joker", key = "j_brainstorm"})
       elseif card.ability.extra.merged >= 10 then
         local jokers = {}
-        for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] ~= card then
-                jokers[#jokers + 1] = G.jokers.cards[i]
-            end
+        for k, v in ipairs(G.jokers.cards) do
+          if v ~= card then
+            jokers[#jokers+1] = v
+          end
         end
         if #jokers > 0 then
-          local chosen_joker = pseudorandom_element(jokers, 'alph')
-          reward_card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+          return {
+            message = localize('k_duplicated_ex'),
+            func = function()
+              local chosen_joker = pseudorandom_element(jokers, 'alph')
+              local copy = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
+              copy:add_to_deck()
+              G.jokers:emplace(copy)
+            end
+          }
         else
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
+          return {message = localize('k_no_other_jokers')}
         end
       elseif card.ability.extra.merged >= 5 then
-        reward_card = SMODS.create_card({ set = "Joker", rarity = "poke_safari", key_append = "alph" })
-      end
-      if reward_card then
-        reward_card:add_to_deck()
-        G.jokers:emplace(reward_card)
-        reward_card:start_materialize()
+        SMODS.add_card({set = "Joker", rarity = "poke_safari", key_append = "alph"})
       end
     end
   end,
