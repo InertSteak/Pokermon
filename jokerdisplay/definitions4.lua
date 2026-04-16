@@ -99,6 +99,25 @@ jd_def["j_poke_budew"] = {
 }
 
 --	Roserade
+jd_def["j_poke_roserade"] = {
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.localized_text = "(" .. localize("Ace", "ranks") .. "," .. localize("3", "ranks") .. "," .. localize("5", "ranks") .. "," ..
+    localize("5", "ranks") .. "," .. localize("7", "ranks") .. "," .. localize("9", "ranks") .. ")"
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    local first_card = scoring_hand and JokerDisplay.calculate_leftmost_card(scoring_hand)
+    if first_card:get_id() == 3 or first_card:get_id() == 5 or first_card:get_id() == 7 or first_card:get_id() == 9 or first_card:get_id() == 14 then
+      return first_card and playing_card == first_card and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+    else
+      return 0
+    end
+  end
+}
+
 --	Cranidos
 --	Rampardos
 --	Shieldon
@@ -290,6 +309,17 @@ jd_def["j_poke_honchkrow"] = {
 --	Glameow
 --	Purugly
 --	Chingling
+jd_def["j_poke_chingling"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult_minus", retrigger_type = "exp" },
+      },
+    },
+  },
+}
+
 --	Stunky
 --	Skuntank
 --	Bronzor
@@ -792,6 +822,47 @@ jd_def["j_poke_porygonz"] = {
 }
 
 --	Gallade
+jd_def["j_poke_gallade"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    local energize_target = card.ability.extra.e_level
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) >= energize_target then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    if poker_hands['Pair'] and next(poker_hands['Pair']) then
+      card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult_mod * energized_jokers)
+    else
+      card.joker_display_values.Xmult = 1
+    end
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'gallade')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem }}
+    card.joker_display_values.localized_text = localize('Pair', 'poker_hands')
+  end
+}
+
 --	Probopass
 jd_def["j_poke_probopass"] = { 
     text = {
@@ -967,6 +1038,30 @@ jd_def["j_poke_rotomm"] = {
 --	Manaphy
 --	Darkrai
 --	Shaymin
+jd_def["j_poke_shaymin"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    if G.GAME.current_round.discards_used == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.joker_display_values.active == localize("jdis_active") then
+        reminder_text.children[2].config.colour = G.C.GREEN
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
+
 --	Arceus
 
 

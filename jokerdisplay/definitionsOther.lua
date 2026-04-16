@@ -36,7 +36,8 @@ jd_def["j_poke_everstone"] = {
         card.joker_display_values.localized_baby = localize({type = "name_text", set = "Other", key = "baby"})
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = ((card.config.center.stage == "Basic" or card.config.center.stage == "Baby") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+      return { x_mult = ((card.config.center.stage == "Baby" and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker)) or
+      (card.config.center.stage == "Basic" and mod_joker.ability.extra.Xmult_multi2 ^ JokerDisplay.calculate_joker_triggers(mod_joker)) or nil) }
     end
 }
 
@@ -130,6 +131,28 @@ jd_def["j_poke_unown_swarm"] = {
   end,
   mod_function = function(card, mod_joker)
     return { x_mult = (card.config.center.rarity == 4 and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil), mult = (card.config.center.rarity == 4 and mod_joker.ability.extra.mult * JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+  end
+}
+
+jd_def["j_poke_oologist"] = {
+  reminder_text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'oologist')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+    if card.ability.extra.activated == false then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
   end
 }
 
