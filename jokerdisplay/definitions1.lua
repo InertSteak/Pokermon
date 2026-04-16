@@ -1646,37 +1646,55 @@ calc_function = function(card)
 end
 }
 
+-- Victreebel
 jd_def["j_poke_victreebel"] = {
-text = {
+  text = {
     { text = "+", colour = G.C.CHIPS},
     { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
-},
-reminder_text = {
-    { ref_table = "card.joker_display_values", ref_value = "localized_text" }
-},
-calc_function = function(card)
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    { text = " [", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "round_retriggers", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "retrigger_max", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
     local count = 0
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text ~= 'Unknown' then
-        for _, scoring_card in pairs(scoring_hand) do
-            if scoring_card:get_id() == 2 or 
-            scoring_card:get_id() == 4 or 
-            scoring_card:get_id() == 6 or
-            scoring_card:get_id() == 8 or 
-            scoring_card:get_id() == 10 then
-                count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-            end
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 2 or scoring_card:get_id() == 4 or scoring_card:get_id() == 6 or scoring_card:get_id() == 8 or scoring_card:get_id() == 10 then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         end
+      end
     end
     card.joker_display_values.chips = count * card.ability.extra.chips
-    card.joker_display_values.localized_text = "(2,4,6,8,10)"
-end,
-retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    card.joker_display_values.localized_text = "(" .. localize("2", "ranks") .. "," .. localize("4", "ranks") .. "," .. localize("6", "ranks") .. "," .. localize("8", "ranks") .. "," .. localize("10", "ranks") .. ")"
+  end,
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
     if held_in_hand then return 0 end
-    return (playing_card:get_id() == 2 or playing_card:get_id() == 4 or
-            playing_card:get_id() == 6 or playing_card:get_id() == 8 or playing_card:get_id() == 10) and
-        joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
-end
+    local remaining = joker_card.ability.extra.retrigger_max - joker_card.ability.extra.round_retriggers
+    local even_cards = {}
+    local even_count = 0
+    local text, _, _ = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if playing_card:get_id() == 2 or playing_card:get_id() == 4 or playing_card:get_id() == 6 or playing_card:get_id() == 8 or playing_card:get_id() == 10 then
+          table.insert(even_cards, scoring_card)
+          even_count = even_count + 1
+        end
+      end
+    end
+    if remaining >= #even_cards then return 1 end
+    for i = 1, remaining do
+      if playing_card == even_cards[i] then
+        return 1
+      end
+    end
+    return 0
+  end,
 }
 
 jd_def["j_poke_tentacool"] = {
