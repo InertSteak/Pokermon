@@ -412,6 +412,10 @@ local rival = {
         ease_poke_dollars(card, 'rival', money)
 
         SMODS.destroy_cards(card, nil, nil, true)
+
+        return {
+          message = localize("poke_smell_ya")
+        }
       else
         G.E_MANAGER:add_event(Event({
           func = (function()
@@ -422,10 +426,6 @@ local rival = {
           end)
         }))
       end
-
-      return {
-        message = localize("poke_smell_ya")
-      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
