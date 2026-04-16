@@ -28,6 +28,7 @@ local miltank={
       return ease_poke_dollars(card, "miltank", earned, true)
     end
   end,
+  attributes = {"types", "joker", "economy"},
 }
 -- Blissey 242
 local blissey={
@@ -85,7 +86,8 @@ local blissey={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
-  end
+  end,
+  attributes = {"enhancements", "generation"},
 }
 -- Raikou 243
 local raikou={
@@ -144,6 +146,7 @@ local raikou={
       end
     end
   end,
+  attributes = {"modify_card", "rank", "economy", "hands"},
 }
 -- Entei 244
 local entei={
@@ -169,15 +172,10 @@ local entei={
       local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-
-      if context.joker_main and card.ability.extra.Xmult > 1 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
     if context.pre_discard and #context.full_hand == 4 and G.GAME.current_round.discards_used == 0 and not context.blueprint then
       local target = pseudorandom_element(context.full_hand, pseudoseed('entei'))
@@ -186,13 +184,18 @@ local entei={
       delay(0.6)
     end
     if context.discard and context.other_card and context.other_card.entei_destroy and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.XMULT})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        message_colour = G.C.XMULT
+      })
+
       return {
-          remove = true
+        remove = true
       }
     end
   end,
+  attributes = {"discard", "destroy_card", "xmult", "scaling"},
 }
 -- Suicune 245
 local suicune={
@@ -229,6 +232,7 @@ local suicune={
       end
     end
   end,
+  attributes = {"chips", "modify_card", "perma_bonus"},
 }
 -- Larvitar 246
 local larvitar={
@@ -266,6 +270,7 @@ local larvitar={
     end
     return scaling_evo(self, card, context, "j_poke_pupitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
 -- Pupitar 247
 local pupitar={
@@ -302,6 +307,7 @@ local pupitar={
     end
     return scaling_evo(self, card, context, "j_poke_tyranitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
 -- Tyranitar 248
 local tyranitar={
@@ -322,30 +328,25 @@ local tyranitar={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.scoring_hand and context.scoring_name == "Full House" then
-      context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-      local drained_vals = math.min(card.ability.extra.chip_mod_minus, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
-      if drained_vals > 0 then
-        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
-      end
-      local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod_minus- drained_vals)
-      if drain_bonus > 0 then
-        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
-        drained_vals = drained_vals + drain_bonus
-      end
-      if drained_vals > 0 then
-        card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {message = localize('k_eroded_ex'), colour = G.C.CHIPS})
-        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
-        context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi
+    if context.individual and context.cardarea == G.play and context.scoring_name == "Full House" then
+
+      local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod_minus)
+
+      if drained_chips > 0 then
+        context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 1) + card.ability.extra.Xmult_multi
         return {
-          extra = {message = localize('k_upgrade_ex'), colour = G.C.XMULT},
+          message = localize('k_eroded_ex'),
           colour = G.C.CHIPS,
-          card = card
+          extra = {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.XMULT
+          },
         }
       end
     end
   end,
   megas = { "mega_tyranitar" },
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "xmult"},
 }
 local mega_tyranitar={
   name = "mega_tyranitar",
@@ -386,6 +387,7 @@ local mega_tyranitar={
       }
     end
   end,
+  attributes = {"hand_type", "chips", "modify_card", "perma_bonus"},
 }
 -- Lugia 249
 local lugia={
@@ -410,26 +412,24 @@ local lugia={
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-        card.ability.extra.Xmult = card.ability.extra.Xmult + (card.ability.extra.Xmult_mod * math.floor(card.ability.extra.drawn/card.ability.extra.to_draw))
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * math.floor(card.ability.extra.drawn / card.ability.extra.to_draw)
+          end,
+          message_colour = G.C.XMULT
+        })
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.XMULT
-        }
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        if card.ability.extra.Xmult > 1 then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
-        end
-      end
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
     end
   end,
+  attributes = {"xmult", "scaling"},
 }
 -- Ho-oh 250
 local ho_oh={
@@ -489,16 +489,17 @@ local ho_oh={
       juice_card_until(card, eval, true)
     end
   end,
+  attributes = {"generation"},
 }
 -- Celebi 251
 local celebi = {
   name = "celebi", 
   pos = {x = 4, y = 10},
   soul_pos = { x = 5, y = 10},
-  config = {extra = {reward = 1, skip_count = 0, skip_target = 1, Xmult_mod = .05}},
+  config = {extra = {reward = 1, skip_count = 0, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.skip_target, card.ability.extra.reward, card.ability.extra.skip_target - card.ability.extra.skip_count, 
+    return {vars = {(G.GAME.celebi_skips or 1), card.ability.extra.reward, (G.GAME.celebi_skips or 1) - card.ability.extra.skip_count, 
                     card.ability.extra.Xmult_mod, 1 + (G.GAME.round * card.ability.extra.Xmult_mod)}}
   end,
   rarity = 4,
@@ -512,11 +513,11 @@ local celebi = {
     if context.skip_blind and not context.blueprint then
       card:juice_up(0.1)
       card.ability.extra.skip_count = card.ability.extra.skip_count + 1
-      if card.ability.extra.skip_count >= card.ability.extra.skip_target then
+      if card.ability.extra.skip_count >= (G.GAME.celebi_skips or 1) then
         ease_ante(-card.ability.extra.reward)
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
-        card.ability.extra.skip_target = card.ability.extra.skip_target + 1
+        G.GAME.celebi_skips = (G.GAME.celebi_skips or 1) + 1
         card.ability.extra.skip_count = 0
       end
     end
@@ -531,6 +532,7 @@ local celebi = {
       end
     end
   end,
+  attributes = {"skip", "xmult"},
 }
 -- Treecko 252
 local treecko={
@@ -595,6 +597,7 @@ local treecko={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("treecko", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
 -- Grovyle 253
 local grovyle={
@@ -664,6 +667,7 @@ local grovyle={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("grovyle", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
 -- Sceptile 254
 local sceptile={
@@ -724,6 +728,7 @@ local sceptile={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("sceptile", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "types"},
 }
 -- Torchic 255
 local torchic={
@@ -782,6 +787,7 @@ local torchic={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("torchic", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
 -- Combusken 256
 local combusken={
@@ -839,6 +845,7 @@ local combusken={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("combusken", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
 -- Blaziken 257
 local blaziken={
@@ -928,6 +935,7 @@ local blaziken={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("blaziken", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "xmult", "types"},
 }
 -- Mudkip 258
 local mudkip={
@@ -991,6 +999,7 @@ local mudkip={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("mudkip", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
 -- Marshtomp 259
 local marshtomp={
@@ -1054,6 +1063,7 @@ local marshtomp={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
 -- Swampert 260
 local swampert={
@@ -1145,6 +1155,7 @@ local swampert={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_ranks("swampert", 3, card.ability.extra.targets)
   end,
+  attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "types", "tarot", "generation"},
 }
 -- Poochyena 261
 local poochyena={
@@ -1166,23 +1177,23 @@ local poochyena={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_colour = G.C.MULT
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_mightyena")
   end,
+  attributes = {"mult", "scaling", "round_evo"},
 }
 -- Mightyena 262
 local mightyena={
@@ -1204,22 +1215,25 @@ local mightyena={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     if context.remove_playing_cards and not context.blueprint then
       for _, removed_card in ipairs(context.removed) do
-        card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod + (card.ability.extra.mult_scaling_mod * #find_pokemon_type("Dark")))
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier + #find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
+          end,
+          message_colour = G.C.MULT
+        })
       end
     end
   end,
+  attributes = {"mult", "scaling", "types"},
 }
 -- Zigzagoon 263
 local zigzagoon={
@@ -1266,6 +1280,7 @@ local zigzagoon={
     end
     return level_evo(self, card, context, "j_poke_linoone")
   end,
+  attributes = {"chance", "generation", "item", "round_evo"},
 }
 -- Linoone 264
 local linoone={
@@ -1312,6 +1327,7 @@ local linoone={
       end
     end
   end,
+  attributes = {"chance", "generation", "item", "hand_type"},
 }
 -- Wurmple 265
 local wurmple={
@@ -1372,6 +1388,7 @@ local wurmple={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
   end,
+  attributes = {"chips", "mult", "nature", "suit", "condition_evo"},
 }
 -- Silcoon 266
 local silcoon={
@@ -1418,6 +1435,7 @@ local silcoon={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
+  attributes = {"mult", "nature", "suit", "condition_evo"},
 }
 -- Beautifly 267
 local beautifly={
@@ -1472,6 +1490,7 @@ local beautifly={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
+  attributes = {"mult", "nature", "suit", "chance", "hand_type"},
 }
 -- Cascoon 268
 local cascoon={
@@ -1518,6 +1537,7 @@ local cascoon={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
   end,
+  attributes = {"chips", "nature", "suit", "condition_evo"},
 }
 -- Dustox 269
 local dustox={
@@ -1575,6 +1595,7 @@ local dustox={
   set_nature = function(self,card)
     card.ability.extra.targets = get_poke_target_card_suit('dustox', true, 'Spades', {'Spades', 'Clubs'})
   end,
+  attributes = {"chips", "nature", "suit", "xmult"},
 }
 -- Lotad 270
 return {name = "Pokemon Jokers 240-270", 

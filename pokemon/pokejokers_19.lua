@@ -45,34 +45,39 @@ local trubbish={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.chips > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier * G.GAME.current_round.discards_left
+          end,
+          message_colour = G.C.CHIPS
+        })
+      
+        card.ability.extra.triggers = card.ability.extra.triggers + 1
       end
     end
+    return scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 then
-      card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.discards_left)
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
-      if card.ability.extra.triggers >= self.config.evo_rqmt and not next(find_joker("everstone")) then
-        poke_evolve(card, "j_poke_garbodor")
-      end
-      local earned = ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
-      return earned
+      return ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
     end
   end,
+  attributes = {"discard", "economy", "chips", "scaling", "trigger_evo"},
 }
 -- Garbodor 569
 local garbodor={
   name = "garbodor",
   pos = {x = 5, y = 5},
-  config = {extra = {chips = 0,chip_mod = 5,triggers = 0}},
+  config = {extra = {chips = 0,chip_mod = 5,triggers = 0, active = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -91,32 +96,41 @@ local garbodor={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.chips > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
       if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 and not context.blueprint then
-        card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * G.GAME.current_round.discards_left)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_value = 'chip_mod',
+          operation = function(ref_table, ref_value, initial, modifier)
+            ref_table[ref_value] = initial + modifier * G.GAME.current_round.discards_left
+          end,
+          message_colour = G.C.CHIPS
+        })
       end
-      if ((G.GAME.poke_ante_discards_used or 0) == 0) and G.GAME.blind.boss then
-        G.E_MANAGER:add_event(Event({
-          func = (function()
-              add_tag(Tag('tag_garbage'))
-              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-              return true
-          end)
-        }))
+      if (G.GAME.poke_ante_discards_used or 0) == 0 and G.GAME.blind.boss then
+        card.ability.extra.active = true
       end
     end
   end,
+  calc_dollar_bonus = function(self, card)
+    if card.ability.extra.active then
+      card.ability.extra.active = false
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          add_tag(Tag('tag_garbage'))
+          play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+          play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+          return true
+        end)
+      }))
+    end
+  end,
+  attributes = {"discard", "economy", "chips", "scaling", "tag", "generation"},
 }
 -- Zorua 570
 local zorua = {
@@ -266,6 +280,7 @@ local zorua = {
       self:set_ability(card)
     end
   end,
+  attributes = {"copying", "round_evo"},
 }
 return {name = "Pokemon Jokers 541-570", 
         list = {trubbish, garbodor, zorua},

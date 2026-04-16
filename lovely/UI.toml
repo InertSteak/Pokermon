@@ -51,25 +51,6 @@ payload = '''
 UIBox_button({id = k, col = true, label = {challenge_unlocked and localize(v.id, 'challenge_names') or localize('k_locked'),}, button = challenge_unlocked and 'change_challenge_description' or 'nil', colour = challenge_unlocked and (v.button_colour or G.C.RED) or G.C.GREY, minw = 4, scale = 0.4, minh = 0.6, text_colour = v.text_colour, focus_args = {snap_to = not snapped}}),
 '''
 
-
-# Description functionality, a little hacky but it works
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''
-if main_end then 
-    desc_nodes[#desc_nodes+1] = main_end 
-end
-'''
-position = "after"
-payload = '''
-if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
-  localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
-end
-'''
-match_indent = true
-
-
 # Card Effect Divider
 [[patches]]
 [patches.pattern]
@@ -95,4 +76,53 @@ elseif part.control.br then
     args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
   end
 '''
+match_indent = true
+
+### For SMODS BETA-1531, delete the above patch when the version requirement updates
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "elseif part.control.X or part.control.B then"
+position = "before"
+payload = '''
+elseif part.control.br then
+  local height = 0.05
+  local gaps = 0.2
+  local mid = 0.15
+  local sides = (tonumber(part.control.br) - gaps*2 - mid) / 2
+  -- spacing
+  args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minh = height}, nodes={}}}
+  if sides < gaps then
+    args.nodes[#args.nodes+1] = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = tonumber(part.control.br), minh = height}}}
+  else
+    local temp_nodes = {{n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TEXT_INACTIVE, minw = mid, minh = height}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", minw = gaps}, nodes={}},
+                        {n=G.UIT.C, config={align = "cm", colour = G.C.UI.TRANSPARENT_DARK, minw = sides, minh = height}, nodes={}}}
+    args.nodes[#args.nodes+1] = {{n=G.UIT.R, config={align = "cm", minw = tonumber(part.control.br)}, nodes=temp_nodes}}
+  end
+'''
+match_indent = true
+
+# Make room for more than 3 banned Boss Blinds in Challenges
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = "local temp_blind =  SMODS.create_sprite(0,0,1,1, G.ANIMATION_ATLAS[v.atlas or ''] or  'blind_chips',  v.pos) "
+position = "at"
+payload = '''
+local blind_size = #challenge.restrictions.banned_other > 3
+    and 1.6 - 0.4 * math.sqrt(#challenge.restrictions.banned_other) or 1
+local temp_blind =  SMODS.create_sprite(0,0,blind_size,blind_size, G.ANIMATION_ATLAS[v.atlas or ''] or  'blind_chips',  v.pos) 
+'''
+match_indent = true
+
+# Fix floating point number formatting
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''if num < 0.01 then return tostring(num) end'''
+position = "at"
+payload = '''if num < 0.01 then return string.format("%.0f", num) end'''
 match_indent = true

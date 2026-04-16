@@ -162,30 +162,24 @@ poke_add_shop_card = function(add_card, card)
 end
 
 poke_remove_card = function(target, card, trigger)
-      if target.ability.name == 'Glass Card' then 
-          target.shattered = true
-      else 
-          target.destroyed = true
-      end 
-      G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-        play_sound('tarot1')
-        card:juice_up(0.3, 0.5)
-        return true end }))
-      G.E_MANAGER:add_event(Event({
-          trigger = trigger and trigger or 'after',
-          delay = 0.2,
-          func = function() 
-              if target.ability.name == 'Glass Card' then 
-                  target:shatter()
-              else
-                  target:start_dissolve()
-              end
-          return true end }))
-      delay(0.3)
-      for i = 1, #G.jokers.cards do
-          G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
-      end
-      card:juice_up()
+  G.E_MANAGER:add_event(Event({
+    trigger = 'after',
+    delay = 0.4,
+    func = function()
+      play_sound('tarot1')
+      card:juice_up(0.3, 0.5)
+      return true
+    end
+  }))
+  G.E_MANAGER:add_event(Event({
+    trigger = trigger and trigger or 'after',
+    delay = 0.2,
+    func = function()
+      SMODS.destroy_cards(target, nil, true)
+      return true
+    end
+  }))
+  delay(0.3)
 end
 
 poke_debug = function(message, verbose, depth)
@@ -233,39 +227,11 @@ poke_vary_rank = function(card, decrease, seed, immediate)
 
   local next_rank = nil
   if decrease == nil then
-    -- randomize rank (decrease is nil)
-    local poss_ranks = {}
-    for _, v in pairs(G.P_CARDS) do
-      if v.suit == card.base.suit then
-        table.insert(poss_ranks, v.value)
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'random_rank'))
-    end
+    next_rank = pseudorandom_element(SMODS.Ranks, pseudoseed(seed or 'random_rank')).key
   elseif decrease then
-    -- only need to do this due to prev being a bad table (should be fixed in the next update)
-    local poss_ranks = {}
-    for _, v in pairs(SMODS.Ranks[card.base.value].prev) do
-      if SMODS.Ranks[v] and type(SMODS.Ranks[v].next) == "table" then
-        for _, _r in pairs(SMODS.Ranks[v].next) do
-          if _r == card.base.value then
-            table.insert(poss_ranks, v)
-            break
-          end
-        end
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'decrease_rank'))
-    end
-
-    -- once prev table is fixed can use this:
-    --[[
     if #SMODS.Ranks[card.base.value].prev > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].prev, pseudoseed(seed or 'decrease_rank'))
     end
-    --]]
   else
     if #SMODS.Ranks[card.base.value].next > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].next, pseudoseed(seed or 'increase_rank'))
@@ -762,4 +728,21 @@ poke_convert_to_set = function(element_or_list)
     end
     return set
   end
+end
+
+poke_drain_chips = function(card, amount)
+  if amount < 0 then return 0 end
+
+  local nominal_chips = card.base.nominal - (card.ability.nominal_drain or 0)
+  local bonus_chips = card.ability.bonus + (card.ability.perma_bonus or 0)
+
+  local base_drain = math.min(nominal_chips - 1, amount)
+
+  card.ability.nominal_drain = (card.ability.nominal_drain or 0) + base_drain
+
+  local bonus_drain = math.min(bonus_chips, amount - base_drain)
+
+  card.ability.perma_bonus = (card.ability.perma_bonus or 0) - bonus_drain
+
+  return base_drain + bonus_drain
 end

@@ -830,3 +830,78 @@ SMODS.DeckSkin {
 		},
 	},
 }
+
+-- APRILS FOOLS
+SMODS.Sound({
+    key = "ludicolo_cry",
+    path = "ludicolo.ogg"
+})
+
+SMODS.Atlas({
+  key = "miror_budicolo",
+  path = "miror_budicolo.png",
+  px = 71,
+  py = 95,
+  atlas_table = "ANIMATION_ATLAS",
+  frames = 4,
+  fps = 8,
+})
+
+SMODS.Atlas({
+  key = "shiny_miror_budicolo",
+  path = "shiny_miror_budicolo.png",
+  px = 71,
+  py = 95,
+  atlas_table = "ANIMATION_ATLAS",
+  frames = 4,
+  fps = 8,
+})
+
+SMODS.Atlas({
+  key = "capture_disc",
+  path = "capture_disc.png",
+  px = 71,
+  py = 95,
+})
+
+SMODS.Atlas({
+  key = "shiny_capture_disc",
+  path = "shiny_capture_disc.png",
+  px = 71,
+  py = 95,
+})
+
+SMODS.Sound({
+  key = "voltorb_flip_music",
+  path = "voltorb_flip_music.ogg",
+  select_music_track = function()
+    -- add a condition that it's series A
+    if pokermon_config.pokemon_aprilfools and next(SMODS.find_card("j_poke_voltorb",true)) then
+      return 999999999
+    end
+  end,
+  sync = false,
+  pitch = 1,
+  volume = 1,
+})
+
+SMODS.Sound({
+  key = "miror_b_music",
+  path = "miror_b_music.ogg",
+	select_music_track = function()
+    if G.hand then
+      for _, v in ipairs(G.hand.cards) do
+        if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
+      end
+    end
+
+    if G.play then
+      for _, v in ipairs(G.play.cards) do
+        if v.config.center.key == "m_poke_ludicolo" then return 9999999999 end
+      end
+    end
+	end,
+  sync = false,
+  pitch = 1,
+  volume = 1,
+})

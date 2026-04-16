@@ -614,55 +614,33 @@ jd_def["j_poke_politoed"] = {
         { text = "+",                              colour = G.C.MULT },
         {ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT},
     },
-    reminder_text = {
+    text = {
         { text = "(" },
         { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREY, 0.35},
         { text = ")" }
     },
-
-    extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        local count = 0
-        local suit = G.GAME.poke_poli_suit or "Spades"
-        if G.play then
-            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-            if text ~= 'Unknown' then
-                for _, scoring_card in pairs(scoring_hand) do
-                    if scoring_card:is_suit(suit) then
-                        count = count +
-                            JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-                    end
-                end
-            end
-        else
-            count = 3
-        end
-        card.joker_display_values.mult = count * card.ability.extra.mult
-        card.joker_display_values.localized_text = localize(suit, 'suits_plural')
+      local suit = G.GAME.poke_poli_suit or "Spades"
+      card.joker_display_values.localized_text = localize(suit, 'suits_plural')
     end,
+    extra_config = { colour = G.C.GREEN, scale = 0.3 },
     retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
-        local suit = joker_card.ability.extra.suits[joker_card.ability.extra.indice]
-        local total = #find_pokemon_type("Water")
-        local cards = scoring_hand and #scoring_hand or 0
-        local pos
-        local remainder
-        if cards > 0 then
-          for i=1, cards do
-            if scoring_hand[i] == playing_card then
-              pos = i
-              break
-            end
-          end
-          local retriggers = math.floor(total/cards)
-          remainder = total % cards
-          if pos <= remainder then retriggers = retriggers + 1 end
-          if held_in_hand then return 0 end
-              return (playing_card:is_suit(suit)) and (retriggers * JokerDisplay.calculate_joker_triggers(joker_card or 0)) or 0
+      if held_in_hand then return 0 end
+      local suit = G.GAME.poke_poli_suit or "Spades"
+      local suit_cards = {}
+      for i = 1, #scoring_hand do
+        if scoring_hand[i]:is_suit(suit) then
+          suit_cards[#suit_cards + 1] = scoring_hand[i]
+          break
         end
+      end
+      local first_suit = JokerDisplay.calculate_leftmost_card(suit_cards)
+      return first_suit and playing_card == first_suit and 
+           (#find_pokemon_type("Water") + joker_card.ability.extra.retriggers) * JokerDisplay.calculate_joker_triggers(joker_card) or 0
     end,
     style_function = function(card, text, reminder_text, extra)
-      if reminder_text and reminder_text.children[2] then
-        reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
+      if text and text.children[2] then
+        text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.poke_poli_suit or "Spades"], 0.35)
       end
       return false
     end
@@ -1421,15 +1399,12 @@ jd_def["j_poke_piloswine"] = {
 }
 
 --	Corsola
-jd_def["j_poke_corsola"] = { 
+jd_def["j_poke_corsola"] = {
     text = {
         { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
     },
-    text_config = { colour = G.C.MULT },
-calc_function = function(card)
-card.joker_display_values.mult = card.ability.extra.mult_mod * card.ability.extra.corsola_tally
-end
+text_config = { colour = G.C.MULT },
 }
 
 --	Remoraid
@@ -1779,10 +1754,11 @@ jd_def["j_poke_celebi"] = {
     { text = "[", colour = G.C.GREY },
     { ref_table ="card.ability.extra", ref_value = "skip_count", colour = G.C.GREY },
     { text = "/", colour = G.C.GREY },
-    { ref_table ="card.ability.extra", ref_value = "skip_target", colour = G.C.ORANGE },
+    { ref_table ="card.joker_display_values", ref_value = "skip_target", colour = G.C.ORANGE },
     { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
+    card.joker_display_values.skip_target = (G.GAME.celebi_skips or 1)
     card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
   end
 }

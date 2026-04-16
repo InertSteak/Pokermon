@@ -30,6 +30,7 @@ local cloyster={
       end
     end
   end,
+  attributes = {"chance", "retrigger"},
 }
 -- Gastly 092
 local gastly={
@@ -79,11 +80,13 @@ local gastly={
           eligible_card:set_edition(edition, true)
         end
       end
-      remove(self, card, context)
-      
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
-  end
+  end,
+  attributes = {"chance", "editions", "round_evo"},
 }
 -- Haunter 093
 local haunter={
@@ -137,12 +140,13 @@ local haunter={
           eligible_card:set_edition(edition, true)
         end
       end
-        
-      remove(self, card, context)
-      
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
       card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
-  end
+  end,
+  attributes = {"chance", "editions", "item_evo"},
 }
 -- Gengar 094
 local gengar={
@@ -220,7 +224,8 @@ local gengar={
       end
     end
   end,
-  megas = {"mega_gengar"}
+  megas = {"mega_gengar"},
+  attributes = {"editions"},
 }
 -- Mega Gengar 094-1
 local mega_gengar ={
@@ -254,6 +259,7 @@ local mega_gengar ={
       }))
     end
   end,
+  attributes = {"tag"},
 }
 -- Onix 095
 local onix={
@@ -290,7 +296,8 @@ local onix={
       end
     end
     return type_evo(self, card, context, "j_poke_steelix", "metal")
-  end
+  end,
+  attributes = {"modify_card", "enhancements", "type_evo"},
 }
 -- Drowzee 096
 local drowzee={
@@ -332,6 +339,7 @@ local drowzee={
       card.ability.extra.planets_used = planets_used
     end
   end,
+  attributes = {"xmult", "planet", "condition_evo"},
 }
 -- Hypno 097
 local hypno={
@@ -383,7 +391,8 @@ local hypno={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
     end
-  end
+  end,
+  attributes = {"xmult", "planet", "holding"},
 }
 -- Krabby 098
 local krabby={
@@ -411,7 +420,8 @@ local krabby={
       end
     end
     return level_evo(self, card, context, "j_poke_kingler")
-  end
+  end,
+  attributes = {"chips", "face", "round_evo"},
 }
 -- Kingler 099
 local kingler={
@@ -466,13 +476,14 @@ local kingler={
         }
       end
     end
-  end
+  end,
+  attributes = {"chips", "face", "modify_card", "enhancements"},
 }
 -- Voltorb 100
 local voltorb={
   name = "voltorb", 
   pos = {x = 8, y = 7}, 
-  config = {extra = {Xmult = 2, rounds = 4, volatile = 'right'}},
+  config = {extra = {Xmult = 1.75, rounds = 4, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -508,13 +519,14 @@ local voltorb={
       end
     end
     return level_evo(self, card, context, "j_poke_electrode")
-  end
+  end,
+  attributes = {"xmult", "volatile", "round_evo"},
 }
 -- Electrode 101
 local electrode={
   name = "electrode", 
   pos = {x = 9, y = 7}, 
-  config = {extra = {Xmult = 2.5, money = 3, volatile = 'right'}},
+  config = {extra = {Xmult = 2.25, money = 3, volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -551,7 +563,8 @@ local electrode={
         }
       end
     end
-  end
+  end,
+  attributes = {"xmult", "economy", "volatile"},
 }
 -- Exeggcute 102
 local exeggcute={
@@ -588,7 +601,8 @@ local exeggcute={
       end
     end
     return item_evo(self, card, context, "j_poke_exeggutor")
-  end
+  end,
+  attributes = {"mult", "suit", "hearts", "chance", "item_evo"},
 }
 -- Exeggutor 103
 local exeggutor={
@@ -626,7 +640,8 @@ local exeggutor={
         end
       end
     end
-  end
+  end,
+  attributes = {"mult", "xmult", "suit", "hearts", "chance"},
 }
 -- Cubone 104
 local cubone={
@@ -640,7 +655,7 @@ local cubone={
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     end
     local consumables_left = math.max(0, self.config.evo_rqmt - card.ability.extra.consumables_used)
-    return {vars = {card.ability.extra.mult, card.ability.extra.mult * ((G.consumeables and #G.consumeables.cards or 0) + #find_joker('thickclub')), consumables_left}}
+    return {vars = {card.ability.extra.mult, card.ability.extra.mult * (#poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')), consumables_left}}
   end,
   rarity = 1, 
   cost = 5, 
@@ -661,7 +676,7 @@ local cubone={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #G.consumeables.cards + #find_joker('thickclub')
+        local count = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * count}}, 
@@ -676,6 +691,7 @@ local cubone={
     end
     return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "holding", "condition_evo"},
 }
 -- Marowak 105
 local marowak={
@@ -687,8 +703,7 @@ local marowak={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thickclub
     end
-    local count = (G.consumeables and #G.consumeables.cards) or 0 
-    count = count + #find_joker('thickclub')
+    local count = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.card_limit, 
                     1 + (center.ability.extra.Xmult_mod * count)}}
   end,
@@ -703,7 +718,7 @@ local marowak={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #G.consumeables.cards + #find_joker('thickclub')
+        local count = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {1 + (card.ability.extra.Xmult_mod * count)}}, 
@@ -715,11 +730,24 @@ local marowak={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.card_limit
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit + limit
+            return true
+        end
+    }))
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.card_limit
-  end, 
+    local limit = card.ability.extra.card_limit
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.consumeables.config.card_limit = G.consumeables.config.card_limit - limit
+            return true
+        end
+    }))
+  end,
+  attributes = {"passive", "xmult"},
 }
 -- Hitmonlee 106
 local hitmonlee={
@@ -751,6 +779,7 @@ local hitmonlee={
       end
     end
   end,
+  attributes = {"xmult", "full_deck"},
 }
 -- Hitmonchan 107
 local hitmonchan={
@@ -782,6 +811,7 @@ local hitmonchan={
       end
     end
   end,
+  attributes = {"xmult", "full_deck"},
 }
 -- Lickitung 108
 local lickitung={
@@ -826,7 +856,8 @@ local lickitung={
       end
     end
     return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"xmult", "rank", "jack", "trigger_evo"},
 }
 -- Koffing 109
 local koffing={
@@ -866,7 +897,8 @@ local koffing={
       end
     end
     return level_evo(self, card, context, "j_poke_weezing")
-  end
+  end,
+  attributes = {"mult", "volatile", "round_evo"},
 }
 -- Weezing 110
 local weezing={
@@ -911,7 +943,8 @@ local weezing={
         G.GAME.blind:disable()
       end
     end
-  end
+  end,
+  attributes = {"mult", "volatile", "on_sell", "boss_blind"},
 }
 -- Rhyhorn 111
 local rhyhorn={
@@ -944,7 +977,8 @@ local rhyhorn={
       }
     end
     return level_evo(self, card, context, "j_poke_rhydon")
-  end
+  end,
+  attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "round_evo"},
 }
 -- Rhydon 112
 local rhydon={
@@ -999,7 +1033,8 @@ local rhydon={
       end
     end
     return item_evo(self, card, context, "j_poke_rhyperior")
-  end
+  end,
+  attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "retrigger", "item_evo"},
 }
 -- Chansey 113
 local chansey={
@@ -1060,7 +1095,8 @@ local chansey={
       card.ability.extra.triggers = 0
     end
     return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
-  end
+  end,
+  attributes = {"enhancements", "generation", "condition_evo"},
 }
 -- Tangela 114
 local tangela={
@@ -1128,6 +1164,7 @@ local tangela={
     end
     return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
+  attributes = {"enhancements", "chips", "mult", "economy", "chance", "trigger_evo"},
 }
 -- Kangaskhan 115
 local kangaskhan={
@@ -1159,7 +1196,8 @@ local kangaskhan={
       return true end }))
     G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest_cap
   end, 
-  megas = {"mega_kangaskhan"}
+  megas = {"mega_kangaskhan"},
+  attributes = {"passive", "economy"},
 }
 -- Mega Kangaskhan 115-1
 local mega_kangaskhan={
@@ -1207,6 +1245,7 @@ local mega_kangaskhan={
       card.ability.extra.consumeables_used = 0
     end
   end,
+  attributes = {"retrigger", "tag"},
 }
 -- Horsea 116
 local horsea={
@@ -1226,32 +1265,32 @@ local horsea={
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and not context.blueprint then
-        local upgraded = false
-        for k, v in ipairs(context.scoring_hand) do
-          if v:get_id() == 6 then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-            if not upgraded then upgraded = true end
-          end
-        end
-        if upgraded then
-          return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.MULT
-          }
+    if context.before and not context.blueprint then
+      local _6s = 0
+      for k, v in ipairs(context.scoring_hand) do
+        if v:get_id() == 6 then
+          _6s = _6s + 1
         end
       end
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
+      if _6s > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * _6s
+          end,
+          message_colour = G.C.MULT,
+        })
       end
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "rank", "six", "scaling", "scaling_evo"},
 }
 -- Seadra 117
 local seadra={
@@ -1271,31 +1310,28 @@ local seadra={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and card.ability.extra.mult > 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
-    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint then
-      if context.other_card:get_id() == 6 then
-        local has_king = false
-        for i = 1, #G.hand.cards do 
-          if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
-        end
-        if has_king then
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod * 2
-        else
-          card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        end
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
+    if context.individual and context.cardarea == G.play and not context.other_card.debuff and not context.blueprint
+        and context.other_card:get_id() == 6 then
+      local has_king = false
+      for i = 1, #G.hand.cards do
+        if G.hand.cards[i]:get_id() == 13 then has_king = true; break end
       end
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        operation = function(ref_table, ref_value, initial, change)
+          ref_table[ref_value] = initial + change * (has_king and 2 or 1)
+        end,
+      })
     end
     return type_evo(self, card, context, "j_poke_kingdra", "dragon")
   end,
+  attributes = {"mult", "rank", "six", "king", "scaling", "type_evo"},
 }
 -- Goldeen 118
 local goldeen={
@@ -1326,7 +1362,8 @@ local goldeen={
       }
     end
     return level_evo(self, card, context, "j_poke_seaking")
-  end
+  end,
+  attributes = {"enhancements", "retrigger", "round_evo"},
 }
 -- Seaking 119
 local seaking={
@@ -1356,7 +1393,8 @@ local seaking={
         card = card
       }
     end
-  end
+  end,
+  attributes = {"enhancements", "retrigger"},
 }
 -- Staryu 120
 local staryu={
@@ -1398,7 +1436,8 @@ local staryu={
       end
     end
     return item_evo(self, card, context, "j_poke_starmie")
-  end
+  end,
+  attributes = {"mult", "economy", "suit", "diamonds", "space", "item_evo"},
 }
 
 return {name = "Pokemon Jokers 91-120", 

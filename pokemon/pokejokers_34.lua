@@ -85,7 +85,8 @@ local gimmighoul={
         end
       end
     end
-  end
+  end,
+  attributes = {"enhancements", "economy", "condition_evo"},
 }
 local gimmighoulr={
   name = "gimmighoulr",
@@ -127,13 +128,17 @@ local gimmighoulr={
       local edition = {negative = true}
       card:set_edition(edition, true, true)
     end
-  end
+  end,
+  in_pool = function(self)
+    return false
+  end,
+  attributes = {"economy"},
 }
 -- Gholdengo 1000
 local gholdengo={
   name = "gholdengo",
   pos = {x = 13, y = 6},
-  config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5}},
+  config = {extra = {Xmult = 1, money_minus = 3, Xmult1 = 1, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money_minus, center.ability.extra.Xmult_multi}}
@@ -148,56 +153,54 @@ local gholdengo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        card.ability.extra.future_dollars = G.GAME.dollars
-      end
-      if context.joker_main then
-        return {
-          message = localize('poke_make_it_rain'), 
-          colour = G.C.MONEY,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
+    if context.joker_main then
+      return {
+        message = localize('poke_make_it_rain'),
+        colour = G.C.MONEY,
+        Xmult_mod = card.ability.extra.Xmult
+      }
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_gold') then
-      local dollars = nil
-      local buffer = nil
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        dollars = to_number(G.GAME.dollars or 0)
-        buffer = to_number(G.GAME.dollar_buffer or 0)
-      else
-        dollars = (G.GAME.dollars or 0)
-        buffer = (G.GAME.dollar_buffer or 0)
-      end
-      
-      if dollars + buffer - card.ability.extra.money_minus >= 0 then
-        card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
-        
-        G.GAME.dollar_buffer = buffer - card.ability.extra.money_minus
-        
+      local to_big = to_big or function(x) return x end
+
+      local dollars = to_big(G.GAME.dollars or 0)
+      local buffer = to_big(G.GAME.dollar_buffer or 0)
+      local money_minus = to_big(card.ability.extra.money_minus)
+
+      if dollars + buffer - money_minus >= to_big(0) then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_multi',
+          operation = function(ref_table, ref_value, initial, scalar_value)
+            SMODS.multiplicative_scaling(ref_table, ref_value, to_big(initial), to_big(scalar_value))
+          end,
+          no_message = true,
+        })
+
+        G.GAME.dollar_buffer = buffer - money_minus
+
         G.E_MANAGER:add_event(Event({
           func = function()
-              G.GAME.dollar_buffer = 0
+              G.GAME.dollar_buffer = to_big(0)
               return true
           end
         }))
-    
+
         return {
-          dollars = -card.ability.extra.money_minus,
+          dollars = -money_minus,
           card = card
         }
       end
     end
-    
     if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.Xmult = card.ability.extra.oXmult
+      card.ability.extra.Xmult = card.ability.extra.Xmult1
       return {
         message = localize('k_reset'),
         colour = G.C.RED
       }
     end
-  end
+  end,
+  attributes = {"enhancements", "economy", "xmult"},
 }
 -- Wo-Chien 1001
 -- Chien-Pao 1002

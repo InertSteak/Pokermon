@@ -473,7 +473,7 @@ retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_ca
 
 jd_def["j_poke_spearow"] = {
     text = {
-        { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        { ref_table = "card.ability.extra", ref_value = "cards_drawn", colour = G.C.ORANGE },
         {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },
@@ -484,7 +484,7 @@ jd_def["j_poke_spearow"] = {
 
 jd_def["j_poke_fearow"] = {
     text = {
-        { ref_table = "card.ability.extra", ref_value = "cards_scored", colour = G.C.ORANGE },
+        { ref_table = "card.ability.extra", ref_value = "cards_drawn", colour = G.C.ORANGE },
         {text = " "},
         { text = "[",                              colour = G.C.GREY },
         { ref_table = "card.ability.extra", ref_value = "card_threshold", colour = G.C.GREY  },
@@ -601,22 +601,11 @@ jd_def["j_poke_sandshrew"] = {
     { text = "+" },
     { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
   },
-  reminder_text = {
-    {text = "[", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
-    {text = "/", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
-    {text = "]", colour = G.C.GREY},
-  },
   text_config = { colour = G.C.CHIPS },
   calc_function = function(card)
     local chips
-    local count = card.ability.extra.glass_restored
-    local limit = 1
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-    card.joker_display_values.count = count
-    card.joker_display_values.limit = limit
   end
 }
 
@@ -625,25 +614,11 @@ jd_def["j_poke_sandslash"] = {
     { text = "+" },
     { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult" }
   },
-  reminder_text = {
-    {text = "[", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "count", colour = G.C.GREY},
-    {text = "/", colour = G.C.GREY},
-    {ref_table ="card.joker_display_values", ref_value = "limit", colour = G.C.ORANGE},
-    {text = "]", colour = G.C.GREY},
-  },
   text_config = { colour = G.C.CHIPS },
   calc_function = function(card)
     local chips
-    local count = card.ability.extra.glass_restored
-    local limit = card.ability.extra.glass_limit
     chips = card.ability.extra.sandshrew_tally * card.ability.extra.chip_mod
     card.joker_display_values.chips = chips
-    if count > limit then
-      count = limit
-    end
-    card.joker_display_values.count = count
-    card.joker_display_values.limit = limit
   end
 }
 
@@ -962,24 +937,10 @@ jd_def["j_poke_zubat"] = {
 
 jd_def["j_poke_golbat"] = {
     text = {
-        { text = "+",  colour = G.C.CHIPS },
-        { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult",  colour = G.C.CHIPS  },
-        {text = " "},
-        { text = "+",  colour = G.C.MULT },
-        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult",  colour = G.C.MULT  },
-        {text = " "},
-        {
-            border_nodes = {
-                { text = "X", colour = G.C.WHITE  },
-                { ref_table = "card.ability.extra", ref_value = "Xmult", colour = G.C.WHITE }
-            },
-        },
-
-        {text = " "},
-        { text = "+$",  colour = G.C.GOLD  },
-        { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult",  colour = G.C.GOLD  }
+        { text = "+" },
+        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
     },
-
+    text_config = { colour = G.C.MULT },
 }
 
 jd_def["j_poke_oddish"] = {
@@ -2436,16 +2397,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = 0
-        if G.consumeables then
-            for i = 1, #G.consumeables.cards do
-                if G.consumeables.cards[i].ability.name == "thickclub" then
-                    consumables = consumables + 2
-                elseif G.consumeables.cards[i].ability.name ~= "thickclub" then
-                    consumables = consumables + 1
-                end
-            end
-        end
+        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2463,18 +2415,8 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local clubs = 0
-        local consumables = 0
-        if G.consumeables then
-            for i = 1, #G.consumeables.cards do
-                if G.consumeables.cards[i].ability.name == "thickclub" then
-                    clubs = clubs + 1
-                elseif G.consumeables.cards[i].ability.name ~= "thickclub" then
-                    consumables = consumables + 1
-                end
-            end
-        end
-        Xmult = 1 + (card.ability.extra.Xmult_mod*consumables) + (card.ability.extra.Xmult_mod*2*clubs)
+        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end
 }
@@ -3140,11 +3082,11 @@ jd_def["j_poke_aerodactyl"] = {
         end
     end
     if count >= 4 then
-      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod) * 2
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult1 + card.ability.extra.Xmult_mod) * 2
     elseif count < 4 and count >= 2 then
-      card.joker_display_values.Xmult = (card.ability.extra.Xmult_original + card.ability.extra.Xmult_mod)
+      card.joker_display_values.Xmult = (card.ability.extra.Xmult1 + card.ability.extra.Xmult_mod)
     elseif count == 1 then 
-      card.joker_display_values.Xmult = card.ability.extra.Xmult_original
+      card.joker_display_values.Xmult = card.ability.extra.Xmult1
     else
       card.joker_display_values.Xmult = 1
     end

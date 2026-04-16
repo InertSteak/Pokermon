@@ -180,7 +180,7 @@ PokemonSprites = {
 {name = "staryu", base = {pos = {x = 28, y = 7}},alts = {AtlasJokersSeriesA = {artist = {'Chartreuse_Chamber', 'Xenellia'}}}},
 {name = "starmie", base = {pos = {x = 0, y = 8}},alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Chartreuse_Chamber'}}}},
 {name = "mega_starmie", base = {pos = {x = 10, y = 9}, soul_pos = {x = 11, y = 9}}, gen_atlas = 1},
-{name = "mrmime", base = {pos = {x = 2, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering', soul_pos = {x = 3, y = 8}}}},
+{name = "mrmime", base = {pos = {x = 2, y = 8}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering', soul_pos = {x = 3, y = 8, apply_edition = true}}}},
 {name = "galarian_mrmime", base = {pos = {x = 6, y = 5}},gen_atlas = 1},
 {name = "scyther", base = {pos = {x = 4, y = 8}},},
 {name = "jynx", base = {pos = {x = 6, y = 8}},},
@@ -188,8 +188,8 @@ PokemonSprites = {
 {name = "magmar", base = {pos = {x = 10, y = 8}},},
 {name = "pinsir", base = {pos = {x = 12, y = 8}},},
 {name = "mega_pinsir", base = {pos = {x = 8, y = 1}, soul_pos = {x = 9, y = 1}},gen_atlas = 1},
-{name = "tauros", base = {pos = {x = 14, y = 8}},},
-{name = "taurosh", base = {pos = {x = 0, y = 0}}, gen_atlas = 1,},
+{name = "tauros", base = {pos = {x = 14, y = 8}},alts= {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
+{name = "taurosh", base = {pos = {x = 0, y = 0}}, gen_atlas = 1,alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
 {name = "paldean_tauros", base = {pos = {x = 6, y = 6}},gen_atlas = 1},
 {name = "paldean_tauros_blaze", base = {pos = {x = 8, y = 6}},gen_atlas = 1},
 {name = "paldean_tauros_aqua", base = {pos = {x = 10, y = 6}},gen_atlas = 1},
@@ -343,7 +343,7 @@ PokemonSprites = {
 {name = "larvitar", base = {pos = {x = 10, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "pupitar", base = {pos = {x = 12, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
 {name = "tyranitar", base = {pos = {x = 14, y = 16}},alts = {AtlasJokersSeriesA = {artist = 'MyDude_YT'}}},
-{name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}}}},
+{name = "mega_tyranitar", base = {pos = {x = 4, y = 4}, soul_pos = {x = 5, y = 4}},gen_atlas = 2, alts = {AtlasJokersSeriesA = {artist = {'MyDude_YT', 'Silverfish07'}, soul_pos = {x = 5, y = 4, apply_edition = true}}}},
 {name = "lugia", base = {pos = {x = 16, y = 16}, soul_pos = {x = 17, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = 'Tovivi', layer = 'center'}}}},
 {name = "ho_oh", base = {pos = {x = 18, y = 16}, soul_pos = {x = 19, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
 {name = "celebi", base = {pos = {x = 20, y = 16}, soul_pos = {x = 21, y = 16}},alts = {AtlasJokersSeriesA = {artist = {name = {'Currently a placeholder!', 'Want your art here?', 'Join our Discord!'}}}}},
@@ -382,7 +382,7 @@ PokemonSprites = {
 {name = "pelipper", base = {pos = {x = 16, y = 18}},},
 {name = "ralts", base = {pos = {x = 18, y = 18}},},
 {name = "kirlia", base = {pos = {x = 20, y = 18}},},
-{name = "gardevoir", base = {pos = {x = 22, y = 18}},},
+{name = "gardevoir", base = {pos = {x = 22, y = 18}},alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
 {name = "mega_gardevoir", base = {pos = {x = 6, y = 4}, soul_pos = {x = 7, y = 4}},gen_atlas = 3},
 {name = "surskit", base = {pos = {x = 24, y = 18}},},
 {name = "masquerain", base = {pos = {x = 26, y = 18}},},
@@ -401,7 +401,7 @@ PokemonSprites = {
 {name = "hariyama", base = {pos = {x = 22, y = 19}},},
 {name = "azurill", base = {pos = {x = 24, y = 19}},},
 {name = "nosepass", base = {pos = {x = 26, y = 19}},},
-{name = "skitty", base = {pos = {x = 28, y = 19}},},
+{name = "skitty", base = {pos = {x = 28, y = 19}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
 {name = "delcatty", base = {pos = {x = 0, y = 20}},},
 {name = "sableye", base = {pos = {x = 2, y = 20}},},
 {name = "mega_sableye", base = {pos = {x = 8, y = 4}, soul_pos = {x = 9, y = 4}},gen_atlas = 3},
@@ -575,7 +575,7 @@ PokemonSprites = {
 {name = "gabite", base = {pos = {x = 16, y = 29}},},
 {name = "garchomp", base = {pos = {x = 18, y = 29}},},
 {name = "mega_garchomp", base = {pos = {x = 2, y = 7}, soul_pos = {x = 3, y = 7}},gen_atlas = 4},
-{name = "munchlax", base = {pos = {x = 20, y = 29}},},
+{name = "munchlax", base = {pos = {x = 20, y = 29}},alts = {AtlasJokersSeriesA = {artist = 'RedHaering'}}},
 {name = "riolu", base = {pos = {x = 22, y = 29}},},
 {name = "lucario", base = {pos = {x = 24, y = 29}},},
 {name = "mega_lucario", base = {pos = {x = 6, y = 6}, soul_pos = {x = 7, y = 6}},gen_atlas = 4},
@@ -1271,6 +1271,7 @@ PokemonSprites = {
 {name = "oologist", base = {pos = {x = 4, y = 4}}, others_atlas = true,},
 {name = "daycare", base = {pos = {x = 2,y = 4}}, others_atlas = true,},
 {name = "billion_lions", base = {pos = {x = 4, y = 3}, soul_pos = {x = 5, y = 3}}, others_atlas = true,},
+{name = "spiclops", base = {pos = {x = 6, y = 4}}, others_atlas = true,},
   }
 }
 
@@ -1311,13 +1312,20 @@ local poke_artist_info = {
   {url = 'https://www.reddit.com/user/My_Dude_CBC/', account = 'My_Dude_CBC'},
   {url = 'https://x.com/MyDude81058128'},
   {url = 'https://steamcommunity.com/profiles/76561198905899441',site = 'Steam', account = 'MyDude'},
-  {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")}
+  {url = 'https://pacmanforever.itch.io/', account = 'My Dude Studios', site = 'Itch.io', colour = HEX("FA5C5C")},
+  {url = 'https://ko-fi.com/mydudestudios', account = 'MyDude', site = 'Ko-fi', colour = HEX("72A5F2")}
   }},
   PigeonPie = {display_name = 'PigeonPie', artist_colour = HEX("FFED24"), highlight_colour = HEX("DE26FF"), links = {
     {url = 'https://www.instagram.com/pigeonpie08'},
     {url = 'https://www.tiktok.com/@pigeon_pie', account = 'pigeon_pie'}
   }},
   PrincessRoxie = {display_name = 'PrincessRoxie', artist_colour = HEX("FF88FF")},
+  --[[PurpleZaffre = {display_name = 'PurpleZaffre', artist_colour = G.C.WHITE, highlight_colour = HEX("6441A5"), links = {
+    {url = 'https://www.purplezaffre.com/', site = 'Website', account = 'PurpleZaffre.com', colour = HEX("6441A5")},
+    {url = 'https://www.deviantart.com/purplezaffre', site = 'Deviantart', account = 'PurpleZaffre'},
+    {url = 'https://bsky.app/profile/purplezaffre.bsky.social', site = 'Bluesky', account = 'PurpleZaffre'},
+    {URL = 'https://x.com/PurpleZaffre'}
+  }}, --]]
   RedHaering = {display_name = 'RedHaering', artist_colour = HEX("D44540"), links = {
     {url = 'https://redhaering.carrd.co/', account = 'RedHaering'}
   }},

@@ -19,6 +19,7 @@ local ambipom={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  attributes = {"passive", "hand_type"},
 }
 -- Drifloon 425
 -- Drifblim 426
@@ -56,6 +57,7 @@ local buneary={
     end
     return level_evo(self, card, context, "j_poke_lopunny")
   end,
+  attributes = {"mult", "round_evo"},
 }
 -- Lopunny 428
 local lopunny={
@@ -64,6 +66,7 @@ local lopunny={
   config = {extra = {mult = 5, Xmult = 2,scry = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     return {vars = {center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.scry}}
   end,
   designer = "King_Alloy",
@@ -119,6 +122,7 @@ local lopunny={
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
   megas = { "mega_lopunny" },
+  attributes = {"foresight", "mult", "xmult", "rank"},
 }
 -- Mega Lopunny 428-1
 local mega_lopunny={
@@ -128,6 +132,7 @@ local mega_lopunny={
   config = {extra = {scry = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     local hand = localize('poke_none')
     if G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
       local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
@@ -169,6 +174,7 @@ local mega_lopunny={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "xmult", "hand_type"},
 }
 
 -- Mismagius 429
@@ -191,49 +197,40 @@ local mismagius = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card then
-      if not context.other_card.debuff and context.other_card:is_face() then
-        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-        if SMODS.pseudorandom_probability(card, 'mismagius', card.ability.extra.num, card.ability.extra.dem, 'mismagius') then
-          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
+    if context.individual and context.cardarea == G.play
+        and context.other_card:is_face() and not context.other_card.debuff then
+      if SMODS.pseudorandom_probability(card, 'mismagius', card.ability.extra.num, card.ability.extra.dem, 'mismagius') then
+        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.CHIPS,
+        }
+      else
+        local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod)
+
+        if drained_chips > 0 then
           return {
-            message = localize('k_upgrade_ex'),
+            message = localize('k_eroded_ex'),
             colour = G.C.CHIPS,
-            card = context.other_card,
+            func = function()
+              SMODS.scale_card(card, {
+                ref_value = 'chips',
+                operation = function(ref_table, ref_value, initial)
+                  ref_table[ref_value] = initial + drained_chips
+                end,
+              })
+            end,
           }
-        else
-          local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
-          if drained_vals > 0 then
-            context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
-          end
-          local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
-          if drain_bonus > 0 then
-            context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
-            drained_vals = drained_vals + drain_bonus
-          end
-          if drained_vals > 0 then
-            card.ability.extra.chips = card.ability.extra.chips + drained_vals
-            return {
-              message = localize('k_eroded_ex'),
-              colour = G.C.CHIPS,
-              card = context.other_card,
-              extra = { func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}) end },
-            }
-          end
         end
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips,
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
   end,
+  attributes = {"face", "modify_card", "scaling", "chance", "perma_bonus", "chips"},
 }
 -- Honchkrow 430
 local honchkrow={
@@ -267,11 +264,57 @@ local honchkrow={
         Xmult_mod = card.ability.extra.Xmult_multi
       }
     end
-  end
+  end,
+  attributes = {"types", "joker", "xmult"},
 }
 -- Glameow 431
 -- Purugly 432
 -- Chingling 433
+local chingling={
+  name = "chingling",
+  pos = {x = 2, y = 2},
+  config = {extra = {Xmult_minus = 0.75, rounds = 2,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+      info_queue[#info_queue+1] = G.P_CENTERS.c_justice
+    end
+    return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
+  end,
+  rarity = 3,
+  cost = 3,
+  stage = "Baby",
+  ptype = "Psychic",
+  atlas = "Pokedex4",
+  gen = 4,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        faint_baby_poke(self, card, context) 
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult_minus
+        }
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          SMODS.add_card{set = 'Tarot', key = 'c_justice', edition = 'e_negative'}
+          return true
+        end
+      }))
+    end
+    return level_evo(self, card, context, "j_poke_chimecho")
+  end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
+}
 -- Stunky 434
 -- Skuntank 435
 -- Bronzor 436
@@ -316,7 +359,8 @@ local bonsly={
       playing_card_joker_effects({created_card})
     end
     return level_evo(self, card, context, "j_poke_sudowoodo")
-  end
+  end,
+  attributes = {"baby", "generation", "face", "enhancements", "round_evo"},
 }
 -- Mime Jr. 439
 local mimejr={
@@ -362,7 +406,8 @@ local mimejr={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_mime_ex"), colour = G.C.CHIPS})
     end
     return level_evo(self, card, context, "j_poke_mrmime")
-  end
+  end,
+  attributes = {"baby", "modify_card", "seals", "round_evo"},
 }
 -- Happiny 440
 local happiny={
@@ -414,6 +459,7 @@ local happiny={
     end
     return level_evo(self, card, context, "j_poke_chansey")
   end,
+  attributes = {"baby", "tarot", "generation", "chance", "round_evo"},
 }
 -- Chatot 441
 -- Spiritomb 442
@@ -464,6 +510,7 @@ local munchlax={
     end
     return level_evo(self, card, context, "j_poke_snorlax")
   end,
+  attributes = {"baby", "item", "generation", "round_evo"},
 }
 -- Riolu 447
 local riolu={
@@ -512,6 +559,7 @@ local riolu={
     end
     return level_evo(self, card, context, "j_poke_lucario")
   end,
+  attributes = {"baby", "spectral", "generation", "round_evo"},
 }
 -- Lucario 448
 local lucario={
@@ -547,9 +595,10 @@ local lucario={
       end
     end
   end,
+  attributes = {"editions", "xmult"},
 }
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, bonsly, mimejr, happiny, munchlax, riolu, lucario},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bonsly, mimejr, happiny, munchlax, riolu, lucario},
 }

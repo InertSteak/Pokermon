@@ -68,11 +68,39 @@ SMODS.Rarity{
     end,
 }
 
+--Load Custom Attributes
+if SMODS.Attribute then
+  SMODS.Attribute { key = "round_evo" }
+  SMODS.Attribute { key = "scaling_evo" }
+  SMODS.Attribute { key = "item_evo" }
+  SMODS.Attribute { key = "type_evo" }
+  SMODS.Attribute { key = "trigger_evo" }
+  SMODS.Attribute { key = "condition_evo" }
+  SMODS.Attribute { key = "starter" }
+  SMODS.Attribute { key = "holding" }
+  SMODS.Attribute { key = "item" }
+  SMODS.Attribute { key = "types" }
+  SMODS.Attribute { key = "volatile" }
+  SMODS.Attribute { key = "energy" }
+  SMODS.Attribute { key = "energy_count" }
+  SMODS.Attribute { key = "energy_limit" }
+  SMODS.Attribute { key = "ancient" }
+  SMODS.Attribute { key = "foresight" }
+  SMODS.Attribute { key = "baby" }
+  SMODS.Attribute { key = "nature" }
+  SMODS.Attribute { key = "hazards" }
+  SMODS.Attribute { key = "applies" }
+  SMODS.Attribute { key = "drain" }
+end
+
 --Load helper function files
+assert(SMODS.load_file("functions/pokeconstants.lua"))()
+assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
 assert(SMODS.load_file("functions/energyfunctions.lua"))()
+assert(SMODS.load_file("functions/pokeanimations.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 
@@ -207,189 +235,86 @@ G.P_CENTERS.e_polychrome.get_weight = function(self)
   return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
 end
 
---To remove the booster slot from shinies
-local removed = Card.remove
-function Card:remove()
-  if self.edition and self.edition.poke_shiny and not self.debuff and self.area and (self.area == G.jokers or self.area == G.hand or self.area == G.play) then
-    SMODS.change_booster_limit(-1)
+--To support Debris sleeve combo
+local card_set_ability_old = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
+      self.ability.card_limit = self.ability.card_limit - 1
   end
-  return removed(self)
+  local ret = card_set_ability_old(self, center, initial, delay_sprites)
+  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
+      if not self.ability then self.ability = {} end
+      self.ability.card_limit = (self.ability.card_limit or 0) + 1
+  end
+  return ret
 end
 
+
 function SMODS.current_mod.reset_game_globals(run_start)
-  local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard'}
+  if run_start then
+    if G.GAME.modifiers.no_energy then
+      G.GAME.energy_rate = 0
+    end
+  end
+
+  local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard', 'wingullcard'}
   for i = 1, #rank_resets do
     poke_reset_rank(rank_resets[i])
   end
   reset_espeon_card()
   reset_gligar_suit()
+  
+  poke_reset_type('cattype', {'skitty', 'delcatty'})
 end
 
---Tutorial WIP
---[[
-local gu = Game.update
-function Game:update(dt)
-	gu(self, dt)
-	if not G.PROFILES[G.SETTINGS.profile].poke_intro_complete then
-		G.FUNCS.poke_intro_controller()
-	end
-end
-G.FUNCS.poke_intro_controller = function()
-  	G.PROFILES[G.SETTINGS.profile].poke_intro_progress = G.PROFILES[G.SETTINGS.profile].poke_intro_progress
-		or {
-			state = "start",
-			completed = {},
-		}
-    if not G.SETTINGS.paused and not G.PROFILES[G.SETTINGS.profile].poke_intro_complete then
-      if G.STATE == G.STATES.MENU and not G.PROFILES[G.SETTINGS.profile].poke_intro_progress.completed.start then
-        G.PROFILES[G.SETTINGS.profile].poke_intro_progress.section = "start"
-        G.FUNCS.poke_intro_part("start")
-        G.PROFILES[G.SETTINGS.profile].poke_intro_progress.completed.start = true
-        G:save_progress()
-      end
-    end
-end
-G.FUNCS.poke_intro_part = function(_part)
-	local step = 1
-	G.SETTINGS.paused = true
-	if _part == "start" then
-    step = poke_info({
-        text_key = 'poke_intro_1',
-        attach = {major = G.ROOM_ATTACH, type = 'cm', offset = {x = 0, y = 0}},
-        step = step,
-    })
+function SMODS.current_mod.calculate(self, context)
+  -- Poliwag line suit
+  if context.after then
+    poke_change_poli_suit()
   end
+  -- Vending deck
+  if G.GAME.modifiers.vending == true then
+    if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                add_tag(Tag('tag_voucher'))
+                play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
+    end
+  end
+  --Hazard level
+  if context.first_hand_drawn then
+    if G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0 then
+      local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+      G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.4,
+          func = function()
+            poke_add_hazards(nil, hazards, G.hand)
+            return true
+          end
+      }))
+    end
+  end
+  --Garbodor
+  if context.pre_discard and not context.hook then
+    G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+  end
+end
+
+local old_end = end_round
+function end_round()
+  old_end()
   G.E_MANAGER:add_event(Event({
-      blockable = false,
-      timer = 'REAL',
-      func = function()
-        G.E_MANAGER:clear_queue("tutorial")
-        if G.OVERLAY_TUTORIAL.content then
-          G.OVERLAY_TUTORIAL.content:remove()
-        end
-        if G.OVERLAY_TUTORIAL.Jimbo then
-          G.OVERLAY_TUTORIAL.Jimbo:remove_button()
-          G.OVERLAY_TUTORIAL.Jimbo:remove_speech_bubble()
-        end
-        G.OVERLAY_TUTORIAL.step = nil
-      end
-  }), 'tutorial')
-  G.SETTINGS.paused = false
-end
+    trigger = 'after',
+    delay = 0.2,
+    func = function()
+      SMODS.calculate_context({evolution = true})
+      return true
+    end
+  }))
 
-
-function poke_info(args)
-  poke_debug("start poke info")
-	local overlay_colour = { 0.32, 0.36, 0.41, 0 }
-	ease_value(overlay_colour, 4, 0.6, nil, "REAL", true, 0.4)
-	G.OVERLAY_TUTORIAL = G.OVERLAY_TUTORIAL
-		or UIBox({
-			definition = {
-				n = G.UIT.ROOT,
-				config = { align = "cm", padding = 32.05, r = 0.1, colour = overlay_colour, emboss = 0.05 },
-				nodes = {},
-			},
-			config = {
-				align = "cm",
-				offset = { x = 0, y = 3.2 },
-				major = G.ROOM_ATTACH,
-				bond = "Weak",
-			},
-		})
-	G.OVERLAY_TUTORIAL.step = G.OVERLAY_TUTORIAL.step or 1
-	G.OVERLAY_TUTORIAL.step_complete = false
-	local row_dollars_chips = G.HUD and G.HUD:get_UIE_by_ID("row_dollars_chips") or G.ROOM_ATTACH
-	local align = args.align or "tm"
-	local step = args.step or 1
-	local attach = args.attach or { major = row_dollars_chips, type = "tm", offset = { x = 0, y = -0.5 } }
-	local pos = args.pos or { x = attach.major.T.x + attach.major.T.w / 2, y = attach.major.T.y + attach.major.T.h / 2 }
-	local button = args.button or { button = localize("b_next"), func = "tut_next" }
-	args.highlight = args.highlight or {}
-	G.E_MANAGER:add_event(
-		Event({
-			trigger = "after",
-			delay = 0.3,
-			func = function()
-				if G.OVERLAY_TUTORIAL and G.OVERLAY_TUTORIAL.step == step and not G.OVERLAY_TUTORIAL.step_complete then
-					if args.on_start then
-						args.on_start()
-					end
-					G.CONTROLLER.interrupt.focus = true
-					G.OVERLAY_TUTORIAL.Jimbo = G.OVERLAY_TUTORIAL.Jimbo or Card_Character(pos)
-					if type(args.highlight) == "function" then
-						args.highlight = args.highlight()
-					end
-					args.highlight[#args.highlight + 1] = G.OVERLAY_TUTORIAL.Jimbo
-					if args.text_key then
-						G.OVERLAY_TUTORIAL.Jimbo:add_speech_bubble(args.text_key, align, args.loc_vars)
-					end
-					G.OVERLAY_TUTORIAL.Jimbo:set_alignment(attach)
-					if args.hard_set then
-						G.OVERLAY_TUTORIAL.Jimbo:hard_set_VT()
-					end
-					G.OVERLAY_TUTORIAL.button_listen = nil
-					if G.OVERLAY_TUTORIAL.content then
-						G.OVERLAY_TUTORIAL.content:remove()
-					end
-					if args.content then
-						G.OVERLAY_TUTORIAL.content = UIBox({
-							definition = args.content(),
-							config = {
-								align = args.content_config and args.content_config.align or "cm",
-								offset = args.content_config and args.content_config.offset or { x = 0, y = 0 },
-								major = args.content_config and args.content_config.major or G.OVERLAY_TUTORIAL.Jimbo,
-								bond = "Weak",
-							},
-						})
-						args.highlight[#args.highlight + 1] = G.OVERLAY_TUTORIAL.content
-					end
-					if args.button_listen then
-						G.OVERLAY_TUTORIAL.button_listen = args.button_listen
-					end
-					if not args.no_button then
-						G.OVERLAY_TUTORIAL.Jimbo:add_button(
-							button.button,
-							button.func,
-							button.colour,
-							button.update_func,
-							true
-						)
-					end
-					G.OVERLAY_TUTORIAL.Jimbo:say_stuff(2 * #(G.localization.misc.tutorial[args.text_key] or {}) + 1)
-					if args.snap_to then
-						G.E_MANAGER:add_event(
-							Event({
-								trigger = "immediate",
-								blocking = false,
-								blockable = false,
-								func = function()
-									if
-										G.OVERLAY_TUTORIAL
-										and G.OVERLAY_TUTORIAL.Jimbo
-										and not G.OVERLAY_TUTORIAL.Jimbo.talking
-									then
-										local _snap_to = args.snap_to()
-										if _snap_to then
-											G.CONTROLLER.interrupt.focus = false
-											G.CONTROLLER:snap_to({ node = args.snap_to() })
-										end
-										return true
-									end
-								end,
-							}),
-							"tutorial"
-						)
-					end
-					if args.highlight then
-						G.OVERLAY_TUTORIAL.highlights = args.highlight
-					end
-					G.OVERLAY_TUTORIAL.step_complete = true
-				end
-				return not G.OVERLAY_TUTORIAL or G.OVERLAY_TUTORIAL.step > step or G.OVERLAY_TUTORIAL.skip_steps
-			end,
-		}),
-		"tutorial"
-	)
-	return step + 1
 end
---]]

@@ -32,10 +32,10 @@ local seed = {
    pos = { x = 1, y = 0 },
    config = {extra = {level = 0, level_max = 5, money = 15}},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
      return {vars = {center.ability.extra.level_max, math.max(0, center.ability.extra.level_max - center.ability.extra.level), center.ability.extra.money}}
    end,
-   weight = 0,
-   in_pool = function(self, args) return false end,
+   weight = 5,
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play and card.ability and card.ability.extra and type(card.ability.extra) == 'table' then
       card.temp_level = card.temp_level or card.ability.extra.level -- If this card has yet to score this hand, snapshot the starting level to handle delayed set_sprites calls
@@ -109,7 +109,37 @@ local flower = {
    end,
 }
 
+local ludicolo = {
+  key = "ludicolo",
+  atlas = "poke_miror_budicolo",
+  pos = { x = 0, y = 0 },
+  config = { },
+  loc_vars = function(self, info_queue, center)
+    return {vars = {}}
+  end,
+  no_rank = true,
+  no_suit = true,
+  replace_base_card = true,
+  always_scores = true,
+  weight = 0,
+  calculate = function(self, card, context)
+    if context.main_scoring and context.cardarea == G.play then
+      return {
+        message = localize("poke_ludicolo_ex"),
+        sound = 'poke_ludicolo_cry'
+      }
+    end
+  end,
+  in_pool = function(self, args) return false end,
+}
+
+local elist = { hazard, seed, flower} -- Would be nice to add all of the seed stages here since they are now more detailed than just numbers in the corner
+
+if pokermon_config.pokemon_aprilfools then
+  elist[#elist+1] = ludicolo
+end
+
 return {
    name = "Enhancements",
-   list = { hazard, seed, flower} -- Would be nice to add all of the seed stages here since they are now more detailed than just numbers in the corner
+   list = elist
 }

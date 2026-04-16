@@ -10,47 +10,17 @@ extended_family = {
   rotomf = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
   rotomfan = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
   rotomm = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
+  deoxys = {{item = true, name = "meteorite"}}
 }
-
-native_evo_items = {
-  "firestone", "waterstone", "leafstone", "thunderstone",
-  "dawnstone", "shinystone", "moonstone", "duskstone",
-  "sunstone", "icestone", "prismscale", "upgrade", "dubious_disc",
-  "linkcable", "kingsrock", "dragonscale", "hardstone",
-}
-
-poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
 
 type_sticker_applied = function(card)
   if not card then return false end
-  if card.ability.grass_sticker then
-    return "Grass"
-  elseif card.ability.fire_sticker then
-    return "Fire"
-  elseif card.ability.water_sticker then
-    return "Water"
-  elseif card.ability.lightning_sticker then
-    return "Lightning"
-  elseif card.ability.psychic_sticker then
-    return "Psychic"
-  elseif card.ability.fighting_sticker then
-    return "Fighting"
-  elseif card.ability.colorless_sticker then
-    return "Colorless"
-  elseif card.ability.dark_sticker then
-    return "Dark"
-  elseif card.ability.metal_sticker then
-    return "Metal"
-  elseif card.ability.fairy_sticker then
-    return "Fairy"
-  elseif card.ability.dragon_sticker then
-    return "Dragon"
-  elseif card.ability.earth_sticker then
-    return "Earth"
-  else
-    return false
+  for _, ptype in ipairs(POKE_TYPES) do
+    if card.ability[ptype:lower() .. '_sticker'] then
+      return ptype
+    end
   end
-  
+  return false
 end
 
 find_pokemon_type = function(target_type, exclude_card, exclude_name)
@@ -70,7 +40,7 @@ is_type = function(card, target_type)
 end
 
 get_type = function(card)
-  if card.ability then
+  if card and card.ability then
     local sticker = type_sticker_applied(card)
     if sticker then
       return sticker
@@ -82,7 +52,7 @@ get_type = function(card)
 end
 
 copy_scaled_values = function(card)
-  local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
+  local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
       if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) or card.config.center.copy_scaled then
@@ -93,32 +63,46 @@ copy_scaled_values = function(card)
   return values
 end
 
-remove = function(self, card, context, check_shiny)
-  card.getting_sliced = true
-  local flags = SMODS.calculate_context({ joker_type_destroyed = true, card = card })
-  if flags.no_destroy then
-    card.getting_sliced = nil
-    return
-  end
-  if check_shiny and card.edition and card.edition.poke_shiny then
-    SMODS.change_booster_limit(-1)
-  end
-  play_sound('tarot1')
-  card.T.r = -0.2
-  card:juice_up(0.3, 0.4)
-  card.states.drag.is = true
-  card.children.center.pinch.x = true
-  G.E_MANAGER:add_event(Event({
-      trigger = 'after', delay = 0.3, blockable = false,
+poke_fake_evolve = function(card, evolve_message, set_sprites)
+    G.E_MANAGER:add_event(Event({
       func = function()
-          G.jokers:remove_card(card)
-          card:remove()
-          card = nil
-          return true
+        if card.evolution_timer then return true end
+        card.evolution_timer = 0
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 1.5,
+            delay = 2.0,
+            func = (function(t) return t end)
+        }))
+        if set_sprites then
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              card:set_sprites(card.config.center)
+              return true
+            end
+          }))
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'ease',
+            ref_table = card,
+            ref_value = 'evolution_timer',
+            ease_to = 2.25,
+            delay = 1.0,
+            func = (function(t) return t end)
+        }))
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card.evolution_timer = nil
+            play_sound('tarot1')
+            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            return true
+          end
+        }))
+        return true
       end
-  }))
-  card.gone = true
-  return true
+    }))
 end
 
 poke_evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
@@ -192,7 +176,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target", "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target",                         "jacks_discarded"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -206,11 +190,6 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   -- value filtering
   if values_to_keep.hazards_drawn then
     values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
-  end
-
-  if values_to_keep.cards_scored and values_to_keep.cards_scored >= 15 and card.config.center.name == "spearow" then
-    values_to_keep.upgrade = true
-    values_to_keep.cards_scored = values_to_keep.cards_scored - 15
   end
   
   if card.config.center.poke_custom_values_to_keep then
@@ -288,7 +267,7 @@ end
 can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
-  if ((not context.repetition and not context.individual and context.end_of_round) or ignore_step) and not context.blueprint and not card.gone then
+  if (context.evolution or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
     return false
@@ -432,32 +411,6 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
-POKE_STAGES = {
-  ["Baby"] = { prev = nil, next = "Basic" },
-  ["Basic"] = { prev = "Baby", next = "One" },
-  ["One"] = { prev = "Basic", next = "Two" },
-  ["Two"] = { prev = "One", next = nil },
-  ["Legendary"] = { prev = "Legendary", next = "Legendary" },
-  ["Mega"] = { prev = nil, next = nil },
-}
-
-poke_add_stage = function (stage, prev_stage, next_stage)
-  POKE_STAGES[stage] = { prev = prev_stage, next = next_stage }
-end
-
-get_previous_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).prev
-end
-
-get_next_stage = function(stage)
-  return (POKE_STAGES[stage] or {}).next
-end
-
-HIGHEST_EVO_OVERRIDES = {
-  ["cosmog"] = { "solgaleo", "lunala" },
-  ["cosmoem"] = { "solgaleo", "lunala" },
-  ["kubfu"] = { "urshifu_single_strike", "urshifu_rapid_strike"},
-}
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
@@ -535,13 +488,6 @@ get_previous_from_mega = function(name, prefix, full_key)
   local prev_key = "j_"..prefix.."_"..prev
   return G.P_CENTERS["j_"..prefix.."_"..prev] and (full_key and prev_key or prev)
 end
-
-PREVIOUS_EVO_OVERRIDES = {
-  ["solgaleo"] = "cosmoem",
-  ["lunala"] = "cosmoem",
-  ["urshifu_single_strike"] = "kubfu",
-  ["urshifu_rapid_strike"] = "kubfu",
-}
 
 get_previous_evo = function(card, full_key)
   local center = card.config.center
@@ -653,16 +599,11 @@ get_evo_item_keys = function(card)
   return keys
 end
 
----@deprecated functionality is handled by generation code instead
-pokemon_in_pool = function()
-  return true
-end
-
 evo_item_use = function(self, card, area, copier)
     local applied = false
     local evolve = false
     for k, v in pairs(G.jokers.cards) do
-      if applied ~= true then
+      if applied ~= true and not v.debuff then
         if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name and not v.ability.extra.evolve then
           evolve = true
         elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" and not v.ability.extra.evolve then
@@ -688,6 +629,7 @@ highlighted_evo_item = function(self, card, area, copier)
     local evolve = false
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
     local choice = G.jokers.highlighted[1]
+    if choice.debuff then return false end
     if choice.ability and choice.ability.extra and type(choice.ability.extra) == "table" and type(choice.ability.extra.item_req) ~= "table" and choice.ability.extra.item_req == self.name and 
        not choice.ability.extra.evolve then
       evolve = true
@@ -904,7 +846,7 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
   local valid_stages = poke_convert_to_set(stage)
   local valid_rarities = poke_convert_to_set(pokerarity)
 
-  for k, v in pairs(G.P_CENTERS) do
+  for k, v in pairs(G.P_CENTER_POOLS.Joker) do
     if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
        and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
        and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
@@ -1046,6 +988,24 @@ get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   end
 end
 
+get_poke_target_card_enhancements = function(seed, num, options)
+  local enhancements = {}
+  local enhance_options = options or {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}       
+  
+  for i = 1, num do
+    local enhancement = pseudorandom_element(enhance_options, pseudoseed(seed))
+    enhancements[#enhancements + 1] = enhancement
+    
+    for j = 1, #enhance_options do
+      if enhance_options[j] == enhancement then
+        table.remove(enhance_options, j)
+      end
+    end
+  end
+  
+  return enhancements
+end
+
 add_target_cards_to_vars = function(vars, targets)
   for i=1, #targets do
     vars[#vars+1] = localize(targets[i].value or "Ace", 'ranks')
@@ -1113,7 +1073,7 @@ volatile_active = function(self, card, direction)
   local self_pos = 0
   local normal_pos = 0
   for i = 1, #G.jokers.cards do
-    local volatile = G.jokers.cards[i].config.center.volatile
+    local volatile = G.jokers.cards[i].ability and G.jokers.cards[i].ability.extra and type(G.jokers.cards[i].ability.extra) == 'table' and G.jokers.cards[i].ability.extra.volatile
     if G.jokers.cards[i] == card then
       self_pos = i
     end
@@ -1302,22 +1262,13 @@ poke_load_individual_sprite = function(self, card, card_table, other_card)
 end
 
 poke_change_poli_suit = function()
-  if not G.GAME.poke_poli_suit_change_triggered then
+  if G.GAME.poke_poli_suit then
     local suits = {"Spades", "Hearts", "Clubs", "Diamonds"}
-    if G.GAME.poke_poli_suit then
-      for i = 1, #suits do
-        if suits[i] == G.GAME.poke_poli_suit then
-          if i == #suits then
-            G.GAME.poke_poli_suit = suits[1]
-          else
-            G.GAME.poke_poli_suit = suits[i+1]
-          end
-          break
-        end
-      end
-    else
-      G.GAME.poke_poli_suit = "Hearts"
-    end
+    local i = get_index(suits, G.GAME.poke_poli_suit)
+    if i == #suits then i = 0 end
+    G.GAME.poke_poli_suit = suits[i+1]
+  else
+    G.GAME.poke_poli_suit = "Hearts"
   end
 end
 
@@ -1333,6 +1284,27 @@ poke_reset_rank = function(name)
     local card = pseudorandom_element(valid_cards, pseudoseed(name..G.GAME.round_resets.ante))
     G.GAME.current_round[name].rank = card.base.value
     G.GAME.current_round[name].id = card.base.id
+  end
+end
+
+poke_reset_type = function(name, exclude_names)
+  G.GAME.current_round[name] = "Grass"
+  local valid_types = {}
+  for k, v in ipairs(G.jokers.cards) do
+    local excluded = nil
+    for i = 1, #exclude_names do
+      if v.ability.name == exclude_names[i] then
+        excluded = true
+        break
+      end
+    end
+    
+    if get_type(v) and not excluded then
+      valid_types[#valid_types + 1] = get_type(v)
+    end
+  end
+  if #valid_types > 0 then
+    G.GAME.current_round[name] = pseudorandom_element(valid_types, pseudoseed(name..G.GAME.round_resets.ante))
   end
 end
 
@@ -1440,4 +1412,20 @@ poke_can_save_consumable = function(card)
   return (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Pocket"))
       or (G.GAME.poke_save_all and not (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.label:find("Wish")))
       or (card.config.center.saveable)
+end
+
+poke_get_consumeables = function()
+  local consumeables = {}
+  if G.STAGE ~= G.STAGES.RUN then return consumeables end
+  local count = 0
+  local areas = {G.jokers.cards, G.consumeables.cards}
+  for i = 1, #areas do
+    local area = areas[i]
+    for j = 1, #area do
+      if area[j].ability.consumeable then
+        consumeables[#consumeables + 1] = area[j]
+      end
+    end
+  end
+  return consumeables
 end

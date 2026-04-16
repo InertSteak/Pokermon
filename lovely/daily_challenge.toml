@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Set the seed
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''self.GAME.pseudorandom.seed = args.seed or (not (G.SETTINGS.tutorial_complete or G.SETTINGS.tutorial_progress.completed_parts['big_blind']) and "TUTORIAL") or generate_starting_seed()'''
+position = 'after'
+match_indent = true
+payload = '''
+if args.challenge and args.challenge.rules and args.challenge.rules.custom and args.challenge.rules.custom[1].id == "poke_mystery_dungeon" then
+  self.GAME.pseudorandom.seed = "poke_"..tostring(os.date("!%d%m%Y"))
+end
+'''

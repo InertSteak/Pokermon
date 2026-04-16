@@ -1,3 +1,6 @@
+# Important
+If you're having trouble loading the mod, try turning off Pixel Smoothing. This can *significantly* reduce the amount of loading needed.
+
 # Pokermon
 Huge thank you to [Lovely](https://github.com/ethangreen-dev/lovely-injector), [Steamodded](https://github.com/Steamopollys/Steamodded), [Cryptid](https://github.com/MathIsFun0/Cryptid) and [Betmma](https://github.com/betmma/my_balatro_mods)!
 This mod and its features would not be possible otherwise. Additonaly thank you to everyone who helps with the project, please check out the credits tab on the mod menu!
