@@ -494,12 +494,7 @@ local ruins_of_alph={
     end
     if context.setting_blind and not context.blueprint then
       for _ = 1, 3 do
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            local unown = SMODS.add_card({set = 'Joker', key = 'j_poke_unown', edition = 'e_negative'})
-            return true
-          end
-        }))
+        SMODS.add_card({set = 'Joker', key = 'j_poke_unown', edition = 'e_negative'})
       end
     end
     if context.selling_self and not context.blueprint then
@@ -523,7 +518,7 @@ local ruins_of_alph={
         if #jokers > 0 then
           return {
             message = localize('k_duplicated_ex'),
-            func = function()
+            func = function() -- display message before copy is created to match invis_joker behaviour
               local chosen_joker = pseudorandom_element(jokers, 'alph')
               local copy = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
               copy:add_to_deck()
