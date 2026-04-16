@@ -952,38 +952,30 @@ local misdreavus = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card then
-      if not context.other_card.debuff and context.other_card:is_face() then
-        context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain or 0
-        context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
-        local drained_vals = math.min(card.ability.extra.chip_mod, context.other_card.base.nominal - context.other_card.ability.nominal_drain - 1)
-        if drained_vals > 0 then
-          context.other_card.ability.nominal_drain = context.other_card.ability.nominal_drain + drained_vals
-        end
-        local drain_bonus = math.min(context.other_card.ability.bonus + context.other_card.ability.perma_bonus, card.ability.extra.chip_mod - drained_vals)
-        if drain_bonus > 0 then
-          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus - drain_bonus
-          drained_vals = drained_vals + drain_bonus
-        end
-        if drained_vals > 0 then
-          card.ability.extra.chips = card.ability.extra.chips + drained_vals
-          return {
-            message = localize('k_eroded_ex'),
-            colour = G.C.CHIPS,
-            card = context.other_card,
-            extra = { func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')}) end },
-          }
-        end
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+    if context.individual and context.cardarea == G.play
+        and context.other_card:is_face() and not context.other_card.debuff then
+
+      local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod)
+
+      if drained_chips > 0 then
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
+          message = localize('k_eroded_ex'),
           colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips,
+          func = function()
+            SMODS.scale_card(card, {
+              ref_value = 'chips',
+              operation = function(ref_table, ref_value, initial)
+                ref_table[ref_value] = initial + drained_chips
+              end,
+            })
+          end,
         }
       end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
     return item_evo(self, card, context, "j_poke_mismagius")
   end,

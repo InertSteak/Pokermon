@@ -729,3 +729,20 @@ poke_convert_to_set = function(element_or_list)
     return set
   end
 end
+
+poke_drain_chips = function(card, amount)
+  if amount < 0 then return 0 end
+
+  local nominal_chips = card.base.nominal - (card.ability.nominal_drain or 0)
+  local bonus_chips = card.ability.bonus + (card.ability.perma_bonus or 0)
+
+  local base_drain = math.min(nominal_chips - 1, amount)
+
+  card.ability.nominal_drain = (card.ability.nominal_drain or 0) + base_drain
+
+  local bonus_drain = math.min(bonus_chips, amount - base_drain)
+
+  card.ability.perma_bonus = (card.ability.perma_bonus or 0) - bonus_drain
+
+  return base_drain + bonus_drain
+end
