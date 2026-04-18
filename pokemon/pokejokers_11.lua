@@ -744,6 +744,38 @@ local mega_camerupt={
   attributes = {"xmult", "enhancements", "scaling", "reset"},
 }
 -- Torkoal 324
+local torkoal={
+  name = "torkoal",
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+    end
+    return {vars = {center.ability.extra.discard_minus}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  enhancement_gate = "m_mult",
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_mult') then
+      if G.GAME.current_round.discards_left > 0 then
+        card.ability.extra.active = true
+        return {
+          repetitions = G.GAME.current_round.discards_left
+        }
+      end
+    end
+  end,
+}
 -- Spoink 325
 -- Grumpig 326
 -- Spinda 327
@@ -818,5 +850,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
 }

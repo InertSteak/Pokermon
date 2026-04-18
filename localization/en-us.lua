@@ -3751,6 +3751,14 @@ return {
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
               }
             },
+            j_poke_torkoal = {
+              name = "Torkoal",
+              text = {
+                "Retrigger each played",
+                "{C:attention}Mult{} card for each",
+                "remaining {C:attention}discard",
+              }
+            },
             j_poke_spinda = {
               name = "Spinda",
               text = {
