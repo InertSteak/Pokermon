@@ -753,7 +753,7 @@ local torkoal={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_mult
     end
-    return {vars = {center.ability.extra.discard_minus}}
+    return {vars = {}}
   end,
   rarity = 3,
   cost = 7,
@@ -768,7 +768,6 @@ local torkoal={
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_mult') then
       if G.GAME.current_round.discards_left > 0 then
-        card.ability.extra.active = true
         return {
           repetitions = G.GAME.current_round.discards_left
         }
