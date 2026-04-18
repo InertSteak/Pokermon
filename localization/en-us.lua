@@ -3109,28 +3109,26 @@ return {
             j_poke_houndour = {
               name = "Houndour",
               text = {
-                "Discarding more than {C:attention}4{} cards",
-                "also discards {C:attention}#3#{} random cards {C:attention}held{} in hand",
+                "{C:attention}+#3#{} discard selection limit",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Discarded cards permanently gain {C:mult}+#1#{} Mult",
+                "Discarded cards permanently",
+                "gain {C:mult}+#1#{} Mult",
                 "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
               }
             },
             j_poke_houndoom = {
               name = "Houndoom",
               text = {
-                "{C:attention}Holding {C:spectral}Medium{}",
-                "Discarding more than {C:attention}4{} cards",
-                "also discards {C:attention}all{} cards {C:attention}held{} in hand",
+                "{C:attention}+#2#{} discard selection limit",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Discarded cards permanently gain {C:mult}+#1#{} Mult",
+                "Discarded cards permanently",
+                "gain {C:mult}+#1#{} Mult",
               }
             },
             j_poke_mega_houndoom = {
                 name = "Mega Houndoom",
                 text = {
-                  "Discarding also discards",
-                  "{C:attention}all{} cards {C:attention}held{} in hand",
+                  "{C:attention}+#3#{} discard selection limit",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Gains {X:mult,C:white} X#2# {} Mult whenever",
                   "cards are discarded",

@@ -984,10 +984,10 @@ local skarmory = {
 local houndour={
   name = "houndour",
   pos = {x = 6, y = 7},
-  config = {extra = {mult_mod = 1,rounds = 4, discards = 2, active = false}},
+  config = {extra = {mult_mod = 2,rounds = 4, limit = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.discards}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, center.ability.extra.limit}}
   end,
   rarity = 2,
   cost = 4,
@@ -999,65 +999,31 @@ local houndour={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
-      if card.ability.extra.active then
-        card.ability.extra.active = false
-      elseif #context.full_hand > 4 then
-        card.ability.extra.active = true
-      end
-    end
     if context.discard and context.other_card then
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
     end
-    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
-      G.E_MANAGER:add_event(Event({func = function()
-        card.ability.extra.active = false
-        local targets = {}
-        local selected = nil
-        for i=1, #G.hand.cards do
-          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
-            table.insert(targets, G.hand.cards[i])
-          end
-        end
-        pseudoshuffle(targets, pseudoseed('houndour'))
-        if #targets > 0 then
-          for i = 1, math.min(#targets, card.ability.extra.discards) do
-              G.hand:add_to_highlighted(targets[i], true)
-              selected = true
-              play_sound('card1', 1)
-          end
-          if selected then 
-            delay(0.2)
-            G.FUNCS.discard_cards_from_highlighted(nil, true)
-          end
-          for i = 1, math.min(#targets, card.ability.extra.discards) do
-              G.hand:remove_from_highlighted(targets[i], true)
-              targets[i]:highlight(true)
-          end  
-        end
-      return true end }))
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.active = false
-    end
     return level_evo(self, card, context, "j_poke_houndoom")
   end,
-  attributes = {"discard", "modify_card", "perma_bonus", "mult", "round_evo"},
+  add_to_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(card.ability.extra.limit)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(-card.ability.extra.limit)
+		if not G.GAME.before_play_buffer then
+			G.hand:unhighlight_all()
+		end
+  end,
+  attributes = {"passive", "discard", "modify_card", "perma_bonus", "mult", "round_evo"},
 }
 -- Houndoom 229
 local houndoom={
   name = "houndoom",
   pos = {x = 7, y = 7},
-  config = {extra = {mult_mod = 2,rounds = 5, active = false}},
+  config = {extra = {mult_mod = 2, limit = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Medium"}}
-      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_medium'}
-      info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'}
-    end
-    return {vars = {center.ability.extra.mult_mod}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.limit}}
   end,
   rarity = "poke_safari",
   cost = 7,
@@ -1069,69 +1035,32 @@ local houndoom={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook and not context.blueprint then
-      if card.ability.extra.active then
-        card.ability.extra.active = false
-      elseif #context.full_hand > 4 then
-        card.ability.extra.active = true
-      end
-    end
     if context.discard and context.other_card then
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
     end
-    if context.post_discard and card.ability.extra.active and not context.recursive and not context.blueprint then
-      G.E_MANAGER:add_event(Event({func = function()
-        card.ability.extra.active = false
-        local targets = {}
-        local selected = nil
-        for i=1, #G.hand.cards do
-          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
-            table.insert(targets, G.hand.cards[i])
-          end
-        end
-        if #targets > 0 then
-          local old_limit = G.hand.config.highlighted_limit
-          G.hand.config.highlighted_limit = #targets
-          for i = 1, #targets do
-              G.hand:add_to_highlighted(targets[i], true)
-              selected = true
-              play_sound('card1', 1)
-          end
-          if selected then 
-            delay(0.2)
-            G.FUNCS.discard_cards_from_highlighted(nil, true)
-          end
-          for i = 1, #targets do
-              G.hand:remove_from_highlighted(targets[i], true)
-              targets[i]:highlight(true)
-          end 
-          G.hand.config.highlighted_limit = old_limit
-        end
-      return true end }))
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.active = false
-    end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local _card = SMODS.add_card{set = 'Spectral', key = 'c_medium'}
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-    end
+		SMODS.change_discard_limit(card.ability.extra.limit)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(-card.ability.extra.limit)
+		if not G.GAME.before_play_buffer then
+			G.hand:unhighlight_all()
+		end
   end,
   megas = { "mega_houndoom" },
-  attributes = {"holding", "discard", "modify_card", "perma_bonus", "mult"},
+  attributes = {"passive", "discard", "modify_card", "perma_bonus", "mult"},
 }
 
 local mega_houndoom={
   name = "mega_houndoom",
   pos = {x = 8, y = 2},
   soul_pos = {x = 9, y = 2},
-  config = {extra = {Xmult = 1, Xmult_mod = 2, Xmult1 = 1}},
+  config = {extra = {Xmult = 1, Xmult_mod = 2, Xmult1 = 1, limit = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.limit}}
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -1155,36 +1084,6 @@ local mega_houndoom={
         message_colour = G.C.XMULT,
       })
     end
-    if context.post_discard and not context.recursive and not context.blueprint then
-      G.E_MANAGER:add_event(Event({func = function()
-        card.ability.extra.active = false
-        local targets = {}
-        local selected = nil
-        for i=1, #G.hand.cards do
-          if G.hand.cards[i] and not G.hand.cards[i].ability.discarded then
-            table.insert(targets, G.hand.cards[i])
-          end
-        end
-        if #targets > 0 then
-          local old_limit = G.hand.config.highlighted_limit
-          G.hand.config.highlighted_limit = #targets
-          for i = 1, #targets do
-              G.hand:add_to_highlighted(targets[i], true)
-              selected = true
-              play_sound('card1', 1)
-          end
-          if selected then 
-            delay(0.2)
-            G.FUNCS.discard_cards_from_highlighted(nil, true)
-          end
-          for i = 1, #targets do
-              G.hand:remove_from_highlighted(targets[i], true)
-              targets[i]:highlight(true)
-          end 
-          G.hand.config.highlighted_limit = old_limit
-        end
-      return true end }))
-    end
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult1
       return {
@@ -1192,6 +1091,15 @@ local mega_houndoom={
         colour = G.C.RED
       }
     end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(card.ability.extra.limit)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+		SMODS.change_discard_limit(-card.ability.extra.limit)
+		if not G.GAME.before_play_buffer then
+			G.hand:unhighlight_all()
+		end
   end,
   attributes = {"discard", "xmult", "scaling", "reset"},
 }
