@@ -1196,6 +1196,14 @@ jd_def["j_poke_mega_camerupt"] = {
 }
 
 --	Torkoal
+jd_def["j_poke_torkoal"] = {
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    local torkoal_retriggers = G.GAME.current_round.discards_left
+    if held_in_hand then return 0 end
+    return SMODS.has_enhancement(playing_card, 'm_mult') and (torkoal_retriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+  end
+}
+
 --	Spoink
 --	Grumpig
 --	Spinda
