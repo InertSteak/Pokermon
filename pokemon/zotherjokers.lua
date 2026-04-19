@@ -493,9 +493,14 @@ local ruins_of_alph={
       if added then table.sort(card.ability.extra.forms) end
     end
     if context.setting_blind and not context.blueprint then
-      for _ = 1, 3 do
-        SMODS.add_card({set = 'Joker', key = 'j_poke_unown', edition = 'e_negative'})
-      end
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          for _ = 1, 3 do
+            SMODS.add_card({set = 'Joker', key = 'j_poke_unown', edition = 'e_negative'})
+          end
+          return true
+        end
+      }))
     end
     if context.selling_self and not context.blueprint then
       if card.ability.extra.merged >= 28 then
