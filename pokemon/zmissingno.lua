@@ -199,9 +199,18 @@ local missingno ={
       local empty_con = G.consumeables.config.card_limit - #G.consumeables.cards
       if empty_con then
         for i=1, empty_con do
-          local copy = copy_card(_card, nil)
-          copy:add_to_deck()
-          G.consumeables:emplace(copy)
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+              func = (function()
+                  local copy = copy_card(_card, nil)
+                  copy:add_to_deck()
+                  G.consumeables:emplace(copy)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+              end)
+            }))
+          end
         end
       end
       local empty_jokers = G.jokers.config.card_limit - #G.jokers.cards - 1
