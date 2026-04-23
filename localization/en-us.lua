@@ -4360,6 +4360,15 @@ return {
                  "gives {X:mult,C:white} X#1# {} Mult",
               }
             },
+            j_poke_mega_lucario = {
+              name = "Mega Lucario",
+              text = {
+                 "Each card held in hand",
+                 "gives {X:mult,C:white} X#1# {} Mult if",
+                 "you have {C:attention}3+ unique",
+                 "{C:attention}editions{} held",
+              }
+            },
             j_poke_mantyke = {
                 name = "Mantyke",
                 text = {
