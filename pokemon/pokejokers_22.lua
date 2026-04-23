@@ -98,7 +98,7 @@ local hydreigon={
       }
     end
     if context.remove_playing_cards and not context.blueprint then
-      for _, removed_card in ipairs(context.removed) do
+      for _ = 1, #context.removed do
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_mod',
