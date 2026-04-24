@@ -84,6 +84,7 @@ local default_family_list = {
   { "numel", "camerupt", "mega_camerupt" },
   { "cacnea", "cacturne"},
   { "swablu", "altaria"},
+  {"corphish", "crawdaunt"},
   { "feebas", "milotic" },
   { "snorunt", "glalie", "froslass" },
   { "nosepass", "probopass" },

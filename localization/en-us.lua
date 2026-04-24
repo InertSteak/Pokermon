@@ -3814,6 +3814,27 @@ return {
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
             },
+            j_poke_corphish = {
+                name = "Corphish",
+                text = {
+                    "{C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "Gains {C:mult}+#2#{} Mult if",
+                    "played hand contains",
+                    "an unscored {C:attention}Nature{} card",
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+                } 
+            },
+            j_poke_crawdaunt = {
+                name = "Crawdaunt",
+                text = {
+                    "{C:attention}Nature: {C:inactive}({C:attention}#3#, #4#, #5#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Gains {C:mult}+#2#{} Mult for each",
+                    "unscored {C:attention}Nature{} card",
+                    "in played hand",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                } 
+            },
             j_poke_lileep = {
                 name = "Lileep",
                 text = {

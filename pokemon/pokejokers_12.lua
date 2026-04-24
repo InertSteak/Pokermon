@@ -182,7 +182,130 @@ local altaria={
 -- Barboach 339
 -- Whiscash 340
 -- Corphish 341
+local corphish={
+  name = "corphish",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 2, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}, evo_rqmt = 16},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+    end
+    
+    local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod, self.config.evo_rqmt}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    return {vars = card_vars}
+  end,
+  rarity = 1,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  gen = 3,
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      local natures = 0
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.in_scoring(v, context.scoring_hand) then
+          for i=1, #card.ability.extra.targets do
+            if v:get_id() == card.ability.extra.targets[i].id then
+              natures = natures + 1
+            end
+          end
+        end
+      end
+      if natures > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_colour = G.C.MULT,
+        })
+      end
+    end
+    
+    if context.joker_main then
+        return {
+            mult = card.ability.extra.mult
+        }
+    end
+    return scaling_evo(self, card, context, "j_poke_crawdaunt", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+  end,
+  attributes = {"passive", "nature", "rank", "mult"},
+}
 -- Crawdaunt 342
+local crawdaunt={
+  name = "crawdaunt",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 2, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+    end
+    
+    local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    return {vars = card_vars}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  gen = 3,
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+      if context.before and not context.blueprint then
+        local natures = 0
+        for k, v in pairs(context.full_hand) do
+          if not SMODS.in_scoring(v, context.scoring_hand) then
+            for i=1, #card.ability.extra.targets do
+              if v:get_id() == card.ability.extra.targets[i].id then
+                natures = natures + 1
+              end
+            end
+          end
+        end
+        if natures > 0 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            operation = function(ref_table, ref_value, initial, modifier)
+              ref_table[ref_value] = initial + (natures * modifier)
+            end,
+            message_colour = G.C.MULT
+          })
+        end
+    end
+    if context.joker_main then
+        return {
+            mult = card.ability.extra.mult
+        }
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+  end,
+  attributes = {"passive", "nature", "rank", "mult"},
+}
 -- Baltoy 343
 -- Claydol 344
 -- Lileep 345
@@ -828,5 +951,5 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
 }
