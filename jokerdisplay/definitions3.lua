@@ -1284,7 +1284,49 @@ jd_def["j_poke_altaria"] = {
 --	Barboach
 --	Whiscash
 --	Corphish
+jd_def["j_poke_corphish"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature2"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3"},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end
+}
+
 --	Crawdaunt
+jd_def["j_poke_crawdaunt"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature2"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3"},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end
+}
+
 --	Baltoy
 --	Claydol
 --	Lileep
