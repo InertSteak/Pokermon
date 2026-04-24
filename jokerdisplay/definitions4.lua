@@ -413,6 +413,41 @@ jd_def["j_poke_lucario"] = {
   end
 }
 
+--  Mega Lucario
+jd_def["j_poke_mega_lucario"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+  },
+  calc_function = function(card)
+    local playing_hand = next(G.play.cards)
+    local triggers = 0
+    local edition_type_count = 0
+    local edition = {}
+    for i = 1, #G.hand.cards do
+      local playing_card = G.hand.cards[i]
+      if playing_card.edition and not edition[playing_card.edition.type] and not playing_card.highlighted then
+        edition[playing_card.edition.type] = true
+        edition_type_count = edition_type_count + 1
+      end
+    end
+    if edition_type_count >= 3 then
+      for _, playing_card in ipairs(G.hand.cards) do
+        if playing_hand or not playing_card.highlighted then
+          if not (playing_card.facing == 'back') and not playing_card.debuff then
+            triggers = triggers + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+          end
+        end
+      end
+    end
+    card.joker_display_values.Xmult = (card.ability.extra.Xmult_multi^triggers)
+  end
+}
+
 --	Hippopotas
 --	Hippowdon
 --	Skorupi
