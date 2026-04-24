@@ -3818,6 +3818,7 @@ return {
                 name = "Corphish",
                 text = {
                     "{C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
                     "Gains {C:mult}+#2#{} Mult if",
                     "played hand contains",
                     "an unscored {C:attention}Nature{} card",
