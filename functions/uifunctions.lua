@@ -96,6 +96,21 @@ poke_random_text = function(strings, config)
           pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
 end
 
+poke_blueprint_compat_ui = function(copy)
+  local compatible = copy and copy.config.center.blueprint_compat
+
+  local text = localize('k_' .. (compatible and 'compatible' or 'incompatible'))
+  local colour = mix_colours(compatible and G.C.GREEN or G.C.RED, G.C.JOKER_GREY, 0.8)
+
+  return {
+    {n = G.UIT.C, config = {align = "bm", padding = 0.02}, nodes = {
+      {n = G.UIT.C, config = {align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes = {
+        {n = G.UIT.T, config = {text = ' ' .. text .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8}}
+      }}
+    }}
+  }
+end
+
 -- Collection Grid UI helper functions
 function poke_create_your_collection_card(key, x, y)
   local form = type(key == 'table') and key.form

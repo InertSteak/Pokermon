@@ -1382,18 +1382,7 @@ local smeargle={
     local found_pos = get_index(G.jokers.cards, card) + 1
     local other_joker = G.jokers.cards[found_pos]
 
-    local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
-
-    local text = localize('k_' .. (compatible and 'compatible' or 'incompatible'))
-    local colour = mix_colours(compatible and G.C.GREEN or G.C.RED, G.C.JOKER_GREY, 0.8)
-
-    local main_end = {
-      {n = G.UIT.C, config = {align = "bm", padding = 0.02}, nodes = {
-        {n = G.UIT.C, config = {align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes = {
-          {n = G.UIT.T, config = {text = ' ' .. text .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8}}
-        }}
-      }}
-    }
+    local main_end = poke_blueprint_compat_ui(other_joker)
 
     return { main_end = main_end }
   end,
