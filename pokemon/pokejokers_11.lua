@@ -49,7 +49,7 @@ local delcatty={
       other_joker.ability = true_ability
       other_joker.gone = nil
 
-      if type(ret) == 'table' then ret.colour = G.C.BLUE end
+      if ret then ret.colour = G.C.BLUE end
       return ret
     end
   end,

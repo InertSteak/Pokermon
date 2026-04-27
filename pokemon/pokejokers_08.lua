@@ -1424,7 +1424,7 @@ local smeargle={
     local copy = self:get_copy(card)
     if copy then
       local ret = SMODS.blueprint_effect(card, copy, context)
-      if type(ret) == 'table' then ret.colour = G.C.BLACK end
+      if ret then ret.colour = G.C.BLACK end
       return ret
     end
   end,
