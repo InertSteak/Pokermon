@@ -166,7 +166,7 @@ local zorua = {
         end
       }))
     end
-    if context.end_of_round and context.game_over == false and context.main_eval then
+    if context.end_of_round and context.game_over == false and context.main_eval and not card.ability.extra.active then
       card.ability.extra.active = true
       SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
