@@ -1396,8 +1396,7 @@ local smeargle={
   blueprint_compat = false,
   eternal_compat = true,
   get_copy = function(self, card)
-    local copy = card.sketched_joker
-    if copy and not copy.getting_sliced and not copy.removed then return copy end
+    if card.sketched_joker and not card.sketched_joker.removed then return card.sketched_joker end
     if card.ability.extra.copy_val then
       -- If we don't have a reference, such as after reloading, we need to find it again
       for _, v in ipairs(G.jokers.cards) do
