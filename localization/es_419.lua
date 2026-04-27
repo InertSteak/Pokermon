@@ -1,5 +1,6 @@
 -- Welcome to es_419.lua!
--- Me gustan los gatonejos
+-- Me gustan los gatonejos y las foquitas :3
+-- heyctf/toffie estuvo aquí
 return {
     descriptions = {
         Back = {
@@ -20,7 +21,6 @@ return {
 					"de {C:item,T:c_poke_twisted_spoon}#2#"
                 } 
             },
-            --Fun fact: this and luminious deck had their descriptions mixed up
             b_poke_obituarydeck = {
                 name = "Baraja obituaria",
                 text = {
@@ -86,7 +86,7 @@ return {
             b_poke_diceydeck = {
                 name = "Baraja tramposa",
                 text = {
-                    "{C:hazard}+#1# nivel de trampas y límite{}, {C:attention}+#1#{} tamaño de mano",
+                    "{C:hazard}+#1# nivel y límite de trampas{}","{C:attention}+#1#{} tamaño de mano",
                     "Al final de cada ronda:",
                     "Gana {C:money}#4# ${} por cada carta",
                     "{C:hazard}trampa{} en tu {C:attention}baraja completa",
@@ -887,18 +887,20 @@ return {
             j_poke_spearow = {
                 name = "Spearow",
                 text = {
-                    "Después de jugar {C:attention}#2#{} {C:inactive}[#3#]{} cartas",
-					"que anotan, aumenta el nivel",
-					"de la siguiente {C:attention}mano de póker{} jugada",
-					"{C:inactive}(Evoluciona tras {C:attention}#1#{C:inactive} rondas)"
+                    "Después de sacar {C:attention}#2#{} {C:inactive}[#3#]{} cartas",
+					"durante las {C:attention}ciegas{}, aumenta el nivel",
+					"de la siguiente {C:attention}mano de",
+					"{C:attention}póker{} jugada {C:inactive}#4#{}",
+					"{C:inactive}(Evoluciona tras activarse {C:attention}#1#{C:inactive} veces)"
                 } 
             },
             j_poke_fearow = {
                 name = "Fearow",
                 text = {
-                    "Después de jugar {C:attention}#1#{} {C:inactive}[#2#]{} cartas",
-					"que anotan, aumenta el nivel",
-					"de la siguiente {C:attention}mano","{C:attention}póker{} jugada {C:inactive}#3#{}",
+					"{C:red}+#4#{} descarte",
+                    "Después de sacar {C:attention}#1#{} {C:inactive}[#2#]{} cartas",
+					"durante las {C:attention}ciegas{}, aumenta el nivel",
+					"de la siguiente {C:attention}mano de","{C:attention}póker{} jugada {C:inactive}#3#{}",
                 }
             },
             j_poke_ekans = {
@@ -947,10 +949,6 @@ return {
                 text = {
                     "{C:chips}+#2#{} fichas por cada {C:attention}carta de{}",
                     "{C:attention}vidrio{} en tu {C:attention}baraja completa",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "{V:1}Añade una copia de la primera",
-					"{C:attention,V:1}carta de vidrio{V:1} que se destruya",
-                    "{V:1}cada ronda a tu mano",
                     "{C:inactive}(Actual {C:chips}+#3#{C:inactive} fichas)",
                     "{C:inactive}(Evoluciona tras {C:attention}#1#{C:inactive} rondas)"
                 } 
@@ -958,12 +956,12 @@ return {
             j_poke_sandslash = {
                 name = "Sandslash",
                 text = {
+                    "{C:green}#3# en #4#{} probabilidades por cada",
+                    "carta {C:attention}mejorada{} descartada",
+                    "de mejorarse a {C:attention}carta de vidrio",
+                    "{br:3}ERROR - CONTACT STEAK",
                     "{C:chips}+#1#{} fichas por cada {C:attention}carta de{}",
                     "{C:attention}vidrio{} en tu {C:attention}baraja completa",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "{V:1}Añade una copia de las primeras",
-					"{C:attention,V:1}#3#{} {C:inactive}[#4#]{} {C:attention,V:1}cartas de vidrio{V:1} que se",
-                    "{V:1}destruyan cada ronda a tu mano",
                     "{C:inactive}(Actual {C:chips}+#2#{C:inactive} fichas)",
                 } 
             },
@@ -1916,7 +1914,7 @@ return {
                     "Cada {C:attention}Tauros{} y {C:attention}Miltank{} que",
 					"tienes otorgan {X:mult,C:white} X#1# {} multi",
 					"{br:4}ERROR - CONTACT STEAK",
-					"Los cambios en la tienda tienen",
+					"Los {C:green}cambios{} en la tienda tienen",
 					"{C:green}#2# en #3#{} probabilidades de agregar",
 					"un {C:attention}Tauros (Manada){} a la tienda",
                 } 
@@ -3053,34 +3051,30 @@ return {
             j_poke_houndour = {
               name = "Houndour",
               text = {
-                "Descartar más de {C:attention}4{} cartas también",
-				"descarta {C:attention}#3#{} cartas al azar {C:attention}en tu mano{}",
-				"{br:2}ERROR - CONTACT STEAK",
+                "{C:attention}+#3#{} límite de selección","de cartas para descartar",
+                "{br:2}ERROR - CONTACT STEAK",
 				"Las cartas descartadas",
 				"ganan para siempre {C:mult}+#1#{} multi",
-				"{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+                "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
               }
             },
             j_poke_houndoom = {
               name = "Houndoom",
               text = {
-			    "{C:attention}Equipado con {C:spectral}Médium{}",
-                "Descartar más de {C:attention}4{} cartas también",
-				"descarta {C:attention}todas{} las cartas {C:attention}en tu mano{}",
-				"{br:2}ERROR - CONTACT STEAK",
+                "{C:attention}+#2#{} límite de selección","de cartas para descartar",
+                "{br:2}ERROR - CONTACT STEAK",
 				"Las cartas descartadas",
 				"ganan para siempre {C:mult}+#1#{} multi",
               }
             },
-			j_poke_mega_houndoom = {
+            j_poke_mega_houndoom = {
                 name = "Mega Houndoom",
                 text = {
-                  "Descartar también descarta",
-                  "{C:attention}todas{} las cartas {C:attention}en tu mano{}",
+                  "{C:attention}+#3#{} límite de selección","de cartas para descartar",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Obtiene {X:mult,C:white} X#2# {} multi",
-                  "cuando se descartan cartas",
-                  "{C:inactive,s:0.8}(Se restablece al final de la ronda)",
+                  "Obtiene {X:mult,C:white} X#2# {} multi cuando",
+                  "se descartan cartas",
+                  "{C:inactive}(Se restablece al final de la ronda)",
                   "{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
                 }
             },
@@ -3382,6 +3376,29 @@ return {
                   "cartas de {C:attention}naturaleza{}"
                 }
             },
+            j_poke_taillow = {
+              name = "Taillow",
+              text = {
+                "Cuando sacas un {C:attention}as{} durante",
+                "la {C:attention}ciega{}, obtiene {C:mult}+#2#{} multi",
+                "{C:inactive}(Se restablece al final de la ronda)",
+                "{C:inactive}(Actual {C:mult}+#1#{C:inactive} multi)",
+				"{C:inactive}(Evoluciona tras {C:attention}#3#{C:inactive} rondas)",
+              }
+            }, 
+            j_poke_swellow = {
+              name = "Swellow",
+              text = {
+			    "Cuando la {C:attention}ciega jefe{} es seleccionada,",
+                "las primeras {C:attention}2{} cartas de tu",
+                "baraja se vuelven {C:attention}ases",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Cuando sacas un {C:attention}as{} durante",
+                "la {C:attention}ciega{}, obtiene {C:mult}+#2#{} multi",
+                "{C:inactive}(Se restablece al final de la ronda)",
+                "{C:inactive}(Actual {C:mult}+#1#{C:inactive} multi)",
+              }
+            }, 
             j_poke_wingull = {
               name = "Wingull",
               text = {
@@ -3451,9 +3468,36 @@ return {
             j_poke_breloom = {
                 name = "Breloom",
                 text = {
-                  "Cuando se selecciona la {C:attention}ciega{}, gana","{C:chips}+#1#{} manos, {C:mult}+#2#{} descartes, o","{C:attention}+#3#{} tamaño de mano por esta ronda"
+                  "Cuando se selecciona la {C:attention}ciega{}, gana",
+				  "{C:chips}+#1#{} manos, {C:mult}+#2#{} descartes, o",
+				  "{C:attention}+#3#{} tamaño de mano por esta ronda"
                 }
             },
+			j_poke_slakoth = {
+                name = "Slakoth",
+                text = {
+                  "{C:mult}+#1#{} multi",
+                  "{C:chips}-#3#{} mano por esta ronda",
+                  "cuando juegas una mano",
+                  "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+                }
+            }, 
+            j_poke_vigoroth = {
+                name = "Vigoroth",
+                text = {
+                  "{X:mult,C:white} X#1# {} multi por cada","mano restante",
+                  "{C:inactive}(Actual {X:mult,C:white} X#2# {C:inactive} multi){}",
+                  "{C:inactive}(Evoluciona tras {C:attention}#3#{C:inactive} rondas","{C:inactive}sin descartar)",
+                }
+            }, 
+            j_poke_slaking = {
+                name = "Slaking",
+                text = {
+                  "{X:mult,C:white} X#1# {} multi",
+                  "{C:chips}-#2#{} mano por esta ronda",
+                  "cuando juegas una mano",
+                }
+            }, 
             j_poke_nincada = {
                 name = "Nincada",
                 text = {
@@ -3663,6 +3707,14 @@ return {
                 "{C:inactive}(Actual {X:mult,C:white} X#1# {C:inactive} multi)"
               }
             },
+            j_poke_torkoal = {
+              name = "Torkoal",
+              text = {
+                "Reactiva todas las cartas {C:attention}multi",
+                "jugadas por cada",
+                "{C:attention}descarte{} restante",
+              }
+            },
             j_poke_spinda = {
               name = "Spinda",
               text = {
@@ -3695,6 +3747,50 @@ return {
                 "{C:hazard}trampa{} en la {C:attention}primera{} mano",
                 "tras jugar una mano",
               }
+            },
+            j_poke_swablu = {
+              name = "Swablu",
+              text = {
+                "Cuando sacas un {C:attention}9",
+                "durante la {C:attention}ciega{}, obtiene",
+                "{C:chips}+#2#{} fichas y ganas {C:money}#3# ${}",
+                "{C:inactive}(Evoluciona cuando tiene","{C:chips}+#1#{C:inactive} / +#4# fichas)",
+              }
+            },
+            j_poke_altaria = {
+              name = "Altaria",
+              text = {
+                "Cuando sacas un {C:attention}9",
+                "durante la {C:attention}ciega{}, obtiene",
+                "{C:chips}+#2#{} fichas y ganas {C:money}#3# ${}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Obtiene {C:chips}+#4#{} fichas más y",
+                "ganas {C:money}#5# ${} más si tienes",
+                "otro comodín tipo {X:dragon,C:white}Dragón{}",
+                "{C:inactive}(Actual {C:chips}+#1#{C:inactive} fichas)",
+              }
+            },
+            j_poke_corphish = {
+                name = "Corphish",
+                text = {
+                    "{C:attention}Naturaleza: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Obtiene {C:mult}+#2#{} multi si",
+                    "la mano jugada contiene",
+                    "una carta de {C:attention}naturaleza{} que no anota",
+                    "{C:inactive}(Evoluciona cuando tiene","{C:mult}+#1#{C:inactive} / +#3# multi)",
+                } 
+            },
+            j_poke_crawdaunt = {
+                name = "Crawdaunt",
+                text = {
+                    "{C:attention}Naturaleza: {C:inactive}({C:attention}#3#, #4#, #5#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Obtiene {C:mult}+#2#{} multi por cada",
+                    "carta de {C:attention}naturaleza{} que no anota",
+                    "en la mano jugada",
+                    "{C:inactive}(Actual {C:mult}+#1#{C:inactive} multi)",
+                } 
             },
             j_poke_lileep = {
                 name = "Lileep",
@@ -3781,6 +3877,16 @@ return {
                 "y crea una carta {C:spectral}espectral{}",
                 "{C:inactive}(Debe haber espacio){}",
                 "{C:inactive}(Evoluciona con un {C:attention}Cordón Unión{C:inactive})"
+              }
+            },
+            j_poke_chimecho = {
+              name = "Chimecho",
+              text = { 
+                "Los {C:attention}vales{} en la tienda son {C:attention}gratis",
+                "{br:3}ERROR - CONTACT STEAK",
+                "{V:1}Agrega una copia de las primeras",
+                "{C:attention,V:1}#1#{} {C:inactive}[#2#]{} {C:attention,V:1}cartas de vidrio{V:1} destruidas",
+                "{V:1}a tu mano cada ronda",
               }
             },
             j_poke_absol = {
@@ -4022,8 +4128,8 @@ return {
                 name = "Deoxys (Velocidad)",
                 text = {
                   "Los sellos {C:attention}ADN{} crean copias",
-                  "que se {C:attention}reactivan 1 vez",
-                  "{C:attention}adicional",
+                  "con {C:chips}+#3#{} fichas adicionales",
+                  "para siempre",
                   "{C:inactive}(Se transforma con","{C:inactive}una carta de {C:planet}Meteorito{C:inactive}){}"
                 }
             },
@@ -4167,6 +4273,15 @@ return {
 				  "otorga {X:mult,C:white}X#1#{} multi",
                 }
             },
+			j_poke_chingling = {
+                name = 'Chingling',
+                text = {
+                    "{C:attention}Bebé{}, {X:mult,C:white} X#1# {} multi",
+                    "Crea una copia {C:dark_edition}negativa{} de",
+                    "{C:tarot}La justicia{} al final de la ronda",
+                    "{C:inactive}(Evoluciona tras {C:attention}#2#{C:inactive} rondas)",
+                }
+            },
             j_poke_bonsly = {
                 name = "Bonsly",
                 text = {
@@ -4219,6 +4334,15 @@ return {
                  "Cada carta con {C:attention}edición{}",
                  "en tu mano",
                  "otorga {X:mult,C:white} X#1# {} multi",
+              }
+            },
+            j_poke_mega_lucario = {
+              name = "Mega Lucario",
+              text = {
+                 "Cada carta en tu mano",
+                 "otorga {X:mult,C:white} X#1# {} multi si",
+                 "tienes {C:attention}3 o más{} {C:attention}ediciones",
+                 "únicas en tu mano",
               }
             },
             j_poke_mantyke = {
@@ -5579,10 +5703,10 @@ return {
             j_poke_oologist = {
                 name = "Oólogo",
                 text = {
-                    "Los cambios tienen un {C:green}#1# en #2#{}",
+                    "Los {C:green}cambios{} tienen un {C:green}#1# en #2#{}",
                     "probabilidades de añadir un",
                     "{C:attention}Huevo misterioso {C:dark_edition}negativo{} a la tienda",
-                    "Una vez por tienda {C:inactive}#3#"
+                    "{C:inactive}(Una vez por tienda) #3#"
                 }
             },
             j_poke_mystery_egg = {
@@ -5613,6 +5737,45 @@ return {
                 text = {
                     "Cuando la ciega es seleccionada, destruye","todos los comodines con un {C:pink}tipo{} que tengas","y obtiene {X:mult,C:white}X#2#{} multi por cada uno","{S:1.1,C:red,E:2}Se autodestruye{} cuando se quedá sin leones","{C:inactive}(Actual {X:mult,C:white}X#1#{C:inactive} multi, {C:attention}#3#{C:inactive} leones)"
                 } 
+            },
+            j_poke_spiclops = {
+                name = "Spiclops",
+                text = {
+                    "{C:hazard}+#1#{} Nivel de trampas, {C:attention}+#2#{} tamaño de mano",
+                    "Apply a random {C:attention}seal{} to",
+                    "every {C:attention}#3#th{} {C:attention}playing card {C:inactive}[#4#]{}",
+                    "added to your deck",
+                    "When {C:attention}Blind{} is selected",
+                    "gain hand size equal to the {C:attention}hazard level{} and",
+                    "lose {C:attention}1 discard{}",
+                    "If first played hand is",
+                    "all {C:attention} Hazard{} cards, gain",
+                    "{C:attention{}+1{} hand size this round for",
+                    "each card in that hand",
+                    "Adds a {C:blue}Blue{} seal to every third",
+                    "{C:attention}Hazard Card held{} in hand",
+                    "at end of round",
+                    "For every #5# {C:inactive}[#6#]{} {C:attention}Hazard Cards{} drawn",
+                    "create a {C:planet}Planet{} card for your",
+                    "most played hand {C:inactive}(Must have room){}"
+
+                }
+            },
+            j_poke_miror_budicolo = {
+                name = "Ludicolo",
+                text = {
+                    "¿¿Se agrega a sí mismo",
+                    "a tu baraja??"
+                },
+            },
+            j_poke_capture_disc = {
+                name = "Disco capturador",
+                text = {
+                    "Obtiene {C:mult}+#1#{} multi",
+                    "cuando es {C:attention}agitado{}",
+                    "{C:inactive}(Se restablece al","{C:inactive}final de la ronda)",
+                    "{C:inactive}(Actual {C:mult}+#2#{C:inactive} multi)"
+                },
             },
             --[[ Egg dynatext, not used right now
             j_poke_mystery_egg = {
@@ -5781,7 +5944,7 @@ return {
             sleeve_poke_diceysleeve = {
                 name = "Funda tramposa",
                 text = {
-                    "{C:hazard}+#1# nivel de trampas y límite{}, {C:attention}+#1#{} tamaño de mano",
+                    "{C:hazard}+#1# nivel y límite de trampas{}","{C:attention}+#1#{} tamaño de mano",
                     "Al final de cada ronda:",
                     "Gana {C:money}#4# ${} por cada carta",
                     "{C:hazard}trampa{} en tu {C:attention}baraja completa",
@@ -5861,14 +6024,12 @@ return {
                 text = {
                   "Es {C:attention}reusable{}",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "Destruye {C:attention}#1#{} cartas restantes",
-                  "de tu {C:attention}baraja{} al azar y",
-                  "sube de nivel la {C:attention}última mano jugada{}",
-                  "{C:inactive}(Última mano: {C:attention}#2#{C:inactive})",
+                  "Destruye {C:attention}1{} carta restante",
+                  "de tu {C:attention}baraja{} al azar",
                   "{br:3}ERROR - CONTACT STEAK",
                   "Transforma al {C:attention}Deoxys{} más a la",
                   "izquierda o seleccionado",
-				  "a su {C:attention}Forma #3#",
+				  "a su {C:attention}Forma #1#",
                   "{C:inactive,s:0.9}(La {C:attention,s:0.9}Forma{C:inactive,s:0.9} cambia con cada {C:green,s:0.9}cambio{C:inactive,s:0.9}){}",
                 }
             },
@@ -7105,7 +7266,9 @@ return {
             poke_m_stone = "de Piedra",
             poke_m_gold = "de Oro",
             poke_m_lucky = "de la Suerte",
-            poke_m_poke_seed = "Semilla"
+            poke_m_poke_seed = "Semilla",
+			
+			poke_ludicolo_ex = "¡Ludicolo!",
         },
         --These are the Labels
         --You know how things like seals and editions have those badges at the bottom? That's what this is for!
