@@ -923,21 +923,22 @@ local nosepass={
 local skitty={
   name = "skitty",
   pos = {x = 0, y = 0},
-  config = {extra = {change_to_type = nil}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
 
-    local highlight_colour = card.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
+    local cattype = G.GAME.current_round.cattype or "Grass"
+
+    local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
     local main_end
 
     if card.area and card.area == G.jokers then
       local found_pos = get_index(G.jokers.cards, card) + 1
       local other_joker = G.jokers.cards[found_pos]
-      main_end = poke_blueprint_compat_ui(is_type(other_joker, G.GAME.current_round.cattype or "Grass") and other_joker)
+      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
     end
 
-    return {vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}, main_end = main_end}
+    return {vars = {cattype, colours = {type_colour, highlight_colour}}, main_end = main_end}
   end,
   rarity = 3,
   cost = 7,
