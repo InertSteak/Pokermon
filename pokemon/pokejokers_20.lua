@@ -13,21 +13,10 @@ local zoroark = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-
-      local other_joker_ret = Card.calculate_joker(other_joker, context)
-
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
+    if other_joker and other_joker ~= card then
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
+      if ret then ret.colour = G.C.BLACK end
+      return ret
     end
   end,
   set_card_type_badge = function(self, card, badges)
@@ -51,7 +40,7 @@ local zoroark = {
     end
     G.E_MANAGER:add_event(Event({
       func = function()
-        if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
+        if card.area ~= G.jokers and not G.SETTINGS.paused then
           card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
           local _o = G.P_CENTERS[card.ability.extra.hidden_key]
           card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
