@@ -758,6 +758,11 @@ local kecleon = {
       card.children.center:set_sprite_pos(card.config.center.pos)
     end
   end,
+  set_type = function(self, card, ptype)
+    apply_type_sticker(card, ptype)
+    self:set_sprites(card)
+    SMODS.recalc_debuff(card)
+  end,
   update = function(self, card, dt)
     if not (card.area and card.area == G.jokers) then return end
     local other_joker
@@ -765,13 +770,12 @@ local kecleon = {
       if v == card then other_joker = G.jokers.cards[k+1] break end
     end
     if other_joker then
-      if get_type(card) ~= get_type(other_joker) then
-        apply_type_sticker(card, get_type(other_joker))
-        card.config.center:set_sprites(card)
+      local other_type = get_type(other_joker) or 'Colorless'
+      if get_type(card) ~= other_type then
+        self:set_type(card, other_type)
       end
     elseif not is_type(card, 'Colorless') then
-      apply_type_sticker(card, 'Colorless')
-      card.config.center:set_sprites(card)
+      self:set_type(card, 'Colorless')
     end
   end,
   attributes = {},
