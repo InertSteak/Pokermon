@@ -461,7 +461,7 @@ PokemonSprites = {
 {name = "feebas", base = {pos = {x = 6, y = 23}},},
 {name = "milotic", base = {pos = {x = 8, y = 23}},},
 {name = "castform", base = {pos = {x = 10, y = 23}},},
-{name = "kecleon", base = {pos = {x = 12, y = 23}},},
+{name = "kecleon", base = {pos = {x = 12, y = 23}},lookup_gen_atlas = 3},
 {name = "shuppet", base = {pos = {x = 14, y = 23}},},
 {name = "banette", base = {pos = {x = 16, y = 23}},},
 {name = "mega_banette", base = {pos = {x = 6, y = 5}, soul_pos = {x = 7, y = 5}},gen_atlas = 3},
