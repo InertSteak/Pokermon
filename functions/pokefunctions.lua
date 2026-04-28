@@ -564,8 +564,9 @@ get_family_keys = function(card)
     end
   end
   if center.name == "smeargle" then
-    if card.ability.extra.copy_joker then
-      table.insert(keys, card.ability.extra.copy_joker.config.center_key)
+    local copy = center:get_copy(card)
+    if copy then
+      table.insert(keys, copy.config.center.key)
     end
   end
   if center.name == "ruins_of_alph" then

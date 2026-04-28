@@ -1353,14 +1353,38 @@ local stantler={
 local smeargle={
   name = "smeargle",
   pos = {x = 3, y = 8},
-  config = {extra = {copy_joker = nil, copy_val = nil}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+  config = {extra = {copy_val = nil, copy_val__ID = nil}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_smeared', config = {} }
-      info_queue[#info_queue+1] = {set = 'Other', key = 'sketch', vars = {}}
+      info_queue[#info_queue+1] = {set = 'Joker', key = 'j_smeared', config = {}}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'sketch'}
     end
-    return {vars = {}}
+
+    if not (card.area and card.area == G.jokers) then return end
+
+    local copy = self:get_copy(card)
+    if copy then
+      -- Display the description of the copy, instead of the center
+      local other_center = copy.config.center
+      local new_config = copy_table(copy.ability)
+      if type(other_center.loc_vars) == 'function' then
+        local other_vars = other_center:loc_vars({}, copy)
+        if other_vars and other_vars.vars then
+          new_config.loc_vars_replacement = other_vars.vars
+        end
+      end
+      info_queue[#info_queue+1] = {set = 'Joker', key = other_center.key, name = other_center.name, config = new_config }
+    end
+
+    -- Add blueprint compatible/incompatible text
+    local found_pos = get_index(G.jokers.cards, card) + 1
+    local other_joker = G.jokers.cards[found_pos]
+
+    local main_end = poke_blueprint_compat_ui(other_joker)
+
+    return { main_end = main_end }
   end,
   rarity = 3,
   cost = 8,
@@ -1371,83 +1395,45 @@ local smeargle={
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.setting_blind and G.jokers.cards[#G.jokers.cards] ~= card and not card.getting_sliced then
-      local found_pos = get_index(G.jokers.cards, card) + 1
-      if G.jokers.cards[found_pos] and card.ability.blueprint_compat == 'compatible' then
-        card.ability.extra.copy_joker = G.jokers.cards[found_pos]
-        card.ability.extra.copy_val = G.jokers.cards[found_pos].unique_val
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+  get_copy = function(self, card)
+    if card.sketched_joker and not card.sketched_joker.removed then return card.sketched_joker end
+    if card.ability.extra.copy_val then
+      -- If we don't have a reference, such as after reloading, we need to find it again
+      for _, v in ipairs(G.jokers.cards) do
+        if v.unique_val == card.ability.extra.copy_val then
+          card.sketched_joker = v
+          return v
+        end
       end
-    end
-    -- On "load", check whether blueprinted joker exists, then re-set it
-    if card.ability.extra.copy_val and type(card.ability.extra.copy_joker) ~= 'table' then
-      card.ability.extra.copy_joker = poke_find_card(function(v) return v.unique_val == card.ability.extra.copy_val end)
-    end
-    -- Find the blueprinted joker
-    local other_joker = poke_find_card(function(v) return v == card.ability.extra.copy_joker end)
-    if not other_joker then
-      card.ability.extra.copy_joker = nil
+      -- If we can't find it (usually because we've sold/destroyed it) don't try again 
       card.ability.extra.copy_val = nil
     end
-    -- Calculate the blueprinted joker
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-      local other_joker_ret = other_joker:calculate_joker(context)
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
-    end
   end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    info_queue[#info_queue + 1] = { set = 'Joker', key = 'j_smeared', config = {} }
-    info_queue[#info_queue+1] = {set = 'Other', key = 'sketch', vars = {}}
-    type_tooltip(self, info_queue, card)
-    if card and card.ability and card.ability.extra.copy_joker then
-      local other_center = card.ability.extra.copy_joker.config.center
-      local new_config = copy_table(card.ability.extra.copy_joker.ability)
-      if type(other_center.loc_vars) == "function" then
-        local other_queue = {}
-        local other_vars = other_center:loc_vars(other_queue, card.ability.extra.copy_joker)
-        if other_vars and other_vars.vars then
-          new_config.loc_vars_replacement = other_vars.vars
-        end
-        if other_queue and #other_queue > 0 then
-          -- Can filter sub-tooltips for any "needed" tooltips
-        end
-      end
-      info_queue[#info_queue + 1] = { set = 'Joker', key = other_center.key, name = other_center.name, config = new_config }
-    end
-    local _c = card and card.config.center or card
-    if not full_UI_table.name then
-      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-    end
-    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-    card.ability.blueprint_compat_check = nil
-    local main_end = (card.area and card.area == G.jokers) and {
-      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-        }}
-      }}
-    }
-    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
-    desc_nodes[#desc_nodes+1] = main_end
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+  calculate = function(self, card, context)
+    if context.setting_blind and not card.getting_sliced then
       local found_pos = get_index(G.jokers.cards, card) + 1
-      local right_joker = G.jokers.cards[found_pos]
-      card.ability.blueprint_compat = ( right_joker and right_joker ~= card and not right_joker.debuff
-          and right_joker.config.center.blueprint_compat and 'compatible')
-          or 'incompatible'
+      local other_joker = G.jokers.cards[found_pos]
+      if other_joker and other_joker.config.center.blueprint_compat then
+        card.sketched_joker = other_joker
+        card.ability.extra.copy_val = other_joker.unique_val
+        card.ability.extra.copy_val__ID = other_joker.unique_val__saved_ID or other_joker.ID
+        SMODS.calculate_effect({message = localize('k_copied_ex')}, card)
+      end
+    end
+
+    local copy = self:get_copy(card)
+    if copy then
+      local ret = SMODS.blueprint_effect(card, copy, context)
+      if ret then ret.colour = G.C.BLACK end
+      return ret
+    end
+  end,
+  load = function(self, card, card_table, other_card)
+    -- Fix for an incredibly niche scenario where a reload *could* facilitate your copy reference changing
+    -- In reality this would never actually happen, but in theory it *can* so we're fixing that
+    local copy_ID = card_table.ability.extra.copy_val__ID
+    if copy_ID and G.ID <= copy_ID then
+      G.ID = copy_ID + 1
     end
   end,
   attributes = {"copying", "applies", "suit", "diamonds", "hearts", "clubs", "spades"},

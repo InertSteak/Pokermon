@@ -148,34 +148,27 @@ local zorua = {
   rental_compat = false,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and not context.no_blueprint and card.ability.extra.active then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-
-      local other_joker_ret = Card.calculate_joker(other_joker, context)
-
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
+    if other_joker and other_joker ~= card and card.ability.extra.active then
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
+      if ret then
+        ret.colour = G.C.BLACK
+        SMODS.calculate_effect(ret, card)
       end
     end
-    if context.after and G.jokers.cards[#G.jokers.cards] ~= card and card.ability.extra.active then
+    if context.after and other_joker ~= card and card.ability.extra.active then
       G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = 0.2,
-        func = function() 
+        func = function()
           card.ability.extra.active = false
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_reveal_ex')})
-      return true end }))
+          SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
+          return true
+        end
+      }))
     end
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and context.game_over == false and context.main_eval and not card.ability.extra.active then
       card.ability.extra.active = true
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
     return level_evo(self, card, context, "j_poke_zoroark")
   end,
@@ -198,19 +191,15 @@ local zorua = {
     if not type_sticker_applied(card) and not poke_is_in_collection(card) and not G.SETTINGS.paused then
       apply_type_sticker(card, "Dark")
     end
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-          card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-          local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-          card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-          card.children.center:set_sprite_pos(_o.pos)
-        else
-          card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-          card.children.center:set_sprite_pos(self.pos)
-        end
-        return true
-      end }))
+    if card.area ~= G.jokers and not G.SETTINGS.paused then
+      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
+      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
+      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
+      card.children.center:set_sprite_pos(_o.pos)
+    else
+      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.center:set_sprite_pos(self.pos)
+    end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
