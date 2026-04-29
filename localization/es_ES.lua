@@ -2997,12 +2997,9 @@ return {
             j_poke_smeargle = {
                 name = "Smeargle",
                 text = {
-                  "{C:attention}Esquematiza{} la habilidad",
-				  "del {C:attention}comodín{} de la derecha",
+                  "{C:attention}Esquematiza{} la habilidad del",
+                  "{C:attention}comodín{} de la derecha",
 				  "cuando la ciega es seleccionada",
-				  "{br:2}ERROR - CONTACT STEAK",
-				  "Aplica la habilidad del",
-				  "{C:attention}Comodín borroso{}",
                 }
             },
             j_poke_tyrogue = {
@@ -3779,8 +3776,8 @@ return {
                     "{C:attention}Naturaleza: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Obtiene {C:mult}+#2#{} multi si",
-                    "la mano jugada contiene",
-                    "una carta de {C:attention}naturaleza{} que no anota",
+                    "la mano jugada contiene una",
+                    "carta de {C:attention}naturaleza{} que no anota",
                     "{C:inactive}(Evoluciona cuando tiene","{C:mult}+#1#{C:inactive} / +#3# multi)",
                 } 
             },
@@ -6599,11 +6596,9 @@ return {
             sketch = {
               name = "Esquema",
               text = {
-                "{s:0.9}Copia a un comodín hasta que es vendido,",
-				"{s:0.9}destruido o copias otra habilidad",
-				"{s:0.9}La copia aparece en una ventana adicional",
-				"{s:0.9}y cuando haces clic derecho en Smeargle",
-				"{s:0.9}Se restablece cuando copias uno nuevo"
+                "Copia una habilidad hasta",
+                "que el comodín copiado es",
+                "destruido o copias otra habilidad"
               }
             },
             unlimited_energy_tooltip = {
