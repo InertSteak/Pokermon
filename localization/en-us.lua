@@ -3796,21 +3796,21 @@ return {
               name = "Swablu",
               text = {
                 "When you draw a {C:attention}9",
-                "during the {C:attention}Blind{}, gain",
-                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
-                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+                "during the {C:attention}Blind{}",
+                "gain {C:chips}+#2#{} Chips",
+                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
               }
             },
             j_poke_altaria = {
               name = "Altaria",
               text = {
-                "When you draw a {C:attention}9",
-                "during the {C:attention}Blind{}, gain",
-                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+                "When you draw a {C:attention}9{} during",
+                "the {C:attention}Blind{}, gain {C:chips}+#2#{} Chips",
+                "and {C:green}#4# in #5#{} chance to",
+                "earn {C:money}$#3#{} as well",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Gain an extra {C:chips}+#4#{} Chips and",
-                "earn an extra {C:money}$#5#{} if you",
-                "have another {X:dragon,C:white}Dragon{} Joker",
+                "Guaranteed if you have",
+                "another {X:dragon,C:white}Dragon{} Joker",
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
             },

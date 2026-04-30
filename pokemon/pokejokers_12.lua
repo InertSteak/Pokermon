@@ -82,10 +82,10 @@ local cacturne = {
 local swablu={
   name = "swablu",
   pos = {x = 0, y = 0},
-  config = {extra = {chips = 0,chip_mod = 2,money_mod = 1,}, evo_rqmt = 36},
+  config = {extra = {chips = 0,chip_mod = 2,}, evo_rqmt = 36},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, self.config.evo_rqmt}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
   end,
   rarity = 1,
   cost = 4,
@@ -105,14 +105,6 @@ local swablu={
             scalar_value = 'chip_mod',
             message_colour = G.C.CHIPS
           })
-          local earned = ease_poke_dollars(card, "swablu", card.ability.extra.money_mod)
-          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  G.GAME.dollar_buffer = 0
-                  return true
-              end
-          }))
         end
       end
     end
@@ -129,10 +121,11 @@ local swablu={
 local altaria={
   name = "altaria",
   pos = {x = 0, y = 0},
-  config = {extra = {chips = 0,chip_mod = 4,money_mod = 1, chip_mod_extra = 2, money_mod_extra = 1}},
+  config = {extra = {chips = 0,chip_mod = 3,money_mod = 1,num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, center.ability.extra.chip_mod_extra, center.ability.extra.money_mod_extra}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'altaria')
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, num, dem}}
   end,
   rarity = "poke_safari",
   cost = 6,
@@ -155,15 +148,16 @@ local altaria={
             end,
             message_colour = G.C.CHIPS
           })
-          local extra = (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.money_mod_extra or 0)
-          local earned = ease_poke_dollars(card, "swablu", card.ability.extra.money_mod + extra)
-          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  G.GAME.dollar_buffer = 0
-                  return true
-              end
-          }))
+          if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#find_pokemon_type("Dragon", card) > 0) then
+            local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+          end
         end
       end
     end
@@ -185,7 +179,7 @@ local altaria={
 local corphish={
   name = "corphish",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 2, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}, evo_rqmt = 16},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
@@ -247,7 +241,7 @@ local corphish={
 local crawdaunt={
   name = "crawdaunt",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 2, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
