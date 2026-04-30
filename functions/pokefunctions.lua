@@ -814,6 +814,8 @@ apply_type_sticker = function(card, sticker_type)
       }, true)
     end
   end
+
+  SMODS.recalc_debuff(card)
 end
 
 get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
