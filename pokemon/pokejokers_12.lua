@@ -715,15 +715,12 @@ local duskull={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
-      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0
+        and (context.other_card == context.scoring_hand[1] or context.other_card == context.scoring_hand[2]
+          or context.other_card == context.scoring_hand[3] or context.other_card == context.scoring_hand[4]) then
+      return {
+        repetitions = card.ability.extra.retriggers,
+      }
     end
     return level_evo(self, card, context, "j_poke_dusclops")
   end,
@@ -749,35 +746,32 @@ local dusclops={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
-      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0
+        and (context.other_card == context.scoring_hand[1] or context.other_card == context.scoring_hand[2]
+          or context.other_card == context.scoring_hand[3] or context.other_card == context.scoring_hand[4]) then
+      return {
+        repetitions = card.ability.extra.retriggers,
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after and G.GAME.current_round.hands_left == 0 and (#context.full_hand - #context.scoring_hand) == 1 and not context.blueprint then
-        for k, v in pairs(context.full_hand) do
-          if not SMODS.in_scoring(v, context.scoring_hand) then
-            poke_remove_card(v, card)
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              G.E_MANAGER:add_event(Event({
-                func = function()
-                  local _card = SMODS.add_card {set = 'Spectral'}
-                  card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end
-            break
+    if context.destroy_card and context.cardarea == 'unscored' and not context.blueprint
+        and G.GAME.current_round.hands_left == 0
+        and (#context.full_hand - #context.scoring_hand) == 1 then
+
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            local spectral = SMODS.add_card({set = 'Spectral'})
+            SMODS.calculate_effect({message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, spectral)
+            G.GAME.consumeable_buffer = 0
+            return true
           end
-        end
+        }))
       end
+
+      return {
+        remove = true
+      }
     end
     return item_evo(self, card, context, "j_poke_dusknoir")
   end,
