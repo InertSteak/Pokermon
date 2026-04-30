@@ -1,50 +1,3 @@
-determine_type = function()
-  local ptype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-  pseudoshuffle(ptype_list, pseudoseed('chart'))
-  local count = 1
-
-  local increase = pseudorandom('increasetypes')
-
-  if G.GAME.blind.name == 'bl_poke_iridescent_hacker' then 
-    if increase > .66 then
-      count = count + 2
-    elseif increase > .33 then
-    count = count + 1
-    end
-  end
-
-  local ptypes = {}
-  for i = 1, count do
-    ptypes[#ptypes+1] = ptype_list[i]
-  end
-  
-  return ptypes
-end
-
-star_disable = function(disabled, card, btypes)
-  if disabled then return false end
-  if (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) then
-    local match = false
-    for k, v in pairs(btypes) do
-      if v == card.ability.extra.ptype then
-        match = true
-        break
-      end
-    end
-    return match
-  elseif btypes then
-    local match = false
-    for k, v in pairs(btypes) do
-      if card.ability[string.lower(v).."_sticker"] then
-        match = true
-        break
-      end
-    end
-    return match
-  end
-  return false
-end
-
 local mirror = {
   key = "mirror",
   dollars = 5,
@@ -158,6 +111,17 @@ local aqua = {
   end
 }
 
+local pick_random_types = function(amount)
+  local ptype_list = copy_table(POKE_TYPES)
+  pseudoshuffle(ptype_list, 'chart')
+
+  local ptypes = {}
+  for i = 1, amount do
+    ptypes[#ptypes+1] = ptype_list[i]
+  end
+  return ptypes
+end
+
 local star={
   key = "star",
   dollars = 5,
@@ -168,33 +132,36 @@ local star={
   atlas = "AtlasBossblinds",
   artist = "Catzzadilla",
   discovered = true,
-  debuff = {},
-  config = {disabled = false},
-  set_blind = function(self)
-    self.config.ptypes = determine_type()
-  end,
-  press_play = function(self)
-    G.GAME.blind.triggered = true
-    G.GAME.blind.prepped = true
-    self.config.ptypes = determine_type()
-  end,
-  drawn_to_hand = function(self)
-    if G.GAME.blind.prepped then
-      for x,y in pairs(G.jokers.cards) do
-        y:set_debuff(false)
+  config = {ptype = nil},
+  calculate = function(self, blind, context)
+    if not blind.disabled then
+      if context.debuff_card and context.debuff_card.area == G.jokers
+          and blind.effect.ptype and is_type(context.debuff_card, blind.effect.ptype) then
+        return {
+          debuff = true
+        }
       end
-      for l,v in pairs(G.jokers.cards) do
-        if star_disable(self.config.disabled, v, self.config.ptypes) then
-          v:set_debuff(true)
-					v:juice_up()
-					G.GAME.blind:wiggle()
+      if context.press_play or context.setting_blind then
+        blind.effect.ptype = pick_random_types(1)[1]
+        blind.triggered = true
+        blind.prepped = true
+      end
+      if context.drawing_cards and blind.prepped then
+        for _, v in ipairs(G.jokers.cards) do
+          if v.debuff then
+            SMODS.recalc_debuff(v)
+          elseif blind.effect.ptype and is_type(v, blind.effect.ptype) then
+            SMODS.recalc_debuff(v)
+            v:juice_up()
+          end
         end
+        blind:wiggle()
       end
     end
+    if context.drawing_cards then
+      blind.prepped = nil
+    end
   end,
-  disable = function(self)
-    self.config.disabled = true
-  end
 }
 
 gray_godfather_remove = function(difference)
@@ -310,6 +277,13 @@ local white_executive = {
   end
 }
 
+local ptype_matches = function(card, types)
+  for _, v in ipairs(types) do
+    if is_type(card, v) then return true end
+  end
+  return false
+end
+
 local iridescent_hacker={
   key = "iridescent_hacker",
   dollars = 8,
@@ -321,32 +295,42 @@ local iridescent_hacker={
   artist = "Catzzadilla",
   discovered = true,
   debuff = {},
-  config = {disabled = false},
-  set_blind = function(self)
-    self.config.ptypes = determine_type()
-  end,
-  press_play = function(self)
-    G.GAME.blind.triggered = true
-    G.GAME.blind.prepped = true
-    self.config.ptypes = determine_type()
-  end,
-  drawn_to_hand = function(self)
-    if G.GAME.blind.prepped then
-      for x,y in pairs(G.jokers.cards) do
-        y:set_debuff(false)
+  config = {ptypes = {}},
+  calculate = function(self, blind, context)
+    if not blind.disabled then
+      if context.debuff_card and context.debuff_card.area == G.jokers
+          and ptype_matches(context.debuff_card, blind.effect.ptypes) then
+        return {
+          debuff = true
+        }
       end
-      for l,v in pairs(G.jokers.cards) do
-        if star_disable(self.config.disabled, v, self.config.ptypes) then
-          v:set_debuff(true)
-					v:juice_up()
-					G.GAME.blind:wiggle()
+      if context.press_play or context.setting_blind then
+        local type_count = 1
+        local chance_to_increase = pseudorandom('increasetypes')
+
+        if chance_to_increase > .66 then type_count = type_count + 1 end
+        if chance_to_increase > .33 then type_count = type_count + 1 end
+
+        blind.effect.ptypes = pick_random_types(type_count)
+        blind.triggered = true
+        blind.prepped = true
+      end
+      if context.drawing_cards and blind.prepped then
+        for _, v in ipairs(G.jokers.cards) do
+          if v.debuff then
+            SMODS.recalc_debuff(v)
+          elseif ptype_matches(v, blind.effect.ptypes) then
+            SMODS.recalc_debuff(v)
+            v:juice_up()
+          end
         end
+        blind:wiggle()
       end
     end
+    if context.drawing_cards then
+      blind.prepped = nil
+    end
   end,
-  disable = function(self)
-    self.config.disabled = true
-  end
 }
 
 return {name = "Blinds",

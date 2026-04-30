@@ -3055,10 +3055,10 @@ return {
             j_poke_smeargle = {
                 name = "Smeargle",
                 text = {
-                  "{C:attention}Sketch{} ability of {C:attention}Joker{} to the right",
-                  "when {C:attention}Blind{} is selected",
-                  "{br:2}ERROR - CONTACT STEAK",
-                  "Applies {C:attention}Smeared Joker{}",
+                  "{C:attention}Sketch{}",
+                  "When {C:attention}Blind{} is selected,",
+                  "copies ability of {C:attention}Joker{}",
+                  "to the right",
                 }
             },
             j_poke_tyrogue = {
@@ -6682,11 +6682,9 @@ return {
             sketch = {
               name = "Sketch",
               text = {
-                "Copies Joker until it is sold,",
-                "destroyed or you copy another ability",
-                "Copy appears as a tooltip",
-                "and in Pokedex menu",
-                "Sketch resets when Joker is copied"
+                "Ability copied until target",
+                "is removed or another",
+                "ability is copied",
               }
             },
             unlimited_energy_tooltip = {

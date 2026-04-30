@@ -1358,7 +1358,6 @@ local smeargle={
     type_tooltip(self, info_queue, card)
 
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Joker', key = 'j_smeared', config = {}}
       info_queue[#info_queue+1] = {set = 'Other', key = 'sketch'}
     end
 
