@@ -815,7 +815,9 @@ apply_type_sticker = function(card, sticker_type)
     end
   end
 
-  SMODS.recalc_debuff(card)
+  if card.area and card.area == G.jokers and G.GAME.facing_blind then
+    SMODS.recalc_debuff(card)
+  end
 end
 
 get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
