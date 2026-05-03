@@ -134,6 +134,7 @@ jd_def["j_poke_unown_swarm"] = {
   end
 }
 
+--[[
 jd_def["j_poke_oologist"] = {
   reminder_text = {
     { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
@@ -154,7 +155,7 @@ jd_def["j_poke_oologist"] = {
       card.joker_display_values.active = localize("jdis_inactive")
     end
   end
-}
+}--]]
 
 -- Rival
 -- jd_def["j_poke_rival"] = {

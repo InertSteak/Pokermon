@@ -687,7 +687,7 @@ local oologist={
   name = "oologist",
   pos = {x = 0, y = 0},
   artist = "MyDude_YT",
-  config = {extra = {num = 1, dem = 20, activated = false}},
+  config = {extra = {rounds_total = 3, rounds_current = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
@@ -695,30 +695,36 @@ local oologist={
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
       end
     end
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'oologist')
-    return {vars = {num, dem, not center.ability.extra.activated and "("..localize('k_active_ex')..")" or ''}}
+    return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
   end,
-  rarity = 3,
-  cost = 8,
+  rarity = 2,
+  cost = 7,
   stage = "Other",
   atlas = "others",
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint and not card.ability.extra.activated then
-      if SMODS.pseudorandom_probability(card, 'oologist', card.ability.extra.num, card.ability.extra.dem, 'oologist') then
-        card.ability.extra.activated = true
-        local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_mystery_egg", edition = "e_negative"}
-        local add_card = SMODS.create_card(temp_card)
-        poke_add_shop_card(add_card, card)
+    if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
+      for i = 1, math.floor(card.ability.extra.rounds_current/card.ability.extra.rounds_total) do
+        SMODS.add_card{set = "Joker", key = "j_poke_mystery_egg", edition = "e_negative"}
       end
     end
-    if context.ending_shop and not context.blueprint then
-      card.ability.extra.activated = false
+    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+      card.ability.extra.rounds_current = card.ability.extra.rounds_current + 1
+      if card.ability.extra.rounds_current == card.ability.extra.rounds_total then
+          local eval = function(card) return not card.REMOVED end
+          juice_card_until(card, eval, true)
+      end
+      return {
+          message = (card.ability.extra.rounds_current < card.ability.extra.rounds_total) and
+              (card.ability.extra.rounds_current .. '/' .. card.ability.extra.rounds_total) or
+              localize('k_active_ex'),
+          colour = G.C.FILTER
+      }
     end
   end,
-  attributes = {"joker", "generation", "reroll"},
+  attributes = {"joker", "generation"},
 }
 
 local daycare={

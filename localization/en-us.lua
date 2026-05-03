@@ -5724,10 +5724,13 @@ return {
             j_poke_oologist = {
                 name = "Oologist",
                 text = {
-                    "Rerolls have a {C:green}#1# in #2#{}",
-                    "chance to add a {C:dark_edition}Negative",
-                    "{C:attention}Mystery Egg{} to shop",
-                    "Once per shop {C:inactive}#3#"
+                    "After {C:attention}#1#{} rounds, sell",
+                    "this card to create a",
+                    "{C:dark_edition}Negative{} {C:attention}Mystery Egg{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Creates another one for",
+                    "every {C:attention}#1#{} additional rounds",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_mystery_egg = {
