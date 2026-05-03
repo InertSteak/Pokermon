@@ -474,47 +474,40 @@ local anorith={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        get_ancient_amount(context.scoring_hand, 7, card)
-      end
-      if context.joker_main and card.ability.extra.ancient_count > 0 then
-        local scoring_mult = card.ability.extra.mult
-        
-        if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
-          local targets = {}
-          local target = nil
-          for k, v in ipairs(G.deck.cards) do
-            if v:get_id() > 7 then
-              targets[#targets + 1] = v
-            end
-          end
-          
-          if #targets > 0 then
-            target = pseudorandom_element(targets, pseudoseed('anorith'))
-            poke_remove_card(target, card)
-          end
-          
-          if not context.blueprint then
-            card.ability.extra.third_times = card.ability.extra.third_times + 1
+    if context.before then
+      get_ancient_amount(context.scoring_hand, 7, card)
+    end
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
+        local targets = {}
+        for k, v in ipairs(G.deck.cards) do
+          if v:get_id() > 7 then
+            targets[#targets+1] = v
           end
         end
-        
-        if card.ability.extra.ancient_count > 1 then
-          if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
-            poke_add_playing_card{set = 'Base', rank = card.ability.extra.rank, area = G.deck}
-          end
+
+        if #targets > 0 then
+          local target = pseudorandom_element(targets, pseudoseed('anorith'))
+          poke_remove_card(target, card)
         end
-        
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
-          colour = G.C.MULT,
-          mult_mod = scoring_mult
-        }
+
+        if not context.blueprint then
+          card.ability.extra.third_times = card.ability.extra.third_times + 1
+        end
       end
-      if context.after then
-        card.ability.extra.ancient_count = 0
+
+      if card.ability.extra.ancient_count > 1 then
+        if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
+          poke_add_playing_card({set = 'Base', rank = card.ability.extra.rank, area = G.deck})
+        end
       end
+
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+    if context.after then
+      card.ability.extra.ancient_count = 0
     end
     return scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
@@ -530,18 +523,7 @@ local armaldo={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'armaldo')
-    local total_xmult = 1
-    local enhanced_sevens = 0
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if v:get_id() == 7 then
-          if v.config.center ~= G.P_CENTERS.c_base then
-            enhanced_sevens = enhanced_sevens + 1
-          end
-        end
-      end
-    end
-    total_xmult = 1 + (enhanced_sevens * center.ability.extra.Xmult_multi)
+    local total_xmult = self:get_total_Xmult(center)
     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, num, dem, center.ability.extra.Xmult_multi, total_xmult}}
   end,
   rarity = "poke_safari",
@@ -553,65 +535,56 @@ local armaldo={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  get_total_Xmult = function(self, card)
+    if not G.playing_cards then return 1 end
+    local enhanced_sevens = 0
+    for k, v in pairs(G.playing_cards) do
+      if v:get_id() == 7 and v.config.center ~= G.P_CENTERS.c_base then
+        enhanced_sevens = enhanced_sevens + 1
+      end
+    end
+    return 1 + enhanced_sevens * card.ability.extra.Xmult_multi
+  end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        get_ancient_amount(context.scoring_hand, 7, card)
-      end
-      if context.joker_main and card.ability.extra.ancient_count > 0 then
-        local scoring_mult = card.ability.extra.mult
-        
-        if card.ability.extra.ancient_count > 2 then
-          local targets = {}
-          local target = nil
-          for k, v in ipairs(G.deck.cards) do
-            if v:get_id() > 7 then
-              targets[#targets + 1] = v
-            end
-          end
-          
-          if #targets > 0 then
-            target = pseudorandom_element(targets, pseudoseed('anorith'))
-            poke_remove_card(target, card)
+    if context.before then
+      get_ancient_amount(context.scoring_hand, 7, card)
+    end
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 2 then
+        local targets = {}
+        for k, v in ipairs(G.deck.cards) do
+          if v:get_id() > 7 then
+            targets[#targets+1] = v
           end
         end
-        
-        if card.ability.extra.ancient_count > 1 then
-          if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
-            poke_add_playing_card{set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck}
-          end
-        end
-        
-        if card.ability.extra.ancient_count > 3 then
-          local total_xmult = 1
-          local enhanced_sevens = 0
-          if G.playing_cards then
-            for k, v in pairs(G.playing_cards) do
-              if v:get_id() == 7 then
-                if v.config.center ~= G.P_CENTERS.c_base then
-                  enhanced_sevens = enhanced_sevens + 1
-                end
-              end
-            end
-          end
-          total_xmult = 1 + (enhanced_sevens * card.ability.extra.Xmult_multi)
-          return {
-            message = localize("poke_x_scissor_ex"), 
-            colour = G.C.MULT,
-            mult_mod = scoring_mult,
-            Xmult_mod = total_xmult
-          }
-        else
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
-            colour = G.C.MULT,
-            mult_mod = scoring_mult
-          }
+
+        if #targets > 0 then
+          local target = pseudorandom_element(targets, pseudoseed('anorith'))
+          poke_remove_card(target, card)
         end
       end
-      if context.after then
-        card.ability.extra.ancient_count = 0
+
+      if card.ability.extra.ancient_count > 1 then
+        if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
+          poke_add_playing_card({set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck})
+        end
       end
+
+      if card.ability.extra.ancient_count > 3 then
+        return {
+          message = localize("poke_x_scissor_ex"),
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult,
+          Xmult_mod = self:get_total_Xmult(card),
+        }
+      else
+        return {
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    if context.after then
+      card.ability.extra.ancient_count = 0
     end
   end,
   generate_ui = fossil_generate_ui,
