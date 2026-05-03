@@ -627,13 +627,6 @@ end
 -- Smeared Check Hook
 local smeared_ref = SMODS.smeared_check
 function SMODS.smeared_check(card, suit)
-  if next(SMODS.find_card('j_poke_smeargle')) then
-    if (card.base.suit == 'Hearts' or card.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
-      return true
-    elseif (card.base.suit == 'Spades' or card.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
-      return true
-    end
-  end
   return smeared_ref(card, suit)
 end
 

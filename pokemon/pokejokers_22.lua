@@ -20,15 +20,13 @@ local deino={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
+    if context.scoring_name == "Three of a Kind" then
+      if context.before and not context.blueprint then
+        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+      end
       if context.joker_main then
-        if not context.blueprint then
-          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
-        end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.mult,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -55,15 +53,13 @@ local zweilous={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Three of a Kind" then
+    if context.scoring_name == "Three of a Kind" then
+      if context.before and not context.blueprint then
+        card.ability.extra.hand_played = card.ability.extra.hand_played + 1
+      end
       if context.joker_main then
-        if not context.blueprint then
-          card.ability.extra.hand_played = card.ability.extra.hand_played + 1
-        end
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.mult,
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult = card.ability.extra.Xmult
         }
       end
     end
@@ -102,7 +98,7 @@ local hydreigon={
       }
     end
     if context.remove_playing_cards and not context.blueprint then
-      for _, removed_card in ipairs(context.removed) do
+      for _ = 1, #context.removed do
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_mod',

@@ -3055,10 +3055,10 @@ return {
             j_poke_smeargle = {
                 name = "Smeargle",
                 text = {
-                  "{C:attention}Sketch{} ability of {C:attention}Joker{} to the right",
-                  "when {C:attention}Blind{} is selected",
-                  "{br:2}ERROR - CONTACT STEAK",
-                  "Applies {C:attention}Smeared Joker{}",
+                  "{C:attention}Sketch{}",
+                  "When {C:attention}Blind{} is selected,",
+                  "copies ability of {C:attention}Joker{}",
+                  "to the right",
                 }
             },
             j_poke_tyrogue = {
@@ -3109,28 +3109,26 @@ return {
             j_poke_houndour = {
               name = "Houndour",
               text = {
-                "Discarding more than {C:attention}4{} cards",
-                "also discards {C:attention}#3#{} random cards {C:attention}held{} in hand",
+                "{C:attention}+#3#{} discard selection limit",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Discarded cards permanently gain {C:mult}+#1#{} Mult",
+                "Discarded cards permanently",
+                "gain {C:mult}+#1#{} Mult",
                 "{C:inactive}(Evolves after {C:attention}#2#{C:inactive} rounds)",
               }
             },
             j_poke_houndoom = {
               name = "Houndoom",
               text = {
-                "{C:attention}Holding {C:spectral}Medium{}",
-                "Discarding more than {C:attention}4{} cards",
-                "also discards {C:attention}all{} cards {C:attention}held{} in hand",
+                "{C:attention}+#2#{} discard selection limit",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Discarded cards permanently gain {C:mult}+#1#{} Mult",
+                "Discarded cards permanently",
+                "gain {C:mult}+#1#{} Mult",
               }
             },
             j_poke_mega_houndoom = {
                 name = "Mega Houndoom",
                 text = {
-                  "Discarding also discards",
-                  "{C:attention}all{} cards {C:attention}held{} in hand",
+                  "{C:attention}+#3#{} discard selection limit",
                   "{br:2}ERROR - CONTACT STEAK",
                   "Gains {X:mult,C:white} X#2# {} Mult whenever",
                   "cards are discarded",
@@ -3753,6 +3751,14 @@ return {
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
               }
             },
+            j_poke_torkoal = {
+              name = "Torkoal",
+              text = {
+                "Retrigger each played",
+                "{C:attention}Mult{} card for each",
+                "remaining {C:attention}discard",
+              }
+            },
             j_poke_spinda = {
               name = "Spinda",
               text = {
@@ -3790,23 +3796,45 @@ return {
               name = "Swablu",
               text = {
                 "When you draw a {C:attention}9",
-                "during the {C:attention}Blind{}, gain",
-                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
-                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#4# Chips)",
+                "during the {C:attention}Blind{}",
+                "gain {C:chips}+#2#{} Chips",
+                "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / +#3# Chips)",
               }
             },
             j_poke_altaria = {
               name = "Altaria",
               text = {
-                "When you draw a {C:attention}9",
-                "during the {C:attention}Blind{}, gain",
-                "{C:chips}+#2#{} Chips and earn {C:money}$#3#{}",
+                "When you draw a {C:attention}9{} during",
+                "the {C:attention}Blind{}, gain {C:chips}+#2#{} Chips",
+                "and {C:green}#4# in #5#{} chance to",
+                "earn {C:money}$#3#{} as well",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Gain an extra {C:chips}+#4#{} Chips and",
-                "earn an extra {C:money}$#5#{} if you",
-                "have another {X:dragon,C:white}Dragon{} Joker",
+                "Guaranteed if you have",
+                "another {X:dragon,C:white}Dragon{} Joker",
                 "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
               }
+            },
+            j_poke_corphish = {
+                name = "Corphish",
+                text = {
+                    "{C:attention}Nature: {C:inactive}({C:attention}#4#, #5#, #6#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Gains {C:mult}+#2#{} Mult if",
+                    "played hand contains",
+                    "an unscored {C:attention}Nature{} card",
+                    "{C:inactive}(Evolves at {C:mult}+#1#{C:inactive} / +#3# Mult)",
+                } 
+            },
+            j_poke_crawdaunt = {
+                name = "Crawdaunt",
+                text = {
+                    "{C:attention}Nature: {C:inactive}({C:attention}#3#, #4#, #5#{C:inactive}){}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Gains {C:mult}+#2#{} Mult for each",
+                    "unscored {C:attention}Nature{} card",
+                    "in played hand",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                } 
             },
             j_poke_lileep = {
                 name = "Lileep",
@@ -4352,6 +4380,15 @@ return {
                  "Each {C:attention}editioned{} card",
                  "held in hand",
                  "gives {X:mult,C:white} X#1# {} Mult",
+              }
+            },
+            j_poke_mega_lucario = {
+              name = "Mega Lucario",
+              text = {
+                 "Each card held in hand",
+                 "gives {X:mult,C:white} X#1# {} Mult if",
+                 "you have {C:attention}3+ unique",
+                 "{C:attention}editions{} held",
               }
             },
             j_poke_mantyke = {
@@ -5687,10 +5724,13 @@ return {
             j_poke_oologist = {
                 name = "Oologist",
                 text = {
-                    "Rerolls have a {C:green}#1# in #2#{}",
-                    "chance to add a {C:dark_edition}Negative",
-                    "{C:attention}Mystery Egg{} to shop",
-                    "Once per shop {C:inactive}#3#"
+                    "After {C:attention}#1#{} rounds, sell",
+                    "this card to create a",
+                    "{C:dark_edition}Negative{} {C:attention}Mystery Egg{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Creates another one for",
+                    "every {C:attention}#1#{} additional rounds",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_mystery_egg = {
@@ -6645,11 +6685,9 @@ return {
             sketch = {
               name = "Sketch",
               text = {
-                "Copies Joker until it is sold,",
-                "destroyed or you copy another ability",
-                "Copy appears as a tooltip",
-                "and in Pokedex menu",
-                "Sketch resets when Joker is copied"
+                "Ability copied until target",
+                "is removed or another",
+                "ability is copied",
               }
             },
             unlimited_energy_tooltip = {

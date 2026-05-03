@@ -10,10 +10,10 @@
 	"badge_colour": "ED533A",
 	"badge_text_colour": "FFFFFF",
   "display_name": "Pokermon",
-	"version": "3.6.1-0415a",
+	"version": "3.7.0-0501a",
 	"dependencies": [
-			"Steamodded (>=1.0.0~BETA-1221a)",
-      "Lovely (>=0.7)"
+			"Steamodded (>=1.0.0~BETA-1620a)",
+      "Lovely (>=0.9)"
 	],
   "conflicts": [],
 	"provides": [],

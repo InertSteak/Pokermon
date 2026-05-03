@@ -570,7 +570,7 @@ local lucario={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, }}
   end,
-  rarity = "poke_safari",
+  rarity = 3,
   cost = 9,
   gen = 4,
   stage = "Basic",
@@ -595,10 +595,69 @@ local lucario={
       end
     end
   end,
+  in_pool = function(self)
+    local has_edition = false
+    if G.playing_cards and #G.playing_cards > 0 then
+      for k, v in pairs(G.playing_cards) do
+        if v.edition then
+          has_edition = true
+          break
+        end
+      end
+    end
+    return has_edition
+  end,
+  attributes = {"editions", "xmult"},
+  megas = { "mega_lucario" },
+}
+
+local mega_lucario={
+  name = "mega_lucario",
+  pos = {x = 5, y = 4},
+  config = {extra = {Xmult_multi = 1.6,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi, }}
+  end,
+  rarity = "poke_mega",
+  cost = 11,
+  gen = 4,
+  stage = "Mega",
+  ptype = "Fighting",
+  atlas = "Pokedex4",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
+      local edition, count = {}, 0
+      for i = 1, #G.hand.cards do
+        local c = G.hand.cards[i]
+        if c.edition and not edition[c.edition.type] then
+          edition[c.edition.type] = true
+          count = count + 1
+        end
+      end
+      if count >= 3 then
+        if context.other_card.debuff then
+            return {
+                message = localize('k_debuffed'),
+                colour = G.C.RED,
+                card = card,
+            }
+        else
+            return {
+                x_mult = card.ability.extra.Xmult_multi,
+                card = card
+            }
+        end
+      end
+    end
+  end,
   attributes = {"editions", "xmult"},
 }
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bonsly, mimejr, happiny, munchlax, riolu, lucario},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
 }

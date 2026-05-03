@@ -628,6 +628,7 @@ local ditto={
   ptype = "Colorless",
   atlas = "Pokedex1",
   gen = 1,
+  volatile = true,
   blueprint_compat = false,
   eternal_compat = false,
   custom_pool_func = true, 

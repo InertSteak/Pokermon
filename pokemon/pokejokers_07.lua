@@ -1110,6 +1110,7 @@ local wobbuffet={
   ptype = "Psychic",
   atlas = "Pokedex2",
   gen = 2,
+  volatile = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

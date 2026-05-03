@@ -923,12 +923,22 @@ local nosepass={
 local skitty={
   name = "skitty",
   pos = {x = 0, y = 0},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    return {vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+
+    local cattype = G.GAME.current_round.cattype or "Grass"
+
+    local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local main_end
+
+    if card.area and card.area == G.jokers then
+      local found_pos = get_index(G.jokers.cards, card) + 1
+      local other_joker = G.jokers.cards[found_pos]
+      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+    end
+
+    return {vars = {cattype, colours = {type_colour, highlight_colour}}, main_end = main_end}
   end,
   rarity = 3,
   cost = 7,
@@ -942,52 +952,15 @@ local skitty={
   eternal_compat = true,
   calculate = function(self, card, context)
     local evo = item_evo(self, card, context, "j_poke_delcatty")
-    if not evo then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
-          other_joker = G.jokers.cards[i + 1] 
-        end
-      end
+    if evo then return evo end
+
+    local found_pos = get_index(G.jokers.cards, card) + 1
+    local other_joker = G.jokers.cards[found_pos]
+    if is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
       local ret = SMODS.blueprint_effect(card, other_joker, context)
-      if ret then
-          ret.colour = G.C.BLUE
-      end
+      if ret then ret.colour = G.C.BLUE end
       return ret
-    else
-      return evo
     end
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
-          other_joker = G.jokers.cards[i + 1] 
-        end
-      end
-      card.ability.blueprint_compat = (other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-    end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    type_tooltip(self, info_queue, card)
-    local highlight_colour = (G.GAME.current_round.cattype or "Grass") ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    local _c = card and card.config.center or card
-    if not full_UI_table.name then
-      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-    end
-    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-    card.ability.blueprint_compat_check = nil
-    local main_end = (card.area and card.area == G.jokers) and {
-      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-        }}
-      }}
-    } or nil
-    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
-    desc_nodes[#desc_nodes+1] = main_end
   end,
   attributes = {"copying", "types", "item_evo"},
 }

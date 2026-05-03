@@ -856,11 +856,9 @@ local dusknoir={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
       return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
+        repetitions = card.ability.extra.retriggers
       }
     end
   end,
