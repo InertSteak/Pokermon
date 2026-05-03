@@ -110,42 +110,32 @@ local simisear = {
   ptype = "Fire",
   atlas = "Pokedex5",
   gen = 5,
-  blueprint_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
-      local eval = function() return G.GAME.current_round.hands_played == 0 end
-      juice_card_until(card, eval, true)
+      juice_card_until(card, function() return G.GAME.current_round.hands_played == 0 end, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) and G.GAME.current_round.hands_played == 0 then
-        card.ability.extra.destroy = true
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          return {
-            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
-              G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                  local card_type = 'Tarot'
-                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, "c_empress")
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end},
-          }
-        end
-      end
-      if context.after and card.ability.extra.destroy and not context.blueprint then
-        card.ability.extra.destroy = nil
-        for k, v in pairs(context.full_hand) do
-          if not SMODS.in_scoring(v, context.scoring_hand) then
-            poke_remove_card(v, card)
+    if context.poker_hands and G.GAME.current_round.hands_played == 0
+        and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) then
+      if context.before and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            SMODS.add_card({set = 'Tarot', key = 'c_empress'})
+            G.GAME.consumeable_buffer = 0
+            return true
           end
-        end
+        }))
+
+        return {
+          message = localize('k_plus_tarot'),
+          colour = G.C.PURPLE,
+        }
+      end
+
+      if context.destroy_card and context.cardarea == 'unscored' and not context.blueprint then
+        return {
+          remove = true
+        }
       end
     end
   end,
