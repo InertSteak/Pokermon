@@ -3751,22 +3751,20 @@ return {
             j_poke_swablu = {
               name = "Swablu",
               text = {
-                "Cuando sacas un {C:attention}9",
-                "durante la {C:attention}ciega{}, obtiene",
-                "{C:chips}+#2#{} fichas y ganas {C:money}#3# ${}",
-                "{C:inactive}(Evoluciona cuando tiene","{C:chips}+#1#{C:inactive} / +#4# fichas)",
+                "Obtiene {C:chips}+#2#{} fichas cuando",
+				"sacas un {C:attention}9{} durante una {C:attention}ciega",
+                "{C:inactive}(Evoluciona cuando tiene","{C:chips}+#1#{C:inactive} / +#3# fichas)",
               }
             },
             j_poke_altaria = {
               name = "Altaria",
               text = {
-                "Cuando sacas un {C:attention}9",
-                "durante la {C:attention}ciega{}, obtiene",
-                "{C:chips}+#2#{} fichas y ganas {C:money}#3# ${}",
+                "Obtiene {C:chips}+#2#{} fichas y tienes",
+				"{C:green}#4# en #5#{} probabilidades de ganar {C:money}#3# ${}",
+				"cuando sacas un {C:attention}9{} durante una {C:attention}ciega",
                 "{br:2}ERROR - CONTACT STEAK",
-                "Obtiene {C:chips}+#4#{} fichas más y",
-                "ganas {C:money}#5# ${} más si tienes",
-                "otro comodín tipo {X:dragon,C:white}Dragón{}",
+                "Garantizado si tienes otro",
+                "comodín tipo {X:dragon,C:white}Dragón{}",
                 "{C:inactive}(Actual {C:chips}+#1#{C:inactive} fichas)",
               }
             },
