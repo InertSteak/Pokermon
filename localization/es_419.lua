@@ -5682,9 +5682,9 @@ return {
                     "Cuando derrotas la {C:attention}ciega jefe{},",
                     "crea una {C:attention}Etiqueta veloz",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{X:mult,C:white}X#3#{} multi por cada",
+                    "{X:mult,C:white}X#1#{} multi por cada",
                     "ciega omitida en esta partida",
-                    "{C:inactive}(Actual {X:mult,C:white}X#4#{C:inactive} multi){}"
+                    "{C:inactive}(Actual {X:mult,C:white}X#2#{C:inactive} multi){}"
                 }
             },
             j_poke_professor = {

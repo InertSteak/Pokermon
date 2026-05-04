@@ -354,99 +354,141 @@ local mystery_egg = {
   end,
   attributes = {"energy_count"},
 }
+
 local rival = {
   name = "rival",
-  pos = {x = 3, y = 1},
+  pos = {x = 0, y = 2},
   artist = "MyDude_YT",
-  config = {extra = {Xmult_mod = 0.2, form = 0, money1 = 15, money2 = 25, money_mod1 = 10, money_mod2 = 20}},
+  config = {extra = {money = 15, money_mod = 10}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local mult = card.ability.extra.mult
-    local money = card.ability.extra.money1
-    local money_mod = card.ability.extra.money_mod1
-    local alt_key = nil
-    if card.ability.extra.form == 1 then
-      alt_key = "j_poke_bitter_rival"
-      money = card.ability.extra.money2
-      money_mod = card.ability.extra.money_mod2
-    elseif card.ability.extra.form > 1 then
-      alt_key = "j_poke_champion"
-      info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
-    end
-
-    return {vars = {money, money_mod, card.ability.extra.Xmult_mod, 1 + G.GAME.skips * card.ability.extra.Xmult_mod}, key = alt_key}
+    return {vars = {card.ability.extra.money, card.ability.extra.money_mod}}
   end,
   rarity = 1,
   cost = 5,
   joblacklist = true,
   stage = "Other",
   atlas = "others",
+  auto_sticker = true,
   perishable_compat = true,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = false,
   calculate = function(self, card, context)
-    local form = card.ability.extra.form
-
-    if context.skip_blind and form < 2 and not context.blueprint then
+    if context.skip_blind then
       SMODS.scale_card(card, {
-        ref_value = form == 0 and 'money1' or 'money2',
-        scalar_value = form == 0 and 'money_mod1' or 'money_mod2',
+        ref_value = 'money',
+        scalar_value = 'money_mod',
         message_colour = G.C.MONEY,
       })
     end
 
-    if context.joker_main and form == 2 then
+    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+      G.GAME.rival_defeated = true
+
+      ease_poke_dollars(card, 'rival', card.ability.extra.money)
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
+      return {
+        message = localize("poke_smell_ya")
+      }
+    end
+  end,
+  in_pool = function(self)
+    return not G.GAME.rival_defeated
+  end,
+  attributes = {"skip", "economy", "boss_blind", "scaling"},
+}
+
+local bitter_rival = {
+  name = "bitter_rival",
+  pos = {x = 2, y = 2},
+  artist = "MyDude_YT",
+  config = {extra = {money = 25, money_mod = 20}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {vars = {card.ability.extra.money, card.ability.extra.money_mod}}
+  end,
+  rarity = 1,
+  cost = 5,
+  joblacklist = true,
+  stage = "Other",
+  atlas = "others",
+  auto_sticker = true,
+  no_collection = true,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.skip_blind then
+      SMODS.scale_card(card, {
+        ref_value = 'money',
+        scalar_value = 'money_mod',
+        message_colour = G.C.MONEY,
+      })
+    end
+
+    if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+      G.GAME.bitter_rival_defeated = true
+
+      ease_poke_dollars(card, 'bitter_rival', card.ability.extra.money)
+
+      SMODS.destroy_cards(card, nil, nil, true)
+
+      return {
+        message = localize("poke_smell_ya")
+      }
+    end
+  end,
+  in_pool = function(self)
+    return G.GAME.rival_defeated and not G.GAME.bitter_rival_defeated
+  end,
+  attributes = {"skip", "economy", "boss_blind", "scaling"},
+}
+
+local champion = {
+  name = "champion",
+  pos = {x = 4, y = 2},
+  artist = "MyDude_YT",
+  config = {extra = {Xmult_mod = 0.2}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+
+    info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
+
+    return {vars = {card.ability.extra.Xmult_mod, 1 + G.GAME.skips * card.ability.extra.Xmult_mod}}
+  end,
+  rarity = 1,
+  cost = 5,
+  joblacklist = true,
+  stage = "Other",
+  atlas = "others",
+  no_collection = true,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
       return {
         Xmult = 1 + G.GAME.skips * card.ability.extra.Xmult_mod
       }
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not context.blueprint then
-      if form < 2 then
-        G.GAME.rival_losses = (G.GAME.rival_losses or 0) + 1
-
-        local money = form == 0
-            and card.ability.extra.money1
-            or card.ability.extra.money2
-
-        ease_poke_dollars(card, 'rival', money)
-
-        SMODS.destroy_cards(card, nil, nil, true)
-
-        return {
-          message = localize("poke_smell_ya")
-        }
-      else
-        G.E_MANAGER:add_event(Event({
-          func = (function()
-            add_tag(Tag('tag_skip'))
-            play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
-            return true
-          end)
-        }))
-      end
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          add_tag(Tag('tag_skip'))
+          play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+          play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+          return true
+        end)
+      }))
     end
   end,
-  set_ability = function(self, card, initial, delay_sprites)
-    if initial then
-      card.ability.extra.form = math.min(2, G.GAME.rival_losses or 0)
-      self:set_sprites(card)
-    end
+  in_pool = function(self)
+    return G.GAME.bitter_rival_defeated
   end,
-  set_sprites = function(self, card, front)
-    if card.ability and card.ability.extra and card.ability.extra.form then
-      local form = card.ability.extra.form
-      local sprite_pos = ({
-        [0] = {x = 0, y = 2},
-        [1] = {x = 2, y = 2},
-        [2] = {x = 4, y = 2},
-      })[form]
-
-      card.children.center:set_sprite_pos(sprite_pos)
-    end
-  end,
-  attributes = {"skip", "economy", "boss_blind", "tag", "generation", "scaling"},
+  attributes = {"xmult", "skip", "boss_blind", "tag", "generation"},
 }
 
 local ruins_of_alph={
@@ -682,7 +724,6 @@ local professor={
   attributes = {"tag", "generation", "on_sell"},
 }
 
-
 local oologist={
   name = "oologist",
   pos = {x = 0, y = 0},
@@ -848,7 +889,7 @@ local repel={
   attributes = {"tag", "generation", "boss_blind", "on_sell"},
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, ruins_of_alph, unown_swarm, professor, daycare, oologist}
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, bitter_rival, champion, ruins_of_alph, unown_swarm, professor, daycare, oologist}
 
 return {name = "Other Jokers",
       list = jlist

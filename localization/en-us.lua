@@ -5708,9 +5708,9 @@ return {
                     "When {C:attention}Boss Blind{} is defeated,",
                     "create a {C:attention}Speed Tag",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "{X:mult,C:white}X#3#{} Mult for each",
+                    "{X:mult,C:white}X#1#{} Mult for each",
                     "Blind skipped this run",
-                    "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult){}"
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
                 }
             },
             j_poke_professor = {
