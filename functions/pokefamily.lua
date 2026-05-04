@@ -187,7 +187,7 @@ local default_family_list = {
   { "gimmighoul", "gholdengo", "gimmighoulr" },
   { "ruins_of_alph" },
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
-  { { key = "rival", form = 0 }, { key = "rival", form = 1 }, { key = "rival", form = 2 } },
+  { "rival", "bitter_rival", "champion" },
   { { key = "unown", form = "A" }, { key = "unown", form = "B" }, { key = "unown", form = "C" }, { key = "unown", form = "D" }, { key = "unown", form = "E" }, { key = "unown", form = "F" },
     { key = "unown", form = "G" }, { key = "unown", form = "H" }, { key = "unown", form = "I" }, { key = "unown", form = "J" }, { key = "unown", form = "K" }, { key = "unown", form = "L" },
     { key = "unown", form = "M" }, { key = "unown", form = "N" }, { key = "unown", form = "O" }, { key = "unown", form = "P" }, { key = "unown", form = "Q" }, { key = "unown", form = "R" },
