@@ -3757,7 +3757,7 @@ return {
               name = "Altaria",
               text = {
                 "Obtiene {C:chips}+#2#{} fichas y tienes",
-				"{C:green}#4# en #5#{} probabilidades de ganar {C:money}#3# ${}",
+				"{C:green}#4# en #5#{} probabilidades de ganar {C:money}#3# ${}", --pls fix this :sob:
 				"cuando sacas un {C:attention}9{} durante una {C:attention}ciega",
                 "{br:2}ERROR - CONTACT STEAK",
                 "Garantizado si tienes otro",
@@ -5698,10 +5698,13 @@ return {
             j_poke_oologist = {
                 name = "Oólogo",
                 text = {
-                    "Los {C:green}cambios{} tienen un {C:green}#1# en #2#{}",
-                    "probabilidades de añadir un",
-                    "{C:attention}Huevo misterioso {C:dark_edition}negativo{} a la tienda",
-                    "{C:inactive}(Una vez por tienda) #3#"
+                    "Tras {C:attention}#1#{} rondas, vende",
+                    "esta carta para crear un",
+                    "{C:attention}Huevo misterioso {C:dark_edition}negativo{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Crea 1 más por cada",
+                    "{C:attention}#1#{} rondas adicionales",
+                    "{C:inactive}(Actual {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_mystery_egg = {

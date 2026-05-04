@@ -5701,10 +5701,13 @@ return {
             j_poke_oologist = {
                 name = "Oólogo",
                 text = {
-                    "Los {C:green}cambios{} tienen un {C:green}#1# en #2#{}",
-                    "probabilidades de añadir un",
-                    "{C:attention}Huevo misterioso {C:dark_edition}negativo{} a la tienda",
-                    "{C:inactive}(Una vez por tienda) #3#"
+                    "Tras {C:attention}#1#{} rondas, vende",
+                    "esta carta para crear un",
+                    "{C:attention}Huevo misterioso {C:dark_edition}negativo{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Crea 1 más por cada",
+                    "{C:attention}#1#{} rondas adicionales",
+                    "{C:inactive}(Actual {C:attention}#2#{C:inactive}/#1#){}",
                 }
             },
             j_poke_mystery_egg = {
