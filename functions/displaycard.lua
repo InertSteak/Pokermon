@@ -12,6 +12,8 @@ function PokeDisplayCard:init(args, x, y, w, h)
     soul_pos = args.soul_pos,
   }
 
+  self.display_text = args.display_text
+
   x = x or args.x or 0
   y = y or args.y or 0
   w = w or args.w or G.CARD_W
@@ -22,6 +24,29 @@ function PokeDisplayCard:init(args, x, y, w, h)
   end})
 
   Card.init(self, x, y, w, h, nil, fake_center)
+end
+
+local function create_h_popup(nodes)
+  return {n=G.UIT.ROOT, config = {align="cm", colour = G.C.CLEAR}, nodes={
+    {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07}, nodes={
+      {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)}, nodes=nodes}
+    }}
+  }}
+end
+
+function PokeDisplayCard:hover()
+  Card.hover(self)
+
+  if self.children.h_popup then
+    self.children.h_popup:remove()
+    self.children.h_popup = nil
+  end
+
+  self.config.h_popup = create_h_popup({
+    name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.8}}})
+  })
+
+  Node.hover(self)
 end
 
 function PokeDisplayCard:get_defaults_from_existing(key, set)
