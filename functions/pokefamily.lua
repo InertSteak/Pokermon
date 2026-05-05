@@ -186,6 +186,7 @@ local default_family_list = {
   { "wiglett", "wugtrio" },
   { "gimmighoul", "gholdengo", "gimmighoulr" },
   { "ruins_of_alph" },
+  {{key = "imposter_professor", form = 0}, {key = "imposter_professor", form = 1}},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
   { "rival", "bitter_rival", "champion" },
   { { key = "unown", form = "A" }, { key = "unown", form = "B" }, { key = "unown", form = "C" }, { key = "unown", form = "D" }, { key = "unown", form = "E" }, { key = "unown", form = "F" },
