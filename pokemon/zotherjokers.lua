@@ -727,7 +727,7 @@ local professor={
 local imposter_professor={
   name = "imposter_professor",
   pos = {x = 0, y = 1},
-  config = {extra = {rounds_total = 2, rounds_current = 0}},
+  config = {extra = {rounds_total = 2, rounds_current = 0, form = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
@@ -771,6 +771,13 @@ local imposter_professor={
       }
     end
   end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.form == 1 then
+      card.children.center:set_sprite_pos({x = 8, y = 1})
+    else
+      card.children.center:set_sprite_pos({x = 6, y = 1})
+    end
+  end,
   in_pool = function(self)
     local grass_found, fire_found, water_found, pseudo_found, letsgo_found
     for _, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
@@ -790,7 +797,8 @@ local imposter_professor={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      card.children.center:set_sprite_pos({x = 8, y = 1})
+      card.ability.extra.form = 1
+      self:set_sprites(card)
     end
   end,
   attributes = {"tag", "generation", "on_sell"},
