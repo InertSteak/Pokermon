@@ -93,6 +93,7 @@ local swablu={
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex3",
+  knockoff_pseudol = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,

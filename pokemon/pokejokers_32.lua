@@ -288,6 +288,7 @@ local tinkatink={
   ptype = "Fairy",
   atlas = "Pokedex9",
   gen = 9,
+  knockoff_pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

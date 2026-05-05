@@ -5721,6 +5721,15 @@ return {
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
+            j_poke_imposter_professor = {
+                name = "Imposter Professor",
+                text = {
+                    "After {C:attention}#1#{} rounds, sell this card",
+                    "to create a {C:attention}rental Pokedex",
+                    "and a {C:attention}Starter Tag...?",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+                }
+            },
             j_poke_oologist = {
                 name = "Oologist",
                 text = {
@@ -6161,6 +6170,12 @@ return {
                 name = "Starter Tag",
                 text = {
                     "Gives a free {C:attention}Starter Pack",
+                }, 
+            },
+            tag_poke_starterq_tag = {
+                name = "Starter Tag...?",
+                text = {
+                    "Gives a free {C:attention}Starter Pack...?",
                 }, 
             },
         },
@@ -7140,6 +7155,13 @@ return {
                     "from among {C:attention}#2#{} Cards"
                 },
             },
+            p_poke_pokepack_starterq_pack = {
+                name = "Starter Pack...?",
+                text = {
+                    "Choose {C:attention}#1# Starter Pokemon...?{}",
+                    "from among {C:attention}#2#{} Cards"
+                },
+            },
             poke_hazards = {
                 name = "Hazards",
                 text = {
@@ -7176,6 +7198,7 @@ return {
             k_poke_pocket_pack = "Pocket Pack",
             k_poke_wish_pack = "Wish Pack",
             k_poke_starter_pack = "Starter Pack",
+            k_poke_starterq_pack = "Starter Pack...?",
             k_poke_gives = "Gives",
             k_poke_ignores = "Ignores",
             k_poke_limit = "Limit",

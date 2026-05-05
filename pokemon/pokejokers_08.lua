@@ -484,6 +484,7 @@ local slugma={
   ptype = "Fire",
   atlas = "Pokedex2",
   gen = 2,
+  knockoff_starter = true,
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,

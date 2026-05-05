@@ -16,6 +16,7 @@ local pansage = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "leafstone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisage")
@@ -86,6 +87,7 @@ local pansear = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "firestone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisear")
@@ -159,6 +161,7 @@ local panpour = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "waterstone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simipour")
