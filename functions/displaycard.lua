@@ -14,6 +14,8 @@ function PokeDisplayCard:init(args, x, y, w, h)
 
   self.display_text = args.display_text
 
+  if not self.display_text then self.no_ui = true end
+
   x = x or args.x or 0
   y = y or args.y or 0
   w = w or args.w or G.CARD_W
@@ -37,6 +39,7 @@ end
 function PokeDisplayCard:hover()
   Card.hover(self)
 
+  if not self.no_ui then
   if self.children.h_popup then
     self.children.h_popup:remove()
     self.children.h_popup = nil
@@ -47,6 +50,7 @@ function PokeDisplayCard:hover()
   })
 
   Node.hover(self)
+  end
 end
 
 function PokeDisplayCard:get_defaults_from_existing(key, set)
