@@ -39,14 +39,14 @@ end
 function PokeDisplayCard:hover()
   Card.hover(self)
 
-  if not self.no_ui then
+  if self.display_text and not self.no_ui then
     if self.children.h_popup then
       self.children.h_popup:remove()
       self.children.h_popup = nil
     end
 
     self.config.h_popup = create_h_popup({
-      name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.8}}})
+      name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #self.display_text, shadow = true}}})
     })
 
     Node.hover(self)
