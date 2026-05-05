@@ -15,15 +15,16 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.display_text = args.display_text
   self.shader = args.shader
 
-  if not self.display_text then self.no_ui = true end
+  if self.display_text == nil then self.no_ui = true end
 
   x = x or args.x or 0
   y = y or args.y or 0
   w = w or args.w or G.CARD_W
   h = h or args.h or G.CARD_H
 
+  local base = args.base_center or 'c_base'
   local fake_center = setmetatable({}, {__index = function(_table, key)
-    return self.properties[key] or G.P_CENTERS.c_base[key]
+    return self.properties[key] or G.P_CENTERS[base][key]
   end})
 
   Card.init(self, x, y, w, h, nil, fake_center)
