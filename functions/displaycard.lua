@@ -56,7 +56,8 @@ end
 function PokeDisplayCard:get_defaults_from_existing(key, set)
   local defaults = {
     ['Seal'] = {
-      existing_obj = G.P_SEALS[key]
+      existing_obj = G.P_SEALS[key],
+      display_text = localize({type = 'name_text', set = 'Other', key = key .. '_seal'})
     },
     ['Tag'] = {
       existing_obj = G.P_TAGS[key],
@@ -71,6 +72,10 @@ function PokeDisplayCard:get_defaults_from_existing(key, set)
     ['Booster'] = {
       w = G.CARD_W*1.27,
       h = G.CARD_H*1.27,
+      display_text = localize({type = 'name_text', set = 'Other', key = key})
+    },
+    ['Sticker'] = {
+      display_text = localize({type = 'name_text', set = 'Other', key = key})
     },
     ['Voucher'] = {
       shader = 'voucher',
@@ -82,9 +87,8 @@ function PokeDisplayCard:get_defaults_from_existing(key, set)
 
   local args = defaults[set] or {}
 
-  if not args.existing_obj then
-    args.existing_obj = G.P_CENTERS[key] or {}
-  end
+  args.existing_obj = args.existing_obj or G.P_CENTERS[key] or {}
+  args.display_text = args.display_text or localize({type = 'name_text', set = set, key = key})
 
   args.atlas = args.existing_obj.atlas
   args.pos = args.existing_obj.pos
