@@ -6,7 +6,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
     args = SMODS.merge_defaults(args, default_args)
   end
 
-  local properties = {
+  self.properties = {
     atlas = args.atlas,
     pos = args.pos,
     soul_pos = args.soul_pos,
@@ -22,7 +22,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
   h = h or args.h or G.CARD_H
 
   local fake_center = setmetatable({}, {__index = function(_table, key)
-    return properties[key] or G.P_CENTERS.c_base[key]
+    return self.properties[key] or G.P_CENTERS.c_base[key]
   end})
 
   Card.init(self, x, y, w, h, nil, fake_center)
@@ -40,16 +40,16 @@ function PokeDisplayCard:hover()
   Card.hover(self)
 
   if not self.no_ui then
-  if self.children.h_popup then
-    self.children.h_popup:remove()
-    self.children.h_popup = nil
-  end
+    if self.children.h_popup then
+      self.children.h_popup:remove()
+      self.children.h_popup = nil
+    end
 
-  self.config.h_popup = create_h_popup({
-    name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.8}}})
-  })
+    self.config.h_popup = create_h_popup({
+      name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.8}}})
+    })
 
-  Node.hover(self)
+    Node.hover(self)
   end
 end
 
