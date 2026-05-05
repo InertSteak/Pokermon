@@ -13,6 +13,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
   }
 
   self.display_text = args.display_text
+  self.shader = args.shader
 
   if not self.display_text then self.no_ui = true end
 
@@ -96,6 +97,17 @@ function PokeDisplayCard:get_defaults_from_existing(key, set)
 
   return args
 end
+
+SMODS.DrawStep {
+  key = 'display_card_shader',
+  order = 19,
+  func = function(self, layer)
+    if self.shader and self:is(PokeDisplayCard) then
+      self.children.center:draw_shader(self.shader, nil, self.ARGS.send_to_shader)
+    end
+  end,
+  conditions = {vortex = false, facing = 'front'},
+}
 
 -- Controller support
 local game_draw_ref = Game.draw
