@@ -100,7 +100,6 @@ assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
 assert(SMODS.load_file("functions/energyfunctions.lua"))()
-assert(SMODS.load_file("functions/pokeanimations.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 
