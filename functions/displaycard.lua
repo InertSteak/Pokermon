@@ -1,8 +1,53 @@
 PokeDisplayCard = Card:extend()
 
+local get_default_args_from_existing = function(key, set)
+  local defaults = {
+    ['Seal'] = {
+      existing_obj = G.P_SEALS[key],
+      display_text = localize({type = 'name_text', set = 'Other', key = key .. '_seal'}),
+    },
+    ['Tag'] = {
+      existing_obj = G.P_TAGS[key],
+      w = 0.8,
+      h = 0.8,
+    },
+    ['Blind'] = {
+      existing_obj = G.P_BLINDS[key],
+      w = 1.3,
+      h = 1.3,
+    },
+    ['Booster'] = {
+      w = G.CARD_W*1.27,
+      h = G.CARD_H*1.27,
+      display_text = localize({type = 'name_text', set = 'Other', key = key}),
+      shader = 'booster',
+    },
+    ['Sticker'] = {
+      display_text = localize({type = 'name_text', set = 'Other', key = key}),
+    },
+    ['Voucher'] = {
+      shader = 'voucher',
+    },
+    ['Spectral'] = {
+      shader = 'booster',
+    },
+  }
+
+  local args = defaults[set] or {}
+
+  args.existing_obj = args.existing_obj or G.P_CENTERS[key] or {}
+  args.display_text = args.display_text or localize({type = 'name_text', set = set, key = key})
+
+  args.atlas = args.existing_obj.atlas
+  args.pos = args.existing_obj.pos
+  args.soul_pos = args.existing_obj.soul_pos
+
+  return args
+end
+
 function PokeDisplayCard:init(args, x, y, w, h)
   if args.existing_key then
-    local default_args = self:get_defaults_from_existing(args.existing_key, args.set)
+    local default_args = get_default_args_from_existing(args.existing_key, args.set)
     args = SMODS.merge_defaults(args, default_args)
   end
 
@@ -15,6 +60,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
   self.display_text = args.display_text
   self.shader = args.shader
 
+  -- To disable automatic `no_ui` while using vanilla tooltip functionality, set `display_text` to false
   if self.display_text == nil then self.no_ui = true end
 
   x = x or args.x or 0
@@ -27,7 +73,33 @@ function PokeDisplayCard:init(args, x, y, w, h)
     return self.properties[key] or G.P_CENTERS[base][key]
   end})
 
+  self.components = {}
+
+  for _, v in ipairs(args.components or {}) do
+    v.display_card = self
+    v:apply(args)
+    self.components[#self.components+1] = v
+  end
+
   Card.init(self, x, y, w, h, nil, fake_center)
+end
+
+function PokeDisplayCard:remove()
+  for _, v in ipairs(self.components) do
+    v.display_card = nil
+  end
+
+  Card.remove(self)
+end
+
+function PokeDisplayCard:get_component(component)
+  for _, v in ipairs(self.components) do
+    if v:is(component) then return v end
+  end
+end
+
+function PokeDisplayCard:has_component(component)
+  return self:get_component(component) ~= nil
 end
 
 function PokeDisplayCard:get_popup_UI()
@@ -128,4 +200,119 @@ function Game:draw()
     target:draw()
     love.graphics.pop()
   end
+end
+
+-- Components
+PokeDisplayCardComponent = Object:extend()
+
+local Component = PokeDisplayCardComponent
+
+function Component:apply(args) return true end
+
+-- -- Toggle Shiny Sprite
+local ShinyToggleComponent = Component:extend()
+
+function ShinyToggleComponent:apply(args)
+  self.shiny = false
+
+  self.atlas = args.atlas
+  self.shiny_atlas = args.atlas .. 'Shiny'
+end
+
+function ShinyToggleComponent:toggle()
+  self.shiny = not self.shiny
+
+  local card = self.display_card
+
+  local atlas_key = self.shiny and self.shiny_atlas or self.atlas
+  local atlas = SMODS.get_atlas(atlas_key)
+
+  card.children.center.atlas = atlas
+  if card.children.floating_sprite then
+    -- Remember to update this when `soul_atlas` is implemented
+    card.children.floating_sprite.atlas = atlas
+  end
+
+  card:juice_up(0.05, 0.03)
+end
+
+poke_input_manager:add_listener({ 'right_click', 'right_stick' }, function(target)
+  if target and target:is(PokeDisplayCard) then
+    local shiny_toggle = target:get_component(ShinyToggleComponent)
+    if shiny_toggle then
+      shiny_toggle:toggle()
+    end
+  end
+end)
+
+-- -- Toggle Visible Layer
+local LayerToggleComponent = Component:extend()
+
+function LayerToggleComponent:init(can_hide_center, can_hide_soul)
+  self.can_hide_center = can_hide_center
+  self.can_hide_soul = can_hide_soul
+end
+
+function LayerToggleComponent:apply()
+  local card_soul_pos = self.display_card.properties.soul_pos
+  if card_soul_pos then
+    self.orig_soul_pos_draw = card_soul_pos.draw
+  end
+end
+
+function LayerToggleComponent:toggle()
+  local card = self.display_card
+  local center = card.children.center
+  local soul = card.children.floating_sprite
+
+  if self.can_hide_soul and self.can_hide_center then
+    -- Cycles through each permutation of hiding soul and center sprites except hiding both
+    soul.states.visible, center.states.visible = center.states.visible ~= soul.states.visible, soul.states.visible
+  elseif self.can_hide_soul then
+    soul.states.visible = not soul.states.visible
+  elseif self.can_hide_center then
+    center.states.visible = not center.states.visible
+  end
+
+  -- floating_sprite doesn't actually respect `states.visible` so we're gonna have to get creative
+  if card.properties.soul_pos then
+    card.properties.soul_pos.draw = not soul.states.visible
+        and function() end
+        or self.orig_soul_pos_draw
+  end
+end
+
+poke_input_manager:add_listener('double_click', function(target)
+  if target and target:is(PokeDisplayCard) then
+    local layer_toggle = target:get_component(LayerToggleComponent)
+    if layer_toggle then
+      layer_toggle:toggle()
+    end
+  end
+end)
+
+function poke_create_art_display_card(args, ...)
+  if args.existing_key then
+    -- here we grab default args early so we can decide which components to add
+    -- you can still pass `existing_key` directly to the PokeDisplayCard constructor
+    -- -- if you need values from existing_obj in your component, consider setting them in `Component:apply()`
+    local default_args = get_default_args_from_existing(args.existing_key, args.set)
+    args = SMODS.merge_defaults(args, default_args)
+    args.existing_key = nil
+  end
+
+  args.components = args.components or {}
+
+  if SMODS.get_atlas(args.atlas .. 'Shiny') then
+    args.components[#args.components+1] = ShinyToggleComponent()
+  end
+
+  if args.soul_pos then
+    local can_hide_center = args.layer ~= 'center'
+    local can_hide_soul = args.layer ~= 'soul'
+
+    args.components[#args.components+1] = LayerToggleComponent(can_hide_center, can_hide_soul)
+  end
+
+  return PokeDisplayCard(args, ...)
 end
