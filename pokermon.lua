@@ -338,7 +338,8 @@ function SMODS.current_mod.menu_cards()
         atlas = atlas,
         pos = { x = 0, y = y },
         soul_pos = { x = 1, y = y },
-        shader = shiny and 'poke_shiny'
+        shader = shiny and 'poke_shiny',
+        soul_shader = shiny and 'poke_shiny',
       }
     },
     remove_original = true,
