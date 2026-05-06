@@ -306,6 +306,15 @@ SMODS.Sound({
 		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Pocket") or SMODS.OPENED_BOOSTER.label:find("Starter"))
 	end,
 })
+
+SMODS.Sound({
+	key = "pocket_music_high_knockoff",
+	path = "pocket_music_high_knockoff.ogg",
+	select_music_track = function()
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Starteq"))
+	end,
+})
+
 SMODS.Sound({
 	key = "energy_use",
 	path = "energy_use.ogg",

@@ -724,6 +724,86 @@ local professor={
   attributes = {"tag", "generation", "on_sell"},
 }
 
+local imposter_professor={
+  name = "imposter_professor",
+  pos = {x = 0, y = 1},
+  config = {extra = {rounds_total = 2, rounds_current = 0, form = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.rounds_total, center.ability.extra.rounds_current}}
+  end,
+  rarity = 2,
+  cost = 5,
+  stage = "Other",
+  atlas = "others",
+  artist = "MyDude_YT",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
+      play_sound('timpani')
+      local added = SMODS.add_card{set = 'Joker', key = 'j_poke_pokedex'}
+      added.ability.rental = true
+      
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE,})
+
+      G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_poke_starterq_tag'))
+              play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+              return true
+          end)
+      }))
+    end
+    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+      card.ability.extra.rounds_current = card.ability.extra.rounds_current + 1
+      if card.ability.extra.rounds_current == card.ability.extra.rounds_total then
+          local eval = function(card) return not card.REMOVED end
+          juice_card_until(card, eval, true)
+      end
+      return {
+          message = (card.ability.extra.rounds_current < card.ability.extra.rounds_total) and
+              (card.ability.extra.rounds_current .. '/' .. card.ability.extra.rounds_total) or
+              localize('k_active_ex'),
+          colour = G.C.FILTER
+      }
+    end
+  end,
+  set_sprites = function(self, card, front)
+    if card.ability and card.ability.extra and card.ability.extra.form == 1 then
+      card.children.center:set_sprite_pos({x = 8, y = 1})
+    else
+      card.children.center:set_sprite_pos({x = 6, y = 1})
+    end
+  end,
+  in_pool = function(self)
+    local grass_found, fire_found, water_found, pseudo_found, letsgo_found
+    for _, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+      if not poke_family_present(v) then
+        if v.knockoff_starter and v.ptype == "Grass" then grass_found = true end
+        if v.knockoff_starter and v.ptype == "Fire" then fire_found = true end
+        if v.knockoff_starter and v.ptype == "Water" then water_found = true end
+        if v.knockoff_pseudol then pseudo_found = true end
+        if v.name == "yamper" or v.name == "bidoof" then letsgo_found = true end
+
+        if grass_found and fire_found and water_found and pseudo_found and letsgo_found then
+          return true
+        end
+      end
+    end
+    return false
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      card.ability.extra.form = 1
+      self:set_sprites(card)
+    end
+  end,
+  attributes = {"tag", "generation", "on_sell"},
+}
+
 local oologist={
   name = "oologist",
   pos = {x = 0, y = 0},
@@ -889,7 +969,8 @@ local repel={
   attributes = {"tag", "generation", "boss_blind", "on_sell"},
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, bitter_rival, champion, ruins_of_alph, unown_swarm, professor, daycare, oologist}
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, bitter_rival, champion, 
+               ruins_of_alph, unown_swarm, professor, imposter_professor, daycare, oologist}
 
 return {name = "Other Jokers",
       list = jlist

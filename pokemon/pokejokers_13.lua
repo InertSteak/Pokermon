@@ -392,6 +392,7 @@ local bagon={
   stage = "Basic",
   ptype = "Dragon",
   atlas = "Pokedex3",
+  pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

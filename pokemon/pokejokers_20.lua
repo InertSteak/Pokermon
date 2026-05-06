@@ -136,6 +136,7 @@ local gothita={
   ptype = "Psychic",
   atlas = "Pokedex5",
   gen = 5,
+  knockoff_pseudol = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_gothorita")

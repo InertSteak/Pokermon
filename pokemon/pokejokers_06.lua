@@ -1267,6 +1267,7 @@ local mareep={
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,
+  knockoff_pseudol = true,
   calculate = function(self, card, context)
     if context.joker_main and card.ability.extra.Xmult >= 0.01 then
       return {

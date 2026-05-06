@@ -245,6 +245,7 @@ local vulpix={
   atlas = "Pokedex1",
   gen = 1,
   ptype = "Fire",
+  knockoff_starter = true,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -540,6 +541,7 @@ local oddish={
   ptype = "Grass",
   atlas = "Pokedex1",
   gen = 1,
+  knockoff_starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
@@ -997,6 +999,7 @@ local psyduck={
   ptype = "Water",
   atlas = "Pokedex1",
   gen = 1,
+  knockoff_starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.joker_main and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
@@ -1139,6 +1142,7 @@ local growlithe={
   ptype = "Fire",
   atlas = "Pokedex1",
   gen = 1,
+  knockoff_starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1213,6 +1217,7 @@ local poliwag={
   ptype = "Water",
   atlas = "Pokedex1",
   gen = 1,
+  knockoff_starter = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play
