@@ -289,7 +289,7 @@ function poke_create_art_display_card(args, ...)
     args.existing_key = nil
   end
 
-  args.components = args.components or {}
+  args.components = {}
 
   if SMODS.get_atlas(args.atlas .. 'Shiny') then
     args.components[#args.components+1] = ShinyToggleComponent()
