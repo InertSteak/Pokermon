@@ -5698,6 +5698,15 @@ return {
                     "{C:inactive}(Actualmente {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
+            j_poke_imposter_professor = {
+                name = "Profesor impostor",
+                text = {
+                    "Después de {C:attention}#1#{} rondas, vende esta carta",
+                    "para crear una {C:attention}Pokédex con alquiler",
+                    "y una... {C:attention}¿Etiqueta inicial...?",
+                    "{C:inactive}(Actualmente {C:attention}#2#{C:inactive}/#1#){}"
+                }
+            },
             j_poke_oologist = {
                 name = "Oólogo",
                 text = {
@@ -6110,6 +6119,12 @@ return {
                 name = "Etiqueta inicial",
                 text = {
                     "Otorga gratis un {C:attention}paquete inicial{}",
+                }, 
+            },
+            tag_poke_starterq_tag = {
+                name = "¿Etiqueta inicial...?",
+                text = {
+                    "Otorga gratis un... {C:attention}¿paquete inicial...?",
                 }, 
             },
         },
@@ -7003,6 +7018,13 @@ return {
                     "de entre {C:attention}#2#{} cartas"
                 },
             },
+            p_poke_pokepack_starterq_pack = {
+                name = "¿Paquete inicial...?",
+                text = {
+                    "Elige {C:attention}#1#... ¿Pokémon inicial?{}",
+                    "de entre {C:attention}#2#{} cartas"
+                },
+            },
             poke_hazards = {
                 name = "Trampas",
                 text = {
@@ -7039,6 +7061,7 @@ return {
             k_poke_pocket_pack = "Paquete Pokémon",
             k_poke_wish_pack = "Paquete de deseos",
 			k_poke_starter_pack = "Paquete inicial",
+            k_poke_starterq_pack = "¿Paquete inicial...?",
 			k_poke_gives = "Otorga",
             k_poke_ignores = "Ignora",
             k_poke_limit = "Límite",
@@ -7232,11 +7255,11 @@ return {
             poke_autotomize_ex = "¡Aligerar!",
 			poke_highjumpkick_ex = "¡Patada salto alta!",
             poke_water_gun_ex = "¡Pistola agua!",
-            poke_sky_attack_ex = "¡Ataque celestial!",
+            poke_sky_attack_ex = "¡Ataque aéreo!",
             poke_bug_buzz_ex = "¡Zumbido!",
             poke_sticky_web_ex = "¡Red pegajosa!",
-            poke_head_smash_ex = "¡Topetazo!",
-            poke_teeter_dance_ex = "¡Danza del caos!",
+            poke_head_smash_ex = "¡Testarazo!",
+            poke_teeter_dance_ex = "¡Danza caos!",
 			
             poke_attack_forme = "Ataque",
             poke_defense_forme = "Defensa",
