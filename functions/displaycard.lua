@@ -133,51 +133,6 @@ function PokeDisplayCard:hover()
   end
 end
 
-function PokeDisplayCard:get_defaults_from_existing(key, set)
-  local defaults = {
-    ['Seal'] = {
-      existing_obj = G.P_SEALS[key],
-      display_text = localize({type = 'name_text', set = 'Other', key = key .. '_seal'}),
-    },
-    ['Tag'] = {
-      existing_obj = G.P_TAGS[key],
-      w = 0.8,
-      h = 0.8,
-    },
-    ['Blind'] = {
-      existing_obj = G.P_BLINDS[key],
-      w = 1.3,
-      h = 1.3,
-    },
-    ['Booster'] = {
-      w = G.CARD_W*1.27,
-      h = G.CARD_H*1.27,
-      display_text = localize({type = 'name_text', set = 'Other', key = key}),
-      shader = 'booster',
-    },
-    ['Sticker'] = {
-      display_text = localize({type = 'name_text', set = 'Other', key = key}),
-    },
-    ['Voucher'] = {
-      shader = 'voucher',
-    },
-    ['Spectral'] = {
-      shader = 'booster',
-    },
-  }
-
-  local args = defaults[set] or {}
-
-  args.existing_obj = args.existing_obj or G.P_CENTERS[key] or {}
-  args.display_text = args.display_text or localize({type = 'name_text', set = set, key = key})
-
-  args.atlas = args.existing_obj.atlas
-  args.pos = args.existing_obj.pos
-  args.soul_pos = args.existing_obj.soul_pos
-
-  return args
-end
-
 SMODS.DrawStep {
   key = 'display_card_shader',
   order = 19,
@@ -248,9 +203,9 @@ end)
 -- -- Toggle Visible Layer
 local LayerToggleComponent = Component:extend()
 
-function LayerToggleComponent:init(can_hide_center, can_hide_soul)
-  self.can_hide_center = can_hide_center
-  self.can_hide_soul = can_hide_soul
+function LayerToggleComponent:init(layer)
+  self.can_hide_center = layer ~= 'center'
+  self.can_hide_soul = layer ~= 'soul'
 end
 
 function LayerToggleComponent:apply()
@@ -308,10 +263,7 @@ function poke_create_art_display_card(args, ...)
   end
 
   if args.soul_pos then
-    local can_hide_center = args.layer ~= 'center'
-    local can_hide_soul = args.layer ~= 'soul'
-
-    args.components[#args.components+1] = LayerToggleComponent(can_hide_center, can_hide_soul)
+        args.components[#args.components+1] = LayerToggleComponent(args.layer)
   end
 
   return PokeDisplayCard(args, ...)
