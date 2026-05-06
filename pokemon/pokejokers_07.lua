@@ -571,6 +571,7 @@ local sunkern={
   ptype = "Grass",
   atlas = "Pokedex2",
   gen = 2,
+  knockoff_starter = true,
   item_req = "sunstone",
   blueprint_compat = true,
   calculate = function(self, card, context)

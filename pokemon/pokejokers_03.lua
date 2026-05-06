@@ -718,6 +718,7 @@ local ponyta={
   ptype = "Fire",
   atlas = "Pokedex1",
   gen = 1, 
+  knockoff_starter = true,
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
