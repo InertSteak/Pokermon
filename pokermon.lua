@@ -317,3 +317,30 @@ function end_round()
   }))
 
 end
+
+function SMODS.current_mod.menu_cards()
+  local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
+
+  local sprite_info = PokemonSprites['unown']
+  local atlas_prefix = poke_get_atlas_prefix('unown', sprite_info)
+
+  local atlas = 'poke_' .. atlas_prefix .. 'TitleCard'
+
+  if not SMODS.get_atlas(atlas) then
+    atlas = 'poke_AtlasJokersBasicTitleCard'
+  end
+
+  local y = shiny and 1 or 0
+
+  return {
+    {
+      poke_display_card_args = {
+        atlas = atlas,
+        pos = { x = 0, y = y },
+        soul_pos = { x = 1, y = y },
+        shader = shiny and 'poke_shiny'
+      }
+    },
+    remove_original = true,
+  }
+end
