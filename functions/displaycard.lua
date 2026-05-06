@@ -30,12 +30,20 @@ function PokeDisplayCard:init(args, x, y, w, h)
   Card.init(self, x, y, w, h, nil, fake_center)
 end
 
-local function create_h_popup(nodes)
+function PokeDisplayCard:get_popup_UI()
   return {n=G.UIT.ROOT, config = {align="cm", colour = G.C.CLEAR}, nodes={
     {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07}, nodes={
-      {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)}, nodes=nodes}
+      {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)}, nodes=self:get_popup_content()}
     }}
   }}
+end
+
+function PokeDisplayCard:get_popup_content()
+  local text = self.display_text
+
+  return {
+    name_from_rows({{n=G.UIT.T, config={text = text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #text, shadow = true}}})
+  }
 end
 
 function PokeDisplayCard:hover()
@@ -47,9 +55,7 @@ function PokeDisplayCard:hover()
       self.children.h_popup = nil
     end
 
-    self.config.h_popup = create_h_popup({
-      name_from_rows({{n=G.UIT.T, config={text = self.display_text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #self.display_text, shadow = true}}})
-    })
+    self.config.h_popup = self:get_popup_UI()
 
     Node.hover(self)
   end
