@@ -113,9 +113,20 @@ end
 function PokeDisplayCard:get_popup_content()
   local text = self.display_text
 
-  return {
+  local content = {
     name_from_rows({{n=G.UIT.T, config={text = text, colour = G.C.UI.TEXT_LIGHT, scale = 0.55 - 0.004 * #text, shadow = true}}})
   }
+
+  for _, v in ipairs(self.components) do
+    if type(v.get_popup_content) == 'function' then
+      local component_content = v:get_popup_content()
+      if component_content then
+        content[#content+1] = component_content
+      end
+    end
+  end
+
+  return content
 end
 
 function PokeDisplayCard:hover()
@@ -164,15 +175,6 @@ local Component = PokeDisplayCardComponent
 
 function Component:apply(args) return true end
 
-local hooktableret = function(obj, methodname, func)
-  local orig = obj[methodname]
-  obj[methodname] = function(...)
-    local t = orig(...)
-    t[#t+1] = func(...)
-    return t
-  end
-end
-
 -- -- Toggle Shiny Sprite
 local ShinyToggleComponent = Component:extend()
 
@@ -181,11 +183,6 @@ function ShinyToggleComponent:apply(args)
 
   self.atlas = args.atlas
   self.shiny_atlas = args.atlas .. 'Shiny'
-
-  -- add extra text to tooltip
-  hooktableret(self.display_card, 'get_popup_content', function()
-    return self:get_popup_content()
-  end)
 end
 
 function ShinyToggleComponent:get_popup_content()
@@ -236,11 +233,6 @@ function LayerToggleComponent:apply()
   if card_soul_pos then
     self.orig_soul_pos_draw = card_soul_pos.draw
   end
-
-  -- add extra text to tooltip
-  hooktableret(self.display_card, 'get_popup_content', function()
-    return self:get_popup_content()
-  end)
 end
 
 function LayerToggleComponent:get_popup_content()
