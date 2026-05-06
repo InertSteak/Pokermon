@@ -155,6 +155,14 @@ SMODS.DrawStep {
   conditions = {vortex = false, facing = 'front'},
 }
 
+local create_card_ref = SMODS.create_card
+function SMODS.create_card(args, ...)
+  if args.poke_display_card_args then
+    return PokeDisplayCard(args.poke_display_card_args)
+  end
+  return create_card_ref(args, ...)
+end
+
 -- Controller support
 local game_draw_ref = Game.draw
 function Game:draw()
