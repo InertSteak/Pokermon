@@ -59,6 +59,7 @@ function PokeDisplayCard:init(args, x, y, w, h)
 
   self.display_text = args.display_text
   self.shader = args.shader
+  self.soul_shader = args.soul_shader
 
   -- To disable automatic `no_ui` while using vanilla tooltip functionality, set `display_text` to false
   if self.display_text == nil then self.no_ui = true end
@@ -154,6 +155,28 @@ SMODS.DrawStep {
   end,
   conditions = {vortex = false, facing = 'front'},
 }
+
+SMODS.DrawStep {
+  key = 'display_card_soul_shader',
+  order = 61,
+  func = function(self, layer)
+    if self.soul_shader and self:is(PokeDisplayCard) then
+      local scale_mod = 0.07 + 0.02*math.sin(1.8*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL))*math.pi*14)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^3
+      local rotate_mod = 0.05*math.sin(1.219*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL)*math.pi*5)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^2
+
+      self.children.floating_sprite:draw_shader(self.soul_shader, nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+    end
+  end,
+  conditions = {vortex = false, facing = 'front'},
+}
+
+local create_card_ref = SMODS.create_card
+function SMODS.create_card(args, ...)
+  if args.poke_display_card_args then
+    return PokeDisplayCard(args.poke_display_card_args)
+  end
+  return create_card_ref(args, ...)
+end
 
 -- Controller support
 local game_draw_ref = Game.draw
