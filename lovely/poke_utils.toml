@@ -310,39 +310,3 @@ pattern = "if area == G.consumeables then"
 position = "at"
 payload = "if area == G.consumeables or area == G.jokers then"
 match_indent = true
-
-## Mega Malamar
-# flip cards or keep them flipped
-[[patches]]
-[patches.pattern]
-target = "blind.lua"
-pattern = '''for k, v in ipairs(G.jokers.cards) do
-        if v.facing == 'back' then v:flip() end
-    end'''
-position = "at"
-payload = '''if #SMODS.find_card("j_poke_mega_malamar") == 0 then
-  for k, v in ipairs(G.jokers.cards) do
-        if v.facing == 'back' then v:flip() end
-    end
-  end'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''return card'''
-position = "before"
-match_indent = true
-payload = '''if #SMODS.find_card("j_poke_mega_malamar") > 0 and not (card.facing == 'back') then
-  card.facing = 'back'
-  card.sprite_facing = 'back'
-end
-'''
-
-[[patches]]
-[patches.pattern]
-target = "cardarea.lua"
-pattern = '''function CardArea:emplace(card, location, stay_flipped)'''
-position = "after"
-match_indent = true
-payload = '''stay_flipped = stay_flipped or (self ~= G.hand and #SMODS.find_card("j_poke_mega_malamar") > 0)'''
