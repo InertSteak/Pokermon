@@ -5031,6 +5031,27 @@ return {
                     "{X:red,C:white}X#1#{} Mult when scored",
                 }
             },
+            j_poke_binacle = {
+                name = "Binacle",
+                text = {
+                    "Retrigger {C:attention}first #2# #1#s{} scored",
+                    "{C:attention}#4#{} additional time",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Retrigger {C:attention}first #3# #1#s{} held in hand",
+                    "{C:attention}#4#{} additional time",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#5#{C:inactive,s:0.8} rounds)"
+                } 
+            },
+            j_poke_barbaracle = {
+                name = "Barbaracle",
+                text = {
+                    "Retrigger {C:attention}first #2# #1#s{} scored",
+                    "{C:attention}#4#{} additional time",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Retrigger {C:attention}first #3# #1#s{} held in hand",
+                    "{C:attention}#4#{} additional time",
+                } 
+            },
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
