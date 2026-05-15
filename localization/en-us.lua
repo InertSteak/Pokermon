@@ -516,13 +516,6 @@ return {
                     "and earn {C:money}$#1#{}",
                 },
             },
-            c_poke_berry_juice_mega = {
-                name = "Mega Berry Juice",
-                text = {
-                    "{C:attention}Mega Evolves{} leftmost",
-                    "or selected Joker",
-                },
-            },
             c_poke_berry_juice_mystery = {
                 name = "Mystery Berry Juice",
                 text = {
@@ -5089,6 +5082,25 @@ return {
                   "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#2#{C:inactive,s:0.8} times){}"
                 }
             },
+						j_poke_bunnelby = {
+							name = 'Bunnelby',
+							text = {
+								"When you draw the last card of a", 
+								"{C:attention}Rank{} from your deck, {C:green}#1# in #2#{}",
+								"chance to gain a {C:tarot}Tarot{} card",
+								"{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
+							}
+						},
+						j_poke_diggersby = {
+							name = 'Diggersby',
+							text = {
+								"When you draw the last card", 
+								"of a {C:attention}Rank{} from your deck, gain",
+								"{X:mult,C:white}X#4#{} Mult and {C:green}#1# in #2#{} chance",
+								"to gain a {C:tarot}Tarot{} card",
+								"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+							}
+						},
             j_poke_litleo = {
                 name = "Litleo",
                 text = {
