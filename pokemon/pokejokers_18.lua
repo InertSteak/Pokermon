@@ -685,5 +685,5 @@ local sawk = {
 -- Sewaddle 540
 return {
   name = "Pokemon Jokers 511-540",
-  list = {pansage, simisage, pansear, simisear, panpour, simipour, munna, musharna, roggenrola, boldore, gigalith, drilbur, excadrill },
+  list = {pansage, simisage, pansear, simisear, panpour, simipour, munna, musharna, roggenrola, boldore, gigalith, drilbur, excadrill, throh, sawk},
 }

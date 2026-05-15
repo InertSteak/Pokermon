@@ -612,7 +612,8 @@ carry_mult_evo = function (self, card, context, forced_key, old_mult, will_evolv
 	return {
 	  message = poke_evolve(card, forced_key)
 	}
-	end
+  end
+end
 
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
@@ -1253,18 +1254,6 @@ get_poke_target_card_ranks = function(seed, num, default, use_deck)
   table.sort(target_ranks, sort_function)
   return target_ranks
 end
-
-get_new_random_poker_hand = function(old_hand_name)
-  local visible_hands = {}
-  for k, v in pairs(G.GAME.hands) do
-	if v.visible and k ~= old_hand_name then
-	  local hand = v
-	  hand.handname = k
-	  table.insert(visible_hands, hand.handname)
-	end
-   end
-  local random_num = math.ceil(#visible_hands * pseudorandom('bisharp'))
-  return visible_hands[random_num]
 
 get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   local suit = default or 'Spades'

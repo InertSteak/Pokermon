@@ -508,10 +508,6 @@ local mystery_dungeon = {
   text_colour = HEX("FFCB01"),
 }
 
-return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
-}
-
 local bunnelby_test = {
     object_type = "Challenge",
     key = "bunnelby_test",
@@ -784,30 +780,6 @@ local starter = {
       type = 'Challenge Deck',
     },
 }
-local drill = {
-    object_type = "Challenge",
-    key = "drill",
-    rules = {
-        modifiers = {
-            {id = 'joker_slots', value = 5},
-			{id = 'discards', value = 2},
-        }
-    },
-    jokers = {
-	  {id = "j_poke_drilbur", eternal = false},
-    },
-    restrictions = {
-        banned_cards = {
-        },
-        banned_tags = {
-        },
-        banned_other = {
-        },
-    },
-    deck = {
-      type = 'Challenge Deck',
-    },
-}
 
 local deer = {
     object_type = "Challenge",
@@ -835,6 +807,6 @@ local deer = {
 }
 
 return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, teddy_bear, furfrou, ruin, no_retreat, speed, rose, drill, deer}
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
 }
 
