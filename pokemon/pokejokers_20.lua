@@ -13,21 +13,10 @@ local zoroark = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-
-      local other_joker_ret = Card.calculate_joker(other_joker, context)
-
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
+    if other_joker and other_joker ~= card then
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
+      if ret then ret.colour = G.C.BLACK end
+      return ret
     end
   end,
   set_card_type_badge = function(self, card, badges)
@@ -51,13 +40,13 @@ local zoroark = {
     end
     G.E_MANAGER:add_event(Event({
       func = function()
-        if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
+        if card.area ~= G.jokers and not G.SETTINGS.paused then
           card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
           local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-          card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
+          card.children.center.atlas = SMODS.get_atlas(_o.atlas)
           card.children.center:set_sprite_pos(_o.pos)
         else
-          card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+          card.children.center.atlas = SMODS.get_atlas(self.atlas)
           card.children.center:set_sprite_pos(self.pos)
         end
         return true
@@ -79,7 +68,7 @@ local zoroark = {
         textDyna.strings = {}
         textDyna:update_text(true)
       end
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
+      card.children.center.atlas = SMODS.get_atlas(_o.atlas)
       card.children.center:set_sprite_pos(_o.pos)
       local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
       for i = #info_queue, 1, -1 do
@@ -115,19 +104,20 @@ local zoroark = {
           card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
           card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
         else
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+          card.children.floating_sprite.atlas = SMODS.get_atlas(self.atlas)
           card.children.floating_sprite:set_sprite_pos(self.soul_pos)
         end
       else
-        card.children.center.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"]
+        card.children.center.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
         card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"]
+        card.children.floating_sprite.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
     elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
       self:set_ability(card)
     end
   end,
+  attributes = {"copying"},
 }
 -- Minccino 572
 -- Cinccino 573
@@ -146,6 +136,7 @@ local gothita={
   ptype = "Psychic",
   atlas = "Pokedex5",
   gen = 5,
+  knockoff_pseudol = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_gothorita")
@@ -163,7 +154,8 @@ local gothita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothorita 575
 local gothorita={
@@ -197,7 +189,8 @@ local gothorita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothitelle 576
 local gothitelle={
@@ -234,6 +227,7 @@ local gothitelle={
       end
       return true end }))
   end,
+  attributes = {"passive", "planet", "economy", "space"},
 }
 -- Solosis 577
 -- Duosion 578
@@ -288,7 +282,8 @@ local vanillite={
       end
     end
     return level_evo(self, card, context, "j_poke_vanillish")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanillish 583
 local vanillish={
@@ -338,7 +333,8 @@ local vanillish={
       end
     end
     return level_evo(self, card, context, "j_poke_vanilluxe")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanilluxe 584
 local vanilluxe={
@@ -394,7 +390,8 @@ local vanilluxe={
         })
       end
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "tag", "generation"},
 }
 -- Deerling 585
 -- Sawsbuck 586
@@ -438,6 +435,7 @@ local frillish = {
     end
     return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "scaling", "discard", "face", "scaling_evo"},
 }
 
 -- Jellicent 593
@@ -480,6 +478,7 @@ local jellicent = {
       }
     end
 	end,
+  attributes = {"chips", "scaling", "discard", "face", "rank", "king", "queen"},
 }
 -- Alomomola 594
 -- Joltik 595
@@ -521,7 +520,8 @@ local ferroseed={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "round_evo"},
 }
 -- Ferrothorn 598
 local ferrothorn={
@@ -575,7 +575,8 @@ local ferrothorn={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "hand_type", "retrigger"},
 }
 -- Klink 599
 -- Klang 600

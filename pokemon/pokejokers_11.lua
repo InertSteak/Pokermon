@@ -3,12 +3,22 @@ local delcatty={
   name = "delcatty",
   pos = {x = 0, y = 0},
   config = {extra = {energy_buff = 1}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    return {vars = {G.GAME.current_round.cattype or "Grass", center.ability.extra.energy_buff, 
-            colours = {type_colour, highlight_colour}}}
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+
+    local cattype = G.GAME.current_round.cattype or "Grass"
+
+    local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local main_end
+
+    if card.area and card.area == G.jokers then
+      local found_pos = get_index(G.jokers.cards, card) + 1
+      local other_joker = G.jokers.cards[found_pos]
+      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+    end
+
+    return {vars = {cattype, card.ability.extra.energy_buff, colours = {type_colour, highlight_colour}}, main_end = main_end}
   end,
   rarity = "poke_safari",
   cost = 9,
@@ -20,80 +30,30 @@ local delcatty={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    local other_joker = nil
-    for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then other_joker = G.jokers.cards[i+1]  end
-    end
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-
+    local found_pos = get_index(G.jokers.cards, card) + 1
+    local other_joker = G.jokers.cards[found_pos]
+    if other_joker and other_joker.config.center.blueprint_compat and not context.no_blueprint
+        and is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
       local fake_card = {config = other_joker.config}
-      fake_card.ability = {}
-      setmetatable(fake_card.ability, {__index = other_joker.ability})
-
-      if type(other_joker.ability.extra) == "table" then
-        fake_card.ability.extra = {}
-        setmetatable(fake_card.ability.extra, {__index = other_joker.ability.extra})
-      else
-        fake_card.ability.extra = other_joker.ability.extra
+      fake_card.ability = setmetatable({}, {__index = other_joker.ability})
+      fake_card.ability.extra = other_joker.ability.extra
+      if type(other_joker.ability.extra) == 'table' then
+        fake_card.ability.extra = setmetatable({}, {__index = other_joker.ability.extra})
       end
-      --prevent evolution
-      other_joker.gone = true
-      for i = 1, card.ability.extra.energy_buff do
-        energize(fake_card, nil, nil, true)
-      end
+      energize(fake_card, nil, nil, true, card.ability.extra.energy_buff)
 
+      other_joker.gone = true --prevent evolution
       local true_ability = other_joker.ability
       other_joker.ability = fake_card.ability
-      local other_joker_ret = Card.calculate_joker(other_joker, context)
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
       other_joker.ability = true_ability
       other_joker.gone = nil
 
-
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLUE
-        return other_joker_ret
-      end
+      if ret then ret.colour = G.C.BLUE end
+      return ret
     end
   end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
-          other_joker = G.jokers.cards[i + 1] 
-        end
-      end
-      card.ability.blueprint_compat = (other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-    end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    type_tooltip(self, info_queue, card)
-    local highlight_colour = (G.GAME.current_round.cattype or "Grass") ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    local _c = card and card.config.center or card
-    if not full_UI_table.name then
-      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-    end
-    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-    card.ability.blueprint_compat_check = nil
-    local main_end = (card.area and card.area == G.jokers) and {
-      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-        }}
-      }}
-    } or nil
-    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {G.GAME.current_round.cattype or "Grass", card.ability.extra.energy_buff, 
-        colours = {type_colour, highlight_colour}}}
-    desc_nodes[#desc_nodes+1] = main_end
-  end,
+  attributes = {"copying", "types", "energy_count"},
 }
 -- Sableye 302
 -- Mawile 303
@@ -148,7 +108,8 @@ local aron = {
       return true
     end
     return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"xmult", "enhancements", "destroy_card", "scaling", "scaling_evo"},
 }
 -- Lairon 305
 local lairon = {
@@ -202,7 +163,8 @@ local lairon = {
       return true
     end
     return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"xmult", "enhancements", "destroy_card", "scaling", "scaling_evo"},
 }
 -- Aggron 306
 local aggron = {
@@ -257,7 +219,8 @@ local aggron = {
           or SMODS.has_enhancement(context.destroying_card, 'm_gold')) then
       return true
     end
-  end
+  end,
+  attributes = {"xmult", "enhancements", "destroy_card", "scaling"},
 }
 -- Meditite 307
 local meditite={
@@ -290,6 +253,7 @@ local meditite={
     end
     return level_evo(self, card, context, "j_poke_medicham")
   end,
+  attributes = {"mult", "discard", "round_evo"},
 }
 -- Medicham 308
 local medicham={
@@ -344,6 +308,7 @@ local medicham={
         end
       end
   end,
+  attributes = {"mult", "discard", "applies"},
 }
 -- Electrike 309
 -- Manectric 310
@@ -360,11 +325,11 @@ local volbeat={
   end,
   rarity = 2,
   cost = 5,
-  gen = 1,
+  gen = 3,
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex3",
-  perishable_compat = true,
+  perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
@@ -391,6 +356,7 @@ local volbeat={
       end
     end
   end,
+  attributes = {"chips", "planet", "types", "joker", "xmult"},
 }
 -- Illumise 314
 local illumise={
@@ -427,6 +393,7 @@ local illumise={
       end
     end
   end,
+  attributes = {"planet", "types", "joker"},
 }
 -- Roselia 315
 local roselia={
@@ -469,6 +436,7 @@ local roselia={
     end
     return item_evo(self, card, context, "j_poke_roserade")
   end,
+  attributes = {"rank", "ace", "three", "five", "seven", "nine", "retrigger", "enhancements", "item_evo"},
 }
 -- Gulpin 316
 -- Swalot 317
@@ -487,6 +455,7 @@ local carvanha={
   stage = "Basic",
   ptype = "Water",
   atlas = "Pokedex3",
+  knockoff_starter = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -528,6 +497,7 @@ local carvanha={
     end
     return scaling_evo(self, card, context, "j_poke_sharpedo", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
+  attributes = {"destroy_card", "xmult", "hand_type", "condition_evo"},
 }
 -- Sharpedo 319
 local sharpedo={
@@ -586,6 +556,7 @@ local sharpedo={
       }
     end
   end,
+  attributes = {"destroy_card", "xmult", "hand_type", "generation", "spectral"},
 }
 -- Wailmer 320
 -- Wailord 321
@@ -605,6 +576,7 @@ local numel={
   stage = "Basic",
   ptype = "Fire",
   atlas = "Pokedex3",
+  knockoff_starter = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -632,6 +604,7 @@ local numel={
     end
     return level_evo(self, card, context, "j_poke_camerupt")
   end,
+  attributes = {"xmult", "round_evo"},
 }
 -- Camerupt 323
 local camerupt={
@@ -682,6 +655,7 @@ local camerupt={
     end
   end,
   megas = { "mega_camerupt" },
+  attributes = {"xmult", "enhancements"},
 }
 -- Mega Camerupt 323-1
 local mega_camerupt={
@@ -728,8 +702,40 @@ local mega_camerupt={
       }
     end
   end,
+  attributes = {"xmult", "enhancements", "scaling", "reset"},
 }
 -- Torkoal 324
+local torkoal={
+  name = "torkoal",
+  pos = {x = 0, y = 0},
+  config = {extra = {}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+    end
+    return {vars = {}}
+  end,
+  rarity = 3,
+  cost = 7,
+  gen = 3,
+  enhancement_gate = "m_mult",
+  stage = "Basic",
+  ptype = "Fire",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_mult') then
+      if G.GAME.current_round.discards_left > 0 then
+        return {
+          repetitions = G.GAME.current_round.discards_left
+        }
+      end
+    end
+  end,
+}
 -- Spoink 325
 -- Grumpig 326
 -- Spinda 327
@@ -797,11 +803,12 @@ local spinda={
       SMODS.add_card{set = 'Tarot', key = 'c_wheel_of_fortune'}
     end
   end,
+  attributes = {"holding", "modify_card", "nature", "rank", "enhancements"},
 }
 -- Trapinch 328
 -- Vibrava 329
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
 }

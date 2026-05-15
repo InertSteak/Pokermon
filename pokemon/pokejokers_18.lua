@@ -16,10 +16,12 @@ local pansage = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "leafstone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisage")
   end,
+  attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
 -- Simisage 512
 local simisage = {
@@ -65,6 +67,7 @@ local simisage = {
       end
     end
   end,
+  attributes = {"applies", "passive", "hand_type", "modify_card", "enhancements", "chance"},
 }
 -- Pansear 513
 local pansear = {
@@ -84,10 +87,12 @@ local pansear = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "firestone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simisear")
   end,
+  attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
 -- Simisear 514
 local simisear = {
@@ -107,45 +112,36 @@ local simisear = {
   ptype = "Fire",
   atlas = "Pokedex5",
   gen = 5,
-  blueprint_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn then
-      local eval = function() return G.GAME.current_round.hands_played == 0 end
-      juice_card_until(card, eval, true)
+      juice_card_until(card, function() return G.GAME.current_round.hands_played == 0 end, true)
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) and G.GAME.current_round.hands_played == 0 then
-        card.ability.extra.destroy = true
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          return {
-            extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
-              G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                  local card_type = 'Tarot'
-                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, "c_empress")
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end},
-          }
-        end
-      end
-      if context.after and card.ability.extra.destroy and not context.blueprint then
-        card.ability.extra.destroy = nil
-        for k, v in pairs(context.full_hand) do
-          if not SMODS.in_scoring(v, context.scoring_hand) then
-            poke_remove_card(v, card)
+    if context.poker_hands and G.GAME.current_round.hands_played == 0
+        and (next(context.poker_hands['Straight']) or next(context.poker_hands['Flush'])) then
+      if context.before and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            SMODS.add_card({set = 'Tarot', key = 'c_empress'})
+            G.GAME.consumeable_buffer = 0
+            return true
           end
-        end
+        }))
+
+        return {
+          message = localize('k_plus_tarot'),
+          colour = G.C.PURPLE,
+        }
+      end
+
+      if context.destroy_card and context.cardarea == 'unscored' and not context.blueprint then
+        return {
+          remove = true
+        }
       end
     end
   end,
+  attributes = {"applies", "passive", "hand_type", "generation", "tarot", "destroy_card"},
 }
 -- Panpour 515
 local panpour = {
@@ -165,10 +161,12 @@ local panpour = {
   atlas = "Pokedex5",
   gen = 5,
   item_req = "waterstone",
+  knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return item_evo(self, card, context, "j_poke_simipour")
   end,
+  attributes = {"applies", "passive", "modify_card", "face", "item_evo"},
 }
 -- Simipour 516
 local simipour = {
@@ -211,6 +209,7 @@ local simipour = {
       end
     end
   end,
+  attributes = {"applies", "passive", "modify_card", "face", "enhancements"},
 }
 -- Munna 517
 local munna={
@@ -276,6 +275,7 @@ local munna={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "enhancements", "modify_card", "xmult", "item_evo"},
 }
 -- Musharna 518
 local musharna={
@@ -319,6 +319,7 @@ local musharna={
       G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
     end
   end,
+  attributes = {"foresight", "enhancements", "xmult", "joker", "types"},
 }
 -- Pidove 519
 -- Tranquill 520
@@ -372,7 +373,8 @@ local roggenrola = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "trigger_evo"},
 }
 -- Boldore 525
 local boldore = {
@@ -422,7 +424,8 @@ local boldore = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "item_evo"},
 }
 -- Gigalith 526
 local gigalith = {
@@ -474,7 +477,8 @@ local gigalith = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "rank", "mult", "retrigger"},
 }
 -- Woobat 527
 -- Swoobat 528
@@ -517,6 +521,7 @@ local drilbur={
     end
     return scaling_evo(self, card, context, "j_poke_excadrill", card.ability.extra.stones_destroyed, self.config.evo_rqmt)
   end,
+  attributes = {"enhancements", "destroy_card", "generation", "item", "economy", "trigger_evo"},
 }
 -- Excadrill 530
 local excadrill={
@@ -559,6 +564,7 @@ local excadrill={
       end
     end
   end,
+  attributes = {"enhancements", "destroy_card", "generation", "item", "economy", "full_deck", "mult"},
 }
 -- Audino 531
 -- Timburr 532

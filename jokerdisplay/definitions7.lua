@@ -175,15 +175,6 @@ jd_def["j_poke_lycanroc_dusk"] = {
     if held_in_hand then return 0 end
     local even_cards = {}
     local odd_cards = {}
-    local even_triggered = true
-    local odd_triggered = true
-    if joker_card.ability.extra.even_triggered == nil then
-      even_triggered = false
-    end
-    if joker_card.ability.extra.odd_triggered == nil then
-      odd_triggered = false
-    end
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     for _, scoring_card in pairs(scoring_hand) do
       if scoring_card:get_id() == 2 or scoring_card:get_id() == 4 or scoring_card:get_id() == 6 or scoring_card:get_id() == 8 or scoring_card:get_id() == 10 then
         table.insert(even_cards, scoring_card)
@@ -194,10 +185,10 @@ jd_def["j_poke_lycanroc_dusk"] = {
     end
     local first_even = scoring_hand and JokerDisplay.calculate_leftmost_card(even_cards)
     local first_odd = scoring_hand and JokerDisplay.calculate_leftmost_card(odd_cards)
-    if playing_card == first_even and not even_triggered then
+    if playing_card == first_even then
       return 1
     end
-    if playing_card == first_odd and not odd_triggered then
+    if playing_card == first_odd then
       return 1
     end
   end

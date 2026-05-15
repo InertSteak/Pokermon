@@ -430,7 +430,7 @@ local safety_first = {
             {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
-            { id = 'bl_final_bell', type = 'blind' },
+            { id = 'bl_final_leaf', type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
             {id = 'bl_poke_mirror', type = 'blind'},
             {id = 'bl_eye', type = 'blind'},

@@ -587,7 +587,7 @@ local function pokermon_show_artist_jokers(artist)
   return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
     nodes = poke_create_UIBox_your_collection {
       keys = keys,
-      create_card_func = PokeDisplayCard,
+      create_card_func = poke_create_art_display_card,
     }
   }
 end
@@ -780,7 +780,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
         keys = keys,
         cols = 3,
         create_card_func = function(key, x, y)
-          local card = poke_create_your_collection_card(key, x, y)
+          local card = poke_create_your_collection_card(key, x, y, { bypass_discovery_center = true })
           card.poke_change_sprite = true
           return card
         end,
@@ -837,7 +837,7 @@ G.FUNCS.pokemon_toggle_sprite = function(card)
     if atlas_prefix then
       if not card.config.center.animated then
         local stub = string.sub(atlas, atlas_find + 1)
-        if G.ASSET_ATLAS['poke_'..atlas_prefix..stub] then
+        if SMODS.get_atlas('poke_'..atlas_prefix..stub) then
           card.config.center.atlas = 'poke_'..atlas_prefix..stub
         else
           card.config.center.atlas = 'poke_'..atlas_prefix..'Natdex'

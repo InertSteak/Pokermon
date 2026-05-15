@@ -75,7 +75,7 @@ local mimikyu={
         end
         if save then
           card.ability.extra.disguise = false
-          card.children.center.atlas = G.ASSET_ATLAS['poke_'..card.config.center.poke_lookup_atlas]
+          card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
           G.E_MANAGER:add_event(Event({
@@ -107,7 +107,7 @@ local mimikyu={
   end,
   set_sprites = function(self, card, front)
     if card and card.ability and card.ability.extra and not card.ability.extra.disguise then
-      card.children.center.atlas = G.ASSET_ATLAS['poke_'..card.config.center.poke_lookup_atlas]
+      card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
       card.children.center:set_sprite_pos(card.config.center.broke_pos)
     end
   end,
@@ -117,6 +117,7 @@ local mimikyu={
       card.ability.extra.disguise = true
     end
   end,
+  attributes = {"chips", "suit", "hearts", "prevents_death"},
 }
 -- Bruxish 779
 -- Drampa 780

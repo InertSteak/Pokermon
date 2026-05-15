@@ -283,6 +283,49 @@ local starter_tag = {
   end
 }
 
+local starterq_tag = {
+	object_type = "Tag",
+	atlas = "AtlasTags",
+	name = "starterq_tag",
+	order = 28,
+	pos = { x = 4, y = 0 },
+	config = { type = "new_blind_choice" },
+	key = "starterq_tag",
+	artist = {"Sonfive", "Catzzadilla", "InertSteak"},
+  discovered = true,
+  min_ante = 2,
+  no_collection = true,
+	loc_vars = function(self, info_queue)
+		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_starterq_pack", specific_vars = {1, 4} }
+	end,
+	apply = function(self, tag, context)
+		if context and context.type == "new_blind_choice" then
+			tag:yep("+", G.C.SECONDARY_SET.Spectral, function()
+				local key = "p_poke_pokepack_starterq_pack"
+				local card = Card(
+					G.play.T.x + G.play.T.w / 2 - G.CARD_W * 1.27 / 2,
+					G.play.T.y + G.play.T.h / 2 - G.CARD_H * 1.27 / 2,
+					G.CARD_W * 1.27,
+					G.CARD_H * 1.27,
+					G.P_CARDS.empty,
+					G.P_CENTERS[key],
+					{ bypass_discovery_center = true, bypass_discovery_ui = true }
+				)
+				card.cost = 0
+				card.from_tag = true
+				G.FUNCS.use_card({ config = { ref_table = card } })
+				card:start_materialize()
+				return true
+			end)
+			tag.triggered = true
+			return true
+		end
+	end,
+  in_pool = function(self)
+    return false
+  end
+}
+
 return {name = "Tags",
-        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag, jirachi_tag, starter_tag}
+        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag, jirachi_tag, starter_tag, starterq_tag}
 }

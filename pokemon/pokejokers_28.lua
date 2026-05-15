@@ -35,7 +35,8 @@ local nickit={
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "nickit", card.ability.extra.money, true)
-	end
+	end,
+  attributes = {"economy", "round_evo"},
 }
 -- Thievul 828
 local thievul={
@@ -56,7 +57,8 @@ local thievul={
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
 			return ease_poke_dollars(card, "thievul", math.min(G.jokers.cards[1].sell_cost*2, 15), true)
     end
-	end
+	end,
+  attributes = {"economy", "sell_value"},
 }
 -- Gossifleur 829
 -- Eldegoss 830
@@ -93,6 +95,7 @@ local yamper={
     end
     return level_evo(self, card, context, "j_poke_boltund")
   end,
+  attributes = {"mult", "economy", "hand_type", "round_evo"},
 }
 -- Boltund 836
 local boltund={
@@ -122,6 +125,7 @@ local boltund={
       end
     end
   end,
+  attributes = {"xmult", "economy", "hand_type"},
 }
 -- Rolycoly 837
 -- Carkol 838

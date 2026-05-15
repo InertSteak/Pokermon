@@ -227,39 +227,11 @@ poke_vary_rank = function(card, decrease, seed, immediate)
 
   local next_rank = nil
   if decrease == nil then
-    -- randomize rank (decrease is nil)
-    local poss_ranks = {}
-    for _, v in pairs(G.P_CARDS) do
-      if v.suit == card.base.suit then
-        table.insert(poss_ranks, v.value)
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'random_rank'))
-    end
+    next_rank = pseudorandom_element(SMODS.Ranks, pseudoseed(seed or 'random_rank')).key
   elseif decrease then
-    -- only need to do this due to prev being a bad table (should be fixed in the next update)
-    local poss_ranks = {}
-    for _, v in pairs(SMODS.Ranks[card.base.value].prev) do
-      if SMODS.Ranks[v] and type(SMODS.Ranks[v].next) == "table" then
-        for _, _r in pairs(SMODS.Ranks[v].next) do
-          if _r == card.base.value then
-            table.insert(poss_ranks, v)
-            break
-          end
-        end
-      end
-    end
-    if #poss_ranks > 0 then
-      next_rank = pseudorandom_element(poss_ranks, pseudoseed(seed or 'decrease_rank'))
-    end
-
-    -- once prev table is fixed can use this:
-    --[[
     if #SMODS.Ranks[card.base.value].prev > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].prev, pseudoseed(seed or 'decrease_rank'))
     end
-    --]]
   else
     if #SMODS.Ranks[card.base.value].next > 0 then
       next_rank = pseudorandom_element(SMODS.Ranks[card.base.value].next, pseudoseed(seed or 'increase_rank'))
@@ -655,13 +627,6 @@ end
 -- Smeared Check Hook
 local smeared_ref = SMODS.smeared_check
 function SMODS.smeared_check(card, suit)
-  if next(SMODS.find_card('j_poke_smeargle')) then
-    if (card.base.suit == 'Hearts' or card.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
-      return true
-    elseif (card.base.suit == 'Spades' or card.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
-      return true
-    end
-  end
   return smeared_ref(card, suit)
 end
 
@@ -756,4 +721,45 @@ poke_convert_to_set = function(element_or_list)
     end
     return set
   end
+end
+
+poke_get_consumeables = function(set)
+  local consumeables = {}
+  if G.STAGE ~= G.STAGES.RUN then return consumeables end
+  local count = 0
+  local areas = {G.jokers.cards, G.consumeables.cards}
+  for i = 1, #areas do
+    local area = areas[i]
+    for j = 1, #area do
+      if area[j].ability.consumeable and not (set and area[j].ability.set ~= set) then
+        consumeables[#consumeables + 1] = area[j]
+      end
+    end
+  end
+  return consumeables
+end
+
+poke_ease_hands_played = function(mod, instant)
+  if mod >= 0 then
+    ease_hands_played(mod, instant)
+  else
+    local to_decrease = math.min(G.GAME.current_round.hands_left + (G.poke_hands_buffer or 0) - 1, -mod)
+    if to_decrease > 0 then
+      ease_hands_played(-to_decrease, instant)
+    end
+  end
+end
+
+local ease_hands_played_ref = ease_hands_played
+ease_hands_played = function(mod, instant, ...)
+  if not instant then
+    G.poke_hands_buffer = (G.poke_hands_buffer or 0) + mod
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        G.poke_hands_buffer = 0
+        return true
+      end
+    }))
+  end
+  return ease_hands_played_ref(mod, instant, ...)
 end

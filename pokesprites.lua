@@ -101,7 +101,10 @@ SMODS.Atlas({
     key = "AtlasConsumablesBirdEnergy",
     path = "Basic Series/AtlasConsumablesBirdEnergy.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 36,
+    fps = 15
 })
 
 SMODS.Atlas({
@@ -196,39 +199,83 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "j_poke_unown_swarm",
+    path = "j_poke_unown_swarm.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny",
+    path = "j_poke_unown_swarm_shiny.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_soul",
+    path = "j_poke_unown_swarm_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny_soul",
+    path = "j_poke_unown_swarm_shiny_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorb",
     path = "Series A/AtlasJokersSeriesAVoltorb.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorbShiny",
     path = "Series A/AtlasJokersSeriesAVoltorbShiny.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrode",
     path = "Series A/AtlasJokersSeriesAElectrode.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrodeShiny",
     path = "Series A/AtlasJokersSeriesAElectrodeShiny.png",
     px = 71,
-    py = 95
-})
-
-
-SMODS.Atlas({
-    key = "modicon",
-    path = "icon.png",
-    px = 32,
-    py = 32
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
 })
 
 SMODS.Atlas({
@@ -314,6 +361,15 @@ SMODS.Sound({
 		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Pocket") or SMODS.OPENED_BOOSTER.label:find("Starter"))
 	end,
 })
+
+SMODS.Sound({
+	key = "pocket_music_high_knockoff",
+	path = "pocket_music_high_knockoff.ogg",
+	select_music_track = function()
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Starteq"))
+	end,
+})
+
 SMODS.Sound({
 	key = "energy_use",
 	path = "energy_use.ogg",

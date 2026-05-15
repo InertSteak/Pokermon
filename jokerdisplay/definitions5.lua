@@ -20,6 +20,20 @@ local jd_def = JokerDisplay.Definitions
 --	Liepard
 --	Pansage
 --	Simisage
+jd_def["j_poke_simisage"] = {
+  extra = {
+    {
+      { text = "(", colour = G.C.GREEN, scale = 0.3 },
+      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
+      { text = ")", colour = G.C.GREEN, scale = 0.3 },
+    },
+  },
+  calc_function = function(card)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'simisage')
+    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+  end
+}
+
 --	Pansear
 --	Simisear
 jd_def["j_poke_simisear"] = {
@@ -37,7 +51,41 @@ jd_def["j_poke_simisear"] = {
 --	Panpour
 --	Simipour
 --	Munna
+jd_def["j_poke_munna"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult_multi", retrigger_type = "exp" },
+      },
+    },
+  }
+}
+
 --	Musharna
+jd_def["j_poke_musharna"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult_multi", retrigger_type = "exp" },
+      },
+    },
+  },
+  calc_function = function(card)
+    local triggers = 0
+    if G.scry_view then
+      for _, scry_card in pairs(G.scry_view.cards) do
+        if scry_card.config.center ~= G.P_CENTERS.c_base and not scry_card.debuff then
+          Xmult = card.ability.extra.Xmult
+          triggers = triggers + JokerDisplay.calculate_card_triggers(scry_card, nil, true)
+        end
+      end
+    end
+    card.joker_display_values.Xmult_multi = (card.ability.extra.Xmult_multi ^ triggers) or 1
+  end
+}
+
 --	Pidove
 --	Tranquill
 --	Unfezant

@@ -39,6 +39,7 @@ local snorunt={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
+  attributes = {"economy", "round_evo", "item_evo"},
 }
 -- Glalie 362
 local glalie={
@@ -76,6 +77,7 @@ local glalie={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
+  attributes = {"economy"},
 }
 -- Spheal 363
 -- Sealeo 364
@@ -140,7 +142,8 @@ local clamperl={
          G.hand:change_size(-card.ability.extra.h_size)
       end
     end
-  end
+  end,
+  attributes = {"holding", "hand_size", "item_evo", "condition_evo"},
 }
 -- Huntail 367
 local huntail ={
@@ -202,7 +205,8 @@ local huntail ={
          G.hand:change_size(-card.ability.extra.h_size)
       end
     end
-  end
+  end,
+  attributes = {"hand_size", "xmult", "scaling", "destroy_card", "tarot", "item"},
 }
 -- Gorebyss 368
 local gorebyss ={
@@ -261,7 +265,8 @@ local gorebyss ={
          G.hand:change_size(-card.ability.extra.h_size)
       end
     end
-  end
+  end,
+  attributes = {"hand_size", "xmult", "scaling", "tarot", "item"},
 }
 -- Relicanth 369
 local relicanth={
@@ -328,6 +333,7 @@ local relicanth={
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "four", "chips", "modify_card", "enhancements", "economy", "xmult", "destroy_card"},
 }
 -- Luvdisc 370
 local luvdisc={
@@ -368,6 +374,7 @@ local luvdisc={
       return true
     end
   end,
+  attributes = {"holding", "passive", "applies"},
 }
 -- Bagon 371
 local bagon={
@@ -385,6 +392,7 @@ local bagon={
   stage = "Basic",
   ptype = "Dragon",
   atlas = "Pokedex3",
+  pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -406,7 +414,8 @@ local bagon={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"mult", "hand_type", "condition_evo"},
 }
 -- Shelgon 372
 local shelgon={
@@ -446,7 +455,8 @@ local shelgon={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"mult", "hand_type", "round_evo"},
 }
 -- Salamence 373
 local salamence={
@@ -484,12 +494,7 @@ local salamence={
       }
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    G.hand:change_size(card.ability.extra.h_size)
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.hand:change_size(-card.ability.extra.h_size)
-  end
+  attributes = {"mult", "hand_type", "hand_type"},
 }
 -- Beldum 374
 local beldum={
@@ -539,6 +544,7 @@ local beldum={
     end
     return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "hand_type", "rank", "ace", "scaling", "scaling_evo"},
 }
 -- Metang 375
 local metang={
@@ -586,6 +592,7 @@ local metang={
     end
     return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, self.config.evo_rqmt)
   end,
+  attributes = {"chips", "hand_type", "rank", "ace", "scaling", "scaling_evo"},
 }
 -- Metagross 376
 local metagross={
@@ -620,6 +627,7 @@ local metagross={
       end
     end
   end,
+  attributes = {"chips", "hand_type", "xmult"},
 }
 -- Regirock 377
 -- Regice 378
@@ -653,6 +661,7 @@ local jirachi = {
       add_tag(Tag('tag_poke_jirachi_tag'))
     end
   end,
+  attributes = {}, -- How do you classify this???
 }
 
 local jirachi_banker = {
@@ -677,7 +686,8 @@ local jirachi_banker = {
   custom_pool_func = true,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"economy"}
 }
 
 local jirachi_booster = {
@@ -710,7 +720,8 @@ local jirachi_booster = {
   custom_pool_func = true,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"passive"}
 }
 
 local jirachi_invis = {
@@ -745,14 +756,15 @@ local jirachi_invis = {
         G.jokers:emplace(copy)
         copy:start_materialize()
 
-        SMODS.destroy_cards(card, nil, nil, true)
+        SMODS.destroy_cards(card, true, nil, true)
       end
     end
   end,
   custom_pool_func = true,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"joker", "generation"}
 }
 
 local jirachi_copy = {
@@ -935,7 +947,8 @@ local jirachi_power = {
   custom_pool_func = true,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"xmult", "hands"}
 }
 
 local jirachi_fixer = {
@@ -987,7 +1000,8 @@ local jirachi_fixer = {
   custom_pool_func = true,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"hands", "discard", "editions", "destroy_card"}
 }
 
 -- Deoxys 386
@@ -1045,6 +1059,7 @@ local deoxys={
   add_to_deck = function(self, card, from_debuff)
     self:set_sprites(card)
   end,
+  attributes = {"discard", "seals", "perma_bonus", "chips", "xmult", "economy", "space"}
 }
 -- Turtwig 387
 -- Grotle 388

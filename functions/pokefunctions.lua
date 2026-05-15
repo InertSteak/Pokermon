@@ -3,7 +3,7 @@ extended_family = {
   unown = {"ruins_of_alph", "unown_swarm"},
   luvdisc = {{item = true, name = "heartscale"}},
   shuckle = {{item = true, name = "berry_juice"}, {item = true, name = "berry_juice_tarot"}, {item = true, name = "berry_juice_planet"}, {item = true, name = "berry_juice_spectral"}, 
-             {item = true, name = "berry_juice_item"}, {item = true, name = "berry_juice_energy"}, {item = true, name = "berry_juice_mystery"}},
+             {item = true, name = "berry_juice_item"}, {item = true, name = "berry_juice_energy"}, {item = true, name = "berry_juice_mega"}},
   rotom = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
   rotomh = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
   rotomw = {{item = true, name = "oven"}, {item = true, name = "washing_machine"}, {item = true, name = "fridge"}, {item = true, name = "fan"}, {item = true, name = "lawn_mower"}},
@@ -176,7 +176,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target", "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target",                         "jacks_discarded"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -191,11 +191,6 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if values_to_keep.hazards_drawn then
     values_to_keep.hazards_drawn = values_to_keep.hazards_drawn % 2
   end
-
-  if values_to_keep.cards_scored and values_to_keep.cards_scored >= 15 and card.config.center.name == "spearow" then
-    values_to_keep.upgrade = true
-    values_to_keep.cards_scored = values_to_keep.cards_scored - 15
-  end
   
   if card.config.center.poke_custom_values_to_keep then
     for k, v in pairs(card.config.center.poke_custom_values_to_keep) do
@@ -204,7 +199,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     has_custom_values_to_keep = true
   end
   
-  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.pos)
+  card.children.center = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, SMODS.get_atlas(new_card.atlas or "Joker"), new_card.pos)
   card.children.center.states.hover = card.states.hover
   card.children.center.states.click = card.states.click
   card.children.center.states.drag = card.states.drag
@@ -236,7 +231,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   end
 
   if new_card.soul_pos then
-    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[new_card.atlas or "Joker"], new_card.soul_pos)
+    card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, SMODS.get_atlas(new_card.atlas or "Joker"), new_card.soul_pos)
     card.children.floating_sprite.role.draw_major = card
     card.children.floating_sprite.states.hover.can = false
     card.children.floating_sprite.states.click.can = false
@@ -569,8 +564,9 @@ get_family_keys = function(card)
     end
   end
   if center.name == "smeargle" then
-    if card.ability.extra.copy_joker then
-      table.insert(keys, card.ability.extra.copy_joker.config.center_key)
+    local copy = center:get_copy(card)
+    if copy then
+      table.insert(keys, copy.config.center.key)
     end
   end
   if center.name == "ruins_of_alph" then
@@ -705,18 +701,6 @@ type_tooltip = function(self, info_queue, center)
           info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
         end
       end
-      if center.ability.money1_frac and center.ability.money1_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money1_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
-      if center.ability.money2_frac and center.ability.money2_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money2_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
       if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
         percent = tonumber(string.format('%.3f', center.ability.money_mod_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
@@ -829,6 +813,10 @@ apply_type_sticker = function(card, sticker_type)
         end,
       }, true)
     end
+  end
+
+  if card.area and card.area == G.jokers and G.GAME.facing_blind then
+    SMODS.recalc_debuff(card)
   end
 end
 
@@ -1108,27 +1096,36 @@ poke_total_chips = function(card)
 end
 
 poke_drain = function(card, target, amount, one_way)
-  local amt = amount
-  local amt_drained = 0
-  if target.sell_cost == 1 then return end
-  target.ability.extra_value = target.ability.extra_value or 0
-  if target.sell_cost <= amt then
-    amt_drained = amt_drained + target.sell_cost - 1
-    target.ability.extra_value = target.ability.extra_value - amt_drained
-  else
-     target.ability.extra_value = target.ability.extra_value - amt
-     amt_drained = amt
-  end
-  
-  if amt_drained > 0 then
+  local drain_amount = math.min(target.sell_cost - 1, amount)
+
+  if drain_amount > 0 then
+    SMODS.scale_card(target, {
+      ref_table = target.ability,
+      ref_value = 'extra_value',
+      operation = function(ref_table, ref_value, initial)
+        ref_table[ref_value] = initial - drain_amount
+      end,
+      scaling_message = {
+        message = localize('poke_val_down'),
+        colour = G.C.RED
+      }
+    })
     target:set_cost()
-    card_eval_status_text(target, 'extra', nil, nil, nil, {message = localize('poke_val_down'), colour = G.C.RED})
+
     if not one_way then
-      card.ability.extra_value = card.ability.extra_value or 0
-      card.ability.extra_value = card.ability.extra_value + amt_drained
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        operation = function(ref_table, ref_value, initial)
+          ref_table[ref_value] = initial + drain_amount
+        end,
+        scaling_message = {
+          message = localize('k_val_up'),
+          colour = G.C.MONEY
+        }
+      })
       card:set_cost()
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
-    end    
+    end
   end
 end
 
@@ -1419,20 +1416,21 @@ poke_can_save_consumable = function(card)
       or (card.config.center.saveable)
 end
 
-poke_get_consumeables = function()
-  local consumeables = {}
-  if G.STAGE ~= G.STAGES.RUN then return consumeables end
-  local count = 0
-  local areas = {G.jokers.cards, G.consumeables.cards}
-  for i = 1, #areas do
-    local area = areas[i]
-    for j = 1, #area do
-      if area[j].ability.consumeable then
-        consumeables[#consumeables + 1] = area[j]
-      end
-    end
-  end
-  return consumeables
+poke_drain_chips = function(card, amount)
+  if amount < 0 then return 0 end
+
+  local nominal_chips = card.base.nominal - (card.ability.nominal_drain or 0)
+  local bonus_chips = card.ability.bonus + (card.ability.perma_bonus or 0)
+
+  local base_drain = math.min(nominal_chips - 1, amount)
+
+  card.ability.nominal_drain = (card.ability.nominal_drain or 0) + base_drain
+
+  local bonus_drain = math.min(bonus_chips, amount - base_drain)
+
+  card.ability.perma_bonus = (card.ability.perma_bonus or 0) - bonus_drain
+
+  return base_drain + bonus_drain
 end
 
 -- Multiple Mega Malamar hooks

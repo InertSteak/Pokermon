@@ -80,8 +80,11 @@ local default_family_list = {
   { "taillow", "swellow"},
   { "wingull", "pelipper"},
   { "ralts", "kirlia", "gardevoir", "gallade"},
+  { "surskit", "masquerain"},
   { "numel", "camerupt", "mega_camerupt" },
   { "cacnea", "cacturne"},
+  { "swablu", "altaria"},
+  {"corphish", "crawdaunt"},
   { "feebas", "milotic" },
   { "snorunt", "glalie", "froslass" },
   { "nosepass", "probopass" },
@@ -138,6 +141,7 @@ local default_family_list = {
   { "carvanha", "sharpedo"},
   { "duskull", "dusclops", "dusknoir" },
   {"clamperl", "huntail", "gorebyss"},
+  { "baltoy", "claydol"},
   { "lileep", "cradily" },
   { "anorith", "armaldo" },
   { "bagon", "shelgon", "salamence"},
@@ -145,7 +149,7 @@ local default_family_list = {
   { "kricketot", "kricketune" },
   { "buizel", "floatzel" },
   { "buneary", "lopunny", "mega_lopunny" },
-  { "riolu", "lucario" },
+  { "riolu", "lucario", "mega_lucario" },
   { "rotom", "rotomh", "rotomw", "rotomf", "rotomfan", "rotomm" },
   { "shaymin", "shaymin_sky" },
   { "munna", "musharna"},
@@ -185,15 +189,16 @@ local default_family_list = {
   { "wiglett", "wugtrio" },
   { "gimmighoul", "gholdengo", "gimmighoulr" },
   { "ruins_of_alph" },
+  {{key = "imposter_professor", form = 0}, {key = "imposter_professor", form = 1}},
   --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
-  { { key = "rival", form = 0 }, { key = "rival", form = 1 }, { key = "rival", form = 2 } },
+  { "rival", "bitter_rival", "champion" },
   { { key = "unown", form = "A" }, { key = "unown", form = "B" }, { key = "unown", form = "C" }, { key = "unown", form = "D" }, { key = "unown", form = "E" }, { key = "unown", form = "F" },
     { key = "unown", form = "G" }, { key = "unown", form = "H" }, { key = "unown", form = "I" }, { key = "unown", form = "J" }, { key = "unown", form = "K" }, { key = "unown", form = "L" },
     { key = "unown", form = "M" }, { key = "unown", form = "N" }, { key = "unown", form = "O" }, { key = "unown", form = "P" }, { key = "unown", form = "Q" }, { key = "unown", form = "R" },
     { key = "unown", form = "S" }, { key = "unown", form = "T" }, { key = "unown", form = "U" }, { key = "unown", form = "V" }, { key = "unown", form = "W" }, { key = "unown", form = "X" },
     { key = "unown", form = "Y" }, { key = "unown", form = "Z" }, { key = "unown", form = "ZEx" }, { key = "unown", form = "ZQu" }
   },
-  { "berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mystery" }
+  { "berry_juice", "berry_juice_tarot", "berry_juice_planet", "berry_juice_spectral", "berry_juice_item", "berry_juice_energy", "berry_juice_mega" }
 }
 
 local pfm_to_name = function(a) return type(a) == 'string' and a or a.key end

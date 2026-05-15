@@ -68,6 +68,31 @@ SMODS.Rarity{
     end,
 }
 
+--Load Custom Attributes
+if SMODS.Attribute then
+  SMODS.Attribute { key = "round_evo" }
+  SMODS.Attribute { key = "scaling_evo" }
+  SMODS.Attribute { key = "item_evo" }
+  SMODS.Attribute { key = "type_evo" }
+  SMODS.Attribute { key = "trigger_evo" }
+  SMODS.Attribute { key = "condition_evo" }
+  SMODS.Attribute { key = "starter" }
+  SMODS.Attribute { key = "holding" }
+  SMODS.Attribute { key = "item" }
+  SMODS.Attribute { key = "types" }
+  SMODS.Attribute { key = "volatile" }
+  SMODS.Attribute { key = "energy" }
+  SMODS.Attribute { key = "energy_count" }
+  SMODS.Attribute { key = "energy_limit" }
+  SMODS.Attribute { key = "ancient" }
+  SMODS.Attribute { key = "foresight" }
+  SMODS.Attribute { key = "baby" }
+  SMODS.Attribute { key = "nature" }
+  SMODS.Attribute { key = "hazards" }
+  SMODS.Attribute { key = "applies" }
+  SMODS.Attribute { key = "drain" }
+end
+
 --Load helper function files
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
 assert(SMODS.load_file("functions/pokecompat.lua"))()
@@ -75,7 +100,6 @@ assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
 assert(SMODS.load_file("functions/energyfunctions.lua"))()
-assert(SMODS.load_file("functions/pokeanimations.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 
@@ -292,4 +316,32 @@ function end_round()
     end
   }))
 
+end
+
+function SMODS.current_mod.menu_cards()
+  local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
+
+  local sprite_info = PokemonSprites['unown']
+  local atlas_prefix = poke_get_atlas_prefix('unown', sprite_info)
+
+  local atlas = 'poke_' .. atlas_prefix .. 'TitleCard'
+
+  if not SMODS.get_atlas(atlas) then
+    atlas = 'poke_AtlasJokersBasicTitleCard'
+  end
+
+  local y = shiny and 1 or 0
+
+  return {
+    {
+      poke_display_card_args = {
+        atlas = atlas,
+        pos = { x = 0, y = y },
+        soul_pos = { x = 1, y = y },
+        shader = shiny and 'poke_shiny',
+        soul_shader = shiny and 'poke_shiny',
+      }
+    },
+    remove_original = true,
+  }
 end

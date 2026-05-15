@@ -290,16 +290,6 @@ ease_poke_dollars = function(card, seed, amt, calc_only)
         earned = earned + 1
       end
     end
-    if card.ability.money1_frac then
-      if card.ability.money1_frac > pseudorandom(pseudoseed(seed)) then
-        earned = earned + 1
-      end
-    end
-    if card.ability.money2_frac then
-      if card.ability.money2_frac > pseudorandom(pseudoseed(seed)) then
-        earned = earned + 1
-      end
-    end
   end
   if (SMODS.Mods["Talisman"] or {}).can_load then
     earned = to_number(earned)

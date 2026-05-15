@@ -90,7 +90,7 @@ local flower = {
    atlas = "AtlasEnhancementsBasic",
    artist = 'MyDude_YT',
    pos = { x = 6, y = 0 },
-   config = {Xmult_flower = 3},
+   config = {Xmult_flower = 2},
    loc_vars = function(self, info_queue, center)
      return {vars = {center.ability.Xmult_flower}}
    end,
@@ -100,9 +100,13 @@ local flower = {
      if context.main_scoring and context.cardarea == G.play then
         local suit_number = next(SMODS.find_card('j_poke_roserade')) and 3 or 4
         if poke_suit_check(context.scoring_hand, suit_number) then
+          local extra = 0
+          if next(SMODS.find_card("j_poke_shaymin")) or next(SMODS.find_card("j_poke_shaymin_sky")) then
+            extra = 1
+          end
           return
           {
-            x_mult = card.ability.Xmult_flower
+            x_mult = card.ability.Xmult_flower + extra
           }
         end
      end

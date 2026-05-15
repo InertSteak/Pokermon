@@ -38,6 +38,7 @@ local mew ={
       card:juice_up()
     end
   end,
+  attributes = {"generation", "tarot", "spectral", "item", "joker"},
 }
 -- Chikorita 152
 local chikorita = {
@@ -82,7 +83,8 @@ local chikorita = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive", "economy", "round_evo"},
 }
 -- Bayleef 153
 local bayleef = {
@@ -126,7 +128,8 @@ local bayleef = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive", "economy", "round_evo"},
 }
 -- Meganium 154
 local meganium = {
@@ -160,7 +163,8 @@ local meganium = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"starter", "hand_size", "passive", "economy"},
 }
 -- Cyndaquil 155
 local cyndaquil = {
@@ -199,6 +203,7 @@ local cyndaquil = {
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "mult", "round_evo"},
 }
 -- Quilava 156
 local quilava = {
@@ -236,6 +241,7 @@ local quilava = {
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "mult", "round_evo"},
 }
 -- Typhlosion 157
 local typhlosion = {
@@ -274,6 +280,7 @@ local typhlosion = {
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "mult", "xmult"},
 }
 -- Totodile 158
 local totodile = {
@@ -325,11 +332,9 @@ local totodile = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
-    if to_decrease > 0 then
-      ease_hands_played(-to_decrease)
-    end
-  end
+    poke_ease_hands_played(-card.ability.extra.hands)
+  end,
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
 -- Croconaw 159
 local croconaw = {
@@ -380,11 +385,9 @@ local croconaw = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
-    if to_decrease > 0 then
-      ease_hands_played(-to_decrease)
-    end
-  end
+    poke_ease_hands_played(-card.ability.extra.hands)
+  end,
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
 -- Feraligatr 160
 local feraligatr = {
@@ -434,11 +437,9 @@ local feraligatr = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    local to_decrease = math.min(G.GAME.current_round.hands_left - 1, card.ability.extra.hands)
-    if to_decrease > 0 then
-      ease_hands_played(-to_decrease)
-    end
-  end
+    poke_ease_hands_played(-card.ability.extra.hands)
+  end,
+  attributes = {"starter", "hands", "passive", "chips", "scaling", "reset"},
 }
 -- Sentret 161
 local sentret={
@@ -484,6 +485,7 @@ local sentret={
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.last_hand = G.GAME.last_hand_played
   end,
+  attributes = {"hand_type", "mult", "scaling", "reset", "scaling_evo"},
 }
 -- Furret 162
 local furret={
@@ -521,6 +523,7 @@ local furret={
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.last_hand = G.GAME.last_hand_played
   end,
+  attributes = {"hand_type", "mult", "scaling"},
 }
 -- Hoothoot 163
 local hoothoot={
@@ -560,6 +563,7 @@ local hoothoot={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "chips", "round_evo"},
 }
 -- Noctowl 164
 local noctowl={
@@ -598,6 +602,7 @@ local noctowl={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
   end,
+  attributes = {"foresight", "chips"},
 }
 -- Ledyba 165
 local ledyba={
@@ -629,7 +634,8 @@ local ledyba={
       end
     end
     return level_evo(self, card, context, "j_poke_ledian")
-  end
+  end,
+  attributes = {"mult", "round_evo"},
 }
 -- Ledian 166
 local ledian={
@@ -660,7 +666,8 @@ local ledian={
         }
       end
     end
-  end
+  end,
+  attributes = {"mult"},
 }
 -- Spinarak 167
 local spinarak={
@@ -696,7 +703,8 @@ local spinarak={
       end
     end
     return level_evo(self, card, context, "j_poke_ariados")
-  end
+  end,
+  attributes = {"chips", "chance", "round_evo"},
 }
 -- Ariados 168
 local ariados={
@@ -731,7 +739,8 @@ local ariados={
         }
       end
     end
-  end
+  end,
+  attributes = {"chips", "chance", "round_evo"},
 }
 -- Crobat 169
 local crobat={
@@ -821,7 +830,8 @@ local crobat={
     if card.ability.extra.money > 0 then
       return ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
     end
-	end
+	end,
+  attributes = {"chips", "mult", "xmult", "economy", "modify_card", "enhancements", "scaling"},
 }
 -- Chinchou 170
 local chinchou={
@@ -855,6 +865,7 @@ local chinchou={
     end
     return level_evo(self, card, context, "j_poke_lanturn")
   end,
+  attributes = {"chips", "economy", "hand_type", "round_evo"},
 }
 -- Lanturn 171
 local lanturn={
@@ -891,6 +902,7 @@ local lanturn={
       end
     end
   end,
+  attributes = {"chips", "economy", "hand_type", "types", "joker"},
 }
 -- Pichu 172
 local pichu={
@@ -924,7 +936,8 @@ local pichu={
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
-	end
+	end,
+  attributes = {"baby", "economy", "round_evo"},
 }
 -- Cleffa 173
 local cleffa={
@@ -970,6 +983,7 @@ local cleffa={
     end
     return level_evo(self, card, context, "j_poke_clefairy")
   end,
+  attributes = {"baby", "tarot", "generation", "space", "round_evo"},
 }
 -- Igglybuff 174
 local igglybuff={
@@ -1015,6 +1029,7 @@ local igglybuff={
     end
     return level_evo(self, card, context, "j_poke_jigglypuff")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Togepi 175
 local togepi={
@@ -1067,6 +1082,7 @@ local togepi={
     {n=G.UIT.T, config={text = ' '..(localize('k_mult')), colour = G.C.UI.TEXT_DARK, scale = 0.32}}}
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds}}
   end,
+  attributes = {"baby", "xmult", "round_evo"},
 }
 -- Togetic 176
 local togetic={
@@ -1119,6 +1135,7 @@ local togetic={
     end
     return item_evo(self, card, context, "j_poke_togekiss")
   end,
+  attributes = {"enhancements", "chance", "chips", "xmult", "item_evo"},
 }
 -- Natu 177
 local natu = {
@@ -1170,6 +1187,7 @@ local natu = {
       self.config.levels[hand] = data.level
     end
   end,
+  attributes = {"planet", "round_evo"},
 }
 -- Xatu 178
 local xatu = {
@@ -1220,6 +1238,7 @@ local xatu = {
       self.config.levels[hand] = data.level
     end
   end,
+  attributes = {"planet", "round_evo"},
 }
 -- Mareep 179
 local mareep={
@@ -1239,6 +1258,7 @@ local mareep={
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,
+  knockoff_pseudol = true,
   calculate = function(self, card, context)
     if context.joker_main and card.ability.extra.Xmult >= 0.01 then
       return {
@@ -1261,6 +1281,7 @@ local mareep={
     end
     return scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "scaling", "scaling_evo"},
 }
 -- Flaaffy 180
 local flaaffy={
@@ -1302,6 +1323,7 @@ local flaaffy={
     end
     return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "scaling", "scaling_evo"},
 }
 
 return {name = "Pokemon Jokers 151-180", 

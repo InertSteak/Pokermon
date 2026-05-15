@@ -4952,8 +4952,8 @@ return {
                     "產生一個{C:attention}迅速標籤",
                     "{br:2}此為分隔線",
                     "在這局遊戲中",
-                    "每個被跳過的盲注會給予{X:mult,C:white}X#3#{}倍數",
-                    "{C:inactive}（目前會給予{X:mult,C:white}X#4#{C:inactive}倍數）{}"
+                    "每個被跳過的盲注會給予{X:mult,C:white}X#1#{}倍數",
+                    "{C:inactive}（目前會給予{X:mult,C:white}X#2#{C:inactive}倍數）{}"
                 }
             },
             j_poke_professor = {

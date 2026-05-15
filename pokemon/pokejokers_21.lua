@@ -81,6 +81,7 @@ local elgyem={
       card.ability.extra.current_planet_count = #uniques
     end
   end,
+  attributes = {"planet", "generation", "space", "condition_evo"},
 }
 -- Beheeyem 606
 local beheeyem={
@@ -180,7 +181,8 @@ local beheeyem={
         if added then card:juice_up() end
       end
     end
-  end
+  end,
+  attributes = {"planet", "generation", "space"},
 }
 -- Litwick 607
 local litwick={
@@ -204,27 +206,24 @@ local litwick={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local Mult = card.ability.extra.mult
-        if card.sell_cost >= card.ability.extra.sell_goal then
-          Mult = 3 * card.ability.extra.mult
-        end
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {Mult}}, 
-          colour = G.C.MULT,
-          mult_mod = Mult
-        }
+    if context.joker_main then
+      local mult = card.ability.extra.mult
+      if card.sell_cost >= card.ability.extra.sell_goal then
+        mult = mult * 3
       end
+      return {
+        mult = mult
+      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
       local adjacent = poke_get_adjacent_jokers(card)
-      for i = 1, #adjacent do 
-        poke_drain(card, adjacent[i], card.ability.extra.money_minus)
+      for _, v in ipairs(adjacent) do
+        poke_drain(card, v, card.ability.extra.money_minus)
       end
     end
     return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
-  end
+  end,
+  attributes = {"drain", "mult", "sell_value", "scaling", "scaling_evo"},
 }
 -- Lampent 608
 local lampent={
@@ -249,25 +248,21 @@ local lampent={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}},
-          colour = G.C.MULT,
-          mult_mod = card.sell_cost
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.sell_cost
+      }
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local adjacent = poke_get_adjacent_jokers(card)
-      for i = 1, #G.jokers.cards do 
-        if G.jokers.cards[i] ~= card then
-          poke_drain(card, G.jokers.cards[i], card.ability.extra.money_minus)
+      for _, v in ipairs(G.jokers.cards) do
+        if v ~= card then
+          poke_drain(card, v, card.ability.extra.money_minus)
         end
       end
     end
     return item_evo(self, card, context, "j_poke_chandelure")
-  end
+  end,
+  attributes = {"drain", "mult", "sell_value", "joker", "scaling", "item_evo"},
 }
 -- Chandelure 609
 local chandelure={
@@ -288,29 +283,18 @@ local chandelure={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.sell_cost}}, 
-          colour = G.C.MULT,
-          mult_mod = card.sell_cost
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.sell_cost
+      }
     end
-    if context.other_joker and context.other_joker.config and context.other_joker.sell_cost < 2 and context.other_joker.ability.set == 'Joker' and not context.post_trigger then
-        G.E_MANAGER:add_event(Event({
-          func = function()
-              context.other_joker:juice_up(0.5, 0.5)
-              return true
-          end
-        })) 
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_multi
-        }
+    if context.other_joker and context.other_joker.sell_cost < 2 then
+      return {
+        Xmult = card.ability.extra.Xmult_multi
+      }
     end
-  end
+  end,
+  attributes = {"xmult", "mult", "sell_value", "joker"},
 }
 -- Axew 610
 -- Fraxure 611
@@ -373,7 +357,8 @@ local golett={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "xmult", "chance", "round_evo"},
 }
 -- Golurk 623
 local golurk={
@@ -423,7 +408,8 @@ local golurk={
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "xmult", "chance"},
 }
 -- Pawniard 624
 local pawniard={
@@ -468,24 +454,13 @@ local pawniard={
     end
     return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "face", "scaling", "scaling_evo"},
 }
 -- Bisharp 625
 local bisharp={
   name = "bisharp",
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,kings_destroyed = 0}, evo_rqmt = 3},
-  loc_txt = {
-    name = "Bisharp",
-    text = {
-      "Gains {X:red,C:white}X#2#{} Mult when a",
-      "{C:attention}face{} card is destroyed",
-      "{br:2}ERROR - CONTACT STEAK",
-      "If first played hand is a",
-      "single {C:attention}face{} card, destroy it",
-      "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
-      "{C:inactive,s:0.8}(Evolves after destroying {C:attention,s:0.8}#3#{C:inactive,s:0.8} Kings)",
-    }
-  },
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.kings_destroyed)}}
@@ -536,6 +511,7 @@ local bisharp={
     end
     return scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
   end,
+  attributes = {"xmult", "face", "hands", "destroy_card", "scaling", "condition_evo"},
 }
 -- Bouffalant 626
 -- Rufflet 627

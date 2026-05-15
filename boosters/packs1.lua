@@ -404,7 +404,95 @@ local starter_pack = {
 	group_key = "k_poke_starter_pack",
 }
 
-local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack}
+local starterq_pack = {
+	name = "Starteq Pack",
+	key = "pokepack_starterq_pack",
+	kind = "Spectral",
+  artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+	atlas = "AtlasBoosterpacksBasic",
+	pos = { x = 4, y = 1 },
+	config = { extra = 4, choose = 1 },
+	cost = 6,
+	order = 5,
+	weight = 0,
+  no_collection = true,
+  draw_hand = false,
+  unlocked = true,
+  discovered = true,
+	create_card = function(self, card, i)
+    local grass_starters = {}
+    local fire_starters = {}
+    local water_starters = {}
+    local pseudo_starters = {}
+    local bidoof_yamper = {}
+    local pack_key = nil
+    for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+      if not poke_family_present(v) then
+        if v.knockoff_starter and v.ptype == "Grass" then
+          grass_starters[#grass_starters + 1] = v.key
+        end
+        if v.knockoff_starter and v.ptype == "Fire" then
+          fire_starters[#fire_starters + 1] = v.key
+        end
+        if v.knockoff_starter and v.ptype == "Water" then
+          water_starters[#water_starters + 1] = v.key
+        end
+        if v.knockoff_pseudol then
+          pseudo_starters[#pseudo_starters + 1] = v.key
+        end
+        if v.name == "bidoof" or v.name == "yamper" then
+          bidoof_yamper[#bidoof_yamper + 1] = v.key
+        end
+      end
+    end
+    
+    if i == 1 and #grass_starters > 0 then
+      pack_key = pseudorandom_element(grass_starters, pseudoseed('grass'))
+    elseif i == 2 and #fire_starters > 0 then
+      pack_key = pseudorandom_element(fire_starters, pseudoseed('fire'))
+    elseif i == 3 and #water_starters > 0 then
+      pack_key = pseudorandom_element(water_starters, pseudoseed('water'))
+    elseif i == 4 and #bidoof_yamper > 0 then
+      pack_key = pseudorandom_element(bidoof_yamper, pseudoseed('pikaeevee'))
+    elseif i == 5 and #pseudo_starters > 0 then
+      pack_key = pseudorandom_element(pseudo_starters, pseudoseed('pseudo'))
+    else
+      if G.P_CENTERS['j_poke_caterpie'] then
+        pack_key = 'j_poke_caterpie'
+      else
+        pack_key = nil
+      end
+    end
+    
+    local temp_card = {area = G.pack_cards, key = pack_key, no_edition = true, skip_materialize = true}
+    return SMODS.create_card(temp_card)
+	end,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.config.center.config.choose, card.ability.extra} }
+	end,
+  in_pool = function(self)
+    return false
+  end,
+  ease_background_colour = function(self)
+     ease_background_colour{new_colour = HEX('8A8A8A'), contrast = 1}
+  end,
+  particles = function(self)
+    G.booster_pack_stars = Particles(1, 1, 0,0, {
+      timer = 0.07,
+      scale = 0.1,
+      initialize = true,
+      lifespan = 15,
+      speed = 0.1,
+      padding = -4,
+      attach = G.ROOM_ATTACH,
+      colours = {HEX('E8B6B3'), HEX('82B1CF'), HEX('78B099')},
+      fill = true
+    })
+	end,
+	group_key = "k_poke_starterq_pack",
+}
+
+local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack, starterq_pack}
 
 for k, v in pairs(pack_list) do
   if not v.ease_background_colour then

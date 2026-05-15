@@ -50,6 +50,7 @@ local ursaluna={
       }
     end
   end,
+  attributes = {"mult", "scaling", "item", "generation"},
 }
 -- Basculegion 902
 -- Sneasler 903
@@ -226,7 +227,8 @@ local tarountula = {
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "hand_size", "passive", "round_evo"},
 }
 -- Spidops 918
 local spidops = {
@@ -273,7 +275,8 @@ local spidops = {
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "hand_size", "passive", "modify_card", "seals"},
 }
 -- Nymble 919
 -- Lokix 920
@@ -327,7 +330,8 @@ local fidough={
     if initial and G.playing_cards then
       card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "rank", "condition_evo"},
 }
 -- Dachsbun 927
 local dachsbun={
@@ -376,7 +380,8 @@ local dachsbun={
     if initial and G.playing_cards then
       card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "rank", "joker", "types"},
 }
 -- Smoliv 928
 -- Dolliv 929

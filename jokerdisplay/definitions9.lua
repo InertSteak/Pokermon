@@ -123,7 +123,34 @@ jd_def["j_poke_ceruledge"] = {
 --	Shroodle
 --	Grafaiai
 --	Bramblin
+jd_def["j_poke_bramblin"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "bramblincard", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.bramblincard = localize(G.GAME.current_round.bramblincard.rank, 'ranks')
+  end
+}
+
 --	Brambleghast
+jd_def["j_poke_brambleghast"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "bramblincard", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.bramblincard = localize(G.GAME.current_round.bramblincard.rank, 'ranks')
+    card.joker_display_values.chips = math.max(card.ability.extra.chip_mod * G.GAME.dollars, 0)
+  end
+}
+
 --	Toedscool
 --	Toedscruel
 --	Klawf

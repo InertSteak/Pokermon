@@ -36,6 +36,7 @@ local bidoof={
   remove_from_deck = function(self, card, from_debuff)
     SMODS.change_free_rerolls(-card.ability.extra.rerolls)
   end,
+  attributes = {"economy", "passive", "condition_evo"}
 }
 -- Bibarel 400
 local bibarel={
@@ -72,6 +73,7 @@ local bibarel={
   remove_from_deck = function(self, card, from_debuff)
     SMODS.change_free_rerolls(-card.ability.extra.rerolls)
   end,
+  attributes = {"economy", "passive", "boss_blind"}
 }
 -- Kricketot 401
 local kricketot={
@@ -105,6 +107,7 @@ local kricketot={
     end
     return level_evo(self, card, context, "j_poke_kricketune")
   end,
+  attributes = {"economy", "suit", "round_evo"}
 }
 -- Kricketune 402
 local kricketune={
@@ -167,6 +170,7 @@ local kricketune={
       end
     end
   end,
+  attributes = {"economy", "suit", "chance", "tarot", "generation"}
 }
 -- Shinx 403
 -- Luxio 404
@@ -215,6 +219,7 @@ local budew={
     end
     return level_evo(self, card, context, "j_poke_roselia")
   end,
+  attributes = {"baby", "item", "generation", "round_evo"}
 }
 -- Roserade 407
 local roserade={
@@ -242,6 +247,7 @@ local roserade={
       }
     end
   end,
+  attributes = {"rank", "ace", "three", "five", "seven", "nine", "retrigger", "enhancements"},
 }
 -- Cranidos 408
 -- Rampardos 409
@@ -284,6 +290,7 @@ local buizel={
     end
     return level_evo(self, card, context, "j_poke_floatzel")
   end,
+  attributes = {"chips", "round_evo"},
 }
 -- Floatzel 419
 local floatzel={
@@ -315,6 +322,7 @@ local floatzel={
       end
     end
   end,
+  attributes = {"chips"},
 }
 -- Cherubi 420
 return {name = "Pokemon Jokers 391-420", 

@@ -1075,7 +1075,7 @@ jd_def["j_poke_steelix"] = {
         card.joker_display_values.status = status
     end
 }
-
+--[[
 jd_def["j_poke_mega_steelix"] = {
     text = {
       { text = "+$", colour = G.C.GOLD },
@@ -1094,6 +1094,7 @@ jd_def["j_poke_mega_steelix"] = {
       card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
     end
 }
+--]]
 
 --	Snubbull
 jd_def["j_poke_snubbull"] = {
@@ -1465,7 +1466,7 @@ jd_def["j_poke_skarmory"] = {
         for _, playing_card in ipairs(G.hand.cards) do
             if playing_hand or not playing_card.highlighted then
                 if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and (SMODS.has_enhancement(playing_card, "m_poke_hazard") or SMODS.has_enhancement(playing_card, "m_steel") ) then
-                    count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
+                    count = count + 1
                 end
             end
         end

@@ -5084,8 +5084,8 @@ return {
                     "{C:attention}보스 블라인드{} 처치 시,",
                     "{C:attention}스피드 태그{} 생성",
                     "이번 판에서 건너뛴 {C:attention}블라인드{}",
-                    "하나당 {X:mult,C:white}X#3#{} 배수",
-                    "{C:inactive}(현재 {X:mult,C:white}X#4#{C:inactive} 배수){}"
+                    "하나당 {X:mult,C:white}X#1#{} 배수",
+                    "{C:inactive}(현재 {X:mult,C:white}X#2#{C:inactive} 배수){}"
                 }
             },
             j_poke_professor = {

@@ -46,7 +46,8 @@ local sylveon={
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-  end
+  end,
+  attributes = {"hands", "modify_card", "editions"},
 }
 -- Hawlucha 701
 -- Dedenne 702
@@ -165,7 +166,8 @@ local pumpkaboo={
   end,
   load = function(self, card, card_table, other_card)
     card.loaded = true
-  end
+  end,
+  attributes = {"discard", "rank", "jack", "spectral", "generation", "item_evo"},
 }
 -- Gourgeist 711
 local gourgeist={
@@ -285,7 +287,8 @@ local gourgeist={
   end,
   load = function(self, card, card_table, other_card)
     card.loaded = true
-  end
+  end,
+  attributes = {"discard", "rank", "jack", "spectral", "generation", "economy"},
 }
 -- Bergmite 712
 -- Avalugg 713

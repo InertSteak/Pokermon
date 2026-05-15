@@ -34,7 +34,8 @@ local cacnea = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "economy", "round_evo"},
 }
 -- Cacturne 332
 local cacturne = {
@@ -74,10 +75,101 @@ local cacturne = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "economy", "destroy_card", "hands"},
 }
 -- Swablu 333
+local swablu={
+  name = "swablu",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0,chip_mod = 2,}, evo_rqmt = 36},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  knockoff_pseudol = true,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 9 then
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS
+          })
+        end
+      end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_altaria", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  attributes = {"rank", "nine", "chips", "economy", "scaling", "scaling_evo"},
+}
 -- Altaria 334
+local altaria={
+  name = "altaria",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0,chip_mod = 3,money_mod = 1,num = 1, dem = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'altaria')
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money_mod, num, dem}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  stage = "One",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 9 then
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            operation = function(ref_table, ref_value, initial, change)
+              ref_table[ref_value] = initial + change + (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
+            end,
+            message_colour = G.C.CHIPS
+          })
+          if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#find_pokemon_type("Dragon", card) > 0) then
+            local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.dollar_buffer = 0
+                    return true
+                end
+            }))
+          end
+        end
+      end
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+  end,
+  attributes = {"rank", "nine", "chips", "economy", "scaling", "types", "joker"},
+}
 -- Zangoose 335
 -- Seviper 336
 -- Lunatone 337
@@ -85,9 +177,342 @@ local cacturne = {
 -- Barboach 339
 -- Whiscash 340
 -- Corphish 341
+local corphish={
+  name = "corphish",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}, evo_rqmt = 10},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+    end
+    
+    local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod, self.config.evo_rqmt}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    return {vars = card_vars}
+  end,
+  rarity = 1,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  gen = 3,
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      local natures = 0
+      for k, v in pairs(context.full_hand) do
+        if not SMODS.in_scoring(v, context.scoring_hand) then
+          for i=1, #card.ability.extra.targets do
+            if v:get_id() == card.ability.extra.targets[i].id then
+              natures = natures + 1
+            end
+          end
+        end
+      end
+      if natures > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'mult',
+          scalar_value = 'mult_mod',
+          message_colour = G.C.MULT,
+        })
+      end
+    end
+    
+    if context.joker_main then
+        return {
+            mult = card.ability.extra.mult
+        }
+    end
+    return scaling_evo(self, card, context, "j_poke_crawdaunt", card.ability.extra.mult, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+  end,
+  attributes = {"passive", "nature", "rank", "mult"},
+}
 -- Crawdaunt 342
+local crawdaunt={
+  name = "crawdaunt",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 1, targets = {{value = "Ace", id = "14"}, {value = "King", id = "13"}, {value = "Queen", id = "12"}}}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+    end
+    
+    local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod}
+    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    return {vars = card_vars}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex3",
+  gen = 3,
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+      if context.before and not context.blueprint then
+        local natures = 0
+        for k, v in pairs(context.full_hand) do
+          if not SMODS.in_scoring(v, context.scoring_hand) then
+            for i=1, #card.ability.extra.targets do
+              if v:get_id() == card.ability.extra.targets[i].id then
+                natures = natures + 1
+              end
+            end
+          end
+        end
+        if natures > 0 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            operation = function(ref_table, ref_value, initial, modifier)
+              ref_table[ref_value] = initial + (natures * modifier)
+            end,
+            message_colour = G.C.MULT
+          })
+        end
+    end
+    if context.joker_main then
+        return {
+            mult = card.ability.extra.mult
+        }
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+  end,
+  attributes = {"passive", "nature", "rank", "mult"},
+}
 -- Baltoy 343
+local baltoy={
+  name = "baltoy",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0, chip_mod = 1, chip_mod1 = 6, hazard_level = 1,}, evo_rqmt = 40},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    local r_chips = {}
+    for i = center.ability.extra.chip_mod, center.ability.extra.chip_mod1 do
+        r_chips[#r_chips + 1] = tostring(i)
+    end
+    local loc_chips = ' '..(localize('k_poke_chips'))..' '..(localize('poke_baltoy_text'))
+    main_start = {
+        {n = G.UIT.R,
+          config = {
+            align = "cm",
+            padding = 0.05,
+            colour = G.C.CLEAR,
+          },
+          nodes = {
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+              { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            }
+        },
+        {n = G.UIT.R,
+        config = {
+          align = "cm",
+          padding = 0.05,
+          colour = G.C.CLEAR,
+        },
+        nodes = {
+            { n = G.UIT.T, config = { text = '  +', colour = G.C.CHIPS, scale = 0.32 } },
+            { n = G.UIT.O, config = { object = DynaText({ string = r_chips, colours = { G.C.CHIPS }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32,              min_cycle_time = 0 }) } },
+            {
+                n = G.UIT.O,
+                config = {
+                    object = DynaText({
+                        string = {
+                            loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips,
+                            loc_chips, loc_chips, loc_chips, loc_chips },
+                        colours = { G.C.UI.TEXT_DARK },
+                        pop_in_rate = 9999999,
+                        silent = true,
+                        random_element = true,
+                        pop_delay = 0.2011,
+                        scale = 0.32,
+                        min_cycle_time = 0
+                    })
+                }
+            },
+          }
+        },
+    }
+    return { main_start = main_start, vars = {center.ability.extra.chips, center.ability.extra.hazard_level, self.config.evo_rqmt} }
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.discard and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
+        local chip_gain = pseudorandom('baltoy', card.ability.extra.chip_mod, card.ability.extra.chip_mod1)
+        
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_table = {chip_mod = chip_gain},
+          scalar_value = 'chip_mod',
+          operation = function(ref_table, ref_value, initial)
+            ref_table[ref_value] = initial + chip_gain
+          end,
+          message_key = 'a_chips',
+          message_colour = G.C.CHIPS,
+        })
+    end
+    if context.joker_main then
+      return
+      {
+        chips = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_claydol", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end,
+}
 -- Claydol 344
+local claydol={
+  name = "claydol",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips = 0, chip_mod = 1, chip_mod1 = 8, hazard_level = 1, num = 1, dem = 3}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+    local r_chips = {}
+    for i = center.ability.extra.chip_mod, center.ability.extra.chip_mod1 do
+        r_chips[#r_chips + 1] = tostring(i)
+    end
+    local loc_chips = ' '..(localize('k_poke_chips'))..' '..(localize('poke_baltoy_text'))
+    main_start = {
+        {n = G.UIT.R,
+          config = {
+            align = "cm",
+            padding = 0.05,
+            colour = G.C.CLEAR,
+          },
+          nodes = {
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+              { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            }
+        },
+        {n = G.UIT.R,
+        config = {
+          align = "cm",
+          padding = 0.05,
+          colour = G.C.CLEAR,
+        },
+        nodes = {
+            { n = G.UIT.T, config = { text = '  +', colour = G.C.CHIPS, scale = 0.32 } },
+            { n = G.UIT.O, config = { object = DynaText({ string = r_chips, colours = { G.C.CHIPS }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32,              min_cycle_time = 0 }) } },
+            {
+                n = G.UIT.O,
+                config = {
+                    object = DynaText({
+                        string = {
+                            loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips, loc_chips,
+                            loc_chips, loc_chips, loc_chips, loc_chips },
+                        colours = { G.C.UI.TEXT_DARK },
+                        pop_in_rate = 9999999,
+                        silent = true,
+                        random_element = true,
+                        pop_delay = 0.2011,
+                        scale = 0.32,
+                        min_cycle_time = 0
+                    })
+                }
+            },
+          }
+        },
+    }
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'claydol')
+    return { main_start = main_start, vars = {center.ability.extra.chips, center.ability.extra.hazard_level, num, dem} }
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.pre_discard and not context.blueprint then
+      for i = 1, #G.hand.highlighted do
+        local c = G.hand.highlighted[i]
+        if SMODS.has_enhancement(c, "m_poke_hazard") and SMODS.pseudorandom_probability(card, 'claydol', card.ability.extra.num, card.ability.extra.dem, 'claydol') then
+          c.claydoll_discard = true
+        end
+      end
+    end
+    if context.discard and SMODS.has_enhancement(context.other_card, "m_poke_hazard") and not context.blueprint then
+        local chip_gain = pseudorandom('baltoy', card.ability.extra.chip_mod, card.ability.extra.chip_mod1)
+        
+        SMODS.scale_card(card, {
+          ref_value = 'chips',
+          scalar_table = {chip_mod = chip_gain},
+          scalar_value = 'chip_mod',
+          operation = function(ref_table, ref_value, initial)
+            ref_table[ref_value] = initial + chip_gain
+          end,
+          message_key = 'a_chips',
+          message_colour = G.C.CHIPS,
+        })
+    end
+    if context.stay_flipped and context.from_area == G.hand and context.to_area == G.discard and context.other_card.claydoll_discard then
+      context.other_card.claydoll_discard = nil
+      return
+      {
+        modify = {to_area = G.hand}
+      }
+    end
+    if context.joker_main then
+      return
+      {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      for k, v in pairs(G.deck.cards) do
+        if v.claydoll_discard then v.claydoll_discard = nil end
+      end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end,
+}
 -- Lileep 345
 local lileep={
   name = "lileep",
@@ -159,6 +584,7 @@ local lileep={
     return scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
 }
 -- Cradily 346
 local cradily={
@@ -235,6 +661,7 @@ local cradily={
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "eight", "hand_size", "sell_value", "chips", "economy"},
 }
 -- Anorith 347
 local anorith={
@@ -258,51 +685,45 @@ local anorith={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        get_ancient_amount(context.scoring_hand, 7, card)
-      end
-      if context.joker_main and card.ability.extra.ancient_count > 0 then
-        local scoring_mult = card.ability.extra.mult
-        
-        if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
-          local targets = {}
-          local target = nil
-          for k, v in ipairs(G.deck.cards) do
-            if v:get_id() > 7 then
-              targets[#targets + 1] = v
-            end
-          end
-          
-          if #targets > 0 then
-            target = pseudorandom_element(targets, pseudoseed('anorith'))
-            poke_remove_card(target, card)
-          end
-          
-          if not context.blueprint then
-            card.ability.extra.third_times = card.ability.extra.third_times + 1
+    if context.before then
+      get_ancient_amount(context.scoring_hand, 7, card)
+    end
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
+        local targets = {}
+        for k, v in ipairs(G.deck.cards) do
+          if v:get_id() > 7 then
+            targets[#targets+1] = v
           end
         end
-        
-        if card.ability.extra.ancient_count > 1 then
-          if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
-            poke_add_playing_card{set = 'Base', rank = card.ability.extra.rank, area = G.deck}
-          end
+
+        if #targets > 0 then
+          local target = pseudorandom_element(targets, pseudoseed('anorith'))
+          poke_remove_card(target, card)
         end
-        
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
-          colour = G.C.MULT,
-          mult_mod = scoring_mult
-        }
+
+        if not context.blueprint then
+          card.ability.extra.third_times = card.ability.extra.third_times + 1
+        end
       end
-      if context.after then
-        card.ability.extra.ancient_count = 0
+
+      if card.ability.extra.ancient_count > 1 then
+        if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
+          poke_add_playing_card({set = 'Base', rank = card.ability.extra.rank, area = G.deck})
+        end
       end
+
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+    if context.after then
+      card.ability.extra.ancient_count = 0
     end
     return scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "trigger_evo"},
 }
 -- Armaldo 348
 local armaldo={
@@ -313,18 +734,7 @@ local armaldo={
     type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'armaldo')
-    local total_xmult = 1
-    local enhanced_sevens = 0
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if v:get_id() == 7 then
-          if v.config.center ~= G.P_CENTERS.c_base then
-            enhanced_sevens = enhanced_sevens + 1
-          end
-        end
-      end
-    end
-    total_xmult = 1 + (enhanced_sevens * center.ability.extra.Xmult_multi)
+    local total_xmult = self:get_total_Xmult(center)
     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.mult, num, dem, center.ability.extra.Xmult_multi, total_xmult}}
   end,
   rarity = "poke_safari",
@@ -336,68 +746,60 @@ local armaldo={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  get_total_Xmult = function(self, card)
+    if not G.playing_cards then return 1 end
+    local enhanced_sevens = 0
+    for k, v in pairs(G.playing_cards) do
+      if v:get_id() == 7 and v.config.center ~= G.P_CENTERS.c_base then
+        enhanced_sevens = enhanced_sevens + 1
+      end
+    end
+    return 1 + enhanced_sevens * card.ability.extra.Xmult_multi
+  end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        get_ancient_amount(context.scoring_hand, 7, card)
-      end
-      if context.joker_main and card.ability.extra.ancient_count > 0 then
-        local scoring_mult = card.ability.extra.mult
-        
-        if card.ability.extra.ancient_count > 2 then
-          local targets = {}
-          local target = nil
-          for k, v in ipairs(G.deck.cards) do
-            if v:get_id() > 7 then
-              targets[#targets + 1] = v
-            end
-          end
-          
-          if #targets > 0 then
-            target = pseudorandom_element(targets, pseudoseed('anorith'))
-            poke_remove_card(target, card)
+    if context.before then
+      get_ancient_amount(context.scoring_hand, 7, card)
+    end
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 2 then
+        local targets = {}
+        for k, v in ipairs(G.deck.cards) do
+          if v:get_id() > 7 then
+            targets[#targets+1] = v
           end
         end
-        
-        if card.ability.extra.ancient_count > 1 then
-          if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
-            poke_add_playing_card{set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck}
-          end
-        end
-        
-        if card.ability.extra.ancient_count > 3 then
-          local total_xmult = 1
-          local enhanced_sevens = 0
-          if G.playing_cards then
-            for k, v in pairs(G.playing_cards) do
-              if v:get_id() == 7 then
-                if v.config.center ~= G.P_CENTERS.c_base then
-                  enhanced_sevens = enhanced_sevens + 1
-                end
-              end
-            end
-          end
-          total_xmult = 1 + (enhanced_sevens * card.ability.extra.Xmult_multi)
-          return {
-            message = localize("poke_x_scissor_ex"), 
-            colour = G.C.MULT,
-            mult_mod = scoring_mult,
-            Xmult_mod = total_xmult
-          }
-        else
-          return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {scoring_mult}}, 
-            colour = G.C.MULT,
-            mult_mod = scoring_mult
-          }
+
+        if #targets > 0 then
+          local target = pseudorandom_element(targets, pseudoseed('anorith'))
+          poke_remove_card(target, card)
         end
       end
-      if context.after then
-        card.ability.extra.ancient_count = 0
+
+      if card.ability.extra.ancient_count > 1 then
+        if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
+          poke_add_playing_card({set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck})
+        end
       end
+
+      if card.ability.extra.ancient_count > 3 then
+        return {
+          message = localize("poke_x_scissor_ex"),
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult,
+          Xmult_mod = self:get_total_Xmult(card),
+        }
+      else
+        return {
+          mult = card.ability.extra.mult
+        }
+      end
+    end
+    if context.after then
+      card.ability.extra.ancient_count = 0
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "enhancements", "xmult"},
 }
 -- Feebas 349
 local feebas={
@@ -435,7 +837,8 @@ local feebas={
       }
     end
     return item_evo(self, card, context, "j_poke_milotic")
-  end
+  end,
+  attributes = {"mult", "passive", "applies", "item_evo"},
 }
 -- Milotic 350
 local milotic={
@@ -470,7 +873,8 @@ local milotic={
         card = card
       }
     end
-  end
+  end,
+  attributes = {"retrigger", "suit"},
 }
 -- Castform 351
 -- Kecleon 352
@@ -495,18 +899,16 @@ local duskull={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
-      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0
+        and (context.other_card == context.scoring_hand[1] or context.other_card == context.scoring_hand[2]
+          or context.other_card == context.scoring_hand[3] or context.other_card == context.scoring_hand[4]) then
+      return {
+        repetitions = card.ability.extra.retriggers,
+      }
     end
     return level_evo(self, card, context, "j_poke_dusclops")
   end,
+  attributes = {"retrigger", "hands", "round_evo"},
 }
 -- Dusclops 356
 local dusclops={
@@ -528,38 +930,36 @@ local dusclops={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) 
-      or (context.other_card == context.scoring_hand[3]) or (context.other_card == context.scoring_hand[4]) then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0
+        and (context.other_card == context.scoring_hand[1] or context.other_card == context.scoring_hand[2]
+          or context.other_card == context.scoring_hand[3] or context.other_card == context.scoring_hand[4]) then
+      return {
+        repetitions = card.ability.extra.retriggers,
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after and G.GAME.current_round.hands_left == 0 and (#context.full_hand - #context.scoring_hand) == 1 and not context.blueprint then
-        for k, v in pairs(context.full_hand) do
-          if not SMODS.in_scoring(v, context.scoring_hand) then
-            poke_remove_card(v, card)
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              G.E_MANAGER:add_event(Event({
-                func = function()
-                  local _card = SMODS.add_card {set = 'Spectral'}
-                  card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end
-            break
+    if context.destroy_card and context.cardarea == 'unscored' and not context.blueprint
+        and G.GAME.current_round.hands_left == 0
+        and (#context.full_hand - #context.scoring_hand) == 1 then
+
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            local spectral = SMODS.add_card({set = 'Spectral'})
+            SMODS.calculate_effect({message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, spectral)
+            G.GAME.consumeable_buffer = 0
+            return true
           end
-        end
+        }))
       end
+
+      return {
+        remove = true
+      }
     end
     return item_evo(self, card, context, "j_poke_dusknoir")
   end,
+  attributes = {"retrigger", "hands", "destroy_card", "spectral", "item_evo"},
 }
 -- Tropius 357
 -- Chimecho 358
@@ -637,7 +1037,8 @@ local chimecho={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"enhancements", "generation"},
 }
 -- Absol 359
 local absol={
@@ -673,6 +1074,7 @@ local absol={
       }
     end
   end,
+  attributes = {"xmult", "mod_chance"},
 }
 -- Wynaut 360
 local wynaut={
@@ -718,7 +1120,8 @@ local wynaut={
     end
     return level_evo(self, card, context, "j_poke_wobbuffet")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
 }

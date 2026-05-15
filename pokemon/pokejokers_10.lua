@@ -4,7 +4,115 @@
 -- Nuzleaf 274
 -- Shiftry 275
 -- Taillow 276
+local taillow={
+  name = "taillow",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 4,rounds = 5,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
+  end,
+  rarity = 1,
+  cost = 5,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+  
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 14 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+    return level_evo(self, card, context, "j_poke_swellow")
+  end,
+  attributes = {"rank", "ace", "mult", "scaling", "reset", "round_evo"},
+}
 -- Swellow 277
+local swellow={
+  name = "swellow",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0,mult_mod = 6,}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
+  end,
+  rarity = "poke_safari",
+  cost = 7,
+  gen = 3,
+  stage = "One",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.setting_blind and context.blind.boss then
+      card.ability.extra.active = true
+    end
+    if context.drawing_cards and not context.blueprint and card.ability.extra.active then
+      for i = 1, 2 do
+        local top = G.deck.cards[#G.deck.cards - i + 1]
+        if top then
+          SMODS.change_base(top, nil, "Ace")
+        end
+      end
+      card.ability.extra.active = nil
+    end
+  
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end
+  
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.drawn_cards[i]:get_id() == 14 then
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    
+    if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+      card.ability.extra.mult = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.CHIPS
+      }
+    end
+  end,
+  attributes = {"rank", "ace", "mult", "scaling", "reset", "boss_blind", "modify_card"},
+}
 -- Wingull 278
 local wingull={
   name = "wingull",
@@ -41,6 +149,7 @@ local wingull={
     end
     return level_evo(self, card, context, "j_poke_pelipper")
   end,
+  attributes = {"rank", "discard", "economy", "round_evo"},
 }
 -- Pelipper 279
 local pelipper={
@@ -78,6 +187,7 @@ local pelipper={
     end
     return level_evo(self, card, context, "j_poke_pelipper")
   end,
+  attributes = {"rank", "discard", "economy", "types", "joker"},
 }
 -- Ralts 280
 local ralts={
@@ -86,8 +196,8 @@ local ralts={
   config = {extra = {mult_mod = 5,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Psychic Energy"}}
     local energized = 0
+    local planets = #poke_get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
         if get_total_energy(v) > 0 then
@@ -95,7 +205,7 @@ local ralts={
         end
       end
     end
-    local total = center.ability.extra.mult_mod * energized
+    local total = center.ability.extra.mult_mod * (energized + planets)
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.rounds, total}}
   end,
   rarity = 2,
@@ -104,18 +214,20 @@ local ralts={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex3",
+  knockoff_pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and next(context.poker_hands['Pair']) then
+    if context.joker_main then
       local energized = 0
+      local planets = #poke_get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
         if get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
-      local total = card.ability.extra.mult_mod * energized
+      local total = card.ability.extra.mult_mod * (energized + planets)
       return 
       {
         mult = total
@@ -123,21 +235,17 @@ local ralts={
     end
     return level_evo(self, card, context, "j_poke_kirlia")
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local energy = SMODS.add_card{ set = 'Energy', key = 'c_poke_psychic_energy'}
-      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, energy)
-    end
-  end,
+  attributes = {"mult", "energy_count", "joker", "hand_type", "round_evo"},
 }
 -- Kirlia 281
 local kirlia={
   name = "kirlia",
   pos = {x = 0, y = 0},
-  config = {extra = {mult_mod = 8, e_limit = 1, planets_used = 0}, evo_rqmt = 15},
+  config = {extra = {mult_mod = 8, planets_used = 0}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local energized = 0
+    local planets = #poke_get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
         if get_total_energy(v) > 0 then
@@ -145,8 +253,8 @@ local kirlia={
         end
       end
     end
-    local total = center.ability.extra.mult_mod * energized
-    return {vars = {center.ability.extra.mult_mod, center.ability.extra.e_limit, total, math.max(0, self.config.evo_rqmt - center.ability.extra.planets_used)}}
+    local total = center.ability.extra.mult_mod * (energized + planets)
+    return {vars = {center.ability.extra.mult_mod, total, math.max(0, self.config.evo_rqmt - center.ability.extra.planets_used)}}
   end,
   rarity = "poke_safari",
   cost = 8,
@@ -161,12 +269,13 @@ local kirlia={
   calculate = function(self, card, context)
     if context.joker_main and next(context.poker_hands['Pair']) then
       local energized = 0
+      local planets = #poke_get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
         if get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
-      local total = card.ability.extra.mult_mod * energized
+      local total = card.ability.extra.mult_mod * (energized + planets)
       return 
       {
         mult = total
@@ -180,33 +289,18 @@ local kirlia={
       return scaling_evo(self, card, context, "j_poke_gardevoir", card.ability.extra.planets_used, self.config.evo_rqmt)
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = card.ability.extra.e_limit
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
-    end
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
-    end
-  end
+  attributes = {"mult", "energy_count", "joker", "hand_type", "passive", "item_evo", "condition_evo"},
 }
 -- Gardevoir 282
 local gardevoir={
   name = "gardevoir",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_mod = 0.3, e_limit = 1, hand_level = 6}},
+  config = {extra = {Xmult_mod = 0.3, hand_level = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_black_hole'}
-      if not center.edition or (center.edition and not center.edition.negative) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
-      end
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Black Hole"}}
     end
     local energized = 0
     if G.jokers then
@@ -227,7 +321,7 @@ local gardevoir={
       end
     end
     local total = 1 + (center.ability.extra.Xmult_mod * (hands + energized))
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.e_limit, total, center.ability.extra.hand_level}}
+    return {vars = {center.ability.extra.Xmult_mod, total, center.ability.extra.hand_level}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -262,25 +356,14 @@ local gardevoir={
         Xmult = total
       }
     end
-    if context.selling_card and context.card.config.center.set == 'Joker' and get_total_energy(context.card) > 0 then
-      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_black_hole', edition = 'e_negative'}
-      SMODS.calculate_effect({ message = localize('k_plus_spectral') }, bhole)
-    end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = card.ability.extra.e_limit
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_black_hole'}
+      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
     end
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
-    end
-  end
+  attributes = {"mult", "xmult", "energy_count", "joker", "passive", "holding", "generation", "spectral"},
 }
 -- Surskit 283
 -- Masquerain 284
@@ -299,6 +382,7 @@ local shroomish={
   ptype = "Grass",
   atlas = "Pokedex3",
   gen = 3,
+  knockoff_starter = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -324,6 +408,7 @@ local shroomish={
     end
     return scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_defeated, self.config.evo_rqmt)
   end,
+  attributes = {"hands", "discard", "hand_size", "condition_evo"},
 }
 -- Breloom 286
 local breloom={
@@ -360,7 +445,8 @@ local breloom={
       end
       card:juice_up()
     end
-  end
+  end,
+  attributes = {"hands", "discard", "hand_size"},
 }
 -- Slakoth 287
 local slakoth={
@@ -377,6 +463,7 @@ local slakoth={
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex3",
+  knockoff_pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -392,6 +479,7 @@ local slakoth={
     end
     return level_evo(self, card, context, "j_poke_vigoroth")
   end,
+  attributes = {"mult", "hands", "round_evo"},
 }
 -- Vigoroth 288
 local vigoroth={
@@ -421,6 +509,7 @@ local vigoroth={
       return level_evo(self, card, context, "j_poke_slaking")
     end
   end,
+  attributes = {"xmult", "hands", "condition_evo"},
 }
 -- Slaking 289
 local slaking={
@@ -451,6 +540,7 @@ local slaking={
       }
     end
   end,
+  attributes = {"xmult", "hands"},
 }
 -- Nincada 290
 local nincada={
@@ -536,6 +626,7 @@ local nincada={
     end
     return evo
   end,
+  attributes = {"chips", "chance", "rank", "nine", "jack", "scaling", "scaling_evo"},
 }
 -- Ninjask 291
 local ninjask={
@@ -579,6 +670,7 @@ local ninjask={
       end
     end
   end,
+  attributes = {"chance", "tag", "rank", "nine", "jack", "mult", "hands"},
 }
 -- Shedinja 292
 local shedinja={
@@ -644,6 +736,7 @@ local shedinja={
       end
     end
   end,
+  attributes = {"prevents_death", "xmult", "scaling", "types"},
 }
 -- Whismur 293
 -- Loudred 294
@@ -673,6 +766,7 @@ local makuhita={
     end
     return level_evo(self, card, context, "j_poke_hariyama")
   end,
+  attributes = {"hands", "round_evo"},
 }
 -- Hariyama 297
 local hariyama={
@@ -699,6 +793,7 @@ local hariyama={
       card:juice_up()
     end
   end,
+  attributes = {"hands", "types", "joker"},
 }
 
 -- Azurill 298
@@ -745,6 +840,7 @@ local azurill ={
     end
     return level_evo(self, card, context, "j_poke_marill")
   end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Nosepass 299
 local nosepass={
@@ -792,18 +888,29 @@ local nosepass={
       end
     end
     return item_evo(self, card, context, "j_poke_probopass")
-  end
+  end,
+  attributes = {"face", "modify_card", "enhancements", "xmult", "item_evo"},
 }
 -- Skitty 300
 local skitty={
   name = "skitty",
   pos = {x = 0, y = 0},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    local highlight_colour = center.ability.extra.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    return {vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+
+    local cattype = G.GAME.current_round.cattype or "Grass"
+
+    local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
+    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local main_end
+
+    if card.area and card.area == G.jokers then
+      local found_pos = get_index(G.jokers.cards, card) + 1
+      local other_joker = G.jokers.cards[found_pos]
+      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+    end
+
+    return {vars = {cattype, colours = {type_colour, highlight_colour}}, main_end = main_end}
   end,
   rarity = 3,
   cost = 7,
@@ -817,54 +924,19 @@ local skitty={
   eternal_compat = true,
   calculate = function(self, card, context)
     local evo = item_evo(self, card, context, "j_poke_delcatty")
-    if not evo then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
-          other_joker = G.jokers.cards[i + 1] 
-        end
-      end
+    if evo then return evo end
+
+    local found_pos = get_index(G.jokers.cards, card) + 1
+    local other_joker = G.jokers.cards[found_pos]
+    if is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
       local ret = SMODS.blueprint_effect(card, other_joker, context)
-      if ret then
-          ret.colour = G.C.BLUE
-      end
+      if ret then ret.colour = G.C.BLUE end
       return ret
-    else
-      return evo
     end
   end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i + 1] and (is_type(G.jokers.cards[i + 1], G.GAME.current_round.cattype)) then 
-          other_joker = G.jokers.cards[i + 1] 
-        end
-      end
-      card.ability.blueprint_compat = (other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-    end
-  end,
-  generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    type_tooltip(self, info_queue, card)
-    local highlight_colour = (G.GAME.current_round.cattype or "Grass") ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(G.GAME.current_round.cattype or "Grass")]
-    local _c = card and card.config.center or card
-    if not full_UI_table.name then
-      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-    end
-    card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-    card.ability.blueprint_compat_check = nil
-    local main_end = (card.area and card.area == G.jokers) and {
-      {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-          {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-        }}
-      }}
-    } or nil
-    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {G.GAME.current_round.cattype or "Grass", colours = {type_colour, highlight_colour}}}
-    desc_nodes[#desc_nodes+1] = main_end
-  end,
+  attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, makuhita, hariyama, azurill, nosepass, skitty},
+        list = {taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
+                makuhita, hariyama, azurill, nosepass, skitty},
 }

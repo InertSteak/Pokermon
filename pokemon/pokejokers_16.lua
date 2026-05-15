@@ -49,7 +49,8 @@ local mantyke={
       }))
     end
     return level_evo(self, card, context, "j_poke_mantine")
-  end
+  end,
+  attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 -- Snover 459
 -- Abomasnow 460
@@ -99,7 +100,8 @@ local weavile = {
         colour = G.C.RED
       }
     end
-  end
+  end,
+  attributes = {"rank", "destroy_card", "economy", "xmult", "scaling", "reset", "boss_blind"},
 }
 -- Magnezone 462
 local magnezone={
@@ -131,7 +133,8 @@ local magnezone={
           card = card
         }
     end
-  end
+  end,
+  attributes = {"xmult", "enhancements", "types", "joker"},
 }
 -- Lickilicky 463
 local lickilicky={
@@ -177,7 +180,8 @@ local lickilicky={
         }
       end
     end
-  end
+  end,
+  attributes = {"xmult", "rank", "jack"},
 }
 -- Rhyperior 464
 local rhyperior={
@@ -217,7 +221,8 @@ local rhyperior={
         card = card
       }
     end
-  end
+  end,
+  attributes = {"chips", "perma_bonus", "modify_card", "enhancements", "retrigger", "types", "joker"},
 }
 -- Tangrowth 465
 local tangrowth={
@@ -280,6 +285,7 @@ local tangrowth={
         end
     end
   end,
+  attributes = {"chips", "mult", "economy", "enhancements", "chance"},
 }
 -- Electivire 466
 local electivire={
@@ -318,7 +324,8 @@ local electivire={
         Xmult = 1 + card.ability.extra.Xmult_mod * card.sell_cost
       }
     end
-  end
+  end,
+  attributes = {"sell_value", "scaling", "economy", "xmult"},
 }
 -- Magmortar 467
 local magmortar={
@@ -367,7 +374,8 @@ local magmortar={
         Xmult_mod = card.ability.extra.Xmult
       }
     end
-  end
+  end,
+  attributes = {"discard", "destroy_card", "mult", "scaling", "xmult"},
 }
 -- Togekiss 468
 local togekiss={
@@ -421,6 +429,7 @@ local togekiss={
       }
     end
   end,
+  attributes = {"enhancements", "chance", "passive", "chance_mod", "chips", "xmult"},
 }
 -- Yanmega 469
 local yanmega={
@@ -463,6 +472,7 @@ local yanmega={
       end
     end
   end,
+  attributes = {"chips", "mult", "rank", "three", "six", "chance", "retrigger"},
 }
 -- Leafeon 470
 local leafeon={
@@ -505,7 +515,8 @@ local leafeon={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-  end
+  end,
+  attributes = {"scaling", "hand_size", "enhancements"},
 }
 -- Glaceon 471
 local glaceon={
@@ -534,6 +545,7 @@ local glaceon={
       end
     end
   end,
+  attributes = {"chance", "generation", "enhancements"},
 }
 -- Gliscor 472
 local gliscor = {
@@ -578,7 +590,8 @@ local gliscor = {
         }
       end
     end
-  end
+  end,
+  attributes = {"suit", "xmult"},
 }
 -- Mamoswine 473
 local mamoswine={
@@ -653,6 +666,7 @@ local mamoswine={
       end
     end
   end,
+  attributes = {"mult", "enhancements", "chance", "economy"},
 }
 -- Porygon-Z 474
 local porygonz={
@@ -717,15 +731,21 @@ local porygonz={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 3
     end
-  end
+  end,
+  attributes = {"energy_limit", "energy", "generation", "xmult", "passive"},
 }
 -- Gallade 475
 local gallade={
   name = "gallade",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_mod = 0.5, e_limit = 1, num = 1, dem = 3, e_level = 3}},
+  config = {extra = {Xmult_mod = 0.5, e_level = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_poke_double_rainbow_energy', 
+                                    vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Double Rainbow Energy"}}
+    end
     local energized = 0
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
@@ -735,20 +755,19 @@ local gallade={
       end
     end
     local total = 1 + (center.ability.extra.Xmult_mod * energized)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'gallade')
-    return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.e_limit, total, num, dem, center.ability.extra.e_level}}
+    return {vars = {center.ability.extra.Xmult_mod, total, center.ability.extra.e_level}}
   end,
   rarity = "poke_safari",
   cost = 10,
   gen = 4,
   stage = "Two",
-  ptype = "Psychic",
+  ptype = "Fighting",
   atlas = "Pokedex3",
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and next(context.poker_hands['Pair']) then
+    if context.joker_main then
       local energized = 0
       for k, v in ipairs(G.jokers.cards) do
         if get_total_energy(v) >= card.ability.extra.e_level then
@@ -761,36 +780,14 @@ local gallade={
         Xmult = total
       }
     end
-    
-    if context.using_consumeable and context.consumeable.ability.set == 'Item' then
-      if SMODS.pseudorandom_probability(card, 'gallade', card.ability.extra.num, card.ability.extra.dem, 'gallade') then
-        local e_jokers = {}
-        for k, v in ipairs(G.jokers.cards) do
-          if can_apply_energy(v, 'Trans') then
-            e_jokers[#e_jokers + 1] = v
-          end
-        end
-        if #e_jokers > 0 then
-          local energize_joker = pseudorandom_element(e_jokers, "gallade_energy")
-          energy_increase(energize_joker, "Trans")
-        end
-      end
-    end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = card.ability.extra.e_limit
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus + card.ability.extra.e_limit
+    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_poke_double_rainbow_energy'}
+      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
     end
   end,
-  remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus - card.ability.extra.e_limit
-    end
-  end
+  attributes = {"energy_count", "item", "xmult", "hand_type", "passive"},
 }
 -- Probopass 476
 local probopass={
@@ -818,7 +815,8 @@ local probopass={
           card = card
       }
     end
-  end
+  end,
+  attributes = {"modify_card", "enhancements", "face", "xmult", "passive"},
 }
 -- Dusknoir 477
 local dusknoir={
@@ -839,11 +837,9 @@ local dusknoir={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+    if context.repetition and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
       return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
+        repetitions = card.ability.extra.retriggers
       }
     end
   end,
@@ -852,7 +848,8 @@ local dusknoir={
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.spectral_rate = math.max(0, G.GAME.spectral_rate - card.ability.extra.spec_up)
-  end
+  end,
+  attributes = {"hands", "spectral", "retrigger", "passive"},
 }
 -- Froslass 478
 local froslass={
@@ -895,6 +892,7 @@ local froslass={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.debt
   end,
+  attributes = {"economy", "passive", "item", "generation"},
 }
 -- Rotom 479
 local rotom={
@@ -947,7 +945,8 @@ local rotom={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"chance", "item", "generation", "passive", "economy"},
 }
 
 local rotomh={
@@ -994,7 +993,8 @@ local rotomh={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "discard", "modify_card", "enhancements"},
 }
 
 local rotomw={
@@ -1057,7 +1057,8 @@ local rotomw={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "economy", "modify_card", "enhancements"},
 }
 
 local rotomf={
@@ -1120,7 +1121,8 @@ local rotomf={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation"},
 }
 
 local rotomfan={
@@ -1207,7 +1209,8 @@ local rotomfan={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "destroy_card", "tag"},
 }
 
 local rotomm={
@@ -1260,7 +1263,8 @@ local rotomm={
   end,
   in_pool = function(self)
     return false
-  end
+  end,
+  attributes = {"chance", "item", "generation", "modify_card"},
 }
 
 -- Uxie 480
