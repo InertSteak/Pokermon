@@ -406,6 +406,8 @@ local mega_malamar={
   end,
 }
 
+-- Binacle 688
+-- Barbaracle 689
 -- Skrelp 690
 return {name = "Pokemon Jokers 661-690", 
   list = {
