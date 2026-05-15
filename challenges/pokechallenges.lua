@@ -646,34 +646,6 @@ local sawk_throh = {
     },
 }
 
-local teddy_bear = {
-    object_type = "Challenge",
-    key = "teddy_bear",
-    rules = {
-        modifiers = {
-            {id = 'joker_slots', value = 5},
-			{id = 'discards', value = 2},
-        }
-    },
-    jokers = {
-      {id = "j_poke_teddiursa", eternal = true},
-    },
-	consumeables = {
-		{id = 'c_moon'},
-	},
-    restrictions = {
-        banned_cards = {
-        },
-        banned_tags = {
-        },
-        banned_other = {
-        },
-    },
-    deck = {
-      type = 'Challenge Deck',
-    },
-}
-
 local furfrou = {
     object_type = "Challenge",
     key = "furfrou",
@@ -689,33 +661,6 @@ local furfrou = {
 	consumeables = {
 		{id = "c_poke_colorless_energy"},
 		{id = "c_poke_colorless_energy"}
-	},
-    restrictions = {
-        banned_cards = {
-        },
-        banned_tags = {
-        },
-        banned_other = {
-        },
-    },
-    deck = {
-      type = 'Challenge Deck',
-    },
-}
-
-local checkmate = {
-    object_type = "Challenge",
-    key = "checkmate",
-    rules = {
-        modifiers = {
-            {id = 'joker_slots', value = 5},
-			{id = 'discards', value = 2},
-        }
-    },
-    jokers = {
-      {id = "j_poke_bisharp", eternal = true},
-    },
-	consumeables = {
 	},
     restrictions = {
         banned_cards = {
@@ -802,32 +747,6 @@ local speed = {
 	consumeables = {
 		{id = 'c_poke_linkcable'}
 	},
-    restrictions = {
-        banned_cards = {
-        },
-        banned_tags = {
-        },
-        banned_other = {
-        },
-    },
-    deck = {
-      type = 'Challenge Deck',
-    },
-}
-
-local rose = {
-    object_type = "Challenge",
-    key = "rose",
-    rules = {
-        modifiers = {
-            {id = 'joker_slots', value = 5},
-			{id = 'discards', value = 2},
-        }
-    },
-    jokers = {
-	  {id = "j_poke_shelmet", eternal = false},
-      {id = "j_poke_budew", eternal = true},
-    },
     restrictions = {
         banned_cards = {
         },
