@@ -1,3 +1,12 @@
+// === GLSL Fix Log ===
+// 修复时间: Mon Jul 21 14:15:41 CST 2025
+// 文件来源: evolution.fs
+// 共修改 3 行
+// 第 125 行："number new_b = sin(2.*(evolution.b - 0.75) * 3.14159265359 / 3.)/5;" → "number new_b = sin(2.*(evolution.b - 0.75) * 3.14159265359 / 3.)/5.0;"
+// 第 126 行："new_b = new_b * (1+sin(angle*3.14159265359 * 5 + evolution.g)/30+cos(angle*3.14159265359 * 2 + evolution.g)/30);" → "new_b = new_b * (1.0+sin(angle*3.14159265359 * 5.0 + evolution.g)/30.0+cos(angle*3.14159265359 * 2.0 + evolution.g)/30.0);"
+// 第 159 行："return transform_projection * vertex_position + vec4(0,0,0,scale);" → "return transform_projection * vertex_position + vec4(0.0,0.0,0.0,scale);"
+// =====================
+
 #if defined(VERTEX) || __VERSION__ > 100 || defined(GL_FRAGMENT_PRECISION_HIGH)
     #define MY_HIGHP_OR_MEDIUMP highp
 #else
@@ -122,8 +131,8 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     hsl_evo.b = sqrt(min(1., max(0., bg_color)));
     if (evolution.b > 0.75)
     {
-        number new_b = sin(2.*(evolution.b - 0.75) * 3.14159265359 / 3.)/5;
-        new_b = new_b * (1+sin(angle*3.14159265359 * 5 + evolution.g)/30+cos(angle*3.14159265359 * 2 + evolution.g)/30);
+        number new_b = sin(2.*(evolution.b - 0.75) * 3.14159265359 / 3.)/5.0;
+        new_b = new_b * (1.0+sin(angle*3.14159265359 * 5.0 + evolution.g)/30.0+cos(angle*3.14159265359 * 2.0 + evolution.g)/30.0);
         new_b = new_b / length(adjusted_uv);
         new_b = new_b * new_b * new_b * new_b - 0.2;
         new_b = new_b * min(1., max(0., evolution.b * 2. - 1.5));
@@ -156,6 +165,6 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
     float scale = 0.2*(-0.03 - 0.3*max(0., 0.3-mid_dist))
                 *hovering*(length(mouse_offset)*length(mouse_offset))/(2. -mid_dist);
 
-    return transform_projection * vertex_position + vec4(0,0,0,scale);
+    return transform_projection * vertex_position + vec4(0.0,0.0,0.0,scale);
 }
 #endif

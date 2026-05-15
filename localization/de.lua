@@ -95,7 +95,7 @@ return {
                     "Level der ausgewählten",
                     "{C:attention}Poker Hand{} zu erhöhen",
                     "{C:attention}Entwicklungskarte{}",
-                    "{C:inactive}(Hand: {C:attention}#1#{Cinactive}){}",
+                    "{C:inactive}(Hand: {C:attention}#1#{C:inactive}){}",
                 },
             },
             c_poke_sunstone = {

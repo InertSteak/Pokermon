@@ -20,38 +20,55 @@ local jd_def = JokerDisplay.Definitions
 --	Vivillon
 --	Litleo
 jd_def["j_poke_litleo"] = {
-    text = {
-        { text = "+", colour = G.C.CHIPS},
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
-    },
-calc_function = function(card)
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+  text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local chips = 0
-    local mult = 0
     local _, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
     end
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
+  end
 }
 
 --	Pyroar
 jd_def["j_poke_pyroar"] = {
-    text = {
-        { text = "+", colour = G.C.CHIPS},
-        { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS }
-    },
-calc_function = function(card)
-    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+  text = {
+    { text = "+", colour = G.C.CHIPS},
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+    { text = " +", colour = HEX("FF7ABF")},
+    { ref_table = "card.joker_display_values", ref_value = "energy_card", retrigger_type = "mult", colour = HEX("FF7ABF") },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  calc_function = function(card)
     local chips = 0
-    local mult = 0
-    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local energy_card = 0
+    local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
     if poker_hands['Flush'] and next(poker_hands['Flush']) then
-        chips = card.ability.extra.chips
+      chips = card.ability.extra.chips
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:get_id() == 12 or scoring_card:get_id() == 13 then
+          energy_card = 1
+        end
+      end
     end
     card.joker_display_values.chips = chips
-end
+    card.joker_display_values.energy_card = energy_card
+    card.joker_display_values.localized_text = localize('Flush', 'poker_hands')
+  end
 }
 
 --	Flabébé
@@ -88,31 +105,13 @@ end
 --	Sylveon
 jd_def["j_poke_sylveon"] = {
     text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-            },
-        },
+        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
     },
-    reminder_text = {
-        {ref_table = "card.ability.extra", ref_value = "rerolls", colour = G.C.ORANGE},
-        { text = " [", colour = G.C.GREY},
-        { ref_table = "card.ability.extra", ref_value = "reroll_goal", colour = G.C.GREY },
-        { text = "]", colour = G.C.GREY}
-        },
     calc_function = function(card)
-        local playing_hand = next(G.play.cards)
-        local count = 0
-                for i, playing_card in ipairs(G.hand.cards) do
-                    if playing_hand or not playing_card.highlighted then
-                    if not (playing_card.facing == 'back') and not playing_card.debuff and playing_card.edition then
-                        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-                    end
-                end
-        end
-        card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
-    end 
+        local status = "Not Active!"
+        if G.GAME.current_round.hands_played == 0 then status = "Active!" end
+        card.joker_display_values.status = status
+    end
 }
 
 --	Hawlucha
@@ -125,7 +124,41 @@ jd_def["j_poke_sylveon"] = {
 --	Phantump
 --	Trevenant
 --	Pumpkaboo
+jd_def["j_poke_pumpkaboo"] = {
+  text = {
+    { text = "+", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jacks_discarded", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jack_target", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+  end
+}
+
 --	Gourgeist
+jd_def["j_poke_gourgeist"] = {
+  text = {
+    { text = "+", colour = G.C.SECONDARY_SET.Spectral },
+    { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult", colour = G.C.SECONDARY_SET.Spectral }
+  },
+  reminder_text = {
+    { text = "[", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jacks_discarded", colour = G.C.GREY },
+    { text = "/", colour = G.C.GREY },
+    { ref_table ="card.ability.extra", ref_value = "jack_target", colour = G.C.ORANGE },
+    { text = "]", colour = G.C.GREY },
+  },
+  calc_function = function(card)
+    card.joker_display_values.count = 1
+  end
+}
+
 --	Bergmite
 --	Avalugg
 --	Noibat

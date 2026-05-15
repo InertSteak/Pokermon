@@ -1,9 +1,9 @@
 local energysearch = { --+1 max energy limit
 	key = "energysearch",
-	atlas = "pokevouchers",
+	atlas = "AtlasVouchersBasic",
   order = 33,
   set = "Voucher",
-	pos = { x = 0, y = 1 },
+	pos = { x = 2, y = 0 },
   config = {},
   discovered = true,
   unlocked = true,
@@ -32,10 +32,10 @@ local energysearch = { --+1 max energy limit
 }
 local energyresearch = { --+1 max energy limit
 	key = "energyresearch",
-	atlas = "pokevouchers",
+	atlas = "AtlasVouchersBasic",
   order = 34,
   set = "Voucher",
-	pos = { x = 1, y = 1 },
+	pos = { x = 3, y = 0 },
   config = {},
   discovered = true,
   unlocked = true,
@@ -66,7 +66,7 @@ local energyresearch = { --+1 max energy limit
 
 local goodrod = { --+1 card choice in pocket packs
 	key = "goodrod",
-	atlas = "pokevouchers",
+	atlas = "AtlasVouchersBasic",
   order = 35,
   set = "Voucher",
 	pos = { x = 0, y = 0 },
@@ -96,7 +96,7 @@ local goodrod = { --+1 card choice in pocket packs
 
 local superrod = { --+1 card choice in pocket packs
 	key = "superrod",
-	atlas = "pokevouchers",
+	atlas = "AtlasVouchersBasic",
   order = 36,
   set = "Voucher",
 	pos = { x = 1, y = 0 },

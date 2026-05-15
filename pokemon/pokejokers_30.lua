@@ -70,20 +70,22 @@ local falinks = {
 local dreepy={
   name = "dreepy",
   pos = {x = 11, y = 5},
-  config = {extra = {money = 1, straight_flush_played = 0, suit = "Spades"}},
+  config = {extra = {money = 1, straight_flush_played = 0}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
-    return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
+    return {vars = {center.ability.extra.money}}
   end,
+  designer = "Lemmanade",
   rarity = 2,
   cost = 6,
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  gen = 8,
+  pseudol = true,
   perishable_compat = true,
   blueprint_compat = false,
-  eternal_compat = true,
+  eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and not context.blueprint then
       for k, v in ipairs(G.jokers.cards) do
@@ -93,11 +95,15 @@ local dreepy={
         end
       end
       if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        juice_flip_hand(card)
-        for i=1, #G.hand.cards do
-          G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(card.ability.extra.suit);return true end }))
-        end 
-        juice_flip_hand(card, true)
+        local first_card = G.hand.cards[1]
+        if not SMODS.has_no_suit(first_card) then
+          local suit = first_card.base.suit
+          juice_flip_hand(card)
+          for i=1, #G.hand.cards do
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
+          end 
+          juice_flip_hand(card, true)
+        end
       end
       return {
         message = localize('k_val_up'),
@@ -111,6 +117,7 @@ local dreepy={
     end
     return scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
   end,
+  attributes = {"sell_value", "joker", "suit", "condition_evo"},
 }
 -- Drakloak 886
 local drakloak={
@@ -119,15 +126,16 @@ local drakloak={
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  gen = 8,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -164,7 +172,8 @@ local drakloak={
       end
       card.ability.extra.total_sell_value = sell_cost
     end
-  end
+  end,
+  attributes = {"xmult", "sell_value", "joker", "hand_type", "condition_evo"},
 }
 -- Dragapult 887
 local dragapult={
@@ -173,17 +182,20 @@ local dragapult={
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.negative) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    if pokermon_config.detailed_tooltips then
+      if not center.edition or (center.edition and not center.edition.negative) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+      end
     end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult, 1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  gen = 8,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -222,7 +234,8 @@ local dragapult={
       end
       card.ability.extra.total_sell_value = sell_cost
     end
-  end
+  end,
+  attributes = {"xmult", "sell_value", "joker", "hand_type", "generation"},
 }
 local dreepy_dart={
   name = "dreepy_dart",
@@ -231,15 +244,17 @@ local dreepy_dart={
   no_collection = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'designed_by', vars = {"Lemmanade"}}
     return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
+  designer = "Lemmanade",
   rarity = "poke_safari",
   cost = 6,
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex8",
+  gen = 8,
   aux_poke = true,
+  auto_sticker = true,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
@@ -252,11 +267,15 @@ local dreepy_dart={
         end
       end
       if G.hand and G.hand.cards and #G.hand.cards > 0 then
-        juice_flip_hand(card)
-        for i=1, #G.hand.cards do
-          G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(card.ability.extra.suit);return true end }))
+        local first_card = G.hand.cards[1]
+        if not SMODS.has_no_suit(first_card) then
+          local suit = first_card.base.suit
+          juice_flip_hand(card)
+          for i=1, #G.hand.cards do
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
+          end 
+          juice_flip_hand(card, true)
         end
-        juice_flip_hand(card, true)
       end
     end
   end,
@@ -265,7 +284,11 @@ local dreepy_dart={
       local edition = {negative = true}
       card:set_edition(edition, true, true)
     end
-  end
+  end,
+  in_pool = function(self)
+    return false
+  end,
+  attributes = {"sell_value", "joker", "suit"},
 }
 -- Zacian 888
 -- Zamazenta 889
@@ -280,6 +303,161 @@ local dreepy_dart={
 -- Calyrex 898
 -- Wyrdeer 899
 -- Kleavor 900
+local wyrdeer={
+  name = "wyrdeer",
+  pos = {x = 0, y = 8},
+  config = {extra = {scry = 2, scry_plus = 1, scry_added = 0}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.scry, center.ability.extra.scry_plus}}
+  end,
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Psychic",
+  atlas = "Pokedex8",
+  gen = 8,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before then
+        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry_plus
+        card.ability.extra.scry_added = card.ability.extra.scry_added + card.ability.extra.scry_plus
+      end
+    end
+    if not context.end_of_round and context.scoring_hand then
+      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+        local highest = nil
+        local highest_card = nil
+        for k, v in pairs(G.scry_view.cards) do
+          if not SMODS.has_no_suit(v) then
+            if not highest then highest = v.base.id; highest_card = v end
+            if v.base.id > highest then
+              highest = v.base.id
+              highest_card = v
+            end
+          end
+        end
+        if highest_card and context.other_card == highest_card then
+          local Mult = 2 * highest_card.base.nominal
+          return {
+            message = localize{type = 'variable', key = 'a_mult', vars = {Mult}},
+            message_card = context.other_card,
+            colour = G.C.MULT,
+            mult_mod = Mult,
+            card = card,
+          }
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition then
+      G.GAME.scry_amount = math.max(card.ability.extra.scry, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      card.ability.extra.scry_added = 0
+      return {
+        message = localize('k_reset'),
+        colour = G.C.PURPLE
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if card.ability.extra.scry_added > 0 then
+      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
+    else
+      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    end
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    if card.ability.extra.scry_added > 0 then
+      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
+    else
+      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    end
+  end,
+  attributes = {"foresight", "mult", "hands", "reset"}
+}
+-- Kleavor 900
+local kleavor={
+  name = "kleavor", 
+  pos = {x = 1, y = 8},
+  config = {extra = {mult = 0, mult_mod = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    end
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
+  end,
+  rarity = "poke_safari", 
+  cost = 8,
+  stage = "One",
+  ptype = "Earth",
+  atlas = "Pokedex8",
+  gen = 8,
+  perishable_compat = false,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.ending_shop then
+      card.ability.extra.selected = false
+      local eval = function() return not card.ability.extra.selected end
+      juice_card_until(card, eval, true)
+    end
+    if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      card.ability.extra.selected = true
+      local my_pos = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i] == card then my_pos = i; break end
+      end
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then
+        local sliced_card = G.jokers.cards[my_pos+1]
+        sliced_card.getting_sliced = true
+
+        if (sliced_card.config.center.rarity ~= 1) then
+          SMODS.add_card {
+            set = 'Enhanced',
+            key = 'm_stone',
+            area = G.deck,
+            edition = poll_edition('aura', nil, true, true),
+            key_append = 'kleavor',
+          }
+        end
+
+        G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            SMODS.scale_card(card, {
+              ref_value = 'mult',
+              scalar_value = 'mult_mod',
+              no_message = true,
+            })
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+            return true
+          end
+        }))
+
+        return {
+          message = localize{type = 'variable', key = 'a_mult',
+          vars = { card.ability.extra.mult }},
+          colour = G.C.RED,
+          no_juice = true
+        }
+      end
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
+  end,
+  attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
+}
 return {name = "Pokemon Jokers 871-900", 
-        list = {falinks, dreepy, drakloak, dragapult, dreepy_dart},
+        list = {falinks, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

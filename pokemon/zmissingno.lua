@@ -134,21 +134,20 @@ end
 missingnocalc = {mmult, mchips, mmoney, mXmult, mranksuit, mtag, mdiscardorhand}
 ]]--
 
-
 local missingno ={
   name = "missingno", 
-  pos = { x = pokermon_config.pokemon_altart and 12 or 1, y = 12},
+  pos = { x = 1, y = 12},
   soul_pos = { x = 2, y = 12},
   config = {extra = {tags_created = 2}},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'Bird'}
-    		return {vars = {center.ability.extra.tags_created}}
+    return {vars = {center.ability.extra.tags_created}}
   end,
   rarity = 4, 
   cost = 21, 
   stage = "Legendary",
   ptype = "Bird",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition then
@@ -200,9 +199,18 @@ local missingno ={
       local empty_con = G.consumeables.config.card_limit - #G.consumeables.cards
       if empty_con then
         for i=1, empty_con do
-          local copy = copy_card(_card, nil)
-          copy:add_to_deck()
-          G.consumeables:emplace(copy)
+          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+              func = (function()
+                  local copy = copy_card(_card, nil)
+                  copy:add_to_deck()
+                  G.consumeables:emplace(copy)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+              end)
+            }))
+          end
         end
       end
       local empty_jokers = G.jokers.config.card_limit - #G.jokers.cards - 1
@@ -215,6 +223,7 @@ local missingno ={
       end
     end
   end,
+  attributes = {"tag", "generation"},
 }
 
 return {name = "Missingno", 

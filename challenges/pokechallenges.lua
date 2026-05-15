@@ -62,14 +62,18 @@ local nuzlocke = {
             {id = 'tag_poke_shiny_tag'},
             {id = 'tag_poke_stage_one_tag'},
             {id = 'tag_poke_safari_tag'},
+            {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
         deck = {
             type = 'Challenge Deck'
         },
-    }
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 -- add joker slots when ante increases with Nuzlocke
@@ -120,12 +124,16 @@ local goodasgold = {
         banned_tags = {
         },
         banned_other = {
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
       type = 'Challenge Deck',
       enhancement = 'm_gold',
     },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local parenthood = {
@@ -178,13 +186,17 @@ local parenthood = {
             {id = 'tag_top_up'},
             {id = 'tag_poke_shiny_tag'},
             {id = 'tag_poke_stage_one_tag'},
-            {id = 'tag_poke_safari_tag'}
+            {id = 'tag_poke_safari_tag'},
+            {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
             {id = 'bl_final_heart', type = 'blind'},
-            {id = 'bl_final_leaf', type = 'blind'}
+            {id = 'bl_final_leaf', type = 'blind'},
+            {id = 'bl_poke_mirror', type = 'blind'}
         }
-    }
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local littlecup = {
@@ -208,11 +220,14 @@ local littlecup = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
       type = 'Challenge Deck',
     },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
 }
 
 local hammertime = {
@@ -233,6 +248,7 @@ local hammertime = {
         banned_tags = {
         },
         banned_other = {
+          {id = 'bl_poke_mirror', type = 'blind'}
         },
     },
     deck = {
@@ -243,6 +259,257 @@ local hammertime = {
         },
       type = 'Challenge Deck',
     },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local lonesome = {
+    object_type = "Challenge",
+    key = 'lonesome',
+    rules = {
+        custom = {
+            { id = 'no_shop_jokers' },
+        },
+        modifiers = {
+            { id = 'joker_slots', value = 1 },
+			{ id = 'consumable_slots', value = 10 },
+        }
+    },
+    jokers = {
+        { id = 'j_poke_cubone', eternal = true},
+	},
+    restrictions = {
+        banned_cards = {
+            {id = 'c_judgement'},
+            {id = 'c_wraith'},
+            {id = 'c_soul'},
+            {id = 'c_poke_pokeball'},
+            {id = 'c_poke_greatball'},
+            {id = 'c_poke_ultraball'},
+            {id = 'c_poke_masterball'},
+			{id = 'v_blank'},
+            {id = 'v_antimatter'},
+            {id = 'p_buffoon_normal_1', ids = {'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',}},
+        },
+        banned_tags = {
+            {id = 'tag_rare'},
+            {id = 'tag_uncommon'},
+            {id = 'tag_holo'},
+            {id = 'tag_polychrome'},
+            {id = 'tag_negative'},
+            {id = 'tag_foil'},
+            {id = 'tag_buffoon'},
+            {id = 'tag_top_up'},
+            {id = 'tag_poke_shiny_tag'},
+            {id = 'tag_poke_stage_one_tag'},
+            {id = 'tag_poke_safari_tag'},
+            {id = 'tag_poke_starter_tag'},
+        },
+        banned_other = {
+            { id = 'bl_final_heart', type = 'blind' },
+            { id = 'bl_final_leaf',  type = 'blind' },
+            { id = 'bl_final_acorn', type = 'blind' },
+            {id = 'bl_poke_mirror', type = 'blind'}
+        }
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local randomizer = {
+    object_type = "Challenge",
+    key = "randomizer",
+    rules = {
+        custom = {
+            { id = 'apply_randomizer' },
+        },
+    },
+    jokers = {
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local delibird_delimma = {
+    key = 'delibird_delimma',
+    rules = {
+        custom = {
+            { id = 'no_reward' },
+            { id = 'no_extra_hand_money' },
+            { id = 'no_interest' },
+        }
+    },
+    jokers = {
+        { id = 'j_poke_delibird', eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+            { id = 'v_seed_money' },
+            { id = 'v_money_tree' },
+            { id = 'j_to_the_moon' },
+            { id = 'j_rocket' },
+            { id = 'j_satellite' },
+        },
+        banned_other = {
+            {id = 'bl_poke_mirror', type = 'blind'}
+        }
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local safety_first = {
+    key = 'safety_first',
+    rules = {
+        custom = {
+            { id = 'no_shop_jokers' },
+            { id = 'no_energy'}
+        },
+        modifiers = {
+            { id = 'joker_slots', value = 3 },
+        }
+    },
+    jokers = {
+        { id = 'j_poke_mudkip', eternal = true},
+        { id = 'j_poke_roggenrola', eternal = true},
+        { id = 'j_poke_espeon', eternal = true},
+	},
+    restrictions = {
+        banned_cards = {
+            {id = 'c_judgement'},
+            {id = 'c_soul'},
+            {id = 'c_pluto'},
+            {id = 'c_black_hole'},
+            {id = 'c_poke_moonstone'},
+            {id = 'c_poke_double_rainbow_energy'},
+            {id = 'c_poke_transformation'},
+            {id = 'c_poke_teraorb'},
+            {id = 'c_poke_obituary'},
+            {id = 'c_poke_nightmare'},
+            {id = 'c_ankh'},
+            {id = 'c_hex'},
+            {id = 'c_wraith'},
+            {id = 'c_wheel_of_fortune'},
+            {id = 'c_poke_berry_juice_energy'},
+            {id = 'c_poke_berry_juice_planet'},
+            {id = 'c_poke_pokeball'},
+            {id = 'c_poke_greatball'},
+            {id = 'c_poke_ultraball'},
+            {id = 'c_poke_masterball'},
+            {id = 'c_poke_heavyboots'},
+			{id = 'v_blank'},
+            {id = 'v_antimatter'},
+            {id = 'v_poke_energysearch'},
+            {id = 'v_poke_energyresearch'},
+            {id = 'p_buffoon_normal_1', ids = {'p_buffoon_normal_1','p_buffoon_normal_2','p_buffoon_jumbo_1','p_buffoon_mega_1',}},
+        },
+        banned_tags = {
+            {id = 'tag_rare'},
+            {id = 'tag_uncommon'},
+            {id = 'tag_holo'},
+            {id = 'tag_polychrome'},
+            {id = 'tag_negative'},
+            {id = 'tag_foil'},
+            {id = 'tag_buffoon'},
+            {id = 'tag_top_up'},
+            {id = 'tag_orbital'},
+            {id = 'tag_poke_shiny_tag'},
+            {id = 'tag_poke_stage_one_tag'},
+            {id = 'tag_poke_safari_tag'},
+            {id = 'tag_poke_starter_tag'},
+        },
+        banned_other = {
+            { id = 'bl_final_leaf', type = 'blind' },
+            { id = 'bl_final_acorn', type = 'blind' },
+            {id = 'bl_poke_mirror', type = 'blind'},
+            {id = 'bl_eye', type = 'blind'},
+            {id = 'bl_club', type = 'blind'},
+            {id = 'bl_window', type = 'blind'},
+            {id = 'bl_head', type = 'blind'},
+            {id = 'bl_goad', type = 'blind'},
+            {id = 'bl_plant', type = 'blind'},
+            {id = 'bl_mark', type = 'blind'},
+            {id = 'bl_poke_gray_godfather', type = 'blind'},
+        }
+    },
+    deck = {
+      type = 'Challenge Deck',
+      enhancement = 'm_poke_hazard'
+    },
+    button_colour = HEX('0064B2'),
+    text_colour = HEX("FFCB01"),
+}
+
+local mystery_dungeon = {
+  key = "mystery_dungeon",
+  rules = {
+    custom = {
+      {id = 'poke_mystery_dungeon'},
+      {id = 'poke_mystery_dungeon2'},
+      {id = 'poke_mystery_dungeon3'},
+    },
+  },
+  apply = function (self)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        local target_id = "Pokermon"
+        local pokermon_decks = {}
+        for i, v in ipairs(G.P_CENTER_POOLS.Back) do
+            if v.mod and v.mod.id == target_id and not v.legacy_deck then
+                pokermon_decks[#pokermon_decks + 1] = v
+            end
+        end
+
+        local seed = "poke_"..tostring(os.date("!%d%m%Y"))
+
+        local deck = pseudorandom_element(pokermon_decks, seed)
+
+        if deck then
+          local deck_key = deck.key
+
+          if deck_key == "b_poke_vendingdeck" then
+            G.GAME.modifiers.vending = true
+          else
+            Back(G.P_CENTERS[deck_key]):apply_to_run()
+          end
+
+          G.GAME.poke_mystery_dungeon_deck_key = deck_key
+
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              play_sound('tarot1')
+              G.deck.cards[1]:juice_up(0.3, 0.3)
+              -- Handles drawing the new deck sprite on top of the challenge deck
+              poke_set_mystery_dungeon_back_sprites()
+              return true
+            end
+          }))
+        end
+
+        local card = SMODS.add_card({area = G.jokers, set = "Joker"})
+        SMODS.Stickers["eternal"]:apply(card, true)
+
+        return true
+      end
+    }))
+  end,
+  button_colour = HEX('0064B2'),
+  text_colour = HEX("FFCB01"),
+}
+
+return {name = "Challenges", 
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
 }
 
 local bunnelby_test = {
@@ -651,3 +918,4 @@ local deer = {
 return {name = "Challenges", 
         list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, teddy_bear, furfrou, ruin, no_retreat, speed, rose, drill, deer}
 }
+

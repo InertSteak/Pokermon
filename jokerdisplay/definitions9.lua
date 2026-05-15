@@ -83,8 +83,37 @@ end
 --	Naclstack
 --	Garganacl
 --	Charcadet
+jd_def["j_poke_charcadet"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.ability.extra", ref_value = "mult", colour = G.C.MULT },
+  },
+}
+
 --	Armarouge
+jd_def["j_poke_armarouge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Ceruledge
+jd_def["j_poke_ceruledge"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    }
+  },
+}
+
 --	Tadbulb
 --	Bellibolt
 --	Wattrel
@@ -94,7 +123,34 @@ end
 --	Shroodle
 --	Grafaiai
 --	Bramblin
+jd_def["j_poke_bramblin"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "bramblincard", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.bramblincard = localize(G.GAME.current_round.bramblincard.rank, 'ranks')
+  end
+}
+
 --	Brambleghast
+jd_def["j_poke_brambleghast"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", colour = G.C.CHIPS },
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "bramblincard", colour = G.C.ORANGE },
+    { text = ")" }
+  },
+  calc_function = function(card)
+    card.joker_display_values.bramblincard = localize(G.GAME.current_round.bramblincard.rank, 'ranks')
+    card.joker_display_values.chips = math.max(card.ability.extra.chip_mod * G.GAME.dollars, 0)
+  end
+}
+
 --	Toedscool
 --	Toedscruel
 --	Klawf
@@ -291,8 +347,8 @@ jd_def["j_poke_annihilape"] = {
                 end
             end
         end
-        card.joker_display_values.chips = count * card.ability.extra.chips * (1 + G.GAME.current_round.hands_played)
-        card.joker_display_values.mult = count * card.ability.extra.mult * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.chips = count * card.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played)
+        card.joker_display_values.mult = count * card.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played)
         card.joker_display_values.localized_text = "(2,3,5,7)"
     end
 }
@@ -300,35 +356,94 @@ jd_def["j_poke_annihilape"] = {
 --	Clodsire
 --	Farigiraf
 jd_def["j_poke_farigiraf"] = {
-    text = {
-        {
-            border_nodes = {
-                { text = "X" },
-                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
-            }
-        }
-    },
-    text_config = { colour = G.C.WHITE },
-    calc_function = function(card)
-        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-        local face_cards = {}
-        if text == 'Two Pair' then
-            for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:is_face() then
-                    table.insert(face_cards, scoring_card)
-                end
-            end
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+      }
+    }
+  },
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+    { text = "+" },
+    { ref_table = "card.joker_display_values", ref_value = "localized_text_face", colour = G.C.ORANGE },
+    { text = ")" },
+  },
+  text_config = { colour = G.C.WHITE },
+  calc_function = function(card)
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+    local face_cards = {}
+    if poker_hands['Two Pair'] and next(poker_hands['Two Pair']) then
+      for _, scoring_card in pairs(scoring_hand) do
+        if scoring_card:is_face() then
+          table.insert(face_cards, scoring_card)
         end
-        local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
-        local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
-        card.joker_display_values.x_mult = math.max(last_face and
-            (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
-
+      end
     end
+    local first_face = JokerDisplay.calculate_leftmost_card(face_cards)
+    local last_face = JokerDisplay.calculate_rightmost_card(face_cards)
+    if first_face ~= last_face then
+      card.joker_display_values.x_mult = math.max(last_face and
+        (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand) + (JokerDisplay.calculate_card_triggers(first_face, scoring_hand)))) or 1, 1)
+    else
+      card.joker_display_values.x_mult = math.max(last_face and
+        (card.ability.extra.Xmult_multi ^ (JokerDisplay.calculate_card_triggers(last_face, scoring_hand))) or 1, 1)
+    end
+    card.joker_display_values.localized_text = localize('Two Pair', 'poker_hands')
+    card.joker_display_values.localized_text_face = localize("k_face_cards")
+  end
 }
 
 --	Dudunsparce
 --	Kingambit
+jd_def["j_poke_kingambit"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+        { text = " X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult_multi", retrigger_type = "exp" },
+      },
+    },
+  },
+  calc_function = function(card)
+    local count = 0
+    local king_count = 0
+    local king_in_hand = false
+    local hand = JokerDisplay.current_hand
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+
+    for _, playing_card in ipairs(G.playing_cards) do
+      if playing_card:get_id() == 13 then king_count = king_count + 1 end
+    end
+
+    for _, playing_card in pairs(hand) do
+      if playing_card:get_id() == 13 then
+        king_in_hand = true
+      end
+    end
+
+    if text ~= 'Unknown' then
+      if king_count == 1 and king_in_hand == true then
+        for _, scoring_card in pairs(scoring_hand) do
+          if scoring_card then
+            count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+          end
+        end
+      end
+    end
+    if king_in_hand == true then
+      card.joker_display_values.Xmult_multi = ((card.ability.extra.Xmult/2) * king_count) ^ count
+    else
+      card.joker_display_values.Xmult_multi = 1
+    end
+  end
+}
+
 --	Great Tusk
 --	Scream Tail
 --	Brute Bonnet

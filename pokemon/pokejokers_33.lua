@@ -11,6 +11,7 @@ local wugtrio={
   cost = 6, 
   stage = "One", 
   atlas = "Pokedex9",
+  gen = 9,
   ptype = "Water",
   blueprint_compat = true,
   calculate = function(self, card, context)
@@ -50,7 +51,8 @@ local wugtrio={
         end
       end
     end
-  end
+  end,
+  attributes = {"xmult", "chips", "hand_type", "rank", "five", "six", "seven"},
 }
 -- Bombirdier 962
 -- Finizen 963
@@ -73,17 +75,18 @@ local wugtrio={
 local annihilape={
   name = "annihilape", 
   pos = {x = 2, y = 6}, 
-  config = {extra = {mult = 5, chips = 7}},
+  config = {extra = {mult_mod = 5, chip_mod = 7}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.chips, center.ability.extra.mult * (1 + G.GAME.current_round.hands_played), 
-                    center.ability.extra.chips * (1 + G.GAME.current_round.hands_played)}}
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, center.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played), 
+                    center.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played)}}
   end,
   rarity = "poke_safari", 
   cost = 11, 
   stage = "Two", 
   ptype = "Fighting",
   atlas = "Pokedex9",
+  gen = 9,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
@@ -92,13 +95,14 @@ local annihilape={
          context.other_card:get_id() == 5 or 
          context.other_card:get_id() == 7 then
         return {
-            chips = card.ability.extra.chips * (1 + G.GAME.current_round.hands_played),
-            mult = card.ability.extra.mult * (1 + G.GAME.current_round.hands_played),
+            chips = card.ability.extra.chip_mod * (1 + G.GAME.current_round.hands_played),
+            mult = card.ability.extra.mult_mod * (1 + G.GAME.current_round.hands_played),
             card = card
         }
       end
     end
-  end
+  end,
+  attributes = {"chips", "mult", "rank", "two", "three", "five", "seven"},
 }
 -- Clodsire 980
 -- Farigiraf 981
@@ -108,7 +112,10 @@ local farigiraf={
   config = {extra = {Xmult_multi = 2.2, score = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Cryptid"}}
+      info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_cryptid', vars = {2}}
+    end
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -116,6 +123,7 @@ local farigiraf={
   stage = "One",
   ptype = "Psychic",
   atlas = "Pokedex9",
+  gen = 9,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -162,6 +170,7 @@ local farigiraf={
       end
     end
   end,
+  attributes = {"holding", "face", "xmult", "hand_type"},
 }
 -- Dudunsparce 982
 local dudunsparce={
@@ -173,8 +182,10 @@ local dudunsparce={
     local alt_key = nil
     if center.ability.extra.form == 1 then
       alt_key = "j_poke_dudunsparce2"
-      info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
-      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Coupon Tag"}}
+      if pokermon_config.detailed_tooltips then
+        info_queue[#info_queue+1] = {key = 'tag_coupon', set = 'Tag'}
+        info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Coupon Tag"}}
+      end
     end
     return {vars = {center.ability.extra.card_slots, center.ability.extra.pack_slots, center.ability.extra.voucher_slots}, key = alt_key}
   end,
@@ -183,6 +194,7 @@ local dudunsparce={
   stage = "One",
   ptype = "Colorless",
   atlas = "Pokedex9",
+  gen = 9,
   perishable_compat = true,
   blueprint_compat = false,
   eternal_compat = true,
@@ -196,9 +208,9 @@ local dudunsparce={
   end,
   set_sprites = function(self, card, front)
     if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-      card.children.center:set_sprite_pos({x = 6, y = 6})
+      card.children.center:set_sprite_pos({x = 8, y = 3})
     else
-      card.children.center:set_sprite_pos({x = 5, y = 6})
+      card.children.center:set_sprite_pos({x = 6, y = 3})
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -206,15 +218,18 @@ local dudunsparce={
     SMODS.change_booster_limit(card.ability.extra.pack_slots)
     SMODS.change_voucher_limit(card.ability.extra.voucher_slots)
     if card.ability.extra.form == 1 then
-      G.E_MANAGER:add_event(Event({
-        func = (function()
-            add_tag(Tag('tag_coupon'))
-            play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-            play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-            return true
-        end)
-      }))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_wowthree')})
+      self:set_sprites(card)
+      if not from_debuff then
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+              add_tag(Tag('tag_coupon'))
+              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+              return true
+          end)
+        }))
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_wowthree')})
+      end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -222,18 +237,20 @@ local dudunsparce={
     SMODS.change_booster_limit(-card.ability.extra.card_slots)
     SMODS.change_voucher_limit(-card.ability.extra.card_slots)
   end,
+  attributes = {"passive"},
 }
 -- Kingambit 983
 local kingambit={
   name = "kingambit",
-  pos = {x = 7, y = 6},
-  config = {extra = {mult = 0, mult_stack = 0}},
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult + center.ability.extra.mult_stack, center.ability.extra.mult}}
+    return {vars = {center.ability.extra.Xmult, }}
   end,
   rarity = "poke_safari",
-  cost = 12,
+  cost = 11,
+  gen = 9,
   stage = "Two",
   ptype = "Metal",
   atlas = "Pokedex9",
@@ -262,6 +279,41 @@ local kingambit={
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
 	end
   end,
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      local king_count = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+        if playing_card:get_id() == 13 then king_count = king_count + 1 end
+      end
+      if king_count == 1 then
+        local has_king = nil
+        for k, v in pairs(context.full_hand) do
+          if v:get_id() == 13 then 
+            has_king = true
+            break
+          end
+        end
+        if has_king and not context.other_card:is_face() then
+          local Xmult = card.ability.extra.Xmult/2
+          if Xmult > 1 then
+            return {
+              x_mult = Xmult,
+              card = card
+            }
+          end
+        end
+      end
+    end
+  end,
+  attributes = {"xmult", "rank", "king", "face", "full_deck"},
 }
 -- Great Tusk 984
 -- Scream Tail 985

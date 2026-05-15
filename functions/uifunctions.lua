@@ -77,3 +77,344 @@ update_scry_cardarea = function(scry_view)
       end,
    }))
 end
+
+poke_random_text = function(strings, config)
+  config = config or {}
+  local c_colours = config.colours or {G.C.UI.TEXT_DARK}
+  if config.poke_rep_string and config.poke_rep_num then
+    for i = 1, config.poke_rep_num do
+      strings[#strings + 1] = config.poke_rep_string
+    end
+  end
+  local c_scale = config.scale or 0.32
+  local c_pop_in_rate = config.pop_in_rate or 9999999
+  local c_silent = config.not_silent and false or true
+  local c_random_element = config.not_random_element and false or true
+  local c_pop_delay = config.pop_delay or 0.2011
+  local c_min_cycle_time = config.min_cycle_time or 0
+  return {colours = c_colours, string = strings, scale = c_scale, pop_in_rate = c_pop_in_rate, silent = c_silent, random_element = c_random_element, 
+          pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
+end
+
+poke_blueprint_compat_ui = function(copy)
+  local compatible = copy and copy.config.center.blueprint_compat
+
+  local text = localize('k_' .. (compatible and 'compatible' or 'incompatible'))
+  local colour = mix_colours(compatible and G.C.GREEN or G.C.RED, G.C.JOKER_GREY, 0.8)
+
+  return {
+    {n = G.UIT.C, config = {align = "bm", padding = 0.02}, nodes = {
+      {n = G.UIT.C, config = {align = "m", colour = colour, r = 0.05, padding = 0.05}, nodes = {
+        {n = G.UIT.T, config = {text = ' ' .. text .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8}}
+      }}
+    }}
+  }
+end
+
+-- Collection Grid UI helper functions
+function poke_create_your_collection_card(key, x, y, params)
+  local form = type(key == 'table') and key.form
+  local center_key = type(key == 'table') and key.key or key
+  local center = G.P_CENTERS[center_key]
+
+  local card = Card(x, y, G.CARD_W, G.CARD_H, nil, center, params)
+
+  if form and center.set_sprites then
+    card.ability.extra.form = form
+    center:set_sprites(card)
+    if center.set_ability then
+      center:set_ability(card)
+    end
+  end
+
+  return card
+end
+
+local function create_cardareas(row_count, col_count)
+  G.your_collection = {}
+  local nodes = {}
+
+  for i = 1, row_count do
+    local cardarea = CardArea(
+      G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
+      G.ROOM.T.h,
+      G.CARD_W * col_count,
+      G.CARD_H * 0.95,
+      {
+        card_limit = col_count,
+        type = 'title',
+        highlight_limit = 0,
+        collection = true,
+      }
+    )
+
+    nodes[#nodes + 1] = {
+      n = G.UIT.R,
+      config = { align = "cm", padding = 0.07, no_fill = true },
+      nodes = {
+        { n = G.UIT.O, config = { object = cardarea } }
+      }
+    }
+
+    G.your_collection[i] = cardarea
+  end
+
+  return nodes
+end
+
+local function populate_cardareas(keys, options)
+  local page = options.page or 1
+  local rows = options.rows or 3
+  local cols = options.cols or 5
+  local create_card_func = options.create_card_func or poke_create_your_collection_card
+  local offset = rows * cols * (page - 1)
+
+  local marker = 1 + offset
+  for i = 1, rows do
+    local cardarea = G.your_collection[i]
+
+    local lastcard = math.min(marker + cols - 1, #keys)
+    for j = marker, lastcard do
+      local x = cardarea.T.x + cardarea.T.w / 2
+      local y = cardarea.T.y
+
+      local card = create_card_func(keys[j], x, y)
+
+      cardarea:emplace(card)
+    end
+
+    marker = marker + cols
+  end
+end
+
+function poke_create_UIBox_your_collection(args)
+  -- Fix for cards not realizing they're in a collection,
+  -- because the collection gets initialized *after* the cards do
+  -- -- Vanilla cards work without this because the joker collection is nested within a second overlay
+  local handle_overlay_menu = false
+  if not G.OVERLAY_MENU then
+    G.OVERLAY_MENU = true
+    handle_overlay_menu = true
+  end
+
+  args = args or {}
+
+  local keys = args.keys or {}
+  local rows = args.rows or 3
+  local cols = args.cols or 5
+  local create_card_func = args.create_card_func or poke_create_your_collection_card
+
+  local page_text = args.page_text or localize('k_page')
+  local show_pagination = true
+
+  if args.dynamic_sizing then
+    if #keys <= rows * cols then show_pagination = false end
+    rows = math.min(math.ceil(#keys / cols), rows)
+    cols = math.min(#keys, cols)
+  end
+
+  local nodes = {
+    {
+      n = G.UIT.R,
+      config = {
+        align = "cm",
+        r = 0.1,
+        colour = G.C.BLACK,
+        emboss = 0.05
+      },
+      nodes = create_cardareas(rows, cols)
+    }
+  }
+
+  populate_cardareas(keys, { rows = rows, cols = cols, create_card_func = create_card_func })
+
+  if show_pagination then
+    local pages = math.max(math.ceil(#keys / (rows * cols)), 1)
+    local page_options = {}
+
+    for i = 1, pages do
+      page_options[#page_options + 1] = page_text .. ' ' .. i .. '/' .. pages
+    end
+
+    nodes[#nodes + 1] = {
+      n = G.UIT.R, config = { align = "cm" }, nodes = {
+        create_option_cycle {
+          options = page_options,
+          w = 4.5,
+          cycle_shoulders = true,
+          opt_callback = 'poke_your_collection_page',
+          current_option = 1,
+          keys = keys,
+          rows = rows,
+          cols = cols,
+          create_card_func = create_card_func,
+          colour = G.C.RED,
+          no_pips = true,
+          focus_args = {
+            snap_to = true,
+            nav = 'wide'
+          }
+        }
+      }
+    }
+  end
+
+  -- Avoids crashing when `G.FUNCS.overlay_menu` tries to call the remove method
+  if handle_overlay_menu then G.OVERLAY_MENU = nil end
+
+  return nodes
+end
+
+G.FUNCS.poke_your_collection_page = function(args)
+  if not args or not args.cycle_config then return end
+
+  local page = args.cycle_config.current_option
+  local keys = args.cycle_config.keys
+  local rows = args.cycle_config.rows
+  local cols = args.cycle_config.cols
+  local create_card_func = args.cycle_config.create_card_func
+
+  for _, cardarea in ipairs(G.your_collection) do
+    remove_all(cardarea.cards)
+  end
+
+  populate_cardareas(keys, { page = page, rows = rows, cols = cols, create_card_func = create_card_func })
+
+  INIT_COLLECTION_CARD_ALERTS()
+end
+
+local function parse_url(url)
+  -- simple Url parser for getting domain name and path
+  local protocol = url:match('[a-z]+://')
+  if protocol then url = url:sub(protocol:len() + 1) end
+  local domains = {}
+  for domain in url:gmatch('([a-z0-9%-]+)%.') do
+    table.insert(domains, domain)
+  end
+  local domain_name = domains[#domains]
+  local path = url:match('.[a-z]+/(.*)')
+  return domain_name, path
+end
+
+local site_colours = {
+  ['youtube'] = HEX("FF0033"),
+  ['twitch'] = HEX("6441A5"),
+  ['steam'] = G.C.BLACK,
+  ['steamcommunity'] = G.C.BLACK,
+  ['x'] = HEX("283234"),
+  ['twitter'] = G.C.BLUE,
+  ['bsky'] = HEX("006AFF"),
+  ['reddit'] = HEX("FF4500"),
+  ['carrd'] = HEX("4071B7"),
+  ['discord'] = HEX("5865F2"),
+  ['instagram'] = HEX("D60059"),
+  ['tiktok'] = HEX("283234"),
+  ['deviantart'] = HEX('00E59B')
+}
+
+local function get_site_colour(domain)
+  return site_colours[domain] or G.C.RED
+end
+
+local function first_to_upper(str)
+  return str:gsub("^%l", string.upper)
+end
+
+function poke_UIBox_link_button(args)
+  local domain_name, path = parse_url(args.url)
+
+  args.button = 'pokermon_open_site'
+  args.colour = args.colour or get_site_colour(domain_name)
+
+  if not args.label then
+    args.label = {
+      args.site_text or first_to_upper(domain_name),
+      -- we live in a society
+      args.bottom_text or path
+    }
+  end
+
+  local scale = args.scale
+
+  if type(scale) == 'table' then
+    args.scale = scale[1]
+  end
+
+  local button = UIBox_button(args)
+
+  -- We can do this because UIBox_button does not return a UIBox
+  button.nodes[1].config.url = args.url
+
+  if type(scale) == 'table' then
+    for i = 2, #scale do
+      if button.nodes[1].nodes[i] then
+        button.nodes[1].nodes[i].nodes[1].config.scale = scale[i]
+      end
+    end
+  end
+
+  return button
+end
+
+function G.FUNCS.pokermon_open_site(e)
+  if e and e.config then
+    local url = e.config.url
+    if url then
+      love.system.openURL(url)
+    end
+  end
+end
+
+
+-- Ordering Collection by Pokedex Order, and enabling pokemon only in collection
+-- modifying this function for *two* different config settings
+SMODS.collection_pool = function(_base_pool)
+  local pool = {}
+  local inserts = {}
+  if type(_base_pool) ~= 'table' then return pool end
+  local is_array = _base_pool[1]
+  local ipairs = is_array and ipairs or pairs
+  for _, v in ipairs(_base_pool) do
+    local moved = false
+    if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
+      -- Taking pokemon jokers out of the pool to sort and re-insert
+      if pokermon_config.order_jokers and v.stage and v.stage ~= 'Other' and v.name ~= "missingno" then
+        inserts[#inserts+1] = v
+        moved = true
+      end
+      -- Taking *non*-pokemon jokers out of the pool entirely if that toggle is on
+      local empty_vanilla = v.set == 'Joker' and not v.stage and pokermon_config.pokemon_only_collection
+      -- Otherwise work as normal
+      if not moved and not empty_vanilla then pool[#pool+1] = v end
+    end
+  end
+
+  -- Now sort pokemon in dex-order, then re-insert into pool
+  if pokermon_config.order_jokers then
+    table.sort(inserts, function(a, b) return pokermon.get_dex_number(a.name) < pokermon.get_dex_number(b.name) end)
+    for i = #inserts, 1, -1 do
+      local name = (inserts[i+1] or {}).name or 'missingno'
+      table.insert(pool, pokermon.find_pool_index(pool, name) or #pool + 1, inserts[i])
+    end
+  end
+
+  if not is_array then table.sort(pool, function(a,b) return a.order < b.order end) end
+  return pool
+end
+
+
+-- Toggle function for Stake + Sticker Skins
+G.FUNCS.toggle_pokermon_skins = function()
+  local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
+  for k, _ in pairs(G.P_STAKES) do
+    if table.contains(vanilla_stakes, k) then
+      if pokermon_config.stake_skins then
+        SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = SMODS.get_atlas("poke_pokestakes_stickers")
+      else
+        SMODS.Stake:take_ownership(k, { atlas = "chips", prefix_config = { key = { mod = false } } }, true)
+        G.shared_stickers[string.sub(k, 7, -1)].atlas = SMODS.get_atlas("stickers")
+      end
+    end
+  end
+end

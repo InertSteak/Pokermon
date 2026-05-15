@@ -2,31 +2,21 @@
 local zoroark = {
   name = "zoroark", 
   pos = { x = 7, y = 5 },
-  soul_pos = { x = 8, y = 12 },
+  soul_pos = { x = 99, y = 99 },
   config = {extra = {hidden_key = nil}},
   rarity = "poke_safari",
   cost = 12,
   stage = "One",
   ptype = "Dark",
   atlas = "Pokedex5",
+  gen = 5,
   blueprint_compat = true,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and not context.no_blueprint then
-      context.blueprint = (context.blueprint or 0) + 1
-      context.blueprint_card = context.blueprint_card or card
-      if context.blueprint > #G.jokers.cards + 1 then return end
-
-      local other_joker_ret = Card.calculate_joker(other_joker, context)
-
-      context.blueprint = nil
-      local eff_card = context.blueprint_card or card
-      context.blueprint_card = nil
-      if other_joker_ret then 
-        other_joker_ret.card = eff_card
-        other_joker_ret.colour = G.C.BLACK
-        return other_joker_ret
-      end
+    if other_joker and other_joker ~= card then
+      local ret = SMODS.blueprint_effect(card, other_joker, context)
+      if ret then ret.colour = G.C.BLACK end
+      return ret
     end
   end,
   set_card_type_badge = function(self, card, badges)
@@ -45,18 +35,22 @@ local zoroark = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if not type_sticker_applied(card) then
+    if not type_sticker_applied(card) and not poke_is_in_collection(card) and not G.SETTINGS.paused then
       apply_type_sticker(card, "Dark")
     end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-    else
-      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-      card.children.center:set_sprite_pos(self.pos)
-    end
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        if card.area ~= G.jokers and not G.SETTINGS.paused then
+          card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
+          local _o = G.P_CENTERS[card.ability.extra.hidden_key]
+          card.children.center.atlas = SMODS.get_atlas(_o.atlas)
+          card.children.center:set_sprite_pos(_o.pos)
+        else
+          card.children.center.atlas = SMODS.get_atlas(self.atlas)
+          card.children.center:set_sprite_pos(self.pos)
+        end
+        return true
+      end }))
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
@@ -67,14 +61,14 @@ local zoroark = {
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
       card.ability = temp_ability
-      if full_UI_table.name then
-        local textDyna = full_UI_table.name[1].nodes[1].config.object
+      if full_UI_table.name[1].nodes[1] then
+        local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
         textDyna.string = textDyna.string .. localize("poke_illusion")
         textDyna.config.string = {textDyna.string}
         textDyna.strings = {}
         textDyna:update_text(true)
       end
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
+      card.children.center.atlas = SMODS.get_atlas(_o.atlas)
       card.children.center:set_sprite_pos(_o.pos)
       local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
       for i = #info_queue, 1, -1 do
@@ -103,26 +97,27 @@ local zoroark = {
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if card.ability.blueprint_compat == 'compatible' and not card.debuff then
+      if card.ability.blueprint_compat == 'compatible' and not card.debuff and other_joker.children.center.atlas.px == 71 then
         card.children.center.atlas = other_joker.children.center.atlas
         card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
         if other_joker.children.floating_sprite then
           card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
           card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
         else
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+          card.children.floating_sprite.atlas = SMODS.get_atlas(self.atlas)
           card.children.floating_sprite:set_sprite_pos(self.soul_pos)
         end
       else
-        card.children.center.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_Shinydex5" or "poke_Pokedex5"]
+        card.children.center.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
         card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_Shinydex5" or "poke_Pokedex5"]
+        card.children.floating_sprite.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
     elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
       self:set_ability(card)
     end
   end,
+  attributes = {"copying"},
 }
 -- Minccino 572
 -- Cinccino 573
@@ -140,6 +135,8 @@ local gothita={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex5",
+  gen = 5,
+  knockoff_pseudol = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_gothorita")
@@ -157,7 +154,8 @@ local gothita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothorita 575
 local gothorita={
@@ -174,6 +172,7 @@ local gothorita={
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex5",
+  gen = 5,
   calculate = function(self, card, context)
     return level_evo(self, card, context, "j_poke_gothitelle")
   end,
@@ -190,7 +189,8 @@ local gothorita={
           if v.set_cost then v:set_cost() end
       end
       return true end }))
-  end
+  end,
+  attributes = {"passive", "planet", "economy", "space", "round_evo"},
 }
 -- Gothitelle 576
 local gothitelle={
@@ -205,11 +205,12 @@ local gothitelle={
   cost = 10, 
   stage = "Two", 
   atlas = "Pokedex5",
+  gen = 5,
   ptype = "Psychic",
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      ease_poke_dollars(card, "pidgeot", card.ability.extra.money)
+      ease_poke_dollars(card, "gothitelle", card.ability.extra.money)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -226,6 +227,7 @@ local gothitelle={
       end
       return true end }))
   end,
+  attributes = {"passive", "planet", "economy", "space"},
 }
 -- Solosis 577
 -- Duosion 578
@@ -239,7 +241,9 @@ local vanillite={
   config = {extra = {chips = 60, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    end
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, center.ability.extra.chips_minus}}
   end,
   rarity = 1, 
@@ -247,53 +251,39 @@ local vanillite={
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex5",
+  gen = 5,
   volatile = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.triggered = true
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
         }
-      end
-      if card.ability.extra.triggered and context.after and not context.blueprint then
-        card.ability.extra.triggered = false
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    play_sound('tarot1')
-                    card.T.r = -0.2
-                    card:juice_up(0.3, 0.4)
-                    card.states.drag.is = true
-                    card.children.center.pinch.x = true
-                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
-                        func = function()
-                                G.jokers:remove_card(self)
-                                card:remove()
-                                card = nil
-                            return true; end})) 
-                    return true
-                end
-            })) 
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_vanillish")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanillish 583
 local vanillish={
@@ -302,7 +292,9 @@ local vanillish={
   config = {extra = {chips = 100, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    end
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, center.ability.extra.chips_minus}}
   end,
   rarity = 2, 
@@ -310,56 +302,39 @@ local vanillish={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex5",
+  gen = 5,
   volatile = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.first_hand_drawn then
-      card.ability.extra.level_up = true
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
-        card.ability.extra.triggered = true
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
         return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
         }
-      end
-      if card.ability.extra.triggered and context.after and not context.blueprint then
-        card.ability.extra.triggered = false
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    play_sound('tarot1')
-                    card.T.r = -0.2
-                    card:juice_up(0.3, 0.4)
-                    card.states.drag.is = true
-                    card.children.center.pinch.x = true
-                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
-                        func = function()
-                                G.jokers:remove_card(self)
-                                card:remove()
-                                card = nil
-                            return true; end})) 
-                    return true
-                end
-            })) 
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
     return level_evo(self, card, context, "j_poke_vanilluxe")
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
 -- Vanilluxe 584
 local vanilluxe={
@@ -375,64 +350,48 @@ local vanilluxe={
   stage = "Two", 
   ptype = "Water",
   atlas = "Pokedex5",
-  blueprint_compat = false,
+  gen = 5,
+  blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-      if context.after and not context.blueprint then
-        if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then 
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    play_sound('tarot1')
-                    card.T.r = -0.2
-                    card:juice_up(0.3, 0.4)
-                    card.states.drag.is = true
-                    card.children.center.pinch.x = true
-                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
-                        func = function()
-                                G.jokers:remove_card(self)
-                                card:remove()
-                                card = nil
-                            return true; end})) 
-                    return true
-                end
-            }))
-            G.E_MANAGER:add_event(Event({
-                func = (function()
-                    play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-                    play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-                    return true
-                end)
-              }))
-            for i = 1, card.ability.extra.tags do
-              G.E_MANAGER:add_event(Event({
-                func = (function()
-                    add_tag(Tag('tag_double'))
-                    return true
-                end)
-              }))
+    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      card.ability.extra.triggered = true
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    if context.after and card.ability.extra.triggered and not context.blueprint then
+      card.ability.extra.triggered = false
+      if card.ability.extra.chips - card.ability.extra.chips_minus <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        G.E_MANAGER:add_event(Event({
+          func = (function()
+            for _ = 1, card.ability.extra.tags do
+              add_tag(Tag('tag_double'))
             end
-            return {
-                message = localize('k_melted_ex'),
-                colour = G.C.CHIPS
-            }
-        else
-            card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_minus
-            return {
-                message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chips_minus}},
-                colour = G.C.CHIPS
-            }
-        end
+            play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+            play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+            return true
+          end)
+        }))
+
+        return {
+          message = localize('k_melted_ex'),
+          colour = G.C.CHIPS
+        }
+      else
+        SMODS.scale_card(card, {
+          ref_value = "chips",
+          scalar_value = "chips_minus",
+          operation = "-",
+          message_key = 'a_chips_minus',
+          message_colour = G.C.CHIPS,
+        })
       end
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "food", "tag", "generation"},
 }
 -- Deerling 585
 local deerling = {
@@ -751,14 +710,185 @@ local escavalier = {
 -- Foongus 590
 -- Amoonguss 591
 -- Frillish 592
+local frillish = {
+  name = "frillish",
+  pos = {x = 0, y = 7},
+  config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
+  end,
+  designer = "Hwang2760",
+  rarity = 2,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Water",
+  atlas = "Pokedex5",
+  gen = 5,
+  blueprint_compat = true,
+  perishable_compat = false,
+  calculate = function(self, card, context)
+    if context.discard and not context.blueprint
+        and context.other_card:is_face() then
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        message_colour = G.C.CHIPS,
+        message_delay = 0.45
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+    return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
+  end,
+  attributes = {"chips", "scaling", "discard", "face", "scaling_evo"},
+}
+
 -- Jellicent 593
+local jellicent = {
+  name = "jellicent",
+  pos = {x = 1, y = 7},
+  config = {extra = {chips = 60, chip_mod = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
+  end,
+  designer = "Hwang2760",
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "One",
+  ptype = "Water",
+  atlas = "Pokedex5",
+  gen = 5,
+  blueprint_compat = true,
+  perishable_compat = false,
+  calculate = function(self, card, context)
+    if context.discard and not context.blueprint
+        and context.other_card:is_face() then
+      local card_id = context.other_card:get_id()
+
+      SMODS.scale_card(card, {
+        ref_value = 'chips',
+        scalar_value = 'chip_mod',
+        operation = function(ref_table, ref_value, initial, modifier)
+          local multi = (card_id == 12 or card_id == 13) and 2 or 1
+          ref_table[ref_value] = initial + modifier * multi
+        end,
+        message_colour = G.C.CHIPS,
+        message_delay = 0.45
+      })
+    end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
+	end,
+  attributes = {"chips", "scaling", "discard", "face", "rank", "king", "queen"},
+}
 -- Alomomola 594
 -- Joltik 595
 -- Galvantula 596
 -- Ferroseed 597
+local ferroseed={
+  name = "ferroseed",
+  pos = {x = 5, y = 7},
+  config = {extra = {rounds = 5, hazard_level = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    end
+    return {vars = {center.ability.extra.rounds, center.ability.extra.hazard_level}}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 5,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.check_enhancement then
+      if SMODS.has_enhancement(context.other_card, 'm_wild') or SMODS.has_enhancement(context.other_card, 'm_poke_hazard') then
+          return {m_steel = true}
+      end
+    end
+    return level_evo(self, card, context, "j_poke_ferrothorn")
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "round_evo"},
+}
 -- Ferrothorn 598
+local ferrothorn={
+  name = "ferrothorn",
+  pos = {x = 6, y = 7},
+  config = {extra = {retriggers = 1, hazard_level = 1}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+      info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+      info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    end
+    return {vars = {center.ability.extra.hazard_level}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 5,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.check_enhancement then
+      if SMODS.has_enhancement(context.other_card, 'm_wild') or SMODS.has_enhancement(context.other_card, 'm_poke_hazard') then
+          return {m_steel = true}
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.before and next(context.poker_hands['Flush']) then
+        card.ability.extra.retrigger_hand = true
+      end
+      if context.after and card.ability.extra.retrigger_hand then
+        card.ability.extra.retrigger_hand = nil
+      end
+    end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) and card.ability.extra.retrigger_hand 
+       and SMODS.has_enhancement(context.other_card, 'm_steel') then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(card.ability.extra.hazard_level)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    poke_change_hazard_level(-card.ability.extra.hazard_level)
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements", "hand_type", "retrigger"},
+}
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, deerling, sawsbuck, karrablast, escavalier},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, deerling, sawsbuck, frillish, jellicent, ferroseed, ferrothorn},
 }

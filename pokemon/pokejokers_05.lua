@@ -1,8 +1,10 @@
 --Code for pokemon jokers 121-150
+
+-- Starmie 121
 local starmie={
   name = "starmie", 
   pos = {x = 3, y = 9},
-  config = {extra = {mult = 4, money_mod = 1, suit = "Diamonds"}},
+  config = {extra = {mult = 2, money_mod = 2, suit = "Diamonds"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money_mod, localize(center.ability.extra.suit, 'suits_singular')}}
@@ -12,10 +14,18 @@ local starmie={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.GAME.dollar_buffer = 0
+                return true
+            end
+        }))
         local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult,
@@ -24,8 +34,10 @@ local starmie={
         }
       end
     end
-  end
+  end,
+  attributes = {"mult", "economy", "suit", "diamonds", "space"},
 }
+-- Mr Mime 122
 local mrmime={
   name = "mrmime", 
   pos = {x = 4, y = 9}, 
@@ -39,6 +51,7 @@ local mrmime={
   stage = "Basic", 
   ptype = "Psychic",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and context.cardarea == G.hand then
@@ -50,69 +63,94 @@ local mrmime={
         }
       end
     end
-  end
+  end,
+  attributes = {"retrigger"},
 }
+-- Scyther 123
 local scyther={
   name = "scyther", 
   pos = {x = 5, y = 9},
   config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.e_foil
-    info_queue[#info_queue+1] = G.P_CENTERS.e_holo
-    info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_hardstone
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 2, 
   cost = 6, 
+  item_req = "hardstone",
   stage = "Basic",
   ptype = "Grass",
   atlas = "Pokedex1",
+  gen = 1,
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    if context.ending_shop then
+      card.ability.extra.selected = false
+      local eval = function() return not card.ability.extra.selected end
+      juice_card_until(card, eval, true)
+    end
     if context.setting_blind and not card.getting_sliced and not context.blueprint then
+      card.ability.extra.selected = true
       local my_pos = nil
       for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] == card then my_pos = i; break end
+        if G.jokers.cards[i] == card then my_pos = i; break end
       end
-      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
-          local sliced_card = G.jokers.cards[my_pos+1]
-          sliced_card.getting_sliced = true
-          if (sliced_card.config.center.rarity ~= 1) and (sliced_card.config.center.rarity ~= 2) and not card.edition then
-            local edition = poll_edition('wheel_of_fortune', nil, true, true)
-            card:set_edition(edition, true)
+
+      if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then
+        local sliced_card = G.jokers.cards[my_pos + 1]
+        sliced_card.getting_sliced = true
+        if (sliced_card.config.center.rarity ~= 1) and (sliced_card.config.center.rarity ~= 2) and not card.edition then
+          local edition = poll_edition('wheel_of_fortune', nil, true, true)
+          card:set_edition(edition, true)
+        end
+
+        G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            SMODS.scale_card(card, {
+              ref_value = 'mult',
+              scalar_value = 'mult_mod',
+              no_message = true,
+            })
+            card:juice_up(0.8, 0.8)
+            sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+            return true
           end
-          
-          G.GAME.joker_buffer = G.GAME.joker_buffer - 1
-          G.E_MANAGER:add_event(Event({func = function()
-              G.GAME.joker_buffer = 0
-              card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-              card:juice_up(0.8, 0.8)
-              sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
-              play_sound('slice1', 0.96+math.random()*0.08)
-          return true end }))
-          card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, colour = G.C.RED, no_juice = true})
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+        }))
+
         return {
-            message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-            mult_mod = card.ability.extra.mult
+          message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } },
+          colour = G.C.RED,
+          no_juice = true
         }
       end
     end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
+    end
     return type_evo(self, card, context, "j_poke_scizor", "metal")
-  end
+        or item_evo(self, card, context, "j_poke_kleavor")
+  end,
+  attributes = {"destroy_card", "mult", "editions", "scaling", "type_evo", "item_evo"},
 }
+-- Jynx 124
 local jynx={
   name = "jynx", 
   pos = {x = 6, y = 9}, 
   config = {extra = {h_size = 2, deck_size = 12}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid
     return {vars = {center.ability.extra.h_size, G.GAME.starting_deck_size + center.ability.extra.deck_size}}
   end,
   rarity = 3, 
@@ -120,22 +158,35 @@ local jynx={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.playing_card_added and not card.getting_sliced then
+    if context.playing_card_added and not card.getting_sliced and context.cards then
       if context.cards and type(context.cards) == "table" and #context.cards > 0 then
+        local cards_added = {}
         for k, v in ipairs(context.cards) do
           if type(v) == "table" then
-            local card_to_copy = v
-            local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-            copy:add_to_deck()
-            G.deck.config.card_limit = G.deck.config.card_limit + 1
-            table.insert(G.playing_cards, copy)
-            G.deck:emplace(copy)
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
-            playing_card_joker_effects({true});
+            if v.jynx then
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      v.jynx = nil
+                      return true
+                  end
+              }))
+            else
+              local card_to_copy = v
+              local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.deck:emplace(copy)
+              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex')})
+              copy.jynx = true
+              cards_added[#cards_added + 1] = copy
+            end
           end
         end
+        if cards_added then playing_card_joker_effects(cards_added) end
       end
     end
     if context.setting_blind then
@@ -146,14 +197,18 @@ local jynx={
       end
     end
   end,
+  attributes = {"generation", "passive", "hand_size"}
 }
+-- Electabuzz 125
 local electabuzz={
   name = "electabuzz", 
   pos = {x = 7, y = 9}, 
   config = {extra = {money_mod = 2, percent = 25, max = 20}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
     return {vars = {center.ability.extra.money_mod, center.ability.extra.percent, math.min(center.ability.extra.max, math.ceil(center.sell_cost * center.ability.extra.percent/100)), 
                     center.ability.extra.max}}
   end,
@@ -163,29 +218,39 @@ local electabuzz={
   stage = "Basic",
   ptype = "Lightning",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if ((context.selling_card and not context.selling_self) or (not context.repetition and not context.individual and context.end_of_round)) and not context.blueprint then
-      card.ability.extra_value = card.ability.extra_value + card.ability.extra.money_mod
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        scalar_table = card.ability.extra,
+        scalar_value = 'money_mod',
+        scaling_message = {
+          message = localize('k_val_up'),
+        }
+      })
       card:set_cost()
-      G.E_MANAGER:add_event(Event({
-        func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')}); return true
-        end}))
     end
     return item_evo(self, card, context, "j_poke_electivire")
   end,
   calc_dollar_bonus = function(self, card)
     local earned = math.min(card.ability.extra.max, math.ceil(card.sell_cost * card.ability.extra.percent/100))
     return ease_poke_dollars(card, "electabuzz", earned, true)
-	end
+	end,
+  attributes = {"sell_value", "scaling", "economy", "item_evo"},
 }
+-- Magmar 126
 local magmar={
   name = "magmar", 
   pos = {x = 8, y = 9}, 
-  config = {extra = {mult = 0, mult_mod = 3}},
+  config = {extra = {mult = 0, mult_mod = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
+    end
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod}}
   end,
   rarity = 3, 
@@ -194,42 +259,41 @@ local magmar={
   stage = "Basic", 
   ptype = "Fire",
   atlas = "Pokedex1",
-  blueprint_compat = false,
+  gen = 1,
+  blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.remove_triggered = false
-      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES and not card.ability.extra.remove_triggered end
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    if context.discard and not context.blueprint then
-      if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and not card.ability.extra.remove_triggered then
-        card.ability.extra.remove_triggered = true
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-        return {
-          remove = true
-        }
-      end
+    if context.discard and not context.blueprint
+        and G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod'
+      })
+
+      return {
+        remove = true
+      }
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return item_evo(self, card, context, "j_poke_magmortar")
-  end
+  end,
+  attributes = {"discard", "destroy_card", "mult", "scaling", "item_evo"},
 }
+-- Pinsir 127
 local pinsir={
   name = "pinsir", 
   pos = {x = 9, y = 9},
   config = {extra = {Xmult = 2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = 2, 
@@ -237,6 +301,7 @@ local pinsir={
   stage = "Basic", 
   ptype = "Grass",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
@@ -259,8 +324,10 @@ local pinsir={
       end
     end
   end,
-  megas = {"mega_pinsir"}
+  megas = {"mega_pinsir"},
+  attributes = {"xmult", "rank"},
 }
+-- Mega Pinsir 127-1
 local mega_pinsir={
   name = "mega_pinsir", 
   pos = {x = 5, y = 1},
@@ -275,6 +342,7 @@ local mega_pinsir={
   stage = "Mega", 
   ptype = "Grass",
   atlas = "Megas",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.c_base then
@@ -283,21 +351,25 @@ local mega_pinsir={
           card = card
         }
     end
-  end
+  end,
+  attributes = {"xmult", "enhancements"},
 }
+-- Tauros 128
 local tauros={
   name = "tauros", 
   pos = {x = 10, y = 9},
-  config = {extra = {Xmult_multi = 1.75, odds = 15}},
+  config = {extra = {Xmult_multi = 1.75, num = 1, dem = 15}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult_multi, ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'tauros')
+    return {vars = {center.ability.extra.Xmult_multi, num, dem}}
   end,
   rarity = 2, 
   cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.other_joker and context.other_joker.config and (context.other_joker.label == "tauros" or context.other_joker.label == "taurosh" or context.other_joker.label == "miltank") then
@@ -314,14 +386,16 @@ local tauros={
         }
     end
     if context.reroll_shop and not context.blueprint then
-      if pseudorandom('tauros') < G.GAME.probabilities.normal/card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'tauros', card.ability.extra.num, card.ability.extra.dem, 'tauros') then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
         local add_card = SMODS.create_card(temp_card)
         poke_add_shop_card(add_card, card)
       end
     end
-  end
+  end,
+  attributes = {"xmult", "reroll", "chance", "joker", "generation"},
 }
+-- Tauros-Herd 128-1
 local taurosh={
   name = "taurosh",
   pos = {x = 11, y = 9},
@@ -336,7 +410,9 @@ local taurosh={
   stage = "Basic", 
   ptype = "Colorless",
   atlas = "Pokedex1",
+  gen = 1,
   aux_poke = true,
+  auto_sticker = true,
   blueprint_compat = true, 
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -348,15 +424,22 @@ local taurosh={
         }
       end
     end
-  end
+  end,
+  in_pool = function(self)
+    return false
+  end,
+  attributes = {"mult"},
 }
+-- Magikarp 129
 local magikarp={
   name = "magikarp",
   pos = {x = 12, y = 9},
   config = {extra = {rounds = 8, chips = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = { set = 'Joker', key = 'j_splash', config={}}
+    end
     return {vars = {center.ability.extra.rounds, center.ability.extra.chips}}
   end,
   rarity = 1, 
@@ -364,6 +447,7 @@ local magikarp={
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -375,16 +459,22 @@ local magikarp={
         }
       end
     end
+    if context.modify_scoring_hand and not context.blueprint then
+      return {
+          add_to_hand = true
+      }
+    end
     return level_evo(self, card, context, "j_poke_gyarados")
-  end
+  end,
+  attributes = {"chips", "passive", "applies", "round_evo"},
 }
+-- Gyarados 130
 local gyarados={
   name = "gyarados", 
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
     return {vars = {center.ability.extra.Xmult}}
   end,
   rarity = "poke_safari", 
@@ -392,6 +482,7 @@ local gyarados={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -404,8 +495,10 @@ local gyarados={
       end
     end
   end,
-  megas = {"mega_gyarados"}
+  megas = {"mega_gyarados"},
+  attributes = {"xmult"},
 }
+-- Mega Gyarados 130-1
 local mega_gyarados={
   name = "mega_gyarados", 
   pos = {x = 7, y = 1},
@@ -420,6 +513,7 @@ local mega_gyarados={
   stage = "Mega", 
   ptype = "Water",
   atlas = "Megas",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -450,22 +544,26 @@ local mega_gyarados={
       play_sound('timpani')
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
     end
-  end
+  end,
+  attributes = {"xmult", "boss_blind"},
 }
+-- Lapras 131
 local lapras={
-  name = "lapras", 
+  name = "lapras",
   pos = {x = 1, y = 10},
-  config = {extra = {chips = 0, chip_mod = 80}},
+  config = {extra = {chips = 0, chip_mod = 25}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 5, 
   stage = "Basic", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -476,33 +574,66 @@ local lapras={
         }
       end
     end
+    if context.skip_blind and not context.blueprint and not G.GAME.lapras_skip then
+      G.GAME.lapras_skip = true
+      G.E_MANAGER:add_event(Event({
+        trigger = "immediate",
+        func = function()
+          G.blind_select:remove()
+          G.blind_prompt_box:remove()
+          G.blind_select = nil
+          delay(0.2)
+          G.GAME.current_round.jokers_purchased = 0
+          G.STATE = G.STATES.SHOP
+          G.GAME.shop_free = nil
+          G.GAME.shop_d6ed = nil
+          G.STATE_COMPLETE = false
+          G.GAME.current_round.used_packs = {}
+          G.GAME.current_round.reroll_cost_increase = 0
+          G.GAME.current_round.free_rerolls = G.GAME.round_resets.free_rerolls
+          calculate_reroll_cost(true)
+          return true
+        end,
+      }))
+    end
+    if context.ending_shop and not context.blueprint then
+      G.GAME.lapras_skip = nil
+    end
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
       card.ability.extra.chips = G.GAME.skips * card.ability.extra.chip_mod
     end
-  end
+  end,
+  attributes = {"chips", "scaling", "skip"},
 }
+-- Ditto 132
 local ditto={
   name = "ditto", 
   pos = {x = 2, y = 10}, 
+   config = {extra = {volatile = 'right'}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'availability', vars = {"you have a Perishable Joker"}}
-    info_queue[#info_queue+1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'availability', vars = {"you have a Perishable Joker"}}
+      if not center.ability.perishable then
+        info_queue[#info_queue+1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds}}
+      end
+      info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
+    end
   end,
-  rarity = 2, 
+  rarity = 3, 
   cost = 8, 
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
+  gen = 1,
+  volatile = true,
   blueprint_compat = false,
   eternal_compat = false,
   custom_pool_func = true, 
   calculate = function(self, card, context) --mostly copied from how invisible joker works
-    if context.selling_self and not context.blueprint then
-      local eval = function(card) return (card.ability.loyalty_remaining == 0) and not G.RESET_JIGGLES end
-                    juice_card_until(card, eval, true)
+    if context.ending_shop and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
       local jokers = {}
       for i=1, #G.jokers.cards do 
           if G.jokers.cards[i] ~= card and G.jokers.cards[i].ability.name ~= "ditto" then
@@ -511,23 +642,15 @@ local ditto={
       end
       
       if #jokers > 0 then 
-          if #G.jokers.cards + G.GAME.joker_buffer <= G.jokers.config.card_limit then 
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
-              local chosen_joker = jokers[1]
-              
-              local card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
-              card:set_eternal(false)
-              --Setting it directly to overrule perishiable compatibility
-              card.ability.perishable = true
-              card.ability.perish_tally = G.GAME.perishable_rounds
-              apply_type_sticker(card, "Colorless")
-              card:add_to_deck()
-              G.jokers:emplace(card)
-          else
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
-          end
+        local chosen_joker_key = jokers[1].config.center.key
+        card.ability.perishable = true
+        card.ability.perish_tally = G.GAME.perishable_rounds
+        apply_type_sticker(card, "Colorless")
+        return {
+          message = poke_evolve(card, chosen_joker_key, nil, localize("poke_transform_success"), true)
+        }
       else
-          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_no_other_jokers')})
       end
     end
   end,
@@ -539,148 +662,36 @@ local ditto={
         end
       end
     end
+    if next(find_joker("Showman")) then return true end
     return true
-  end
+  end,
+  attributes = {"joker", "volatile"},
 }
+-- Eevee 133
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
-  config = {extra = {money_mod = 2, limit = 0, max = 5}},
+  config = {extra = {Xmult = 1.33}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
-    return {vars = {center.ability.extra.money_mod, center.ability.extra.limit, center.ability.extra.max}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
+    end
+    return {vars = {center.ability.extra.Xmult}}
   end,
-  rarity = 2, 
-  cost = 4,
+  rarity = 1, 
+  cost = 3,
   item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   evo_list = {waterstone = "j_poke_vaporeon", thunderstone = "j_poke_jolteon", firestone = "j_poke_flareon", sunstone = "j_poke_espeon", moonstone = "j_poke_umbreon", 
               leafstone = "j_poke_leafeon", icestone = "j_poke_glaceon", shinystone = "j_poke_sylveon"},
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.reroll_shop and card.ability.extra.limit < 5 then
-      card.ability.extra.limit = card.ability.extra.limit + 1
-      ease_poke_dollars(card, "eevee", card.ability.extra.money_mod)
-      return {
-          message = localize('$')..card.ability.extra.money_mod,
-          colour = G.C.MONEY
-      }
-    end
-    if context.ending_shop and not context.blueprint then
-      card.ability.extra.limit = 0
-    end
-    return item_evo(self, card, context, nil)
-  end
-}
-local vaporeon={
-  name = "vaporeon", 
-  pos = {x = 4, y = 10},
-  config = {extra = {chips = 0, chip_mod = 32, rerolls = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.rerolls}}
-  end,
-  rarity = "poke_safari", 
-  cost = 7, 
-  stage = "One", 
-  ptype = "Water",
-  atlas = "Pokedex1",
-  perishable_compat = false,
-  blueprint_compat = true,
-  calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.CHIPS})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.CHIPS})
-        card.ability.extra.rerolls = 0
-        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-    end
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-          colour = G.C.CHIPS,
-          chip_mod = card.ability.extra.chips
-        }
-      end
-    end
-  end
-}
-local jolteon={
-  name = "jolteon", 
-  pos = {x = 5, y = 10},
-  config = {extra = {money = 8, rerolls = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.rerolls}}
-  end,
-  rarity = "poke_safari", 
-  cost = 7, 
-  stage = "One",
-  ptype = "Lightning",
-  atlas = "Pokedex1",
-  blueprint_compat = false,
-  calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.MONEY})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        ease_poke_dollars(card, "jolteon", card.ability.extra.money)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.MONEY})
-        card.ability.extra.rerolls = 0
-      end
-    end
-  end
-}
-local flareon={
-  name = "flareon", 
-  pos = {x = 6, y = 10},
-  config = {extra = {Xmult = 1, Xmult_mod = .16, rerolls = 0}}, 
-  blueprint_compat = true,
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.rerolls}}
-  end,
-  rarity = "poke_safari", 
-  cost = 7, 
-  stage = "One", 
-  ptype = "Fire",
-  atlas = "Pokedex1",
-  perishable_compat = false,
-  calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if card.ability.extra.rerolls < 2 then
-        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.rerolls.."/3", colour = G.C.XMULT})
-        if card.ability.extra.rerolls == 2 then
-          local eval = function() return card.ability.extra.rerolls == 2 end
-          juice_card_until(card, eval, true)
-        end
-      else
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "3/3", colour = G.C.XMULT})
-        card.ability.extra.rerolls = 0
-        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex")})
-      end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
+      if context.joker_main and G.GAME.current_round.hands_played == 0 then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.XMULT,
@@ -688,15 +699,134 @@ local flareon={
         }
       end
     end
-  end
+    return item_evo(self, card, context, nil)
+  end,
+  attributes = {"xmult", "hands", "item_evo"},
 }
+-- Vaporeon 134
+local vaporeon={
+  name = "vaporeon", 
+  pos = {x = 4, y = 10},
+  config = {extra = {chips = 4}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips}}
+  end,
+  rarity = "poke_safari", 
+  cost = 7, 
+  stage = "One", 
+  ptype = "Water",
+  atlas = "Pokedex1",
+  gen = 1,
+  perishable_compat = true,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+        local bonus = card.ability.extra.chips
+        if SMODS.has_enhancement(context.other_card, 'm_bonus') then
+          bonus = bonus * 2
+        end
+        context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + bonus
+        return {
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS
+        }
+    end
+  end,
+  attributes = {"modify_card", "chips", "perma_bonus", "enhancements"},
+}
+-- Jolteon 135
+local jolteon={
+  name = "jolteon", 
+  pos = {x = 5, y = 10},
+  config = {extra = {money = 5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+    end
+    return {vars = {center.ability.extra.money}}
+  end,
+  rarity = "poke_safari", 
+  cost = 7, 
+  stage = "One",
+  ptype = "Lightning",
+  atlas = "Pokedex1",
+  gen = 1,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      local earned = ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
+      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+      return {
+          dollars = earned,
+          func = function() -- This is for timing purposes, it runs after the dollar manipulation
+              G.E_MANAGER:add_event(Event({
+                  func = function()
+                      G.GAME.dollar_buffer = 0
+                      return true
+                  end
+              }))
+          end
+      }
+    end
+  end,
+  attributes = {"discard", "economy", "enhancements"},
+}
+-- Flareon 136
+local flareon={
+  name = "flareon", 
+  pos = {x = 6, y = 10},
+  config = {extra = {Xmult_multi = 3}}, 
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.Xmult_multi}}
+  end,
+  rarity = "poke_safari", 
+  cost = 7, 
+  stage = "One", 
+  ptype = "Fire",
+  atlas = "Pokedex1",
+  gen = 1,
+  perishable_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
+      local first_mult = nil
+      for i=1, #G.hand.cards do
+        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
+          first_mult = G.hand.cards[i]
+          break
+        end
+      end
+      if context.other_card == first_mult then
+        if context.other_card.debuff then
+            return {
+                message = localize('k_debuffed'),
+                colour = G.C.RED,
+                card = card,
+            }
+        else
+            return {
+                x_mult = card.ability.extra.Xmult_multi,
+                card = card
+            }
+        end
+      end
+    end
+  end,
+  attributes = {"xmult", "enhancements"},
+}
+-- Porygon 137
 local porygon={
   name = "porygon", 
   pos = {x = 7, y = 10},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_upgrade
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_upgrade
+    end
     return {vars = {}}
   end,
   rarity = 2, 
@@ -706,6 +836,7 @@ local porygon={
   stage = "Basic",
   ptype = "Colorless",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
@@ -738,8 +869,10 @@ local porygon={
     else
       G.GAME.energy_plus = G.GAME.energy_plus - 1
     end
-  end
+  end,
+  attributes = {"generation", "energy", "energy_limit", "item_evo"},
 }
+-- Omanyte 138
 local omanyte={
   name = "omanyte", 
   pos = {x = 8, y = 10},
@@ -754,32 +887,23 @@ local omanyte={
   cost = 5, 
   stage = "Basic",
   ptype = "Water",
-  atlas = "Pokedex1", 
+  atlas = "Pokedex1",
+  gen = 1, 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local threes = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
-        end
-        first_level = threes > 0
-        second_level = threes > 1
-        third_level = threes > 2
-        
-        if first_level then
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-          end
+      if context.before then
+       get_ancient_amount(context.scoring_hand, 3, card)
+      end
+      if context.joker_main and card.ability.extra.ancient_count > 0 then
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+          _card:add_to_deck()
+          G.consumeables:emplace(_card)
+          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
         end
         
-        if third_level then
+        if card.ability.extra.ancient_count > 2 then
           card.ability.extra.third_times = card.ability.extra.third_times + 1
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
@@ -789,7 +913,7 @@ local omanyte={
           end
         end
         
-        if second_level then
+        if card.ability.extra.ancient_count > 1 then
           local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
           return {
             dollars = earned, 
@@ -797,11 +921,16 @@ local omanyte={
           }
         end
       end
+      if context.after then
+        card.ability.extra.ancient_count = 0
+      end
     end
     return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "three", "generation", "tarot", "item", "economy", "trigger_evo"},
 }
+-- Omastar 139
 local omastar={
   name = "omastar", 
   pos = {x = 9, y = 10}, 
@@ -817,32 +946,21 @@ local omastar={
   stage = "One", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local fourth_level = nil
-        local threes = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 3 then threes = threes + 1 end
+      if context.before then
+       get_ancient_amount(context.scoring_hand, 3, card)
+      end
+      if context.joker_main and card.ability.extra.ancient_count > 0 then
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
+          _card:add_to_deck()
+          G.consumeables:emplace(_card)
+          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
         end
-        first_level = threes > 0
-        second_level = threes > 1
-        third_level = threes > 2
-        fourth_level = threes > 3
-        
-        if first_level then
-          if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil)
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
-          end
-        end
-        if third_level then
+        if card.ability.extra.ancient_count > 2 then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
@@ -850,7 +968,7 @@ local omastar={
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
           end
         end
-        if fourth_level and not card.ability.extra.tag_created then
+        if card.ability.extra.ancient_count > 3 and not card.ability.extra.tag_created then
           card.ability.extra.tag_created = true
           local tag = ''
           local tag_choice = pseudorandom('sylveon')
@@ -874,7 +992,7 @@ local omastar={
             end)
           }))
         end
-        if second_level then
+        if card.ability.extra.ancient_count > 1 then
           local earned = ease_poke_dollars(card, "omastar", card.ability.extra.money, true)
           return {
             dollars = earned, 
@@ -882,17 +1000,22 @@ local omastar={
           }
         end
       end
+      if context.after then
+        card.ability.extra.ancient_count = 0
+      end
     end
     if context.end_of_round and not context.individual and not context.repetition then
       card.ability.extra.tag_created = nil
     end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "three", "generation", "tarot", "item", "economy", "tag"},
 }
+-- Kabuto 140
 local kabuto={
   name = "kabuto", 
   pos = {x = 10, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 20, chips2 = 2, chips3 = 60, third_times = 0}, evo_rqmt = 5},
+  config = {extra = {rank = "2", chips1 = 50, chips2 = 5, chips3 = 50, third_times = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
    type_tooltip(self, info_queue, card)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(card.ability.extra.rank, 'ranks')}}
@@ -904,24 +1027,16 @@ local kabuto={
   stage = "Basic", 
   ptype = "Earth",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        local twos = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 2 then twos = twos + 1 end
-        end
-        card.ability.extra.first_level = twos > 0
-        card.ability.extra.second_level = twos > 1
-        card.ability.extra.third_level = twos > 2
+        get_ancient_amount(context.scoring_hand, 2, card)
       end
-      if context.joker_main then
-        local chips = 0
-        if card.ability.extra.first_level then
-          chips = chips + card.ability.extra.chips1
-        end
-        if card.ability.extra.third_level then
+      if context.joker_main and card.ability.extra.ancient_count > 0 then
+        local chips = card.ability.extra.chips1
+        if card.ability.extra.ancient_count > 2 then
           card.ability.extra.third_times = card.ability.extra.third_times + 1
           chips = chips + card.ability.extra.chips3
         end
@@ -934,8 +1049,11 @@ local kabuto={
           }
         end
       end
+      if context.after then
+        card.ability.extra.ancient_count = 0
+      end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.second_level then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.ancient_count > 1 then
       if context.other_card:get_id() == 2 then 
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
@@ -949,11 +1067,13 @@ local kabuto={
     return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "two", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
+-- Kabutops 141
 local kabutops={
   name = "kabutops", 
   pos = {x = 11, y = 10}, 
-  config = {extra = {rank = "2", chips1 = 40, chips2 = 4, chips3 = 80, retriggers = 1}},
+  config = {extra = {rank = "2", chips1 = 70, chips2 = 5, chips3 = 70, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
    type_tooltip(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
@@ -963,26 +1083,18 @@ local kabutops={
   cost = 8, 
   stage = "One",
   ptype = "Earth",
-  atlas = "Pokedex1", 
+  atlas = "Pokedex1",
+  gen = 1, 
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        local twos = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 2 then twos = twos + 1 end
-        end
-        card.ability.extra.first_level = twos > 0
-        card.ability.extra.second_level = twos > 1
-        card.ability.extra.third_level = twos > 2
-        card.ability.extra.fourth_level = twos > 3
+        get_ancient_amount(context.scoring_hand, 2, card)
       end
-      if context.joker_main then
-        local chips = 0
-        if card.ability.extra.first_level then
-          chips = chips + card.ability.extra.chips1
-        end
-        if card.ability.extra.third_level then
+      if context.joker_main and card.ability.extra.ancient_count > 0 then
+        local chips = card.ability.extra.chips1
+        
+        if card.ability.extra.ancient_count > 2 then
           chips = chips + card.ability.extra.chips3
         end
         
@@ -995,7 +1107,7 @@ local kabutops={
         end
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.second_level then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.ancient_count > 1 then
       if context.other_card:get_id() == 2 then 
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0
         context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.chips2
@@ -1006,8 +1118,8 @@ local kabutops={
         }
       end
     end
-    if context.repetition and context.cardarea == G.play and card.ability.extra.fourth_level then
-      if (context.other_card == context.scoring_hand[1]) or (context.other_card == context.scoring_hand[2]) then
+    if context.repetition and context.cardarea == G.play and card.ability.extra.ancient_count > 3 then
+      if context.other_card:get_id() == 2 then
         return {
             message = localize('k_again_ex'),
             repetitions = card.ability.extra.retriggers,
@@ -1015,18 +1127,25 @@ local kabutops={
         }
       end
     end
+    
+    if context.after then
+      card.ability.extra.ancient_count = 0
+    end
   end,
   generate_ui = fossil_generate_ui,
+  attributes = {"ancient", "rank", "two", "chips", "modify_card", "perma_bonus", "retrigger"},
 }
+-- Aerodactyl 142
 local aerodactyl={
   name = "aerodactyl", 
   pos = {x = 12, y = 10},
-  config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult_original = 2}},
+  config = {extra = {rank = "Ace", Xmult = 2, Xmult_mod = .50, Xmult1 = 2}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
      info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(center.ability.extra.rank, 'ranks')}}
-     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-     info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+     if pokermon_config.detailed_tooltips then
+       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+     end
      return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = 3, 
@@ -1034,76 +1153,54 @@ local aerodactyl={
   stage = "Basic",
   ptype = "Earth",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.Xmult_original = card.ability.extra.Xmult
-    end
     if context.before then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local fourth_level = nil
-        local mult = 0
-        local ret_values = {}
-        local aces = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
-        end
-        first_level = aces > 0
-        second_level = aces > 1
-        third_level = aces > 2
-        fourth_level = aces > 3
-        
-        if third_level and not context.blueprint then
-          local target = nil
-          for k, v in pairs(context.scoring_hand) do
-            if v:get_id() == 14 and v.config.center == G.P_CENTERS.c_base then
-              target = v
-              break
-            end
-          end
-          if target then
-            poke_convert_cards_to(target, {mod_conv = 'm_glass'}, true, true)
+      get_ancient_amount(context.scoring_hand, 14, card)
+
+      if card.ability.extra.ancient_count > 2 and not context.blueprint then
+        local target = nil
+        for k, v in pairs(context.scoring_hand) do
+          if v:get_id() == 14 and v.config.center == G.P_CENTERS.c_base then
+            target = v
+            break
           end
         end
-    end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local first_level = nil
-        local second_level = nil
-        local third_level = nil
-        local fourth_level = nil
-        local mult = 0
-        local ret_values = {}
-        local aces = 0
-        for i = 1, #context.scoring_hand do
-            if context.scoring_hand[i]:get_id() == 14 then aces = aces + 1 end
-        end
-        first_level = aces > 0
-        second_level = aces > 1
-        third_level = aces > 2
-        fourth_level = aces > 3
-                
-        if second_level and not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-        end
-        
-        if fourth_level and not context.blueprint then
-          card.ability.extra.Xmult = card.ability.extra.Xmult * 2
-        end
-        
-        if first_level then
-          return {
-            message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-            colour = G.C.XMULT,
-            Xmult_mod = card.ability.extra.Xmult
-          }
+        if target then
+          poke_convert_cards_to(target, { mod_conv = 'm_glass' }, true, true)
         end
       end
     end
+
+    if context.joker_main and card.ability.extra.ancient_count > 0 then
+      if card.ability.extra.ancient_count > 1 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          no_message = true,
+        })
+      end
+
+      if card.ability.extra.ancient_count > 3 and not context.blueprint then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult',
+          no_message = true,
+        })
+      end
+
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+
+    if context.after then
+      card.ability.extra.ancient_count = 0
+    end
+
     if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      card.ability.extra.Xmult = card.ability.extra.Xmult_original
+      card.ability.extra.Xmult = card.ability.extra.Xmult1
       return {
         message = localize('k_reset'),
         colour = G.C.RED
@@ -1111,28 +1208,29 @@ local aerodactyl={
     end
   end,
   generate_ui = fossil_generate_ui,
-  megas = {"mega_aerodactyl"}
+  megas = {"mega_aerodactyl"},
+  attributes = {"ancient", "rank", "ace", "xmult", "scaling", "modify_card", "enhancements", "reset"},
 }
+-- Mega Aerodactyl 142-1
 local mega_aerodactyl={
   name = "mega_aerodactyl", 
   pos = {x = 9, y = 1},
   soul_pos = { x = 10, y = 1 },
-  config = {extra = {rank = "Ace", Xmult_multi = 1, odds = 4}},
+  config = {extra = {rank = "Ace", Xmult_multi = 1, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
      type_tooltip(self, info_queue, center)
-     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, 
-                     ''..(G.GAME and G.GAME.probabilities.normal or 1), center.ability.extra.odds}}
+     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'mega_aerodactyl')
+     return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.Xmult_multi, num, dem}}
   end,
   rarity = "poke_mega", 
   cost = 12, 
   stage = "Mega",
   ptype = "Earth",
   atlas = "Megas",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:get_id() == 14 then
-      if pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
-      end
       return { 
         x_mult = card.ability.extra.Xmult_multi * card.ability.extra.aces,
         card = card
@@ -1150,19 +1248,23 @@ local mega_aerodactyl={
         card.ability.extra.aces = 0
       end
     end
-    if context.destroying_card and pseudorandom('mega_aerodactyl') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if context.destroying_card and SMODS.pseudorandom_probability(card, 'mega_aerodactyl', card.ability.extra.num, card.ability.extra.dem, 'mega_aerodactyl') then
       return not context.blueprint and context.destroying_card:get_id() == 14
     end
   end,
+  attributes = {"rank", "ace", "xmult", "chance", "destroy_card"},
 }
+-- Snorlax 143
 local snorlax={
   name = "snorlax", 
   pos = {x = 0, y = 11},
   config = {extra = {Xmult_mod = 0.2, Xmult = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leftovers"}}
-    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Leftovers"}}
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_leftovers
+    end
     return {vars = {center.ability.extra.Xmult_mod, center.ability.extra.Xmult}}
   end,
   rarity = 3, 
@@ -1171,41 +1273,41 @@ local snorlax={
   ptype = "Colorless",
   joblacklist = true,
   atlas = "Pokedex1",
+  gen = 1,
   perishable_compat = false,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leftovers')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      return true
+      local leftovers = SMODS.add_card({ set = 'Item', key = 'c_poke_leftovers' })
+      SMODS.calculate_effect({ message = localize('poke_plus_pokeitem') }, leftovers)
     end
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    elseif not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
-      local count = find_joker('leftovers')
-      if #count > 0 then
-        card.ability.extra.Xmult = card.ability.extra.Xmult + (card.ability.extra.Xmult_mod * #count)
-        return {
-          message = localize('k_upgrade_ex'),
-          colour = G.C.RED
-        }
+    if context.joker_main then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      local count = #SMODS.find_card('c_poke_leftovers')
+      if count > 0 then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * count
+          end,
+          message_colour = G.C.RED,
+        })
       end
     end
-  end
+  end,
+  attributes = {"holding", "xmult", "scaling"},
 }
+-- Articuno 144
 local articuno={
   name = "articuno", 
-  pos = {x = pokermon_config.pokemon_altart and 7 or 1, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 1, y = 11},
   soul_pos = { x = 2, y = 11},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -1216,6 +1318,7 @@ local articuno={
   stage = "Legendary", 
   ptype = "Water",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint and context.scoring_hand then
@@ -1223,11 +1326,13 @@ local articuno={
       local args = {edition = "e_foil", seal = SMODS.poll_seal({guaranteed = true})}
       poke_convert_cards_to(target, args, true, true)
     end
-  end
+  end,
+  attributes = {"modify_card", "seals", "editions"},
 }
+-- Zapdos 145
 local zapdos={
   name = "zapdos", 
-  pos = {x = pokermon_config.pokemon_altart and 8 or 3, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 3, y = 11},
   soul_pos = { x = 4, y = 11},
   config = {extra = {Xmult = 0.08, money_threshold = 2}},
   loc_vars = function(self, info_queue, center)
@@ -1240,6 +1345,7 @@ local zapdos={
   stage = "Legendary",
   ptype = "Lightning",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1260,11 +1366,13 @@ local zapdos={
         end
       end
     end
-  end
+  end,
+  attributes = {"xmult"},
 }
+-- Moltres 146
 local moltres={
   name = "moltres", 
-  pos = {x = pokermon_config.pokemon_altart and 9 or 5, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 5, y = 11},
   soul_pos = { x = 6, y = 11},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -1274,6 +1382,7 @@ local moltres={
   stage = "Legendary",
   ptype = "Fire",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.pre_discard and G.GAME.current_round.discards_used <= 0 and not context.hook then
@@ -1287,74 +1396,83 @@ local moltres={
       local eval = function() return G.GAME.current_round.discards_used <= 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-  end
+  end,
+  attributes = {"discard", "hand_type"},
 }
+-- Dratini 147
 local dratini={
   name = "dratini", 
   pos = {x = 7, y = 11},
-  config = {extra = {mult = 0, mult_mod = 1, size = 3}, evo_rqmt = 10},
+  config = {extra = {mult = 0, mult_mod = 1, size = 3}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = 2, 
   cost = 6, 
   stage = "Basic", 
   ptype = "Dragon",
   atlas = "Pokedex1",
+  gen = 1,
+  pseudol = true, 
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
-      if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-      end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        no_message = true,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "scaling", "scaling_evo"},
 }
+-- Dragonair 148
 local dragonair={
   name = "dragonair", 
   pos = {x = 8, y = 11}, 
-  config = {extra = {mult = 0, mult_mod = 1, size = 2}, evo_rqmt = 30},
+  config = {extra = {mult = 0, mult_mod = 2, size = 2}, evo_rqmt = 55},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size}}
+    return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.size, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Dragon",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   perishable_compat = false,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and context.full_hand then
-      if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-      end
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.before and #context.full_hand <= card.ability.extra.size and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_value = 'mult',
+        scalar_value = 'mult_mod',
+        no_message = true,
+      })
+    end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
     return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
   end,
+  attributes = {"mult", "scaling", "scaling_evo"},
 }
+-- Dragonite 149
 local dragonite={
   name = "dragonite", 
   pos = {x = 9, y = 11},
-  config = {extra = {mult = 30, retriggers = 5}},
+  config = {extra = {mult = 55, retriggers = 5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.retriggers}} 
@@ -1364,70 +1482,73 @@ local dragonite={
   stage = "Two", 
   ptype = "Dragon",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-          colour = G.C.MULT,
-          mult_mod = card.ability.extra.mult
-        }
-      end
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult
+      }
     end
-    if context.repetition and context.cardarea == G.play and context.scoring_hand and context.full_hand and #context.full_hand == 1 then
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
+    if context.repetition and context.cardarea == G.play and #context.full_hand == 1 then
+      return {
+        repetitions = card.ability.extra.retriggers
+      }
     end
   end,
+  attributes = {"mult", "scaling", "retrigger"},
 }
+-- Mewtwo 150
 local mewtwo={
   name = "mewtwo", 
-  pos = {x = pokermon_config.pokemon_altart and 10 or 10, y = pokermon_config.pokemon_altart and 12 or 11},
+  pos = {x = 10, y = 11},
   soul_pos = { x = 11, y = 11},
-  config = {extra = {Xmult_mod = 1.2}},
+  config = {extra = {Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    if not center.edition or (center.edition and not center.edition.polychrome) then
-      info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+      if not center.edition or (center.edition and not center.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
     end
-    if next(SMODS.find_card('c_poke_megastone')) then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = {"Mega Mewtwo X", "Mega Mewtwo Y"}}
-    end
-    info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    return {vars = {center.ability.extra.Xmult_mod}}
+    return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 4, 
   cost = 20, 
   stage = "Legendary",
   ptype = "Psychic",
   atlas = "Pokedex1",
+  gen = 1,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.ending_shop and not context.blueprint then
+    if (context.end_of_round and G.GAME.blind.boss) and not context.repetition and not context.individual and not context.blueprint then
       local leftmost = G.jokers.cards[1]
-      if leftmost ~= card then
+      if leftmost ~= card and not leftmost.getting_sliced then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
         local chosen_joker = G.jokers.cards[1]
         
         if (#G.jokers.cards - 1 < G.jokers.config.card_limit and not leftmost.ability.eternal) or (#G.jokers.cards < G.jokers.config.card_limit and leftmost.ability.eternal) then
-          local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition)
-          local edition = {polychrome = true}
-          _card:set_edition(edition, true)
-          if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
-            energy_increase(_card, _card.ability.extra.ptype)
-          elseif type_sticker_applied(_card) then
-            energy_increase(_card, type_sticker_applied(_card))
-          end
-          _card:add_to_deck()
-          G.jokers:emplace(_card)
-          if _card.debuff then 
-            _card.debuff = false 
-            if _card.ability.perishable then _card.ability.perish_tally = G.GAME.perishable_rounds end
-          end
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              local _card = copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
+              local edition = {polychrome = true}
+              _card:set_edition(edition, true)
+              _card.ability.card_limit = 0
+              if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not type_sticker_applied(_card) then
+                energy_increase(_card, _card.ability.extra.ptype)
+              elseif type_sticker_applied(_card) then
+                energy_increase(_card, type_sticker_applied(_card))
+              end
+              _card:add_to_deck()
+              G.jokers:emplace(_card)
+              if _card.debuff then 
+                _card.debuff = false 
+                if _card.ability.perishable then _card.ability.perish_tally = G.GAME.perishable_rounds end
+              end
+              return true
+            end
+          }))
         end
         
         if not leftmost.ability.eternal then
@@ -1445,29 +1566,16 @@ local mewtwo={
           end
         })) 
         return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_mod}}, 
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_multi}}, 
           colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_mod
+          Xmult_mod = card.ability.extra.Xmult_multi
         }
     end
   end,
-  megas = {"mega_mewtwo_x","mega_mewtwo_y"},
-  getMega = function(self, card)
-    -- Leftmost = X, Rightmost = Y, Middle = Random
-    local mega = nil
-    for k, v in ipairs(G.jokers.cards) do
-      if card == v and k == 1 then
-        mega = self.megas[1]
-        break
-      elseif card == v and k == #G.jokers.cards then
-        mega = self.megas[2]
-      end
-    end
-    if not mega then mega = pseudorandom_element(self.megas, pseudoseed('megastone_charizard')) end
-    return mega
-  end
+  megas = {"mega_mewtwo_x", "mega_mewtwo_y"},
+  attributes = {"boss_blind", "generation", "editions", "destroy_card", "joker", "xmult", "energy_count"},
 }
-
+-- Mega Mewtwo X 150-1
 local mega_mewtwo_x = {
   name = "mega_mewtwo_x",
   pos = {x = 11, y = 1},
@@ -1482,6 +1590,7 @@ local mega_mewtwo_x = {
   stage = "Mega",
   ptype = "Fighting",
   atlas = "Megas",
+  gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.other_joker then
@@ -1491,9 +1600,10 @@ local mega_mewtwo_x = {
           Xmult_mod = card.ability.extra.Xmult_multi
         }
     end
-  end
+  end,
+  attributes = {"xmult", "joker"},
 }
-
+-- Mega Mewtwo Y 150-2
 local mega_mewtwo_y = {
   name = "mega_mewtwo_y",
   pos = {x = 13, y = 1},
@@ -1501,6 +1611,9 @@ local mega_mewtwo_y = {
   config = {extra = {Xmult_mod = 3, rounds = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+    end
     return {vars = {center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_mega",
@@ -1508,6 +1621,7 @@ local mega_mewtwo_y = {
   stage = "Mega",
   ptype = "Psychic",
   atlas = "Megas",
+  gen = 1,
   blueprint_compat = false,
   calculate = function(self, card, context)
     if context.ending_shop and not context.blueprint then
@@ -1533,9 +1647,10 @@ local mega_mewtwo_y = {
         G.GAME.energy_plus = G.GAME.energy_plus + 1
       end
     end
-  end
+  end,
+  attributes = {"boss_blind", "energy_count", "energy_limit"},
 }
-
+----------------------
 return {name = "Pokemon Jokers 121-150", 
         list = { starmie, mrmime, scyther, jynx, electabuzz, magmar, pinsir, mega_pinsir, tauros, taurosh, magikarp, gyarados, mega_gyarados, lapras, ditto, eevee, vaporeon, jolteon, flareon, porygon,                 omanyte, omastar, kabuto, kabutops, aerodactyl, mega_aerodactyl, snorlax, articuno, zapdos, moltres, dratini, dragonair, dragonite, mewtwo, mega_mewtwo_x, mega_mewtwo_y},
 }

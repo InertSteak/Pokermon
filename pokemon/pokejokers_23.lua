@@ -18,6 +18,7 @@ local litleo={
   stage = "Basic",
   ptype = "Fire",
   atlas = "Pokedex6",
+  gen = 6,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -32,7 +33,8 @@ local litleo={
       end
     end
     return level_evo(self, card, context, "j_poke_pyroar")
-  end
+  end,
+  attributes = {"chips", "hand_type", "round_evo"},
 }
 -- Pyroar 668
 local pyroar={
@@ -48,6 +50,7 @@ local pyroar={
   stage = "One",
   ptype = "Fire",
   atlas = "Pokedex6",
+  gen = 6,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -90,7 +93,8 @@ local pyroar={
         end
       end
     end
-  end
+  end,
+  attributes = {"chips", "hand_type", "round_evo", "energy", "generation", "rank", "king", "queen"},
 }
 -- Flabébé 669
 -- Floette 670

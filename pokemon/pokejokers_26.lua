@@ -102,7 +102,7 @@ local golisopod={
 local mimikyu={
   name = "mimikyu",
   pos = {x = 2, y = 5},
-  broke_pos = {x = 3, y = 5},
+  broke_pos = {x = 4, y = 4},
   config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -114,6 +114,7 @@ local mimikyu={
   stage = "Basic",
   ptype = "Psychic",
   atlas = "Pokedex7",
+  gen = 7,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -147,6 +148,7 @@ local mimikyu={
         end
         if save then
           card.ability.extra.disguise = false
+          card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
           G.E_MANAGER:add_event(Event({
@@ -170,11 +172,17 @@ local mimikyu={
           })) 
           return {
               message = localize('k_saved_ex'),
-              saved = true,
+              saved = localize('poke_saved_by')..' '..(G.localization.descriptions.Joker[card.config.center.key].name),
               colour = G.C.RED
           }
         end
       end
+  end,
+  set_sprites = function(self, card, front)
+    if card and card.ability and card.ability.extra and not card.ability.extra.disguise then
+      card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
+      card.children.center:set_sprite_pos(card.config.center.broke_pos)
+    end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
@@ -182,6 +190,7 @@ local mimikyu={
       card.ability.extra.disguise = true
     end
   end,
+  attributes = {"chips", "suit", "hearts", "prevents_death"},
 }
 -- Bruxish 779
 -- Drampa 780
