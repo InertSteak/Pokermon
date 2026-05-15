@@ -230,8 +230,112 @@ local gothitelle={
   attributes = {"passive", "planet", "economy", "space"},
 }
 -- Solosis 577
+local solosis = {
+  name = "solosis",
+  pos = {x = 13, y = 5},
+  config = { extra = { card_dupes = 1, copied_cards = {}, copies_req = 0 }, evo_rqmt = 4 },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
+  end,
+  designer = "Eternalnacho",
+  rarity = 3,
+  cost = 7,
+  stage = "Basic",
+  ptype = "Psychic",
+  gen = 5,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    -- First hand of round jiggle a la DNA
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    -- I made a custom context for this effect
+    if context.mitosis and G.GAME.current_round.hands_played == 0 then
+      poke_copy_card_to_play(card, G.play.cards[1])
+    end
+    -- destroy the temporary copies after scoring them
+    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
+      for _, v in pairs(card.ability.extra.copied_cards) do
+        if v == context.destroy_card.unique_val then return {remove = true} end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_duosion", card.ability.extra.copies_req, self.config.evo_rqmt)
+  end,
+  attributes = {"generation", "hands", "condition_evo"},
+}
 -- Duosion 578
+local duosion = {
+  name = "duosion",
+  pos = {x = 14, y = 5},
+  config = { extra = { card_dupes = 2, copied_cards = {}, copies_req = 0 }, evo_rqmt = 8 },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
+  end,
+  designer = "Eternalnacho",
+  rarity = "poke_safari",
+  cost = 9,
+  stage = "One",
+  ptype = "Psychic",
+  gen = 5,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    -- I made a custom context for this effect
+    if context.mitosis and G.GAME.current_round.hands_played == 0 then
+      poke_copy_card_to_play(card, G.play.cards[1])
+    end
+    -- destroy the temporary copies after scoring them
+    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
+      for _, v in pairs(card.ability.extra.copied_cards) do
+        if v == context.destroy_card.unique_val then return {remove = true} end
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_reuniclus", card.ability.extra.copies_req, self.config.evo_rqmt)
+  end,
+  attributes = {"generation", "hands", "condition_evo"},
+}
 -- Reuniclus 579
+local reuniclus = {
+  name = "reuniclus",
+  pos = {x = 15, y = 5},
+  config = { extra = { card_dupes = 2, copied_cards = {} } },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.card_dupes } }
+  end,
+  designer = "Eternalnacho",
+  rarity = "poke_safari",
+  cost = 11,
+  stage = "Two",
+  ptype = "Psychic",
+  gen = 5,
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    -- I made a custom context for this effect
+    if context.mitosis then
+      poke_copy_card_to_play(card, G.play.cards[1])
+    end
+    -- destroy the temporary copies after scoring them
+    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
+      for _, v in pairs(card.ability.extra.copied_cards) do
+        if v == context.destroy_card.unique_val then return {remove = true} end
+      end
+    end
+  end,
+  attributes = {"generation"},
+}
 -- Ducklett 580
 -- Swanna 581
 -- Vanillite 582
@@ -581,5 +685,5 @@ local ferrothorn={
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
+        list = {zoroark, gothita, gothorita, gothitelle, solosis, duosion, reuniclus, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
 }

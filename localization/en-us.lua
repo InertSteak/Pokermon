@@ -4900,6 +4900,35 @@ return {
                     "Earn {C:money}$#1#{} when a {C:planet}Planet{} card is used"
                 } 
             },
+            j_poke_solosis = {
+              name = "Solosis",
+              text = {
+                "Creates up to {C:attention}#1#{} temporary {C:attention}copy{}",
+                "of {C:attention}first{} scoring card of round,",
+                "then adds it to scoring hand",
+                "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+                "{C:inactive,s:0.8}(Evolves after copying {C:attention,s:0.8}#2#{C:inactive,s:0.8} cards)",
+              }
+            },
+            j_poke_duosion = {
+              name = "Duosion",
+              text = {
+                "Creates up to {C:attention}#1#{} temporary {C:attention}copies{}",
+                "of {C:attention}first{} scoring card of round,",
+                "then adds them to scoring hand",
+                "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+                "{C:inactive,s:0.8}(Evolves after copying {C:attention,s:0.8}#2#{C:inactive,s:0.8} cards)",
+              }
+            },
+            j_poke_reuniclus = {
+              name = "Reuniclus",
+              text = {
+                "Creates up to {C:attention}#1#{} temporary {C:attention}copies{}",
+                "of {C:attention}first{} scoring card in {C:attention}poker hand{},",
+                "then adds them to scoring hand",
+                "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+              }
+            },
             j_poke_vanillite = {
                 name = "Vanillite",
                 text = {
