@@ -223,7 +223,7 @@ local furfrou={
 		end
 		card:juice_up()
 		card.ability.extra.form = 0
-		card.children.center:set_sprite_pos({x = 12, y = 1})
+		card.children.center:set_sprite_pos({x = 6, y = 6})
 	end
   end,
   set_ability = function(self, card, initial, delay_sprites)

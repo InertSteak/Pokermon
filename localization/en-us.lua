@@ -5286,6 +5286,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected, this Joker",
 					"gains a random {C:attention}Trim",
+					"(until you clear the Boss Blind)",
 					"{C:inactive}(Currently {C:mult}+#1#{} Mult)"
                 } 
             },
