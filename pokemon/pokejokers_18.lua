@@ -574,9 +574,116 @@ local excadrill={
 -- Palpitoad 536
 -- Seismitoad 537
 -- Throh 538
+local throh = {
+  name = "throh",
+  pos = { x = 2, y = 3 },
+  config = { extra = {mult = 0, mult_mod = 1, mult_cost_factor = 3, discard_mod = 1, triggered = false, volatile = "right", round_limit = 3}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+	info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    return { vars = {card.ability.extra.mult,card.ability.extra.mult_mod, card.ability.extra.mult_mod*card.ability.extra.mult_cost_factor, card.ability.extra.discard_mod, card.ability.extra.round_limit} }
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex5",
+  volatile = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+  
+	local mult_cost = math.ceil(card.ability.extra.mult_mod*card.ability.extra.mult_cost_factor)
+	
+    if context.pre_discard and not context.hook and not (volatile_active(self, card, card.ability.extra.volatile) and card.ability.extra.mult >= mult_cost) then
+		card.ability.extra.mult =  card.ability.extra.mult + card.ability.extra.mult_mod
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+	end
+	local mult_to_add = card.ability.extra.mult
+	if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+		if volatile_active(self, card, card.ability.extra.volatile) and card.ability.extra.mult >= mult_cost then
+			card.ability.extra.triggered = true
+			card.ability.extra.mult = card.ability.extra.mult - mult_cost
+			card.ability.extra.round_limit = card.ability.extra.round_limit - 1
+			G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.discard_mod
+			ease_discard(card.ability.extra.discard_mod)
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_throh_ex')})
+		end
+		if card.ability.extra.round_limit <= 0 then
+			card:set_debuff(true)
+		end
+		return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+		end
+	  end
+	 if context.end_of_round then
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards - (3 - card.ability.extra.round_limit)
+		card.ability.extra.round_limit  = 3
+	 end
+    end,
+}
 -- Sawk 539
+local sawk = {
+  name = "sawk",
+  pos = { x = 3, y = 3 },
+  config = { extra = {chips = 0, chip_mod = 4, chip_cost_factor = 5, hand_mod = 1, triggered = false, volatile = "left", round_limit = 3}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+	info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..card.ability.extra.volatile}
+    return { vars = {card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.chip_mod*card.ability.extra.chip_cost_factor, card.ability.extra.hand_mod, card.ability.extra.round_limit} }
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex5",
+  volatile = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+
+  local chip_cost = card.ability.extra.chip_mod*card.ability.extra.chip_cost_factor
+  
+    if context.before and not (volatile_active(self, card, card.ability.extra.volatile) and card.ability.extra.chips >= chip_cost) then
+		card.ability.extra.chips =  card.ability.extra.chips + card.ability.extra.chip_mod
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+	end
+	local chips_to_add = card.ability.extra.chips
+	
+	if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+		if volatile_active(self, card, card.ability.extra.volatile) and card.ability.extra.chips >= chip_cost then
+			card.ability.extra.triggered = true
+			card.ability.extra.chips = card.ability.extra.chips - chip_cost
+			card.ability.extra.round_limit = card.ability.extra.round_limit - 1
+			G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hand_mod
+			ease_hands_played(card.ability.extra.hand_mod)
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_sawk_ex')})
+		end
+		if card.ability.extra.round_limit <= 0 then
+			card:set_debuff(true)
+		end
+		return {
+          message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+          colour = G.C.CHIPS,
+          chip_mod = card.ability.extra.chips
+        }
+	  end
+	 end
+	 if context.end_of_round then
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands - (3 - card.ability.extra.round_limit)
+		card.ability.extra.round_limit  = 3
+	 end
+    end,
+}
 -- Sewaddle 540
 return {
   name = "Pokemon Jokers 511-540",
-  list = {pansage, simisage, pansear, simisear, panpour, simipour, munna, musharna, roggenrola, boldore, gigalith, drilbur, excadrill },
+  list = {pansage, simisage, pansear, simisear, panpour, simipour, munna, musharna, roggenrola, boldore, gigalith, drilbur, excadrill, throh, sawk},
 }

@@ -878,6 +878,95 @@ local milotic={
 }
 -- Castform 351
 -- Kecleon 352
+-- Minor bug causes Kecleon to proc automatically the first time when you start with it.
+-- Minor timing delay when certain effects give you a Joker, like using a Poke Ball in the store. Causes potential issue with timing if you move the Joker and sell it, causing the effect to trigger.
+local kecleon={
+  name = "kecleon",
+  pos = {x = 12, y = 23},
+  config = {extra = {mult_mod = 2, mult = 0, joker_tally = (G.jokers and #G.jokers or 0), latest_type = "Colorless"}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult}}
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
+          colour = G.C.MULT,
+          mult_mod = card.ability.extra.mult
+        }
+      end
+    end
+
+	--Update Kecleon if a new Joker is obtained for any reason
+	if #G.jokers.cards > card.ability.extra.joker_tally then
+		local newest_joker = G.jokers.cards[#G.jokers.cards]
+		if has_type(newest_joker) and not is_type(card, newest_joker.ability.extra.ptype) then
+			apply_type_sticker(card, newest_joker.ability.extra.ptype)
+			card.ability.extra.joker_tally = #G.jokers.cards
+		end
+	elseif #G.jokers.cards < card.ability.extra.joker_tally then
+		card.ability.extra.joker_tally = #G.jokers.cards
+	end
+	  
+	  
+  -- --Increase Kecleon's mult if it changes type for any reason
+  if not is_type(card, card.ability.extra.latest_type) then
+	card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+	card.ability.extra.latest_type = get_type(card)
+	card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_kecleon_ex'), colour = G.C.FILTER})
+	card:juice_up()
+	--Set sprite depending on type
+		if is_type(card, "Dark") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 6, y = 0})
+		elseif is_type(card, "Dragon") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 8, y = 0})
+		elseif is_type(card, "Earth") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 10, y = 0})
+		elseif is_type(card, "Fairy") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 0, y = 1})
+		elseif is_type(card, "Fighting") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 2, y = 1})
+		elseif is_type(card, "Fire") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 4, y = 1})
+		elseif is_type(card, "Grass") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 6, y = 1})
+		elseif is_type(card, "Lightning") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 8, y = 1})
+		elseif is_type(card, "Metal") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 10, y = 1})
+		elseif is_type(card, "Psychic") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 0, y = 2})
+		elseif is_type(card, "Water") then
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 2, y = 2})
+		else
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex")
+		  card.children.center:set_sprite_pos({x = 12, y = 23})
+		end
+	end
+  end
+}
+
 -- Shuppet 353
 -- Banette 354
 -- Duskull 355
@@ -1123,5 +1212,5 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, chimecho, absol, wynaut},
 }

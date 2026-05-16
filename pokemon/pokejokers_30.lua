@@ -1,3 +1,57 @@
+local falinks = {
+  name = "falinks",
+  pos = { x = 7, y = 4 },
+  config = { extra = {chip_mod = 50, mult_mod = 10, Xmult_mod = 0.5, hand_mod = 1, lost_hands = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = {card.ability.extra.chip_mod, card.ability.extra.mult_mod, 1 + card.ability.extra.Xmult_mod, card.ability.extra.hand_mod} }
+  end,
+  rarity = 3,
+  cost = 9,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex8",
+  volatile = true,
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+		card.ability.eternal = true
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_falinks_ex')})
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.hand_mod
+		ease_discard(card.ability.extra.hand_mod)
+		G.hand:change_size(card.ability.extra.hand_mod)
+		if not (G.GAME.blind.boss and G.GAME.blind.name == 'The Needle' and not G.GAME.blind.disabled) then
+			local starting_hands = G.GAME.round_resets.hands
+			G.GAME.round_resets.hands = card.ability.extra.hand_mod
+			card.ability.extra.lost_hands = starting_hands - G.GAME.round_resets.hands
+			ease_hands_played(-card.ability.extra.lost_hands)
+		end
+	end
+	if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+		return {
+          message = "Forward!",
+          colour = G.C.BLACK,
+          mult_mod = card.ability.extra.mult_mod,
+          chip_mod = card.ability.extra.chip_mod,
+          Xmult_mod = 1 + card.ability.extra.Xmult_mod
+        }
+	end
+	 if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+	    card.ability.eternal = false
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+		if not (G.GAME.blind.boss and G.GAME.blind.name == 'The Needle' and not G.GAME.blind.disabled) then
+			G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.lost_hands 
+			ease_hands_played(card.ability.extra.lost_hands)
+			ease_discard(-card.ability.extra.hand_mod)
+			card.ability.extra.lost_hands = 0
+		end
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.hand_mod
+		G.hand:change_size(-card.ability.extra.hand_mod)
+	 end
+  end,
+}
 -- Pincurchin 871
 -- Snom 872
 -- Frosmoth 873
@@ -248,6 +302,7 @@ local dreepy_dart={
 -- Spectrier 897
 -- Calyrex 898
 -- Wyrdeer 899
+-- Kleavor 900
 local wyrdeer={
   name = "wyrdeer",
   pos = {x = 0, y = 8},
@@ -404,5 +459,5 @@ local kleavor={
   attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
 }
 return {name = "Pokemon Jokers 871-900", 
-        list = {dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
+        list = {falinks, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

@@ -1,3 +1,149 @@
+family = {
+    {"bulbasaur","ivysaur","venusaur","mega_venusaur"},
+    {"charmander","charmeleon","charizard","mega_charizard_x","mega_charizard_y",},
+    {"squirtle","wartortle","blastoise","mega_blastoise"},
+    {"caterpie","metapod","butterfree"},
+    {"weedle","kakuna","beedrill","mega_beedrill"},
+    {"pidgey","pidgeotto","pidgeot","mega_pidgeot"},
+    {"rattata","raticate"},
+    {"spearow","fearow"},
+    {"ekans","arbok"},
+    {"pichu", "pikachu","raichu"},
+    {"sandshrew","sandslash"},
+    {"nidoranf","nidorina","nidoqueen"},
+    {"nidoranm","nidorino","nidoking"},
+    {"cleffa", "clefairy","clefable"},
+    {"vulpix","ninetales"},
+    {"igglybuff", "jigglypuff","wigglytuff"},
+    {"zubat","golbat", "crobat"},
+    {"oddish","gloom","vileplume", "bellossom"},
+    {"paras","parasect"},
+    {"venonat","venomoth"},
+    {"diglett","dugtrio"},
+    {"meowth","persian"},
+    {"psyduck","golduck"},
+    {"mankey","primeape", "annihilape"},
+    {"growlithe","arcanine"},
+    {"poliwag","poliwhirl","poliwrath", "politoed"},
+    {"abra","kadabra","alakazam","mega_alakazam"},
+    {"machop","machoke","machamp"},
+    {"bellsprout","weepinbell","victreebel"},
+    {"tentacool","tentacruel"},
+    {"geodude","graveler","golem"},
+    {"ponyta","rapidash"},
+    {"slowpoke", "slowbro", "slowking", "mega_slowbro"},
+    {"magnemite","magneton", "magnezone"},
+    {"doduo","dodrio"},
+    {"seel","dewgong"},
+    {"grimer","muk"},
+    {"shellder","cloyster"},
+    {"gastly","haunter","gengar","mega_gengar",},
+    {"onix","steelix"},
+    {"drowzee","hypno"},
+    {"krabby","kingler"},
+    {"voltorb","electrode"},
+    {"exeggcute","exeggutor"},
+    {"cubone","marowak"},
+    {"koffing","weezing"},
+    {"rhyhorn","rhydon", "rhyperior"},
+    {"horsea","seadra", "kingdra"},
+    {"goldeen","seaking"},
+    {"staryu","starmie"},
+    {"scyther", "scizor"},
+	  {"teddiursa", "ursaring","ursaluna"},
+    {"mimejr", "mrmime"},
+    {"tauros", "taurosh"},
+    {"kangaskhan", "mega_kangaskhan"},
+    {"elekid", "electabuzz", "electivire"},
+    {"magby", "magmar", "magmortar"},
+    {"tangela", "tangrowth"},
+    {"smoochum", "jynx"},
+    {"pinsir", "mega_pinsir"},
+    {"magikarp","gyarados", "mega_gyarados"},
+    {"munchlax", "snorlax"},
+    {"aerodactyl", "mega_aerodactyl"},
+    {"happiny", "chansey", "blissey"},
+    {"lickitung", "lickilicky"},
+    {"porygon", "porygon2", "porygonz"},
+    {"eevee", "vaporeon", "jolteon", "flareon", "espeon", "umbreon", "glaceon", "leafeon", "sylveon"},
+    {"omanyte","omastar"},
+    {"kabuto","kabutops"},
+    {"dratini","dragonair","dragonite"},
+    {"mewtwo","mega_mewtwo_x","mega_mewtwo_y"},
+    {"chikorita", "bayleef", "meganium"},
+    {"cyndaquil", "quilava", "typhlosion"},
+    {"totodile", "croconaw", "feraligatr"},
+    {"tyrogue", "hitmonlee", "hitmonchan", "hitmontop"},
+    {"feebas", "milotic"},
+    {"snorunt", "glalie", "froslass"},
+    {"nosepass", "probopass"},
+    {"beldum", "metang", "metagross"},
+    {"jirachi", "jirachi_banker", "jirachi_booster", "jirachi_power", "jirachi_copy", "jirachi_fixer"},
+    {"sentret", "furret"},
+    {"hoothoot", "noctowl"},
+    {"ledyba", "ledian"},
+    {"spinarak", "ariados"},
+    {"sneasel", "weavile"},
+    {"remoraid", "octillery"},
+    {"togepi", "togetic", "togekiss"},
+    {"natu", "xatu"},
+    {"azurill", "marill", "azumarill"},
+    {"phanpy", "donphan"},
+    {"girafarig", "farigiraf"},
+    {"murkrow", "honchkrow"},
+    {"bonsly", "sudowoodo"},
+    {"hoppip", "skiploom", "jumpluff"},
+    {"sunkern", "sunflora"},
+    {"misdreavus", "mismagius"},
+    {"wynaut", "wobbuffet"},
+    {"pineco", "forretress"},
+    {"dunsparce", {key = "dudunsparce", form = 0}, {key = "dudunsparce", form = 1}},
+    {"snubbull", "granbull"},
+    {"mantyke", "mantine"},
+    {"treecko", "grovyle", "sceptile"},
+    {"torchic", "combusken", "blaziken"},
+    {"mudkip", "marshtomp", "swampert"},
+    {"zigzagoon", "linoone"},
+    {"shroomish", "breloom"},
+    {"aron","lairon","aggron"},
+	{"wailmer","wailord"},
+	{"budew", "roselia", "roserade"},
+    {"buizel", "floatzel"},
+    {"gothita", "gothorita", "gothitelle"},
+    {"vanillite", "vanillish", "vanilluxe"},
+    {"elgyem", "beheeyem"},
+    {"litwick", "lampent", "chandelure"},
+	{"deerling", "sawsbuck"},
+	{"karrablast", "escavalier"},
+	{"shelmet", "accelgor"},
+    {"pansage", "simisage"},
+    {"pansear", "simisear"},
+    {"panpour", "simipour"},
+    {"golett", "golurk"},
+	  {"pawniard", "bisharp", "kingambit"},
+    {"roggenrola", "boldore", "gigalith"},
+	{"drilbur", "excadrill"},
+    {"zorua", "zoroark"},
+    {"deino", "zweilous", "hydreigon"},
+	  {"bunnelby", "diggersby"},
+    {"litleo", "pyroar"},
+    {"grubbin", "charjabug", "vikavolt"},
+	  {"wimpod", "golisopod"},
+    {"dreepy", "drakloak", "dragapult", "dreepy_dart"},
+    {"hisuian_qwilfish", "overqwil"},
+    {"yamper","boltund"},
+    {"tarountula", "spidops"},
+    {"fidough", "dachsbun"},
+    {"tinkatink", "tinkatuff", "tinkaton"},
+    {"wiglett", "wugtrio"},
+    {"gimmighoul", "gholdengo", "gimmighoulr"},
+  --{{key = "oricorio", form = "Hearts"}, {key = "oricorio", form = "Clubs"}, {key = "oricorio", form = "Diamonds"}, {key = "oricorio", form = "Spades"}},
+    {{key = "rival", form = 0},{key = "rival", form = 1},{key = "rival", form = 2}},
+	{{key = "furfrou", form = 0},{key = "furfrou", form = 1},{key = "furfrou", form = 2},{key = "furfrou", form = 3},{key = "furfrou", form = 4},{key = "furfrou", form = 5},{key = "furfrou", form = 6},{key = "furfrou", form = 7},{key = "furfrou", form = 8},{key = "furfrou", form = 9}},
+	{{key = "deerling", form = 0},{key = "deerling", form = 1},{key = "deerling", form = 2},{key = "deerling", form = 3}},
+	{{key = "sawsbuck", form = 0},{key = "sawsbuck", form = 1},{key = "sawsbuck", form = 2},{key = "sawsbuck", form = 3}},
+}
+
 extended_family = {
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
@@ -35,6 +181,19 @@ find_pokemon_type = function(target_type, exclude_card, exclude_name)
   return found
 end
 
+find_other_pokemon_type = function(card, poke_type)
+  local type_count = 0
+  type_count = #find_pokemon_type(poke_type)
+  if is_type(card, poke_type) then
+    type_count = type_count - 1
+  end
+  if type_count > 0 then
+    return type_count
+  else
+    return 0
+  end
+end
+
 is_type = function(card, target_type)
   return card and get_type(card) == target_type
 end
@@ -51,16 +210,23 @@ get_type = function(card)
   return nil
 end
 
+has_type = function(card)
+  return (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) or type_sticker_applied(card)
+end
+
 copy_scaled_values = function(card)
+  local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
   local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
+      if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) then
       if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) or card.config.center.copy_scaled then
         values[l] = card.ability.extra[l]
       end
+      end
     end
+    return values
   end
-  return values
 end
 
 poke_fake_evolve = function(card, evolve_message, set_sprites)
@@ -176,7 +342,8 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target",                         "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "largest_hand_name", "season_suit", "season", "e_limit_up", "form", "jack_target", "jacks_discarded"}
+
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -324,6 +491,32 @@ item_evo = function(self, card, context, forced_key)
     end
 end
 
+item_evo_with_condition = function(self, card, context, forced_key, will_evolve)
+	if not will_evolve then
+		return 
+	end
+	
+    if (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string")) then
+      if type(card.ability.extra.evolve) == "string" then
+        forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]
+      end
+      if forced_key and can_evolve(self, card, context, forced_key) then
+        card.ability.extra.evolve = nil
+        return {
+          message = poke_evolve(card, forced_key)
+        }
+      end
+
+      if can_evolve(self, card, context, forced_key, true) then
+        if not card.ability.extra.juiced then
+          card.ability.extra.juiced = true
+          local eval = function(card) return card.ability.extra.evolve and not card.REMOVED and not G.RESET_JIGGLES end
+          juice_card_until(card, eval, true)
+        end
+      end
+    end
+end
+
 scaling_evo = function (self, card, context, forced_key, current, target, evo_message)
   if (SMODS.Mods["Talisman"] or {}).can_load then
     current = to_big(current)
@@ -411,6 +604,24 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
   end
 end
 
+deck_out_evo = function (self, card, context, forced_key, will_evolve)
+  if card.debuff then return end
+  if can_evolve(self, card, context, forced_key) and will_evolve then
+	return {
+	  message = poke_evolve(card, forced_key)
+	}
+	end
+end
+
+carry_mult_evo = function (self, card, context, forced_key, old_mult, will_evolve)
+  if card.debuff then return end
+  if can_evolve(self, card, context, forced_key) and will_evolve then
+	return {
+	  message = poke_evolve(card, forced_key)
+	}
+  end
+end
+
 get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
@@ -420,6 +631,7 @@ get_lowest_evo = function(card)
   --Nice and simple, we just want the lowest value, which should be the first
   --In the case the family is one joker, just return the name
   return (type(family[1]) == "table" and family[1].key) or family[1] or name
+
 end
 
 get_highest_evo = function(card)
@@ -606,7 +818,11 @@ evo_item_use = function(self, card, area, copier)
     for k, v in pairs(G.jokers.cards) do
       if applied ~= true and not v.debuff then
         if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name and not v.ability.extra.evolve then
-          evolve = true
+			if v.config.center.condition ~= nil and v.config.center.condition == false then
+				evolve = false
+			else
+				evolve = true
+			end
         elseif v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) == "table" and not v.ability.extra.evolve then
           for l, p in pairs(v.ability.extra.item_req) do
             if p == self.name then
@@ -820,6 +1036,101 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
+get_largest_poker_hand_name = function()
+	local largest_tier = 1
+	local largest_hand_name = 'High Card'
+	if G.GAME then
+		for k, v in pairs(G.GAME.hands) do
+			if v.played > 0 and get_poker_hand_tier(k) > largest_tier then
+				largest_tier = get_poker_hand_tier(k)
+				largest_hand_name = k
+			end
+		end
+	end
+	return largest_hand_name
+end
+
+get_starting_season = function()
+	math.randomseed(os.time())
+	return math.random(0,3)
+end
+
+get_next_season = function(season)
+	season = season + 1
+	if season > 3 then
+		season = 0
+	end
+	return season
+end
+
+get_poker_hand_tier = function(hand_name)
+	local tier = 1
+	if hand_name == 'High Card' then
+		tier = 1
+	elseif hand_name == 'Pair' then
+		tier = 2
+	elseif hand_name == 'Two Pair' then
+		tier = 3
+	elseif hand_name == 'Three of a Kind' then
+		tier = 4
+	elseif hand_name == 'Straight' then
+		tier = 5
+	elseif hand_name == 'Flush' then
+		tier = 6
+	elseif hand_name== 'Full House' then
+		tier = 7
+	elseif hand_name == 'Four of a Kind' then
+		tier = 8
+	elseif hand_name == 'Straight Flush' then
+		tier = 9
+	elseif hand_name == 'Five of a Kind' then
+		tier = 10
+	elseif hand_name == 'Flush House' then
+		tier = 11
+	elseif hand_name == 'Flush Five' then
+		tier = 12
+	end
+	return tier
+end
+
+get_next_poker_hand_name = function(hand_name)
+	local next = 'Pair'
+	if hand_name == 'High Card' then
+		next = 'Pair'
+	elseif hand_name == 'Pair' then
+		next = 'Two Pair'
+	elseif hand_name == 'Two Pair' then
+		next = 'Three of a Kind'
+	elseif hand_name == 'Three of a Kind' then
+		next = 'Straight'
+	elseif hand_name == 'Straight' then
+		next = 'Flush'
+	elseif hand_name == 'Flush' then
+		next = 'Full House'
+	elseif hand_name== 'Full House' then
+		next = 'Four of a Kind'
+	elseif hand_name == 'Four of a Kind' then
+		next = 'Straight Flush'
+	elseif hand_name == 'Straight Flush' then
+		next = 'Five of a Kind'
+	elseif hand_name == 'Five of a Kind' then
+		next = 'Flush House'
+	else
+		next = 'Flush Five'
+	end
+	return next
+end
+
+table_contains = function(table, value)
+  for i = 1,#table do
+    if (table[i] == value) then
+      return true
+    end
+  end
+  return false
+end
+
+
 get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
   local poke_keys = {}
   local poke_key
@@ -997,6 +1308,7 @@ get_poke_target_card_enhancements = function(seed, num, options)
   end
   
   return enhancements
+
 end
 
 add_target_cards_to_vars = function(vars, targets)
