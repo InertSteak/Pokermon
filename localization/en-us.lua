@@ -763,6 +763,14 @@ return {
                     "{s:0.8}Applies all previous Stakes"
                 }
             },
+            stake_poke_elite = {
+              name = "Elite Stake",
+              text = {
+                "{X:gray,C:attention}+2{} Ante win requirement",
+                "Last 4 Antes are Showdown Boss Blinds",
+                "{s:0.8}Applies all previous Stakes"
+              },
+            },
         },
         Joker = {
             j_poke_bulbasaur = {
@@ -7192,6 +7200,14 @@ return {
                     "{C:attention}#1#{} unenhanced cards in deck",
                     "become {C:attention}Hazard Cards{}",
                 },
+            },
+            poke_elite_sticker = {
+              name = "Elite Sticker",
+              text = {
+                "Used this {C:attention}Joker{}",
+                "to win on {C:attention}Elite{}",
+                "{C:attention}Stake{} difficulty",
+              },
             },
         },
     },

@@ -198,6 +198,9 @@ load_directory("vouchers", SMODS.Voucher, true)
 --Load blinds
 load_directory("blinds", SMODS.Blind, true)
 
+--Load stakes
+load_directory("stakes", SMODS.Stake, true)
+
 --Load tags
 load_directory("tags", SMODS.Tag, true)
 
