@@ -882,7 +882,7 @@ local milotic={
 -- Minor timing delay when certain effects give you a Joker, like using a Poke Ball in the store. Causes potential issue with timing if you move the Joker and sell it, causing the effect to trigger.
 local kecleon={
   name = "kecleon",
-  pos = {x = 3, y = 10},
+  pos = {x = 12, y = 23},
   config = {extra = {mult_mod = 2, mult = 0, joker_tally = (G.jokers and #G.jokers or 0), latest_type = "Colorless"}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -927,29 +927,41 @@ local kecleon={
 	card:juice_up()
 	--Set sprite depending on type
 		if is_type(card, "Dark") then
-		  card.children.center:set_sprite_pos({x = 0, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 6, y = 0})
 		elseif is_type(card, "Dragon") then
-		  card.children.center:set_sprite_pos({x = 1, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 8, y = 0})
 		elseif is_type(card, "Earth") then
-		  card.children.center:set_sprite_pos({x = 2, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 10, y = 0})
 		elseif is_type(card, "Fairy") then
-		  card.children.center:set_sprite_pos({x = 3, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 0, y = 1})
 		elseif is_type(card, "Fighting") then
-		  card.children.center:set_sprite_pos({x = 4, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 2, y = 1})
 		elseif is_type(card, "Fire") then
-		  card.children.center:set_sprite_pos({x = 5, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 4, y = 1})
 		elseif is_type(card, "Grass") then
-		  card.children.center:set_sprite_pos({x = 6, y = 16})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 6, y = 1})
 		elseif is_type(card, "Lightning") then
-		  card.children.center:set_sprite_pos({x = 0, y = 17})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 8, y = 1})
 		elseif is_type(card, "Metal") then
-		  card.children.center:set_sprite_pos({x = 1, y = 17})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 10, y = 1})
 		elseif is_type(card, "Psychic") then
-		  card.children.center:set_sprite_pos({x = 2, y = 17})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 0, y = 2})
 		elseif is_type(card, "Water") then
-		  card.children.center:set_sprite_pos({x = 3, y = 17})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicGen03")
+		  card.children.center:set_sprite_pos({x = 2, y = 2})
 		else
-		  card.children.center:set_sprite_pos({x = 3, y = 10})
+		  card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex")
+		  card.children.center:set_sprite_pos({x = 12, y = 23})
 		end
 	end
   end

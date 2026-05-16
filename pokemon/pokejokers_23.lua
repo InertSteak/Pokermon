@@ -232,23 +232,23 @@ local furfrou={
   set_sprites = function(self, card, front)
     --Change Trim
 		if card.ability and card.ability.extra and card.ability.extra.form == 1 then --Heart Form
-		  card.children.center:set_sprite_pos({x = 1, y = 7})
+		  card.children.center:set_sprite_pos({x = 8, y = 6})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then --Star Form
-		  card.children.center:set_sprite_pos({x = 3, y = 7})
+		  card.children.center:set_sprite_pos({x = 0, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then --Diamond Form
-		  card.children.center:set_sprite_pos({x = 4, y = 7})
+		  card.children.center:set_sprite_pos({x = 2, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 4 then --Debutante Form
-		  card.children.center:set_sprite_pos({x = 5, y = 7})
+		  card.children.center:set_sprite_pos({x = 4, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 5 then --Dandy Form
-		  card.children.center:set_sprite_pos({x = 7, y = 7})
+		  card.children.center:set_sprite_pos({x = 8, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 6 then --Matron Form
 		  card.children.center:set_sprite_pos({x = 6, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 7 then --Pharaoh Form
-		  card.children.center:set_sprite_pos({x = 2, y = 7})
+		  card.children.center:set_sprite_pos({x = 10, y = 6})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 8 then --Kabuki Form
-		  card.children.center:set_sprite_pos({x = 8, y = 7})
+		  card.children.center:set_sprite_pos({x = 10, y = 7})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 9 then --La Reine Form
-		  card.children.center:set_sprite_pos({x = 9, y = 7})
+		  card.children.center:set_sprite_pos({x = 0, y = 8})
 		end
   end
 }

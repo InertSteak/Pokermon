@@ -278,7 +278,6 @@ local kingambit={
       card:juice_up()
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
 	end
-  end,
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {

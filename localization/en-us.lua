@@ -3724,8 +3724,8 @@ return {
 					"{C:mult}+#1# Mult{} if playing a {C:attention}#3#{}",
                     "{C:inactive}(+#2# Mult per {C:attention}tier{} {C:inactive}of played hand)",
 					"{br:3.5}ERROR - CONTACT STEAK",
-					"{C:attention}Poker hand{} increases if playing a", 
-					"larger poker hand than the target.",
+					"{C:attention}Poker hand{} permanently increases if you play", 
+					"a larger poker hand than the target.",
 					"When triggered, gain {C:attention}+1 EXP{} per {C:attention}tier{}",
 					"{C:inactive}(Evolves at {C:attention}#4#{C:inactive} / #5# EXP)"
                 }
@@ -3734,8 +3734,8 @@ return {
                 name = 'Wailord',
                 text = {
                     "{C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} Mult if playing a {C:attention}#5#{}",
-					"{C:attention}Poker hand{} increases if playing a", 
-					"larger poker hand than the target.",
+					"{C:attention}Poker hand{} permanently increases if you play", 
+					"a larger poker hand than the target.",
 					"{C:inactive}({C:mult}+#3# Mult{} and {C:mult}Xmult{} increased by {C:mult}+#4#{} {C:inactive}per {C:attention}tier{}{C:inactive})"
                 }
             },
@@ -5146,6 +5146,39 @@ return {
 					"{C:inactive}(Suit changes after beating boss blind)",
                 } 
 			},
+			j_poke_karrablast = {
+                name = "Karrablast",
+                text = {
+                    "{C:mult}+#1# Mult{} per {C:attention}hand{} played this round {C:attention}",
+					"{C:inactive,s:0.8}(Currently {C:mult}+#2#{C:inactive,s:0.8} Mult{})",
+                    "{C:inactive,s:0.8}(Evolves with Link Cable if you have another Grass Joker)"
+                }
+            },
+			j_poke_escavalier = {
+                name = "Escavalier",
+                text = {
+                    "{C:mult}+#1# Mult{} per {C:attention}hand{} played this round",
+                    "If you clear a {C:attention}Small{} or {C:attention}Big Blind{} by {C:attention}#4#X{} or more chips,",
+					"gain its {C:attention}Skip Tag{}",
+					"{C:inactive,s:0.8}(Currently {C:mult}+#2#{C:inactive,s:0.8} Mult, Tag: #3#}"
+                }
+            },
+			j_poke_shelmet = {
+                name = "Shelmet",
+                text = {
+                    "{C:mult}+#1# Mult{} when playing your first {C:attention}hand",
+                    "{C:inactive,s:0.8}(Evolves with Link Cable if you have another Grass Joker)"
+                }
+            },
+			j_poke_accelgor = {
+                name = "Accelgor",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult if playing your first {C:chips}hand",
+                    "If you clear a {C:attention}Small{} or {C:attention}Big Blind{} on the first {C:chips}hand{},",
+					"gain its {C:attention}Skip Tag{}",
+					"{C:inactive,s:0.8}(Current Tag: #2#)"
+                }
+            },
             j_poke_golett = {
                 name = "Golett",
                 text = {

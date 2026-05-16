@@ -202,11 +202,12 @@ local gholdengo={
   end,
   attributes = {"enhancements", "economy", "xmult"},
 }
+
 -- Wo-Chien 1001
 local wo_chien={
   name = "wo_chien",
-  pos = {x = pokermon_config.pokemon_altart and 0, y = pokermon_config.pokemon_altart and 9},
-  soul_pos = {x = 1, y = 9},
+  pos = {x = 20, y = 66}, 
+  soul_pos =  {x = 21, y = 66},
   config = {extra = {chips = 50, mult = 8, Xmult = 1.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -267,8 +268,8 @@ local wo_chien={
 -- Chien-Pao 1002
 local chien_pao={
   name = "chien_pao",
-  pos = {x = pokermon_config.pokemon_altart and 2, y = pokermon_config.pokemon_altart and 9},
-  soul_pos = {x = 3, y = 9},
+  pos = {x = 22, y = 66}, 
+  soul_pos =  {x = 23, y = 66},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -305,8 +306,8 @@ local chien_pao={
 -- Ting-Lu 1003
 local ting_lu={
   name = "ting_lu",
-  pos = {x = pokermon_config.pokemon_altart and 4, y = pokermon_config.pokemon_altart and 9},
-  soul_pos = {x = 5, y = 9},
+  pos = {x = 24, y = 66}, 
+  soul_pos =  {x = 25, y = 66},
   config = {extra = {chips = 50}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -354,70 +355,11 @@ local ting_lu={
   end,
 }
 
-local gholdengo={
-  name = "gholdengo",
-  pos = {x = 13, y = 6},
-  config = {extra = {Xmult = 1, money_minus = 3, oXmult = 1, Xmult_multi = 1.5, future_dollars = 0}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, center.ability.extra.money_minus, center.ability.extra.Xmult_multi}}
-  end,
-  rarity = "poke_safari",
-  cost = 8,
-  stage = "One",
-  ptype = "Metal",
-  atlas = "Pokedex9",
-  perishable_compat = false,
-  blueprint_compat = true,
-  eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        card.ability.extra.future_dollars = G.GAME.dollars
-      end
-      if context.joker_main then
-        return {
-          message = localize('poke_make_it_rain'), 
-          colour = G.C.MONEY,
-          Xmult_mod = card.ability.extra.Xmult
-        }
-      end
-    end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        card.ability.extra.future_dollars = to_big(card.ability.extra.future_dollars) - to_big(card.ability.extra.money_minus)
-        if to_big(card.ability.extra.future_dollars) >= to_big(0) then
-          card.ability.extra.Xmult = to_big(card.ability.extra.Xmult) * to_big(card.ability.extra.Xmult_multi)
-          return {
-            dollars = -card.ability.extra.money_minus,
-            card = card
-          }
-        end
-      else
-        card.ability.extra.future_dollars = card.ability.extra.future_dollars - card.ability.extra.money_minus
-        if card.ability.extra.future_dollars >= 0 then
-          card.ability.extra.Xmult = card.ability.extra.Xmult * card.ability.extra.Xmult_multi
-          return {
-            dollars = -card.ability.extra.money_minus,
-            card = card
-          }
-        end
-      end
-    end
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.Xmult = card.ability.extra.oXmult
-      return {
-        message = localize('k_reset'),
-        colour = G.C.RED
-      }
-    end
-  end
-}
 -- Chi-Yu 1004
 local chi_yu={
   name = "chi_yu",
-  pos = {x = pokermon_config.pokemon_altart and 6, y = pokermon_config.pokemon_altart and 9},
-  soul_pos = {x = 7, y = 9},
+  pos = {x = 26, y = 66}, 
+  soul_pos =  {x = 27, y = 66},
   config = {extra = {mult_multi = 8}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)

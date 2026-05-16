@@ -396,7 +396,7 @@ local vanilluxe={
 -- Deerling 585
 local deerling = {
   name = "deerling",
-  pos = { x = 7, y = 6 },
+  pos = {x = 2, y = 1},
   config = { extra = {chips = 0, chip_mod = 2, season_suit = 'Hearts', season = get_starting_season(), form = get_starting_season()}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -477,13 +477,13 @@ local deerling = {
   set_sprites = function(self, card, front)
     --Change Form
 		if card.ability and card.ability.extra and card.ability.extra.form == 0 then --Spring Form
-		  card.children.center:set_sprite_pos({x = 7, y = 6})
+		  card.children.center:set_sprite_pos({x = 2, y = 1})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 1 then --Summer Form
-		  card.children.center:set_sprite_pos({x = 11, y = 12})
+		  card.children.center:set_sprite_pos({x = 4, y = 1})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then --Fall Form
-		  card.children.center:set_sprite_pos({x = 12, y = 12})
+		  card.children.center:set_sprite_pos({x = 6, y = 1})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then --Winter Form
-		  card.children.center:set_sprite_pos({x = 10, y = 12})
+		  card.children.center:set_sprite_pos({x = 8, y = 1})
 		end
   end,
    set_suit = function(self, card, front)
@@ -505,7 +505,7 @@ local deerling = {
 -- Sawsbuck 586
 local sawsbuck = {
   name = "sawsbuck",
-  pos = { x = 8, y = 6 },
+  pos = {x = 10, y = 1},
   config = { extra = {chips = 0, chip_mod = 4, season_suit = 'Hearts', season = get_starting_season(), form = get_starting_season()}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
@@ -584,13 +584,13 @@ local sawsbuck = {
   set_sprites = function(self, card, front)
     --Change Form
 		if card.ability and card.ability.extra and card.ability.extra.form == 0 then --Spring Form
-		  card.children.center:set_sprite_pos({x = 8, y = 6})
+		  card.children.center:set_sprite_pos({x = 10, y = 1})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 1 then --Summer Form
-		  card.children.center:set_sprite_pos({x = 11, y = 13})
+		  card.children.center:set_sprite_pos({x = 0, y = 2})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then --Fall Form
-		  card.children.center:set_sprite_pos({x = 12, y = 13})
+		  card.children.center:set_sprite_pos({x = 2, y = 2})
 		elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then --Winter Form
-		  card.children.center:set_sprite_pos({x = 10, y = 13})
+		  card.children.center:set_sprite_pos({x = 4, y = 2})
 		end
   end,
    set_suit = function(self, card, front)
@@ -890,5 +890,5 @@ local ferrothorn={
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, deerling, sawsbuck, frillish, jellicent, ferroseed, ferrothorn},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, deerling, sawsbuck, karrablast, escavalier, frillish, jellicent, ferroseed, ferrothorn},
 }

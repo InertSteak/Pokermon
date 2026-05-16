@@ -210,16 +210,23 @@ get_type = function(card)
   return nil
 end
 
+has_type = function(card)
+  return (card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.ptype) or type_sticker_applied(card)
+end
+
 copy_scaled_values = function(card)
+  local values = {mult = 0, chips = 0, Xmult = 0, money = 0}
   local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
+      if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) then
       if card.ability.extra[l] and (card.ability.extra[l.."_mod"] or card.ability.extra[string.sub(l, 1, -2).."_mod"]) or card.config.center.copy_scaled then
         values[l] = card.ability.extra[l]
       end
+      end
     end
+    return values
   end
-  return values
 end
 
 poke_fake_evolve = function(card, evolve_message, set_sprites)

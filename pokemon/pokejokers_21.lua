@@ -305,7 +305,7 @@ local chandelure={
 -- Shelmet 616
 local shelmet = {
   name = "shelmet",
-  pos = { x = 10, y = 8 },
+  pos = {x = 0, y = 8},
   config = { extra = {mult_mod = 12}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
@@ -341,7 +341,7 @@ local shelmet = {
 -- Accelgor 617
 local accelgor = {
   name = "accelgor",
-  pos = { x = 11, y = 8 },
+  pos = {x = 1, y = 8},
   config = { extra = {Xmult_mod = 2, tag = nil, tag_name = nil}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)

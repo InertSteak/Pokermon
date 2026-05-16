@@ -531,6 +531,8 @@ local bunnelby_test = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local wailmer_test = {
@@ -555,6 +557,8 @@ local wailmer_test = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local kecleon_test = {
@@ -584,6 +588,8 @@ local kecleon_test = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local wimpod_test = {
@@ -608,6 +614,8 @@ local wimpod_test = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local sawk_throh = {
@@ -640,6 +648,8 @@ local sawk_throh = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local furfrou = {
@@ -669,6 +679,8 @@ local furfrou = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local ruin = {
@@ -681,10 +693,10 @@ local ruin = {
         }
     },
     jokers = {
-      {id = "j_poke_chi_yu", eternal = true},
-	  {id = "j_poke_ting_lu", eternal = true},
-	  {id = "j_poke_wo_chien", eternal = true},
-	  {id = "j_poke_chien_pao", eternal = true},
+     {id = "j_poke_chi_yu", eternal = true},
+	 {id = "j_poke_ting_lu", eternal = true},
+	 {id = "j_poke_wo_chien", eternal = true},
+	 {id = "j_poke_chien_pao", eternal = true},
     },
 	consumeables = {
 	},
@@ -699,6 +711,8 @@ local ruin = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local no_retreat = {
@@ -726,6 +740,8 @@ local no_retreat = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local speed = {
@@ -739,6 +755,7 @@ local speed = {
     },
     jokers = {
       {id = "j_poke_karrablast", eternal = true},
+	  {id = "j_poke_shelmet", eternal = true},
     },
 	consumeables = {
 		{id = 'c_poke_linkcable'}
@@ -754,31 +771,8 @@ local speed = {
     deck = {
       type = 'Challenge Deck',
     },
-}
-
-local starter = {
-    object_type = "Challenge",
-    key = "starter",
-    rules = {
-        modifiers = {
-            {id = 'joker_slots', value = 5},
-			{id = 'discards', value = 2},
-        }
-    },
-    jokers = {
-	  {id = "j_poke_turtwig", eternal = false},
-    },
-    restrictions = {
-        banned_cards = {
-        },
-        banned_tags = {
-        },
-        banned_other = {
-        },
-    },
-    deck = {
-      type = 'Challenge Deck',
-    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 local deer = {
@@ -804,6 +798,8 @@ local deer = {
     deck = {
       type = 'Challenge Deck',
     },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
 return {name = "Challenges", 
