@@ -121,6 +121,62 @@ local mimikyu={
 }
 -- Bruxish 779
 -- Drampa 780
+local drampa = {
+  name = "drampa",
+  config = { extra = { boosters = 1 } },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.boosters } }
+  end,
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Dragon",
+  gen = 7,
+  blueprint_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        poke_upgrade_all_shop_packs('jumbo')
+        return true
+      end
+    }))
+    SMODS.change_booster_limit(card.ability.extra.boosters)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    SMODS.change_booster_limit(-card.ability.extra.boosters)
+  end,
+  designer = "CBMX",
+  megas = {"mega_drampa"},
+  attributes = {"passive"},
+}
+-- Mega Drampa 780-1
+local mega_drampa = {
+  name = "mega_drampa",
+  config = { extra = { boosters = 1, booster_choice_mod = 1 } },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.boosters, card.ability.extra.booster_choice_mod } }
+  end,
+  rarity = "poke_mega",
+  cost = 12,
+  stage = "Mega",
+  ptype = "Dragon",
+  gen = 7,
+  blueprint_compat = false,
+  add_to_deck = function(self, card, from_debuff)
+    poke_upgrade_all_shop_packs('mega')
+    -- to stop adding boosters when mega evolving
+    G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + card.ability.extra.boosters
+    G.GAME.modifiers.booster_choice_mod = (G.GAME.modifiers.booster_choice_mod or 0) + card.ability.extra.booster_choice_mod
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) - card.ability.extra.boosters
+    G.GAME.modifiers.booster_choice_mod = math.max(0, (G.GAME.modifiers.booster_choice_mod or 0) - card.ability.extra.booster_choice_mod)
+  end,
+  attributes = {"passive"},
+}
+
 return {name = "Pokemon Jokers 751-780", 
-        list = {mimikyu},
+        list = {mimikyu, drampa, mega_drampa},
 }

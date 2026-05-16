@@ -5281,6 +5281,27 @@ return {
                   "{C:inactive}(#3#){}"
                 }
             },
+            j_poke_drampa = {
+                name = "Drampa",
+                text = {
+                    "{C:attention}+#1#{} Booster Pack slot",
+                    "available in shop",
+                    "{C:attention}Booster Packs{} are always",
+                    "{C:attention}Jumbo{} or better",
+                }
+            },
+            j_poke_mega_drampa = {
+                name = "Mega Drampa",
+                text = {
+                    "{C:attention}+#1#{} Booster Pack slot",
+                    "available in shop",
+                    "{C:attention}Booster Packs{} are",
+                    "always {C:attention}Mega",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:attention}+#2#{} card selection limit",
+                    "in {C:attention}Booster Packs",
+                }
+            },
             j_poke_nickit = {
                 name = "Nickit",
                 text = {
