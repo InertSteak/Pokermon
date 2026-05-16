@@ -238,19 +238,28 @@ local shuckle={
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind and not card.getting_sliced and not context.blueprint and G.consumeables and G.consumeables.cards and #G.consumeables.cards > 0 then
+    if context.setting_blind and not card.getting_sliced and not context.blueprint and G.consumeables and #G.consumeables.cards > 0 then
       local sliced_card = G.consumeables.cards[1]
       if not sliced_card.getting_sliced and not sliced_card.config.center.berry_juice then
         sliced_card.getting_sliced = true
-        G.E_MANAGER:add_event(Event({func = function()
+        G.E_MANAGER:add_event(Event({
+          func = function()
             card:juice_up(0.8, 0.8)
             sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
-            play_sound('slice1', 0.96+math.random()*0.08)
-            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, pokermon.juice_list[sliced_card.config.center.set] or 'c_poke_berry_juice_mystery')
-            _card:add_to_deck()
-            G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-        return true end }))
+            play_sound('slice1', 0.96 + math.random() * 0.08)
+
+            local key
+            if sliced_card.config.center.key == 'c_poke_megastone' then
+              key = 'c_poke_berry_juice_mega'
+            else
+              key = pokermon.juice_list[sliced_card.config.center.set] or 'c_poke_berry_juice_mystery'
+            end
+
+            local berry_juice = SMODS.add_card({set = 'Item', key = key})
+            SMODS.calculate_effect({message = localize('poke_plus_pokeitem')}, berry_juice)
+            return true
+          end
+        }))
       end
     end
   end,
@@ -1459,58 +1468,55 @@ local tyrogue={
 		return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        faint_baby_poke(self, card, context)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
-        }
-      end
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
-        local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+
+    if context.joker_main then
+      faint_baby_poke(self, card, context)
+      return {
+        Xmult = card.ability.extra.Xmult_minus
+      }
+    end
+
+    if G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not context.blueprint then
+      if context.before and #context.full_hand == 5 then
+        local target = pseudorandom_element(context.full_hand, 'tyrogue')
+        G.playing_card = (G.playing_card and G.playing_card + 1) or 1
         local copy = copy_card(target, nil, nil, G.playing_card)
         copy:add_to_deck()
         G.deck.config.card_limit = G.deck.config.card_limit + 1
         table.insert(G.playing_cards, copy)
         G.hand:emplace(copy)
         copy.states.visible = nil
+
         G.E_MANAGER:add_event(Event({
           func = function()
-              copy:start_materialize()
-              return true
+            copy:start_materialize()
+            return true
           end
-        })) 
-        playing_card_joker_effects({copy})
+        }))
         return {
-            message = localize('k_copied_ex'),
-            colour = G.C.CHIPS,
-            card = card,
-            playing_cards_created = {true}
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          playing_cards_created = {copy}
+        }
+      end
+
+      if context.pre_discard and #context.full_hand == 5 and not context.hook then
+        local random_card = pseudorandom_element(context.full_hand, 'tyrogue')
+        random_card.poke_tyrogue_destroy = true
+      end
+
+      if context.discard and context.other_card.poke_tyrogue_destroy then
+        context.other_card.poke_tyrogue_destroy = nil
+        return {
+          remove = true
         }
       end
     end
-    
-    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
-      if not card.ability.extra.destroyed_card then
-        card.ability.extra.destroyed_card = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
-      end
-      if context.other_card == card.ability.extra.destroyed_card then
-        return {
-          delay = 0.45, 
-          remove = true,
-          card = card
-        }
-      end
-    end
-    
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.destroyed_card = nil
-      local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    
+
     local forced_key = nil
     if #G.playing_cards > G.GAME.starting_deck_size then
       forced_key = "j_poke_hitmonchan"

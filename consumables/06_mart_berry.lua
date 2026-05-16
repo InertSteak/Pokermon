@@ -218,6 +218,38 @@ local berry_juice_tarot = {
   end
 }
 
+local berry_juice_mega = {
+  name = "berry_juice_mega",
+  key = "berry_juice_mega",
+  set = "Item",
+  artist = { "Sonfive", "Emma" },
+  berry_juice = true,
+  poke_multi_item = true,
+  pos = { x = 7, y = 7 },
+  atlas = "AtlasConsumablesBasic",
+  cost = 12,
+  unlocked = true,
+  discovered = true,
+  no_collection = true,
+  in_pool = function(self)
+    return false
+  end,
+  can_use = function(self, card)
+    return G.jokers and #G.jokers.cards > 0 and
+        poke_find_leftmost_or_highlighted(function(joker)
+          return get_mega(joker) and not joker.debuff
+        end)
+  end,
+  use = function(self, card, area, copier)
+    local target = poke_find_leftmost_or_highlighted(function(joker)
+      return get_mega(joker) and not joker.debuff
+    end)
+    local prefix = target.config.center.poke_custom_prefix or "poke"
+    local forced_key = "j_" .. prefix .. "_" .. get_mega(target)
+    poke_evolve(target, forced_key)
+  end
+}
+
 local berry_juice_mystery = {
   name = "berry_juice_mystery",
   key = "berry_juice_mystery",
@@ -257,5 +289,5 @@ local berry_juice_mystery = {
 
 
 return {name = "Items",
-        list = {berry_juice, berry_juice_tarot, berry_juice_planet, berry_juice_spectral, berry_juice_item, berry_juice_energy, berry_juice_mystery}
+        list = {berry_juice, berry_juice_tarot, berry_juice_planet, berry_juice_spectral, berry_juice_item, berry_juice_energy, berry_juice_mega, berry_juice_mystery}
 }
