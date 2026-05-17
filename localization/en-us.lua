@@ -767,7 +767,7 @@ return {
               name = "Elite Stake",
               text = {
                 "{X:gray,C:attention}+2{} Ante win requirement",
-                "Last 4 Antes are Showdown Boss Blinds",
+                "Last {C:attention}4{} Antes are {C:attention}Showdown Boss Blinds",
                 "{s:0.8}Applies all previous Stakes"
               },
             },
