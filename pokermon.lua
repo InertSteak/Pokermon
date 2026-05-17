@@ -172,9 +172,12 @@ load_directory("boosters", SMODS.Booster, true)
 --Load seals
 load_directory("seals", SMODS.Seal, true)
 
+--Load stakes
+load_directory("stakes", SMODS.Stake, true)
+
 --Load stickers
 load_directory("stickers", function (item)
-  item.hide_badge = true
+  if not item.name == "weakened" then item.hide_badge = true end
   SMODS.Sticker(item)
 end, true)
 
@@ -248,11 +251,67 @@ function Card:set_ability(center, initial, delay_sprites)
   return ret
 end
 
+-- copy of `is_energizable` but for centers instead
+local is_center_energizable = function(center)
+  if energizable_vanilla[center.name] then
+    return true
+  end
+  -- Regular case
+  if type(center.config.extra) == "table" then
+    for name, _ in pairs(energy_values) do
+      if type(center.config.extra[name]) == "number" then
+        return true
+      end
+    end
+  elseif type(center.config.extra) == "number" then
+    return true
+  -- More generic check for energizable values that aren't in ability.extra
+  else
+    for k, _ in pairs(energy_values) do
+      if center.config[energy_values[k]] and center.config[energy_values[k]] > 0 then return true end
+    end
+  end
+  return false
+end
+
+-- workaround for `get_family_keys` taking a card instead of a center
+local get_family_key_set = function(center)
+  local family = poke_get_family_list(center.name)
+  local keys = {}
+  if #family > 1 then
+    local prefix = center.poke_custom_prefix or 'poke' -- if it's in a family, we know it's one of these
+    for _, v in ipairs(family) do
+      local name = type(v) == 'table' and v.key or v
+      local key = 'j_' .. prefix .. '_' .. name
+      if G.P_CENTERS[key] then
+        keys[key] = true
+      end
+    end
+  else
+    keys[center.key] = true
+  end
+  return keys
+end
+
 
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
     if G.GAME.modifiers.no_energy then
       G.GAME.energy_rate = 0
+    end
+    for _, center in pairs(G.P_CENTERS) do
+      -- distribute `poke_weakened_compat` to jokers
+      if G.GAME.modifiers.enable_poke_weakened and center.set == 'Joker'
+          and center.poke_weakened_compat == nil then -- allow manual overrides
+        local family_key_set = get_family_key_set(center)
+        for k, _ in pairs(family_key_set) do
+          local rel_center = G.P_CENTERS[k]
+          if rel_center and is_center_energizable(rel_center) then
+            center.poke_weakened_compat = true
+            break
+          end
+        end
+      end
     end
   end
 

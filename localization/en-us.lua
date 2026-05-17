@@ -6157,6 +6157,15 @@ return {
                 }
             },
         },
+        Stake={
+            stake_poke_lilac_stake = {
+            name = "Lilac Stake",
+            text = {"Shop can have {C:attention}Weakened{} Jokers",
+                    "{C:inactive,s:0.8}(Base values are {C:attention,s:0.8}de-energized{}{C:inactive,s:0.8}){}",
+                    "{s:0.8}Applies all previous Stakes"
+                },
+            },
+        },
         Tag = {
             tag_poke_pocket_tag = {
                 name = "Pocket Tag",
@@ -6328,6 +6337,14 @@ return {
                 text = {
                   "{X:bird,C:white}Bird{}",
                 }
+            },
+            poke_lilac_stake_sticker = {
+            name = "Lilac Sticker",
+            text = {
+                    "Used this Joker",
+                    "to win on {C:attention}Lilac",
+                    "{C:attention}Stake{} difficulty"
+                },
             },
             --infoqueue used for things like kabuto and omanyte
             ancient = {
@@ -6942,6 +6959,13 @@ return {
                 "{C:dark_edition}#1#{}"
               }
             },
+            poke_weakened = {
+                name = "Weakened",
+                text = {
+                        "Base values",
+                        "are {C:attention}de-energized{}"
+                    },
+            },
             endless = {
               name = "Reusable",
               text = {
@@ -7480,6 +7504,7 @@ return {
 
             k_poke_safari = "Safari",
             k_poke_mega = "Mega",
+            poke_weakened = "Weakened",
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},
