@@ -35,8 +35,73 @@ find_pokemon_type = function(target_type, exclude_card, exclude_name)
   return found
 end
 
+quantum_type_check = function(card, target_type)
+  if not card then return false end
+
+  local card_type = get_type(card)
+  local groups = {}
+
+  -- collect all quantum groups
+  for _, joker in ipairs(G.jokers.cards) do
+    if joker:has_attribute("quantum_types") then
+      local targets = joker.ability.extra.targets or {}
+      local group = {}
+
+      for _, t in ipairs(targets) do
+        group[t.type] = true
+      end
+
+      table.insert(groups, group)
+    end
+  end
+
+  -- merge overlapping groups
+  local changed = true
+  while changed do
+    changed = false
+
+    for i = #groups, 1, -1 do
+      for j = i - 1, 1, -1 do
+        local overlap = false
+
+        for k in pairs(groups[i]) do
+          if groups[j][k] then
+            overlap = true
+            break
+          end
+        end
+
+        if overlap then
+          for k in pairs(groups[i]) do
+            groups[j][k] = true
+          end
+
+          table.remove(groups, i)
+          changed = true
+          break
+        end
+      end
+    end
+  end
+
+  -- check merged groups
+  for _, group in ipairs(groups) do
+    if group[target_type]
+    and group[card_type]
+    and target_type ~= card_type
+    then
+      return true
+    end
+  end
+
+  return false
+end
+
 is_type = function(card, target_type)
-  return card and get_type(card) == target_type
+  return card and (
+    get_type(card) == target_type
+    or quantum_type_check(card, target_type)
+  )
 end
 
 get_type = function(card)

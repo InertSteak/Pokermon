@@ -2032,8 +2032,8 @@ return {
                     "{C:chips}+#2#{} Chips for each",
                     "{C:attention}Blind{} skipped this run",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Skipping {C:attention}Blinds{} no",
-                    "longer skips {C:attention}Shops{}",
+                    "Visit the {C:attention}shop{}",
+                    "after skipping",
                     "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
                 } 
             },
@@ -2095,7 +2095,7 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
-                    "{X:attention,C:white}3+{} : Create an {C:item}Item{} card",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
                     "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
                 } 
@@ -3853,7 +3853,7 @@ return {
                 "{C:green}#3# in #4#{} chance for",
                 "discarded {C:attention}Hazard{} cards",
                 "to be returned to {C:attention}hand",
-                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips",
               }
             },
             j_poke_lileep = {
@@ -3917,7 +3917,7 @@ return {
                 name = "Milotic",
                 text = {
                   "Retrigger all cards played if",
-                  "they share the same {C:attention}suit{}"
+                  "poker hand is {C:attention}mono-suit{}"
                 }
             },
             j_poke_duskull = {
@@ -5478,6 +5478,28 @@ return {
                 "{C:inactive,s:0.8}(Resets at end of round)",
                 "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
               }
+            },
+            j_poke_shroodle = {
+                name = 'Shroodle',
+                text = {
+                    "{C:attention}Nature:{} {B:1,V:4}#1#{}, {B:2,V:5}#2#{}, {B:3,V:6}#3#{}",
+                    "{br:3}text",
+                    "When {C:attention}Boss Blind{} is defeated",
+                    "create a {C:attention}random{} tag",
+                    "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#4#{C:inactive,s:0.8} tags){}"
+                } 
+            },
+            j_poke_grafaiai = {
+                name = 'Grafaiai',
+                text = {
+                    "{C:attention}Nature:{} {B:1,V:4}#1#{}, {B:2,V:5}#2#{}, {B:3,V:6}#3#{}",
+                    "Jokers with a {C:attention}Nature{} type also",
+                    "count as the other {C:attention}Nature{} Types",
+                    "{br:3}text",
+                    "When {C:attention}Boss Blind{} is defeated, create the",
+                    "last {C:attention}tag{} used during this run",
+                    "{C:inactive}(Last used: #4#){}"
+                } 
             },
             j_poke_bramblin = {
               name = "Bramblin",
