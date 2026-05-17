@@ -5106,6 +5106,38 @@ return {
                     "also contains a {C:attention}King{} or {C:attention}Queen{}"
                 } 
             },
+            j_poke_inkay = {
+                name = "Inkay",
+                text = {
+                    "Cards have a {C:green}#1# in #2#{} chance to",
+                    "be drawn {C:attention}face down{}",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Played face down cards give",
+                    "{C:red}+#3#{} Mult when scored",
+                    "{C:inactive,s:0.8}(Evolves after triggering face down cards {C:attention,s:0.8}#4#{C:inactive,s:0.8} times)"
+                } 
+            },
+            j_poke_malamar = {
+                name = "Malamar",
+                text = {
+                    "All cards are drawn {C:attention}face down{}",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Played face down cards give",
+                    "{X:red,C:white}X#1#{} Mult when scored",
+                } 
+            },
+            j_poke_mega_malamar = {
+                name = "Mega Malamar",
+                text = {
+                    "Most cards besides this Joker,",
+                    "its {C:attention}Mega Stone{} and",
+                    "{C:attention}playing cards{} held in hand",
+                    "are {C:attention}face down{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "Played cards give",
+                    "{X:red,C:white}X#1#{} Mult when scored",
+                }
+            },
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {

@@ -1432,3 +1432,14 @@ poke_drain_chips = function(card, amount)
 
   return base_drain + bonus_drain
 end
+
+-- Multiple Mega Malamar hooks
+local cscui = create_shop_card_ui
+create_shop_card_ui = function(card, type, area)
+  local ret = cscui(card, type, area)
+  if #find_joker("mega_malamar") > 0 and not (card.facing == 'back') then
+    card.facing = 'back'
+    card.sprite_facing = 'back'
+  end
+  return ret
+end
