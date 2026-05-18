@@ -1191,6 +1191,23 @@ jd_def["j_poke_torkoal"] = {
 --	Spoink
 --	Grumpig
 --	Spinda
+jd_def["j_poke_spinda"] = {
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature2"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3"},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end
+}
+
 --	Trapinch
 --	Vibrava
 --	Flygon
