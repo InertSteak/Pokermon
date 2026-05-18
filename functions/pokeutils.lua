@@ -437,7 +437,7 @@ function Game:init_game_object()
 end
 
 poke_is_in_collection = function(card)
-  if not card.area then return true end
+  if not card.area and G.OVERLAY_MENU then return true end
   if G.your_collection then
     for k, v in pairs(G.your_collection) do
       if card.area == v then
