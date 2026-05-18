@@ -1302,7 +1302,21 @@ jd_def["j_poke_crawdaunt"] = {
 }
 
 --	Baltoy
+jd_def["j_poke_baltoy"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  }
+}
+
 --	Claydol
+jd_def["j_poke_claydol"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  }
+}
+
 --	Lileep
 jd_def["j_poke_lileep"] = {
   text = {
