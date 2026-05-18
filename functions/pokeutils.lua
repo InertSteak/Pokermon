@@ -438,6 +438,7 @@ end
 
 poke_is_in_collection = function(card)
   if not card.area and G.OVERLAY_MENU then return true end
+  if card.area and card.area.config.collection then return true end
   if G.your_collection then
     for k, v in pairs(G.your_collection) do
       if card.area == v then
