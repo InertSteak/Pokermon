@@ -4936,6 +4936,25 @@ return {
                   "create {C:attention}#3# Double Tags{} "
                 }
             },
+						j_poke_deerling = {
+							name = 'Deerling',
+							text = {
+								"{C:attention}Nature:{} {C:inactive}({V:1}#4#{C:inactive})",
+								"Gain {C:mult}+#1#{} Mult per {C:attention}consecutive{} played",
+								"hand with only scoring {C:attention}Nature{} cards",
+								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+								"{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#3#{C:inactive,s:0.8} Mult)",
+							}
+						},
+						j_poke_sawsbuck = {
+							name = 'Sawsbuck',
+							text = {
+								"{C:attention}Nature:{} {C:inactive}({V:1}#3#{C:inactive})",
+								"Gain {C:mult}+#1#{} Mult per {C:attention}consecutive{} played",
+								"hand with only scoring {C:attention}Nature{} cards",
+								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+							}
+						},
             j_poke_frillish = {
                 name = "Frillish",
 				text = {

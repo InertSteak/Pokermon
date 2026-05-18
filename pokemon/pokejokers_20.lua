@@ -394,7 +394,209 @@ local vanilluxe={
   attributes = {"chips", "scaling", "food", "tag", "generation"},
 }
 -- Deerling 585
+local deerling = {
+	name = "deerling",
+	pos = {x = 4, y = 1},
+	 config = {extra = {mult_mod = 1, mult = 0, check = true, form = "Summer", targets = {{suit = "Spades"}}}, evo_rqmt = 12},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    --local card_vars = {card.ability.extra.mult_mod, card.ability.extra.mult, self.config.evo_rqmt, card.ability.extra.targets.suit, colours = {G.C.SUITS["Spades"]}}
+		local abbr = card.ability.extra
+		return {vars = {abbr.mult_mod, abbr.mult, self.config.evo_rqmt, abbr.targets[1].suit, colours = {G.C.SUITS[abbr.targets[1].suit or "Spades"]}}}
+	end,
+	rarity = 1, --Common
+	cost = 6,
+	stage = "Basic",
+	ptype = "Grass",
+	gen = 5,
+	designer = "Thor's Girdle",
+	atlas = "AtlasJokersBasicGen05",
+	perishable_compat = false,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			local wrongSuit = false
+			for _, playing_card in ipairs(context.scoring_hand) do
+				if not playing_card:is_suit(card.ability.extra.targets[1].suit) then
+					wrongSuit = true
+					break
+				end
+			end
+			if wrongSuit then
+				local last_mult = card.ability.extra.mult
+				card.ability.extra.mult = 0
+				if last_mult > 0 then
+					return {
+						message = localize('k_reset')
+					}
+				end
+			else
+				card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+			end
+		end
+		
+		if context.joker_main then
+		return {
+			mult = card.ability.extra.mult
+		}
+		end
+		
+		--this is literally just so it works with spawning from DebugPlus
+		if card.ability.extra.check then
+			self:set_sprites(card)
+			card.ability.extra.check = false
+		end
+		
+	return scaling_evo(self, card, context, "j_poke_sawsbuck", card.ability.extra.mult, self.config.evo_rqmt)
+	end,
+
+	set_ability = function(self, card, initial, delay_sprites)
+	  if initial then
+			self:set_nature(card)
+		end
+	end,
+
+  set_nature = function(self, card)
+		if card.ability and card.ability.extra and card.ability.extra.targets and card.ability.extra.targets[1] and card.ability.extra.targets[1].suit then
+			card.ability.extra.targets = get_poke_target_card_suit("deerling", true, 'Spades')
+			if card.ability.extra.targets[1].suit == "Hearts" then
+				card.ability.extra.form = "Spring"
+			elseif card.ability.extra.targets[1].suit == "Spades" then
+				card.ability.extra.form = "Summer"
+			elseif card.ability.extra.targets[1].suit == "Diamonds" then
+				card.ability.extra.form = "Autumn"
+			elseif card.ability.extra.targets[1].suit == "Clubs" then
+				card.ability.extra.form = "Winter"
+			else
+				card.ability.extra.form = "Summer"
+			end
+			self:set_sprites(card)
+		end
+  end,
+	
+	set_sprites = function(self, card, front)
+		if card.ability and card.ability.extra and card.ability.extra.form then
+			if card.ability.extra.form == "Spring" then
+				card.children.center:set_sprite_pos({x = 2, y = 1})
+			elseif card.ability.extra.form == "Summer" then
+				card.children.center:set_sprite_pos({x = 4, y = 1})
+			elseif card.ability.extra.form == "Autumn" then
+				card.children.center:set_sprite_pos({x = 6, y = 1})		
+			elseif card.ability.extra.form == "Winter" then
+				card.children.center:set_sprite_pos({x = 8, y = 1})
+			end
+		else
+			self:set_nature(card)
+		end
+		
+	end,
+	
+}
 -- Sawsbuck 586
+local sawsbuck = {
+	name = "sawsbuck",
+	pos = {x = 0, y = 2},
+	 config = {extra = {mult_mod = 2, mult = 0, check = true, form = "Summer", targets = {{suit = "Spades"}}}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"suit"}}
+    end
+    --local card_vars = {card.ability.extra.mult_mod, card.ability.extra.mult, card.ability.extra.targets.suit}
+		local abbr = card.ability.extra
+		return {vars = {abbr.mult_mod, abbr.mult, abbr.targets[1].suit, colours = {G.C.SUITS[abbr.targets[1].suit or "Spades"]}}}
+	end,
+	rarity = "poke_safari", 
+	cost = 7,
+	stage = "One",
+	ptype = "Grass",
+	gen = 5,
+	designer = "Thor's Girdle",
+	atlas = "AtlasJokersBasicGen05",
+	perishable_compat = false,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			local wrongSuit = false
+			for _, playing_card in ipairs(context.scoring_hand) do
+				if not playing_card:is_suit(card.ability.extra.targets[1].suit) then
+					wrongSuit = true
+					break
+				end
+			end
+			if wrongSuit then
+				local last_mult = card.ability.extra.mult
+				card.ability.extra.mult = 0
+				if last_mult > 0 then
+					return {
+						message = localize('k_reset')
+					}
+				end
+			else
+				card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+			end
+		end
+		
+		if context.joker_main then
+		return {
+			mult = card.ability.extra.mult
+		}
+		end
+		
+		if card.ability.extra.check then
+			self:set_sprites(card)
+			card.ability.extra.check = false
+		end
+	end,
+	
+	set_ability = function(self, card, initial, delay_sprites)
+	  if initial then
+			self:set_nature(card)
+		end
+	end,
+
+  set_nature = function(self, card)
+		if card.ability and card.ability.extra and card.ability.extra.targets and card.ability.extra.targets[1] and card.ability.extra.targets[1].suit then
+			card.ability.extra.targets = get_poke_target_card_suit("sawsbuck", true, 'Spades')
+			if card.ability.extra.targets[1].suit == "Hearts" then
+				card.ability.extra.form = "Spring"
+			elseif card.ability.extra.targets[1].suit == "Spades" then
+				card.ability.extra.form = "Summer"
+			elseif card.ability.extra.targets[1].suit == "Diamonds" then
+				card.ability.extra.form = "Autumn"
+			elseif card.ability.extra.targets[1].suit == "Clubs" then
+				card.ability.extra.form = "Winter"
+			else
+				card.ability.extra.form = "Summer"
+			end
+			self:set_sprites(card)
+		end
+  end,
+	
+	set_sprites = function(self, card, front)
+		if card.ability and card.ability.extra and card.ability.extra.form then
+			if card.ability.extra.form == "Spring" then
+				card.children.center:set_sprite_pos({x = 10, y = 1})
+			elseif card.ability.extra.form == "Summer" then
+				card.children.center:set_sprite_pos({x = 0, y = 2})
+			elseif card.ability.extra.form == "Autumn" then
+				card.children.center:set_sprite_pos({x = 2, y = 2})		
+			elseif card.ability.extra.form == "Winter" then
+				card.children.center:set_sprite_pos({x = 4, y = 2})
+			end
+		else 
+			self:set_nature(card)
+		end
+		
+	end,
+}
 -- Emolga 587
 -- Karrablast 588
 -- Escavalier 589
@@ -581,5 +783,5 @@ local ferrothorn={
 -- Klink 599
 -- Klang 600
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, deerling, sawsbuck, frillish, jellicent, ferroseed, ferrothorn},
 }
