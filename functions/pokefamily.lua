@@ -170,6 +170,7 @@ local default_family_list = {
   { "zorua", "zoroark" },
   { "deino", "zweilous", "hydreigon" },
   { "litleo", "pyroar" },
+  { "bunnelby", "diggersby"},
   { { key = "pumpkaboo", form = 0 }, { key = "pumpkaboo", form = 1 }, { key = "pumpkaboo", form = 2 }, { key = "pumpkaboo", form = 3 },
     { key = "gourgeist", form = 0 }, { key = "gourgeist", form = 1 }, { key = "gourgeist", form = 2 }, { key = "gourgeist", form = 3 },
   },

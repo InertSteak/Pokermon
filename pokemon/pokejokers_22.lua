@@ -135,9 +135,10 @@ local hydreigon={
 local bunnelby = {
 	name = "bunnelby",
 	--pos = {x = 26, y = 43},
-	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 8},
+	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 6},
 	loc_vars = function(self, info_queue, card)
 		type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
 		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'bunnelby')
 	  return {vars = {num, dem, math.max(self.config.evo_rqmt - card.ability.extra.triggers, 0)}}
 	end,
@@ -147,7 +148,6 @@ local bunnelby = {
 	ptype = "Colorless",
 	gen = 6,
 	designer = "Thor's Girdle",
-	--atlas = "AtlasJokersBasicNatdex",
 	perishable_compat = true,
 	blueprint_compat = true,
 	eternal_compat = true,
@@ -164,25 +164,26 @@ local bunnelby = {
 					end
 				end
 				if trigger == true then 
-					card.ability.extra.triggers = card.ability.extra.triggers + 1
 					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
 						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
-							 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
-                        SMODS.add_card {
-                            set = 'Tarot',
-												}
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end)
-                }))
+              card.ability.extra.triggers = card.ability.extra.triggers + 1
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  func = (function()
+                      SMODS.add_card {
+                          set = 'Tarot',
+                      }
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end)
+              }))
+          
+            return {
+              message = localize("k_plus_tarot"),
+              colour = G.C.PURPLE
+            }
 						end
 					end
-					return {
-						message = 'Dig!',
-						colour = G.C.ORANGE
-					}
 				end
 			end
      end
@@ -194,11 +195,12 @@ local bunnelby = {
 local diggersby = {
 	name = "diggersby",
 	--pos = {x = 28, y = 43},
-	config = {extra = {num= 1, dem = 2, Xmult = 1, Xmult_mod = 0.05}},
+	config = {extra = {num= 1, dem = 2, mult = 0, mult_mod = 2}},
 	loc_vars = function(self, info_queue, card)
 		type_tooltip(self, info_queue, card)
-		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggesby')
-	  return {vars = {num, dem, card.ability.extra.Xmult, card.ability.extra.Xmult_mod}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggersby')
+	  return {vars = {num, dem, card.ability.extra.mult, card.ability.extra.mult_mod}}
 	end,
 	rarity = "poke_safari", 
 	cost = 7,
@@ -206,11 +208,9 @@ local diggersby = {
 	ptype = "Earth",
 	gen = 6,
 	designer = "Thor's Girdle",
-	--atlas = "AtlasJokersBasicNatdex",
 	perishable_compat = true,
 	blueprint_compat = true,
 	eternal_compat = true,
-	
 	calculate = function(self, card, context)
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
      if G.deck and G.deck.cards then
@@ -223,35 +223,39 @@ local diggersby = {
 					end
 				end
 				if trigger == true then 
-					card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
 					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-						if SMODS.pseudorandom_probability(card, 'diggersby', card.ability.extra.num, card.ability.extra.dem, 'diggersby') then
-							 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
-                        SMODS.add_card {
-                            set = 'Tarot',
-												}
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end)
-                }))
+						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  func = (function()
+                      SMODS.add_card {
+                          set = 'Tarot',
+                      }
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end)
+              }))
+              SMODS.scale_card(card, {
+                ref_value = 'mult',
+                scalar_value = 'mult_mod',
+                message_colour = G.C.MULT,
+              })
+            
+            return {
+              message = localize("k_plus_tarot"),
+              colour = G.C.PURPLE
+            }
 						end
 					end
-					return {
-						message = 'Dig!',
-						colour = G.C.ORANGE
-					}
 				end
 			end
      end
    end
-	 if context.joker_main and card.ability.extra.Xmult > 1 then
+	 if context.joker_main and card.ability.extra.mult > 0 then
 		return {
-			xmult = card.ability.extra.Xmult
+			mult = card.ability.extra.mult
 		}
 	 end
-	 
 	end,
 }
 

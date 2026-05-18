@@ -5092,20 +5092,19 @@ return {
 						j_poke_bunnelby = {
 							name = 'Bunnelby',
 							text = {
-								"When you draw the last card of a", 
-								"{C:attention}Rank{} from your deck, {C:green}#1# in #2#{}",
-								"chance to gain a {C:tarot}Tarot{} card",
+                "{C:green}#1# in #2#{} chance to create a",
+                "{C:tarot}Tarot{} card when you",
+                "{C:attention}deplete{} a {C:attention}rank{}",
 								"{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
 							}
 						},
 						j_poke_diggersby = {
 							name = 'Diggersby',
 							text = {
-								"When you draw the last card", 
-								"of a {C:attention}Rank{} from your deck, gain",
-								"{X:mult,C:white}X#4#{} Mult and {C:green}#1# in #2#{} chance",
-								"to gain a {C:tarot}Tarot{} card",
-								"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+                "{C:green}#1# in #2#{} chance to create a",
+                "{C:tarot}Tarot{} card and gain {C:mult}+#4#{} Mult",
+                "when you {C:attention}deplete{} a {C:attention}rank{}",
+								"{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
 							}
 						},
             j_poke_litleo = {
@@ -6366,6 +6365,14 @@ return {
                     "the lowest {C:attention}stage{} of",
                     "one of the {C:attention}parents",
                     "{C:inactive}(Always {C:attention}3{C:inactive} rounds to hatch){}"
+                }
+            },
+            deplete = {
+                name = "Deplete",
+                text = {
+                    "Draw the {C:attention}last{} of a",
+                    "card remaining in deck",
+                    "during the {C:attention}Blind",
                 }
             },
             energize = {
