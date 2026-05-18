@@ -14,7 +14,7 @@ local jd_def = JokerDisplay.Definitions
 --	Diggersby
 jd_def["j_poke_diggersby"] = {
   text = {
-    { text = "+" },
+    { text = "+", G.C.MULT },
     { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
   },
 }
