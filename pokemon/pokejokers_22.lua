@@ -178,10 +178,8 @@ local bunnelby = {
                   end)
               }))
           
-            return {
-              message = localize("k_plus_tarot"),
-              colour = G.C.PURPLE
-            }
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+            trigger = false
 						end
 					end
 				end
@@ -241,10 +239,8 @@ local diggersby = {
                 message_colour = G.C.MULT,
               })
             
-            return {
-              message = localize("k_plus_tarot"),
-              colour = G.C.PURPLE
-            }
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+              trigger = false
 						end
 					end
 				end
