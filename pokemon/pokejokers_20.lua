@@ -579,7 +579,79 @@ local ferrothorn={
   attributes = {"hazards", "passive", "modify_card", "enhancements", "hand_type", "retrigger"},
 }
 -- Klink 599
+local klink = {
+	name = "klink",
+	--pos = {x = 26, y = 39},
+	config = {extra = {money = 1, drawn = 0, to_draw = 12, totalEarned = 0}, evo_rqmt = 8},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw - abbr.drawn, math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+	end,
+	rarity = 1, --Common
+	cost = 4,
+	stage = "Basic",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+				local earned = ease_poke_dollars(card, "klink", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		return scaling_evo (self, card, context, "j_poke_klang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+	end,
+}
 -- Klang 600
+local klang = {
+	name = "klang",
+	--pos = {x = 28, y = 39},
+	config = {extra = {money = 1, drawn = 0, to_draw = 10, totalEarned = 0}, evo_rqmt = 10},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+		return {vars = {abbr.money, abbr.to_draw - abbr.drawn, math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 6,
+	stage = "One",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+				local earned = ease_poke_dollars(card, "klang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		return scaling_evo (self, card, context, "j_poke_klinklang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+	end,
+}
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn, klink, klang},
 }

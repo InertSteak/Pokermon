@@ -4976,6 +4976,32 @@ return {
                 "{C:attention}Steel{} cards {C:attention}held in hand{}",
               }
             },
+						j_poke_klink = {
+							name = 'Klink',
+							text = {
+								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
+								"cards in a blind",
+								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klang = {
+							name = 'Klang',
+							text = {
+								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
+								"cards in a blind",
+								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klinklang = {
+							name = 'Klinklang',
+							text = {
+								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
+								"cards in a blind",
+								"{br:2}ERROR - CONTACT STEAK",
+								"{X:mult,C:white}X#3#{} if {C:attention}#4#{C:inactive}[#5#]{} cards have ",
+								"been drawn this blind",
+							}
+						},
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {

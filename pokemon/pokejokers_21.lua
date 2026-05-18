@@ -1,4 +1,49 @@
 -- Klinklang 601
+local klinklang = {
+	name = "klinklang",
+	--pos = {x = 0, y = 40},
+	config = {extra = {money = 1, Xmult = 2.5, drawn = 0, to_draw = 8, totaldrawn = 0, totalTarget = 30}},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw - abbr.drawn, abbr.Xmult, abbr.totalTarget, abbr.totaldrawn}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 8,
+	stage = "Two",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+		if context.setting_blind and not card.getting_sliced and not context.blueprint then
+			card.ability.extra.totaldrawn = 0
+		end
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+			card.ability.extra.totaldrawn = card.ability.extra.totaldrawn + #SMODS.drawn_cards
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+				local earned = ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		if context.cardarea == G.jokers and context.joker_main and card.ability.extra.totaldrawn >= card.ability.extra.totalTarget then
+			return {
+				message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+				colour = G.C.XMULT,
+				Xmult_mod = card.ability.extra.Xmult
+			}
+		end
+	end,
+}
 -- Tynamo 602
 -- Eelektrik 603
 -- Eelektross 604
@@ -519,5 +564,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
 }
