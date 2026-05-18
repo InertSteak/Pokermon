@@ -913,14 +913,18 @@ local mantine={
         chips = card.ability.extra.chips
       }
     end
-    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
-      if SMODS.has_enhancement(context.other_card, 'm_gold') then
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          message_colour = G.C.CHIPS,
-        })
-      end
+    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand)
+        and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      return {
+        card = context.other_card,
+        func = function()
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS,
+          })
+        end
+      }
     end
   end,
   attributes = {"chips", "scaling", "enhancements"},
