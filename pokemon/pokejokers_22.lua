@@ -132,7 +132,133 @@ local hydreigon={
 -- Frogadier 657
 -- Greninja 658
 -- Bunnelby 659
+local bunnelby = {
+	name = "bunnelby",
+	--pos = {x = 26, y = 43},
+	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 6},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
+		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'bunnelby')
+	  return {vars = {num, dem, math.max(self.config.evo_rqmt - card.ability.extra.triggers, 0)}}
+	end,
+	rarity = 1, --Common
+	cost = 6,
+	stage = "Basic",
+	ptype = "Colorless",
+	gen = 6,
+	designer = "Thor's Girdle",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
+     if G.deck and G.deck.cards then
+			for i, drawnCard in ipairs(SMODS.drawn_cards) do
+				local trigger = true
+				for k, v in pairs(G.deck.cards) do
+					if drawnCard:get_id() == v:get_id() then
+						trigger = false
+						break
+					end
+				end
+				if trigger == true then 
+					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+              card.ability.extra.triggers = card.ability.extra.triggers + 1
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  func = (function()
+                      SMODS.add_card {
+                          set = 'Tarot',
+                      }
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end)
+              }))
+          
+            return {
+              message = localize("k_plus_tarot"),
+              colour = G.C.PURPLE
+            }
+						end
+					end
+				end
+			end
+     end
+   end
+	return scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
+	end,
+}
 -- Diggersby 660
+local diggersby = {
+	name = "diggersby",
+	--pos = {x = 28, y = 43},
+	config = {extra = {num= 1, dem = 2, mult = 0, mult_mod = 2}},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggersby')
+	  return {vars = {num, dem, card.ability.extra.mult, card.ability.extra.mult_mod}}
+	end,
+	rarity = "poke_safari", 
+	cost = 7,
+	stage = "One",
+	ptype = "Earth",
+	gen = 6,
+	designer = "Thor's Girdle",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
+     if G.deck and G.deck.cards then
+			for i, drawnCard in ipairs(SMODS.drawn_cards) do
+				local trigger = true
+				for k, v in pairs(G.deck.cards) do
+					if drawnCard:get_id() == v:get_id() then
+						trigger = false
+						break
+					end
+				end
+				if trigger == true then 
+					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  func = (function()
+                      SMODS.add_card {
+                          set = 'Tarot',
+                      }
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end)
+              }))
+              SMODS.scale_card(card, {
+                ref_value = 'mult',
+                scalar_value = 'mult_mod',
+                message_colour = G.C.MULT,
+              })
+            
+            return {
+              message = localize("k_plus_tarot"),
+              colour = G.C.PURPLE
+            }
+						end
+					end
+				end
+			end
+     end
+   end
+	 if context.joker_main and card.ability.extra.mult > 0 then
+		return {
+			mult = card.ability.extra.mult
+		}
+	 end
+	end,
+}
+
 return {name = "Pokemon Jokers 631-660", 
-        list = {deino, zweilous, hydreigon},
+        list = {deino, zweilous, hydreigon, bunnelby, diggersby},
 }
