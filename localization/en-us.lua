@@ -5296,6 +5296,27 @@ return {
                 "in poker hand"
               }
             },
+						j_poke_dewpider = {
+							name = 'Dewpider',
+							text = {
+								"If sum of {C:attention}Ranks{} in scored hand", 
+								"is within {C:attention}[#1#-#2#]{} earn {C:money}$#3#",
+								"and gains {C:mult}+#5#{} Mult, required", 
+								"sums change at end of round",
+								"{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+								"{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#6#{C:inactive,s:0.8} Mult)",
+							}
+						},
+						j_poke_araquanid = {
+							name = 'Araquanid',
+							text = {
+								"If sum of {C:attention}Ranks{} in scored hand", 
+								"is within {C:attention}[#1#-#2#]{} earn {C:money}$#3#",
+								"and gains {C:mult}+#5#{} Mult, required", 
+								"sums change at end of round",
+								"{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+							}
+						},					
             j_poke_mimikyu = {
                 name = "Mimikyu",
                 text = {
