@@ -713,9 +713,10 @@ poke_convert_to_set = function(element_or_list)
   if element_or_list then
     local set
     if type(element_or_list) == 'table' then
-      for _, v in ipairs(element_or_list) do
+      for k, v in pairs(element_or_list) do
         set = set or {}
-        set[v] = true
+local key = v == true and k or v
+        set[key] = true
       end
     else
       set = { [element_or_list] = true }
