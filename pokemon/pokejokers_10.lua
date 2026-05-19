@@ -905,9 +905,12 @@ local skitty={
     local main_end
 
     if card.area and card.area == G.jokers then
-      local found_pos = get_index(G.jokers.cards, card) + 1
-      local other_joker = G.jokers.cards[found_pos]
-      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+      local found_pos = get_index(G.jokers.cards, card)
+      -- fix for multiplayer not removing cards from `G.jokers` properly
+      if found_pos then
+        local other_joker = G.jokers.cards[found_pos + 1]
+        main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+      end
     end
 
     return {vars = {cattype, colours = {type_colour, highlight_colour}}, main_end = main_end}
@@ -926,12 +929,15 @@ local skitty={
     local evo = item_evo(self, card, context, "j_poke_delcatty")
     if evo then return evo end
 
-    local found_pos = get_index(G.jokers.cards, card) + 1
-    local other_joker = G.jokers.cards[found_pos]
-    if is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
-      local ret = SMODS.blueprint_effect(card, other_joker, context)
-      if ret then ret.colour = G.C.BLUE end
-      return ret
+    local found_pos = get_index(G.jokers.cards, card)
+    -- fix for multiplayer not removing cards from `G.jokers` properly
+    if found_pos then
+      local other_joker = G.jokers.cards[found_pos + 1]
+      if is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
+        local ret = SMODS.blueprint_effect(card, other_joker, context)
+        if ret then ret.colour = G.C.BLUE end
+        return ret
+      end
     end
   end,
   attributes = {"copying", "types", "item_evo"},

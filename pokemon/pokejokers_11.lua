@@ -13,9 +13,12 @@ local delcatty={
     local main_end
 
     if card.area and card.area == G.jokers then
-      local found_pos = get_index(G.jokers.cards, card) + 1
-      local other_joker = G.jokers.cards[found_pos]
-      main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+      local found_pos = get_index(G.jokers.cards, card)
+      -- fix for multiplayer not removing cards from `G.jokers` properly
+      if found_pos then
+        local other_joker = G.jokers.cards[found_pos + 1]
+        main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+      end
     end
 
     return {vars = {cattype, card.ability.extra.energy_buff, colours = {type_colour, highlight_colour}}, main_end = main_end}
@@ -30,8 +33,9 @@ local delcatty={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    local found_pos = get_index(G.jokers.cards, card) + 1
-    local other_joker = G.jokers.cards[found_pos]
+    local found_pos = get_index(G.jokers.cards, card)
+    -- fix for multiplayer not removing cards from `G.jokers` properly
+    local other_joker = found_pos and G.jokers.cards[found_pos + 1]
     if other_joker and other_joker.config.center.blueprint_compat and not context.no_blueprint
         and is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
       local fake_card = {config = other_joker.config}

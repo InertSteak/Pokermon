@@ -913,14 +913,18 @@ local mantine={
         chips = card.ability.extra.chips
       }
     end
-    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
-      if SMODS.has_enhancement(context.other_card, 'm_gold') then
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          message_colour = G.C.CHIPS,
-        })
-      end
+    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand)
+        and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      return {
+        card = context.other_card,
+        func = function()
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS,
+          })
+        end
+      }
     end
   end,
   attributes = {"chips", "scaling", "enhancements"},
@@ -1388,8 +1392,11 @@ local smeargle={
     end
 
     -- Add blueprint compatible/incompatible text
-    local found_pos = get_index(G.jokers.cards, card) + 1
-    local other_joker = G.jokers.cards[found_pos]
+    local found_pos = get_index(G.jokers.cards, card)
+    -- fix for multiplayer not removing cards from `G.jokers` properly
+    if not found_pos then return end
+
+    local other_joker = G.jokers.cards[found_pos + 1]
 
     local main_end = poke_blueprint_compat_ui(other_joker)
 
@@ -1420,13 +1427,16 @@ local smeargle={
   end,
   calculate = function(self, card, context)
     if context.setting_blind and not card.getting_sliced then
-      local found_pos = get_index(G.jokers.cards, card) + 1
-      local other_joker = G.jokers.cards[found_pos]
-      if other_joker and other_joker.config.center.blueprint_compat then
-        card.sketched_joker = other_joker
-        card.ability.extra.copy_val = other_joker.unique_val
-        card.ability.extra.copy_val__ID = other_joker.unique_val__saved_ID or other_joker.ID
-        SMODS.calculate_effect({message = localize('k_copied_ex')}, card)
+      local found_pos = get_index(G.jokers.cards, card)
+      -- fix for multiplayer not removing cards from `G.jokers` properly
+      if found_pos then
+        local other_joker = G.jokers.cards[found_pos + 1]
+        if other_joker and other_joker.config.center.blueprint_compat then
+          card.sketched_joker = other_joker
+          card.ability.extra.copy_val = other_joker.unique_val
+          card.ability.extra.copy_val__ID = other_joker.unique_val__saved_ID or other_joker.ID
+          SMODS.calculate_effect({message = localize('k_copied_ex')}, card)
+        end
       end
     end
 

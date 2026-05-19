@@ -279,6 +279,20 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+  key = "elite_stake",
+  px = 29,
+  py = 29,
+  path = "elite_stake.png"
+})
+
+SMODS.Atlas({
+  key = "elite_stake_sticker",
+  px = 71,
+  py = 95,
+  path = "elite_stake_sticker.png"
+})
+
+SMODS.Atlas({
     key = "placeholder_item",
     path = "placeholder_item.png",
     px = 71,

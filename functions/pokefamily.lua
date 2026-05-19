@@ -179,6 +179,7 @@ local default_family_list = {
   { "litleo", "pyroar" },
   { { key = "furfrou", form = 0 }, { key = "furfrou", form = 1 }, { key = "furfrou", form = 2 }, { key = "furfrou", form = 3 }, { key = "furfrou", form = 4 }, { key = "furfrou", form = 5 }, { key = "furfrou", form = 6 }, { key = "furfrou", form = 7 }, { key = "furfrou", form = 8 }, { key = "furfrou", form = 9 },
   },
+  { "bunnelby", "diggersby"},
   { { key = "pumpkaboo", form = 0 }, { key = "pumpkaboo", form = 1 }, { key = "pumpkaboo", form = 2 }, { key = "pumpkaboo", form = 3 },
     { key = "gourgeist", form = 0 }, { key = "gourgeist", form = 1 }, { key = "gourgeist", form = 2 }, { key = "gourgeist", form = 3 },
   },

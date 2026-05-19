@@ -82,6 +82,27 @@ if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card
 '''
 match_indent = true
 
+# Elite Stake Functionality
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+elseif not v.boss.showdown and (v.boss.min <= math.max(1, G.GAME.round_resets.ante) and ((math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= 0 or G.GAME.round_resets.ante < 2)) then
+    eligible_bosses[k] = res and true or nil
+'''
+position = "before"
+payload = '''
+elseif G.GAME.modifiers.elite4 then
+    if v.boss.showdown and G.GAME.round_resets.ante >= 2 and
+            (G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3 or G.GAME.round_resets.ante % G.GAME.win_ante == 0) then
+        eligible_bosses[k] = res and true
+    elseif not v.boss.showdown and v.boss.min <= math.max(1, G.GAME.round_resets.ante) and
+            (math.max(1, G.GAME.round_resets.ante) % G.GAME.win_ante ~= 0 and not
+            (math.max(1, G.GAME.round_resets.ante) % G.GAME.win_ante >= G.GAME.win_ante - 3) or G.GAME.round_resets.ante < 2) then
+        eligible_bosses[k] = res and true
+    end
+'''
+match_indent = true
 
 ## Foresight / Scry functionality
 # Scry Functionality 1
