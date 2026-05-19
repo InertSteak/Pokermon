@@ -79,6 +79,7 @@ local pumpkaboo={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  poke_custom_values_to_keep = { "jack_target", "jacks_discarded" },
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
       card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('pumpkaboo'))
@@ -217,7 +218,7 @@ local gourgeist={
     end
   end,
   set_sprites = function(self, card, front)
-    if poke_can_set_sprite(self) then
+    if poke_can_set_sprite(card) then
       if card.loaded then
         card.loaded = nil
         self:set_ability(card)

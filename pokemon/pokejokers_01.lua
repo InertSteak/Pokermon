@@ -1035,6 +1035,7 @@ local spearow={
   gen = 1,
   ptype = "Colorless",
   blueprint_compat = false,
+  poke_custom_values_to_keep = { "upgrade" },
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end

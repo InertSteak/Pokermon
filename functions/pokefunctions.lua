@@ -176,7 +176,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target",                         "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -211,7 +211,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if type(card.ability.extra) == "table" then
     for k,v in pairs(values_to_keep) do
       if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
-        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" or k == "jack_target" then
+        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" then
           card.ability.extra[k] = v
         end
       end
