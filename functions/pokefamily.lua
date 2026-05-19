@@ -186,6 +186,7 @@ local default_family_list = {
   { "bramblin", "brambleghast" },
   { "tinkatink", "tinkatuff", "tinkaton" },
   { "wiglett", "wugtrio" },
+  { "cetoddle", "cetitan" },
   { "gimmighoul", "gholdengo", "gimmighoulr" },
   { "ruins_of_alph" },
   {{key = "imposter_professor", form = 0}, {key = "imposter_professor", form = 1}},
