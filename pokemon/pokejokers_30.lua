@@ -12,6 +12,51 @@
 -- Dracovish 882
 -- Arctovish 883
 -- Duraludon 884
+local duraludon = {
+  name = "duraludon",
+  config = {extra = {
+    Xmult = 2,
+    hands_played = 0,
+  }},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return {
+      vars = {
+        card.ability.extra.Xmult,
+        (card.ability.extra.hands_played % 2 == 0) and "1 remaining" or "Active!",
+
+      }
+    }
+  end,
+  designer = "Sonfive",
+  rarity = 3,
+  cost = 8,
+  stage = "Basic",
+  ptype = "Dragon",
+  gen = 8,
+  blueprint_compat = true,  
+  calculate = function(self, card, context)
+    local a = card.ability.extra
+    local odd, even = (a.hands_played % 2 == 1), (a.hands_played % 2 == 0)
+    if context.joker_main and not context.repetition then
+      if odd then 
+        a.hands_played = a.hands_played + 1
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {a.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = a.Xmult
+        }
+      elseif even then
+        a.hands_played = a.hands_played + 1
+        return {
+          message = "Recharging.." 
+        }
+        
+      end
+    end
+    return type_evo(self, card, context, "j_poke_archaludon", "metal")
+  end,
+}
 -- Dreepy 885
 local dreepy={
   name = "dreepy",
@@ -404,5 +449,5 @@ local kleavor={
   attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
 }
 return {name = "Pokemon Jokers 871-900", 
-        list = {dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
+        list = {duraludon, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

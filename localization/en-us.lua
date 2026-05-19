@@ -5342,6 +5342,14 @@ return {
                     "a {C:attention}Straight{}",
                 } 
             },
+            j_poke_duraludon = {
+                name = "Duraludon",
+                text = {
+                    "{X:red,C:white}X#1#{} Mult every {C:attention}2{} hands played",
+                    "{C:inactive}#2#",
+                    "{C:inactive,s:0.8}(Evolves with a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)"
+                }
+            },
             j_poke_dreepy = {
                 name = "Dreepy",
                 text = {
@@ -5649,6 +5657,19 @@ return {
                   "This Joker can't be debuffed",
                   "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
                   "{C:inactive,s:0.8}(Resets at end of round)",
+                }
+            },
+            j_poke_archaludon = {
+                name = "Archaludon",
+                text = {
+                    "{X:red,C:white}X#2#{} Mult every {C:attention}2{} hands played",
+                    "{C:inactive}#3#",
+                    "{br:3}brrrr",
+                    "Gain {X:red,C:white}X#1#{} Mult plus an additional",
+                    "{X:red,C:white}X#1#{} Mult for each {X:lightning,C:black}Lightning{} Joker",
+                    "you have for every {C:attention}2{} hands played",
+                    "{C:inactive}#4#",
+                    "{C:inactive}(Resets at end of round){}",
                 }
             },
             j_poke_missingno = {
