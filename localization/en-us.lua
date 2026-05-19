@@ -5031,6 +5031,24 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 }
             },
+	    j_unova_cubchoo = {
+                name = "Cubchoo",
+                text = {
+                    "This Joker gains {C:mult}+#2#{} Mult",
+                    "per scoring {C:clubs}#4#{} in played hand",
+                    "Lose {C:mult}#3#{} Mult if hand has no scoring {C:clubs}#5#{}",
+                    "{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#1#{C:inactive,s:0.8} / #6# Mult)",
+                }
+            },
+	    j_unova_beartic = {
+                name = "Beartic",
+                text = {
+                    "This Joker gains {C:mult}+#2#{} Mult",
+                    "per scoring {C:clubs}#4#{} in played hand",
+                    "Lose {C:mult}#3#{} Mult if hand has no scoring {C:clubs}#5#{}",
+                    "{C:inactive,s:0.8}(Currently {C:mult,s:0.8}+#1#{C:inactive,s:0.8} Mult)"
+                }
+            },
             j_poke_golett = {
                 name = "Golett",
                 text = {
