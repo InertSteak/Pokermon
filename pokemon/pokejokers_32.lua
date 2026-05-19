@@ -1,7 +1,165 @@
 -- Squawkabilly 931
 -- Nacli 932
+local nacli = {
+  name = "nacli",
+  config = {extra = {Xmult_mod = 0.2, Xmult = 1, numerator = 1, denominator = 2}, evo_rqmt = 2},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator, card.ability.extra.denominator, 'nacli')
+		return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, numerator, denominator}}
+  end,
+  designer = "Sonfive",
+  rarity = 3,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Earth",
+  gen = 9,
+  blueprint_compat = true,
+  
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      local abbr = card.ability.extra
+      local odds
+      local rightmost = G.jokers.cards[#G.jokers.cards]
+
+      if rightmost ~= card and not rightmost.ability.eternal then 
+        if is_type(rightmost, "Metal") or is_type(rightmost, "Water") then
+          odds = SMODS.pseudorandom_probability(card, 'nacli', abbr.numerator, (abbr.denominator / 2), 'nacli')
+        else
+          odds = SMODS.pseudorandom_probability(card, 'nacli', abbr.numerator, abbr.denominator, 'nacli')
+        end
+        if odds then
+          abbr.Xmult = abbr.Xmult + abbr.Xmult_mod
+          G.E_MANAGER:add_event(Event({
+          remove(self, rightmost, context)
+          }))
+          return{
+            message = localize('poke_saltcure_ex'), colour = HEX('A8F2FF')
+          }
+        end
+      end
+    end
+
+
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_naclstack", card.ability.extra.Xmult, self.config.evo_rqmt)
+  end
+}
 -- Naclstack 933
+local naclstack = {
+  name = "naclstack",
+  config = {extra = {Xmult = 2, Xmult_mod = 0.5, numerator = 1, denominator = 4}, evo_rqmt = 4},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator, card.ability.extra.denominator, 'nacli')
+		return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, numerator, denominator, (denominator/2)}}
+  end,
+  designer = "Sonfive",
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "One",
+  ptype = "Earth",
+  gen = 9,
+  blueprint_compat = true,
+  
+  calculate = function(self, card, context)
+    if context.setting_blind and not context.blueprint then
+      local abbr = card.ability.extra
+      local odds
+      local rightmost = G.jokers.cards[#G.jokers.cards]
+
+      if rightmost ~= card and not rightmost.ability.eternal then 
+        if is_type(rightmost, "Metal") or is_type(rightmost, "Water") then
+          odds = SMODS.pseudorandom_probability(card, 'naclstack', abbr.numerator, (abbr.denominator / 2), 'naclstack')
+        else
+          odds = SMODS.pseudorandom_probability(card, 'naclstack', abbr.numerator, abbr.denominator, 'naclstack')
+        end
+        if odds then
+          abbr.Xmult = abbr.Xmult + abbr.Xmult_mod
+          G.E_MANAGER:add_event(Event({
+          remove(self, rightmost, context)
+          }))
+          return{
+            message = localize('poke_saltcure_ex'), colour = HEX('A8F2FF')
+          }
+        end
+      end
+    end
+
+
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_garganacl", card.ability.extra.Xmult, self.config.evo_rqmt)
+  end
+}
 -- Garganacl 934
+local garganacl = {
+  name = "garganacl",
+  config = {extra = {Xmult_multi = 1.1, Xmult = 4, numerator = 1, denominator = 8}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator, card.ability.extra.denominator, 'nacli')
+		return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.Xmult, numerator, denominator, (denominator/2)}}
+  end,
+  designer = "Sonfive",
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "Two",
+  ptype = "Earth",
+  gen = 9,
+  blueprint_compat = true,
+  
+  calculate = function(self, card, context)
+    local abbr = card.ability.extra
+    if context.setting_blind and not context.blueprint then
+      local abbr = card.ability.extra
+      local odds
+      local rightmost = G.jokers.cards[#G.jokers.cards]
+
+      if rightmost ~= card and not rightmost.ability.eternal then 
+        if is_type(rightmost, "Metal") or is_type(rightmost, "Water") then
+          odds = SMODS.pseudorandom_probability(card, 'garganacl', abbr.numerator, (abbr.denominator / 2), 'garganacl')
+        else
+          odds = SMODS.pseudorandom_probability(card, 'garganacl', abbr.numerator, abbr.denominator, 'garganacl')
+        end
+        if odds then
+          abbr.Xmult = abbr.Xmult * abbr.Xmult_multi
+          G.E_MANAGER:add_event(Event({
+          remove(self, rightmost, context)
+          }))
+          return{
+            message = localize('poke_saltcure_ex'), colour = HEX('A8F2FF')
+          }
+        end
+      end
+    end
+    
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main then
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+          colour = G.C.XMULT,
+          Xmult_mod = card.ability.extra.Xmult
+        }
+      end
+    end
+  end
+}
 -- Charcadet 935
 local charcadet={
   name = "charcadet",
@@ -484,5 +642,5 @@ local wiglett={
   attributes = {"mult", "chips", "hand_type", "rank", "five", "six", "seven", "round_evo"},
 }
 return {name = "Pokemon Jokers 931-960", 
-        list = {charcadet, armarouge, ceruledge, bramblin, brambleghast, tinkatink, tinkatuff, tinkaton, wiglett},
+        list = {nacli, naclstack, garganacl, charcadet, armarouge, ceruledge, bramblin, brambleghast, tinkatink, tinkatuff, tinkaton, wiglett},
 }

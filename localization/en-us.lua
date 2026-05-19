@@ -5476,6 +5476,40 @@ return {
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
+            j_poke_nacli = {
+                name = 'Nacli',
+                text = {
+                    "When {C:attention}Blind{} is selected, {C:green}#3# in #4#{} chance to",
+                    "destroy rightmost {C:attention}Joker{} and gain {X:red,C:white}X#1#{}",
+                    "{C:inactive}(Guaranteed if target is {}{X:water,C:white}Water{}{C:inactive} or {}{X:metal,C:white}Metal{}{C:inactive}){}",
+                    "{br:4}text needs to be here to work",
+                    "This Joker can't be debuffed",
+                    "{C:inactive}(Evolves at {X:red,C:white}X#2#{}{C:inactive} / {}{X:red,C:white}X2{}{C:inactive}){}"                 
+                } 
+            },
+            j_poke_naclstack = {
+                name = 'Naclstack',
+                text = {
+                    "When {C:attention}Blind{} is selected, {C:green}#3# in #4#{} chance to",
+                    "destroy rightmost {C:attention}Joker{} and gain {X:red,C:white}X#1#{}",
+                    "{C:inactive}({C:green}#3# in #5#{}{C:inactive} if target is {}{X:water,C:white}Water{}{C:inactive} or {}{X:metal,C:white}Metal{}{C:inactive}){}",
+                    "{br:4}text needs to be here to work",
+                    "This Joker can't be debuffed",
+                    "{C:inactive}(Evolves at {X:red,C:white}X#2#{}{C:inactive} / {}{X:red,C:white}X4{}{C:inactive}){}"
+                } 
+            },
+            j_poke_garganacl = {
+                name = 'Garganacl',
+                text = {
+                    "When {C:attention}Blind{} is selected, {C:green}#3# in #4#{} chance",
+                    "to destroy rightmost {C:attention}Joker{} and",
+                    "mulitply this Joker's {X:red,C:white}X{} Mult by {X:red,C:white}X#1#{}",
+                    "{C:inactive}({C:green}#3# in #5#{}{C:inactive} if target is {}{X:water,C:white}Water{}{C:inactive} or {}{X:metal,C:white}Metal{}{C:inactive}){}",
+                    "{br:4}text needs to be here to work",
+                    "This Joker can't be debuffed",
+                    "{C:inactive}(Currently {}{X:red,C:white}X#2#{}{C:inactive} Mult){}"
+                } 
+            },
             j_poke_charcadet = {
               name = "Charcadet",
               text = {
@@ -7465,6 +7499,7 @@ return {
             poke_sticky_web_ex = "Sticky Web!",
             poke_head_smash_ex = "Head Smash!",
             poke_teeter_dance_ex = "Teeter Dance!",
+			poke_saltcure_ex = "Salt Cure!",
             
             poke_attack_forme = "Attack",
             poke_defense_forme = "Defense",
