@@ -91,6 +91,7 @@ if SMODS.Attribute then
   SMODS.Attribute { key = "hazards" }
   SMODS.Attribute { key = "applies" }
   SMODS.Attribute { key = "drain" }
+  SMODS.Attribute { key = "quantum_types" }
 end
 
 --Load helper function files
@@ -302,11 +303,12 @@ function SMODS.current_mod.calculate(self, context)
     end
   end
   --Garbodor
-  if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss == true then
-    G.GAME.poke_ante_discards_used = 0
-  end
   if context.pre_discard and not context.hook then
     G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+  end
+  --Grafaiai
+  if context.tag_triggered then
+    G.GAME.last_tag = context.tag_triggered.key
   end
 end
 
