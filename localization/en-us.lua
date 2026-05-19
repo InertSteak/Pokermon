@@ -4000,8 +4000,8 @@ return {
                 "{C:attention}Holding {C:spectral}Ethereal {C:attention}Tag",
                 "Gain {C:attention}+#1#{} hand size while",
                 "opening {C:attention}Booster Packs{}",
-                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
                 "{C:inactive,s:0.8}(Evolves after selling a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
               }
             },
             j_poke_huntail = {
