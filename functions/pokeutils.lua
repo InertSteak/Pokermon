@@ -214,6 +214,18 @@ function poke_find_card(key_or_function, use_highlighted)
   end
 end
 
+function poke_find_playing_card(findFunc, findArea)
+  local area = findArea or G.deck.cards
+  local found = {}
+  for k, v in pairs(area) do
+    if findFunc(v) then
+      found[#found + 1] = v
+    end
+  end
+  
+  return found
+end
+
 function poke_find_leftmost_or_highlighted(key_or_function)
   if not key_or_function then
     return G.jokers.highlighted[1] or G.jokers.cards[1]
