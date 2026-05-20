@@ -111,6 +111,34 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
+poke_generate_illusion_ui = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  -- Create the illusion joker's text boxes
+  local old_ability = card.ability
+  card.ability = copy_table(old_ability)
+  for k, v in pairs(other_center.config) do card.ability[k] = v end
+  other_center:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  card.ability = old_ability
+  -- Adds the "...?" to the end of the name
+  if next(full_UI_table.name[1].nodes) then
+    local name_nodes = full_UI_table.name[1].nodes
+    local dynatext = name_nodes[#name_nodes].nodes[1].config.object
+    dynatext.string = dynatext.string .. localize("poke_illusion")
+    dynatext.config.string = {dynatext.string}
+    dynatext.strings = {}
+    dynatext:update_text(true)
+  end
+end
+
+poke_set_card_type_badge = function(card, badges, center)
+  if not center then center = card.config.center end
+
+  local card_type = SMODS.Rarity:get_rarity_badge(center.rarity)
+  local card_type_colour = get_type_colour(center, card)
+  local card_type_text_colour = SMODS.get_card_type_text_colour('Joker', center, card)
+
+  badges[#badges+1] = create_badge(card_type, card_type_colour, card_type_text_colour, 1.2)
+end
+
 -- Collection Grid UI helper functions
 function poke_create_your_collection_card(key, x, y, params)
   local form = type(key == 'table') and key.form
