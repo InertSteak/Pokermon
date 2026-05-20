@@ -51,7 +51,7 @@ local zoroark = {
       if not type_sticker_applied(card) then apply_type_sticker(card, "Dark") end
       if not card.ability.extra.hidden_key then
         card.ability.extra.hidden_key = get_random_poke_key_options {
-          key_append = 'zorua',
+          key_append = 'zoroark',
           rarity = 'Common',
           exclude_types = 'Dark',
         }
