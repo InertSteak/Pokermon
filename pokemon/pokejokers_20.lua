@@ -52,7 +52,7 @@ local zoroark = {
       if not card.ability.extra.hidden_key then
         card.ability.extra.hidden_key = get_random_poke_key_options {
           key_append = 'zoroark',
-          rarity = 'Common',
+          rarity = 'poke_safari',
           exclude_types = 'Dark',
         }
       end
