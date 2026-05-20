@@ -11,7 +11,7 @@ pattern = '''self.GAME.pseudorandom.seed = args.seed or (not (G.SETTINGS.tutoria
 position = 'after'
 match_indent = true
 payload = '''
-if args.challenge and args.challenge.rules and args.challenge.rules.custom and args.challenge.rules.custom[1].id == "poke_mystery_dungeon" then
+if args.challenge and args.challenge.rules and next(args.challenge.rules.custom) and args.challenge.rules.custom[1].id == "poke_mystery_dungeon" then
   self.GAME.pseudorandom.seed = "poke_"..tostring(os.date("!%d%m%Y"))
 end
 '''

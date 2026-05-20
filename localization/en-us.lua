@@ -4000,8 +4000,8 @@ return {
                 "{C:attention}Holding {C:spectral}Ethereal {C:attention}Tag",
                 "Gain {C:attention}+#1#{} hand size while",
                 "opening {C:attention}Booster Packs{}",
-                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
                 "{C:inactive,s:0.8}(Evolves after selling a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Linking Cord{C:inactive,s:0.8})",
               }
             },
             j_poke_huntail = {
@@ -5103,6 +5103,7 @@ return {
                 "{C:green}#1# in #2#{} chance to create a",
                 "{C:tarot}Tarot{} card when you",
                 "{C:attention}deplete{} a {C:attention}rank{}",
+                "{C:inactive}(Must have room)",
 								"{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#3#{C:inactive,s:0.8} times)",
 							}
 						},
@@ -5112,6 +5113,7 @@ return {
                 "{C:green}#1# in #2#{} chance to create a",
                 "{C:tarot}Tarot{} card and gain {C:mult}+#4#{} Mult",
                 "when you {C:attention}deplete{} a {C:attention}rank{}",
+                "{C:inactive}(Must have room)",
 								"{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
 							}
 						},

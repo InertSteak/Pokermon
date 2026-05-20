@@ -214,6 +214,18 @@ function poke_find_card(key_or_function, use_highlighted)
   end
 end
 
+function poke_find_playing_card(findFunc, findArea)
+  local area = findArea or G.deck.cards
+  local found = {}
+  for k, v in pairs(area) do
+    if findFunc(v) then
+      found[#found + 1] = v
+    end
+  end
+  
+  return found
+end
+
 function poke_find_leftmost_or_highlighted(key_or_function)
   if not key_or_function then
     return G.jokers.highlighted[1] or G.jokers.cards[1]
@@ -437,7 +449,8 @@ function Game:init_game_object()
 end
 
 poke_is_in_collection = function(card)
-  if not card.area then return true end
+  if not card.area and G.OVERLAY_MENU then return true end
+  if card.area and card.area.config.collection then return true end
   if G.your_collection then
     for k, v in pairs(G.your_collection) do
       if card.area == v then
@@ -712,9 +725,10 @@ poke_convert_to_set = function(element_or_list)
   if element_or_list then
     local set
     if type(element_or_list) == 'table' then
-      for _, v in ipairs(element_or_list) do
+      for k, v in pairs(element_or_list) do
         set = set or {}
-        set[v] = true
+local key = v == true and k or v
+        set[key] = true
       end
     else
       set = { [element_or_list] = true }
@@ -795,4 +809,96 @@ poke_nope = function(card)
         return true
     end
             }))
+end
+
+-- Utils for sprite manipulation on existing cards
+
+--- Checks whether two sprites are equal.
+--- Also accepts card centers (uses `atlas` and `pos`)
+poke_compare_sprites = function(a, b)
+  a = a or {}
+  b = b or {}
+  local a_atlas = type(a.atlas) == 'table' and a.atlas.name or a.atlas
+  local b_atlas = type(b.atlas) == 'table' and b.atlas.name or b.atlas
+  local a_pos = a.sprite_pos or a.pos or {}
+  local b_pos = b.sprite_pos or b.pos or {}
+  return a_atlas == b_atlas and a_pos.x == b_pos.x and a_pos.y == b_pos.y
+end
+
+--- Copies the sprite at `from.children[sprite_index]` to `card.children[sprite_index]`
+poke_copy_sprite = function(card, from, sprite_index)
+  if poke_compare_sprites(card.children[sprite_index], from.children[sprite_index]) then
+    return
+  end
+
+  if card.children[sprite_index] then
+    card.children[sprite_index]:remove()
+    card.children[sprite_index] = nil
+  end
+
+  if not from.children[sprite_index] then return end
+
+  local sprite = from.children[sprite_index]
+  local copy = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, sprite.atlas.name, sprite.sprite_pos)
+
+  for k, v in pairs(sprite.states) do
+    if v == from.states[k] then
+      copy.states[k] = card.states[k]
+    elseif not v.can then
+      copy.states[k].can = false
+    end
+  end
+
+  for k, v in pairs(sprite.role) do
+    if v == from then
+      copy.role[k] = card
+    else
+      copy.role[k] = v
+    end
+  end
+
+  card.children[sprite_index] = copy
+end
+
+poke_copy_joker_sprites = function(card, from)
+  poke_copy_sprite(card, from, 'center')
+  poke_copy_sprite(card, from, 'floating_sprite')
+end
+
+--- Resets the card back to its original sprite, while keeping states/roles intact
+poke_reset_sprite = function(card, center)
+  center = center or card.config.center
+
+  local sprite = card.children.center
+  local soul = card.children.floating_sprite
+
+  if poke_compare_sprites(sprite, center) then return end
+
+  card.children.center = nil
+  card.children.floating_sprite = nil
+
+  local new_center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, center.atlas, center.pos)
+
+  new_center.states = sprite.states
+  new_center.role = sprite.role
+
+  card.children.center = new_center
+
+  if center.soul_pos then
+    local new_soul = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, center.soul_atlas or center.atlas, center.soul_pos)
+
+    if soul then
+      new_soul.states = soul.states
+      new_soul.role = soul.role
+    else
+      new_soul.role.draw_major = card
+      new_soul.states.hover.can = false
+      new_soul.states.click.can = false
+    end
+
+    card.children.floating_sprite = new_soul
+  end
+
+  if sprite then sprite:remove() end
+  if soul then soul:remove() end
 end

@@ -156,16 +156,10 @@ local bunnelby = {
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do
-				local trigger = true
-				for k, v in pairs(G.deck.cards) do
-					if drawnCard:get_id() == v:get_id() then
-						trigger = false
-						break
-					end
-				end
-				if trigger == true then 
-					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+        local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
+				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then
+          if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               card.ability.extra.triggers = card.ability.extra.triggers + 1
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
               G.E_MANAGER:add_event(Event({
@@ -179,11 +173,10 @@ local bunnelby = {
               }))
           
               card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
-            else
-              poke_nope(card)
 						end
+          else
+            poke_nope(card)
 					end
-          trigger = false
 				end
 			end
      end
@@ -214,17 +207,11 @@ local diggersby = {
 	calculate = function(self, card, context)
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
      if G.deck and G.deck.cards then
-			for i, drawnCard in ipairs(SMODS.drawn_cards) do
-				local trigger = true
-				for k, v in pairs(G.deck.cards) do
-					if drawnCard:get_id() == v:get_id() then
-						trigger = false
-						break
-					end
-				end
-				if trigger == true then 
-					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-						if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+			for i, drawnCard in ipairs(SMODS.drawn_cards) do 
+        local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
+				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then 
+          if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
               G.E_MANAGER:add_event(Event({
                   func = (function()
@@ -235,19 +222,19 @@ local diggersby = {
                       return true
                   end)
               }))
-              SMODS.scale_card(card, {
-                ref_value = 'mult',
-                scalar_value = 'mult_mod',
-                message_colour = G.C.MULT,
-              })
             
               card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
-            else
-              poke_nope(card)
-						end
-					end
-          trigger = false
-				end
+            end
+            
+            SMODS.scale_card(card, {
+              ref_value = 'mult',
+              scalar_value = 'mult_mod',
+              message_colour = G.C.MULT,
+            })
+          else
+            poke_nope(card)
+          end
+        end
 			end
      end
    end
