@@ -173,32 +173,29 @@ local teraorb = {
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-        local change_list = {}
-        for i = 1, #poketype_list do
-          if card.ability.extra.change_to_type ~= poketype_list[i] then
-            change_list[#change_list + 1] = poketype_list[i]
-          end
+    if context.pre_discard then
+      local change_list = {}
+      for _, ptype in ipairs(POKE_TYPES) do
+        if card.ability.extra.change_to_type ~= ptype then
+          change_list[#change_list+1] = ptype
         end
-        card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            self:set_sprites(card)
-            return true
-          end
-        }))
-  
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.change_to_type, colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]})
       end
+      card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          self:set_sprites(card)
+          return true
+        end
+      }))
+      return {
+        message = card.ability.extra.change_to_type,
+        colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-      card.ability.extra.change_to_type = pseudorandom_element(poketype_list, 'tera')
-      
+      card.ability.extra.change_to_type = pseudorandom_element(POKE_TYPES, 'tera')
       self:set_sprites(card)
     end
   end,
