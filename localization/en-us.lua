@@ -5478,6 +5478,34 @@ return {
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
+            j_poke_smoliv = {
+              name = "Smoliv",
+              text = {
+                "Gain {C:money}$#1#{} of sell value",
+                "at end of round",
+                "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
+              }
+            },
+            j_poke_dolliv = {
+              name = "Dolliv",
+              text = {
+                "Adds {C:money}$#1#{} of sell value to",
+                "{C:attention}self{} and {C:attention}adjacent{} Jokers",
+                "at end of round",
+                "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
+              }
+            },
+            j_poke_arboliva = {
+              name = "Arboliva",
+              text = {
+                "Adds {C:money}$#1#{} of sell value to",
+                "{C:attention}every{} Joker and {C:attention}Consumable{}",
+                "at end of round",
+                "{br:2.5}ERROR - CONTACT STEAK",
+                "Adds {C:attention}double{} to {X:grass,C:white}Grass{} Jokers",
+                "and {X:grass,C:white}Grass{} {C:pink}Energy"
+              }
+            },
             j_poke_charcadet = {
               name = "Charcadet",
               text = {

@@ -384,8 +384,128 @@ local dachsbun={
   attributes = {"chips", "scaling", "rank", "joker", "types"},
 }
 -- Smoliv 928
+local smoliv = {
+  name = "smoliv",
+  pos = {x = 10, y = 1},
+  config = { extra = { money_mod = 2}, evo_rqmt = 12 },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.money_mod, self.config.evo_rqmt, card.sell_cost, } }
+  end,
+  designer = "Eternalnacho",
+  rarity = 1,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  gen = 9,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.main_eval and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        scalar_table = card.ability.extra,
+        scalar_value = 'money_mod',
+        scaling_message = {
+          message = localize('k_val_up'),
+        }
+      })
+      card:set_cost()
+    end
+    return scaling_evo(self, card, context, "j_poke_dolliv", card.sell_cost, self.config.evo_rqmt)
+  end,
+  attributes = {"types", "joker", "sell_value", "round_evo"}
+}
 -- Dolliv 929
+local dolliv = {
+  name = "dolliv",
+  pos = {x = 11, y = 1},
+  config = { extra = { money_mod = 2}, evo_rqmt = 22 },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local a = card.ability.extra or self.config.extra
+    return { vars = { a.money_mod, self.config.evo_rqmt, card.sell_cost } }
+  end,
+  designer = "Eternalnacho",
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  gen = 9,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.main_eval and not context.blueprint then
+      SMODS.scale_card(card, {
+        ref_table = card.ability,
+        ref_value = 'extra_value',
+        scalar_table = card.ability.extra,
+        scalar_value = 'money_mod',
+        scaling_message = {
+          message = localize('k_val_up'),
+        }
+      })
+      card:set_cost()
+      
+      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      for i = 1, #adjacent_jokers do
+        SMODS.scale_card(adjacent_jokers[i], {
+          ref_table = adjacent_jokers[i].ability,
+          ref_value = 'extra_value',
+          scalar_table = card.ability.extra,
+          scalar_value = 'money_mod',
+          scaling_message = {
+            message = localize('k_val_up'),
+          }
+        })
+        adjacent_jokers[i]:set_cost()
+      end
+    end
+    return scaling_evo(self, card, context, "j_poke_arboliva", card.sell_cost, self.config.evo_rqmt)
+  end,
+  attributes = {"types", "joker", "sell_value", "condition_evo"}
+}
 -- Arboliva 930
-return {name = "Pokemon Jokers 901-930", 
-        list = {ursaluna, tarountula, spidops, fidough, dachsbun},
+local arboliva = {
+  name = "arboliva",
+  pos = {x = 12, y = 1},
+  config = { extra = { money_mod = 2 } },
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    local a = card.ability.extra or self.config.extra
+    return { vars = { a.money_mod } }
+  end,
+  designer = "Eternalnacho",
+  rarity = "poke_safari",
+  cost = 10,
+  stage = "Two",
+  ptype = "Grass",
+  gen = 9,
+  blueprint_compat = false,
+  calculate = function(self, card, context)
+    if context.end_of_round and context.main_eval and not context.blueprint then
+      for _, area in ipairs({ G.jokers, G.consumeables }) do
+        for _, other_card in ipairs(area.cards) do
+          SMODS.scale_card(other_card, {
+            ref_table = other_card.ability,
+            ref_value = 'extra_value',
+            scalar_table = card.ability.extra,
+            scalar_value = 'money_mod',
+            scaling_message = {
+              message = localize('k_val_up'),
+            },
+            operation = function(ref_table, ref_value, initial, change)
+              local double = (is_type(other_card, "Grass") or (other_card.ability.name and other_card.ability.name == "c_poke_grass_energy"))
+              ref_table[ref_value] = initial + (change * (double and 2 or 1))
+            end
+          })
+          other_card:set_cost()
+        end
+      end
+    end
+  end,
+  attributes = {"types", "joker", "sell_value"}
+}
+
+return {name = "Pokemon Jokers 901-930",
+        list = {ursaluna, tarountula, spidops, fidough, dachsbun, smoliv, dolliv, arboliva},
 }
