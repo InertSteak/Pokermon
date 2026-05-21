@@ -1389,7 +1389,7 @@ local smeargle={
           new_config.loc_vars_replacement = other_vars.vars
         end
       end
-      info_queue[#info_queue+1] = {set = 'Joker', key = (other_vars and other_vars.key) or other_center.key, config = new_config, vars = other_vars and other_vars.vars or {} }
+      info_queue[#info_queue+1] = {set = 'Joker', key = (other_vars and other_vars.key) or other_center.key, name = other_center.name, config = new_config, vars = other_vars and other_vars.vars or {} }
     end
 
     -- Add blueprint compatible/incompatible text
