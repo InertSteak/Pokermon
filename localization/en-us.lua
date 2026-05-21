@@ -5453,37 +5453,29 @@ return {
             j_poke_smoliv = {
               name = "Smoliv",
               text = {
-                "Adds {C:money}$#1#{} of sell value",
-                "to a random {X:grass,C:white}Grass{} Joker",
+                "Gain {C:money}$#1#{} of sell value",
                 "at end of round",
-                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
               }
             },
             j_poke_dolliv = {
               name = "Dolliv",
               text = {
-                "Adds {C:money}$#1#{} of sell value",
-                "to a random {X:grass,C:white}Grass{} Joker",
+                "Adds {C:money}$#1#{} of sell value to",
+                "{C:attention}self{} and {C:attention}adjacent{} Jokers",
                 "at end of round",
-                "{br:2.5}ERROR - CONTACT STEAK",
-                "{C:green}#3# in #4#{} chance to add",
-                "{C:money}$#2#{} of sell value to",
-                "each {X:grass,C:white}Grass{} Joker instead",
-                "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#5#{C:inactive,s:0.8}/$#6# total",
-                "{C:inactive,s:0.8}sell value of {X:grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
+                "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#3#{C:inactive,s:0.8} / $#2# Sell Value)"
               }
             },
             j_poke_arboliva = {
               name = "Arboliva",
               text = {
-                "Adds {C:money}$#1#{} of sell value",
-                "to each {X:grass,C:white}Grass{} Joker",
+                "Adds {C:money}$#1#{} of sell value to",
+                "{C:attention}every{} Joker and {C:attention}Consumable{}",
                 "at end of round",
                 "{br:2.5}ERROR - CONTACT STEAK",
-                "{X:mult,C:white}X#2#{} Mult for every",
-                "{C:money}${} of sell value from",
-                "{X:grass,C:white}Grass{} Jokers",
-                "{C:inactive}(Currently {X:mult,C:white}X#3#{})"
+                "Adds {C:attention}double{} to {X:grass,C:white}Grass{} Jokers",
+                "and {X:grass,C:white}Grass{} {C:pink}Energy"
               }
             },
             j_poke_charcadet = {
