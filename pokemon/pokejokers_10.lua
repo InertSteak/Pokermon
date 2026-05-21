@@ -267,7 +267,7 @@ local kirlia={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main and next(context.poker_hands['Pair']) then
+    if context.joker_main then
       local energized = 0
       local planets = #poke_get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
