@@ -324,7 +324,7 @@ return {
                 name = "Tera Orb",
                 text = {
                     "{C:attention}Type Changer:{} {B:1,V:2}#1#{}",
-                    "{C:inactive,s:0.8}({C:pink,s:0.8}Type{C:inactive,s:0.8} changes every hand played){}",
+                    "{C:inactive,s:0.8}({C:pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:pink}Energize{} leftmost or",
                     "selected Joker if it",
