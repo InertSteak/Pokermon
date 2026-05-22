@@ -1311,7 +1311,7 @@ jd_def["j_poke_slugma"] = {
   },
   reminder_text = {
     { text = "Hands Remaining: ", colour = G.C.GREY },
-    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+    { ref_table = "card.ability.extra", ref_value = "loyalty_remaining", colour = G.C.GREY }
   },
 }
 
@@ -1323,7 +1323,7 @@ jd_def["j_poke_magcargo"] = {
   },
   reminder_text = {
     { text = "Hands Remaining: ", colour = G.C.GREY },
-    { ref_table = "card.ability.extra", ref_value = "hands", colour = G.C.GREY }
+    { ref_table = "card.ability.extra", ref_value = "loyalty_remaining", colour = G.C.GREY }
   },
 }
 

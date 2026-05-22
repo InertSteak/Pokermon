@@ -2912,18 +2912,20 @@ return {
             j_poke_slugma = {
               name = "Slugma",
               text = {
-                "Every {C:attention}4{} {C:inactive}[#4#]{} hands played, destroy",
-                "first card {C:attention}held{} in hand after scoring",
-                "and this Joker gains {C:chips}+#2#{} Chips",
+                "{C:chips}+#2#{} Chips and destroy {C:attention}first{} card",
+                "{C:attention}held{} in hand after scoring",
+                "every {C:attention}#4#{} hands played",
+                "{C:inactive}(#5#){}",
                 "{C:inactive}(Evolves at {C:chips}+#1#{C:inactive} / #3# Chips)",
               }
             },
             j_poke_magcargo = {
                 name = "Magcargo",
                 text = {
-                  "Every {C:attention}3{} {C:inactive}[#3#]{} hands played, destroy",
-                  "first card {C:attention}held{} in hand after scoring",
-                  "and this Joker gains {C:chips}+#2#{} Chips",
+                  "{C:chips}+#2#{} Chips and destroy {C:attention}first{} card",
+                  "{C:attention}held{} in hand after scoring",
+                  "every {C:attention}#3#{} hands played",
+                  "{C:inactive}(#4#){}",
                   "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },

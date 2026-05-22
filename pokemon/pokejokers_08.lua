@@ -482,10 +482,11 @@ local ursaring={
 local slugma={
   name = "slugma",
   pos = {x = 6, y = 6},
-  config = {extra = {chips = 0,chip_mod = 12, hands = 4, hand_reset = 4}, evo_rqmt = 60},
+  config = {extra = {chips = 0,chip_mod = 12, every = 3, loyalty_remaining = 3}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,self.config.evo_rqmt, center.ability.extra.hands}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt, center.ability.extra.every + 1,
+                    localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 2,
   cost = 6,
@@ -498,28 +499,25 @@ local slugma={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    if context.before and not context.blueprint then
-      card.ability.extra.hands = card.ability.extra.hands - 1
-      if card.ability.extra.hands == 1 then
-        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
-      if card.ability.extra.hands == 0 then
-        card.ability.extra.hands = card.ability.extra.hand_reset
-
-        if G.hand.cards[1] then
-          card.ability.extra.remove = true
+    if context.before then
+      card.ability.extra.loyalty_remaining = (card.ability.extra.every - 1 - (G.GAME.hands_played - card.ability.hands_played_at_create)) %
+          (card.ability.extra.every + 1)
+      if not context.blueprint then
+        if card.ability.extra.loyalty_remaining == 0 then
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
         end
-
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          no_message = true,
-        })
+        
+        if card.ability.extra.loyalty_remaining == card.ability.extra.every then
+          if G.hand.cards[1] then
+            card.ability.extra.remove = true
+          end
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            no_message = true,
+          })
+        end
       end
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
@@ -539,10 +537,11 @@ local slugma={
 local magcargo={
   name = "magcargo",
   pos = {x = 7, y = 6},
-  config = {extra = {chips = 0,chip_mod = 15, hands = 3, hand_reset = 3, remove = false}},
+  config = {extra = {chips = 0,chip_mod = 15, every = 2, loyalty_remaining = 2, remove = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.hands}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.every + 1,
+                    localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 3,
   cost = 6,
@@ -554,28 +553,25 @@ local magcargo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    if context.before and not context.blueprint then
-      card.ability.extra.hands = card.ability.extra.hands - 1
-      if card.ability.extra.hands == 1 then
-        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
-      if card.ability.extra.hands == 0 then
-        card.ability.extra.hands = card.ability.extra.hand_reset
-
-        if G.hand.cards[1] then
-          card.ability.extra.remove = true
+    if context.before then
+      card.ability.extra.loyalty_remaining = (card.ability.extra.every - 1 - (G.GAME.hands_played - card.ability.hands_played_at_create)) %
+          (card.ability.extra.every + 1)
+      if not context.blueprint then
+        if card.ability.extra.loyalty_remaining == 0 then
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
         end
-
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          no_message = true,
-        })
+        
+        if card.ability.extra.loyalty_remaining == card.ability.extra.every then
+          if G.hand.cards[1] then
+            card.ability.extra.remove = true
+          end
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            no_message = true,
+          })
+        end
       end
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
