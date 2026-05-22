@@ -66,8 +66,8 @@ local controller_is_locked = function()
       or G.CONTROLLER.locks.frame
 end
 
-local L_cursor_press_ref = G.CONTROLLER.L_cursor_press
-G.CONTROLLER.L_cursor_press = function(self, x, y)
+local L_cursor_press_ref = Controller.L_cursor_press
+Controller.L_cursor_press = function(self, x, y)
   if not controller_is_locked() then
     local target = (self.HID.touch and self.cursor_hover.target) or self.hovering.target or self.focused.target
     poke_input_manager:left_click(target)
@@ -75,8 +75,8 @@ G.CONTROLLER.L_cursor_press = function(self, x, y)
   return L_cursor_press_ref(self, x, y)
 end
 
-local queue_R_cursor_press_ref = G.CONTROLLER.queue_R_cursor_press
-G.CONTROLLER.queue_R_cursor_press = function(self, x, y)
+local queue_R_cursor_press_ref = Controller.queue_R_cursor_press
+Controller.queue_R_cursor_press = function(self, x, y)
   if not controller_is_locked() then
     local target = self.hovering.target or self.focused.target
     poke_input_manager:right_click(target)
@@ -84,8 +84,8 @@ G.CONTROLLER.queue_R_cursor_press = function(self, x, y)
   return queue_R_cursor_press_ref(self, x, y)
 end
 
-local capture_focused_input_ref = G.CONTROLLER.capture_focused_input
-G.CONTROLLER.capture_focused_input = function(self, button, input_type, dt)
+local capture_focused_input_ref = Controller.capture_focused_input
+Controller.capture_focused_input = function(self, button, input_type, dt)
   if input_type == 'press' and button == 'rightstick' and self.focused then
     local target = self.focused.target
     poke_input_manager:right_stick(target)
