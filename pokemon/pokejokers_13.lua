@@ -907,10 +907,11 @@ local jirachi_power = {
   name = "jirachi_power", 
   pos = { x = 4, y = 0 },
   soul_pos = { x = 5, y = 0 },
-  config = {extra = {Xmult_multi = 2, every = 3, loyalty_remaining = 2}},
+  config = {extra = {Xmult_multi = 2, every = 2, loyalty_remaining = 2}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every, localize{type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {card.ability.extra.loyalty_remaining}}}}
+    return {vars = {card.ability.extra.Xmult_multi, card.ability.extra.every + 1, 
+                    localize{type = 'variable', key = (card.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {card.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 4,
   cost = 20,
@@ -923,20 +924,19 @@ local jirachi_power = {
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.after then
-        if card.ability.extra.loyalty_remaining == 0 then
-          card.ability.extra.loyalty_remaining = card.ability.extra.every
-        end
-        card.ability.extra.loyalty_remaining = card.ability.extra.loyalty_remaining - 1
-        if card.ability.extra.loyalty_remaining == 0 then
-          local eval = function(card) return (card.ability.extra.loyalty_remaining == 0) and not G.RESET_JIGGLES end
-          juice_card_until(card, eval, true)
-        end
+    if context.before then
+      card.ability.extra.loyalty_remaining = (card.ability.extra.every - 1 - (G.GAME.hands_played - card.ability.hands_played_at_create)) %
+          (card.ability.extra.every + 1)
+      if not context.blueprint then
+          if card.ability.extra.loyalty_remaining == 0 then
+              local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+              juice_card_until(card, eval, true)
+          end
       end
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
-      if card.ability.extra.loyalty_remaining == 0 then
+
+    if context.individual and not context.end_of_round and context.cardarea == G.play then
+      if card.ability.extra.loyalty_remaining == card.ability.extra.every then
         return {
           x_mult = card.ability.extra.Xmult_multi,
           card = card
