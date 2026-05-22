@@ -844,7 +844,7 @@ poke_copy_sprite = function(card, from, sprite_index)
   for k, v in pairs(sprite.states) do
     if v == from.states[k] then
       copy.states[k] = card.states[k]
-    elseif not v.can then
+    elseif type(v) == 'table' and not v.can then
       copy.states[k].can = false
     end
   end
