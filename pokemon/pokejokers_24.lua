@@ -108,13 +108,13 @@ local pumpkaboo={
         self:set_ability(card)
       end
       if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-        card.children.center:set_sprite_pos({x = 2, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
         card.children.center:set_sprite_pos({x = 4, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
+      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
         card.children.center:set_sprite_pos({x = 6, y = 9})
+      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
+        card.children.center:set_sprite_pos({x = 8, y = 9})
       else
-        card.children.center:set_sprite_pos({x = 0, y = 9})
+        card.children.center:set_sprite_pos({x = 2, y = 9})
       end
     end
   end,
