@@ -5512,8 +5512,13 @@ return {
 						j_poke_rabsca = {
 							name = 'Rabsca',      
 							text = {
-								"{C:mult}+#1#{} Mult per {C:item}Item{} and",
-								"{C:tarot}Tarot{} card used this run",
+                "{C:green}#3# in #4#{} chance to create",
+                "a {C:tarot}Tarot{} card when you",
+                "use an {C:item}Item{} card",
+                "{C:inactive}(Must have room){}",
+                "{br:2}ERROR - CONTACT STEAK",
+								"{C:mult}+#1#{} Mult per {C:item}Item{}",
+								"card used this run",
 								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
 							} 
 						},

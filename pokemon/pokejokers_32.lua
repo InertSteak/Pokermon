@@ -270,7 +270,7 @@ local brambleghast={
 local rellor = {
 	name = "rellor",
 	--pos = {x = 14, y = 63},
-	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 6},
+	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 5},
 	loc_vars = function(self, info_queue, card)
 		type_tooltip(self, info_queue, card)
 		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
@@ -310,11 +310,12 @@ local rellor = {
 local rabsca = {
 	name = "rabsca",
 	--pos = {x = 16, y = 63},
-	config = {extra = { mult_mod = 1}},
+	config = {extra = { mult_mod = 1, num = 1, dem = 4}},
 	loc_vars = function(self, info_queue, card)
 		type_tooltip(self, info_queue, card)
-		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.tarot or 0)) * card.ability.extra.mult_mod
-	  return {vars = {card.ability.extra.mult_mod, mult}}
+    local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
+    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'rabsca')
+	  return {vars = {card.ability.extra.mult_mod, mult, num, dem}}
 	end,
 	rarity = "poke_safari", 
 	cost = 8,
@@ -322,15 +323,13 @@ local rabsca = {
 	ptype = "Grass", --wish it was Psychic :(
 	gen = 9,
 	designer = "Thor's Girdle",
-	--atlas = "AtlasJokersBasicNatdex",
 	perishable_compat = true,
 	blueprint_compat = true,
-
 	calculate = function(self, card, context)
 		if context.joker_main  then
 			if G.GAME.consumeable_usage_total then
-				if (G.GAME.consumeable_usage_total.tarot or G.GAME.consumeable_usage_total.item) and (G.GAME.consumeable_usage_total.item or 0) + (G.GAME.consumeable_usage_total.tarot or 0) > 0 then
-					local mult = ((G.GAME.consumeable_usage_total.item or 0) + (G.GAME.consumeable_usage_total.tarot or 0)) * card.ability.extra.mult_mod
+				if (G.GAME.consumeable_usage_total.item or 0) > 0 then
+					local mult = (G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod
 					return {
 						mult = mult
 									}
@@ -338,11 +337,19 @@ local rabsca = {
 			end
 		end
 		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Item" then
-			return {
-				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
-			}
-		end
-		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Tarot" then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if SMODS.pseudorandom_probability(card, 'rabsca', card.ability.extra.num, card.ability.extra.dem, 'rabsca') then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              SMODS.add_card({set = 'Tarot'})
+              G.GAME.consumeable_buffer = 0
+              return true
+            end
+          }))
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+        end
+      end
 			return {
 				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
 			}
