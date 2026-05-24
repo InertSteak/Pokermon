@@ -16,7 +16,7 @@ energy_max = 3
 
 -- we're gonna need this for the vanilla jokers later
 -- Load list of energizable vanilla jokers
-local energizable_vanilla = assert(SMODS.load_file("functions/energizable_vanilla.lua"))()
+energizable_vanilla = assert(SMODS.load_file("functions/energizable_vanilla.lua"))()
 
 -- this is a series of checks formerly strewn about the energy functions
 -- namely, is ability.extra a table or a number or nil, is there an energizable value, etc.

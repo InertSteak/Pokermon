@@ -3,7 +3,7 @@ local type_sticker_template =
   prefix_config = {key = false},
   rate = 0.0,
   atlas = "AtlasStickersBasic",
-  no_collection = true
+  no_collection = true,
 }
 
 local type_stickers = {}

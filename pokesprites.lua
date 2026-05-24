@@ -150,6 +150,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "AtlasStakesBasic",
+    path = "Basic Series/AtlasStakesBasic.png",
+    px = 29,
+    py = 29
+})
+
+SMODS.Atlas({
     key = "AtlasStickersBasic",
     path = "Basic Series/AtlasStickersBasic.png",
     px = 71,
