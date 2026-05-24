@@ -185,6 +185,7 @@ local default_family_list = {
   { "smoliv", "dolliv", "arboliva" },
   { "charcadet", "armarouge", "ceruledge" },
   { "bramblin", "brambleghast" },
+  { "rellor", "rabsca"},
   { "tinkatink", "tinkatuff", "tinkaton" },
   { "wiglett", "wugtrio" },
   { "gimmighoul", "gholdengo", "gimmighoulr" },
