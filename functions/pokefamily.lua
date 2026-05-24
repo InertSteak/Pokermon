@@ -154,6 +154,7 @@ local default_family_list = {
   { "shaymin", "shaymin_sky" },
   { "munna", "musharna"},
   { "gothita", "gothorita", "gothitelle" },
+  { "solosis", "duosion", "reuniclus" },
   { "vanillite", "vanillish", "vanilluxe" },
   { "frillish", "jellicent" },
   { "elgyem", "beheeyem" },

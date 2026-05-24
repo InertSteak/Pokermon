@@ -1435,3 +1435,41 @@ poke_drain_chips = function(card, amount)
 
   return base_drain + bonus_drain
 end
+
+poke_copy_card_to_play = function(joker, card)
+  for _ = 1, joker.ability.extra.card_dupes do
+    if #G.play.cards < 5 then
+      local copy = copy_card(card)
+      copy:add_to_deck()
+      G.deck.config.card_limit = G.deck.config.card_limit + 1
+      table.insert(G.playing_cards, copy)
+      G.play:emplace(copy)
+      copy.states.visible = nil
+      copy:start_materialize()
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          G.play:add_to_highlighted(copy)
+          return true
+        end
+      }))
+      table.insert(joker.ability.extra.copied_cards, copy.unique_val)
+      if joker.ability.extra.copies_req then joker.ability.extra.copies_req = joker.ability.extra.copies_req + 1 end
+      playing_card_joker_effects(copy)
+    end
+  end
+end
+
+-- context.mitosis is funny
+if evaluate_play_intro then
+  local evaluate_play_intro_ref = evaluate_play_intro
+  evaluate_play_intro = function()
+    SMODS.calculate_context({mitosis = true})
+    return evaluate_play_intro_ref()
+  end
+else
+  local eval_play_ref = G.FUNCS.evaluate_play
+  G.FUNCS.evaluate_play = function(e)
+    SMODS.calculate_context({mitosis = true})
+    return eval_play_ref(e)
+  end
+end
