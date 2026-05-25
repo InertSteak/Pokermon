@@ -36,10 +36,10 @@ pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name)
 end
 
 pokermon.is_type = function(card, target_type)
-  return card and get_type(card) == target_type
+  return card and pokermon.get_type(card) == target_type
 end
 
-get_type = function(card)
+pokermon.get_type = function(card)
   if card and card.ability then
     local sticker = pokermon.type_sticker_applied(card)
     if sticker then
@@ -743,7 +743,7 @@ type_tooltip = function(self, info_queue, center)
 end
 
 poke_set_type_badge = function(self, card, badges)
-  local ptype = get_type(card)
+  local ptype = pokermon.get_type(card)
   if ptype then
     local lower_ptype = string.lower(ptype)
     local text_colour = G.C.WHITE
@@ -1304,8 +1304,8 @@ poke_reset_type = function(name, exclude_names)
       end
     end
     
-    if get_type(v) and not excluded then
-      valid_types[#valid_types + 1] = get_type(v)
+    if pokermon.get_type(v) and not excluded then
+      valid_types[#valid_types + 1] = pokermon.get_type(v)
     end
   end
   if #valid_types > 0 then

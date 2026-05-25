@@ -174,7 +174,7 @@ local teraorb = {
     set_spoon_item(card)
     local choice = poke_find_leftmost_or_highlighted()
     if pokermon.is_type(choice, card.ability.extra.change_to_type) then
-      energy_increase(choice, get_type(choice))
+      energy_increase(choice, pokermon.get_type(choice))
     end
     apply_type_sticker(choice, card.ability.extra.change_to_type)
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})

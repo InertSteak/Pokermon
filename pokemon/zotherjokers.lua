@@ -35,7 +35,7 @@ local rotomdex={
       local poketype_list = {}
       for k, v in pairs(G.jokers.cards) do
         if (v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype) or pokermon.type_sticker_applied(v) then
-          poketype = get_type(v)
+          poketype = pokermon.get_type(v)
           if not poketype_list[poketype] then
             poketype_list[poketype] = true
             type_amount = type_amount + 1
@@ -221,8 +221,8 @@ local treasure_eatery={
     if context.setting_blind and not context.blueprint then
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
-        if get_type(G.jokers.cards[#G.jokers.cards]) then
-          apply_type_sticker(G.jokers.cards[1], get_type(G.jokers.cards[#G.jokers.cards]))
+        if pokermon.get_type(G.jokers.cards[#G.jokers.cards]) then
+          apply_type_sticker(G.jokers.cards[1], pokermon.get_type(G.jokers.cards[#G.jokers.cards]))
           card:juice_up()
           card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
         end
