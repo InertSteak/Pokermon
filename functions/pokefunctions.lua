@@ -110,7 +110,7 @@ pokermon.evolve = function(card, to_key, immediate, evolve_message, transformati
     to_key = get_random_poke_key('randomizer')
   end
   if immediate then
-    poke_backend_evolve(card, to_key, energize_amount)
+    pokermon.backend_evolve(card, to_key, energize_amount)
   else
     G.E_MANAGER:add_event(Event({
       func = function()
@@ -126,7 +126,7 @@ pokermon.evolve = function(card, to_key, immediate, evolve_message, transformati
         }))
         G.E_MANAGER:add_event(Event({
           func = function()
-            poke_backend_evolve(card, to_key, energize_amount)
+            pokermon.backend_evolve(card, to_key, energize_amount)
             return true
           end
         }))
@@ -154,7 +154,7 @@ end
 
 -- Stolen from Cardsauce
 -- Based on code from Ortalab
-poke_backend_evolve = function(card, to_key, energize_amount)
+pokermon.backend_evolve = function(card, to_key, energize_amount)
   local custom_values_to_keep = {}
   local has_custom_values_to_keep = nil
   local trigger_add = nil
