@@ -113,7 +113,7 @@ local magnezone={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
-    local total = #find_pokemon_type("Metal")
+    local total = #poke_find_pokemon_type("Metal")
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.Xmult_multi + (total * center.ability.extra.Xmult_multi2)}}
   end,
   rarity = "poke_safari", 
@@ -127,7 +127,7 @@ local magnezone={
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        SMODS.has_enhancement(context.other_card, 'm_steel') then
-        local total = #find_pokemon_type("Metal")
+        local total = #poke_find_pokemon_type("Metal")
         return {
           x_mult = card.ability.extra.Xmult_multi + (total * card.ability.extra.Xmult_multi2),
           card = card
@@ -193,7 +193,7 @@ local rhyperior={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     end
-    return {vars = {center.ability.extra.chips, 1 + math.floor(#find_pokemon_type("Earth")/3)}}
+    return {vars = {center.ability.extra.chips, 1 + math.floor(#poke_find_pokemon_type("Earth")/3)}}
   end,
   rarity = "poke_safari", 
   cost = 10,
@@ -214,7 +214,7 @@ local rhyperior={
       }
     end
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_stone') then
-      local rhytriggers = 1 + math.floor(#find_pokemon_type("Earth")/3)
+      local rhytriggers = 1 + math.floor(#poke_find_pokemon_type("Earth")/3)
       return {
         message = localize('k_again_ex'),
         repetitions = rhytriggers,

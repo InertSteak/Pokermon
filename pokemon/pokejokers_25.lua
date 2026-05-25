@@ -33,7 +33,7 @@ local grubbin={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local card_mult = card.ability.extra.mult
-        if next(find_pokemon_type("Lightning")) then
+        if next(poke_find_pokemon_type("Lightning")) then
           card_mult = card_mult * 3
         end
         return {
@@ -65,12 +65,12 @@ local charjabug={
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_thunderstone
     end
-		return {vars = {center.ability.extra.mult, center.ability.extra.mult * #find_pokemon_type("Lightning")}}
+		return {vars = {center.ability.extra.mult, center.ability.extra.mult * #poke_find_pokemon_type("Lightning")}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #find_pokemon_type("Lightning")
+        local count = #poke_find_pokemon_type("Lightning")
         if count > 0 then
           return {
             message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult * count}}, 
@@ -98,7 +98,7 @@ local vikavolt={
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local count = #find_pokemon_type("Lightning")
+    local count = #poke_find_pokemon_type("Lightning")
       if is_type(center, "Lightning") then
         count = count - 1
       end
@@ -107,7 +107,7 @@ local vikavolt={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local count = #find_pokemon_type("Lightning")
+        local count = #poke_find_pokemon_type("Lightning")
         if is_type(card, "Lightning") then
           count = count - 1
         end

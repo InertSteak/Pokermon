@@ -884,7 +884,7 @@ local hardstone = {
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
       conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
-      local bonus = self.config.max_chips * #find_pokemon_type("Earth")
+      local bonus = self.config.max_chips * #poke_find_pokemon_type("Earth")
       if bonus > 0 then
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus

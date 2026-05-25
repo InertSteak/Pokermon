@@ -324,7 +324,7 @@ local fidough={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_dachsbun", #find_pokemon_type("Fire"), 1)
+    return scaling_evo(self, card, context, "j_poke_dachsbun", #poke_find_pokemon_type("Fire"), 1)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.playing_cards then
@@ -364,7 +364,7 @@ local dachsbun={
           ref_value = 'chips',
           scalar_value = 'chip_mod',
           operation = function (ref_table, ref_value, initial, modifier)
-            ref_table[ref_value] = initial + modifier + #find_pokemon_type("Fire") * 2
+            ref_table[ref_value] = initial + modifier + #poke_find_pokemon_type("Fire") * 2
           end,
           message_colour = G.C.CHIPS
         })

@@ -171,7 +171,7 @@ local pelipper={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.wingullcard.id then
-      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true) + #find_pokemon_type("Water")
+      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true) + #poke_find_pokemon_type("Water")
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
         dollars = earned,
@@ -721,10 +721,10 @@ local shedinja={
     end
     
     if context.ending_shop and not context.blueprint then
-      local fire_count = #find_pokemon_type("Fire", nil, "shedinja")
-      local earth_count = #find_pokemon_type("Earth", nil, "shedinja")
-      local dark_count = #find_pokemon_type("Dark", nil, "shedinja")
-      local psychic_count = #find_pokemon_type("Psychic", nil, "shedinja")
+      local fire_count = #poke_find_pokemon_type("Fire", nil, "shedinja")
+      local earth_count = #poke_find_pokemon_type("Earth", nil, "shedinja")
+      local dark_count = #poke_find_pokemon_type("Dark", nil, "shedinja")
+      local psychic_count = #poke_find_pokemon_type("Psychic", nil, "shedinja")
       if fire_count > 0 or earth_count > 0 or dark_count > 0 or psychic_count > 0 then
         G.E_MANAGER:add_event(Event({
           func = function()
@@ -788,7 +788,7 @@ local hariyama={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local hands = card.ability.extra.hands * #find_pokemon_type("Fighting")
+      local hands = card.ability.extra.hands * #poke_find_pokemon_type("Fighting")
       ease_hands_played(hands)
       card:juice_up()
     end
