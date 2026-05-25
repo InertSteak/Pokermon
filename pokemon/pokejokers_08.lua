@@ -1271,7 +1271,7 @@ local porygon2={
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local forced_key = matching_energy(G.jokers.cards[1], true);
       if forced_key == "c_poke_bird_energy" then
-        poke_evolve(card, 'j_poke_porygonz')
+        pokermon.evolve(card, 'j_poke_porygonz')
       end
       G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
       G.E_MANAGER:add_event(Event({

@@ -105,7 +105,7 @@ pokermon.fake_evolve = function(card, evolve_message, set_sprites)
     }))
 end
 
-poke_evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
+pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.apply_randomizer and not transformation then
     to_key = get_random_poke_key('randomizer')
   end
@@ -283,7 +283,7 @@ level_evo = function(self, card, context, forced_key)
       end
       if card.ability.extra.rounds <= 0 then
         return {
-          message = poke_evolve(card, forced_key)
+          message = pokermon.evolve(card, forced_key)
         }
       elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
@@ -309,7 +309,7 @@ item_evo = function(self, card, context, forced_key)
       if forced_key and can_evolve(self, card, context, forced_key) then
         card.ability.extra.evolve = nil
         return {
-          message = poke_evolve(card, forced_key)
+          message = pokermon.evolve(card, forced_key)
         }
       end
 
@@ -331,7 +331,7 @@ scaling_evo = function (self, card, context, forced_key, current, target, evo_me
   end
   if can_evolve(self, card, context, forced_key) and current >= target then
     return {
-      message = poke_evolve(card, forced_key, nil, evo_message)
+      message = pokermon.evolve(card, forced_key, nil, evo_message)
     }
   end
   if can_evolve(self, card, context, forced_key, true) and current >= target then
@@ -346,7 +346,7 @@ end
 type_evo = function (self, card, context, forced_key, type_req)
   if can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
     return {
-      message = poke_evolve(card, forced_key)
+      message = pokermon.evolve(card, forced_key)
     }
   elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
     if not card.ability.extra.juiced then
@@ -365,7 +365,7 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
     end
     if suit_count/#G.playing_cards >= percentage then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     end
   end
@@ -379,11 +379,11 @@ deck_enhance_evo = function (self, card, context, forced_key, enhancement, perce
     end
     if percentage and (enhance_count/#G.playing_cards >= percentage) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     elseif flat and (enhance_count >= flat) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     end
   end
@@ -401,11 +401,11 @@ deck_seal_evo = function (self, card, context, forced_key, seal, percentage, fla
     end
     if percentage and (seal_count/#G.playing_cards >= percentage) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     elseif flat and (seal_count >= flat) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     end
   end

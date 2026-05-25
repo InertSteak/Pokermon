@@ -21,7 +21,7 @@ local mirror = {
           end
           target.ability.from_mirror = true
           blind.effect.trans_key = target.config.center_key
-          poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
+          pokermon.evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
         end
       end
     end
@@ -33,7 +33,7 @@ local mirror = {
         end
       end
       if target then
-        poke_evolve(target, blind.effect.trans_key, nil, localize("poke_transform_success"), true)
+        pokermon.evolve(target, blind.effect.trans_key, nil, localize("poke_transform_success"), true)
         if blind.effect.reset_eternal then
           target.ability.eternal = true
         end

@@ -28,7 +28,7 @@ local transformation = {
         local prefix = choice.config.center.poke_custom_prefix or "poke"
         local forced_key = "j_"..prefix.."_"..highest
         local context = {}
-        poke_evolve(choice, forced_key)
+        pokermon.evolve(choice, forced_key)
       end
     end
   end
@@ -94,7 +94,7 @@ local megastone = {
       card.ability.extra.used_on = nil
     end
     card.ability.extra.usable = false
-    poke_evolve(target, forced_key)
+    pokermon.evolve(target, forced_key)
   end,
   calculate = function(self, card, context)
     if context.end_of_round then
@@ -121,7 +121,7 @@ local megastone = {
     local target = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
     if target then
       local forced_key = get_previous_evo(target, true)
-      poke_evolve(target, forced_key)
+      pokermon.evolve(target, forced_key)
     end
   end,
 }

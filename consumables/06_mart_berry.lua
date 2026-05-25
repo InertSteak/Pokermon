@@ -246,7 +246,7 @@ local berry_juice_mega = {
     end)
     local prefix = target.config.center.poke_custom_prefix or "poke"
     local forced_key = "j_" .. prefix .. "_" .. get_mega(target)
-    poke_evolve(target, forced_key)
+    pokermon.evolve(target, forced_key)
   end
 }
 

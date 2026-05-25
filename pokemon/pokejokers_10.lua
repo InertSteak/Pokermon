@@ -610,7 +610,7 @@ local nincada={
             local copy = copy_card(card)
             copy:add_to_deck()
             G.jokers:emplace(copy)
-            poke_evolve(copy, 'j_poke_shedinja', true)
+            pokermon.evolve(copy, 'j_poke_shedinja', true)
             copy.states.visible = nil
             G.GAME.joker_buffer = 0
             G.E_MANAGER:add_event(Event({
