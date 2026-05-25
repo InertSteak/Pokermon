@@ -676,7 +676,7 @@ set_joker_family_win = function(card)
 end
 
 set_previous_evo_win = function(center)
-  local previous = get_previous_evo_from_center(center, true)
+  local previous = pokermon.get_previous_evo_from_center(center, true)
   if previous then
     -- This is the bit that tracks joker wins
     G.PROFILES[G.SETTINGS.profile].joker_usage[previous] = G.PROFILES[G.SETTINGS.profile].joker_usage[previous]

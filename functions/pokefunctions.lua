@@ -411,7 +411,7 @@ pokermon.deck_seal_evo = function (self, card, context, forced_key, seal, percen
   end
 end
 
-get_lowest_evo = function(card)
+pokermon.get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
   
@@ -422,7 +422,7 @@ get_lowest_evo = function(card)
   return (type(family[1]) == "table" and family[1].key) or family[1] or name
 end
 
-get_highest_evo = function(card)
+pokermon.get_highest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
@@ -453,7 +453,7 @@ get_highest_evo = function(card)
   -- check if max stage is the same as card's, and check split evo weirdness
   if max_stage ~= "Legendary" and card.config.center.stage == max_stage then return
   elseif max_stage ~= "Legendary" and POKE_STAGES[card.config.center.stage].next == max_stage
-    and get_previous_evo_from_center(G.P_CENTERS[prefix..max_evo_name], true) ~= card.config.center_key then return
+    and pokermon.get_previous_evo_from_center(G.P_CENTERS[prefix..max_evo_name], true) ~= card.config.center_key then return
   end
 
   -- find pokermon in family list with max stage
@@ -469,7 +469,7 @@ get_highest_evo = function(card)
   return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
 end
 
-get_mega = function(card)
+pokermon.get_mega = function(card)
   if not card.config.center.megas then return end
   if #card.config.center.megas == 1 then return card.config.center.megas[1] end
   -- Leftmost = X, Rightmost = Y, Middle = Random
@@ -481,7 +481,7 @@ get_mega = function(card)
   return mega
 end
 
-get_previous_from_mega = function(name, prefix, full_key)
+pokermon.get_previous_from_mega = function(name, prefix, full_key)
   local prev = string.sub(name, 6, -1)
   -- string.match here wants to catch '_x', '_y' and '_z' at the end of the key
   prev = string.gsub(prev, '_%a$', '')
@@ -489,12 +489,12 @@ get_previous_from_mega = function(name, prefix, full_key)
   return G.P_CENTERS["j_"..prefix.."_"..prev] and (full_key and prev_key or prev)
 end
 
-get_previous_evo = function(card, full_key)
+pokermon.get_previous_evo = function(card, full_key)
   local center = card.config.center
-  return get_previous_evo_from_center(center, full_key)
+  return pokermon.get_previous_evo_from_center(center, full_key)
 end
 
-get_previous_evo_from_center = function(center, full_key)
+pokermon.get_previous_evo_from_center = function(center, full_key)
   local name = center.name or "bulbasaur"
   local index, prev
   local prefix = center.poke_custom_prefix or "poke"
@@ -505,7 +505,7 @@ get_previous_evo_from_center = function(center, full_key)
   end
 
   if center.stage == "Mega" then
-    local mega = get_previous_from_mega(name, prefix, full_key)
+    local mega = pokermon.get_previous_from_mega(name, prefix, full_key)
     if mega then return mega end
   end
 

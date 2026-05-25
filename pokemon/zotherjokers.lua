@@ -872,7 +872,7 @@ local daycare={
         local adj_joker = adjacent_jokers[i]
         if adj_joker.config and adj_joker.config.center.stage then
           if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" then
-            local lowest = get_lowest_evo(adj_joker)
+            local lowest = pokermon.get_lowest_evo(adj_joker)
             local prefix = adj_joker.config.center.poke_custom_prefix or "poke"
             local lowest_key = "j_"..prefix.."_"..lowest
             if G.P_CENTERS[lowest_key].stage ~= "Legendary" then
@@ -884,7 +884,7 @@ local daycare={
       
       if breedable >= 2 then
         local parent = pseudorandom_element(adjacent_jokers, pseudoseed("daycare"))
-        local lowest = get_lowest_evo(parent)
+        local lowest = pokermon.get_lowest_evo(parent)
         if lowest and type(lowest) == "string" then
           local prefix = parent.config.center.poke_custom_prefix or "poke"
           local egg_key = "j_"..prefix.."_"..lowest
@@ -903,7 +903,7 @@ local daycare={
         local adj_joker = adjacent_jokers[i]
         if adj_joker.config and adj_joker.config.center.stage then
           if adj_joker.config.center.stage ~= "Other" and adj_joker.config.center.stage ~= "Baby" then
-            local lowest = get_lowest_evo(adj_joker)
+            local lowest = pokermon.get_lowest_evo(adj_joker)
             local prefix = adj_joker.config.center.poke_custom_prefix or "poke"
             local lowest_key = "j_"..prefix.."_"..lowest
             if G.P_CENTERS[lowest_key].stage ~= "Legendary" then

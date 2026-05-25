@@ -23,7 +23,7 @@ local transformation = {
     local choice = poke_find_leftmost_or_highlighted()
     if pokermon.get_type(choice) then energy_increase(choice, pokermon.get_type(choice)) end
     if not choice.config.center.aux_poke then
-      local highest = get_highest_evo(choice)
+      local highest = pokermon.get_highest_evo(choice)
       if highest and type(highest) == "string" then
         local prefix = choice.config.center.poke_custom_prefix or "poke"
         local forced_key = "j_"..prefix.."_"..highest
@@ -36,9 +36,9 @@ local transformation = {
 
 local get_mega_target = function(self)
   return poke_find_leftmost_or_highlighted(function(joker)
-    return not self.ability.extra.used_on and get_mega(joker) and not joker.debuff
+    return not self.ability.extra.used_on and pokermon.get_mega(joker) and not joker.debuff
         or joker.config.center.rarity == "poke_mega" and joker.unique_val == self.ability.extra.used_on
-        or G.GAME.modifiers.infinite_megastone and ((get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
+        or G.GAME.modifiers.infinite_megastone and ((pokermon.get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
   end)
 end
 
@@ -86,11 +86,11 @@ local megastone = {
     local target = get_mega_target(card)
     local forced_key
     local prefix = target.config.center.poke_custom_prefix or "poke"
-    if get_mega(target) then
-      forced_key = "j_"..prefix.."_"..get_mega(target)
+    if pokermon.get_mega(target) then
+      forced_key = "j_"..prefix.."_"..pokermon.get_mega(target)
       card.ability.extra.used_on = not G.GAME.modifiers.infinite_megastone and target.unique_val
     else
-      forced_key = get_previous_evo(target, true)
+      forced_key = pokermon.get_previous_evo(target, true)
       card.ability.extra.used_on = nil
     end
     card.ability.extra.usable = false
@@ -120,7 +120,7 @@ local megastone = {
   remove_from_deck = function(self, card, from_debuff)
     local target = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
     if target then
-      local forced_key = get_previous_evo(target, true)
+      local forced_key = pokermon.get_previous_evo(target, true)
       pokermon.evolve(target, forced_key)
     end
   end,
