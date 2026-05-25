@@ -51,7 +51,7 @@ pokermon.get_type = function(card)
   return nil
 end
 
-copy_scaled_values = function(card)
+pokermon.copy_scaled_values = function(card)
   local values = {mult = 0, chips = 0, Xmult = 0, Xmult_multi = 0, money = 0}
   if card.ability and card.ability.extra and type(card.ability.extra) == "table" then
     for l, v in pairs(values) do
@@ -180,7 +180,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if pokermon.type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
-  local values_to_keep = copy_scaled_values(card)
+  local values_to_keep = pokermon.copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
       values_to_keep[k] = card.ability.extra[k]
