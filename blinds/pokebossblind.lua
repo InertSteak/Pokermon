@@ -147,7 +147,7 @@ local star={
   calculate = function(self, blind, context)
     if not blind.disabled then
       if context.debuff_card and context.debuff_card.area == G.jokers
-          and blind.effect.ptype and is_type(context.debuff_card, blind.effect.ptype) then
+          and blind.effect.ptype and pokermon.is_type(context.debuff_card, blind.effect.ptype) then
         return {
           debuff = true
         }
@@ -161,7 +161,7 @@ local star={
         for _, v in ipairs(G.jokers.cards) do
           if v.debuff then
             SMODS.recalc_debuff(v)
-          elseif blind.effect.ptype and is_type(v, blind.effect.ptype) then
+          elseif blind.effect.ptype and pokermon.is_type(v, blind.effect.ptype) then
             SMODS.recalc_debuff(v)
             v:juice_up()
           end
@@ -290,7 +290,7 @@ local white_executive = {
 
 local ptype_matches = function(card, types)
   for _, v in ipairs(types) do
-    if is_type(card, v) then return true end
+    if pokermon.is_type(card, v) then return true end
   end
   return false
 end

@@ -909,7 +909,7 @@ local skitty={
       -- fix for multiplayer not removing cards from `G.jokers` properly
       if found_pos then
         local other_joker = G.jokers.cards[found_pos + 1]
-        main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+        main_end = poke_blueprint_compat_ui(pokermon.is_type(other_joker, cattype) and other_joker)
       end
     end
 
@@ -933,7 +933,7 @@ local skitty={
     -- fix for multiplayer not removing cards from `G.jokers` properly
     if found_pos then
       local other_joker = G.jokers.cards[found_pos + 1]
-      if is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
+      if pokermon.is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
         local ret = SMODS.blueprint_effect(card, other_joker, context)
         if ret then ret.colour = G.C.BLUE end
         return ret

@@ -173,7 +173,7 @@ local teraorb = {
   use = function(self, card, area, copier)
     set_spoon_item(card)
     local choice = poke_find_leftmost_or_highlighted()
-    if is_type(choice, card.ability.extra.change_to_type) then
+    if pokermon.is_type(choice, card.ability.extra.change_to_type) then
       energy_increase(choice, get_type(choice))
     end
     apply_type_sticker(choice, card.ability.extra.change_to_type)

@@ -27,7 +27,7 @@ pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
-      if is_type(v, target_type) and v ~= exclude_card and v.ability.name ~= exclude_name then
+      if pokermon.is_type(v, target_type) and v ~= exclude_card and v.ability.name ~= exclude_name then
         table.insert(found, v)
       end
     end
@@ -35,7 +35,7 @@ pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name)
   return found
 end
 
-is_type = function(card, target_type)
+pokermon.is_type = function(card, target_type)
   return card and get_type(card) == target_type
 end
 
@@ -1017,7 +1017,7 @@ find_other_poke_or_energy_type = function(card, poke_type, count_self)
     energy = string.lower(poke_type).."_energy"
   end
   type_count = #pokermon.find_pokemon_type(poke_type)
-  if is_type(card, poke_type) and not count_self then
+  if pokermon.is_type(card, poke_type) and not count_self then
     type_count = type_count - 1
   end
   

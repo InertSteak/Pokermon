@@ -17,7 +17,7 @@ local delcatty={
       -- fix for multiplayer not removing cards from `G.jokers` properly
       if found_pos then
         local other_joker = G.jokers.cards[found_pos + 1]
-        main_end = poke_blueprint_compat_ui(is_type(other_joker, cattype) and other_joker)
+        main_end = poke_blueprint_compat_ui(pokermon.is_type(other_joker, cattype) and other_joker)
       end
     end
 
@@ -37,7 +37,7 @@ local delcatty={
     -- fix for multiplayer not removing cards from `G.jokers` properly
     local other_joker = found_pos and G.jokers.cards[found_pos + 1]
     if other_joker and other_joker.config.center.blueprint_compat and not context.no_blueprint
-        and is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
+        and pokermon.is_type(other_joker, G.GAME.current_round.cattype or "Grass") then
       local fake_card = {config = other_joker.config}
       fake_card.ability = setmetatable({}, {__index = other_joker.ability})
       fake_card.ability.extra = other_joker.ability.extra

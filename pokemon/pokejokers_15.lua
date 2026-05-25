@@ -251,7 +251,7 @@ local honchkrow={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker and is_type(context.other_joker, "Dark") then
+    if context.other_joker and pokermon.is_type(context.other_joker, "Dark") then
       G.E_MANAGER:add_event(Event({
         func = function()
             context.other_joker:juice_up(0.5, 0.5)

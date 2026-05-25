@@ -898,7 +898,7 @@ local blaziken={
       end
     end
     
-    if context.other_joker and (is_type(context.other_joker, "Fire") or is_type(context.other_joker, "Fighting")) and card.ability.extra.cards_discarded >= card.ability.extra.discard_target then
+    if context.other_joker and (pokermon.is_type(context.other_joker, "Fire") or pokermon.is_type(context.other_joker, "Fighting")) and card.ability.extra.cards_discarded >= card.ability.extra.discard_target then
       G.E_MANAGER:add_event(Event({
         func = function()
             context.other_joker:juice_up(0.5, 0.5)

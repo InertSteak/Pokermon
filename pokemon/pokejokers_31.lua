@@ -494,7 +494,7 @@ local arboliva = {
               message = localize('k_val_up'),
             },
             operation = function(ref_table, ref_value, initial, change)
-              local double = (is_type(other_card, "Grass") or (other_card.ability.name and other_card.ability.name == "c_poke_grass_energy"))
+              local double = (pokermon.is_type(other_card, "Grass") or (other_card.ability.name and other_card.ability.name == "c_poke_grass_energy"))
               ref_table[ref_value] = initial + (change * (double and 2 or 1))
             end
           })

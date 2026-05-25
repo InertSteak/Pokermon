@@ -99,7 +99,7 @@ local vikavolt={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local count = #pokermon.find_pokemon_type("Lightning")
-      if is_type(center, "Lightning") then
+      if pokermon.is_type(center, "Lightning") then
         count = count - 1
       end
 		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count), center.ability.extra.mult}}
@@ -108,7 +108,7 @@ local vikavolt={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #pokermon.find_pokemon_type("Lightning")
-        if is_type(card, "Lightning") then
+        if pokermon.is_type(card, "Lightning") then
           count = count - 1
         end
         return {

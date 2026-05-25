@@ -214,7 +214,7 @@ jd_def["j_poke_blaziken"] = {
   end,
   mod_function = function(card, mod_joker)
     if mod_joker.ability.extra.cards_discarded >= mod_joker.ability.extra.discard_target then
-      return { x_mult = ((is_type(card, "Fire") or is_type(card, "Fighting")) and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+      return { x_mult = ((pokermon.is_type(card, "Fire") or pokermon.is_type(card, "Fighting")) and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     else
       return { xmult = nil }
     end
@@ -839,7 +839,7 @@ jd_def["j_poke_skitty"] = {
   get_blueprint_joker = function(card)
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
-        if is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
+        if pokermon.is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
           return G.jokers.cards[i + 1]
         else
           return nil
@@ -926,7 +926,7 @@ jd_def["j_poke_delcatty"] = {
   get_blueprint_joker = function(card)
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
-        if is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
+        if pokermon.is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
           return G.jokers.cards[i + 1]
         else
           return nil

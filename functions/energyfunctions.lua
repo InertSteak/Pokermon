@@ -52,7 +52,7 @@ end
 energy_matches = function(card, etype, include_colorless)
   if get_type(card) and (etype == "Trans" or etype == "Bird") then return true
   elseif get_type(card) and etype == "Colorless" and include_colorless then return true
-  elseif is_type(card, etype) then return true end
+  elseif pokermon.is_type(card, etype) then return true end
   return false
 end
 
@@ -89,7 +89,7 @@ end
 increment_energy = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   -- checking if the colorless penalty applies
-  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
+  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- the regular energy increment
   if (energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
@@ -118,7 +118,7 @@ energize = function(card, etype, evolving, silent, amount, center)
   local frac
   local energy_count, c_energy_count = get_total_energy(card, true)
   -- colorless type check
-  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
+  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- vanilla jokers aren't coded well so we're knocking them out first
   if energizable_vanilla[center.name] then
     energize_other(card, etype, center, c_penalty, amount)
