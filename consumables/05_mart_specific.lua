@@ -232,7 +232,7 @@ local meteorite = {
       end
       if deoxys.ability.extra.form ~= curr_index then
         deoxys.ability.extra.form = curr_index
-        poke_fake_evolve(deoxys, localize("poke_transform_success"), true)
+        pokermon.fake_evolve(deoxys, localize("poke_transform_success"), true)
       end
     end
   end,

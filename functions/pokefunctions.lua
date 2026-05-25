@@ -63,7 +63,7 @@ pokermon.copy_scaled_values = function(card)
   return values
 end
 
-poke_fake_evolve = function(card, evolve_message, set_sprites)
+pokermon.fake_evolve = function(card, evolve_message, set_sprites)
     G.E_MANAGER:add_event(Event({
       func = function()
         if card.evolution_timer then return true end
