@@ -357,7 +357,7 @@ pokermon.type_evo  = function (self, card, context, forced_key, type_req)
   end
 end
 
-deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
+pokermon.deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
   if pokermon.can_evolve(self, card, context, forced_key) then
     local suit_count = 0
     for k, v in pairs(G.playing_cards) do
@@ -371,7 +371,7 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
   end
 end
 
-deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage, flat)
+pokermon.deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
     local enhance_count = 0
     for k, v in pairs(G.playing_cards) do
@@ -389,7 +389,7 @@ deck_enhance_evo = function (self, card, context, forced_key, enhancement, perce
   end
 end
 
-deck_seal_evo = function (self, card, context, forced_key, seal, percentage, flat)
+pokermon.deck_seal_evo = function (self, card, context, forced_key, seal, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
     local seal_count = 0
     for k, v in pairs(G.playing_cards) do

@@ -1087,7 +1087,7 @@ local chansey={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
-    return deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
+    return pokermon.deck_enhance_evo(self, card, context, "j_poke_blissey", "Lucky", .25)
   end,
   attributes = {"enhancements", "generation", "condition_evo"},
 }
