@@ -264,7 +264,7 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
   end
 end
 
-can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
+pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
   if next(find_joker("everstone")) and not allow_level then return false end
   if (context.evolution or ignore_step) and not context.blueprint and not card.gone then
@@ -277,7 +277,7 @@ end
 level_evo = function(self, card, context, forced_key)
     if not card.ability.extra.rounds then return end
     if card.debuff then return end
-    if can_evolve(self, card, context, forced_key) then
+    if pokermon.can_evolve(self, card, context, forced_key) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
       end
@@ -288,13 +288,13 @@ level_evo = function(self, card, context, forced_key)
       elseif card.ability.extra.rounds > 0 then
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
-    elseif can_evolve(self, card, context, forced_key, nil, true) then
+    elseif pokermon.can_evolve(self, card, context, forced_key, nil, true) then
       if card.ability.extra.rounds > 0 then
         card.ability.extra.rounds = card.ability.extra.rounds - 1
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
       end
     end
-    if can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
+    if pokermon.can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
       local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
@@ -306,14 +306,14 @@ item_evo = function(self, card, context, forced_key)
       if type(card.ability.extra.evolve) == "string" then
         forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]
       end
-      if forced_key and can_evolve(self, card, context, forced_key) then
+      if forced_key and pokermon.can_evolve(self, card, context, forced_key) then
         card.ability.extra.evolve = nil
         return {
           message = pokermon.evolve(card, forced_key)
         }
       end
 
-      if can_evolve(self, card, context, forced_key, true) then
+      if pokermon.can_evolve(self, card, context, forced_key, true) then
         if not card.ability.extra.juiced then
           card.ability.extra.juiced = true
           local eval = function(card) return card.ability.extra.evolve and not card.REMOVED and not G.RESET_JIGGLES end
@@ -329,12 +329,12 @@ scaling_evo = function (self, card, context, forced_key, current, target, evo_me
     current = to_big(current)
     target = to_big(target)
   end
-  if can_evolve(self, card, context, forced_key) and current >= target then
+  if pokermon.can_evolve(self, card, context, forced_key) and current >= target then
     return {
       message = pokermon.evolve(card, forced_key, nil, evo_message)
     }
   end
-  if can_evolve(self, card, context, forced_key, true) and current >= target then
+  if pokermon.can_evolve(self, card, context, forced_key, true) and current >= target then
     if not card.ability.extra.juiced then
       card.ability.extra.juiced = true
       local eval = function(card) return current >= target and not card.REMOVED and not G.RESET_JIGGLES end
@@ -344,11 +344,11 @@ scaling_evo = function (self, card, context, forced_key, current, target, evo_me
 end
 
 type_evo = function (self, card, context, forced_key, type_req)
-  if can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
+  if pokermon.can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
     return {
       message = pokermon.evolve(card, forced_key)
     }
-  elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
+  elseif pokermon.can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
     if not card.ability.extra.juiced then
       card.ability.extra.juiced = true
       local eval = function(card) return card.ability[type_req.."_sticker"] and not card.REMOVED and not G.RESET_JIGGLES end
@@ -358,7 +358,7 @@ type_evo = function (self, card, context, forced_key, type_req)
 end
 
 deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
-  if can_evolve(self, card, context, forced_key) then
+  if pokermon.can_evolve(self, card, context, forced_key) then
     local suit_count = 0
     for k, v in pairs(G.playing_cards) do
       if v:is_suit(suit) then suit_count = suit_count + 1 end
@@ -372,7 +372,7 @@ deck_suit_evo = function (self, card, context, forced_key, suit, percentage)
 end
 
 deck_enhance_evo = function (self, card, context, forced_key, enhancement, percentage, flat)
-  if can_evolve(self, card, context, forced_key) then
+  if pokermon.can_evolve(self, card, context, forced_key) then
     local enhance_count = 0
     for k, v in pairs(G.playing_cards) do
       if v.ability.name == enhancement.." Card" then enhance_count  = enhance_count  + 1 end
@@ -390,7 +390,7 @@ deck_enhance_evo = function (self, card, context, forced_key, enhancement, perce
 end
 
 deck_seal_evo = function (self, card, context, forced_key, seal, percentage, flat)
-  if can_evolve(self, card, context, forced_key) then
+  if pokermon.can_evolve(self, card, context, forced_key) then
     local seal_count = 0
     for k, v in pairs(G.playing_cards) do
       if seal and v.seal == seal then 
