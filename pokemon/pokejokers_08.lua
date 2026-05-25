@@ -623,7 +623,7 @@ local swinub={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_piloswine")
+    return pokermon.level_evo(self, card, context, "j_poke_piloswine")
   end,
   calc_dollar_bonus = function(self, card)
     if SMODS.pseudorandom_probability(card, 'swinub', card.ability.extra.num, card.ability.extra.dem, 'swinub') then
@@ -769,7 +769,7 @@ local remoraid={
         card = card
       }
     end
-    return level_evo(self, card, context, "j_poke_octillery")
+    return pokermon.level_evo(self, card, context, "j_poke_octillery")
   end,
   attributes = {"retrigger", "hands", "round_evo"},
 }
@@ -1013,7 +1013,7 @@ local houndour={
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.RED})
     end
-    return level_evo(self, card, context, "j_poke_houndoom")
+    return pokermon.level_evo(self, card, context, "j_poke_houndoom")
   end,
   add_to_deck = function(self, card, from_debuff)
 		SMODS.change_discard_limit(card.ability.extra.limit)
@@ -1199,7 +1199,7 @@ local phanpy={
         Xmult = card.ability.extra.Xmult
       }
     end
-    return level_evo(self, card, context, "j_poke_donphan")
+    return pokermon.level_evo(self, card, context, "j_poke_donphan")
   end,
   attributes = {"xmult", "scaling", "reset", "round_evo"},
 }
@@ -1532,7 +1532,7 @@ local tyrogue={
     else
       forced_key = "j_poke_hitmontop"
     end
-    return level_evo(self, card, context, forced_key)
+    return pokermon.level_evo(self, card, context, forced_key)
   end,
   attributes = {"baby", "hands", "discard", "generation", "destroy_card", "round_evo"},
 }
@@ -1601,7 +1601,7 @@ local smoochum ={
         }
       end
     end
-    local evo = level_evo(self, card, context, "j_poke_jynx")
+    local evo = pokermon.level_evo(self, card, context, "j_poke_jynx")
     if evo and type(evo) == "table" then
       G.E_MANAGER:add_event(Event({
         func = (function()
@@ -1649,7 +1649,7 @@ local elekid ={
         }
       end
     end
-    local evo = level_evo(self, card, context, "j_poke_electabuzz")
+    local evo = pokermon.level_evo(self, card, context, "j_poke_electabuzz")
     if evo and type(evo) == "table" then
       G.E_MANAGER:add_event(Event({
         func = (function()
@@ -1696,7 +1696,7 @@ local magby={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_magmar")
+    return pokermon.level_evo(self, card, context, "j_poke_magmar")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size

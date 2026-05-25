@@ -55,7 +55,7 @@ local buneary={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_lopunny")
+    return pokermon.level_evo(self, card, context, "j_poke_lopunny")
   end,
   attributes = {"mult", "round_evo"},
 }
@@ -311,7 +311,7 @@ local chingling={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_chimecho")
+    return pokermon.level_evo(self, card, context, "j_poke_chimecho")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
@@ -358,7 +358,7 @@ local bonsly={
       local created_card = create_playing_card({front = G.P_CARDS[suit..'_'..rank], center = G.P_CENTERS[enhancement]}, G.deck, nil, nil, {G.C.PURPLE})
       playing_card_joker_effects({created_card})
     end
-    return level_evo(self, card, context, "j_poke_sudowoodo")
+    return pokermon.level_evo(self, card, context, "j_poke_sudowoodo")
   end,
   attributes = {"baby", "generation", "face", "enhancements", "round_evo"},
 }
@@ -405,7 +405,7 @@ local mimejr={
       card:juice_up(0.5, 0.5)
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_mime_ex"), colour = G.C.CHIPS})
     end
-    return level_evo(self, card, context, "j_poke_mrmime")
+    return pokermon.level_evo(self, card, context, "j_poke_mrmime")
   end,
   attributes = {"baby", "modify_card", "seals", "round_evo"},
 }
@@ -457,7 +457,7 @@ local happiny={
           }))
       end
     end
-    return level_evo(self, card, context, "j_poke_chansey")
+    return pokermon.level_evo(self, card, context, "j_poke_chansey")
   end,
   attributes = {"baby", "tarot", "generation", "chance", "round_evo"},
 }
@@ -508,7 +508,7 @@ local munchlax={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_snorlax")
+    return pokermon.level_evo(self, card, context, "j_poke_snorlax")
   end,
   attributes = {"baby", "item", "generation", "round_evo"},
 }
@@ -557,7 +557,7 @@ local riolu={
         }))
       end
     end
-    return level_evo(self, card, context, "j_poke_lucario")
+    return pokermon.level_evo(self, card, context, "j_poke_lucario")
   end,
   attributes = {"baby", "spectral", "generation", "round_evo"},
 }

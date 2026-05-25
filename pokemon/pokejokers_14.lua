@@ -105,7 +105,7 @@ local kricketot={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_kricketune")
+    return pokermon.level_evo(self, card, context, "j_poke_kricketune")
   end,
   attributes = {"economy", "suit", "round_evo"}
 }
@@ -217,7 +217,7 @@ local budew={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_roselia")
+    return pokermon.level_evo(self, card, context, "j_poke_roselia")
   end,
   attributes = {"baby", "item", "generation", "round_evo"}
 }
@@ -288,7 +288,7 @@ local buizel={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_floatzel")
+    return pokermon.level_evo(self, card, context, "j_poke_floatzel")
   end,
   attributes = {"chips", "round_evo"},
 }

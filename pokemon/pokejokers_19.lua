@@ -191,7 +191,7 @@ local zorua = {
         message = localize('k_reset')
       }
     end
-    return level_evo(self, card, context, "j_poke_zoroark")
+    return pokermon.level_evo(self, card, context, "j_poke_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
     poke_set_card_type_badge(card, badges, self:get_illusion(card))

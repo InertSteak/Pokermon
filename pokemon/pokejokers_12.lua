@@ -27,7 +27,7 @@ local cacnea = {
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = '$'..earned, colour = G.C.MONEY})
       end
     end
-    return level_evo(self, card, context, "j_poke_cacturne")
+    return pokermon.level_evo(self, card, context, "j_poke_cacturne")
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)
@@ -906,7 +906,7 @@ local duskull={
         repetitions = card.ability.extra.retriggers,
       }
     end
-    return level_evo(self, card, context, "j_poke_dusclops")
+    return pokermon.level_evo(self, card, context, "j_poke_dusclops")
   end,
   attributes = {"retrigger", "hands", "round_evo"},
 }
@@ -1118,7 +1118,7 @@ local wynaut={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_wobbuffet")
+    return pokermon.level_evo(self, card, context, "j_poke_wobbuffet")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }

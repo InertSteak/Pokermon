@@ -73,7 +73,7 @@ local nidoranm={
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_nidorino")
+    return pokermon.level_evo(self, card, context, "j_poke_nidorino")
   end,
   attributes = {"mult", "rank", "king", "round_evo"},
 }
@@ -561,7 +561,7 @@ local oddish={
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_gloom")
+    return pokermon.level_evo(self, card, context, "j_poke_gloom")
   end,
   attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "round_evo"},
 }
@@ -763,7 +763,7 @@ local venonat={
         numerator = context.numerator + card.ability.extra.plus_odds
       }
     end
-    return level_evo(self, card, context, "j_poke_venomoth")
+    return pokermon.level_evo(self, card, context, "j_poke_venomoth")
   end,
   attributes = {"mod_chance", "passive", "round_evo"},
 }
@@ -846,7 +846,7 @@ local diglett={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_dugtrio")
+    return pokermon.level_evo(self, card, context, "j_poke_dugtrio")
   end,
   attributes = {"chips", "hand_type", "mult", "rank", "two", "three", "four", "round_evo"},
 }
@@ -1009,7 +1009,7 @@ local psyduck={
         colour = G.C.MONEY
       }
     end
-    return level_evo(self, card, context, "j_poke_golduck")
+    return pokermon.level_evo(self, card, context, "j_poke_golduck")
   end,
   attributes = {"economy", "face", "round_evo"},
 }
@@ -1084,7 +1084,7 @@ local mankey={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_primeape")
+    return pokermon.level_evo(self, card, context, "j_poke_primeape")
   end,
   attributes = {"chips", "mult", "rank", "two", "three", "five", "seven", "round_evo"},
 }
@@ -1226,7 +1226,7 @@ local poliwag={
         mult = card.ability.extra.mult,
       }
     end
-    return level_evo(self, card, context, "j_poke_poliwhirl")
+    return pokermon.level_evo(self, card, context, "j_poke_poliwhirl")
   end,
   attributes = {"mult", "suit", "round_evo"},
 }

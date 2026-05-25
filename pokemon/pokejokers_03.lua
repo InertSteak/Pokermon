@@ -106,7 +106,7 @@ local abra={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_kadabra")
+    return pokermon.level_evo(self, card, context, "j_poke_kadabra")
   end,
   attributes = {"chance", "tarot", "item", "hand_type", "round_evo"},
 }
@@ -309,7 +309,7 @@ local machop={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_machoke")
+    return pokermon.level_evo(self, card, context, "j_poke_machoke")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -444,7 +444,7 @@ local bellsprout={
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_weepinbell")
+    return pokermon.level_evo(self, card, context, "j_poke_weepinbell")
   end,
   attributes = {"chips", "rank", "two", "four", "six", "eight", "ten", "round_evo"},
 }
@@ -553,7 +553,7 @@ local tentacool={
         card = card
       }
     end
-    return level_evo(self, card, context, "j_poke_tentacruel")
+    return pokermon.level_evo(self, card, context, "j_poke_tentacruel")
   end,
   attributes = {"mult", "rank", "ten", "round_evo"},
 }
@@ -609,7 +609,7 @@ local geodude={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_graveler")
+    return pokermon.level_evo(self, card, context, "j_poke_graveler")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
@@ -960,7 +960,7 @@ local magnemite={
           x_mult = card.ability.extra.Xmult_multi
         }
     end
-    return level_evo(self, card, context, "j_poke_magneton")
+    return pokermon.level_evo(self, card, context, "j_poke_magneton")
   end,
   attributes = {"xmult", "enhancements", "round_evo"},
 }
@@ -1090,7 +1090,7 @@ local doduo={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_dodrio")
+    return pokermon.level_evo(self, card, context, "j_poke_dodrio")
   end,
   attributes = {"mult", "face", "round_evo"},
 }
@@ -1182,7 +1182,7 @@ local seel={
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    return level_evo(self, card, context, "j_poke_dewgong")
+    return pokermon.level_evo(self, card, context, "j_poke_dewgong")
   end,
   attributes = {"chance", "modify_card", "seals", "hands", "round_evo"},
 }
@@ -1245,7 +1245,7 @@ local grimer={
       playing_card_joker_effects({added_card})
       card:juice_up()
     end
-    return level_evo(self, card, context, "j_poke_muk")
+    return pokermon.level_evo(self, card, context, "j_poke_muk")
   end,
   attributes = {"mult", "full_deck", "generation", "round_evo"},
 }

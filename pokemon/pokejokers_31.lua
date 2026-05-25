@@ -218,7 +218,7 @@ local tarountula = {
   hazard_poke = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_spidops")
+    return pokermon.level_evo(self, card, context, "j_poke_spidops")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)

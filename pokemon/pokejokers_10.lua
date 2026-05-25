@@ -48,7 +48,7 @@ local taillow={
         colour = G.C.CHIPS
       }
     end
-    return level_evo(self, card, context, "j_poke_swellow")
+    return pokermon.level_evo(self, card, context, "j_poke_swellow")
   end,
   attributes = {"rank", "ace", "mult", "scaling", "reset", "round_evo"},
 }
@@ -147,7 +147,7 @@ local wingull={
         end
       }
     end
-    return level_evo(self, card, context, "j_poke_pelipper")
+    return pokermon.level_evo(self, card, context, "j_poke_pelipper")
   end,
   attributes = {"rank", "discard", "economy", "round_evo"},
 }
@@ -185,7 +185,7 @@ local pelipper={
         end
       }
     end
-    return level_evo(self, card, context, "j_poke_pelipper")
+    return pokermon.level_evo(self, card, context, "j_poke_pelipper")
   end,
   attributes = {"rank", "discard", "economy", "types", "joker"},
 }
@@ -233,7 +233,7 @@ local ralts={
         mult = total
       }
     end
-    return level_evo(self, card, context, "j_poke_kirlia")
+    return pokermon.level_evo(self, card, context, "j_poke_kirlia")
   end,
   attributes = {"mult", "energy_count", "joker", "hand_type", "round_evo"},
 }
@@ -477,7 +477,7 @@ local slakoth={
         mult = card.ability.extra.mult
       }
     end
-    return level_evo(self, card, context, "j_poke_vigoroth")
+    return pokermon.level_evo(self, card, context, "j_poke_vigoroth")
   end,
   attributes = {"mult", "hands", "round_evo"},
 }
@@ -506,7 +506,7 @@ local vigoroth={
       }
     end
     if G.GAME.current_round.discards_used <= 0  then
-      return level_evo(self, card, context, "j_poke_slaking")
+      return pokermon.level_evo(self, card, context, "j_poke_slaking")
     end
   end,
   attributes = {"xmult", "hands", "condition_evo"},
@@ -764,7 +764,7 @@ local makuhita={
       ease_hands_played(card.ability.extra.hands)
       card:juice_up()
     end
-    return level_evo(self, card, context, "j_poke_hariyama")
+    return pokermon.level_evo(self, card, context, "j_poke_hariyama")
   end,
   attributes = {"hands", "round_evo"},
 }
@@ -838,7 +838,7 @@ local azurill ={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_marill")
+    return pokermon.level_evo(self, card, context, "j_poke_marill")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }

@@ -402,7 +402,7 @@ local hoppip={
         message = localize("poke_hop_ex"),
       }
     end
-    return level_evo(self, card, context, "j_poke_skiploom")
+    return pokermon.level_evo(self, card, context, "j_poke_skiploom")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -447,7 +447,7 @@ local skiploom={
         message = localize("poke_skip_ex"),
       }
     end
-    return level_evo(self, card, context, "j_poke_jumpluff")
+    return pokermon.level_evo(self, card, context, "j_poke_jumpluff")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -698,7 +698,7 @@ local wooper={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_quagsire")
+    return pokermon.level_evo(self, card, context, "j_poke_quagsire")
   end,
   attributes = {"mult", "face", "round_evo"},
 }
@@ -742,7 +742,7 @@ local quagsire={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_quagsire")
+    return pokermon.level_evo(self, card, context, "j_poke_quagsire")
   end,
   attributes = {"mult", "face"},
 }
@@ -1268,7 +1268,7 @@ local pineco={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_forretress")
+    return pokermon.level_evo(self, card, context, "j_poke_forretress")
   end,
   attributes = {"chips", "volatile", "round_evo"},
 }
@@ -1354,7 +1354,7 @@ local dunsparce={
       }))
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_screech_ex")})
     end
-    return level_evo(self, card, context, "j_poke_dudunsparce")
+    return pokermon.level_evo(self, card, context, "j_poke_dudunsparce")
   end,
   attributes = {"reroll", "round_evo"},
 }
@@ -1525,7 +1525,7 @@ local snubbull = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_granbull")
+    return pokermon.level_evo(self, card, context, "j_poke_granbull")
   end,
   attributes = {"xmult", "face", "round_evo"},
 }

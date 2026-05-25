@@ -29,7 +29,7 @@ local snorunt={
         in_debt = G.GAME.dollars < 0
       end
       if in_debt then
-        return level_evo(self, card, context, "j_poke_glalie")
+        return pokermon.level_evo(self, card, context, "j_poke_glalie")
       end
     end
   end,
@@ -448,7 +448,7 @@ local shelgon={
         mult = total
       }
     end
-    return level_evo(self, card, context, "j_poke_salamence")
+    return pokermon.level_evo(self, card, context, "j_poke_salamence")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)

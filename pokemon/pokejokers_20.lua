@@ -106,7 +106,7 @@ local gothita={
   knockoff_pseudol = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_gothorita")
+    return pokermon.level_evo(self, card, context, "j_poke_gothorita")
   end,
   add_to_deck = function(self, card, from_debuff)
       G.E_MANAGER:add_event(Event({func = function()
@@ -141,7 +141,7 @@ local gothorita={
   atlas = "Pokedex5",
   gen = 5,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_gothitelle")
+    return pokermon.level_evo(self, card, context, "j_poke_gothitelle")
   end,
   add_to_deck = function(self, card, from_debuff)
       G.E_MANAGER:add_event(Event({func = function()
@@ -248,7 +248,7 @@ local vanillite={
         })
       end
     end
-    return level_evo(self, card, context, "j_poke_vanillish")
+    return pokermon.level_evo(self, card, context, "j_poke_vanillish")
   end,
   attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
@@ -299,7 +299,7 @@ local vanillish={
         })
       end
     end
-    return level_evo(self, card, context, "j_poke_vanilluxe")
+    return pokermon.level_evo(self, card, context, "j_poke_vanilluxe")
   end,
   attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
@@ -480,7 +480,7 @@ local ferroseed={
           return {m_steel = true}
       end
     end
-    return level_evo(self, card, context, "j_poke_ferrothorn")
+    return pokermon.level_evo(self, card, context, "j_poke_ferrothorn")
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)

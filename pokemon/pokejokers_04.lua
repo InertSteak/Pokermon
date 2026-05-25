@@ -57,7 +57,7 @@ local gastly={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not card.gone then
-      return level_evo(self, card, context, "j_poke_haunter")
+      return pokermon.level_evo(self, card, context, "j_poke_haunter")
     end
   end,
   calc_dollar_bonus = function(self, card)
@@ -410,7 +410,7 @@ local krabby={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_kingler")
+    return pokermon.level_evo(self, card, context, "j_poke_kingler")
   end,
   attributes = {"chips", "face", "round_evo"},
 }
@@ -509,7 +509,7 @@ local voltorb={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_electrode")
+    return pokermon.level_evo(self, card, context, "j_poke_electrode")
   end,
   attributes = {"xmult", "volatile", "round_evo"},
 }
@@ -888,7 +888,7 @@ local koffing={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_weezing")
+    return pokermon.level_evo(self, card, context, "j_poke_weezing")
   end,
   attributes = {"mult", "volatile", "round_evo"},
 }
@@ -969,7 +969,7 @@ local rhyhorn={
           card = card
       }
     end
-    return level_evo(self, card, context, "j_poke_rhydon")
+    return pokermon.level_evo(self, card, context, "j_poke_rhydon")
   end,
   attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "round_evo"},
 }
@@ -1352,7 +1352,7 @@ local goldeen={
         card = card
       }
     end
-    return level_evo(self, card, context, "j_poke_seaking")
+    return pokermon.level_evo(self, card, context, "j_poke_seaking")
   end,
   attributes = {"enhancements", "retrigger", "round_evo"},
 }

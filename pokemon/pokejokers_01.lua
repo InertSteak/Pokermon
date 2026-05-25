@@ -567,7 +567,7 @@ local caterpie={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_metapod")
+    return pokermon.level_evo(self, card, context, "j_poke_metapod")
   end,
   attributes = {"mult", "round_evo"},
 }
@@ -597,7 +597,7 @@ local metapod={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_butterfree")
+    return pokermon.level_evo(self, card, context, "j_poke_butterfree")
   end,
   attributes = {"mult", "round_evo"},
 }
@@ -656,7 +656,7 @@ local weedle={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_kakuna")
+    return pokermon.level_evo(self, card, context, "j_poke_kakuna")
   end,
   attributes = {"chips", "round_evo"},
 }
@@ -686,7 +686,7 @@ local kakuna={
           }
       end
     end
-    return level_evo(self, card, context, "j_poke_beedrill")
+    return pokermon.level_evo(self, card, context, "j_poke_beedrill")
   end,
   attributes = {"chips", "round_evo"},
 }
@@ -798,7 +798,7 @@ local pidgey={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_pidgeotto")
+    return pokermon.level_evo(self, card, context, "j_poke_pidgeotto")
   end,
   attributes = {"rank", "suit", "mult", "round_evo"},
 }
@@ -850,7 +850,7 @@ local pidgeotto={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_pidgeot")
+    return pokermon.level_evo(self, card, context, "j_poke_pidgeot")
   end,
   attributes = {"rank", "suit", "mult", "round_evo"},
 }
@@ -984,7 +984,7 @@ local rattata={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_raticate")
+    return pokermon.level_evo(self, card, context, "j_poke_raticate")
   end,
   attributes = {"retrigger", "round_evo"},
 }
@@ -1143,7 +1143,7 @@ local ekans={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_arbok")
+    return pokermon.level_evo(self, card, context, "j_poke_arbok")
   end,
   attributes = {"hand_type", "mult", "round_evo"},
 }
@@ -1327,7 +1327,7 @@ local sandshrew={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_sandslash")
+    return pokermon.level_evo(self, card, context, "j_poke_sandslash")
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -1420,7 +1420,7 @@ local nidoranf={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_nidorina")
+    return pokermon.level_evo(self, card, context, "j_poke_nidorina")
   end,
   attributes = {"chips", "rank", "queen", "round_evo"},
 }

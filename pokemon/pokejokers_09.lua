@@ -1182,7 +1182,7 @@ local poochyena={
         })
       end
     end
-    return level_evo(self, card, context, "j_poke_mightyena")
+    return pokermon.level_evo(self, card, context, "j_poke_mightyena")
   end,
   attributes = {"mult", "scaling", "round_evo"},
 }
@@ -1269,7 +1269,7 @@ local zigzagoon={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_linoone")
+    return pokermon.level_evo(self, card, context, "j_poke_linoone")
   end,
   attributes = {"chance", "generation", "item", "round_evo"},
 }

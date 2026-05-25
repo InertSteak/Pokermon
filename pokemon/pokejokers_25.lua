@@ -43,7 +43,7 @@ local grubbin={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_charjabug")
+    return pokermon.level_evo(self, card, context, "j_poke_charjabug")
   end,
   attributes = {"mult", "types", "round_evo"},
 }

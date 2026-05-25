@@ -274,7 +274,7 @@ pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, all
   end
 end
 
-level_evo = function(self, card, context, forced_key)
+pokermon.level_evo = function(self, card, context, forced_key)
     if not card.ability.extra.rounds then return end
     if card.debuff then return end
     if pokermon.can_evolve(self, card, context, forced_key) then

@@ -464,7 +464,7 @@ local magikarp={
           add_to_hand = true
       }
     end
-    return level_evo(self, card, context, "j_poke_gyarados")
+    return pokermon.level_evo(self, card, context, "j_poke_gyarados")
   end,
   attributes = {"chips", "passive", "applies", "round_evo"},
 }

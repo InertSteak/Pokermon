@@ -350,7 +350,7 @@ local golett={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_golurk")
+    return pokermon.level_evo(self, card, context, "j_poke_golurk")
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)

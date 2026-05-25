@@ -76,7 +76,7 @@ local chikorita = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_bayleef")
+    return pokermon.level_evo(self, card, context, "j_poke_bayleef")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -121,7 +121,7 @@ local bayleef = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_meganium")
+    return pokermon.level_evo(self, card, context, "j_poke_meganium")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -193,7 +193,7 @@ local cyndaquil = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_quilava")
+    return pokermon.level_evo(self, card, context, "j_poke_quilava")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -231,7 +231,7 @@ local quilava = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_typhlosion")
+    return pokermon.level_evo(self, card, context, "j_poke_typhlosion")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -322,7 +322,7 @@ local totodile = {
         colour = G.C.CHIPS
       }
     end
-    return level_evo(self, card, context, "j_poke_croconaw")
+    return pokermon.level_evo(self, card, context, "j_poke_croconaw")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -375,7 +375,7 @@ local croconaw = {
         colour = G.C.CHIPS
       }
     end
-    return level_evo(self, card, context, "j_poke_feraligatr")
+    return pokermon.level_evo(self, card, context, "j_poke_feraligatr")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -555,7 +555,7 @@ local hoothoot={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_noctowl")
+    return pokermon.level_evo(self, card, context, "j_poke_noctowl")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
@@ -633,7 +633,7 @@ local ledyba={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_ledian")
+    return pokermon.level_evo(self, card, context, "j_poke_ledian")
   end,
   attributes = {"mult", "round_evo"},
 }
@@ -702,7 +702,7 @@ local spinarak={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_ariados")
+    return pokermon.level_evo(self, card, context, "j_poke_ariados")
   end,
   attributes = {"chips", "chance", "round_evo"},
 }
@@ -863,7 +863,7 @@ local chinchou={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_lanturn")
+    return pokermon.level_evo(self, card, context, "j_poke_lanturn")
   end,
   attributes = {"chips", "economy", "hand_type", "round_evo"},
 }
@@ -932,7 +932,7 @@ local pichu={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_pikachu")
+    return pokermon.level_evo(self, card, context, "j_poke_pikachu")
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
@@ -981,7 +981,7 @@ local cleffa={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_clefairy")
+    return pokermon.level_evo(self, card, context, "j_poke_clefairy")
   end,
   attributes = {"baby", "tarot", "generation", "space", "round_evo"},
 }
@@ -1027,7 +1027,7 @@ local igglybuff={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_jigglypuff")
+    return pokermon.level_evo(self, card, context, "j_poke_jigglypuff")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
@@ -1059,7 +1059,7 @@ local togepi={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_togetic")
+    return pokermon.level_evo(self, card, context, "j_poke_togetic")
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or self
@@ -1180,7 +1180,7 @@ local natu = {
         break
       end
     end
-    return level_evo(self, card, context, "j_poke_xatu")
+    return pokermon.level_evo(self, card, context, "j_poke_xatu")
   end,
   set_sprites = function(self, card, front)
     for hand, data in pairs(G.GAME.hands) do

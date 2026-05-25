@@ -31,7 +31,7 @@ local nickit={
   gen = 8,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_thievul")
+    return pokermon.level_evo(self, card, context, "j_poke_thievul")
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "nickit", card.ability.extra.money, true)
@@ -93,7 +93,7 @@ local yamper={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_boltund")
+    return pokermon.level_evo(self, card, context, "j_poke_boltund")
   end,
   attributes = {"mult", "economy", "hand_type", "round_evo"},
 }

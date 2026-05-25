@@ -32,7 +32,7 @@ local litleo={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_pyroar")
+    return pokermon.level_evo(self, card, context, "j_poke_pyroar")
   end,
   attributes = {"chips", "hand_type", "round_evo"},
 }

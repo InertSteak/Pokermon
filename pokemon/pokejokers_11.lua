@@ -255,7 +255,7 @@ local meditite={
         mult = total
       }
     end
-    return level_evo(self, card, context, "j_poke_medicham")
+    return pokermon.level_evo(self, card, context, "j_poke_medicham")
   end,
   attributes = {"mult", "discard", "round_evo"},
 }
@@ -606,7 +606,7 @@ local numel={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint then
       card.ability.extra.cards_scored = card.ability.extra.cards_scored + 1
     end
-    return level_evo(self, card, context, "j_poke_camerupt")
+    return pokermon.level_evo(self, card, context, "j_poke_camerupt")
   end,
   attributes = {"xmult", "round_evo"},
 }

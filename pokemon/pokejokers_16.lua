@@ -48,7 +48,7 @@ local mantyke={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_mantine")
+    return pokermon.level_evo(self, card, context, "j_poke_mantine")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }

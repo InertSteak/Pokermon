@@ -398,7 +398,7 @@ local tinkatink={
         SMODS.debuff_card(v,false, 'tinkatink'..card.unique_val)
       end
     end
-    return level_evo(self, card, context, "j_poke_tinkatuff")
+    return pokermon.level_evo(self, card, context, "j_poke_tinkatuff")
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
@@ -448,7 +448,7 @@ local tinkatuff={
         SMODS.debuff_card(v,false, 'tinkatuff'..card.unique_val)
       end
     end
-    return level_evo(self, card, context, "j_poke_tinkaton")
+    return pokermon.level_evo(self, card, context, "j_poke_tinkaton")
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
@@ -567,7 +567,7 @@ local wiglett={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_wugtrio")
+    return pokermon.level_evo(self, card, context, "j_poke_wugtrio")
   end,
   attributes = {"mult", "chips", "hand_type", "rank", "five", "six", "seven", "round_evo"},
 }
