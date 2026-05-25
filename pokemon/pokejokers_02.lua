@@ -112,7 +112,7 @@ local nidorino={
           }
       end
     end
-    return item_evo(self, card, context, "j_poke_nidoking")
+    return pokermon.item_evo(self, card, context, "j_poke_nidoking")
   end,
   attributes = {"mult", "rank", "king", "item_evo"},
 }
@@ -185,7 +185,7 @@ local clefairy={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_clefable")
+    return pokermon.item_evo(self, card, context, "j_poke_clefable")
   end,
   attributes = {"mult", "suit", "clubs", "space", "item_evo"},
 }
@@ -279,7 +279,7 @@ local vulpix={
         end
       end 
     end
-    return item_evo(self, card, context, "j_poke_ninetales")
+    return pokermon.item_evo(self, card, context, "j_poke_ninetales")
   end,
   attributes = {"chance", "rank", "nine", "tarot", "generation", "item_evo"},
 }
@@ -374,7 +374,7 @@ local jigglypuff={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_wigglytuff")
+    return pokermon.item_evo(self, card, context, "j_poke_wigglytuff")
   end,
   attributes = {"chips", "mult", "suit", "spades", "item_evo"},
 }
@@ -605,7 +605,7 @@ local gloom={
           }
       end
     end
-    return item_evo(self, card, context)
+    return pokermon.item_evo(self, card, context)
   end,
   attributes = {"mult", "rank", "ace", "three", "five", "seven", "nine", "item_evo"},
 }
@@ -1154,7 +1154,7 @@ local growlithe={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_arcanine")
+    return pokermon.item_evo(self, card, context, "j_poke_arcanine")
   end,
   attributes = {"mult", "hand_type", "item_evo"},
 }

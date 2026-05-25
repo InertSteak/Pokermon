@@ -836,7 +836,7 @@ local feebas={
           add_to_hand = true
       }
     end
-    return item_evo(self, card, context, "j_poke_milotic")
+    return pokermon.item_evo(self, card, context, "j_poke_milotic")
   end,
   attributes = {"mult", "passive", "applies", "item_evo"},
 }
@@ -957,7 +957,7 @@ local dusclops={
         remove = true
       }
     end
-    return item_evo(self, card, context, "j_poke_dusknoir")
+    return pokermon.item_evo(self, card, context, "j_poke_dusknoir")
   end,
   attributes = {"retrigger", "hands", "destroy_card", "spectral", "item_evo"},
 }

@@ -1249,7 +1249,7 @@ local pikachu={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_raichu")
+    return pokermon.item_evo(self, card, context, "j_poke_raichu")
   end,
   attributes = {"mult", "economy", "item_evo"},
 }
@@ -1461,7 +1461,7 @@ local nidorina={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_nidoqueen")
+    return pokermon.item_evo(self, card, context, "j_poke_nidoqueen")
   end,
   attributes = {"chips", "rank", "queen", "item_evo"},
 }

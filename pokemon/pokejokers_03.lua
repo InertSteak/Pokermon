@@ -31,7 +31,7 @@ local poliwhirl={
         mult = card.ability.extra.mult,
       }
     end
-    return item_evo(self, card, context)
+    return pokermon.item_evo(self, card, context)
   end,
   attributes = {"mult", "suit", "item_evo"},
 }
@@ -159,7 +159,7 @@ local kadabra={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_alakazam")
+    return pokermon.item_evo(self, card, context, "j_poke_alakazam")
   end,
   attributes = {"chance", "tarot", "item", "hand_type", "item_evo"},
 }
@@ -357,7 +357,7 @@ local machoke={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_machamp")
+    return pokermon.item_evo(self, card, context, "j_poke_machamp")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -477,7 +477,7 @@ local weepinbell={
           }
       end
     end
-    return item_evo(self, card, context, "j_poke_victreebel")
+    return pokermon.item_evo(self, card, context, "j_poke_victreebel")
   end,
   attributes = {"chips", "rank", "two", "four", "six", "eight", "ten", "item_evo"},
 }
@@ -649,7 +649,7 @@ local graveler={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_golem")
+    return pokermon.item_evo(self, card, context, "j_poke_golem")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
@@ -804,7 +804,7 @@ local slowpoke={
         add_card.cost = 0
       end
     end
-    local evo = item_evo(self, card, context, "j_poke_slowking")
+    local evo = pokermon.item_evo(self, card, context, "j_poke_slowking")
     if not evo then
       evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
     end
@@ -1007,7 +1007,7 @@ local magneton={
           x_mult = card.ability.extra.Xmult_multi + (adjacent * card.ability.extra.Xmult_multi2)
         }
     end
-    return item_evo(self, card, context, "j_poke_magnezone")
+    return pokermon.item_evo(self, card, context, "j_poke_magnezone")
   end,
   attributes = {"xmult", "enhancements", "types", "joker", "item_evo"},
 }
@@ -1336,7 +1336,7 @@ local shellder={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_cloyster")
+    return pokermon.item_evo(self, card, context, "j_poke_cloyster")
   end,
   attributes = {"chance", "retrigger", "item_evo"},
 }

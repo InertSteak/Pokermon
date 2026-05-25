@@ -284,7 +284,7 @@ local kirlia={
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
       card.ability.extra.planets_used = card.ability.extra.planets_used + 1
     end
-    local evo = item_evo(self, card, context, "j_poke_gallade")
+    local evo = pokermon.item_evo(self, card, context, "j_poke_gallade")
     if not evo then
       return scaling_evo(self, card, context, "j_poke_gardevoir", card.ability.extra.planets_used, self.config.evo_rqmt)
     end
@@ -887,7 +887,7 @@ local nosepass={
         card.ability.extra.first = nil
       end
     end
-    return item_evo(self, card, context, "j_poke_probopass")
+    return pokermon.item_evo(self, card, context, "j_poke_probopass")
   end,
   attributes = {"face", "modify_card", "enhancements", "xmult", "item_evo"},
 }
@@ -926,7 +926,7 @@ local skitty={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    local evo = item_evo(self, card, context, "j_poke_delcatty")
+    local evo = pokermon.item_evo(self, card, context, "j_poke_delcatty")
     if evo then return evo end
 
     local found_pos = get_index(G.jokers.cards, card)

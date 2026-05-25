@@ -391,7 +391,7 @@ local sneasel = {
         remove = true
       }
     end
-    return item_evo(self, card, context, "j_poke_weavile")
+    return pokermon.item_evo(self, card, context, "j_poke_weavile")
   end,
   attributes = {"rank", "destroy_card", "economy", "item_evo"},
 }
@@ -474,7 +474,7 @@ local ursaring={
         mult = card.ability.extra.mult,
       }
     end
-    return item_evo(self, card, context, "j_poke_ursaluna")
+    return pokermon.item_evo(self, card, context, "j_poke_ursaluna")
   end,
   attributes = {"mult", "scaling", "item", "generation", "item_evo"},
 }
@@ -1286,7 +1286,7 @@ local porygon2={
           end)}))
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
     end
-    return item_evo(self, card, context, "j_poke_porygonz")
+    return pokermon.item_evo(self, card, context, "j_poke_porygonz")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not G.GAME.energy_plus then

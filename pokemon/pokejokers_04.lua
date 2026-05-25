@@ -117,7 +117,7 @@ local haunter={
   blueprint_compat = false,
   calculate = function(self, card, context)
     if not card.gone then
-      return item_evo(self, card, context, "j_poke_gengar")
+      return pokermon.item_evo(self, card, context, "j_poke_gengar")
     end
   end,
   calc_dollar_bonus = function(self, card)
@@ -591,7 +591,7 @@ local exeggcute={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_exeggutor")
+    return pokermon.item_evo(self, card, context, "j_poke_exeggutor")
   end,
   attributes = {"mult", "suit", "hearts", "chance", "item_evo"},
 }
@@ -1025,7 +1025,7 @@ local rhydon={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_rhyperior")
+    return pokermon.item_evo(self, card, context, "j_poke_rhyperior")
   end,
   attributes = {"enhancements", "modify_card", "chips", "perma_bonus", "retrigger", "item_evo"},
 }
@@ -1426,7 +1426,7 @@ local staryu={
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_starmie")
+    return pokermon.item_evo(self, card, context, "j_poke_starmie")
   end,
   attributes = {"mult", "economy", "suit", "diamonds", "space", "item_evo"},
 }

@@ -438,7 +438,7 @@ local roselia={
         })) 
       end
     end
-    return item_evo(self, card, context, "j_poke_roserade")
+    return pokermon.item_evo(self, card, context, "j_poke_roserade")
   end,
   attributes = {"rank", "ace", "three", "five", "seven", "nine", "retrigger", "enhancements", "item_evo"},
 }

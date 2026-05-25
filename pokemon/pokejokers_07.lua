@@ -580,7 +580,7 @@ local sunkern={
         card = card
       }
     end
-    return item_evo(self, card, context, "j_poke_sunflora")
+    return pokermon.item_evo(self, card, context, "j_poke_sunflora")
   end,
   attributes = {"economy", "hands", "item_evo"},
 }
@@ -888,7 +888,7 @@ local murkrow={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_honchkrow")
+    return pokermon.item_evo(self, card, context, "j_poke_honchkrow")
   end,
   attributes = {"xmult", "types", "joker", "item_evo"},
 }
@@ -978,7 +978,7 @@ local misdreavus = {
         chips = card.ability.extra.chips,
       }
     end
-    return item_evo(self, card, context, "j_poke_mismagius")
+    return pokermon.item_evo(self, card, context, "j_poke_mismagius")
   end,
   attributes = {"face", "modify_card", "scaling", "chips", "item_evo"},
 }
@@ -1402,7 +1402,7 @@ local gligar = {
         }
       end
     end
-    return item_evo(self, card, context, "j_poke_gliscor")
+    return pokermon.item_evo(self, card, context, "j_poke_gliscor")
   end,
   attributes = {"xmult", "suit", "item_evo"},
 }

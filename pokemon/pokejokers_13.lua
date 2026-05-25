@@ -18,7 +18,7 @@ local snorunt={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    local evolve = item_evo(self, card, context, "j_poke_froslass")
+    local evolve = pokermon.item_evo(self, card, context, "j_poke_froslass")
     if evolve then
       return evolve
     else
@@ -115,7 +115,7 @@ local clamperl={
     if context.selling_card and context.card.label == "linkcable" then
       card.ability.extra.link_sold = card.ability.extra.link_sold + 1
     end
-    local evolve = item_evo(self, card, context, "j_poke_gorebyss")
+    local evolve = pokermon.item_evo(self, card, context, "j_poke_gorebyss")
     if evolve then 
       return evolve
     else

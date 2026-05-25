@@ -260,7 +260,7 @@ local lampent={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_chandelure")
+    return pokermon.item_evo(self, card, context, "j_poke_chandelure")
   end,
   attributes = {"drain", "mult", "sell_value", "joker", "scaling", "item_evo"},
 }

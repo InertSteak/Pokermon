@@ -140,7 +140,7 @@ local scyther={
       }
     end
     return type_evo(self, card, context, "j_poke_scizor", "metal")
-        or item_evo(self, card, context, "j_poke_kleavor")
+        or pokermon.item_evo(self, card, context, "j_poke_kleavor")
   end,
   attributes = {"destroy_card", "mult", "editions", "scaling", "type_evo", "item_evo"},
 }
@@ -233,7 +233,7 @@ local electabuzz={
       })
       card:set_cost()
     end
-    return item_evo(self, card, context, "j_poke_electivire")
+    return pokermon.item_evo(self, card, context, "j_poke_electivire")
   end,
   calc_dollar_bonus = function(self, card)
     local earned = math.min(card.ability.extra.max, math.ceil(card.sell_cost * card.ability.extra.percent/100))
@@ -283,7 +283,7 @@ local magmar={
         mult = card.ability.extra.mult
       }
     end
-    return item_evo(self, card, context, "j_poke_magmortar")
+    return pokermon.item_evo(self, card, context, "j_poke_magmortar")
   end,
   attributes = {"discard", "destroy_card", "mult", "scaling", "item_evo"},
 }
@@ -699,7 +699,7 @@ local eevee={
         }
       end
     end
-    return item_evo(self, card, context, nil)
+    return pokermon.item_evo(self, card, context, nil)
   end,
   attributes = {"xmult", "hands", "item_evo"},
 }
@@ -854,7 +854,7 @@ local porygon={
           end)}))
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
     end
-    return item_evo(self, card, context, "j_poke_porygon2")
+    return pokermon.item_evo(self, card, context, "j_poke_porygon2")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not G.GAME.energy_plus then

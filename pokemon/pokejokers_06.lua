@@ -1133,7 +1133,7 @@ local togetic={
 
       return ret
     end
-    return item_evo(self, card, context, "j_poke_togekiss")
+    return pokermon.item_evo(self, card, context, "j_poke_togekiss")
   end,
   attributes = {"enhancements", "chance", "chips", "xmult", "item_evo"},
 }

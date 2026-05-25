@@ -158,7 +158,7 @@ local pumpkaboo={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_gourgeist")
+    return pokermon.item_evo(self, card, context, "j_poke_gourgeist")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then

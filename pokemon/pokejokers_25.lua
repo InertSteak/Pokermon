@@ -80,7 +80,7 @@ local charjabug={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_vikavolt")
+    return pokermon.item_evo(self, card, context, "j_poke_vikavolt")
   end,
   attributes = {"mult", "types", "joker", "item_evo"},
 }

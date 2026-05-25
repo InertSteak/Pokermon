@@ -43,7 +43,7 @@ local charcadet={
       card.ability.extra.mult = card.ability.extra.mult_original
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
     end
-    return item_evo(self, card, context)
+    return pokermon.item_evo(self, card, context)
   end,
   attributes = {"mult", "scaling", "reset", "item_evo"},
 }

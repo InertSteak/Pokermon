@@ -301,7 +301,7 @@ pokermon.level_evo = function(self, card, context, forced_key)
     end
 end
 
-item_evo = function(self, card, context, forced_key)
+pokermon.item_evo = function(self, card, context, forced_key)
     if (card.ability.extra.evolve and ((card.ability.extra.evolve == true) or type(card.ability.extra.evolve) == "string")) then
       if type(card.ability.extra.evolve) == "string" then
         forced_key = card.ability.extra.evo_list[card.ability.extra.evolve]

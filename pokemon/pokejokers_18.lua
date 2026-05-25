@@ -19,7 +19,7 @@ local pansage = {
   knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return item_evo(self, card, context, "j_poke_simisage")
+    return pokermon.item_evo(self, card, context, "j_poke_simisage")
   end,
   attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
@@ -90,7 +90,7 @@ local pansear = {
   knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return item_evo(self, card, context, "j_poke_simisear")
+    return pokermon.item_evo(self, card, context, "j_poke_simisear")
   end,
   attributes = {"applies", "passive", "hand_type", "item_evo"},
 }
@@ -164,7 +164,7 @@ local panpour = {
   knockoff_starter = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return item_evo(self, card, context, "j_poke_simipour")
+    return pokermon.item_evo(self, card, context, "j_poke_simipour")
   end,
   attributes = {"applies", "passive", "modify_card", "face", "item_evo"},
 }
@@ -267,7 +267,7 @@ local munna={
         Xmult = card.ability.extra.Xmult_multi
       }
     end
-    return item_evo(self, card, context, "j_poke_musharna")
+    return pokermon.item_evo(self, card, context, "j_poke_musharna")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
@@ -417,7 +417,7 @@ local boldore = {
           }
       end
     end
-    return item_evo(self, card, context, "j_poke_gigalith")
+    return pokermon.item_evo(self, card, context, "j_poke_gigalith")
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)
