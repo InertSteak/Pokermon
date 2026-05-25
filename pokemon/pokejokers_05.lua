@@ -1535,10 +1535,10 @@ local mewtwo={
               local edition = {polychrome = true}
               _card:set_edition(edition, true)
               _card.ability.card_limit = 0
-              if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not poke_type_sticker_applied(_card) then
+              if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not pokermon.type_sticker_applied(_card) then
                 energy_increase(_card, _card.ability.extra.ptype)
-              elseif poke_type_sticker_applied(_card) then
-                energy_increase(_card, poke_type_sticker_applied(_card))
+              elseif pokermon.type_sticker_applied(_card) then
+                energy_increase(_card, pokermon.type_sticker_applied(_card))
               end
               _card:add_to_deck()
               G.jokers:emplace(_card)
@@ -1628,13 +1628,13 @@ local mega_mewtwo_y = {
       local leftmost = G.jokers.cards[1]
       if leftmost ~= card then
         local _card = G.jokers.cards[1]
-        if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not poke_type_sticker_applied(_card) then
+        if _card.config and _card.config.center.stage and _card.config.center.stage ~= "Other" and not pokermon.type_sticker_applied(_card) then
           for i = 1, 2 do
             energy_increase(_card, _card.ability.extra.ptype)
           end
-        elseif poke_type_sticker_applied(_card) then
+        elseif pokermon.type_sticker_applied(_card) then
           for i = 1, 2 do
-            energy_increase(_card, poke_type_sticker_applied(_card))
+            energy_increase(_card, pokermon.type_sticker_applied(_card))
           end
         end
       end

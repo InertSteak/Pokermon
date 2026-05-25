@@ -64,10 +64,10 @@ local berry_juice_energy = {
       choice = G.jokers.cards[1]
     end
     play_sound('poke_energy_use', 1, 0.5)
-    if choice.config and choice.config.center.stage and not poke_type_sticker_applied(choice) then
+    if choice.config and choice.config.center.stage and not pokermon.type_sticker_applied(choice) then
       energy_increase(choice, choice.ability.extra.ptype)
-    elseif poke_type_sticker_applied(choice) then
-      energy_increase(choice, poke_type_sticker_applied(choice))
+    elseif pokermon.type_sticker_applied(choice) then
+      energy_increase(choice, pokermon.type_sticker_applied(choice))
     end
     if not G.GAME.modifiers.no_interest then
       G.GAME.modifiers.reset_no_interest = true
