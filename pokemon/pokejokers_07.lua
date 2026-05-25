@@ -337,7 +337,7 @@ local politoed={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, localize(G.GAME.poke_poli_suit or "Spades",'suits_singular'),  
                     colours = {G.C.SUITS[G.GAME.poke_poli_suit or "Spades"]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
-                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.retriggers + #poke_find_pokemon_type("Water")}}
+                    localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural'), center.ability.extra.retriggers + #pokermon.find_pokemon_type("Water")}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -357,7 +357,7 @@ local politoed={
         end
       end
       if first_suit and first_suit == context.other_card then
-        local poli_retriggers = card.ability.extra.retriggers + #poke_find_pokemon_type("Water")
+        local poli_retriggers = card.ability.extra.retriggers + #pokermon.find_pokemon_type("Water")
         return {
           repetitions = poli_retriggers
         }
@@ -863,7 +863,7 @@ local murkrow={
   config = {extra = {Xmult = 0.5,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * #poke_find_pokemon_type("Dark"))}}
+    return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * #pokermon.find_pokemon_type("Dark"))}}
   end,
   rarity = 2,
   cost = 6,
@@ -878,7 +878,7 @@ local murkrow={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = math.max(1, 1 + card.ability.extra.Xmult * #poke_find_pokemon_type("Dark"))
+        local Xmult = math.max(1, 1 + card.ability.extra.Xmult * #pokermon.find_pokemon_type("Dark"))
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 

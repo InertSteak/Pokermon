@@ -23,7 +23,7 @@ pokermon.type_sticker_applied = function(card)
   return false
 end
 
-poke_find_pokemon_type = function(target_type, exclude_card, exclude_name)
+pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name)
   local found = {}
   if G.jokers and G.jokers.cards then
     for k, v in pairs(G.jokers.cards) do
@@ -1016,7 +1016,7 @@ find_other_poke_or_energy_type = function(card, poke_type, count_self)
   else
     energy = string.lower(poke_type).."_energy"
   end
-  type_count = #poke_find_pokemon_type(poke_type)
+  type_count = #pokermon.find_pokemon_type(poke_type)
   if is_type(card, poke_type) and not count_self then
     type_count = type_count - 1
   end

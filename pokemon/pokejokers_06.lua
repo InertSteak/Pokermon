@@ -874,8 +874,8 @@ local lanturn={
   config = {extra = {chips = 60, chip_mod = 20, money = 1, money_mod = 1,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local Money = center.ability.extra.money + (center.ability.extra.money_mod * #poke_find_pokemon_type("Lightning"))
-    local Chips = center.ability.extra.chips + (center.ability.extra.chip_mod * #poke_find_pokemon_type("Water"))
+    local Money = center.ability.extra.money + (center.ability.extra.money_mod * #pokermon.find_pokemon_type("Lightning"))
+    local Chips = center.ability.extra.chips + (center.ability.extra.chip_mod * #pokermon.find_pokemon_type("Water"))
     return {vars = {center.ability.extra.chips, center.ability.extra.money, center.ability.extra.chip_mod, center.ability.extra.money_mod, Money, Chips}}
   end,
   rarity = 2,
@@ -890,9 +890,9 @@ local lanturn={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
-        local Money = card.ability.extra.money + (card.ability.extra.money_mod * #poke_find_pokemon_type("Lightning"))
+        local Money = card.ability.extra.money + (card.ability.extra.money_mod * #pokermon.find_pokemon_type("Lightning"))
         local earned = ease_poke_dollars(card, "lanturn", Money, true)
-        local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #poke_find_pokemon_type("Water"))
+        local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #pokermon.find_pokemon_type("Water"))
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {Chips}}, 
           colour = G.C.CHIPS,

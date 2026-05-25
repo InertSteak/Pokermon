@@ -350,7 +350,7 @@ local volbeat={
         message_key = 'a_chips',
         message_colour = G.C.CHIPS
       })
-      if #poke_find_pokemon_type("Grass", card) > 0 then
+      if #pokermon.find_pokemon_type("Grass", card) > 0 then
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_mod',
@@ -382,7 +382,7 @@ local illumise={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local grass_count = #poke_find_pokemon_type("Grass")
+      local grass_count = #pokermon.find_pokemon_type("Grass")
       for i = 1, grass_count do
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1

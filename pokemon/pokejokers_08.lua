@@ -707,7 +707,7 @@ local corsola={
           ref_value = 'mult',
           scalar_value = 'mult_mod',
           operation = function(ref_table, ref_value, initial, change)
-            ref_table[ref_value] = initial + change * #poke_find_pokemon_type("Water")
+            ref_table[ref_value] = initial + change * #pokermon.find_pokemon_type("Water")
           end,
           message_colour = G.C.MULT
         })

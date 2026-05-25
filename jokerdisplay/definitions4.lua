@@ -522,7 +522,7 @@ jd_def["j_poke_magnezone"] = {
         },
     },
     calc_function = function(card)
-        local metal = #poke_find_pokemon_type("Metal")
+        local metal = #pokermon.find_pokemon_type("Metal")
         local count = 0
         local playing_hand = next(G.play.cards)
         local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
@@ -580,7 +580,7 @@ jd_def["j_poke_rhyperior"] = {
   retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
     if held_in_hand then return 0 end
 
-    local rhytriggers = 1 + math.floor(#poke_find_pokemon_type("Earth") / 3)
+    local rhytriggers = 1 + math.floor(#pokermon.find_pokemon_type("Earth") / 3)
     return playing_card.ability.effect == "Stone Card" and (rhytriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
   end
 }

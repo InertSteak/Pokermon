@@ -329,8 +329,8 @@ jd_def["j_poke_lanturn"] = {
   calc_function = function(card)
     card.joker_display_values.chips = 0
     card.joker_display_values.money = 0
-    local water_count = #poke_find_pokemon_type("Water")
-    local lightning_count = #poke_find_pokemon_type("Lightning")
+    local water_count = #pokermon.find_pokemon_type("Water")
+    local lightning_count = #pokermon.find_pokemon_type("Lightning")
     local text, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Pair'] and next(poker_hands['Pair']) then
       card.joker_display_values.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * water_count)
@@ -636,7 +636,7 @@ jd_def["j_poke_politoed"] = {
       end
       local first_suit = JokerDisplay.calculate_leftmost_card(suit_cards)
       return first_suit and playing_card == first_suit and 
-           (#poke_find_pokemon_type("Water") + joker_card.ability.extra.retriggers) * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+           (#pokermon.find_pokemon_type("Water") + joker_card.ability.extra.retriggers) * JokerDisplay.calculate_joker_triggers(joker_card) or 0
     end,
     style_function = function(card, text, reminder_text, extra)
       if text and text.children[2] then
@@ -799,7 +799,7 @@ jd_def["j_poke_murkrow"] = {
         },
     },
     calc_function = function(card)
-        local dark = #poke_find_pokemon_type("Dark")
+        local dark = #pokermon.find_pokemon_type("Dark")
         card.joker_display_values.Xmult = 1 + (dark * card.ability.extra.Xmult)
     end
 }
@@ -1636,7 +1636,7 @@ jd_def["j_poke_miltank"] = {
         { ref_table = "card.joker_display_values", ref_value = "localized_text" },
     },
     calc_function = function(card)
-        local type = #poke_find_pokemon_type("Colorless")
+        local type = #pokermon.find_pokemon_type("Colorless")
         card.joker_display_values.money = type * card.ability.extra.money
                 card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
     end

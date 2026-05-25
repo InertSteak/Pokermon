@@ -94,7 +94,7 @@ jd_def["j_poke_sceptile"] = {
   },
   calc_function = function(card)
     local count = 0
-    local grass_count = #poke_find_pokemon_type("Grass", card)
+    local grass_count = #pokermon.find_pokemon_type("Grass", card)
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text ~= 'Unknown' then
       for _, scoring_card in pairs(scoring_hand) do
@@ -324,8 +324,8 @@ jd_def["j_poke_swampert"] = {
       end
     end
     if nature_cards >= 5 then
-      local water_jokers = #poke_find_pokemon_type("Water")
-      local earth_jokers = #poke_find_pokemon_type("Earth")
+      local water_jokers = #pokermon.find_pokemon_type("Water")
+      local earth_jokers = #pokermon.find_pokemon_type("Earth")
       card.joker_display_values.tarot = math.floor((water_jokers + earth_jokers)/2)
     else
       card.joker_display_values.tarot = 0
@@ -593,7 +593,7 @@ jd_def["j_poke_pelipper"] = {
   },
   calc_function = function(card)
     local money = 0
-    local water_jokers = #poke_find_pokemon_type("Water")
+    local water_jokers = #pokermon.find_pokemon_type("Water")
     local hand = G.hand.highlighted
     for _, playing_card in pairs(hand) do
       if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card:get_id() and playing_card:get_id() == G.GAME.current_round.wingullcard.id  then
@@ -1263,7 +1263,7 @@ jd_def["j_poke_altaria"] = {
     { ref_table = "card.joker_display_values", ref_value = "localized_text" }
   },
   calc_function = function(card)
-    local dragon_count = #poke_find_pokemon_type("Dragon")
+    local dragon_count = #pokermon.find_pokemon_type("Dragon")
     card.joker_display_values.localized_text = "(Draw " .. localize("9", "ranks")..")"
   end
 }

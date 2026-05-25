@@ -5,7 +5,7 @@ local miltank={
   config = {extra = {money = 4,}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.money, center.ability.extra.money * #poke_find_pokemon_type("Colorless")}}
+    return {vars = {center.ability.extra.money, center.ability.extra.money * #pokermon.find_pokemon_type("Colorless")}}
   end,
   rarity = 2,
   cost = 7,
@@ -17,7 +17,7 @@ local miltank={
   blueprint_compat = false,
   eternal_compat = true,
   calc_dollar_bonus = function(self, card)
-    local earned = card.ability.extra.money * #poke_find_pokemon_type("Colorless")
+    local earned = card.ability.extra.money * #pokermon.find_pokemon_type("Colorless")
     local above_zero = nil
     if (SMODS.Mods["Talisman"] or {}).can_load then
       above_zero = to_big(earned) > to_big(0)
@@ -680,7 +680,7 @@ local sceptile={
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     end
     local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, 
-                       center.ability.extra.money_mod + (#poke_find_pokemon_type("Grass", center) * center.ability.extra.money_increase), center.ability.extra.money_increase}
+                       center.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", center) * center.ability.extra.money_increase), center.ability.extra.money_increase}
     add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
@@ -697,14 +697,14 @@ local sceptile={
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       for i=1, #card.ability.extra.targets do
         if context.other_card:get_id() == card.ability.extra.targets[i].id then
-          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod + (#poke_find_pokemon_type("Grass", card) * card.ability.extra.money_increase)
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", card) * card.ability.extra.money_increase)
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.GAME.dollar_buffer = 0
                     return true
                 end
             }))
-            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (#poke_find_pokemon_type("Grass", card) * card.ability.extra.money_increase), true)
+            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", card) * card.ability.extra.money_increase), true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
               dollars = earned,
@@ -1104,7 +1104,7 @@ local swampert={
         end
       end
       if nature_count >= 5 then
-        local create_number = math.floor((#poke_find_pokemon_type("Water") + #poke_find_pokemon_type("Earth"))/2)
+        local create_number = math.floor((#pokermon.find_pokemon_type("Water") + #pokermon.find_pokemon_type("Earth"))/2)
         if create_number > 0 then
           return {
             extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = function()
@@ -1217,7 +1217,7 @@ local mightyena={
           ref_value = 'mult',
           scalar_value = 'mult_mod',
           operation = function(ref_table, ref_value, initial, modifier)
-            ref_table[ref_value] = initial + modifier + #poke_find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
+            ref_table[ref_value] = initial + modifier + #pokermon.find_pokemon_type("Dark") * card.ability.extra.mult_scaling_mod
           end,
           message_colour = G.C.MULT
         })

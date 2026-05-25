@@ -297,7 +297,7 @@ local musharna={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      local psy_count = #poke_find_pokemon_type("Psychic")
+      local psy_count = #pokermon.find_pokemon_type("Psychic")
       if psy_count > 0 then
         G.GAME.scry_amount = (G.GAME.scry_amount or 0) + (psy_count * card.ability.extra.scry)
         card.ability.extra.scry_added = card.ability.extra.scry_added + (psy_count * card.ability.extra.scry)

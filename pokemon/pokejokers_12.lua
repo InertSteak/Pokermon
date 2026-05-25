@@ -145,11 +145,11 @@ local altaria={
             ref_value = 'chips',
             scalar_value = 'chip_mod',
             operation = function(ref_table, ref_value, initial, change)
-              ref_table[ref_value] = initial + change + (#poke_find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
+              ref_table[ref_value] = initial + change + (#pokermon.find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
             end,
             message_colour = G.C.CHIPS
           })
-          if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#poke_find_pokemon_type("Dragon", card) > 0) then
+          if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#pokermon.find_pokemon_type("Dragon", card) > 0) then
             local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
             G.E_MANAGER:add_event(Event({
