@@ -139,7 +139,7 @@ local scyther={
         mult = card.ability.extra.mult
       }
     end
-    return type_evo(self, card, context, "j_poke_scizor", "metal")
+    return pokermon.type_evo (self, card, context, "j_poke_scizor", "metal")
         or pokermon.item_evo(self, card, context, "j_poke_kleavor")
   end,
   attributes = {"destroy_card", "mult", "editions", "scaling", "type_evo", "item_evo"},

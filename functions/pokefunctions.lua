@@ -343,7 +343,7 @@ pokermon.scaling_evo = function (self, card, context, forced_key, current, targe
   end
 end
 
-type_evo = function (self, card, context, forced_key, type_req)
+pokermon.type_evo  = function (self, card, context, forced_key, type_req)
   if pokermon.can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
     return {
       message = pokermon.evolve(card, forced_key)

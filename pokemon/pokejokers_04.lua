@@ -286,7 +286,7 @@ local onix={
          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
       end
     end
-    return type_evo(self, card, context, "j_poke_steelix", "metal")
+    return pokermon.type_evo (self, card, context, "j_poke_steelix", "metal")
   end,
   attributes = {"modify_card", "enhancements", "type_evo"},
 }
@@ -1320,7 +1320,7 @@ local seadra={
         end,
       })
     end
-    return type_evo(self, card, context, "j_poke_kingdra", "dragon")
+    return pokermon.type_evo (self, card, context, "j_poke_kingdra", "dragon")
   end,
   attributes = {"mult", "rank", "six", "king", "scaling", "type_evo"},
 }
