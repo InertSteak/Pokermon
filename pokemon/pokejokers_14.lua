@@ -28,7 +28,7 @@ local bidoof={
     if context.reroll_shop and not context.blueprint and card.ability.extra.rerolls_to_evolve > 0 then
       card.ability.extra.rerolls_to_evolve = card.ability.extra.rerolls_to_evolve - 1
     end
-    return scaling_evo(self, card, context, "j_poke_bibarel", self.config.evo_rqmt - card.ability.extra.rerolls_to_evolve, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_bibarel", self.config.evo_rqmt - card.ability.extra.rerolls_to_evolve, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     SMODS.change_free_rerolls(card.ability.extra.rerolls)

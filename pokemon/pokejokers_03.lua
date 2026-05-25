@@ -725,7 +725,7 @@ local ponyta={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_rapidash", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "hand_type", "scaling", "scaling_evo"},
 }
@@ -806,10 +806,10 @@ local slowpoke={
     end
     local evo = pokermon.item_evo(self, card, context, "j_poke_slowking")
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
+      evo = pokermon.scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.last_counter, self.config.evo_rqmt)
     end
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.shell_used, 1)
+      evo = pokermon.scaling_evo(self, card, context, "j_poke_slowbro", card.ability.extra.shell_used, 1)
     end
     return evo
   end,

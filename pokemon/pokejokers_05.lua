@@ -925,7 +925,7 @@ local omanyte={
         card.ability.extra.ancient_count = 0
       end
     end
-    return scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
   attributes = {"ancient", "rank", "three", "generation", "tarot", "item", "economy", "trigger_evo"},
@@ -1064,7 +1064,7 @@ local kabuto={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
   attributes = {"ancient", "rank", "two", "chips", "modify_card", "perma_bonus", "trigger_evo"},
@@ -1430,7 +1430,7 @@ local dratini={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dragonair", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "scaling", "scaling_evo"},
 }
@@ -1464,7 +1464,7 @@ local dragonair={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dragonite", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "scaling", "scaling_evo"},
 }

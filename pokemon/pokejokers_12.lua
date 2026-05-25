@@ -114,7 +114,7 @@ local swablu={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_altaria", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_altaria", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"rank", "nine", "chips", "economy", "scaling", "scaling_evo"},
 }
@@ -226,7 +226,7 @@ local corphish={
             mult = card.ability.extra.mult
         }
     end
-    return scaling_evo(self, card, context, "j_poke_crawdaunt", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_crawdaunt", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -388,7 +388,7 @@ local baltoy={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_claydol", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_claydol", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)
@@ -581,7 +581,7 @@ local lileep={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
   attributes = {"rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
@@ -720,7 +720,7 @@ local anorith={
     if context.after then
       card.ability.extra.ancient_count = 0
     end
-    return scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
   generate_ui = fossil_generate_ui,
   attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "trigger_evo"},

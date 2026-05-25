@@ -30,7 +30,7 @@ local deino={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_zweilous", card.ability.extra.hand_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_zweilous", card.ability.extra.hand_played, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "hand_type", "trigger_evo"},
 }
@@ -63,7 +63,7 @@ local zweilous={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hydreigon", card.ability.extra.hand_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_hydreigon", card.ability.extra.hand_played, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "hand_type", "trigger_evo"},
 }
@@ -181,7 +181,7 @@ local bunnelby = {
 			end
      end
    end
-	return scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
+	return pokermon.scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
 	end,
 }
 -- Diggersby 660

@@ -319,7 +319,7 @@ local drowzee={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.planets_used, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_hypno", card.ability.extra.planets_used, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -680,7 +680,7 @@ local cubone={
     if context.using_consumeable then
       card.ability.extra.consumables_used = card.ability.extra.consumables_used + 1
     end
-    return scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
   end,
   attributes = {"mult", "holding", "condition_evo"},
 }
@@ -846,7 +846,7 @@ local lickitung={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_lickilicky", card.ability.extra.jacks_played, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "rank", "jack", "trigger_evo"},
 }
@@ -1155,7 +1155,7 @@ local tangela={
           end
         end
     end
-    return scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_tangrowth", card.ability.extra.wilds_scored, self.config.evo_rqmt)
   end,
   attributes = {"enhancements", "chips", "mult", "economy", "chance", "trigger_evo"},
 }
@@ -1279,7 +1279,7 @@ local horsea={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_seadra", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "rank", "six", "scaling", "scaling_evo"},
 }

@@ -268,7 +268,7 @@ local larvitar={
         card = card
       }
     end
-    return scaling_evo(self, card, context, "j_poke_pupitar", card.ability.extra.full_houses, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_pupitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
@@ -305,7 +305,7 @@ local pupitar={
         card = card
       }
     end
-    return scaling_evo(self, card, context, "j_poke_tyranitar", card.ability.extra.full_houses, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_tyranitar", card.ability.extra.full_houses, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
@@ -581,7 +581,7 @@ local treecko={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_grovyle", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_grovyle", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -651,7 +651,7 @@ local grovyle={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_sceptile", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_sceptile", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -769,7 +769,7 @@ local torchic={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_combusken", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_combusken", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -827,7 +827,7 @@ local combusken={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_blaziken", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -976,7 +976,7 @@ local mudkip={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_marshtomp", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_marshtomp", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -1037,7 +1037,7 @@ local marshtomp={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_swampert", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -1366,9 +1366,9 @@ local wurmple={
       card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
     end
     if card.ability.extra.targets[1].suit == 'Hearts' or card.ability.extra.targets[1].suit == 'Diamonds' then
-      return scaling_evo(self, card, context, "j_poke_silcoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
+      return pokermon.scaling_evo(self, card, context, "j_poke_silcoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
     elseif card.ability.extra.targets[1].suit == 'Spades' or card.ability.extra.targets[1].suit == 'Clubs' then
-      return scaling_evo(self, card, context, "j_poke_cascoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
+      return pokermon.scaling_evo(self, card, context, "j_poke_cascoon", card.ability.extra.nature_scored, self.config.evo_rqmt)
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
@@ -1416,7 +1416,7 @@ local silcoon={
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.targets[1].suit) then
       card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
     end
-    return scaling_evo(self, card, context, "j_poke_beautifly", card.ability.extra.nature_scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_beautifly", card.ability.extra.nature_scored, self.config.evo_rqmt)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -1518,7 +1518,7 @@ local cascoon={
     if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.targets[1].suit) then
       card.ability.extra.nature_scored = card.ability.extra.nature_scored + 1
     end
-    return scaling_evo(self, card, context, "j_poke_dustox", card.ability.extra.nature_scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dustox", card.ability.extra.nature_scored, self.config.evo_rqmt)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then

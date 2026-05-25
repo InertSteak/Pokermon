@@ -400,7 +400,7 @@ local frillish = {
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "scaling", "discard", "face", "scaling_evo"},
 }

@@ -60,7 +60,7 @@ local elgyem={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
     end
-    return scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -221,7 +221,7 @@ local litwick={
         poke_drain(card, v, card.ability.extra.money_minus)
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
   end,
   attributes = {"drain", "mult", "sell_value", "scaling", "scaling_evo"},
 }
@@ -452,7 +452,7 @@ local pawniard={
         Xmult = card.ability.extra.Xmult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "face", "scaling", "scaling_evo"},
 }
@@ -509,7 +509,7 @@ local bisharp={
         remove = true
       }
     end
-    return scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "face", "hands", "destroy_card", "scaling", "condition_evo"},
 }

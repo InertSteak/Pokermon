@@ -47,7 +47,7 @@ local bulbasaur={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_ivysaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -109,7 +109,7 @@ local ivysaur={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_venusaur", card.ability.extra.earned, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -226,7 +226,7 @@ local charmander={
         mult = card.ability.extra.mult,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_charmeleon", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -269,7 +269,7 @@ local charmeleon={
         mult = card.ability.extra.mult,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_charizard", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -414,7 +414,7 @@ local squirtle={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_wartortle", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -461,7 +461,7 @@ local wartortle={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_blastoise", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -1061,7 +1061,7 @@ local spearow={
         card.ability.extra.cards_drawn = card.ability.extra.cards_drawn % card.ability.extra.card_threshold
       end
     end
-    return scaling_evo(self, card, context, "j_poke_fearow", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_fearow", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "trigger_evo"},
 }

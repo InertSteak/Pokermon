@@ -64,7 +64,7 @@ local trubbish={
         card.ability.extra.triggers = card.ability.extra.triggers + 1
       end
     end
-    return scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 then

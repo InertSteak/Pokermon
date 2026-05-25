@@ -366,7 +366,7 @@ local roggenrola = {
           }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.hazard_triggered, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_boldore", card.ability.extra.hazard_triggered, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     poke_change_hazard_level(card.ability.extra.hazard_level)
@@ -519,7 +519,7 @@ local drilbur={
     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
       card.ability.extra.active = true
     end
-    return scaling_evo(self, card, context, "j_poke_excadrill", card.ability.extra.stones_destroyed, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_excadrill", card.ability.extra.stones_destroyed, self.config.evo_rqmt)
   end,
   attributes = {"enhancements", "destroy_card", "generation", "item", "economy", "trigger_evo"},
 }

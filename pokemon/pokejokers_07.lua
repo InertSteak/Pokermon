@@ -202,7 +202,7 @@ local marill={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_azumarill", card.ability.extra.bonus_scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_azumarill", card.ability.extra.bonus_scored, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "enhancements", "condition_evo"},
 }
@@ -315,7 +315,7 @@ local weird_tree={
   no_collection = true,
   custom_pool_func = true,
   calculate = function(self, card, context)
-    return scaling_evo(self, card, context, "j_poke_sudowoodo", 
+    return pokermon.scaling_evo(self, card, context, "j_poke_sudowoodo", 
                       ((not pokermon.is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0) and 1 or 0, 1, localize("poke_transform_success"))
   end,
   set_ability = function(self, card, initial, delay_sprites)
@@ -535,7 +535,7 @@ local aipom={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_ambipom", math.min(self.config.straight_rqmt, card.ability.extra.straights_played) + 
+    return pokermon.scaling_evo(self, card, context, "j_poke_ambipom", math.min(self.config.straight_rqmt, card.ability.extra.straights_played) + 
                        math.min(self.config.straight_rqmt, card.ability.extra.flushes_played), self.config.straight_rqmt + self.config.flush_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -653,7 +653,7 @@ local yanma={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_yanmega", card.ability.extra.scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_yanmega", card.ability.extra.scored, self.config.evo_rqmt)
   end,
   attributes = {"chips", "mult", "rank", "three", "six", "chance", "trigger_evo"},
 }
@@ -1225,7 +1225,7 @@ local girafarig={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.death_used, 1)
+    return pokermon.scaling_evo(self, card, context, "j_poke_farigiraf", card.ability.extra.death_used, 1)
   end,
   attributes = {"face", "xmult", "hand_type", "condition_evo"},
 }

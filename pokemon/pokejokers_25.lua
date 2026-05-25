@@ -158,12 +158,12 @@ local rockruff={
         card = card
       }
     end
-    local evo = scaling_evo(self, card, context, "j_poke_lycanroc_dusk", (self.config.evo_rqmt * 2) - card.ability.extra.odd_to_score - card.ability.extra.even_to_score, self.config.evo_rqmt * 2)
+    local evo = pokermon.scaling_evo(self, card, context, "j_poke_lycanroc_dusk", (self.config.evo_rqmt * 2) - card.ability.extra.odd_to_score - card.ability.extra.even_to_score, self.config.evo_rqmt * 2)
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_lycanroc_day", self.config.evo_rqmt - card.ability.extra.even_to_score, self.config.evo_rqmt)
+      evo = pokermon.scaling_evo(self, card, context, "j_poke_lycanroc_day", self.config.evo_rqmt - card.ability.extra.even_to_score, self.config.evo_rqmt)
     end
     if not evo then
-      evo = scaling_evo(self, card, context, "j_poke_lycanroc_night", self.config.evo_rqmt - card.ability.extra.odd_to_score, self.config.evo_rqmt)
+      evo = pokermon.scaling_evo(self, card, context, "j_poke_lycanroc_night", self.config.evo_rqmt - card.ability.extra.odd_to_score, self.config.evo_rqmt)
     end
     if evo then return evo end
   end,

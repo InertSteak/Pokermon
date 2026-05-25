@@ -119,7 +119,7 @@ local clamperl={
     if evolve then 
       return evolve
     else
-      return scaling_evo(self, card, context, "j_poke_huntail", card.ability.extra.link_sold, 1)
+      return pokermon.scaling_evo(self, card, context, "j_poke_huntail", card.ability.extra.link_sold, 1)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -407,7 +407,7 @@ local bagon={
         mult = total
       }
     end
-    return scaling_evo(self, card, context, "j_poke_shelgon", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_shelgon", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
@@ -542,7 +542,7 @@ local beldum={
         chips = card.ability.extra.chips,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_metang", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "hand_type", "rank", "ace", "scaling", "scaling_evo"},
 }
@@ -590,7 +590,7 @@ local metang={
         chips = card.ability.extra.chips,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_metagross", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "hand_type", "rank", "ace", "scaling", "scaling_evo"},
 }

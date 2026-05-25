@@ -324,7 +324,7 @@ pokermon.item_evo = function(self, card, context, forced_key)
     end
 end
 
-scaling_evo = function (self, card, context, forced_key, current, target, evo_message)
+pokermon.scaling_evo = function (self, card, context, forced_key, current, target, evo_message)
   if (SMODS.Mods["Talisman"] or {}).can_load then
     current = to_big(current)
     target = to_big(target)

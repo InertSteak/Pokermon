@@ -462,7 +462,7 @@ local zubat={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_golbat", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "modify_card", "enhancements", "scaling", "scaling_evo"},
 }
@@ -522,7 +522,7 @@ local golbat={
         mult_mod = card.ability.extra.mult,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_crobat", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
   attributes = {"mult", "modify_card", "enhancements", "scaling", "scaling_evo"},
 }
@@ -691,7 +691,7 @@ local paras={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_parasect", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "hand_type", "scaling", "scaling_evo"},
 }
@@ -936,7 +936,7 @@ local meowth={
     if not context.repetition and not context.individual and context.end_of_round then
       card.ability.extra.triggers = 0
     end
-    return scaling_evo(self, card, context, "j_poke_persian", card.ability.extra.money, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_persian", card.ability.extra.money, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
@@ -1119,7 +1119,7 @@ local primeape={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_annihilape", card.ability.extra.primes_played, self.config.evo_rqmt)
   end,
   attributes = {"chips", "mult", "rank", "two", "three", "five", "seven", "trigger_evo"},
 }

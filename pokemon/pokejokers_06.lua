@@ -480,7 +480,7 @@ local sentret={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.last_hand = G.GAME.last_hand_played
@@ -1279,7 +1279,7 @@ local mareep={
         message_key = 'a_xmult_minus'
       })
     end
-    return scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "scaling", "scaling_evo"},
 }
@@ -1321,7 +1321,7 @@ local flaaffy={
         message_key = 'a_xmult_minus'
       })
     end
-    return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "scaling", "scaling_evo"},
 }

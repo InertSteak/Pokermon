@@ -111,7 +111,7 @@ local aron = {
         and SMODS.has_enhancement(context.destroying_card, 'm_steel') then
       return true
     end
-    return scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_lairon", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "enhancements", "destroy_card", "scaling", "scaling_evo"},
 }
@@ -166,7 +166,7 @@ local lairon = {
           or SMODS.has_enhancement(context.destroying_card, 'm_stone')) then
       return true
     end
-    return scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_aggron", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "enhancements", "destroy_card", "scaling", "scaling_evo"},
 }
@@ -499,7 +499,7 @@ local carvanha={
         xmult = card.ability.extra.Xmult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_sharpedo", card.ability.extra.eaten, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_sharpedo", card.ability.extra.eaten, self.config.evo_rqmt)
   end,
   attributes = {"destroy_card", "xmult", "hand_type", "condition_evo"},
 }

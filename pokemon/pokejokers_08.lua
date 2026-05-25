@@ -426,7 +426,7 @@ local teddiursa={
         mult = card.ability.extra.mult,
       }
     end
-    return scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_ursaring", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "scaling", "scaling_evo"},
 }
@@ -529,7 +529,7 @@ local slugma={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_magcargo", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "scaling", "destroy_card", "hands", "scaling_evo"},
 }
@@ -672,7 +672,7 @@ local piloswine={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.scored, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_mamoswine", card.ability.extra.scored, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if SMODS.pseudorandom_probability(card, 'piloswine', card.ability.extra.num, card.ability.extra.dem, 'piloswine') then
@@ -1349,7 +1349,7 @@ local stantler={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_poke_wyrdeer", card.ability.extra.triggered, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_wyrdeer", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry

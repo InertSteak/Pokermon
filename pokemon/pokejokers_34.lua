@@ -51,7 +51,7 @@ local gimmighoul={
         poke_add_shop_card(new_card, card)
         new_card.cost = 0
     end
-    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
+    return pokermon.scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.STAGE == G.STAGES.RUN then

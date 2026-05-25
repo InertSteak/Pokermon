@@ -286,7 +286,7 @@ local kirlia={
     end
     local evo = pokermon.item_evo(self, card, context, "j_poke_gallade")
     if not evo then
-      return scaling_evo(self, card, context, "j_poke_gardevoir", card.ability.extra.planets_used, self.config.evo_rqmt)
+      return pokermon.scaling_evo(self, card, context, "j_poke_gardevoir", card.ability.extra.planets_used, self.config.evo_rqmt)
     end
   end,
   attributes = {"mult", "energy_count", "joker", "hand_type", "passive", "item_evo", "condition_evo"},
@@ -406,7 +406,7 @@ local shroomish={
     if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
       card.ability.extra.boss_defeated = card.ability.extra.boss_defeated + 1
     end
-    return scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_defeated, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_breloom", card.ability.extra.boss_defeated, self.config.evo_rqmt)
   end,
   attributes = {"hands", "discard", "hand_size", "condition_evo"},
 }
@@ -601,7 +601,7 @@ local nincada={
       }
     end
 
-    local evo = scaling_evo(self, card, context, "j_poke_ninjask", (card.ability.extra.chips <= 0) and 1 or 0, 1)
+    local evo = pokermon.scaling_evo(self, card, context, "j_poke_ninjask", (card.ability.extra.chips <= 0) and 1 or 0, 1)
     if evo and type(evo) == "table" then
       if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
         G.GAME.joker_buffer = G.GAME.joker_buffer + 1

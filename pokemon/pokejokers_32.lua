@@ -204,7 +204,7 @@ local bramblin={
       card.ability.extra.rank_scored = 0
       card.ability.extra.seed_added = 0
     end
-    return scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
   end,
   attributes = {"rank", "modify_card", "enhancements", "condition_evo"},
 }
@@ -303,7 +303,7 @@ local rellor = {
 				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
 			}
 		end
-		return scaling_evo(self, card, context, "j_poke_rabsca", card.ability.extra.items_used, self.config.evo_rqmt)
+		return pokermon.scaling_evo(self, card, context, "j_poke_rabsca", card.ability.extra.items_used, self.config.evo_rqmt)
 	end,
 }
 -- Rabsca 954

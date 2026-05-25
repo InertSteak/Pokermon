@@ -61,7 +61,7 @@ local dreepy={
         card.ability.extra.straight_flush_played = card.ability.extra.straight_flush_played + 1
       end
     end
-    return scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
+    return pokermon.scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
   end,
   attributes = {"sell_value", "joker", "suit", "condition_evo"},
 }
@@ -106,7 +106,7 @@ local drakloak={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then

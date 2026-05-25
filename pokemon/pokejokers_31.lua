@@ -113,7 +113,7 @@ local hisuian_qwilfish = {
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_overqwil", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_overqwil", card.ability.extra.chips, self.config.evo_rqmt)
   end,
 }
 local overqwil = {
@@ -324,7 +324,7 @@ local fidough={
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_dachsbun", #pokermon.find_pokemon_type("Fire"), 1)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dachsbun", #pokermon.find_pokemon_type("Fire"), 1)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.playing_cards then
@@ -412,7 +412,7 @@ local smoliv = {
       })
       card:set_cost()
     end
-    return scaling_evo(self, card, context, "j_poke_dolliv", card.sell_cost, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dolliv", card.sell_cost, self.config.evo_rqmt)
   end,
   attributes = {"types", "joker", "sell_value", "round_evo"}
 }
@@ -460,7 +460,7 @@ local dolliv = {
         adjacent_jokers[i]:set_cost()
       end
     end
-    return scaling_evo(self, card, context, "j_poke_arboliva", card.sell_cost, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_arboliva", card.sell_cost, self.config.evo_rqmt)
   end,
   attributes = {"types", "joker", "sell_value", "condition_evo"}
 }
