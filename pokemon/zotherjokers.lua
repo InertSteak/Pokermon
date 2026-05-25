@@ -34,7 +34,7 @@ local rotomdex={
       local poketype = nil
       local poketype_list = {}
       for k, v in pairs(G.jokers.cards) do
-        if (v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype) or type_sticker_applied(v) then
+        if (v.ability and v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.ptype) or poke_type_sticker_applied(v) then
           poketype = get_type(v)
           if not poketype_list[poketype] then
             poketype_list[poketype] = true

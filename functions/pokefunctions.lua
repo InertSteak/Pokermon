@@ -13,7 +13,7 @@ extended_family = {
   deoxys = {{item = true, name = "meteorite"}}
 }
 
-type_sticker_applied = function(card)
+poke_type_sticker_applied = function(card)
   if not card then return false end
   for _, ptype in ipairs(POKE_TYPES) do
     if card.ability[ptype:lower() .. '_sticker'] then
@@ -41,7 +41,7 @@ end
 
 get_type = function(card)
   if card and card.ability then
-    local sticker = type_sticker_applied(card)
+    local sticker = poke_type_sticker_applied(card)
     if sticker then
       return sticker
     elseif type(card.ability.extra) == "table" and card.ability.extra.ptype then
@@ -177,7 +177,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   end
 
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
-  if type_sticker_applied(card) then
+  if poke_type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
   local values_to_keep = copy_scaled_values(card)
@@ -751,7 +751,7 @@ poke_set_type_badge = function(self, card, badges)
       text_colour = G.C.BLACK
     end
     ptype = localize('poke_'..lower_ptype..'_badge')
-    if type_sticker_applied(card) then
+    if poke_type_sticker_applied(card) then
       ptype = ptype.." "..localize("poke_tera")
     end
     if lower_ptype == "bird" then
