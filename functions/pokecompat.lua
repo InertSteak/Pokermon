@@ -152,3 +152,6 @@ find_other_poke_or_energy_type = pokermon.find_cards_by_ptype
 
 ---@deprecated use `pokermon.faint_baby_poke` instead
 faint_baby_poke = pokermon.faint_baby_poke
+
+---@deprecated use `pokermon.volatile_active` instead
+volatile_active = pokermon.volatile_active

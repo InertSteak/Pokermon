@@ -223,7 +223,7 @@ local vanillite={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips
@@ -274,7 +274,7 @@ local vanillish={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips
@@ -321,7 +321,7 @@ local vanilluxe={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips

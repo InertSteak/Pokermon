@@ -633,7 +633,7 @@ local ditto={
   eternal_compat = false,
   custom_pool_func = true, 
   calculate = function(self, card, context) --mostly copied from how invisible joker works
-    if context.ending_shop and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.ending_shop and not context.blueprint and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       local jokers = {}
       for i=1, #G.jokers.cards do 
           if G.jokers.cards[i] ~= card and G.jokers.cards[i].ability.name ~= "ditto" then

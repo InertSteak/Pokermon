@@ -1064,7 +1064,7 @@ pokermon.faint_baby_poke = function(self, card, context)
   end
 end
 
-volatile_active = function(self, card, direction)
+pokermon.volatile_active = function(self, card, direction)
   local active = true
   local first_pos = nil
   local self_pos = 0

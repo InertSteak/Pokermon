@@ -1116,7 +1116,7 @@ local wobbuffet={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind and not context.blueprint and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.setting_blind and not context.blueprint and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       local target = G.jokers.cards[#G.jokers.cards]
       if target ~= card and not (target.ability.eternal or target.ability.perishable) and target.config.center.eternal_compat then
         target:set_eternal(true)
@@ -1253,7 +1253,7 @@ local pineco={
   volatile = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         G.E_MANAGER:add_event(Event({
           func = function()
               card.ability.fainted = G.GAME.round
@@ -1296,7 +1296,7 @@ local forretress={
   volatile = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         local multiplier = 1
         for k, v in pairs(G.hand.cards) do
           if SMODS.has_enhancement(v, 'm_steel') then

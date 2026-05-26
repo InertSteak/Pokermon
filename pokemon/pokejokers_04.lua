@@ -492,7 +492,7 @@ local voltorb={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         if not context.blueprint then
           G.E_MANAGER:add_event(Event({
             func = function()
@@ -535,7 +535,7 @@ local electrode={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         ease_poke_dollars(card, "electrode", card.ability.extra.money)
         if not context.blueprint then
           G.E_MANAGER:add_event(Event({
@@ -873,7 +873,7 @@ local koffing={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         G.E_MANAGER:add_event(Event({
           func = function()
               card.ability.fainted = G.GAME.round
@@ -915,7 +915,7 @@ local weezing={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+      if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
         G.E_MANAGER:add_event(Event({
           func = function()
               card.ability.fainted = G.GAME.round
