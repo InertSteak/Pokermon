@@ -51,7 +51,7 @@ pokermon.load_pokemon = function(item)
   if item.poke_multi_sprite then
     local prev_set_sprites = item.set_sprites
     item.set_sprites = function(self, card, front)
-      poke_set_sprites(self, card, front)
+      pokermon.set_sprites(self, card, front)
       if prev_set_sprites then
         prev_set_sprites(self, card, front)
       end

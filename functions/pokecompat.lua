@@ -167,3 +167,6 @@ fossil_generate_ui = pokermon.fossil_generate_ui
 
 ---@deprecated use `pokermon.generate_pickup_item_key` instead
 generate_pickup_item_key = pokermon.generate_pickup_item_key
+
+---@deprecated use `pokermon.set_sprites` instead
+poke_set_sprites = pokermon.set_sprites

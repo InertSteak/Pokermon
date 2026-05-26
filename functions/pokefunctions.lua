@@ -1206,7 +1206,7 @@ pokermon.generate_pickup_item_key = function(seed)
   return item_key
 end
 
-poke_set_sprites = function(self, card, front)
+pokermon.set_sprites = function(self, card, front)
   if card and card.ability and card.ability.extra then
     if not card.ability.extra.loaded_pos and card.ability.extra.loaded_sprite then
       card.ability.extra.loaded_pos = card.config.center.pos
