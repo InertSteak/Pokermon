@@ -222,7 +222,7 @@ local treasure_eatery={
       card.ability.extra.rounds = card.ability.extra.rounds - 1
       if G.jokers and G.jokers.cards and #G.jokers.cards > 1 then
         if pokermon.get_type(G.jokers.cards[#G.jokers.cards]) then
-          apply_type_sticker(G.jokers.cards[1], pokermon.get_type(G.jokers.cards[#G.jokers.cards]))
+          pokermon.apply_type_sticker(G.jokers.cards[1], pokermon.get_type(G.jokers.cards[#G.jokers.cards]))
           card:juice_up()
           card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
         end

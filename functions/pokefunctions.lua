@@ -761,7 +761,7 @@ pokermon.set_type_badge = function(self, card, badges)
   end
 end
 
-apply_type_sticker = function(card, sticker_type)
+pokermon.apply_type_sticker = function(card, sticker_type)
   local apply_type = nil
   
   if sticker_type then

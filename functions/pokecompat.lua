@@ -117,5 +117,8 @@ evo_item_in_pool = pokermon.evo_item_in_pool
 ---@deprecated use `pokermon.set_type_badge` instead
 poke_set_type_badge = pokermon.set_type_badge
 
+---@deprecated use `pokermon.apply_type_sticker` instead
+apply_type_sticker = pokermon.apply_type_sticker
+
 ---@deprecated use `pokermon.type_tooltip` instead
 type_tooltip = pokermon.type_tooltip

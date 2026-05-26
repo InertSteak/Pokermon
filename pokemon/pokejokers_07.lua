@@ -320,7 +320,7 @@ local weird_tree={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      apply_type_sticker(card, "Grass")
+      pokermon.apply_type_sticker(card, "Grass")
     end
   end,
   in_pool = function(self)

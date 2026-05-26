@@ -276,7 +276,7 @@ local gourgeist={
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Spectral' then
       ease_poke_dollars(card, "gourgeist", card.ability.extra.money)
-      apply_type_sticker(G.jokers.cards[1], "Psychic")
+      pokermon.apply_type_sticker(G.jokers.cards[1], "Psychic")
       card:juice_up()
       card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
     end

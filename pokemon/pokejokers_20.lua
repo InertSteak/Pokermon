@@ -48,7 +48,7 @@ local zoroark = {
   set_ability = function(self, card, initial, delay_sprites)
     if card.area ~= G.jokers and not poke_is_in_collection(card) then
       -- Initialize the Illusion
-      if not pokermon.type_sticker_applied(card) then apply_type_sticker(card, "Dark") end
+      if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Dark") end
       if not card.ability.extra.hidden_key then
         card.ability.extra.hidden_key = get_random_poke_key_options {
           key_append = 'zoroark',

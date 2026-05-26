@@ -696,7 +696,7 @@ local metalcoat = {
     end
     
     if choice then
-      apply_type_sticker(choice, "Metal")
+      pokermon.apply_type_sticker(choice, "Metal")
       card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
     end
     
@@ -735,7 +735,7 @@ local dragonscale = {
       choice = G.jokers.cards[1]
     end
     
-    apply_type_sticker(choice, "Dragon")
+    pokermon.apply_type_sticker(choice, "Dragon")
     card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
     
     for i = 1, 3 do

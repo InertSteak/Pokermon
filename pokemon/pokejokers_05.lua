@@ -645,7 +645,7 @@ local ditto={
         local chosen_joker_key = jokers[1].config.center.key
         card.ability.perishable = true
         card.ability.perish_tally = G.GAME.perishable_rounds
-        apply_type_sticker(card, "Colorless")
+        pokermon.apply_type_sticker(card, "Colorless")
         return {
           message = pokermon.evolve(card, chosen_joker_key, nil, localize("poke_transform_success"), true)
         }
