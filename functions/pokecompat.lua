@@ -128,3 +128,6 @@ get_random_poke_key = pokermon.get_random_poke_key
 
 ---@deprecated use `pokermon.get_random_poke_key_options` instead
 get_random_poke_key_options = pokermon.get_random_poke_key_options
+
+---@deprecated use `pokermon.create_random_poke_joker` instead
+create_random_poke_joker = pokermon.create_random_poke_joker
