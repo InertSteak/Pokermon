@@ -176,3 +176,6 @@ poke_set_sprite_ability = pokermon.set_sprite_ability
 
 ---@deprecated use `pokermon.load_individual_sprite` instead
 poke_load_individual_sprite = pokermon.load_individual_sprite
+
+---@deprecated use `pokermon.load_individual_sprite` instead
+poke_create_treasure = pokermon.create_treasure

@@ -512,7 +512,7 @@ local drilbur={
         card.ability.extra.active = false
         card.ability.extra.stones_destroyed = card.ability.extra.stones_destroyed + 1
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
-        poke_create_treasure(card, 'drilbur')
+        pokermon.create_treasure(card, 'drilbur')
         return true
       end
     end
@@ -559,7 +559,7 @@ local excadrill={
     if context.destroying_card then
       if not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_stone') then
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
-        poke_create_treasure(card, 'excadril', true)
+        pokermon.create_treasure(card, 'excadril', true)
         return true
       end
     end

@@ -1304,7 +1304,7 @@ pokermon.reset_gligar_suit = function()
   G.GAME.current_round.gligar_suit = gligar_card
 end
 
-poke_create_treasure = function(card, seed, megastone)
+pokermon.create_treasure = function(card, seed, megastone)
   local treasure = pseudorandom(pseudoseed(seed))
   local money = 0
   local stone_max = 0
