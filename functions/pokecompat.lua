@@ -25,5 +25,76 @@ HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return p
 ---@deprecated use `poke_get_evo_overrides` instead
 PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
 
+-- DE-GLOBALIZING REFACTOR
+
+---@deprecated use `pokermon.find_pokemon_type` instead
+type_sticker_applied = pokermon.type_sticker_applied
+
+---@deprecated use `pokermon.find_pokemon_type` instead
+find_pokemon_type = pokermon.find_pokemon_type
+
+---@deprecated use `pokermon.is_type` instead
+is_type = pokermon.is_type
+
+---@deprecated use `pokermon.get_type` instead
+get_type = pokermon.get_type
+
+---@deprecated use `pokermon.copy_scaled_values` instead
+copy_scaled_values = pokermon.copy_scaled_values
+
+---@deprecated use `pokermon.fake_evolve` instead
+poke_fake_evolve = pokermon.fake_evolve
+
+---@deprecated use `pokermon.evolve` instead
+poke_evolve = pokermon.evolve
+
+---@deprecated use `pokermon.backend_evolve` instead
+poke_backend_evolve = pokermon.backend_evolve
+
+---@deprecated use `pokermon.can_evolve` instead
+can_evolve = pokermon.can_evolve
+
+---@deprecated use `pokermon.level_evo` instead
+level_evo = pokermon.level_evo
+
+---@deprecated use `pokermon.item_evo` instead
+item_evo = pokermon.item_evo
+
+---@deprecated use `pokermon.scaling_evo` instead
+scaling_evo = pokermon.scaling_evo
+
+---@deprecated use `pokermon.type_evo` instead
+type_evo = pokermon.type_evo
+
+---@deprecated use `pokermon.deck_suit_evo` instead
+deck_suit_evo = pokermon.deck_suit_evo
+
+---@deprecated use `pokermon.deck_enhance_evo` instead
+deck_enhance_evo = pokermon.deck_enhance_evo
+
+---@deprecated use `pokermon.deck_seal_evo` instead
+deck_seal_evo = pokermon.deck_seal_evo
+
+---@deprecated use `pokermon.get_lowest_evo` instead
+get_lowest_evo = pokermon.get_lowest_evo
+
+---@deprecated use `pokermon.get_highest_evo` instead
+get_highest_evo = pokermon.get_highest_evo
+
+---@deprecated use `pokermon.get_mega` instead
+get_mega = pokermon.get_mega
+
+---@deprecated use `pokermon.get_previous_from_mega` instead
+get_previous_from_mega = pokermon.get_previous_from_mega
+
+---@deprecated use `pokermon.get_previous_evo` instead
+get_previous_evo = pokermon.get_previous_evo
+
+---@deprecated use `pokermon.get_previous_evo_from_center` instead
+get_previous_evo_from_center = pokermon.get_previous_evo_from_center
+
+---@deprecated use `pokermon.get_family_keys` instead
+get_family_keys = pokermon.get_family_keys
+
 ---@deprecated use `pokermon.type_tooltip` instead
 type_tooltip = pokermon.type_tooltip
