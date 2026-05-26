@@ -204,7 +204,7 @@ local fake_masterball = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            local forced_evo = get_random_poke_key("masterball", "Legendary", nil, nil, nil, {j_poke_jirachi = true})
+            local forced_evo = pokermon.get_random_poke_key("masterball", "Legendary", nil, nil, nil, {j_poke_jirachi = true})
             pokermon.evolve(jirachi, forced_evo, nil, nil, true)
             return
          end

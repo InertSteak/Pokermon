@@ -107,7 +107,7 @@ end
 
 pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.apply_randomizer and not transformation then
-    to_key = get_random_poke_key('randomizer')
+    to_key = pokermon.get_random_poke_key('randomizer')
   end
   if immediate then
     pokermon.backend_evolve(card, to_key, energize_amount)
@@ -820,7 +820,7 @@ pokermon.apply_type_sticker = function(card, sticker_type)
   end
 end
 
-get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys, exclude_types)
+pokermon.get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys, exclude_types)
   local poke_keys = {}
   local poke_key
   exclude_keys = poke_convert_to_set(exclude_keys) or {}
@@ -870,19 +870,19 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
   return poke_key
 end
 
-get_random_poke_key_options = function(options)
+pokermon.get_random_poke_key_options = function(options)
   local pseed = options.seed or options.pseed or options.key_append
   local stage = options.stage or options.pokestage
   local pokerarity = options.rarity or options.pokerarity
   local poketype = options.type or options.poketype
   local exclude_keys = options.exclude_keys
   local exclude_types = options.exclude_types
-  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys, exclude_types)
+  return pokermon.get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys, exclude_types)
 end
 
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
   local create_args = {set = "Joker", area = pokearea, key = ''}
-  create_args.key = get_random_poke_key(pseed, stage, pokerarity, area, poketype)
+  create_args.key = pokermon.get_random_poke_key(pseed, stage, pokerarity, area, poketype)
 
   return SMODS.create_card(create_args)
 end

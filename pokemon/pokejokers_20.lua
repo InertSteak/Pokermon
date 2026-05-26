@@ -50,7 +50,7 @@ local zoroark = {
       -- Initialize the Illusion
       if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Dark") end
       if not card.ability.extra.hidden_key then
-        card.ability.extra.hidden_key = get_random_poke_key_options {
+        card.ability.extra.hidden_key = pokermon.get_random_poke_key_options {
           key_append = 'zoroark',
           rarity = 'poke_safari',
           exclude_types = 'Dark',

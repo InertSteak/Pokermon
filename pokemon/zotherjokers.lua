@@ -326,7 +326,7 @@ local mystery_egg = {
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local poke_key = get_random_poke_key_options {
+      local poke_key = pokermon.get_random_poke_key_options {
         stage = { "Baby", "Basic" },
         rarity = { "Common", "Uncommon", "Rare" },
         key_append = 'egg'

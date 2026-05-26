@@ -114,11 +114,17 @@ evo_item_use_total = pokermon.evo_item_use_total
 ---@deprecated use `pokermon.evo_item_in_pool` instead
 evo_item_in_pool = pokermon.evo_item_in_pool
 
+---@deprecated use `pokermon.type_tooltip` instead
+type_tooltip = pokermon.type_tooltip
+
 ---@deprecated use `pokermon.set_type_badge` instead
 poke_set_type_badge = pokermon.set_type_badge
 
 ---@deprecated use `pokermon.apply_type_sticker` instead
 apply_type_sticker = pokermon.apply_type_sticker
 
----@deprecated use `pokermon.type_tooltip` instead
-type_tooltip = pokermon.type_tooltip
+---@deprecated use `pokermon.get_random_poke_key` instead
+get_random_poke_key = pokermon.get_random_poke_key
+
+---@deprecated use `pokermon.get_random_poke_key_options` instead
+get_random_poke_key_options = pokermon.get_random_poke_key_options
