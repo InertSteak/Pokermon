@@ -1099,7 +1099,7 @@ pokermon.total_chips = function(card)
   return total_chips
 end
 
-poke_drain = function(card, target, amount, one_way)
+pokermon.drain_value = function(card, target, amount, one_way)
   local drain_amount = math.min(target.sell_cost - 1, amount)
 
   if drain_amount > 0 then

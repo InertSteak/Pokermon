@@ -457,7 +457,7 @@ local duskstone = {
       if G.jokers.cards[i].sell_cost > 1 or ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
         joker_count = joker_count + 1
         if not ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
-          poke_drain(card, G.jokers.cards[i], 1, true)
+          pokermon.drain_value(card, G.jokers.cards[i], 1, true)
         end
       end
     end

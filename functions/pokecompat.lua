@@ -158,3 +158,6 @@ volatile_active = pokermon.volatile_active
 
 ---@deprecated use `pokermon.total_chips` instead
 poke_total_chips = pokermon.total_chips
+
+---@deprecated use `pokermon.drain_value` instead
+poke_drain = pokermon.drain_value
