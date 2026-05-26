@@ -5230,6 +5230,106 @@ return {
                   "sticker to leftmost {C:attention}Joker"
                 }
             },
+						j_poke_rowlet = {
+							name = 'Rowlet',
+							text = {
+								"{C:attention}+#2#{} hand size",
+								"Earn {C:money}$#1#{} if held hand is a",
+								"{C:attention}[#3#]{}, resets each hand",
+								"Next target: {C:attention}[#4#]",
+								"{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#5#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_dartrix = {
+							name = 'Dartrix',
+							text = {
+								"{C:attention}+#2#{} hand size",
+								"Earn {C:money}$#1#{} if held hand is a",
+								"{C:attention}[#3#]{}, resets each hand",
+								"Next target: {C:attention}[#4#]",
+								"{C:inactive,s:0.8}(Evolves after earning {C:money,s:0.8}$#5#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_decidueye = {
+							name = 'Decidueye',
+							text = {
+								"{C:attention}+#2#{} hand size",
+								"Earn {C:money}$#1#{} if held hand is a",
+								"{C:attention}[#3#]{}, resets each hand",
+								"Next target: {C:attention}[#4#]",
+								"{br:2}ERROR - CONTACT STEAK",
+								"Also {C:green}#6# in #7#{} chance to gain a",
+								"{C:spectral}Spectral{} card if played {C:attention}poker hand{}",
+								"is the previous target: {C:attention}[#5#]",
+							}
+						},
+						j_poke_litten = {
+							name = 'Litten',
+							text = {
+								"{C:red}+#1#{} discard",
+								"Gain {C:mult}+#3#{} after discarding",
+								"your most played {C:attention}poker hand{}",
+								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+								"{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#4#{C:inactive,s:0.8} Mult)",
+							}
+						},
+						j_poke_torracat = {
+							name = 'Torracat',
+							text = {
+								"{C:red}+#1#{} discard",
+								"Gain {C:mult}+#3#{} after discarding",
+								"your most played {C:attention}poker hand{}",
+								"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+								"{C:inactive,s:0.8}(Evolves at {C:mult,s:0.8}+#4#{C:inactive,s:0.8} Mult)",
+							}
+						},
+						j_poke_incineroar = {
+							name = 'Incineroar',
+							text = {
+								"{C:red}+#2#{} discard",
+								"Gain {C:mult}+#4#{} after discarding",
+								"your most played {C:attention}poker hand{}",
+								"{br:2}ERROR - CONTACT STEAK",
+								"Also earn {C:money}$#1#{} per card",
+								"in discarded {C:attention}poker hand{}",
+								"{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+							}
+						},
+						j_poke_popplio = {
+							name = 'Popplio',
+							text = {
+								"{C:chips}+#3#{} hand",
+								"Gain {C:chips}+#2#{} Chips if {C:attention}poker hand{} is a",
+								"{C:attention}[#4#]{}, {C:attention}poker hand{} changes",
+								"after each hand",
+								"{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+								"{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#5#{C:inactive,s:0.8} Chips)",
+							}
+						},
+						j_poke_brionne = {
+							name = 'Brionne',
+							text = {
+								"{C:chips}+#3#{} hand",
+								"Gain {C:chips}+#2#{} Chips if {C:attention}poker hand{} is a",
+								"{C:attention}[#4#]{}, {C:attention}poker hand{} changes",
+								"after each hand",
+								"{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+								"{C:inactive,s:0.8}(Evolves at {C:chips,s:0.8}+#5#{C:inactive,s:0.8} Chips)",
+							}
+						},
+						j_poke_primarina = {
+							name = 'Primarina',
+							text = {
+								"{C:chips}+#3#{} hand",
+								"Gain {C:chips}+#2#{} Chips if {C:attention}poker hand{} is a",
+								"{C:attention}[#6#]{}, {C:attention}poker hand{} changes",
+								"after each hand",
+								"{br:2}ERROR - CONTACT STEAK",
+								"Also gain {X:mult,C:white}X#5#{} per consecutive",
+								"correct hand, resets on round end",
+								"{C:inactive}(Currently {X:mult,C:white}X#4#{}, {C:chips}+#1#{C:inactive})",
+							}
+						},
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
