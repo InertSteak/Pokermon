@@ -1435,3 +1435,72 @@ poke_drain_chips = function(card, amount)
 
   return base_drain + bonus_drain
 end
+
+--Taken directly from JokerDisplay's evaluate_hand function, ported to avoid dependency
+poke_evaluate_hand = function(cards, count_facedowns)
+    local valid_cards = cards
+    local has_facedown = false
+
+    if not cards then
+        local hand_info = JokerDisplay.current_hand_info
+        return hand_info.text, hand_info.poker_hands, hand_info.scoring_hand
+    elseif type(cards) ~= "table" then
+        return "Unknown", {}, {}
+    end
+    for i = 1, #cards do
+        if type(cards[i]) ~= "table" or not cards[i].ability or not (cards[i].ability.set == 'Enhanced' or cards[i].ability.set == 'Default') then
+            return "Unknown", {}, {}
+        end
+    end
+
+    -- To prevent crashing during poker hand eval
+    if G.play then
+        for i = 1, #G.play.cards do
+            if type(G.play.cards[i]) ~= "table" or not G.play.cards[i].ability or not (G.play.cards[i].ability.set == 'Enhanced' or G.play.cards[i].ability.set == 'Default') then
+                return "Unknown", {}, {}
+            end
+        end
+    end
+
+    if not count_facedowns then
+        valid_cards = {}
+        for i = 1, #cards do
+            if cards[i].facing and cards[i].facing ~= 'back' then
+                table.insert(valid_cards, cards[i])
+            else
+                has_facedown = true
+            end
+        end
+    else
+        valid_cards = cards
+    end
+
+    local text, _, poker_hands, scoring_hand, _ = G.FUNCS.get_poker_hand_info(valid_cards)
+
+    local final_scoring_hand = {}
+    for i = 1, #valid_cards do
+        local splashed = SMODS.always_scores(valid_cards[i]) or next(find_joker('Splash')) or next(find_joker('luvdisc')) or next(find_joker('magikarp')) or next(find_joker('feebas'))
+        local unsplashed = SMODS.never_scores(valid_cards[i])
+        if not splashed then
+            for _, card in pairs(scoring_hand) do
+                if card == valid_cards[i] then splashed = true end
+            end
+        end
+        local effects = {}
+        SMODS.calculate_context(
+            {
+                modify_scoring_hand = true,
+                other_card = valid_cards[i],
+                full_hand = valid_cards,
+                scoring_hand =
+                    scoring_hand
+            }, effects)
+        local flags = SMODS.trigger_effects(effects, valid_cards[i])
+        flags = flags or {}
+        if flags.add_to_hand then splashed = true end
+        if flags.remove_from_hand then unsplashed = true end
+        if splashed and not unsplashed then table.insert(final_scoring_hand, valid_cards[i]) end
+    end
+
+    return (has_facedown and "Unknown" or text), poker_hands, final_scoring_hand
+end
