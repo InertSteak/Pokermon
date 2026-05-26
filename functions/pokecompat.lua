@@ -210,3 +210,9 @@ energy_matches = pokermon.energy.energy_matches
 
 ---@deprecated use `pokermon.energy.can_apply_energy` instead
 can_apply_energy = pokermon.energy.can_apply_energy
+
+---@deprecated use `pokermon.energy.can_use` instead
+energy_can_use = pokermon.energy.can_use
+
+---@deprecated use `pokermon.energy.can_use` instead
+energy_use = pokermon.energy.use

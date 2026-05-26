@@ -11,10 +11,10 @@ local energy_template = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    return pokermon.energy.use(self, card, area, copier)
   end
 }
 
@@ -84,10 +84,10 @@ local bird_energy = {
         return { main_start = main_start }
     end,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    local choice = energy_can_use(self, card)
+    local choice = pokermon.energy.can_use(self, card)
     if choice then
       increment_energy(choice, self.etype, pokermon.energy.max + (G.GAME.energy_plus or 0))
     end
@@ -115,7 +115,7 @@ local double_rainbow_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
     G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
