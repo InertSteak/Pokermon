@@ -528,7 +528,7 @@ pokermon.get_previous_evo_from_center = function(center, full_key)
   return full_key and "j_"..prefix.."_"..prev or prev
 end
 
-get_family_keys = function(card)
+pokermon.get_family_keys = function(card)
   local keys = {}
   local center = card.config.center
   local line = poke_get_family_list(center.name)

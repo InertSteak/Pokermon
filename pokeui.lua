@@ -651,7 +651,7 @@ local function open_pokedex(target)
     if menu and target.config.center.poke_multi_item then menu = 'your_collection_consumables' end
     G.SETTINGS.paused = true
     G.FUNCS.overlay_menu {
-      definition = create_UIBox_pokedex_jokers(get_family_keys(target), menu),
+      definition = create_UIBox_pokedex_jokers(pokermon.get_family_keys(target), menu),
     }
     G.CONTROLLER:update_focus()
   end
