@@ -1229,7 +1229,7 @@ pokermon.load_individual_sprite = function(self, card, card_table, other_card)
   end
 end
 
-poke_change_poli_suit = function()
+pokermon.change_poli_suit = function()
   if G.GAME.poke_poli_suit then
     local suits = {"Spades", "Hearts", "Clubs", "Diamonds"}
     local i = get_index(suits, G.GAME.poke_poli_suit)
@@ -1240,7 +1240,7 @@ poke_change_poli_suit = function()
   end
 end
 
-poke_reset_rank = function(name)
+pokermon.reset_rank = function(name)
   G.GAME.current_round[name] = {rank = 'Ace'}
   local valid_cards = {}
   for k, v in ipairs(G.playing_cards) do
@@ -1255,7 +1255,7 @@ poke_reset_rank = function(name)
   end
 end
 
-poke_reset_type = function(name, exclude_names)
+pokermon.reset_type = function(name, exclude_names)
   G.GAME.current_round[name] = "Grass"
   local valid_types = {}
   for k, v in ipairs(G.jokers.cards) do
@@ -1276,7 +1276,7 @@ poke_reset_type = function(name, exclude_names)
   end
 end
 
-reset_espeon_card = function()
+pokermon.reset_espeon_card = function()
   G.GAME.current_round.espeon_rank = 'Ace'
   G.GAME.current_round.espeon_id = 14
   G.GAME.current_round.espeon_suit = 'Spades'
@@ -1295,7 +1295,7 @@ reset_espeon_card = function()
   end
 end
 
-reset_gligar_suit = function()
+pokermon.reset_gligar_suit = function()
   local gligar_suits = {}
   for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
       if v ~= G.GAME.current_round.gligar_suit then gligar_suits[#gligar_suits + 1] = v end

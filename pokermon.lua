@@ -261,18 +261,18 @@ function SMODS.current_mod.reset_game_globals(run_start)
 
   local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard', 'wingullcard'}
   for i = 1, #rank_resets do
-    poke_reset_rank(rank_resets[i])
+    pokermon.reset_rank(rank_resets[i])
   end
-  reset_espeon_card()
-  reset_gligar_suit()
+  pokermon.reset_espeon_card()
+  pokermon.reset_gligar_suit()
   
-  poke_reset_type('cattype', {'skitty', 'delcatty'})
+  pokermon.reset_type('cattype', {'skitty', 'delcatty'})
 end
 
 function SMODS.current_mod.calculate(self, context)
   -- Poliwag line suit
   if context.after then
-    poke_change_poli_suit()
+    pokermon.change_poli_suit()
   end
   -- Vending deck
   if G.GAME.modifiers.vending == true then
