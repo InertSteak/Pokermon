@@ -206,7 +206,7 @@ local mismagius = {
           colour = G.C.CHIPS,
         }
       else
-        local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod)
+        local drained_chips = pokermon.drain_chips(context.other_card, card.ability.extra.chip_mod)
 
         if drained_chips > 0 then
           return {

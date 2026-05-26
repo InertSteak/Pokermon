@@ -1382,7 +1382,7 @@ pokermon.can_save_consumable = function(card)
       or (card.config.center.saveable)
 end
 
-poke_drain_chips = function(card, amount)
+pokermon.drain_chips = function(card, amount)
   if amount < 0 then return 0 end
 
   local nominal_chips = card.base.nominal - (card.ability.nominal_drain or 0)

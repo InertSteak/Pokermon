@@ -330,7 +330,7 @@ local tyranitar={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.scoring_name == "Full House" then
 
-      local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod_minus)
+      local drained_chips = pokermon.drain_chips(context.other_card, card.ability.extra.chip_mod_minus)
 
       if drained_chips > 0 then
         context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 1) + card.ability.extra.Xmult_multi

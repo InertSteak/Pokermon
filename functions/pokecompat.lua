@@ -182,3 +182,6 @@ poke_create_treasure = pokermon.create_treasure
 
 ---@deprecated use `pokermon.get_ancient_amount` instead
 get_ancient_amount = pokermon.get_ancient_amount
+
+---@deprecated use `pokermon.drain_chips` instead
+poke_drain_chips = pokermon.drain_chips

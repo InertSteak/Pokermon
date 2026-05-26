@@ -956,7 +956,7 @@ local misdreavus = {
     if context.individual and context.cardarea == G.play
         and context.other_card:is_face() and not context.other_card.debuff then
 
-      local drained_chips = poke_drain_chips(context.other_card, card.ability.extra.chip_mod)
+      local drained_chips = pokermon.drain_chips(context.other_card, card.ability.extra.chip_mod)
 
       if drained_chips > 0 then
         return {
