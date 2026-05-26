@@ -5,7 +5,7 @@ if SMODS.current_mod then
   end
 end
 
-pokermon = {}
+pokermon = { energy = {} }
 SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
@@ -95,11 +95,11 @@ end
 
 --Load helper function files
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
+assert(SMODS.load_file("functions/pokefunctions.lua"))()
+assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
-assert(SMODS.load_file("functions/pokefunctions.lua"))()
-assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 

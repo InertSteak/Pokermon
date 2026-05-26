@@ -1,28 +1,25 @@
+pokermon.energy.values = {
+  mult = .4, mult1 = .4, mult2 = .4,
+  chips = .3, chips1 = .3, chips2 = .3, chips3 = .3,
+  Xmult = .2, Xmult1 = .2, Xmult2 = .2,
+  Xchips = .2, Xchips1 = .2, Xchips2 = .2,
+  money = .3, money1 = .3, money2 = .3,
+  money_mod = .1, money_mod1 = .1, money_mod2 = .1,
+  mult_mod = .2, mult_mod1 = .2, mult_mod2 = .2,
+  chip_mod = .2, chip_mod1 = .2, chip_mod2 = .2,
+  Xmult_mod = .2, Xmult_mod1 = .2, Xmult_mod2 = .2,
+  Xmult_multi = .05, Xmult_multi1 = .05, Xmult_multi2 = .05,
+  Xchips_multi = .05, Xchips_multi1 = .05, Xchips_multi2 = .05,
+}
+pokermon.energy.max = 3
+
 -- we're gonna need this for the vanilla jokers later
 -- Load list of energizable vanilla jokers
 local energizable_vanilla = assert(SMODS.load_file("functions/energizable_vanilla.lua"))()
 
-pokermon.energy = {
-  values = {
-    mult = .4, mult1 = .4, mult2 = .4,
-    chips = .3, chips1 = .3, chips2 = .3, chips3 = .3,
-    Xmult = .2, Xmult1 = .2, Xmult2 = .2,
-    Xchips = .2, Xchips1 = .2, Xchips2 = .2,
-    money = .3, money1 = .3, money2 = .3,
-    money_mod = .1, money_mod1 = .1, money_mod2 = .1,
-    mult_mod = .2, mult_mod1 = .2, mult_mod2 = .2,
-    chip_mod = .2, chip_mod1 = .2, chip_mod2 = .2,
-    Xmult_mod = .2, Xmult_mod1 = .2, Xmult_mod2 = .2,
-    Xmult_multi = .05, Xmult_multi1 = .05, Xmult_multi2 = .05,
-    Xchips_multi = .05, Xchips_multi1 = .05, Xchips_multi2 = .05,
-  },
-
-  max = 3
-}
-
 -- this is a series of checks formerly strewn about the energy functions
 -- namely, is ability.extra a table or a number or nil, is there an energizable value, etc.
-is_energizable = function(card)
+pokermon.energy.is_energizable = function(card)
   -- Vanilla Jokers check
   if energizable_vanilla[card.config.center.name] then
     return true
@@ -59,7 +56,7 @@ energy_matches = function(card, etype, include_colorless)
 end
 
 can_apply_energy = function(card, etype)
-  return energy_matches(card, etype, true) and is_energizable(card) and can_increase_energy(card, etype)
+  return energy_matches(card, etype, true) and pokermon.energy.is_energizable(card) and can_increase_energy(card, etype)
 end
 
 -- can_use and use are tied to energy cards proper
@@ -97,7 +94,7 @@ increment_energy = function(card, etype, amount, silent)
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.energy_count = card.ability.extra.energy_count and (card.ability.extra.energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
-    elseif is_energizable(card) then
+    elseif pokermon.energy.is_energizable(card) then
       card.ability.energy_count = card.ability.energy_count and (card.ability.energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
     end
@@ -106,7 +103,7 @@ increment_energy = function(card, etype, amount, silent)
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.c_energy_count = card.ability.extra.c_energy_count and (card.ability.extra.c_energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
-    elseif is_energizable(card) then
+    elseif pokermon.energy.is_energizable(card) then
       card.ability.c_energy_count = card.ability.c_energy_count and (card.ability.c_energy_count + amount) or amount
       energize(card, etype, false, silent, amount)
     end
