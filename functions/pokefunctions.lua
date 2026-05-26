@@ -1364,7 +1364,7 @@ pokermon.create_treasure = function(card, seed, megastone)
   end
 end
 
-get_ancient_amount = function(hand, id, append_to_card)
+pokermon.get_ancient_amount = function(hand, id, append_to_card)
   local count = 0
   for i = 1, #hand do
     if hand[i]:get_id() == id then count = count + 1 end

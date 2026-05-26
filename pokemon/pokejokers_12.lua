@@ -537,7 +537,7 @@ local lileep={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        get_ancient_amount(context.scoring_hand, 8, card)
+        pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
@@ -609,7 +609,7 @@ local cradily={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        get_ancient_amount(context.scoring_hand, 8, card)
+        pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
@@ -686,7 +686,7 @@ local anorith={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.before then
-      get_ancient_amount(context.scoring_hand, 7, card)
+      pokermon.get_ancient_amount(context.scoring_hand, 7, card)
     end
     if context.joker_main and card.ability.extra.ancient_count > 0 then
       if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
@@ -758,7 +758,7 @@ local armaldo={
   end,
   calculate = function(self, card, context)
     if context.before then
-      get_ancient_amount(context.scoring_hand, 7, card)
+      pokermon.get_ancient_amount(context.scoring_hand, 7, card)
     end
     if context.joker_main and card.ability.extra.ancient_count > 0 then
       if card.ability.extra.ancient_count > 2 then

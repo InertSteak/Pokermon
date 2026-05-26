@@ -292,7 +292,7 @@ local relicanth={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        get_ancient_amount(context.scoring_hand, 4, card)
+        pokermon.get_ancient_amount(context.scoring_hand, 4, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 1 and #G.deck.cards > 0 then
         local bottom_card = G.deck.cards[1]

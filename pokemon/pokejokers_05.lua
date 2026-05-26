@@ -893,7 +893,7 @@ local omanyte={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-       get_ancient_amount(context.scoring_hand, 3, card)
+       pokermon.get_ancient_amount(context.scoring_hand, 3, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -951,7 +951,7 @@ local omastar={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-       get_ancient_amount(context.scoring_hand, 3, card)
+       pokermon.get_ancient_amount(context.scoring_hand, 3, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -1032,7 +1032,7 @@ local kabuto={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        get_ancient_amount(context.scoring_hand, 2, card)
+        pokermon.get_ancient_amount(context.scoring_hand, 2, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         local chips = card.ability.extra.chips1
@@ -1089,7 +1089,7 @@ local kabutops={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        get_ancient_amount(context.scoring_hand, 2, card)
+        pokermon.get_ancient_amount(context.scoring_hand, 2, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
         local chips = card.ability.extra.chips1
@@ -1157,7 +1157,7 @@ local aerodactyl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.before then
-      get_ancient_amount(context.scoring_hand, 14, card)
+      pokermon.get_ancient_amount(context.scoring_hand, 14, card)
 
       if card.ability.extra.ancient_count > 2 and not context.blueprint then
         local target = nil
