@@ -1223,7 +1223,7 @@ pokermon.set_sprite_ability = function(self, card, initial, delay_sprites)
   end
 end
 
-poke_load_individual_sprite = function(self, card, card_table, other_card)
+pokermon.load_individual_sprite = function(self, card, card_table, other_card)
   if card and card.ability and card.ability.extra then
     card.ability.extra.loaded_sprite = true
   end

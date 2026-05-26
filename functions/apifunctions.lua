@@ -43,7 +43,7 @@ pokermon.load_pokemon = function(item)
         end
       }))
     end
-    poke_load_individual_sprite(self, card, card_table, other_card)
+    pokermon.load_individual_sprite(self, card, card_table, other_card)
     if prev_load then
       prev_load(self, card, card_table, other_card)
     end
