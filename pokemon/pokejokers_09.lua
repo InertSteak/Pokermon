@@ -546,7 +546,7 @@ local treecko={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.money_mod, triggers_left, card.ability.extra.h_size}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -595,7 +595,7 @@ local treecko={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("treecko", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("treecko", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
@@ -611,7 +611,7 @@ local grovyle={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.money_mod, triggers_left, card.ability.extra.h_size, card.ability.extra.money_mod + 1}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -665,7 +665,7 @@ local grovyle={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("grovyle", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("grovyle", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "trigger_evo"},
 }
@@ -681,7 +681,7 @@ local sceptile={
     end
     local card_vars = {center.ability.extra.money_mod, center.ability.extra.money_earned, center.ability.extra.h_size, 
                        center.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", center) * center.ability.extra.money_increase), center.ability.extra.money_increase}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -726,7 +726,7 @@ local sceptile={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("sceptile", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("sceptile", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hand_size", "passive", "nature", "rank", "economy", "types"},
 }
@@ -742,7 +742,7 @@ local torchic={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.mult_mod, triggers_left, card.ability.extra.d_size}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -785,7 +785,7 @@ local torchic={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("torchic", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("torchic", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
@@ -801,7 +801,7 @@ local combusken={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.mult_mod, triggers_left, card.ability.extra.d_size}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -843,7 +843,7 @@ local combusken={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("combusken", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("combusken", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "trigger_evo"},
 }
@@ -860,7 +860,7 @@ local blaziken={
     end
     local card_vars = {center.ability.extra.mult_mod, center.ability.extra.Xmult_multi, center.ability.extra.d_size, center.ability.extra.discard_target, 
                        math.max(0, center.ability.extra.discard_target - center.ability.extra.cards_discarded)}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -933,7 +933,7 @@ local blaziken={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("blaziken", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("blaziken", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "discard", "passive", "nature", "rank", "mult", "xmult", "types"},
 }
@@ -949,7 +949,7 @@ local mudkip={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.chip_mod, triggers_left, card.ability.extra.hands}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -994,7 +994,7 @@ local mudkip={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("mudkip", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("mudkip", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
@@ -1010,7 +1010,7 @@ local marshtomp={
     end
     local triggers_left = math.max(0, self.config.evo_rqmt - card.ability.extra.triggers)
     local card_vars = {card.ability.extra.chip_mod, triggers_left, card.ability.extra.hands}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -1055,7 +1055,7 @@ local marshtomp={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("marshtomp", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "trigger_evo"},
 }
@@ -1070,7 +1070,7 @@ local swampert={
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     end
     local card_vars = {center.ability.extra.chip_mod, center.ability.extra.hands, center.ability.extra.nature_target}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -1144,7 +1144,7 @@ local swampert={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("swampert", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("swampert", 3, card.ability.extra.targets)
   end,
   attributes = {"starter", "hands", "passive", "nature", "rank", "chips", "types", "tarot", "generation"},
 }
@@ -1377,7 +1377,7 @@ local wurmple={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
+    card.ability.extra.targets = pokermon.get_target_card_suit('wurmple', true, 'Spades', {'Spades', 'Hearts', 'Diamonds', 'Clubs'})
   end,
   attributes = {"chips", "mult", "nature", "suit", "condition_evo"},
 }
@@ -1424,7 +1424,7 @@ local silcoon={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
+    card.ability.extra.targets = pokermon.get_target_card_suit('silcoon', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
   attributes = {"mult", "nature", "suit", "condition_evo"},
 }
@@ -1479,7 +1479,7 @@ local beautifly={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
+    card.ability.extra.targets = pokermon.get_target_card_suit('beautifly', true, 'Hearts', {'Hearts', 'Diamonds'})
   end,
   attributes = {"mult", "nature", "suit", "chance", "hand_type"},
 }
@@ -1526,7 +1526,7 @@ local cascoon={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
+    card.ability.extra.targets = pokermon.get_target_card_suit('cascoon', true, 'Spades', {'Spades', 'Clubs'})
   end,
   attributes = {"chips", "nature", "suit", "condition_evo"},
 }
@@ -1584,7 +1584,7 @@ local dustox={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_suit('dustox', true, 'Spades', {'Spades', 'Clubs'})
+    card.ability.extra.targets = pokermon.get_target_card_suit('dustox', true, 'Spades', {'Spades', 'Clubs'})
   end,
   attributes = {"chips", "nature", "suit", "xmult"},
 }

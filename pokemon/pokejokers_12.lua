@@ -188,7 +188,7 @@ local corphish={
     end
     
     local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod, self.config.evo_rqmt}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = 1,
@@ -234,7 +234,7 @@ local corphish={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("corphish", 3, card.ability.extra.targets)
   end,
   attributes = {"passive", "nature", "rank", "mult"},
 }
@@ -250,7 +250,7 @@ local crawdaunt={
     end
     
     local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod}
-    add_target_cards_to_vars(card_vars, card.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, card.ability.extra.targets)
     return {vars = card_vars}
   end,
   rarity = "poke_safari",
@@ -297,7 +297,7 @@ local crawdaunt={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("corphish", 3, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("corphish", 3, card.ability.extra.targets)
   end,
   attributes = {"passive", "nature", "rank", "mult"},
 }

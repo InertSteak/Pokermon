@@ -841,7 +841,8 @@ pokermon.get_random_poke_key = function(pseed, stage, pokerarity, _area, poketyp
   local valid_rarities = poke_convert_to_set(pokerarity)
 
   for k, v in pairs(G.P_CENTER_POOLS.Joker) do
-    if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
+    if v.stage and v.stage ~= "Other"
+        and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and pokermon.get_gen_allowed(v)
         and not (poketype and poketype ~= v.ptype) and not exclude_types[v.ptype]
         and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega"
         and not exclude_keys[v.key] and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
@@ -887,7 +888,7 @@ pokermon.create_random_poke_joker = function(pseed, stage, pokerarity, area, pok
   return SMODS.create_card(create_args)
 end
 
-get_gen_allowed = function(card)
+pokermon.get_gen_allowed = function(card)
   local gen_allowed = false
   if card.gen then
     local gen = card.gen
@@ -906,7 +907,7 @@ get_gen_allowed = function(card)
   return gen_allowed
 end
 
-get_poke_target_card_ranks = function(seed, num, default, use_deck)
+pokermon.get_target_card_ranks = function(seed, num, default, use_deck)
   local target_ranks = {}
   local valid_cards = {}
   if not G.playing_cards then
@@ -954,7 +955,7 @@ get_poke_target_card_ranks = function(seed, num, default, use_deck)
   return target_ranks
 end
 
-get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
+pokermon.get_target_card_suit = function(seed, use_deck, default, limit_suits)
   local suit = default or 'Spades'
   local allowed_suits = limit_suits or SMODS.Suits
   local valid_cards = {}
@@ -984,7 +985,7 @@ get_poke_target_card_suit = function(seed, use_deck, default, limit_suits)
   end
 end
 
-get_poke_target_card_enhancements = function(seed, num, options)
+pokermon.get_target_card_enhancements = function(seed, num, options)
   local enhancements = {}
   local enhance_options = options or {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}       
   
@@ -1002,7 +1003,7 @@ get_poke_target_card_enhancements = function(seed, num, options)
   return enhancements
 end
 
-add_target_cards_to_vars = function(vars, targets)
+pokermon.add_target_cards_to_vars = function(vars, targets)
   for i=1, #targets do
     vars[#vars+1] = localize(targets[i].value or "Ace", 'ranks')
   end

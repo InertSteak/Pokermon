@@ -131,3 +131,18 @@ get_random_poke_key_options = pokermon.get_random_poke_key_options
 
 ---@deprecated use `pokermon.create_random_poke_joker` instead
 create_random_poke_joker = pokermon.create_random_poke_joker
+
+---@deprecated use `pokermon.get_gen_allowed` instead
+get_gen_allowed = pokermon.get_gen_allowed
+
+---@deprecated use `pokermon.get_target_card_ranks` instead
+get_poke_target_card_ranks = pokermon.get_target_card_ranks
+
+---@deprecated use `pokermon.get_target_card_suit` instead
+get_poke_target_card_suit = pokermon.get_target_card_suit
+
+---@deprecated use `pokermon.get_target_card_enhancements` instead
+get_poke_target_card_enhancements = pokermon.get_target_card_enhancements
+
+---@deprecated use `pokermon.add_target_cards_to_vars` instead
+add_target_cards_to_vars = pokermon.add_target_cards_to_vars

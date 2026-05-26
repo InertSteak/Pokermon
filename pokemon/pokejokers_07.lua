@@ -994,7 +994,7 @@ local unown={
       info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     end
     local card_vars = {center.ability.extra.mult}
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     return {vars = card_vars}
   end,
   discovered = true,
@@ -1082,7 +1082,7 @@ local unown={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.targets = get_poke_target_card_ranks("unown", 1, card.ability.extra.targets)
+    card.ability.extra.targets = pokermon.get_target_card_ranks("unown", 1, card.ability.extra.targets)
   end,
   set_sprites = function(self, card, front)
     card.children.center:set_sprite_pos({x = 0, y = 0})

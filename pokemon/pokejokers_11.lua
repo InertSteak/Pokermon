@@ -754,7 +754,7 @@ local spinda={
       local enhance_name = localize('poke_'..center.ability.extra.enhancements[i])
       card_vars[#card_vars + 1] = enhance_name
     end
-    add_target_cards_to_vars(card_vars, center.ability.extra.targets)
+    pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Wheel of Fortune"}}
     return {vars = card_vars}
   end,
@@ -799,8 +799,8 @@ local spinda={
     end
   end,
   set_nature = function(self,card)
-    card.ability.extra.enhancements = get_poke_target_card_enhancements("spinda", 3, {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky", "m_poke_seed"})
-    card.ability.extra.targets = get_poke_target_card_ranks("spinda", 3, card.ability.extra.targets)
+    card.ability.extra.enhancements = pokermon.get_target_card_enhancements("spinda", 3, {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky", "m_poke_seed"})
+    card.ability.extra.targets = pokermon.get_target_card_ranks("spinda", 3, card.ability.extra.targets)
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
