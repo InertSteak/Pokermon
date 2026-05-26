@@ -149,3 +149,6 @@ add_target_cards_to_vars = pokermon.add_target_cards_to_vars
 
 ---@deprecated use `pokermon.find_cards_by_ptype` instead
 find_other_poke_or_energy_type = pokermon.find_cards_by_ptype
+
+---@deprecated use `pokermon.faint_baby_poke` instead
+faint_baby_poke = pokermon.faint_baby_poke

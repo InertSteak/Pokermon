@@ -1481,7 +1481,7 @@ local tyrogue={
     end
 
     if context.joker_main then
-      faint_baby_poke(self, card, context)
+      pokermon.faint_baby_poke(self, card, context)
       return {
         Xmult = card.ability.extra.Xmult_minus
       }
@@ -1593,7 +1593,7 @@ local smoochum ={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -1641,7 +1641,7 @@ local elekid ={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -1688,7 +1688,7 @@ local magby={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,

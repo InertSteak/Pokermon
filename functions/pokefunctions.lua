@@ -1029,7 +1029,7 @@ pokermon.find_cards_by_ptype = function(card, poke_type, count_self)
   end
 end
 
-faint_baby_poke = function(self, card, context)
+pokermon.faint_baby_poke = function(self, card, context)
   if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
     if context.joker_main then
       local alive = true

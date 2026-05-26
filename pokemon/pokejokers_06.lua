@@ -924,7 +924,7 @@ local pichu={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -965,7 +965,7 @@ local cleffa={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -1011,7 +1011,7 @@ local igglybuff={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context) 
+        pokermon.faint_baby_poke(self, card, context) 
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -1049,7 +1049,7 @@ local togepi={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         local xmult = 20 * (card.ability.extra.Xmult1 + pseudorandom('togepi') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
         xmult = math.floor(xmult + 0.5) / 20
         return {
