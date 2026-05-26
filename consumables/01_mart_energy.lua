@@ -3,7 +3,7 @@ local energy_template = {
   set = "Energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "AtlasConsumablesBasic",
@@ -64,7 +64,7 @@ local bird_energy = {
           },
           nodes = {
               { n = G.UIT.O, config = { object = DynaText(poke_random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
-              { n = G.UIT.T, config = { text = ' +'..(energy_max + (G.GAME.energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
+              { n = G.UIT.T, config = { text = ' +'..(pokermon.energy.max + (G.GAME.energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
               { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
             }
           },
@@ -89,7 +89,7 @@ local bird_energy = {
   use = function(self, card, area, copier)
     local choice = energy_can_use(self, card)
     if choice then
-      increment_energy(choice, self.etype, energy_max + (G.GAME.energy_plus or 0))
+      increment_energy(choice, self.etype, pokermon.energy.max + (G.GAME.energy_plus or 0))
     end
     G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,
@@ -106,7 +106,7 @@ local double_rainbow_energy = {
   config = {},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
   end,
   pos = { x = 0, y = 6 },
   atlas = "AtlasConsumablesBasic",

@@ -1,22 +1,24 @@
-energy_values = {
-  mult = .4, mult1 = .4, mult2 = .4,
-  chips = .3, chips1 = .3, chips2 = .3, chips3 = .3,
-  Xmult = .2, Xmult1 = .2, Xmult2 = .2,
-  Xchips = .2, Xchips1 = .2, Xchips2 = .2,
-  money = .3, money1 = .3, money2 = .3,
-  money_mod = .1, money_mod1 = .1, money_mod2 = .1,
-  mult_mod = .2, mult_mod1 = .2, mult_mod2 = .2,
-  chip_mod = .2, chip_mod1 = .2, chip_mod2 = .2,
-  Xmult_mod = .2, Xmult_mod1 = .2, Xmult_mod2 = .2,
-  Xmult_multi = .05, Xmult_multi1 = .05, Xmult_multi2 = .05,
-  Xchips_multi = .05, Xchips_multi1 = .05, Xchips_multi2 = .05,
-}
-
-energy_max = 3
-
 -- we're gonna need this for the vanilla jokers later
 -- Load list of energizable vanilla jokers
 local energizable_vanilla = assert(SMODS.load_file("functions/energizable_vanilla.lua"))()
+
+pokermon.energy = {
+  values = {
+    mult = .4, mult1 = .4, mult2 = .4,
+    chips = .3, chips1 = .3, chips2 = .3, chips3 = .3,
+    Xmult = .2, Xmult1 = .2, Xmult2 = .2,
+    Xchips = .2, Xchips1 = .2, Xchips2 = .2,
+    money = .3, money1 = .3, money2 = .3,
+    money_mod = .1, money_mod1 = .1, money_mod2 = .1,
+    mult_mod = .2, mult_mod1 = .2, mult_mod2 = .2,
+    chip_mod = .2, chip_mod1 = .2, chip_mod2 = .2,
+    Xmult_mod = .2, Xmult_mod1 = .2, Xmult_mod2 = .2,
+    Xmult_multi = .05, Xmult_multi1 = .05, Xmult_multi2 = .05,
+    Xchips_multi = .05, Xchips_multi1 = .05, Xchips_multi2 = .05,
+  },
+
+  max = 3
+}
 
 -- this is a series of checks formerly strewn about the energy functions
 -- namely, is ability.extra a table or a number or nil, is there an energizable value, etc.
@@ -27,7 +29,7 @@ is_energizable = function(card)
   end
   -- Regular case
   if type(card.ability.extra) == "table" then
-    for name, _ in pairs(energy_values) do
+    for name, _ in pairs(pokermon.energy.values) do
       if type(card.ability.extra[name]) == "number" then
         return true
       end
@@ -36,8 +38,8 @@ is_energizable = function(card)
     return true
   -- More generic check for energizable values that aren't in ability.extra
   else
-    for k, _ in pairs(energy_values) do
-      if card.ability[energy_values[k]] and card.ability[energy_values[k]] > 0 then return true end
+    for k, _ in pairs(pokermon.energy.values) do
+      if card.ability[pokermon.energy.values[k]] and card.ability[pokermon.energy.values[k]] > 0 then return true end
     end
   end
   return false
@@ -45,7 +47,7 @@ end
 
 can_increase_energy = function(card, etype)
   if pokermon_config.unlimited_energy or card.config.center.no_energy_limit or (etype and etype == "Bird") then return true end
-  return get_total_energy(card) < energy_max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
+  return get_total_energy(card) < pokermon.energy.max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
 end
 
 -- Checking the type compatibility flowchart
@@ -78,7 +80,7 @@ end
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
 energy_increase = function(card, etype, amount, silent)
   if not amount then amount = 1 end
-  if can_increase_energy(card) or amount <= energy_max + (G.GAME.energy_plus or 0) +
+  if can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
       (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - get_total_energy(card) then
     increment_energy(card, etype, amount, silent)
   end
@@ -124,10 +126,10 @@ energize = function(card, etype, evolving, silent, amount, center)
     energize_other(card, etype, center, c_penalty, amount)
   -- base pokermon case
   elseif type(card.ability.extra) == "table" then
-    for name, _ in pairs(energy_values) do
+    for name, _ in pairs(pokermon.energy.values) do
       local data = card.ability.extra[name]
       if type(data) == "number" then
-        local addition = energy_values[name]
+        local addition = pokermon.energy.values[name]
         local previous_mod = (name == "mult_mod" or name == "chip_mod") and card.ability.extra[name]
         local updated_mod = nil
         if evolving then
@@ -176,8 +178,8 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
       field2, value2 = energizable_vanilla[center.name][3].field, energizable_vanilla[center.name][3].value
       energize_vanilla_values(card, center, field2, value2, colorless_penalty, amount)
     end
-    for k, _ in pairs(energy_values) do
-      local increase = energy_values[k] * amount / colorless_penalty
+    for k, _ in pairs(pokermon.energy.values) do
+      local increase = pokermon.energy.values[k] * amount / colorless_penalty
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
       if card.ability[k] and center.config[k] and field ~= k and not (field2 and field2 == k) then
         card.ability[k] = card.ability[k] + (center.config[k] * increase)
@@ -187,8 +189,8 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
     end
   else
     -- should work for remaining energizable non-vanilla, non-pokermon jokers hopefully
-    for k, _ in pairs(energy_values) do
-      local increase = energy_values[k] / colorless_penalty
+    for k, _ in pairs(pokermon.energy.values) do
+      local increase = pokermon.energy.values[k] / colorless_penalty
       -- energize existing vanilla values if they aren't the target (i.e. ability.x_mult)
       if card.ability[k] and center.config[k] then
         card.ability[k] = card.ability[k] + (center.config[k] * increase)
@@ -206,13 +208,13 @@ energize_vanilla_values = function(card, center, field, value, colorless_penalty
   local config = center.config[value] ~= nil and center.config or center.config.extra
   local ability = (config == center.config) and card.ability or card.ability.extra
   -- energy calculations
-  local increase = energy_values[field] * amount / colorless_penalty
+  local increase = pokermon.energy.values[field] * amount / colorless_penalty
   if (type(config[value]) == "number") and (type(ability[value]) == "number") then
     ability[value] = ability[value] + (config[value] * increase)
   -- compatibility with mods that affect config structure of particular vanilla jokers; i.e. Minty with Fibonacci
   elseif (type(config[value]) == "table") then
     for u, num in pairs(ability[value]) do
-      if energy_values[u] then
+      if pokermon.energy.values[u] then
         for w, base in pairs(config[value]) do
           if u == w then ability[value][u] = num + (base * increase) end
         end

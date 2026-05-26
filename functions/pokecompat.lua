@@ -27,6 +27,8 @@ PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return 
 
 ------------ DE-GLOBALIZING REFACTOR --------------
 
+-- pokefunctions.lua
+
 ---@deprecated use `pokermon.extended_family` instead
 extended_family = pokermon.extended_family
 
@@ -188,3 +190,11 @@ get_ancient_amount = pokermon.get_ancient_amount
 
 ---@deprecated use `pokermon.drain_chips` instead
 poke_drain_chips = pokermon.drain_chips
+
+-- energyfunctions.lua
+
+---@deprecated use `pokermon.energy.values` instead
+energy_values = pokermon.energy.values
+
+---@deprecated use `pokermon.energy.values` instead
+energy_max = pokermon.energy.max

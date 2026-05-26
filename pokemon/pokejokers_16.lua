@@ -743,7 +743,7 @@ local gallade={
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_poke_double_rainbow_energy', 
-                                    vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+                                    vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Double Rainbow Energy"}}
     end
     local energized = 0
