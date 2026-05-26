@@ -260,7 +260,7 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
   end
   
   if energize_amount then
-    energy_increase(card, 'Trans', energize_amount)
+    pokermon.energy.increase(card, 'Trans', energize_amount)
   end
 end
 

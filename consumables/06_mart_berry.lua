@@ -65,9 +65,9 @@ local berry_juice_energy = {
     end
     play_sound('poke_energy_use', 1, 0.5)
     if choice.config and choice.config.center.stage and not pokermon.type_sticker_applied(choice) then
-      energy_increase(choice, choice.ability.extra.ptype)
+      pokermon.energy.increase(choice, choice.ability.extra.ptype)
     elseif pokermon.type_sticker_applied(choice) then
-      energy_increase(choice, pokermon.type_sticker_applied(choice))
+      pokermon.energy.increase(choice, pokermon.type_sticker_applied(choice))
     end
     if not G.GAME.modifiers.no_interest then
       G.GAME.modifiers.reset_no_interest = true

@@ -216,3 +216,6 @@ energy_can_use = pokermon.energy.can_use
 
 ---@deprecated use `pokermon.energy.can_use` instead
 energy_use = pokermon.energy.use
+
+---@deprecated use `pokermon.energy.increase` instead
+energy_increase = pokermon.energy.increase

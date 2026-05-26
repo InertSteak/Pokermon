@@ -78,7 +78,7 @@ pattern = "if card.ability.consumeable and not skip_materialize then card:start_
 position = "after"
 payload = '''
 if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
-if _type == 'Joker' and G.GAME.modifiers.apply_type then pokermon.apply_type_sticker(card); energy_increase(card, pokermon.get_type(card)) end
+if _type == 'Joker' and G.GAME.modifiers.apply_type then pokermon.apply_type_sticker(card); pokermon.energy.increase(card, pokermon.get_type(card)) end
 '''
 match_indent = true
 

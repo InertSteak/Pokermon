@@ -21,7 +21,7 @@ local transformation = {
   end,
   use = function(self, card, area, copier)
     local choice = poke_find_leftmost_or_highlighted()
-    if pokermon.get_type(choice) then energy_increase(choice, pokermon.get_type(choice)) end
+    if pokermon.get_type(choice) then pokermon.energy.increase(choice, pokermon.get_type(choice)) end
     if not choice.config.center.aux_poke then
       local highest = pokermon.get_highest_evo(choice)
       if highest and type(highest) == "string" then

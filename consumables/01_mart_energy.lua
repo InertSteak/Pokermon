@@ -121,7 +121,7 @@ local double_rainbow_energy = {
     G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
     local choice = poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
     for _ = 1, 2 do
-      energy_increase(choice, self.etype)
+      pokermon.energy.increase(choice, self.etype)
     end
     if not G.GAME.modifiers.no_interest then
       G.GAME.modifiers.reset_no_interest = true
