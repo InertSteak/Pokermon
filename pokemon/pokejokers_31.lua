@@ -4,7 +4,7 @@ local ursaluna={
   pos = {x = 2, y = 8},
   config = {extra = {mult = 0,mult_mod = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -61,7 +61,7 @@ local hisuian_qwilfish = {
   pos = {x = 5, y = 4},
   config = {extra = {hazard_ratio = 10, chip_mod = 5, chips = 0}, evo_rqmt = 80},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
@@ -121,7 +121,7 @@ local overqwil = {
   pos = {x = 7, y = 8},
   config = {extra = {hazard_ratio = 5, chip_mod = 20, chips = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'poke_hazards'}
@@ -201,7 +201,7 @@ local tarountula = {
   pos = {x = 12, y = 0},
   config = {extra = {hazard_level = 1, rounds = 4, h_size = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
@@ -236,7 +236,7 @@ local spidops = {
   pos = {x = 13, y = 0},
   config = {extra = {hazard_level = 1, h_size = 2, card_goal = 8, cards_added = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
@@ -291,7 +291,7 @@ local fidough={
   pos = {x = 8, y = 1},
   config = {extra = {chips = 0,chip_mod = 8, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
   rarity = 1,
@@ -339,7 +339,7 @@ local dachsbun={
   pos = {x = 9, y = 1},
   config = {extra = {chips = 0,chip_mod = 10, rank = "2", id = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, localize(center.ability.extra.rank or "2", 'ranks')}}
   end,
   rarity = "poke_safari",
@@ -389,7 +389,7 @@ local smoliv = {
   pos = {x = 10, y = 1},
   config = { extra = { money_mod = 2}, evo_rqmt = 12 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.money_mod, self.config.evo_rqmt, card.sell_cost, } }
   end,
   designer = "Eternalnacho",
@@ -422,7 +422,7 @@ local dolliv = {
   pos = {x = 11, y = 1},
   config = { extra = { money_mod = 2}, evo_rqmt = 22 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     return { vars = { a.money_mod, self.config.evo_rqmt, card.sell_cost } }
   end,
@@ -470,7 +470,7 @@ local arboliva = {
   pos = {x = 12, y = 1},
   config = { extra = { money_mod = 2 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     return { vars = { a.money_mod } }
   end,

@@ -13,7 +13,7 @@ local sylveon={
   pos = {x = 8, y = 3},
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -64,7 +64,7 @@ local pumpkaboo={
   pos = {x = 0, y = 0},
   config = {extra = {jack_target = 5, jacks_discarded = 0, form = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local forms = {'j_poke_pumpkaboo_small', 'j_poke_pumpkaboo_average', 'j_poke_pumpkaboo_large', 'j_poke_pumpkaboo_super'}
     local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
     return {vars = {center.ability.extra.jack_target, display_jacks}, key = forms[center.ability.extra.form + 1]}
@@ -176,7 +176,7 @@ local gourgeist={
   pos = {x = 0, y = 0},
   config = {extra = {jack_target = 5, jacks_discarded = 0, form = -1, money = 6}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local forms = {'j_poke_gourgeist_small', 'j_poke_gourgeist_average', 'j_poke_gourgeist_large', 'j_poke_gourgeist_super'}
     local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
     return {vars = {center.ability.extra.jack_target, display_jacks, center.ability.extra.money}, 

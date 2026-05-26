@@ -20,7 +20,7 @@ local nickit={
   pos = {x = 3, y = 1},
   config = {extra = {money = 3, rounds = 5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -43,7 +43,7 @@ local thievul={
   name = "thievul", 
   pos = {x = 4, y = 1}, 
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[1] and G.jokers.cards[1] ~= center and math.min(G.jokers.cards[1].sell_cost*2, 15)) or 0}}
   end,
   rarity = "poke_safari", 
@@ -72,7 +72,7 @@ local yamper={
   pos = {x = 11, y = 1}, 
   config = {extra = {mult = 3, money = 3, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -103,7 +103,7 @@ local boltund={
   pos = {x = 12, y = 1}, 
   config = {extra = {Xmult = 2, money = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money}}
   end,
   rarity = 3, 

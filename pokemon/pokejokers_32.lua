@@ -8,7 +8,7 @@ local charcadet={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 0,mult_mod = 5, mult_original = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dawnstone
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
@@ -53,7 +53,7 @@ local armarouge={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 3, Xmult_mod = 1, Xmult2 = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
   end,
   rarity = "poke_safari",
@@ -98,7 +98,7 @@ local ceruledge={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1, Xmult_mod = 0.75, Xmult2 = 1, money_minus = 1,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -165,7 +165,7 @@ local bramblin={
   pos = {x = 0, y = 0},
   config = {extra = {cards_drawn = 0, seed_added = 0, rank_scored = 0}, evo_rqmt = 160},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     return {vars = {localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks'), math.max(0, self.config.evo_rqmt - center.ability.extra.cards_drawn)}}
   end,
@@ -214,7 +214,7 @@ local brambleghast={
   pos = {x = 0, y = 0},
   config = {extra = {chip_mod = 2, seed_added = 0, rank_scored = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * math.max(0, (G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)),
         localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks')}}
@@ -272,7 +272,7 @@ local rellor = {
 	--pos = {x = 14, y = 63},
 	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 5},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
 		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
 	    return {vars = {card.ability.extra.mult_mod, mult, math.max(self.config.evo_rqmt - card.ability.extra.items_used, 0 )}}
 	end,
@@ -312,7 +312,7 @@ local rabsca = {
 	--pos = {x = 16, y = 63},
 	config = {extra = { mult_mod = 1, num = 1, dem = 4}},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
     local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'rabsca')
 	  return {vars = {card.ability.extra.mult_mod, mult, num, dem}}
@@ -364,7 +364,7 @@ local tinkatink={
   pos = {x = 0, y = 4},
   config = {extra = {mult = 5,rounds = 5, cards_debuffed = 12}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
@@ -415,7 +415,7 @@ local tinkatuff={
   pos = {x = 1, y = 4},
   config = {extra = {mult = 10,rounds = 5, cards_debuffed = 16}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
@@ -465,7 +465,7 @@ local tinkaton={
   pos = {x = 2, y = 4},
   config = {extra = {mult = 15,rounds = 5, cards_debuffed = 20}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -520,7 +520,7 @@ local wiglett={
   pos = {x = 3, y = 4}, 
   config = {extra = {rounds = 4, chips = 60, mult = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.chips, center.ability.extra.mult}}
   end,
   rarity = 1, 

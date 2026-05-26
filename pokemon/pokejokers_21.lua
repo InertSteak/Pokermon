@@ -8,7 +8,7 @@ local elgyem={
   pos = {x = 13, y = 7},
   config = {extra = {top_planets = 5,  current_planet_count = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
@@ -89,7 +89,7 @@ local beheeyem={
   pos = {x = 0, y = 8},
   config = {extra = {top_planets = 3, boosters_to_open = 9}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
@@ -190,7 +190,7 @@ local litwick={
   pos = {x = 1, y = 8},
   config = {extra = {mult = 3, money_minus = 1, sell_goal = 7}, evo_rqmt = 13},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -231,7 +231,7 @@ local lampent={
   pos = {x = 2, y = 8},
   config = {extra = {money_minus = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -270,7 +270,7 @@ local chandelure={
   pos = {x = 3, y = 8},
   config = {extra = {Xmult_multi = 1.3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.sell_cost}}
   end,
   rarity = "poke_safari",
@@ -314,7 +314,7 @@ local golett={
   pos = {x = 2, y = 9},
   config = {extra = {hazard_level = 1, Xmult_multi = 1.2, rounds = 5, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
@@ -366,7 +366,7 @@ local golurk={
   pos = {x = 3, y = 9},
   config = {extra = {hazard_level = 1, interval = 3, Xmult_multi = 1.3, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
@@ -417,7 +417,7 @@ local pawniard={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,}, evo_rqmt = 2},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, self.config.evo_rqmt}}
   end,
   rarity = 3,
@@ -462,7 +462,7 @@ local bisharp={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,kings_destroyed = 0}, evo_rqmt = 3},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.kings_destroyed)}}
   end,
   rarity = "poke_safari",

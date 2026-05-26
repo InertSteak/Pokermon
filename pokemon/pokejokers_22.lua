@@ -6,7 +6,7 @@ local deino={
   pos = {x = 13, y = 9},
   config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = 2,
@@ -40,7 +40,7 @@ local zweilous={
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = "poke_safari",
@@ -73,7 +73,7 @@ local hydreigon={
   pos = {x = 1, y = 10},
   config = {extra = {Xmult = 3.33, Xmult_mod = 0.33}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",
@@ -137,7 +137,7 @@ local bunnelby = {
 	--pos = {x = 26, y = 43},
 	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 6},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
 		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'bunnelby')
 	  return {vars = {num, dem, math.max(self.config.evo_rqmt - card.ability.extra.triggers, 0)}}
@@ -190,7 +190,7 @@ local diggersby = {
 	--pos = {x = 28, y = 43},
 	config = {extra = {num= 1, dem = 2, mult = 0, mult_mod = 2}},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggersby')
 	  return {vars = {num, dem, card.ability.extra.mult, card.ability.extra.mult_mod}}

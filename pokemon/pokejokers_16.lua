@@ -11,7 +11,7 @@ local mantyke={
   pos = {x = 1, y = 5},
   config = {extra = {Xmult_minus = 0.75, rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -60,7 +60,7 @@ local weavile = {
   pos = {x = 4, y = 5},
   config = {extra = {Xmult_mod = 1, Xmult = 1, Xmult2 = 1, money = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult, localize(G.GAME.current_round.sneaselcard and G.GAME.current_round.sneaselcard.rank or "Ace", 'ranks'),
                     card.ability.extra.money}}
   end,
@@ -109,7 +109,7 @@ local magnezone={
   pos = {x = 5, y = 5}, 
   config = {extra = {Xmult_multi = 1.5, Xmult_multi2 = .25}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
@@ -142,7 +142,7 @@ local lickilicky={
   pos = {x = 6, y = 5}, 
   config = {extra = {Xmult_multi = 1.5, subtract = 0.3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi - center.ability.extra.subtract}}
   end,
   rarity = "poke_safari", 
@@ -189,7 +189,7 @@ local rhyperior={
   pos = {x = 7, y = 5},
   config = {extra = {chips = 8}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     end
@@ -230,7 +230,7 @@ local tangrowth={
   pos = {x = 8, y = 5},
   config = {extra = {mult = 15, chips = 75, money_mod = 3, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
@@ -293,7 +293,7 @@ local electivire={
   pos = {x = 9, y = 5}, 
   config = {extra = {money_mod = 2, Xmult_mod = 0.02}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
@@ -333,7 +333,7 @@ local magmortar={
   pos = {x = 10, y = 5}, 
   config = {extra = {mult = 0, mult_mod = 2, Xmult = 1, Xmult_mod = 0.05}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
@@ -383,7 +383,7 @@ local togekiss={
   pos = {x = 11, y = 5},
   config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5, plus_odds = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local num, chip_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.chip_dem, 'togekiss')
     local _, Xmult_dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.Xmult_dem, 'togekiss')
     return {vars = {num, chip_dem, Xmult_dem, card.ability.extra.chips, card.ability.extra.Xmult_multi, card.ability.extra.plus_odds}}
@@ -437,7 +437,7 @@ local yanmega={
   pos = {x = 12, y = 5},
   config = {extra = {mult_mod = 6,chip_mod = 12, num = 1, dem = 3, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'yanmega')
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.chip_mod, num, dem}}
   end,
@@ -480,7 +480,7 @@ local leafeon={
   pos = {x = 13, y = 5},
   config = {extra = {h_size = 7, h_mod = 1, h_size_limit = 7}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.h_size, center.ability.extra.h_mod, center.ability.extra.h_size_limit}}
   end,
   rarity = "poke_safari", 
@@ -524,7 +524,7 @@ local glaceon={
   pos = {x = 0, y = 6},
   config = {extra = {num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'glaceon')
     return {vars = {num, dem}}
   end,
@@ -553,7 +553,7 @@ local gliscor = {
   pos = {x = 1, y = 6},
   config = {extra = {Xmult_multi = 0.25}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local played_Xmult = 1
     if G.hand then
       local suit_count = 0
@@ -599,7 +599,7 @@ local mamoswine={
   pos = {x = 2, y = 6},
   config = {extra = {mult = 15,money = 4,num = 1, dem = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'mamoswine')
     return {vars = {center.ability.extra.mult, center.ability.extra.money, num, dem}}
   end,
@@ -674,7 +674,7 @@ local porygonz={
   pos = {x = 3, y = 6},
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {1 + ((G.GAME.energies_used or 0) * center.ability.extra.Xmult_mod), center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
@@ -740,7 +740,7 @@ local gallade={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_mod = 0.5, e_level = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_poke_double_rainbow_energy', 
                                     vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
@@ -795,7 +795,7 @@ local probopass={
   pos = {x = 5, y = 6},
   config = {extra = {Xmult_multi = 1.5,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -824,7 +824,7 @@ local dusknoir={
   pos = {x = 0, y = 0},
   config = {extra = {retriggers = 1, spec_up = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers, }}
   end,
   rarity = "poke_safari",
@@ -857,7 +857,7 @@ local froslass={
   pos = {x = 7, y = 6},
   config = {extra = {debt = 15}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.debt}}
   end,
   rarity = "poke_safari",
@@ -900,7 +900,7 @@ local rotom={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
     return {vars = {num, dem}}
   end,
@@ -954,7 +954,7 @@ local rotomh={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
     return {vars = {num, dem}}
   end,
@@ -1002,7 +1002,7 @@ local rotomw={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2, money = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
     return {vars = {num, dem, center.ability.extra.money}}
   end,
@@ -1066,7 +1066,7 @@ local rotomf={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -1130,7 +1130,7 @@ local rotomfan={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
     return {vars = {num, dem}}
   end,
@@ -1218,7 +1218,7 @@ local rotomm={
   pos = {x = 0, y = 0},
   config = {extra = {num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'rotom')
     return {vars = {num, dem}}
   end,

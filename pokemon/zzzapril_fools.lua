@@ -4,7 +4,7 @@ local billion_lions = {
   soul_pos = {x = 6, y = 12},
   config = {extra= {Xmult = 1, Xmult_mod = 1, lions = 1000000000}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.lions}}
   end,
   rarity = 4,
@@ -54,7 +54,7 @@ local miror_budicolo = {
   pos = {x = 0, y = 0},
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = 1,
@@ -92,7 +92,7 @@ local spiclops = {
   name = "spiclops",
   config = {extra = {hazard_level = 1, h_size = 4, card_goal = 8, cards_added = 0, planet_goal = 2, hazards_drawn = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local vars = {
       card.ability.extra.hazard_level,
       card.ability.extra.h_size,

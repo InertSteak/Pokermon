@@ -15,7 +15,7 @@ local shaymin={
   pos = {x = 0, y = 0},
   config = {extra = {flowers_scored = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
     end
@@ -61,7 +61,7 @@ local shaymin_sky={
   pos = {x = 0, y = 0},
   config = {extra = {death_used = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower

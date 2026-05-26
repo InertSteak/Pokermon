@@ -9,7 +9,7 @@ local taillow={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 0,mult_mod = 4,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -58,7 +58,7 @@ local swellow={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 0,mult_mod = 6,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, }}
   end,
   rarity = "poke_safari",
@@ -119,7 +119,7 @@ local wingull={
   pos = {x = 0, y = 0},
   config = {extra = {money_mod = 4,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money_mod, center.ability.extra.rounds, localize(G.GAME.current_round.wingullcard and G.GAME.current_round.wingullcard.rank or "Ace", 'ranks')}}
   end,
   rarity = 1,
@@ -157,7 +157,7 @@ local pelipper={
   pos = {x = 0, y = 0},
   config = {extra = {money_mod = 4, water_money = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money_mod, center.ability.extra.water_money, localize(G.GAME.current_round.wingullcard and G.GAME.current_round.wingullcard.rank or "Ace", 'ranks')}}
   end,
   rarity = "poke_safari",
@@ -195,7 +195,7 @@ local ralts={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 5,rounds = 5,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local energized = 0
     local planets = #poke_get_consumeables('Planet')
     if G.jokers then
@@ -243,7 +243,7 @@ local kirlia={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 8, planets_used = 0}, evo_rqmt = 15},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local energized = 0
     local planets = #poke_get_consumeables('Planet')
     if G.jokers then
@@ -297,7 +297,7 @@ local gardevoir={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_mod = 0.3, hand_level = 5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_black_hole'}
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Black Hole"}}
@@ -373,7 +373,7 @@ local shroomish={
   pos = {x = 3, y = 3},
   config = {extra = {hands = 1, d_size = 1, h_size = 1, boss_defeated = 0}, evo_rqmt = 2},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands, center.ability.extra.d_size, center.ability.extra.h_size, math.max(0, self.config.evo_rqmt - center.ability.extra.boss_defeated)}}
   end,
   rarity = 1,
@@ -416,7 +416,7 @@ local breloom={
   pos = {x = 4, y = 3},
   config = {extra = {hands = 2, d_size = 2, h_size = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands, center.ability.extra.d_size, center.ability.extra.h_size}}
   end,
   rarity = 2,
@@ -454,7 +454,7 @@ local slakoth={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 15, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.hands, center.ability.extra.money}}
   end,
   rarity = 2,
@@ -487,7 +487,7 @@ local vigoroth={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult_mod = 0.5, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_mod, 1 + math.max(0, (center.ability.extra.Xmult_mod * G.GAME.current_round.hands_left)), center.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
@@ -517,7 +517,7 @@ local slaking={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 4, hands = 1, }},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.hands}}
   end,
   rarity = "poke_safari",
@@ -548,7 +548,7 @@ local nincada={
   pos = {x = 0, y = 0},
   config = {extra = {chips = 65, chips_minus = 5, num = 1, dem = 2}, },
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'multi_evolution'}
     end
@@ -634,7 +634,7 @@ local ninjask={
   pos = {x = 0, y = 0},
   config = {extra = {mult_mod = 13, num = 1, dem = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'tag_skip', set = 'Tag', specific_vars = {5, 5 * G.GAME.skips}}
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'ninjask')
     return {vars = {center.ability.extra.mult_mod, num, dem}}
@@ -678,7 +678,7 @@ local shedinja={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1, Xmult_mod = 0.5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",
@@ -747,7 +747,7 @@ local makuhita={
   pos = {x = 0, y = 0},
   config = {extra = {hands = 1, rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -774,7 +774,7 @@ local hariyama={
   pos = {x = 0, y = 0},
   config = {extra = {hands = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.hands}}
   end,
   rarity = 2,
@@ -802,7 +802,7 @@ local azurill ={
   pos = {x = 6, y = 4},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -848,7 +848,7 @@ local nosepass={
   pos = {x = 7, y = 4},
   config = {extra = {Xmult_multi = 2.5,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = 2,
@@ -896,7 +896,7 @@ local skitty={
   name = "skitty",
   pos = {x = 0, y = 0},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
 
     local cattype = G.GAME.current_round.cattype or "Grass"
 

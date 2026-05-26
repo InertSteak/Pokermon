@@ -691,7 +691,7 @@ evo_item_in_pool = function(self)
     return false
 end
 
-type_tooltip = function(self, info_queue, center)
+pokermon.type_tooltip = function(self, info_queue, center)
   local percent
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and (get_total_energy(center) ~= 0)) then
       info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {get_total_energy(center), energy_max + (G.GAME.energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
@@ -791,7 +791,7 @@ apply_type_sticker = function(card, sticker_type)
         unlocked = true, 
         discovered = true,
         loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
+          pokermon.type_tooltip(self, info_queue, center)
           return lv(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
@@ -805,7 +805,7 @@ apply_type_sticker = function(card, sticker_type)
         unlocked = true,
         discovered = true,
         loc_vars = function(self, info_queue, center)
-          type_tooltip(self, info_queue, center)
+          pokermon.type_tooltip(self, info_queue, center)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end

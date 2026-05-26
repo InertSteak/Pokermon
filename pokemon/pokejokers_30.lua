@@ -18,7 +18,7 @@ local dreepy={
   pos = {x = 11, y = 5},
   config = {extra = {money = 1, straight_flush_played = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money}}
   end,
   designer = "Lemmanade",
@@ -71,7 +71,7 @@ local drakloak={
   pos = {x = 12, y = 5},
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
@@ -127,7 +127,7 @@ local dragapult={
   pos = {x = 13, y = 5},
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -189,7 +189,7 @@ local dreepy_dart={
   config = {extra = {money = 1, suit = "Spades"}},
   no_collection = true,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
   designer = "Lemmanade",
@@ -253,7 +253,7 @@ local wyrdeer={
   pos = {x = 0, y = 8},
   config = {extra = {scry = 2, scry_plus = 1, scry_added = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.scry, center.ability.extra.scry_plus}}
   end,
   rarity = "poke_safari",
@@ -328,7 +328,7 @@ local kleavor={
   pos = {x = 1, y = 8},
   config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil
       info_queue[#info_queue+1] = G.P_CENTERS.e_holo

@@ -24,3 +24,6 @@ HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return p
 
 ---@deprecated use `poke_get_evo_overrides` instead
 PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
+
+---@deprecated use `pokermon.type_tooltip` instead
+type_tooltip = pokermon.type_tooltip

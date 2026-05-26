@@ -10,7 +10,7 @@ local litleo={
   pos = {x = 3, y = 1},
   config = {extra = {chips = 70,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -42,7 +42,7 @@ local pyroar={
   pos = {x = 4, y = 1},
   config = {extra = {chips = 90}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2,
