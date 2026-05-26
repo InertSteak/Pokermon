@@ -42,27 +42,27 @@ pokermon.energy.is_energizable = function(card)
   return false
 end
 
-can_increase_energy = function(card, etype)
+pokermon.energy.can_increase_energy = function(card, etype)
   if pokermon_config.unlimited_energy or card.config.center.no_energy_limit or (etype and etype == "Bird") then return true end
   return get_total_energy(card) < pokermon.energy.max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
 end
 
 -- Checking the type compatibility flowchart
-energy_matches = function(card, etype, include_colorless)
+pokermon.energy.energy_matches = function(card, etype, include_colorless)
   if pokermon.get_type(card) and (etype == "Trans" or etype == "Bird") then return true
   elseif pokermon.get_type(card) and etype == "Colorless" and include_colorless then return true
   elseif pokermon.is_type(card, etype) then return true end
   return false
 end
 
-can_apply_energy = function(card, etype)
-  return energy_matches(card, etype, true) and pokermon.energy.is_energizable(card) and can_increase_energy(card, etype)
+pokermon.energy.can_apply_energy = function(card, etype)
+  return pokermon.energy.energy_matches(card, etype, true) and pokermon.energy.is_energizable(card) and pokermon.energy.can_increase_energy(card, etype)
 end
 
 -- can_use and use are tied to energy cards proper
 energy_can_use = function(self, card)
   -- So we've trimmed down the energy checks to about four different functions that all culminate here
-  return poke_find_leftmost_or_highlighted(function(joker) return can_apply_energy(joker, self.etype) end) or false
+  return poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end) or false
 end
 
 energy_use = function(self, card, area, copier, exclude_spoon)
@@ -70,14 +70,14 @@ energy_use = function(self, card, area, copier, exclude_spoon)
   play_sound('poke_energy_use', 1, 0.5)
   if not exclude_spoon then set_spoon_item(card) end
   -- check if valid target or not
-  local choice = poke_find_leftmost_or_highlighted(function(joker) return can_apply_energy(joker, self.etype) end)
+  local choice = poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
   if choice then increment_energy(choice, self.etype) end
 end
 
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
 energy_increase = function(card, etype, amount, silent)
   if not amount then amount = 1 end
-  if can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
+  if pokermon.energy.can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
       (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - get_total_energy(card) then
     increment_energy(card, etype, amount, silent)
   end
@@ -90,7 +90,7 @@ increment_energy = function(card, etype, amount, silent)
   -- checking if the colorless penalty applies
   local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- the regular energy increment
-  if (energy_matches(card, etype, false)) then
+  if (pokermon.energy.energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.energy_count = card.ability.extra.energy_count and (card.ability.extra.energy_count + amount) or amount
       energize(card, etype, false, silent, amount)

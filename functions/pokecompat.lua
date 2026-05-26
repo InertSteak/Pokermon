@@ -198,3 +198,15 @@ energy_values = pokermon.energy.values
 
 ---@deprecated use `pokermon.energy.values` instead
 energy_max = pokermon.energy.max
+
+---@deprecated use `pokermon.energy.is_energizable` instead
+is_energizable = pokermon.energy.is_energizable
+
+---@deprecated use `pokermon.energy.can_increase_energy` instead
+can_increase_energy = pokermon.energy.can_increase_energy
+
+---@deprecated use `pokermon.energy.energy_matches` instead
+energy_matches = pokermon.energy.energy_matches
+
+---@deprecated use `pokermon.energy.can_apply_energy` instead
+can_apply_energy = pokermon.energy.can_apply_energy
