@@ -742,7 +742,7 @@ pokermon.type_tooltip = function(self, info_queue, center)
   end
 end
 
-poke_set_type_badge = function(self, card, badges)
+pokermon.set_type_badge = function(self, card, badges)
   local ptype = pokermon.get_type(card)
   if ptype then
     local lower_ptype = string.lower(ptype)
@@ -796,7 +796,7 @@ apply_type_sticker = function(card, sticker_type)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end
-          poke_set_type_badge(self, card, badges)          
+          pokermon.set_type_badge(self, card, badges)          
         end,
       }, true)
     else
@@ -809,7 +809,7 @@ apply_type_sticker = function(card, sticker_type)
         end,
         set_badges = function(self, card, badges)
           if badge then badge(self, card, badges) end
-          poke_set_type_badge(self, card, badges)
+          pokermon.set_type_badge(self, card, badges)
         end,
       }, true)
     end

@@ -114,5 +114,8 @@ evo_item_use_total = pokermon.evo_item_use_total
 ---@deprecated use `pokermon.evo_item_in_pool` instead
 evo_item_in_pool = pokermon.evo_item_in_pool
 
+---@deprecated use `pokermon.set_type_badge` instead
+poke_set_type_badge = pokermon.set_type_badge
+
 ---@deprecated use `pokermon.type_tooltip` instead
 type_tooltip = pokermon.type_tooltip

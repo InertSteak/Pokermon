@@ -16,7 +16,7 @@ pokermon.load_pokemon = function(item)
       item.config.extra = {ptype = item.ptype}
     end
   end
-  item.set_badges = poke_set_type_badge
+  item.set_badges = pokermon.set_type_badge
   if item.item_req then
     if item.config and item.config.extra then
       item.config.extra.item_req = item.item_req
