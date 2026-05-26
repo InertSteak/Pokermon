@@ -146,3 +146,6 @@ get_poke_target_card_enhancements = pokermon.get_target_card_enhancements
 
 ---@deprecated use `pokermon.add_target_cards_to_vars` instead
 add_target_cards_to_vars = pokermon.add_target_cards_to_vars
+
+---@deprecated use `pokermon.find_cards_by_ptype` instead
+find_other_poke_or_energy_type = pokermon.find_cards_by_ptype

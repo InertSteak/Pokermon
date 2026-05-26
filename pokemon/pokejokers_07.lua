@@ -316,7 +316,7 @@ local weird_tree={
   custom_pool_func = true,
   calculate = function(self, card, context)
     return pokermon.scaling_evo(self, card, context, "j_poke_sudowoodo", 
-                      ((not pokermon.is_type(card, "Grass")) or find_other_poke_or_energy_type(card, "Water", true) > 0) and 1 or 0, 1, localize("poke_transform_success"))
+                      ((not pokermon.is_type(card, "Grass")) or pokermon.find_cards_by_ptype(card, "Water", true) > 0) and 1 or 0, 1, localize("poke_transform_success"))
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then

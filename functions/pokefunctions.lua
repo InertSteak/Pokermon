@@ -1009,7 +1009,7 @@ pokermon.add_target_cards_to_vars = function(vars, targets)
   end
 end
 
-find_other_poke_or_energy_type = function(card, poke_type, count_self)
+pokermon.find_cards_by_ptype = function(card, poke_type, count_self)
   local energy = nil
   local type_count = 0
   if string.lower(poke_type) == "dark" then
