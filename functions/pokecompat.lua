@@ -27,6 +27,9 @@ PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return 
 
 ------------ DE-GLOBALIZING REFACTOR --------------
 
+---@deprecated use `pokermon.extended_family` instead
+extended_family = pokermon.extended_family
+
 ---@deprecated use `pokermon.find_pokemon_type` instead
 type_sticker_applied = pokermon.type_sticker_applied
 

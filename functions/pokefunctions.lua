@@ -1,4 +1,4 @@
-extended_family = {
+pokermon.extended_family = {
   tauros = {"miltank"},
   unown = {"ruins_of_alph", "unown_swarm"},
   luvdisc = {{item = true, name = "heartscale"}},
@@ -547,7 +547,7 @@ pokermon.get_family_keys = function(card)
   else
     table.insert(keys, full_prefix..center.name)
   end
-  for k, v in pairs(extended_family) do
+  for k, v in pairs(pokermon.extended_family) do
     if k == center.name then
       for _, y in pairs(v) do
         if type(y) == "table" then
