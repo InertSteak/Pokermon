@@ -583,7 +583,7 @@ local lileep={
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_cradily", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"rank", "eight", "hand_size", "sell_value", "chips", "trigger_evo"},
 }
 -- Cradily 346
@@ -660,7 +660,7 @@ local cradily={
       end
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "eight", "hand_size", "sell_value", "chips", "economy"},
 }
 -- Anorith 347
@@ -722,7 +722,7 @@ local anorith={
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_armaldo", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "trigger_evo"},
 }
 -- Armaldo 348
@@ -798,7 +798,7 @@ local armaldo={
       card.ability.extra.ancient_count = 0
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "seven", "mult", "chance", "generation", "destroy_card", "enhancements", "xmult"},
 }
 -- Feebas 349

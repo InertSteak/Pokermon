@@ -332,7 +332,7 @@ local relicanth={
       return context.destroying_card == rightmost and not SMODS.has_enhancement(context.destroying_card, 'm_stone')
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "four", "chips", "modify_card", "enhancements", "economy", "xmult", "destroy_card"},
 }
 -- Luvdisc 370

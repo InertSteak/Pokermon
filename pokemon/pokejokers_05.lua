@@ -927,7 +927,7 @@ local omanyte={
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_omastar", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "three", "generation", "tarot", "item", "economy", "trigger_evo"},
 }
 -- Omastar 139
@@ -1008,7 +1008,7 @@ local omastar={
       card.ability.extra.tag_created = nil
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "three", "generation", "tarot", "item", "economy", "tag"},
 }
 -- Kabuto 140
@@ -1066,7 +1066,7 @@ local kabuto={
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_kabutops", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "two", "chips", "modify_card", "perma_bonus", "trigger_evo"},
 }
 -- Kabutops 141
@@ -1132,7 +1132,7 @@ local kabutops={
       card.ability.extra.ancient_count = 0
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "two", "chips", "modify_card", "perma_bonus", "retrigger"},
 }
 -- Aerodactyl 142
@@ -1207,7 +1207,7 @@ local aerodactyl={
       }
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   megas = {"mega_aerodactyl"},
   attributes = {"ancient", "rank", "ace", "xmult", "scaling", "modify_card", "enhancements", "reset"},
 }

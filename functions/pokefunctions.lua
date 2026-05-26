@@ -1133,7 +1133,7 @@ pokermon.drain_value = function(card, target, amount, one_way)
   end
 end
 
-fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+pokermon.fossil_generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   if not full_UI_table.name then
     full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
   end

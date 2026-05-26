@@ -161,3 +161,6 @@ poke_total_chips = pokermon.total_chips
 
 ---@deprecated use `pokermon.drain_value` instead
 poke_drain = pokermon.drain_value
+
+---@deprecated use `pokermon.fossil_generate_ui` instead
+fossil_generate_ui = pokermon.fossil_generate_ui
