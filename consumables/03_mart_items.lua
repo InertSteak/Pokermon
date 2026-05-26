@@ -155,7 +155,7 @@ local waterstone = {
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
       if conv_card.ability.name == 'Bonus' then
-        local bonus = math.min(self.config.max_chips, poke_total_chips(conv_card))
+        local bonus = math.min(self.config.max_chips, pokermon.total_chips(conv_card))
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
       else

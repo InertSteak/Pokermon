@@ -221,7 +221,7 @@ local suicune={
       if context.before then
         for k, v in pairs(context.scoring_hand) do
           v.ability.perma_bonus = v.ability.perma_bonus or 0
-          v.ability.perma_bonus = v.ability.perma_bonus + math.min(card.ability.extra.chips_max, poke_total_chips(v))
+          v.ability.perma_bonus = v.ability.perma_bonus + math.min(card.ability.extra.chips_max, pokermon.total_chips(v))
         end
         
         return {

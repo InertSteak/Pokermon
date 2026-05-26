@@ -618,7 +618,7 @@ local metagross={
       }
     end
     if context.individual and context.cardarea == G.play and context.scoring_name == "Four of a Kind" then
-      local total_chips = poke_total_chips(context.other_card)
+      local total_chips = pokermon.total_chips(context.other_card)
       local Xmult = (total_chips)^(1 / 4)
       if Xmult > 0 then
         return {

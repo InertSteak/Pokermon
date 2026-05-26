@@ -916,7 +916,7 @@ jd_def["j_poke_wigglytuff"] = {
                     if scoring_card:is_suit("Spades") then
                         local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                         mult = mult + card.ability.extra.mult * retriggers
-                        chips = chips + (card.ability.extra.chips + poke_total_chips(scoring_card)) * retriggers
+                        chips = chips + (card.ability.extra.chips + pokermon.total_chips(scoring_card)) * retriggers
                     end
                 end
             end

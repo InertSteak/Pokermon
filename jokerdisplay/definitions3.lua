@@ -1814,7 +1814,7 @@ jd_def["j_poke_metagross"] = {
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text == 'Four of a Kind' then
       for _, scoring_card in pairs(scoring_hand) do
-        local total_chips = poke_total_chips(scoring_card)
+        local total_chips = pokermon.total_chips(scoring_card)
         local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         x_mult = x_mult * (total_chips ^ (retriggers/4))
       end

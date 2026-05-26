@@ -155,3 +155,6 @@ faint_baby_poke = pokermon.faint_baby_poke
 
 ---@deprecated use `pokermon.volatile_active` instead
 volatile_active = pokermon.volatile_active
+
+---@deprecated use `pokermon.total_chips` instead
+poke_total_chips = pokermon.total_chips

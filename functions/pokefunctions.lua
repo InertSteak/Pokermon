@@ -1088,7 +1088,7 @@ pokermon.volatile_active = function(self, card, direction)
   return active
 end
 
-poke_total_chips = function(card)
+pokermon.total_chips = function(card)
   local total_chips = (card.ability.bonus) + (card.ability.perma_bonus or 0)
   if card.ability.effect ~= 'Stone Card' and not card.config.center.replace_base_card then
     total_chips = total_chips + (card.base.nominal)

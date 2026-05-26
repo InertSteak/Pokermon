@@ -397,7 +397,7 @@ local wigglytuff={
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card:is_suit(card.ability.extra.suit) then
       if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-        local total_chips = poke_total_chips(context.other_card) 
+        local total_chips = pokermon.total_chips(context.other_card) 
         return {
           message = "Tuff!", 
           colour = G.C.MULT,

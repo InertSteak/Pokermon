@@ -193,7 +193,7 @@ calc_function = function(card)
     local chips = 0
     if G.scry_view then
         for k, v in pairs(G.scry_view.cards) do
-            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+            chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
     else
@@ -213,7 +213,7 @@ calc_function = function(card)
     local chips = 0
     if G.scry_view then
         for k, v in pairs(G.scry_view.cards) do
-            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+            chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
     else
