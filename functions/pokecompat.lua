@@ -170,3 +170,6 @@ generate_pickup_item_key = pokermon.generate_pickup_item_key
 
 ---@deprecated use `pokermon.set_sprites` instead
 poke_set_sprites = pokermon.set_sprites
+
+---@deprecated use `pokermon.set_sprite_ability` instead
+poke_set_sprite_ability = pokermon.set_sprite_ability

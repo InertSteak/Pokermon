@@ -61,7 +61,7 @@ pokermon.load_pokemon = function(item)
       if prev_set_ability then
         prev_set_ability(self, card, initial, delay_sprites)
       end
-      poke_set_sprite_ability(self, card, initial, delay_sprites)
+      pokermon.set_sprite_ability(self, card, initial, delay_sprites)
     end
   end
   if item.name == "articuno" then poke_debug(item.atlas) end

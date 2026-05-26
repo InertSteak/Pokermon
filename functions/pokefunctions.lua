@@ -1217,7 +1217,7 @@ pokermon.set_sprites = function(self, card, front)
   end
 end
 
-poke_set_sprite_ability = function(self, card, initial, delay_sprites)
+pokermon.set_sprite_ability = function(self, card, initial, delay_sprites)
   if initial and card and card.ability and card.ability.extra and not card.ability.extra.loaded_pos then
     card.ability.extra.loaded_pos = card.config.center.pos
   end
