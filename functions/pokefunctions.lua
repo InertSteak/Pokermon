@@ -575,12 +575,12 @@ pokermon.get_family_keys = function(card)
       table.insert(keys, form)
     end
   end
-  local evo_item_keys = get_evo_item_keys(card)
+  local evo_item_keys = pokermon.get_evo_item_keys(card)
   table.append(keys, evo_item_keys)
   return keys
 end
 
-get_evo_item_keys = function(card)
+pokermon.get_evo_item_keys = function(card)
   local keys = {}
   if card and card.config and card.config.center and card.config.center.item_req then
     local prefix = card.config.center.poke_custom_prefix
@@ -600,7 +600,7 @@ get_evo_item_keys = function(card)
   return keys
 end
 
-evo_item_use = function(self, card, area, copier)
+pokermon.evo_item_use = function(self, card, area, copier)
     local applied = false
     local evolve = false
     for k, v in pairs(G.jokers.cards) do
@@ -626,7 +626,7 @@ evo_item_use = function(self, card, area, copier)
     return evolve
 end
 
-highlighted_evo_item = function(self, card, area, copier)
+pokermon.highlighted_evo_item = function(self, card, area, copier)
     local evolve = false
     if not G.jokers.highlighted or #G.jokers.highlighted ~= 1 then return false end
     local choice = G.jokers.highlighted[1]
@@ -650,7 +650,7 @@ highlighted_evo_item = function(self, card, area, copier)
     return evolve
 end
 
-function is_evo_item_for(self, card)
+function pokermon.is_evo_item_for(self, card)
   if not card.ability or type(card.ability.extra) ~= "table" or card.ability.extra.evolve then return false end
 
   if type(card.ability.extra.item_req) == "table" then
@@ -663,18 +663,18 @@ function is_evo_item_for(self, card)
   return card.ability.extra.item_req == self.name
 end
 
-evo_item_use_total = function(self, card, area, copier)
+pokermon.evo_item_use_total = function(self, card, area, copier)
     local evolve = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      evolve = highlighted_evo_item(self, card, area, copier)
+      evolve = pokermon.highlighted_evo_item(self, card, area, copier)
     end
     if not evolve then
-      evolve = evo_item_use(self, card, area, copier)
+      evolve = pokermon.evo_item_use(self, card, area, copier)
     end
     return evolve
 end
 
-evo_item_in_pool = function(self)
+pokermon.evo_item_in_pool = function(self)
     if G.jokers then
       for k, v in pairs(G.jokers.cards) do
         if v.ability and v.ability.extra and type(v.ability.extra) == "table" and type(v.ability.extra.item_req) ~= "table" and v.ability.extra.item_req == self.name then

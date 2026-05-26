@@ -88,7 +88,7 @@ local dubious_disc = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     return G.hand.cards and #G.hand.cards > 0
@@ -102,9 +102,9 @@ local dubious_disc = {
         G.hand.cards[i]:set_ability(enhancement, nil, true)
       end
       juice_flip_hand(card, true)
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)

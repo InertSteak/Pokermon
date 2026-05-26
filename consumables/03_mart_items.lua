@@ -93,7 +93,7 @@ local firestone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 4 then
@@ -114,9 +114,9 @@ local firestone = {
       poke_remove_card(target, card)
       poke_unhighlight_cards()
       
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -141,7 +141,7 @@ local waterstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -164,9 +164,9 @@ local waterstone = {
       juice_flip(card, true)
       delay(0.5)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -190,7 +190,7 @@ local thunderstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -218,9 +218,9 @@ local thunderstone = {
       end
       playing_card_joker_effects(cards_added)
       poke_remove_card(selected, card)
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -246,7 +246,7 @@ local leafstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     return G.hand.cards and #G.hand.cards > 0
@@ -262,9 +262,9 @@ local leafstone = {
       end
       juice_flip_hand(card, true)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -300,7 +300,7 @@ local moonstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
@@ -318,9 +318,9 @@ local moonstone = {
         poke_nope(card)
       end
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -345,7 +345,7 @@ local sunstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
@@ -363,9 +363,9 @@ local sunstone = {
       end
       juice_flip(card, true)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -392,7 +392,7 @@ local shinystone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -413,9 +413,9 @@ local shinystone = {
       return true end }))
 
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -463,7 +463,7 @@ local duskstone = {
     end
     local money = math.min(card.ability.extra.max, card.ability.extra.money * joker_count)
     ease_dollars(money)
-    evo_item_use_total(self, card, area, copier)
+    pokermon.evo_item_use_total(self, card, area, copier)
   end,
   calculate = function(self, card, context)
     if context.setting_blind and not context.blueprint then
@@ -522,7 +522,7 @@ local dawnstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     return card.ability.extra.hand_played
@@ -552,9 +552,9 @@ local dawnstone = {
         end
       end
       
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   calculate = function(self, card, context)
@@ -588,7 +588,7 @@ local icestone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
@@ -611,9 +611,9 @@ local icestone = {
       end
 
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -637,7 +637,7 @@ local linkcable = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 2 then
@@ -662,9 +662,9 @@ local linkcable = {
       delay(0.5)
       poke_unhighlight_cards()
       
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -774,7 +774,7 @@ local kingsrock = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -798,9 +798,9 @@ local kingsrock = {
       delay(0.5)
       juice_flip(card, true)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -824,7 +824,7 @@ local upgrade = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
@@ -842,9 +842,9 @@ local upgrade = {
       end
       juice_flip(card, true)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -870,7 +870,7 @@ local hardstone = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -892,9 +892,9 @@ local hardstone = {
       juice_flip(card, true)
       delay(0.5)
       poke_unhighlight_cards()
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)
@@ -947,7 +947,7 @@ local prismscale = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and is_evo_item_for(self, G.jokers.highlighted[1]) then
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
       return true
     end
     if G.hand.highlighted and #G.hand.highlighted == 1 then
@@ -977,9 +977,9 @@ local prismscale = {
       juice_flip_table(card, cards_held, true, limit)
       poke_unhighlight_cards()
       
-      evo_item_use_total(self, card, area, copier)
+      pokermon.evo_item_use_total(self, card, area, copier)
     else
-      highlighted_evo_item(self, card, area, copier)
+      pokermon.highlighted_evo_item(self, card, area, copier)
     end
   end,
   in_pool = function(self)

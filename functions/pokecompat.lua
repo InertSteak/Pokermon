@@ -25,7 +25,7 @@ HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return p
 ---@deprecated use `poke_get_evo_overrides` instead
 PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
 
--- DE-GLOBALIZING REFACTOR
+------------ DE-GLOBALIZING REFACTOR --------------
 
 ---@deprecated use `pokermon.find_pokemon_type` instead
 type_sticker_applied = pokermon.type_sticker_applied
@@ -95,6 +95,24 @@ get_previous_evo_from_center = pokermon.get_previous_evo_from_center
 
 ---@deprecated use `pokermon.get_family_keys` instead
 get_family_keys = pokermon.get_family_keys
+
+---@deprecated use `pokermon.get_evo_item_keys` instead
+get_evo_item_keys = pokermon.get_evo_item_keys
+
+---@deprecated use `pokermon.evo_item_use` instead
+evo_item_use = pokermon.evo_item_use
+
+---@deprecated use `pokermon.highlighted_evo_item` instead
+highlighted_evo_item = pokermon.highlighted_evo_item
+
+---@deprecated use `pokermon.is_evo_item_for` instead
+is_evo_item_for = pokermon.is_evo_item_for
+
+---@deprecated use `pokermon.evo_item_use_total` instead
+evo_item_use_total = pokermon.evo_item_use_total
+
+---@deprecated use `pokermon.evo_item_in_pool` instead
+evo_item_in_pool = pokermon.evo_item_in_pool
 
 ---@deprecated use `pokermon.type_tooltip` instead
 type_tooltip = pokermon.type_tooltip
