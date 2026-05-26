@@ -164,3 +164,6 @@ poke_drain = pokermon.drain_value
 
 ---@deprecated use `pokermon.fossil_generate_ui` instead
 fossil_generate_ui = pokermon.fossil_generate_ui
+
+---@deprecated use `pokermon.generate_pickup_item_key` instead
+generate_pickup_item_key = pokermon.generate_pickup_item_key

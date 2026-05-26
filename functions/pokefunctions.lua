@@ -1175,7 +1175,7 @@ pokermon.fossil_generate_ui = function(self, info_queue, card, desc_nodes, speci
   end
 end
 
-generate_pickup_item_key = function(seed)
+pokermon.generate_pickup_item_key = function(seed)
   local item_key = 'c_poke_transformation'
   local item_chance = pseudorandom(seed)
   if item_chance < .34 then item_key = nil
