@@ -120,7 +120,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
   local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- vanilla jokers aren't coded well so we're knocking them out first
   if energizable_vanilla[center.name] then
-    energize_other(card, etype, center, c_penalty, amount)
+    pokermon.energy.energize_other(card, etype, center, c_penalty, amount)
   -- base pokermon case
   elseif type(card.ability.extra) == "table" then
     for name, _ in pairs(pokermon.energy.values) do
@@ -153,7 +153,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
     end
   -- everything else
   else
-    energize_other(card, etype, center, c_penalty, amount)
+    pokermon.energy.energize_other(card, etype, center, c_penalty, amount)
   end
   if not silent then
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
@@ -161,19 +161,19 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
 end
 
 -- For Vanilla Jokers and other non-Pokermon Mods
-energize_other = function(card, etype, center, colorless_penalty, amount)
+pokermon.energy.energize_other = function(card, etype, center, colorless_penalty, amount)
   if not amount then amount = 1 end
   if not center then center = card.config.center end
   -- We're just gonna make the vanilla jokers their own special little case...
   if energizable_vanilla[center.name] then
     -- get the relevant vanilla joker value from the center and ability and energy_value type
     local field, value = energizable_vanilla[center.name][1], energizable_vanilla[center.name][2]
-    energize_vanilla_values(card, center, field, value, colorless_penalty, amount)
+    pokermon.energy.energize_vanilla_values(card, center, field, value, colorless_penalty, amount)
     -- this checks if a second value needs to be energized
     local field2, value2
     if energizable_vanilla[center.name][3] then
       field2, value2 = energizable_vanilla[center.name][3].field, energizable_vanilla[center.name][3].value
-      energize_vanilla_values(card, center, field2, value2, colorless_penalty, amount)
+      pokermon.energy.energize_vanilla_values(card, center, field2, value2, colorless_penalty, amount)
     end
     for k, _ in pairs(pokermon.energy.values) do
       local increase = pokermon.energy.values[k] * amount / colorless_penalty
@@ -198,7 +198,7 @@ energize_other = function(card, etype, center, colorless_penalty, amount)
   end
 end
 
-energize_vanilla_values = function(card, center, field, value, colorless_penalty, amount)
+pokermon.energy.energize_vanilla_values = function(card, center, field, value, colorless_penalty, amount)
   if not amount then amount = 1 end
   if not center then center = card.config.center end
   -- checking if the target value is in ability or ability.extra
