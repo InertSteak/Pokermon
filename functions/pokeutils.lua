@@ -262,7 +262,7 @@ pokermon.vary_rank = function(card, decrease, seed, immediate)
   end
 end
 
-poke_get_adjacent_jokers = function(card)
+pokermon.get_adjacent_jokers = function(card)
   local jokers = {}
   if #G.jokers.cards > 1 then
     local pos = 0

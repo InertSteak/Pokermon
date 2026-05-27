@@ -257,3 +257,6 @@ poke_find_leftmost_or_highlighted = pokermon.find_leftmost_or_highlighted
 
 ---@deprecated use `pokermon.vary_rank` instead
 poke_vary_rank = pokermon.vary_rank
+
+---@deprecated use `pokermon.get_adjacent_jokers` instead
+poke_get_adjacent_jokers = pokermon.get_adjacent_jokers

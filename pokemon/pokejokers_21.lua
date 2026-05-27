@@ -216,7 +216,7 @@ local litwick={
       }
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local adjacent = poke_get_adjacent_jokers(card)
+      local adjacent = pokermon.get_adjacent_jokers(card)
       for _, v in ipairs(adjacent) do
         pokermon.drain_value(card, v, card.ability.extra.money_minus)
       end

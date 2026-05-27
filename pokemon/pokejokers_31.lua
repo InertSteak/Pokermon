@@ -446,7 +446,7 @@ local dolliv = {
       })
       card:set_cost()
       
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
         SMODS.scale_card(adjacent_jokers[i], {
           ref_table = adjacent_jokers[i].ability,

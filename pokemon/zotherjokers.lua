@@ -300,7 +300,7 @@ local mystery_egg = {
   calculate = function(self, card, context)
     if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
       local adjacent = 0
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
         if is_egg_helper(adjacent_jokers[i]) then adjacent = adjacent + 1 end
       end
@@ -866,7 +866,7 @@ local daycare={
   eternal_compat = false,
   calculate = function(self, card, context)
     if context.selling_self and not context.blueprint then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       local breedable = 0
       for i = 1, #adjacent_jokers do
         local adj_joker = adjacent_jokers[i]
@@ -897,7 +897,7 @@ local daycare={
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       local breedable = 0
       for i = 1, #adjacent_jokers do
         local adj_joker = adjacent_jokers[i]

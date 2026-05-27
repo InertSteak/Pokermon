@@ -978,7 +978,7 @@ local magneton={
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      local adjacent_jokers = poke_get_adjacent_jokers(center)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(center)
       for i = 1, #adjacent_jokers do
         if pokermon.is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
@@ -998,7 +998,7 @@ local magneton={
     if context.cardarea == G.play and context.individual and not context.other_card.debuff and not context.end_of_round and
        SMODS.has_enhancement(context.other_card, 'm_steel') then
         local adjacent = 0
-        local adjacent_jokers = poke_get_adjacent_jokers(card)
+        local adjacent_jokers = pokermon.get_adjacent_jokers(card)
         for i = 1, #adjacent_jokers do
           if pokermon.is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
         end

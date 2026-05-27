@@ -1868,7 +1868,7 @@ calc_function = function(card)
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
         if pokermon.is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
