@@ -6,7 +6,7 @@ local create_energy = function(self, card)
   if match_type > .50 and #G.jokers.cards > 0 then
     local energy_types = {}
     for l, v in pairs(G.jokers.cards) do
-      local match = matching_energy(v)
+      local match = pokermon.energy.get_matching_energy(v)
       if match and not next(SMODS.find_card(match)) then
         table.insert(energy_types, match)
       end

@@ -23,7 +23,7 @@ local cacnea = {
   calculate = function(self, card, context)
     if context.remove_playing_cards then
       for _, removed_card in ipairs(context.removed) do
-        local earned = ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
+        local earned = pokermon.ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = '$'..earned, colour = G.C.MONEY})
       end
     end
@@ -62,7 +62,7 @@ local cacturne = {
   calculate = function(self, card, context)
     if context.remove_playing_cards then
       for _, removed_card in ipairs(context.removed) do
-        local earned = ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
+        local earned = pokermon.ease_poke_dollars(card, "cacnea", card.ability.extra.money_mod)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = '$'..earned, colour = G.C.MONEY})
       end
     end
@@ -150,7 +150,7 @@ local altaria={
             message_colour = G.C.CHIPS
           })
           if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#pokermon.find_pokemon_type("Dragon", card) > 0) then
-            local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
+            local earned = pokermon.ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -635,7 +635,7 @@ local cradily={
           
           if highest > 0 then
             card:juice_up()
-            ease_poke_dollars(card, "cradily", highest)
+            pokermon.ease_poke_dollars(card, "cradily", highest)
           end
         end
       end

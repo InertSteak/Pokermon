@@ -37,7 +37,7 @@ local gimmighoul={
                 return true
             end
         }))
-      local earned = ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
       return {
         dollars = earned,
         card = card
@@ -120,7 +120,7 @@ local gimmighoulr={
     elseif money_chance < .9999 then amount_earned = 100
     else amount_earned = 200 end
   
-    ease_poke_dollars(card, "gimmir", amount_earned)
+    pokermon.ease_poke_dollars(card, "gimmir", amount_earned)
     remove(self, card, {})
   end,
   set_ability = function(self, card, initial, delay_sprites)

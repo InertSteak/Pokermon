@@ -197,7 +197,7 @@ local nightmare = {
   use = function(self, card)
     local choice = poke_find_leftmost_or_highlighted()
     if choice then
-      local energy = matching_energy(choice, true) or "c_poke_colorless_energy"
+      local energy = pokermon.energy.get_matching_energy(choice, true) or "c_poke_colorless_energy"
       if energy then
         local max = (energy == "c_poke_bird_energy") and 1 or 2
         for _ = 1, max do

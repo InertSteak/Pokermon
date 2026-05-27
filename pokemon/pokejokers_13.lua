@@ -307,7 +307,7 @@ local relicanth={
     
         if card.ability.extra.ancient_count > 2 then
           draw_card(G.deck, G.hand, nil, nil, nil, bottom_card)
-          ease_poke_dollars(card, "relicanth", card.ability.extra.money)
+          pokermon.ease_poke_dollars(card, "relicanth", card.ability.extra.money)
         end
       end
       if context.after then

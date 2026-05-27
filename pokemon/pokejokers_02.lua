@@ -939,7 +939,7 @@ local meowth={
     return pokermon.scaling_evo(self, card, context, "j_poke_persian", card.ability.extra.money, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
+    return pokermon.ease_poke_dollars(card, "meowth", card.ability.extra.money, true)
 	end,
   attributes = {"economy", "enhancements", "scaling", "scaling_evo"},
 }
@@ -980,7 +980,7 @@ local persian={
     if SMODS.pseudorandom_probability(card, 'persian', card.ability.extra.num, card.ability.extra.dem, 'persian') then
       payout = payout * 2
     end
-    return ease_poke_dollars(card, "persian", payout, true)
+    return pokermon.ease_poke_dollars(card, "persian", payout, true)
 	end,
   attributes = {"economy", "enhancements", "scaling", "chance"},
 }
@@ -1003,7 +1003,7 @@ local psyduck={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.joker_main and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face() then
-      local earned = ease_poke_dollars(card, "psyduck", card.ability.extra.money)
+      local earned = pokermon.ease_poke_dollars(card, "psyduck", card.ability.extra.money)
       return {
         message = '$'..earned,
         colour = G.C.MONEY
@@ -1046,7 +1046,7 @@ local golduck={
       }
     end
     if context.joker_main and context.cardarea == G.jokers and context.scoring_hand and context.full_hand and #context.full_hand == 1 and context.scoring_hand[1]:is_face()  then
-      local earned = ease_poke_dollars(card, "golduck", card.ability.extra.money)
+      local earned = pokermon.ease_poke_dollars(card, "golduck", card.ability.extra.money)
       return {
         message = '$'..earned,
         colour = G.C.MONEY

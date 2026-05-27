@@ -133,19 +133,19 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
           addition = addition * (energy_count + c_energy_count / 2)
           card.ability.extra[name] = data + (center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
           updated_mod = card.ability.extra[name]
-          rounded, frac = round_energy_value(card.ability.extra[name], name)
+          rounded, frac = pokermon.energy.round_value(card.ability.extra[name], name)
           card.ability.extra[name] = rounded
           if frac then
-            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
+            pokermon.energy.set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
             frac = nil
           end
         else
           card.ability.extra[name] = data + (center.config.extra[name] * addition / (etype == "Colorless" and c_penalty or 1)) * (card.ability.extra.escale or 1) * amount
           updated_mod = card.ability.extra[name]
-          rounded, frac = round_energy_value(card.ability.extra[name], name)
+          rounded, frac = pokermon.energy.round_value(card.ability.extra[name], name)
           card.ability.extra[name] = rounded
           if frac then
-            set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
+            pokermon.energy.set_frac(card, frac, name, rounded > 0, previous_mod and (updated_mod/previous_mod))
             frac = nil
           end
         end
@@ -234,7 +234,7 @@ pokermon.energy.get_total_energy = function(card, get_counts)
   else return curr_energy_count + curr_c_energy_count end
 end
 
-round_energy_value = function(value, field)
+pokermon.energy.round_value = function(value, field)
   local rounded = nil
   local frac = nil
   if pokermon_config.precise_energy then
@@ -251,7 +251,7 @@ round_energy_value = function(value, field)
   return rounded, frac
 end
 
-set_frac = function(card, frac, field, increased, ratio)
+pokermon.energy.set_frac = function(card, frac, field, increased, ratio)
   local frac_name = field.."_frac"
   local bonus_amt = math.ceil(card.ability.extra[field]/(increased and 2 or 1))
   card.ability[frac_name] = card.ability[frac_name] and (card.ability[frac_name] + frac) or frac
@@ -274,25 +274,9 @@ set_frac = function(card, frac, field, increased, ratio)
   end
 end
 
-matching_energy = function(card, allow_bird)
+pokermon.energy.get_matching_energy = function(card, allow_bird)
   if not pokermon.get_type(card) or (pokermon.get_type(card) == "Bird" and not allow_bird) then return end
   local etype = pokermon.get_type(card) and string.lower(pokermon.get_type(card))
   local e_key = "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy'
   if G.P_CENTERS[e_key] then return "c_poke_"..etype..(etype == 'dark' and 'ness' or '')..'_energy' end
-end
-
-ease_poke_dollars = function(card, seed, amt, calc_only)
-  local earned = amt
-  if card.ability.extra and type(card.ability.extra) == "table" then
-    if card.ability.money_frac then
-      if card.ability.money_frac > pseudorandom(pseudoseed(seed)) then
-        earned = earned + 1
-      end
-    end
-  end
-  if (SMODS.Mods["Talisman"] or {}).can_load then
-    earned = to_number(earned)
-  end
-  if not calc_only then ease_dollars(earned) end
-  return earned
 end

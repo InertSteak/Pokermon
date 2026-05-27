@@ -1323,7 +1323,7 @@ pokermon.create_treasure = function(card, seed, megastone)
     mega = true
   end
   if money > 0 then
-    ease_poke_dollars(card, seed, money)
+    pokermon.ease_poke_dollars(card, seed, money)
   end
   if stone_max > 0 then
     for i = 1, stone_max do
@@ -1397,4 +1397,20 @@ pokermon.drain_chips = function(card, amount)
   card.ability.perma_bonus = (card.ability.perma_bonus or 0) - bonus_drain
 
   return base_drain + bonus_drain
+end
+
+pokermon.ease_poke_dollars = function(card, seed, amt, calc_only)
+  local earned = amt
+  if card.ability.extra and type(card.ability.extra) == "table" then
+    if card.ability.money_frac then
+      if card.ability.money_frac > pseudorandom(pseudoseed(seed)) then
+        earned = earned + 1
+      end
+    end
+  end
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    earned = to_number(earned)
+  end
+  if not calc_only then ease_dollars(earned) end
+  return earned
 end

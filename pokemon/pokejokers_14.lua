@@ -97,7 +97,7 @@ local kricketot={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #context.full_hand == 4 then
         if poke_suit_check(context.full_hand, 4) then
-          local earned = ease_poke_dollars(card, "kriketot", card.ability.extra.money)
+          local earned = pokermon.ease_poke_dollars(card, "kriketot", card.ability.extra.money)
           return {
             message = '$'..earned,
             colour = G.C.MONEY
@@ -132,7 +132,7 @@ local kricketune={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #context.full_hand == 4 then
         if poke_suit_check(context.full_hand, 4) then
-          local earned = ease_poke_dollars(card, "kriketune", card.ability.extra.money)
+          local earned = pokermon.ease_poke_dollars(card, "kriketune", card.ability.extra.money)
           if SMODS.pseudorandom_probability(card, 'kriketune', card.ability.extra.num, card.ability.extra.dem, 'kriketune') then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1

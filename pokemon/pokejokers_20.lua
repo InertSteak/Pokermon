@@ -177,7 +177,7 @@ local gothitelle={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      ease_poke_dollars(card, "gothitelle", card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, "gothitelle", card.ability.extra.money)
     end
   end,
   add_to_deck = function(self, card, from_debuff)

@@ -191,6 +191,9 @@ get_ancient_amount = pokermon.get_ancient_amount
 ---@deprecated use `pokermon.drain_chips` instead
 poke_drain_chips = pokermon.drain_chips
 
+---@deprecated use `pokermon.ease_poke_dollars` instead
+ease_poke_dollars = pokermon.ease_poke_dollars
+
 -- energyfunctions.lua
 
 ---@deprecated use `pokermon.energy.values` instead

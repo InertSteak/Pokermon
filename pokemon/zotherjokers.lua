@@ -385,7 +385,7 @@ local rival = {
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
       G.GAME.rival_defeated = true
 
-      ease_poke_dollars(card, 'rival', card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, 'rival', card.ability.extra.money)
 
       SMODS.destroy_cards(card, nil, nil, true)
 
@@ -431,7 +431,7 @@ local bitter_rival = {
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
       G.GAME.bitter_rival_defeated = true
 
-      ease_poke_dollars(card, 'bitter_rival', card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, 'bitter_rival', card.ability.extra.money)
 
       SMODS.destroy_cards(card, nil, nil, true)
 

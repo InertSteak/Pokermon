@@ -574,7 +574,7 @@ local sunkern={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind or context.joker_main then
-      local earned = ease_poke_dollars(card, "sunkern", card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, "sunkern", card.ability.extra.money, true)
       return {
         dollars = earned,
         card = card
@@ -602,7 +602,7 @@ local sunflora={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind or context.joker_main or context.pre_discard or context.using_consumeable then
-      local earned = ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
       return {
         dollars = earned,
         card = card
@@ -610,7 +610,7 @@ local sunflora={
     end
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
+    return pokermon.ease_poke_dollars(card, "sunflora", card.ability.extra.money, true)
 	end,
   attributes = {"economy", "hands", "discard"},
 }

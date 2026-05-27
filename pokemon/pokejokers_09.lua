@@ -25,7 +25,7 @@ local miltank={
       above_zero = earned > 0
     end
     if above_zero then
-      return ease_poke_dollars(card, "miltank", earned, true)
+      return pokermon.ease_poke_dollars(card, "miltank", earned, true)
     end
   end,
   attributes = {"types", "joker", "economy"},
@@ -138,7 +138,7 @@ local raikou={
           }))
         end
         juice_flip_table(card, conv_cards, true, limit)
-        local earned = ease_poke_dollars(card, "raikou", card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, "raikou", card.ability.extra.money, true)
         return {
           dollars = earned,
           card = card
@@ -570,7 +570,7 @@ local treecko={
                   return true
               end
           }))
-            local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
+            local earned = pokermon.ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod, true)
             if not context.blueprint then
               card.ability.extra.triggers = card.ability.extra.triggers + 1
             end
@@ -640,7 +640,7 @@ local grovyle={
                   return true
               end
           }))
-            local earned = ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod + more, true)
+            local earned = pokermon.ease_poke_dollars(card, "grovyle", card.ability.extra.money_mod + more, true)
             if not context.blueprint then
               card.ability.extra.triggers = card.ability.extra.triggers + 1
             end
@@ -704,7 +704,7 @@ local sceptile={
                     return true
                 end
             }))
-            local earned = ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", card) * card.ability.extra.money_increase), true)
+            local earned = pokermon.ease_poke_dollars(card, "sceptile", card.ability.extra.money_mod + (#pokermon.find_pokemon_type("Grass", card) * card.ability.extra.money_increase), true)
             card.ability.extra.money_earned = card.ability.extra.money_earned + earned
             return {
               dollars = earned,

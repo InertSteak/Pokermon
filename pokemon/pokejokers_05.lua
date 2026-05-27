@@ -26,7 +26,7 @@ local starmie={
                 return true
             end
         }))
-        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
+        local earned = pokermon.ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult,
           dollars = earned,
@@ -237,7 +237,7 @@ local electabuzz={
   end,
   calc_dollar_bonus = function(self, card)
     local earned = math.min(card.ability.extra.max, math.ceil(card.sell_cost * card.ability.extra.percent/100))
-    return ease_poke_dollars(card, "electabuzz", earned, true)
+    return pokermon.ease_poke_dollars(card, "electabuzz", earned, true)
 	end,
   attributes = {"sell_value", "scaling", "economy", "item_evo"},
 }
@@ -756,7 +756,7 @@ local jolteon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
-      local earned = ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
           dollars = earned,
@@ -914,7 +914,7 @@ local omanyte={
         end
         
         if card.ability.extra.ancient_count > 1 then
-          local earned = ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
+          local earned = pokermon.ease_poke_dollars(card, "omanyte", card.ability.extra.money, true)
           return {
             dollars = earned, 
             card = card
@@ -993,7 +993,7 @@ local omastar={
           }))
         end
         if card.ability.extra.ancient_count > 1 then
-          local earned = ease_poke_dollars(card, "omastar", card.ability.extra.money, true)
+          local earned = pokermon.ease_poke_dollars(card, "omastar", card.ability.extra.money, true)
           return {
             dollars = earned, 
             card = card

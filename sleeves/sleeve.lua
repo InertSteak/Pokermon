@@ -73,7 +73,7 @@ end
     calculate = function(self, sleeve, context)
       if self.get_current_deck_key() ~= 'b_poke_obituarydeck' then return end
       if context.joker_type_destroyed or context.selling_card then
-        local key = matching_energy(context.card, true)
+        local key = pokermon.energy.get_matching_energy(context.card, true)
         if key then
           SMODS.add_card { key = key, edition = 'e_negative' }
         end

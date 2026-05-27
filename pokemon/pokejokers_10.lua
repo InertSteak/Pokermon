@@ -133,7 +133,7 @@ local wingull={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.wingullcard.id then
-      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true)
+      local earned = pokermon.ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true)
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
         dollars = earned,
@@ -171,7 +171,7 @@ local pelipper={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.wingullcard.id then
-      local earned = ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true) + #pokermon.find_pokemon_type("Water")
+      local earned = pokermon.ease_poke_dollars(card, "wingull", card.ability.extra.money_mod, true) + #pokermon.find_pokemon_type("Water")
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
       return {
         dollars = earned,
@@ -661,7 +661,7 @@ local ninjask={
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_played == 0 then
       if context.other_card:get_id() == 9 or context.other_card:get_id() == 11 then
-        local earned = ease_poke_dollars(card, "ninjask", card.ability.extra.money_mod, true)
+        local earned = pokermon.ease_poke_dollars(card, "ninjask", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult_mod,
           dollars = earned,

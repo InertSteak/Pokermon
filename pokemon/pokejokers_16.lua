@@ -78,7 +78,7 @@ local weavile = {
         ref_value = 'Xmult',
         scalar_value = 'Xmult_mod',
       })
-      ease_poke_dollars(card, "weavile", card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, "weavile", card.ability.extra.money)
       card:juice_up()
     end
     if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
@@ -256,7 +256,7 @@ local tangrowth={
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
+            dollars = pokermon.ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
             card = card
           }
         else
@@ -278,7 +278,7 @@ local tangrowth={
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
+              dollars = pokermon.ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
               card = card
             }
           end
@@ -637,7 +637,7 @@ local mamoswine={
                     return true
                 end
             }))
-            local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
+            local earned = pokermon.ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
             return {
               mult = card.ability.extra.mult * stoneglass,
               dollars = earned,
@@ -658,7 +658,7 @@ local mamoswine={
                 return true
             end
         }))
-        local earned = ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, "2mamoswine", card.ability.extra.money, true)
         return {
           dollars = earned,
           card = card
@@ -1035,7 +1035,7 @@ local rotomw={
         end
       end
       if #enhanced > 0 then
-        ease_poke_dollars(card, "rotomw", card.ability.extra.money * #enhanced)
+        pokermon.ease_poke_dollars(card, "rotomw", card.ability.extra.money * #enhanced)
       end
     end
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then

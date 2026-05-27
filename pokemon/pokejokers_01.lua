@@ -32,7 +32,7 @@ local bulbasaur={
           card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod
         end
 
-        local earned = ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true)
+        local earned = pokermon.ease_poke_dollars(card, "bulba", card.ability.extra.money_mod, true)
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
           dollars = earned,
@@ -94,7 +94,7 @@ local ivysaur={
           card.ability.extra.earned = card.ability.extra.earned + card.ability.extra.money_mod + more
         end
 
-        local earned = ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true)
+        local earned = pokermon.ease_poke_dollars(card, "ivy", card.ability.extra.money_mod + more, true)
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
           dollars = earned,
@@ -144,7 +144,7 @@ local venusaur={
           colour = G.C.RED,
         }
       else
-        local earned = ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true)
+        local earned = pokermon.ease_poke_dollars(card, "venu", card.ability.extra.money_mod, true)
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
         return {
           dollars = earned,
@@ -1233,7 +1233,7 @@ local pikachu={
       end
       if dollars < card.ability.extra.money_threshold then
         card:juice_up()
-        ease_poke_dollars(card, "pikachu", card.ability.extra.money)
+        pokermon.ease_poke_dollars(card, "pikachu", card.ability.extra.money)
       end
     end
     if context.cardarea == G.jokers and context.scoring_hand then
@@ -1273,7 +1273,7 @@ local raichu={
   calculate = function(self, card, context)
     if context.setting_blind then
       card:juice_up()
-      ease_poke_dollars(card, "raichu", G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))
+      pokermon.ease_poke_dollars(card, "raichu", G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5))
     end
     if context.cardarea == G.jokers and context.scoring_hand then
       local dollars = G.GAME.dollars

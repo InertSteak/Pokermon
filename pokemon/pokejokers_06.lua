@@ -69,7 +69,7 @@ local chikorita = {
       if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-        local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
         return {
             dollars = earned,
             card = context.other_card or card,
@@ -114,7 +114,7 @@ local bayleef = {
       if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-        local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
         return {
             dollars = earned,
             card = context.other_card or card,
@@ -151,7 +151,7 @@ local meganium = {
     if context.end_of_round and context.individual and context.cardarea == G.hand then
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
       G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-      local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
       return {
           dollars = earned,
           card = context.other_card or card,
@@ -828,7 +828,7 @@ local crobat={
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
-      return ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
+      return pokermon.ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
     end
 	end,
   attributes = {"chips", "mult", "xmult", "economy", "modify_card", "enhancements", "scaling"},
@@ -854,7 +854,7 @@ local chinchou={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
-        local earned = ease_poke_dollars(card, "chinchou", card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, "chinchou", card.ability.extra.money, true)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
@@ -891,7 +891,7 @@ local lanturn={
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
         local Money = card.ability.extra.money + (card.ability.extra.money_mod * #pokermon.find_pokemon_type("Lightning"))
-        local earned = ease_poke_dollars(card, "lanturn", Money, true)
+        local earned = pokermon.ease_poke_dollars(card, "lanturn", Money, true)
         local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #pokermon.find_pokemon_type("Water"))
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {Chips}}, 
@@ -935,7 +935,7 @@ local pichu={
     return pokermon.level_evo(self, card, context, "j_poke_pikachu")
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
+    return pokermon.ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
 	end,
   attributes = {"baby", "economy", "round_evo"},
 }

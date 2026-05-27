@@ -382,7 +382,7 @@ local sneasel = {
   calculate = function(self, card, context)
     if context.final_scoring_step and #context.full_hand == 1 and context.full_hand[1]:get_id() == G.GAME.current_round.sneaselcard.id and not context.blueprint then
       context.full_hand[1].to_be_removed_by = card
-      ease_poke_dollars(card, "sneasel", card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, "sneasel", card.ability.extra.money)
       card:juice_up()
     end
     if context.destroy_card and context.destroy_card.to_be_removed_by == card and not context.blueprint then
@@ -627,7 +627,7 @@ local swinub={
   end,
   calc_dollar_bonus = function(self, card)
     if SMODS.pseudorandom_probability(card, 'swinub', card.ability.extra.num, card.ability.extra.dem, 'swinub') then
-      return ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
+      return pokermon.ease_poke_dollars(card, "2swinub", card.ability.extra.money, true)
     end
   end,
   attributes = {"mult", "enhancements", "chance", "economy", "round_evo"},
@@ -676,7 +676,7 @@ local piloswine={
   end,
   calc_dollar_bonus = function(self, card)
     if SMODS.pseudorandom_probability(card, 'piloswine', card.ability.extra.num, card.ability.extra.dem, 'piloswine') then
-      return ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
+      return pokermon.ease_poke_dollars(card, "2piloswine", card.ability.extra.money, true)
     end
   end,
   attributes = {"mult", "enhancements", "chance", "economy", "trigger_evo"},
@@ -1269,7 +1269,7 @@ local porygon2={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local forced_key = matching_energy(G.jokers.cards[1], true);
+      local forced_key = pokermon.energy.get_matching_energy(G.jokers.cards[1], true);
       if forced_key == "c_poke_bird_energy" then
         pokermon.evolve(card, 'j_poke_porygonz')
       end

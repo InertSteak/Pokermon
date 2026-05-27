@@ -1046,7 +1046,7 @@ local farfetchd={
     if context.using_consumeable then
       if SMODS.pseudorandom_probability(card, 'farfetchd', card.ability.extra.num, card.ability.extra.dem, 'farfetchd') or context.consumeable.ability.name == "leek" then
         card:juice_up()
-        ease_poke_dollars(card, "farfet", card.ability.extra.money)
+        pokermon.ease_poke_dollars(card, "farfet", card.ability.extra.money)
       end
     end
   end,

@@ -536,7 +536,7 @@ local electrode={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
-        ease_poke_dollars(card, "electrode", card.ability.extra.money)
+        pokermon.ease_poke_dollars(card, "electrode", card.ability.extra.money)
         if not context.blueprint then
           G.E_MANAGER:add_event(Event({
             func = function()
@@ -1127,7 +1127,7 @@ local tangela={
             colour = G.C.BLACK,
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
-            dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
+            dollars = pokermon.ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
             card = card
           }
         else
@@ -1149,7 +1149,7 @@ local tangela={
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
-              dollars = ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
+              dollars = pokermon.ease_poke_dollars(card, "tangela", card.ability.extra.money_mod, true),
               card = card
             }
           end
@@ -1418,7 +1418,7 @@ local staryu={
             end
         }))
 
-        local earned = ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
+        local earned = pokermon.ease_poke_dollars(card, "starmie", card.ability.extra.money_mod, true)
         return {
           mult = card.ability.extra.mult,
           dollars = earned,

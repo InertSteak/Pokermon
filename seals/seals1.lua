@@ -22,7 +22,7 @@ local pink_seal = {
             local energy_types = {}
             local _card = nil
             for l, v in pairs(G.jokers.cards) do
-              local match = matching_energy(v, true)
+              local match = pokermon.energy.get_matching_energy(v, true)
               if match then
                 table.insert(energy_types, match)
               end
