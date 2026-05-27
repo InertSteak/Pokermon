@@ -112,8 +112,8 @@ target = "game.lua"
 pattern = "function Game:update_selecting_hand(dt)"
 position = "after"
 payload = '''
-    if not self.scry_view and type(create_scry_cardarea) == "function" then
-      self.scry_view = create_scry_cardarea()
+    if not self.scry_view and type(pokermon.ui.create_scry_cardarea) == "function" then
+      self.scry_view = pokermon.ui.create_scry_cardarea()
     elseif self.scry_view then
       update_scry_cardarea(self.scry_view)
     end

@@ -1,4 +1,4 @@
-create_scry_cardarea = function()
+pokermon.ui.create_scry_cardarea = function()
    local config = { card_limit = 0, type = 'scry' }
    config.major = G.deck
    local scry_view = CardArea(0, 0, 2 * G.CARD_W, 0.5 * G.CARD_H, config)
@@ -348,7 +348,7 @@ local function first_to_upper(str)
   return str:gsub("^%l", string.upper)
 end
 
-function pokermon.ui.UIBox_link_button(args)
+pokermon.ui.UIBox_link_button = function(args)
   local domain_name, path = parse_url(args.url)
 
   args.button = 'pokermon_open_site'
