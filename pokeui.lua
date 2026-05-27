@@ -876,7 +876,7 @@ local divider_text = function(i, limit)
   return div_text
 end
 
-function poke_artist_credit(artists)
+pokermon.ui.poke_artist_credit = function(artists)
   if type(artists) == 'table' and not artists[1] then artists = { artists.name } end
   if type(artists) == 'string' then artists = { artists } end
 
@@ -933,7 +933,7 @@ function poke_artist_credit(artists)
   return artist_credit
 end
 
-function poke_designer_credit(designer_name)
+function pokermon.ui.poke_designer_credit(designer_name)
     local designer_credit = {n=G.UIT.R, config = {align = 'tm'}, nodes = {
         {n=G.UIT.T, config={
             text = localize('poke_credits_designer'),
@@ -982,10 +982,10 @@ function G.UIDEF.card_h_popup(card)
   local ret_val =prev_card_h_popup(card)
   local artist, designer = get_credits(card)
   if artist then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_artist_credit(artist))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, pokermon.ui.poke_artist_credit(artist))
   end
   if designer then
-    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, poke_designer_credit(designer))
+    table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes, pokermon.ui.poke_designer_credit(designer))
   end
   
   return ret_val
@@ -997,10 +997,10 @@ function create_UIBox_blind_popup(blind, discovered, vars)
   if blind.artist or blind.designer then
     local nodes = {}
     if blind.artist then
-      nodes[#nodes+1] = poke_artist_credit(blind.artist)
+      nodes[#nodes+1] = pokermon.ui.poke_artist_credit(blind.artist)
     end
     if blind.designer then
-      nodes[#nodes+1] = poke_designer_credit(blind.designer)
+      nodes[#nodes+1] = pokermon.ui.poke_designer_credit(blind.designer)
     end
     table.insert(ret.nodes,
       {n=G.UIT.R, config = {align = "cm"}, nodes = {
