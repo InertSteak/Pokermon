@@ -809,7 +809,7 @@ end
 
 --- Checks whether two sprites are equal.
 --- Also accepts card centers (uses `atlas` and `pos`)
-poke_compare_sprites = function(a, b)
+pokermon.compare_sprites = function(a, b)
   a = a or {}
   b = b or {}
   local a_atlas = type(a.atlas) == 'table' and a.atlas.name or a.atlas
@@ -820,8 +820,8 @@ poke_compare_sprites = function(a, b)
 end
 
 --- Copies the sprite at `from.children[sprite_index]` to `card.children[sprite_index]`
-poke_copy_sprite = function(card, from, sprite_index)
-  if poke_compare_sprites(card.children[sprite_index], from.children[sprite_index]) then
+pokermon.copy_sprite = function(card, from, sprite_index)
+  if pokermon.compare_sprites(card.children[sprite_index], from.children[sprite_index]) then
     return
   end
 
@@ -854,19 +854,19 @@ poke_copy_sprite = function(card, from, sprite_index)
   card.children[sprite_index] = copy
 end
 
-poke_copy_joker_sprites = function(card, from)
-  poke_copy_sprite(card, from, 'center')
-  poke_copy_sprite(card, from, 'floating_sprite')
+pokermon.copy_joker_sprites = function(card, from)
+  pokermon.copy_sprite(card, from, 'center')
+  pokermon.copy_sprite(card, from, 'floating_sprite')
 end
 
 --- Resets the card back to its original sprite, while keeping states/roles intact
-poke_reset_sprite = function(card, center)
+pokermon.reset_sprite = function(card, center)
   center = center or card.config.center
 
   local sprite = card.children.center
   local soul = card.children.floating_sprite
 
-  if poke_compare_sprites(sprite, center) then return end
+  if pokermon.compare_sprites(sprite, center) then return end
 
   card.children.center = nil
   card.children.floating_sprite = nil

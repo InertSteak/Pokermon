@@ -219,7 +219,7 @@ local zorua = {
   end,
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.hidden_key = nil
-    poke_reset_sprite(card)
+    pokermon.reset_sprite(card)
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local center = self:get_illusion(card)
@@ -235,9 +235,9 @@ local zorua = {
           and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker and other_joker ~= card
           and other_joker.config.center.blueprint_compat then
-        poke_copy_joker_sprites(card, other_joker)
+        pokermon.copy_joker_sprites(card, other_joker)
       else
-        poke_reset_sprite(card)
+        pokermon.reset_sprite(card)
       end
     end
   end,
