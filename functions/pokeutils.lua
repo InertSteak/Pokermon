@@ -262,12 +262,6 @@ pokermon.vary_rank = function(card, decrease, seed, immediate)
   end
 end
 
-poke_create_base_copy = function(selected)
-  for j = 1, 2 do
-    create_playing_card({front = selected.config.card, center = G.P_CENTERS.c_base}, G.hand, nil, nil, {G.C.PURPLE})
-  end
-end
-
 poke_get_adjacent_jokers = function(card)
   local jokers = {}
   if #G.jokers.cards > 1 then
