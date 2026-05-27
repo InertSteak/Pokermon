@@ -1373,7 +1373,7 @@ local sandslash={
     if context.discard and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.blueprint then
       if SMODS.pseudorandom_probability(card, 'sandslash', card.ability.extra.num, card.ability.extra.dem, 'sandslash') then
         local target = {context.other_card}
-        poke_convert_cards_to(target, {mod_conv = 'm_glass'})
+        pokermon.convert_cards(target, {mod_conv = 'm_glass'})
       end
     end
   end,

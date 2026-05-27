@@ -972,7 +972,7 @@ local rotomh={
   calculate = function(self, card, context)
     if context.pre_discard and context.full_hand and #context.full_hand == 2 and G.GAME.current_round.discards_used == 0 and not context.hook and not context.blueprint then
       local target = {context.full_hand[1],context.full_hand[2]}
-      poke_convert_cards_to(target, {mod_conv = 'm_mult'})
+      pokermon.convert_cards(target, {mod_conv = 'm_mult'})
     end
     if context.open_booster and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       if SMODS.pseudorandom_probability(card, 'rotom', card.ability.extra.num, card.ability.extra.dem, 'rotom') then

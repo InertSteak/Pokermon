@@ -260,3 +260,9 @@ poke_vary_rank = pokermon.vary_rank
 
 ---@deprecated use `pokermon.get_adjacent_jokers` instead
 poke_get_adjacent_jokers = pokermon.get_adjacent_jokers
+
+---@deprecated use `pokermon.set_spoon_item` instead
+set_spoon_item = pokermon.set_spoon_item
+
+---@deprecated use `pokermon.convert_cards` instead
+poke_convert_cards_to = pokermon.convert_cards

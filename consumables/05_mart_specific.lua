@@ -94,7 +94,7 @@ local dubious_disc = {
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
@@ -127,7 +127,7 @@ local heartscale = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     juice_flip(card)
     local rightmost = G.hand.highlighted[1]
     for i = 1, #G.hand.highlighted do

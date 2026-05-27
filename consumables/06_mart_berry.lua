@@ -102,7 +102,7 @@ local berry_juice_spectral = {
   use = function(self, card, area, copier)
     local target = G.hand.highlighted[1]
     local args = {edition = poll_edition('aura', nil, true, true), seal = SMODS.poll_seal({guaranteed = true})}
-    poke_convert_cards_to(target, args, nil, true)
+    pokermon.convert_cards(target, args, nil, true)
   end
 }
 

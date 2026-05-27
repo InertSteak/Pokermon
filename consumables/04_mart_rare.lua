@@ -171,7 +171,7 @@ local teraorb = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     local choice = pokermon.find_leftmost_or_highlighted()
     if pokermon.is_type(choice, card.ability.extra.change_to_type) then
       pokermon.energy.increase(choice, pokermon.get_type(choice))

@@ -19,7 +19,7 @@ local pokeball = {
     end
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
         local _card = pokermon.create_random_poke_joker("pokeball", "Basic")
@@ -54,7 +54,7 @@ local greatball = {
     end
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         play_sound('timpani')
         local _card = pokermon.create_random_poke_joker("greatball", "One")

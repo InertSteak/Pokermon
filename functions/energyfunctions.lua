@@ -68,7 +68,7 @@ end
 pokermon.energy.use = function(self, card, area, copier, exclude_spoon)
   G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   play_sound('poke_energy_use', 1, 0.5)
-  if not exclude_spoon then set_spoon_item(card) end
+  if not exclude_spoon then pokermon.set_spoon_item(card) end
   -- check if valid target or not
   local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
   if choice then pokermon.energy.modify(choice, self.etype) end

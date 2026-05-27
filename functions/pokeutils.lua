@@ -339,7 +339,7 @@ pokermon.get_lowest_rank = function(id, rank)
   return low_id, low_rank
 end
 
-set_spoon_item = function(card)
+pokermon.set_spoon_item = function(card)
   G.E_MANAGER:add_event(Event({
     trigger = 'immediate',
     func = function()
@@ -355,7 +355,7 @@ set_spoon_item = function(card)
   }))
 end
 
-poke_conversion_event_helper = function(func, delay, immediate)
+pokermon.conversion_event_helper = function(func, delay, immediate)
   if immediate then
     func()
   else
@@ -370,30 +370,30 @@ poke_conversion_event_helper = function(func, delay, immediate)
   end
 end
 
-poke_convert_cards_to = function(cards, t, noflip, immediate)
+pokermon.convert_cards = function(cards, t, noflip, immediate)
   if not cards then return end
   if cards and cards.is and cards:is(Card) then cards = {cards} end
   if not t.seal and not noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
+      pokermon.conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end)
     end
     delay(0.2)
   end
   for i = 1, #cards do
     if t.mod_conv then
-      poke_conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_ability(G.P_CENTERS[t.mod_conv]) end, nil, immediate)
       if t.mod_conv == 'm_poke_seed' then
         cards[i]:set_sprites(cards[i].config.center)
       end
     end
     if t.edition then
-      poke_conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_edition(t.edition, true) end, nil, immediate)
     end
     if t.suit_conv then
-      poke_conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:change_suit(t.suit_conv) end, nil, immediate)
     end
     if t.seal then
-      poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
+      pokermon.conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
     end
     if t.random then
       pokermon.vary_rank(cards[i], nil, nil, immediate)
@@ -406,22 +406,22 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus or 0
         cards[i].ability.perma_bonus = cards[i].ability.perma_bonus + t.bonus_chips
       end
-      poke_conversion_event_helper(bonus_add, nil, immediate)
+      pokermon.conversion_event_helper(bonus_add, nil, immediate)
     end
   end
   if not t.seal and not noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
+      pokermon.conversion_event_helper(function() cards[i]:flip(); cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
   if not noflip then delay(0.3) end
   if noflip then
     for i = 1, #cards do
-      poke_conversion_event_helper(function() cards[i]:juice_up(0.3, 0.3) end, 0.2)
+      pokermon.conversion_event_helper(function() cards[i]:juice_up(0.3, 0.3) end, 0.2)
     end
   end
   if cards == G.hand.highlighted then
-    poke_conversion_event_helper(function() G.hand:unhighlight_all() end)
+    pokermon.conversion_event_helper(function() G.hand:unhighlight_all() end)
   end
 end
 

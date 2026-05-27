@@ -1168,7 +1168,7 @@ local aerodactyl={
           end
         end
         if target then
-          poke_convert_cards_to(target, { mod_conv = 'm_glass' }, true, true)
+          pokermon.convert_cards(target, { mod_conv = 'm_glass' }, true, true)
         end
       end
     end
@@ -1324,7 +1324,7 @@ local articuno={
     if context.before and context.cardarea == G.jokers and not context.blueprint and context.scoring_hand then
       local target = context.scoring_hand[1]
       local args = {edition = "e_foil", seal = SMODS.poll_seal({guaranteed = true})}
-      poke_convert_cards_to(target, args, true, true)
+      pokermon.convert_cards(target, args, true, true)
     end
   end,
   attributes = {"modify_card", "seals", "editions"},

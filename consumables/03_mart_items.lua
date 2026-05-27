@@ -15,7 +15,7 @@ local twisted_spoon = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     local used_item = copier or card
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then
@@ -102,7 +102,7 @@ local firestone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 4 then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -150,7 +150,7 @@ local waterstone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
@@ -199,7 +199,7 @@ local thunderstone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local selected = G.hand.highlighted[1]
       local poss_cards = {}
@@ -252,7 +252,7 @@ local leafstone = {
     return G.hand.cards and #G.hand.cards > 0
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
       juice_flip_hand(card)
       for i = 1, #G.hand.cards do
@@ -309,7 +309,7 @@ local moonstone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
         local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
@@ -354,7 +354,7 @@ local sunstone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -401,7 +401,7 @@ local shinystone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if #G.hand.highlighted == 1 then
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           local over = false
@@ -451,7 +451,7 @@ local duskstone = {
     return true
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     local joker_count = 0
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i].sell_cost > 1 or ((card.ability.extra.round_target - card.ability.extra.rounds) <= 0) then
@@ -528,7 +528,7 @@ local dawnstone = {
     return card.ability.extra.hand_played
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if card.ability.extra.hand_played then
       local money = 0
       local hand_played = card.ability.extra.hand_played
@@ -597,7 +597,7 @@ local icestone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
@@ -646,7 +646,7 @@ local linkcable = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 2 then
       local rightmost = G.hand.highlighted[1]
       for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
@@ -687,7 +687,7 @@ local metalcoat = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
@@ -727,7 +727,7 @@ local dragonscale = {
     return #G.jokers.cards > 0
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     local choice = nil
     if G.jokers.highlighted and #G.jokers.highlighted == 1 then
       choice = G.jokers.highlighted[1]
@@ -783,7 +783,7 @@ local kingsrock = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
@@ -833,7 +833,7 @@ local upgrade = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
       juice_flip(card)
@@ -879,7 +879,7 @@ local hardstone = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
       juice_flip(card)
@@ -918,7 +918,7 @@ local miracleseed = {
   unlocked = true,
   discovered = true,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     juice_flip(card)
     for i = 1, #G.hand.highlighted do
       G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
@@ -956,7 +956,7 @@ local prismscale = {
     return false
   end,
   use = function(self, card, area, copier)
-    set_spoon_item(card)
+    pokermon.set_spoon_item(card)
     if #G.hand.highlighted == 1 then
       local selected_suit = G.hand.highlighted[1].base.suit
       

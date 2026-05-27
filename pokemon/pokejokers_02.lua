@@ -1187,7 +1187,7 @@ local arcanine={
             break
           end
         end
-        poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)
+        pokermon.convert_cards(target, {mod_conv = 'm_mult'}, true, true)
       end
       if context.joker_main and next(context.poker_hands['Flush']) then
         return {

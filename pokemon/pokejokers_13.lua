@@ -1041,7 +1041,7 @@ local deoxys={
     if context.discard and not context.blueprint and card.ability.extra.form == 4 then
       if G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 then
         local target = {context.full_hand[1]}
-        poke_convert_cards_to(target, {seal = "poke_dna_seal"})
+        pokermon.convert_cards(target, {seal = "poke_dna_seal"})
       end
     end
   end,
