@@ -287,3 +287,6 @@ poke_change_hazard_level = pokermon.change_hazard_level
 
 ---@deprecated use `pokermon.get_hazard_level_vars` instead
 poke_get_hazard_level_vars = pokermon.get_hazard_level_vars
+
+---@deprecated use `pokermon.suit_check` instead
+poke_suit_check = pokermon.suit_check

@@ -525,7 +525,7 @@ pokermon.get_hazard_level_vars = function()
   return vars
 end
 
-function poke_same_suit(hand)
+function pokermon.is_same_suit(hand)
   local ret = {}
   local suits = SMODS.Suit.obj_buffer
   for j = 1, #suits do
@@ -541,7 +541,7 @@ function poke_same_suit(hand)
   return false
 end
 
-function poke_get_rank(card)
+function pokermon.get_rank(card)
   local id = card.base.id
   local rank = nil
   if id == 14 then rank = "Ace"
@@ -552,7 +552,7 @@ function poke_get_rank(card)
   return rank
 end
 
-function poke_is_even(card)
+function pokermon.is_even(card)
   if card:get_id() == 2 or 
    card:get_id() == 4 or 
    card:get_id() == 6 or 
@@ -564,7 +564,7 @@ function poke_is_even(card)
   end
 end
 
-function poke_is_odd(card)
+function pokermon.is_odd(card)
   if card:get_id() == 3 or 
    card:get_id() == 5 or 
    card:get_id() == 7 or 
@@ -576,7 +576,7 @@ function poke_is_odd(card)
   end
 end
 
-function poke_suit_check(hand, num)
+function pokermon.suit_check(hand, num)
   local suits = {}
   local suit_count = 0
   

@@ -147,10 +147,10 @@ local rockruff={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card:is_face() then
-      if poke_is_even(context.other_card) and card.ability.extra.even_to_score > 0 then
+      if pokermon.is_even(context.other_card) and card.ability.extra.even_to_score > 0 then
         card.ability.extra.even_to_score = card.ability.extra.even_to_score - 1
       end
-      if poke_is_odd(context.other_card) and card.ability.extra.odd_to_score > 0 then
+      if pokermon.is_odd(context.other_card) and card.ability.extra.odd_to_score > 0 then
         card.ability.extra.odd_to_score = card.ability.extra.odd_to_score - 1
       end
       return {
@@ -191,7 +191,7 @@ local lycanroc_day={
     if context.individual and not context.end_of_round and context.cardarea == G.play then
       if G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 then
         ease_hands_played(card.ability.extra.hands)
-        if poke_is_even(context.other_card) then
+        if pokermon.is_even(context.other_card) then
           return {
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chip_mod,
@@ -204,7 +204,7 @@ local lycanroc_day={
           }
         end
       end
-      if poke_is_even(context.other_card) then
+      if pokermon.is_even(context.other_card) then
         return {
           mult = card.ability.extra.mult,
           card = card
@@ -239,7 +239,7 @@ local lycanroc_night={
       G.hand:change_size(card.ability.extra.h_size)
       G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
     end
-    if context.individual and not context.end_of_round and context.cardarea == G.play and poke_is_odd(context.other_card) then
+    if context.individual and not context.end_of_round and context.cardarea == G.play and pokermon.is_odd(context.other_card) then
       return {
         mult = card.ability.extra.mult,
         card = card
@@ -277,10 +277,10 @@ local lycanroc_dusk={
       local first_even = nil
       local first_odd = nil
       for i = 1, #context.scoring_hand do
-        if poke_is_even(context.scoring_hand[i]) and not first_even then
+        if pokermon.is_even(context.scoring_hand[i]) and not first_even then
           first_even = context.scoring_hand[i]
         end
-        if poke_is_odd(context.scoring_hand[i]) and not first_odd then
+        if pokermon.is_odd(context.scoring_hand[i]) and not first_odd then
           first_odd = context.scoring_hand[i]
         end
       end

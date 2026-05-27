@@ -99,7 +99,7 @@ local flower = {
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play then
         local suit_number = next(SMODS.find_card('j_poke_roserade')) and 3 or 4
-        if poke_suit_check(context.scoring_hand, suit_number) then
+        if pokermon.suit_check(context.scoring_hand, suit_number) then
           local extra = 0
           if next(SMODS.find_card("j_poke_shaymin")) or next(SMODS.find_card("j_poke_shaymin_sky")) then
             extra = 1

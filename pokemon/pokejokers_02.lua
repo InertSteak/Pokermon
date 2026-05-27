@@ -545,7 +545,7 @@ local oddish={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_odd(context.other_card) then
+      if pokermon.is_odd(context.other_card) then
           local value
           local random = pseudorandom('oddish')
           if random < (1/3) then
@@ -589,7 +589,7 @@ local gloom={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_odd(context.other_card) then
+      if pokermon.is_odd(context.other_card) then
           local value
           local random = pseudorandom('gloom')
           if random < (1/3) then
@@ -627,7 +627,7 @@ local vileplume={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_odd(context.other_card) then
+      if pokermon.is_odd(context.other_card) then
           local random = pseudorandom('vileplume')
           if random < (1/3) then
             return { 

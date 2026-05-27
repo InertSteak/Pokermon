@@ -106,7 +106,7 @@ local bellossom={
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           local upgrade = pseudorandom(pseudoseed('bellossom'))
-          if poke_is_odd(v) and upgrade > .50 and not v.edition then
+          if pokermon.is_odd(v) and upgrade > .50 and not v.edition then
               odds[#odds+1] = v
               if v.config.center ~= G.P_CENTERS.c_base and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
@@ -144,7 +144,7 @@ local bellossom={
       end
     end
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_odd(context.other_card) then
+      if pokermon.is_odd(context.other_card) then
           if context.other_card.bellossom_score then
             return {
               mult = card.ability.extra.mult,

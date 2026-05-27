@@ -437,7 +437,7 @@ local bellsprout={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_even(context.other_card) then
+      if pokermon.is_even(context.other_card) then
           return {
             chips = card.ability.extra.chips,
             card = card
@@ -470,7 +470,7 @@ local weepinbell={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_even(context.other_card) then
+      if pokermon.is_even(context.other_card) then
           return {
             chips = card.ability.extra.chips,
             card = card
@@ -499,7 +499,7 @@ local victreebel={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-      if poke_is_even(context.other_card) then
+      if pokermon.is_even(context.other_card) then
           return {
             chips = card.ability.extra.chips,
             card = card

@@ -115,7 +115,7 @@ local raikou={
     end
     if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
       if context.before and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 and G.hand and #G.hand.cards > 0 then
-        local rank = poke_get_rank(context.scoring_hand[1])
+        local rank = pokermon.get_rank(context.scoring_hand[1])
         local hand_cards = {}
         local conv_cards = {}
         for k, v in pairs(G.hand.cards) do

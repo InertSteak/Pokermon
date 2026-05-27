@@ -859,7 +859,7 @@ local milotic={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and poke_same_suit(context.scoring_hand) then
+      if context.before and pokermon.is_same_suit(context.scoring_hand) then
         card.ability.extra.active = true
       end
       if context.after and card.ability.extra.active then

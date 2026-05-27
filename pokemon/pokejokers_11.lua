@@ -421,13 +421,13 @@ local roselia={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and G.GAME.current_round.hands_played == 0 and context.other_card == context.scoring_hand[1]
-      and poke_is_odd(context.other_card) then
+      and pokermon.is_odd(context.other_card) then
       return {
         repetitions = card.ability.extra.retriggers
       }
     end
     if context.before and context.cardarea == G.jokers and not context.blueprint then
-      if G.GAME.current_round.hands_played == 0 and not poke_is_odd(context.scoring_hand[1]) then
+      if G.GAME.current_round.hands_played == 0 and not pokermon.is_odd(context.scoring_hand[1]) then
         local _card = context.scoring_hand[1]
         _card:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
         G.E_MANAGER:add_event(Event({
