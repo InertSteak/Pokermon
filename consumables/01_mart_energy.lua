@@ -119,7 +119,7 @@ local double_rainbow_energy = {
   end,
   use = function(self, card, area, copier)
     G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
-    local choice = poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
+    local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
     for _ = 1, 2 do
       pokermon.energy.increase(choice, self.etype)
     end

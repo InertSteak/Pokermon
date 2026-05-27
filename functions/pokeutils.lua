@@ -182,7 +182,7 @@ pokermon.remove_card = function(target, card, trigger)
   delay(0.3)
 end
 
-poke_debug = function(message, verbose, depth)
+pokermon.debug = function(message, verbose, depth)
   if verbose then
     sendDebugMessage("The type of the message variable is ["..type(message).."]")
   end
@@ -197,7 +197,7 @@ poke_debug = function(message, verbose, depth)
   end
 end
 
-function poke_find_card(key_or_function, use_highlighted)
+pokermon.find_card = function(key_or_function, use_highlighted)
   local is_target = function(card)
     return (type(key_or_function) == "function") and key_or_function(card)
       or card.config.center.key == key_or_function
@@ -214,7 +214,7 @@ function poke_find_card(key_or_function, use_highlighted)
   end
 end
 
-function poke_find_playing_card(findFunc, findArea)
+pokermon.find_playing_card = function(findFunc, findArea)
   local area = findArea or G.deck.cards
   local found = {}
   for k, v in pairs(area) do
@@ -226,11 +226,11 @@ function poke_find_playing_card(findFunc, findArea)
   return found
 end
 
-function poke_find_leftmost_or_highlighted(key_or_function)
+function pokermon.find_leftmost_or_highlighted(key_or_function)
   if not key_or_function then
     return G.jokers.highlighted[1] or G.jokers.cards[1]
   end
-  return poke_find_card(key_or_function, true)
+  return pokermon.find_card(key_or_function, true)
 end
 
 poke_vary_rank = function(card, decrease, seed, immediate)

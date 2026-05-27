@@ -236,12 +236,12 @@ local berry_juice_mega = {
   end,
   can_use = function(self, card)
     return G.jokers and #G.jokers.cards > 0 and
-        poke_find_leftmost_or_highlighted(function(joker)
+        pokermon.find_leftmost_or_highlighted(function(joker)
           return pokermon.get_mega(joker) and not joker.debuff
         end)
   end,
   use = function(self, card, area, copier)
-    local target = poke_find_leftmost_or_highlighted(function(joker)
+    local target = pokermon.find_leftmost_or_highlighted(function(joker)
       return pokermon.get_mega(joker) and not joker.debuff
     end)
     local prefix = target.config.center.poke_custom_prefix or "poke"

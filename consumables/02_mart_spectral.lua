@@ -16,11 +16,11 @@ local transformation = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    local choice = poke_find_leftmost_or_highlighted()
+    local choice = pokermon.find_leftmost_or_highlighted()
     return choice and pokermon.get_type(choice) or false
   end,
   use = function(self, card, area, copier)
-    local choice = poke_find_leftmost_or_highlighted()
+    local choice = pokermon.find_leftmost_or_highlighted()
     if pokermon.get_type(choice) then pokermon.energy.increase(choice, pokermon.get_type(choice)) end
     if not choice.config.center.aux_poke then
       local highest = pokermon.get_highest_evo(choice)
@@ -35,7 +35,7 @@ local transformation = {
 }
 
 local get_mega_target = function(self)
-  return poke_find_leftmost_or_highlighted(function(joker)
+  return pokermon.find_leftmost_or_highlighted(function(joker)
     return not self.ability.extra.used_on and pokermon.get_mega(joker) and not joker.debuff
         or joker.config.center.rarity == "poke_mega" and joker.unique_val == self.ability.extra.used_on
         or G.GAME.modifiers.infinite_megastone and ((pokermon.get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
@@ -55,7 +55,7 @@ local megastone = {
     if not G.GAME.modifiers.infinite_megastone then
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
     end
-    local joker = poke_find_card(function(joker)
+    local joker = pokermon.find_card(function(joker)
         return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on
       end)
     if joker then
@@ -98,7 +98,7 @@ local megastone = {
   end,
   calculate = function(self, card, context)
     if context.end_of_round then
-      local mega = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
+      local mega = pokermon.find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
       if not mega then card.ability.extra.used_on = nil end
       if not card.ability.extra.usable then
         card.ability.extra.usable = true
@@ -110,7 +110,7 @@ local megastone = {
     return true
   end,
   in_pool = function(self)
-    local mega_poke = G.jokers and poke_find_card(function(joker) return joker.config.center.megas end)
+    local mega_poke = G.jokers and pokermon.find_card(function(joker) return joker.config.center.megas end)
     return mega_poke
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -118,7 +118,7 @@ local megastone = {
     card.ability.extra.usable = true
   end,
   remove_from_deck = function(self, card, from_debuff)
-    local target = poke_find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
+    local target = pokermon.find_card(function(joker) return joker.config.center.rarity == "poke_mega" and joker.unique_val == card.ability.extra.used_on end)
     if target then
       local forced_key = pokermon.get_previous_evo(target, true)
       pokermon.evolve(target, forced_key)
@@ -195,7 +195,7 @@ local nightmare = {
   unlocked = true,
   discovered = true,
   use = function(self, card)
-    local choice = poke_find_leftmost_or_highlighted()
+    local choice = pokermon.find_leftmost_or_highlighted()
     if choice then
       local energy = pokermon.energy.get_matching_energy(choice, true) or "c_poke_colorless_energy"
       if energy then
@@ -209,7 +209,7 @@ local nightmare = {
     end
   end,
   can_use = function(self, card)
-    local choice = poke_find_leftmost_or_highlighted()
+    local choice = pokermon.find_leftmost_or_highlighted()
     return choice and not choice.ability.eternal
   end,
 }

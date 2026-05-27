@@ -157,7 +157,7 @@ local bunnelby = {
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then
+				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then
           if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
 						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               card.ability.extra.triggers = card.ability.extra.triggers + 1
@@ -209,7 +209,7 @@ local diggersby = {
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do 
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then 
+				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then 
           if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1

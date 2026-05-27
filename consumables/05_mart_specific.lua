@@ -217,9 +217,9 @@ local meteorite = {
     }))
     SMODS.destroy_cards(destroyed_cards)
         
-    local deoxys = poke_find_card("j_poke_deoxys", true)
+    local deoxys = pokermon.find_card("j_poke_deoxys", true)
     if not deoxys then
-      deoxys = poke_find_card("j_poke_deoxys")
+      deoxys = pokermon.find_card("j_poke_deoxys")
     end
     if deoxys then
       local forme_list = {"Attack", "Defense", "Speed", "Normal"}

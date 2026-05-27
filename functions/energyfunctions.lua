@@ -62,7 +62,7 @@ end
 -- can_use and use are tied to energy cards proper
 pokermon.energy.can_use = function(self, card)
   -- So we've trimmed down the energy checks to about four different functions that all culminate here
-  return poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end) or false
+  return pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end) or false
 end
 
 pokermon.energy.use = function(self, card, area, copier, exclude_spoon)
@@ -70,7 +70,7 @@ pokermon.energy.use = function(self, card, area, copier, exclude_spoon)
   play_sound('poke_energy_use', 1, 0.5)
   if not exclude_spoon then set_spoon_item(card) end
   -- check if valid target or not
-  local choice = poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
+  local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
   if choice then pokermon.energy.modify(choice, self.etype) end
 end
 

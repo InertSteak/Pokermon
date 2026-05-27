@@ -245,3 +245,12 @@ poke_add_shop_card = pokermon.add_shop_card
 
 ---@deprecated use `pokermon.remove_card` instead
 poke_remove_card = pokermon.remove_card
+
+---@deprecated use `pokermon.find_card` instead
+poke_find_card = pokermon.find_card
+
+---@deprecated use `pokermon.find_playing_card` instead
+poke_find_playing_card = pokermon.find_playing_card
+
+---@deprecated use `pokermon.find_leftmost_or_highlighted` instead
+poke_find_leftmost_or_highlighted = pokermon.find_leftmost_or_highlighted
