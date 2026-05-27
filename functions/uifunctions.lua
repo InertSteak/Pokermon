@@ -10,7 +10,7 @@ pokermon.ui.create_scry_cardarea = function()
    return scry_view
 end
 
-cards_dont_match = function(card1, card2)
+pokermon.cards_dont_match = function(card1, card2)
    if type(card1) ~= type(card2) then return true end
    if card1.config.center ~= card2.config.center then return true end
    if card1.config.card_key ~= card2.config.card_key then return true end
@@ -25,7 +25,7 @@ cards_dont_match = function(card1, card2)
    return false
 end
 
-hide_scry_cardarea = function()
+pokermon.ui.hide_scry_cardarea = function()
    G.scry_view.states.visible = false
    local to_kill = #G.scry_view.cards
    for i = to_kill, 1, -1 do
@@ -33,7 +33,7 @@ hide_scry_cardarea = function()
    end
 end
 
-update_scry_cardarea = function(scry_view)
+pokermon.ui.update_scry_cardarea = function(scry_view)
    if not scry_view.states.visible then
       local to_kill = #scry_view.cards
       for i = to_kill, 1, -1 do
@@ -57,11 +57,11 @@ update_scry_cardarea = function(scry_view)
 
    local i = 1
    for k, card in pairs(deck) do
-      while i <= #scry_view.cards and cards_dont_match(card,scry_view.cards[i]) do
+      while i <= #scry_view.cards and pokermon.cards_dont_match(card,scry_view.cards[i]) do
          scry_view.cards[i]:start_dissolve({G.C.PURPLE})
          i = i + 1
       end
-      if k <= G.GAME.scry_amount and cards_dont_match(card, scry_view.cards[i]) then
+      if k <= G.GAME.scry_amount and pokermon.cards_dont_match(card, scry_view.cards[i]) then
          local temp_card = copy_card(card, nil, 0.7)
          temp_card.states.drag.can = false
          temp_card.states.hover.can = false

@@ -115,7 +115,7 @@ payload = '''
     if not self.scry_view and type(pokermon.ui.create_scry_cardarea) == "function" then
       self.scry_view = pokermon.ui.create_scry_cardarea()
     elseif self.scry_view then
-      update_scry_cardarea(self.scry_view)
+      pokermon.ui.update_scry_cardarea(self.scry_view)
     end
 '''
 match_indent = true
@@ -147,7 +147,7 @@ target = "game.lua"
 pattern = "function Game:update_round_eval(dt)"
 position = "after"
 payload = '''
-    if G.scry_view then hide_scry_cardarea() end
+    if G.scry_view then pokermon.ui.hide_scry_cardarea() end
 '''
 match_indent = true
 
