@@ -219,3 +219,9 @@ energy_use = pokermon.energy.use
 
 ---@deprecated use `pokermon.energy.increase` instead
 energy_increase = pokermon.energy.increase
+
+---@deprecated use `pokermon.energy.modify` instead
+increment_energy = pokermon.energy.modify
+
+---@deprecated use `pokermon.energy.energize` instead
+energize = pokermon.energy.energize

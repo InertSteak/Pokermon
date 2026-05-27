@@ -71,7 +71,7 @@ pokermon.energy.use = function(self, card, area, copier, exclude_spoon)
   if not exclude_spoon then set_spoon_item(card) end
   -- check if valid target or not
   local choice = poke_find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
-  if choice then increment_energy(choice, self.etype) end
+  if choice then pokermon.energy.modify(choice, self.etype) end
 end
 
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
@@ -79,13 +79,13 @@ pokermon.energy.increase = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   if pokermon.energy.can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
       (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - get_total_energy(card) then
-    increment_energy(card, etype, amount, silent)
+    pokermon.energy.modify(card, etype, amount, silent)
   end
 end
 
--- increment_energy runs the last type checks, as well as the colorless penalty check for energy type
--- if for some strange reason there's ever a desire to skip incrementing the energy *counts*, call energize directly
-increment_energy = function(card, etype, amount, silent)
+-- pokermon.energy.modify runs the last type checks, as well as the colorless penalty check for energy type
+-- if for some strange reason there's ever a desire to skip incrementing the energy *counts*, call pokermon.energy.energize directly
+pokermon.energy.modify = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   -- checking if the colorless penalty applies
   local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
@@ -93,24 +93,24 @@ increment_energy = function(card, etype, amount, silent)
   if (pokermon.energy.energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.energy_count = card.ability.extra.energy_count and (card.ability.extra.energy_count + amount) or amount
-      energize(card, etype, false, silent, amount)
+      pokermon.energy.energize(card, etype, false, silent, amount)
     elseif pokermon.energy.is_energizable(card) then
       card.ability.energy_count = card.ability.energy_count and (card.ability.energy_count + amount) or amount
-      energize(card, etype, false, silent, amount)
+      pokermon.energy.energize(card, etype, false, silent, amount)
     end
   -- We only need to increase c_energy_count if the colorless penalty applies to that energy in the first place
   elseif c_penalty then
     if card.ability.extra and type(card.ability.extra) == "table" then
       card.ability.extra.c_energy_count = card.ability.extra.c_energy_count and (card.ability.extra.c_energy_count + amount) or amount
-      energize(card, etype, false, silent, amount)
+      pokermon.energy.energize(card, etype, false, silent, amount)
     elseif pokermon.energy.is_energizable(card) then
       card.ability.c_energy_count = card.ability.c_energy_count and (card.ability.c_energy_count + amount) or amount
-      energize(card, etype, false, silent, amount)
+      pokermon.energy.energize(card, etype, false, silent, amount)
     end
   end
 end
 
-energize = function(card, etype, evolving, silent, amount, center)
+pokermon.energy.energize = function(card, etype, evolving, silent, amount, center)
   if not amount then amount = 1 end
   if not center then center = card.config.center end
   local rounded

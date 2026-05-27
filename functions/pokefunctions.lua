@@ -220,7 +220,7 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
       new_card:set_ability(card)
     end
     if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
-      energize(card, nil, true, true)
+      pokermon.energy.energize(card, nil, true, true)
     end
   end
   

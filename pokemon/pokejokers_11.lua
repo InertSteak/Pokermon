@@ -44,7 +44,7 @@ local delcatty={
       if type(other_joker.ability.extra) == 'table' then
         fake_card.ability.extra = setmetatable({}, {__index = other_joker.ability.extra})
       end
-      energize(fake_card, nil, nil, true, card.ability.extra.energy_buff)
+      pokermon.energy.energize(fake_card, nil, nil, true, card.ability.extra.energy_buff)
 
       other_joker.gone = true --prevent evolution
       local true_ability = other_joker.ability

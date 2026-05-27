@@ -89,7 +89,7 @@ local bird_energy = {
   use = function(self, card, area, copier)
     local choice = pokermon.energy.can_use(self, card)
     if choice then
-      increment_energy(choice, self.etype, pokermon.energy.max + (G.GAME.energy_plus or 0))
+      pokermon.energy.modify(choice, self.etype, pokermon.energy.max + (G.GAME.energy_plus or 0))
     end
     G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,

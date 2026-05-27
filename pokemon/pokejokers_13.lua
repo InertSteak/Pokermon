@@ -812,7 +812,7 @@ local jirachi_copy = {
       --prevent evolution
       other_joker.gone = true
       for i = 1, card.ability.extra.energy_buff do
-        energize(fake_card, nil, nil, true)
+        pokermon.energy.energize(fake_card, nil, nil, true)
       end
 
       local true_ability = other_joker.ability

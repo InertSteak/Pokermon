@@ -870,7 +870,7 @@ jd_def["j_poke_delcatty"] = {
       if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
         true_copy = card.joker_display_values.fake_card
         while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
-          energize(true_copy, nil, nil, true)
+          pokermon.energy.energize(true_copy, nil, nil, true)
           if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
             true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
           else
@@ -885,7 +885,7 @@ jd_def["j_poke_delcatty"] = {
         card.joker_display_values.to_track = {}
         card.joker_display_values.extra_to_track = {}
         for i = 1, card.ability.extra.energy_buff do
-          energize(true_copy, nil, nil, true)
+          pokermon.energy.energize(true_copy, nil, nil, true)
         end
         for k,v in pairs(copied_joker.ability) do
           if type(true_copy.ability[k]) ~= "table" then
