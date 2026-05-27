@@ -5,7 +5,7 @@ if SMODS.current_mod then
   end
 end
 
-pokermon = { energy = {}, ui = {} }
+pokermon = { energy = {}, ui = {}, sprites = {} }
 SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
@@ -328,7 +328,7 @@ function SMODS.current_mod.menu_cards()
   local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
 
   local sprite_info = PokemonSprites['unown']
-  local atlas_prefix = poke_get_atlas_prefix('unown', sprite_info)
+  local atlas_prefix = pokermon.sprites.get_atlas_prefix('unown', sprite_info)
 
   local atlas = 'poke_' .. atlas_prefix .. 'TitleCard'
 

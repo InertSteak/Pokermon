@@ -6,8 +6,8 @@ pokermon.load_pokemon = function(item)
     item.config = {}
   end
   if not item.poke_custom_prefix then
-    poke_load_atlas(item)
-    poke_load_sprites(item)
+    pokermon.sprites.load_atlas(item)
+    pokermon.sprites.load_sprites(item)
   end
   if item.ptype then
     if item.config and item.config.extra then

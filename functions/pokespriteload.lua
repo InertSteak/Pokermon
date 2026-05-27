@@ -1341,7 +1341,7 @@ local poke_artist_info = {
   Xenellia = {display_name = 'Xenellia', artist_colour = HEX("9B0000")}
 }
 
-poke_load_sprites = function(item)
+pokermon.sprites.load_sprites = function(item)
   if item.animated then return end
   local sprite_info = PokemonSprites[item.name]
   local sprite = nil
@@ -1365,7 +1365,7 @@ poke_load_sprites = function(item)
   end
 end
 
-poke_get_atlas_prefix = function(name, sprite_info)
+pokermon.sprites.get_atlas_prefix = function(name, sprite_info)
   local atlas_prefix = nil
   if pokermon_config.pokemon_spritesheet_overrides[name] then return pokermon_config.pokemon_spritesheet_overrides[name] end
   if sprite_info.alts and sprite_info.alts[pokermon_config.pokemon_spritesheet_atlas] then
@@ -1376,7 +1376,7 @@ poke_get_atlas_prefix = function(name, sprite_info)
   return atlas_prefix
 end
 
-poke_get_atlas_string = function(atlas_prefix, gen_atlas, others_atlas)
+pokermon.sprites.get_atlas_string = function(atlas_prefix, gen_atlas, others_atlas)
   if gen_atlas then
     local gen_string
     if gen_atlas < 10 then
@@ -1392,10 +1392,10 @@ poke_get_atlas_string = function(atlas_prefix, gen_atlas, others_atlas)
   end
 end
 
-poke_load_atlas = function(item)
+pokermon.sprites.load_atlas = function(item)
   if not item.poke_custom_atlas and PokemonSprites[item.name] then
     local sprite_info = PokemonSprites[item.name]
-    local atlas_prefix = poke_get_atlas_prefix(item.name, sprite_info)
+    local atlas_prefix = pokermon.sprites.get_atlas_prefix(item.name, sprite_info)
     if sprite_info.alts and sprite_info.alts[atlas_prefix] and sprite_info.alts[atlas_prefix].artist then
       item.artist = sprite_info.alts[atlas_prefix].artist
       local soul_pos = sprite_info.alts[atlas_prefix].soul_pos
@@ -1412,9 +1412,9 @@ poke_load_atlas = function(item)
       item.artist = sprite_info.base.artist
     end
     if not item.animated then
-      item.atlas = poke_get_atlas_string(atlas_prefix, sprite_info.gen_atlas, sprite_info.others_atlas)
+      item.atlas = pokermon.sprites.get_atlas_string(atlas_prefix, sprite_info.gen_atlas, sprite_info.others_atlas)
       if sprite_info.lookup_gen_atlas then
-        item.poke_lookup_atlas = poke_get_atlas_string(atlas_prefix, sprite_info.lookup_gen_atlas)
+        item.poke_lookup_atlas = pokermon.sprites.get_atlas_string(atlas_prefix, sprite_info.lookup_gen_atlas)
       end
     end
   end

@@ -303,3 +303,17 @@ poke_create_UIBox_your_collection = pokermon.ui.create_UIBox_your_collection
 
 ---@deprecated use `pokermon.add_to_family` instead
 poke_add_to_family = pokermon.add_to_family
+
+-- pokespriteload.lua
+
+---@deprecated use `pokermon.sprites.load_sprites` instead
+poke_add_to_family = pokermon.sprites.load_sprites
+
+---@deprecated use `pokermon.sprites.get_atlas_prefix` instead
+poke_get_atlas_prefix = pokermon.sprites.get_atlas_prefix
+
+---@deprecated use `pokermon.sprites.get_atlas_string` instead
+poke_get_atlas_string = pokermon.sprites.get_atlas_string
+
+---@deprecated use `pokermon.sprites.load_atlas` instead
+poke_load_atlas = pokermon.sprites.load_atlas

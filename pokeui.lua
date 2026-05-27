@@ -489,7 +489,7 @@ local function get_sprite_keys_by_artist(artist)
       key.atlas = 'poke_'..sprite.anim_atlas
       key.pos = { x = 0, y = 0 }
     else
-      key.atlas = 'poke_'..poke_get_atlas_string(sprite.atlas_prefix, sprite.gen_atlas, sprite.others_atlas)
+      key.atlas = 'poke_'..pokermon.sprites.get_atlas_string(sprite.atlas_prefix, sprite.gen_atlas, sprite.others_atlas)
       key.pos = sprite.pos
       key.soul_pos = sprite.soul_pos
     end
