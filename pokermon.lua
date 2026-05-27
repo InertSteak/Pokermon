@@ -5,7 +5,7 @@ if SMODS.current_mod then
   end
 end
 
-pokermon = { energy = {} }
+pokermon = { energy = {}, ui = {} }
 SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them

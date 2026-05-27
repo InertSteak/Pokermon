@@ -78,7 +78,7 @@ update_scry_cardarea = function(scry_view)
    }))
 end
 
-poke_random_text = function(strings, config)
+pokermon.ui.random_text = function(strings, config)
   config = config or {}
   local c_colours = config.colours or {G.C.UI.TEXT_DARK}
   if config.poke_rep_string and config.poke_rep_num then

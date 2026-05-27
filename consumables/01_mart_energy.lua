@@ -63,9 +63,9 @@ local bird_energy = {
             colour = G.C.CLEAR,
           },
           nodes = {
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
               { n = G.UIT.T, config = { text = ' +'..(pokermon.energy.max + (G.GAME.energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
             }
           },
           {n = G.UIT.R,
@@ -76,7 +76,7 @@ local bird_energy = {
           },
           nodes = {
               { n = G.UIT.T, config = { text = '('..localize('k_poke_ignores')..' ', colour = G.C.JOKER_GREY, scale = 0.32 } },
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings2, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(energy_strings2, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_limit')..')', colour = G.C.JOKER_GREY, scale = 0.32 } },
             }
           },
