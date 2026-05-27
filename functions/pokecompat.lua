@@ -290,3 +290,8 @@ poke_get_hazard_level_vars = pokermon.get_hazard_level_vars
 
 ---@deprecated use `pokermon.suit_check` instead
 poke_suit_check = pokermon.suit_check
+
+-- uifunctions.lua
+
+---@deprecated use `pokermon.ui.create_your_collection_card` instead
+poke_create_your_collection_card = pokermon.ui.create_your_collection_card

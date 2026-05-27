@@ -140,7 +140,7 @@ pokermon.ui.set_card_type_badge = function(card, badges, center)
 end
 
 -- Collection Grid UI helper functions
-function poke_create_your_collection_card(key, x, y, params)
+function pokermon.ui.create_your_collection_card(key, x, y, params)
   local form = type(key == 'table') and key.form
   local center_key = type(key == 'table') and key.key or key
   local center = G.P_CENTERS[center_key]
@@ -194,7 +194,7 @@ local function populate_cardareas(keys, options)
   local page = options.page or 1
   local rows = options.rows or 3
   local cols = options.cols or 5
-  local create_card_func = options.create_card_func or poke_create_your_collection_card
+  local create_card_func = options.create_card_func or pokermon.ui.create_your_collection_card
   local offset = rows * cols * (page - 1)
 
   local marker = 1 + offset
@@ -230,7 +230,7 @@ function poke_create_UIBox_your_collection(args)
   local keys = args.keys or {}
   local rows = args.rows or 3
   local cols = args.cols or 5
-  local create_card_func = args.create_card_func or poke_create_your_collection_card
+  local create_card_func = args.create_card_func or pokermon.ui.create_your_collection_card
 
   local page_text = args.page_text or localize('k_page')
   local show_pagination = true

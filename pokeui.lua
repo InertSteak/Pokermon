@@ -780,7 +780,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
         keys = keys,
         cols = 3,
         create_card_func = function(key, x, y)
-          local card = poke_create_your_collection_card(key, x, y, { bypass_discovery_center = true })
+          local card = pokermon.ui.create_your_collection_card(key, x, y, { bypass_discovery_center = true })
           card.poke_change_sprite = true
           return card
         end,
