@@ -87,7 +87,7 @@ local hisuian_qwilfish = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      pokermon.add_hazards(card.ability.extra.hazard_ratio)
     end
     if context.hand_drawn then
       local count = 0
@@ -148,7 +148,7 @@ local overqwil = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.setting_blind then
-      poke_add_hazards(card.ability.extra.hazard_ratio)
+      pokermon.add_hazards(card.ability.extra.hazard_ratio)
     end
     if context.hand_drawn then
       local count = 0
@@ -204,7 +204,7 @@ local tarountula = {
     pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
 
     return {vars = {abbr.hazard_level, abbr.rounds, abbr.h_size}}
@@ -222,11 +222,11 @@ local tarountula = {
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "hand_size", "passive", "round_evo"},
 }
@@ -239,7 +239,7 @@ local spidops = {
     pokermon.type_tooltip(self, info_queue, card)
     -- just to shorten function
     local abbr = card.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
     return {vars = {abbr.hazard_level, abbr.h_size, abbr.card_goal, math.max(0, abbr.card_goal - abbr.cards_added)}}
@@ -270,11 +270,11 @@ local spidops = {
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "hand_size", "passive", "modify_card", "seals"},
 }

@@ -471,7 +471,7 @@ tdmsg = function(tablename)
   end
 end
 
-poke_add_hazards = function(ratio, flat, area)
+pokermon.add_hazards = function(ratio, flat, area)
   local hazards = {}
   flat = flat or 0
   area = area or G.deck
@@ -492,7 +492,7 @@ poke_add_hazards = function(ratio, flat, area)
   playing_card_joker_effects(hazards)
 end
 
-poke_set_hazards = function(amount)
+pokermon.set_hazards = function(amount)
   for i = 1, amount do
     local valid = {}
     for k, v in pairs(G.deck.cards) do
@@ -507,18 +507,18 @@ poke_set_hazards = function(amount)
   end
 end
 
-poke_change_hazard_max = function(mod)
+pokermon.change_hazard_max = function(mod)
   G.GAME.hazard_max = G.GAME.hazard_max or 3
   G.GAME.hazard_max = G.GAME.hazard_max + mod
 end
 
-poke_change_hazard_level = function(mod)
+pokermon.change_hazard_level = function(mod)
   local max = G.GAME.hazard_max or 3
   G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level or 0
   G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level + mod
 end
 
-poke_get_hazard_level_vars = function()
+pokermon.get_hazard_level_vars = function()
   local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level or 0)
   local max = G.GAME.hazard_max or 3
   local vars = {level, max}

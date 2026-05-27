@@ -295,7 +295,7 @@ function SMODS.current_mod.calculate(self, context)
           trigger = 'before',
           delay = 0.4,
           func = function()
-            poke_add_hazards(nil, hazards, G.hand)
+            pokermon.add_hazards(nil, hazards, G.hand)
             return true
           end
       }))

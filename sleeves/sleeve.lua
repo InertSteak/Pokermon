@@ -405,8 +405,8 @@ local diceysleeve = {
     else
       G.E_MANAGER:add_event(Event({
         func = function()
-          poke_change_hazard_max(self.config.hazard_layer_max)
-          poke_change_hazard_level(self.config.hazard_layer)
+          pokermon.change_hazard_max(self.config.hazard_layer_max)
+          pokermon.change_hazard_level(self.config.hazard_layer)
           G.hand:change_size(self.config.h_size)
           
           G.GAME.modifiers.enhance_bonus = 'm_poke_hazard'

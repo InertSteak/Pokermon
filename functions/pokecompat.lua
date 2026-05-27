@@ -272,3 +272,18 @@ poke_unhighlight_cards = pokermon.unhighlight_cards
 
 ---@deprecated use `pokermon.is_in_collection` instead
 poke_is_in_collection = pokermon.is_in_collection
+
+---@deprecated use `pokermon.add_hazards` instead
+poke_add_hazards = pokermon.add_hazards
+
+---@deprecated use `pokermon.set_hazards` instead
+poke_set_hazards = pokermon.set_hazards
+
+---@deprecated use `pokermon.change_hazard_max` instead
+poke_change_hazard_max = pokermon.change_hazard_max
+
+---@deprecated use `pokermon.change_hazard_level` instead
+poke_change_hazard_level = pokermon.change_hazard_level
+
+---@deprecated use `pokermon.get_hazard_level_vars` instead
+poke_get_hazard_level_vars = pokermon.get_hazard_level_vars
