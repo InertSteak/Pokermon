@@ -800,7 +800,7 @@ local slowpoke={
       if SMODS.pseudorandom_probability(card, 'slowpoke', card.ability.extra.num, card.ability.extra.dem, 'slowpoke') then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_shell"}
         local add_card = SMODS.create_card(temp_card)
-        poke_add_shop_card(add_card, card)
+        pokermon.add_shop_card(add_card, card)
         add_card.cost = 0
       end
     end

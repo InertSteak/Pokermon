@@ -541,7 +541,7 @@ local glaceon={
         local card_to_copy = pseudorandom_element(G.deck.cards, pseudoseed('deckglaceon'))
         local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
         copy:set_ability(G.P_CENTERS.m_glass, nil, true)
-        poke_add_shop_card(copy, card)
+        pokermon.add_shop_card(copy, card)
       end
     end
   end,

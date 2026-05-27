@@ -231,3 +231,17 @@ energize = pokermon.energy.energize
 
 ---@deprecated use `pokermon.energy.get_total_energy` instead
 get_total_energy = pokermon.energy.get_total_energy
+
+-- pokeutils.lua
+
+---@deprecated use `pokermon.add_card` instead
+poke_add_card = pokermon.add_card
+
+---@deprecated use `pokermon.add_playing_card` instead
+poke_add_playing_card = pokermon.add_playing_card
+
+---@deprecated use `pokermon.add_shop_card` instead
+poke_add_shop_card = pokermon.add_shop_card
+
+---@deprecated use `pokermon.remove_card` instead
+poke_remove_card = pokermon.remove_card

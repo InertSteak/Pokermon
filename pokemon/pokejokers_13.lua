@@ -183,7 +183,7 @@ local huntail ={
 
         if #G.hand.cards > 0 then
           local target = pseudorandom_element(G.hand.cards, pseudoseed('huntail'))
-          poke_remove_card(target, card)
+          pokermon.remove_card(target, card)
         end
       end
     end

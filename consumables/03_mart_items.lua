@@ -111,7 +111,7 @@ local firestone = {
       juice_flip(card, true)
       
       local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
-      poke_remove_card(target, card)
+      pokermon.remove_card(target, card)
       poke_unhighlight_cards()
       
       pokermon.evo_item_use_total(self, card, area, copier)
@@ -217,7 +217,7 @@ local thunderstone = {
         cards_added[#cards_added + 1] = _card
       end
       playing_card_joker_effects(cards_added)
-      poke_remove_card(selected, card)
+      pokermon.remove_card(selected, card)
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -606,7 +606,7 @@ local icestone = {
       juice_flip(card, true)
       for i = 1, #G.hand.highlighted do
         if SMODS.pseudorandom_probability(card, 'icestone', self.config.num, self.config.dem, 'icestone') then
-          poke_remove_card(G.hand.highlighted[i], card)
+          pokermon.remove_card(G.hand.highlighted[i], card)
         end
       end
 
@@ -702,7 +702,7 @@ local metalcoat = {
     
     local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
     copy:set_ability(G.P_CENTERS.m_steel, nil, true)
-    poke_add_card(copy, card)
+    pokermon.add_card(copy, card)
     poke_unhighlight_cards()
   end,
   in_pool = function(self)

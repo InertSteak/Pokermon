@@ -389,7 +389,7 @@ local tauros={
       if SMODS.pseudorandom_probability(card, 'tauros', card.ability.extra.num, card.ability.extra.dem, 'tauros') then
         local temp_card = {set = "Joker", area = G.shop_jokers, key = "j_poke_taurosh"}
         local add_card = SMODS.create_card(temp_card)
-        poke_add_shop_card(add_card, card)
+        pokermon.add_shop_card(add_card, card)
       end
     end
   end,

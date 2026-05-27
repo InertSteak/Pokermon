@@ -522,7 +522,7 @@ local slugma={
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
       card.ability.extra.remove = false
-      poke_remove_card(G.hand.cards[1], card)
+      pokermon.remove_card(G.hand.cards[1], card)
     end
     if context.joker_main then
       return {
@@ -576,7 +576,7 @@ local magcargo={
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
       card.ability.extra.remove = false
-      poke_remove_card(G.hand.cards[1], card)
+      pokermon.remove_card(G.hand.cards[1], card)
     end
     if context.joker_main then
       return {

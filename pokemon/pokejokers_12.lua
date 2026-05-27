@@ -699,7 +699,7 @@ local anorith={
 
         if #targets > 0 then
           local target = pseudorandom_element(targets, pseudoseed('anorith'))
-          poke_remove_card(target, card)
+          pokermon.remove_card(target, card)
         end
 
         if not context.blueprint then
@@ -709,7 +709,7 @@ local anorith={
 
       if card.ability.extra.ancient_count > 1 then
         if SMODS.pseudorandom_probability(card, 'anorith', card.ability.extra.num, card.ability.extra.dem, 'anorith') then
-          poke_add_playing_card({set = 'Base', rank = card.ability.extra.rank, area = G.deck})
+          pokermon.add_playing_card({set = 'Base', rank = card.ability.extra.rank, area = G.deck})
         end
       end
 
@@ -771,13 +771,13 @@ local armaldo={
 
         if #targets > 0 then
           local target = pseudorandom_element(targets, pseudoseed('anorith'))
-          poke_remove_card(target, card)
+          pokermon.remove_card(target, card)
         end
       end
 
       if card.ability.extra.ancient_count > 1 then
         if SMODS.pseudorandom_probability(card, 'armaldo', card.ability.extra.num, card.ability.extra.dem, 'armaldo') then
-          poke_add_playing_card({set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck})
+          pokermon.add_playing_card({set = 'Enhanced', rank = card.ability.extra.rank, area = G.deck})
         end
       end
 

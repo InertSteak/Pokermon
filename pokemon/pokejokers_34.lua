@@ -48,7 +48,7 @@ local gimmighoul={
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
         new_card:set_edition(edition, true)
-        poke_add_shop_card(new_card, card)
+        pokermon.add_shop_card(new_card, card)
         new_card.cost = 0
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)

@@ -110,7 +110,7 @@ juice_flip_single = function(card, index)
   }))
 end
 
-poke_add_card = function(add_card, card, area)
+pokermon.add_card = function(add_card, card, area)
       if not area then area = G.hand end
       add_card:add_to_deck()
       G.deck.config.card_limit = G.deck.config.card_limit + 1
@@ -132,7 +132,7 @@ poke_add_card = function(add_card, card, area)
       }
 end
 
-poke_add_playing_card = function(t, no_joker_effect)
+pokermon.add_playing_card = function(t, no_joker_effect)
   local playing_card = SMODS.add_card(t)
   if not no_joker_effect then
     playing_card_joker_effects({playing_card})
@@ -140,7 +140,7 @@ poke_add_playing_card = function(t, no_joker_effect)
   return playing_card
 end
 
-poke_add_shop_card = function(add_card, card)
+pokermon.add_shop_card = function(add_card, card)
     if G.GAME.shop.joker_max == 1 then
       G.shop_jokers.config.card_limit = G.GAME.shop.joker_max + 1
       G.shop_jokers.T.w = math.min((G.GAME.shop.joker_max + 1)*1.02*G.CARD_W,4.08*G.CARD_W)
@@ -161,7 +161,7 @@ poke_add_shop_card = function(add_card, card)
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_plus_shop'), colour = G.C.GREEN})
 end
 
-poke_remove_card = function(target, card, trigger)
+pokermon.remove_card = function(target, card, trigger)
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.4,

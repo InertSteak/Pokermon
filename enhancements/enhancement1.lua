@@ -19,7 +19,7 @@ local hazard = {
    calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition and context.cardarea == G.hand and context.playing_card_end_of_round then
       if SMODS.pseudorandom_probability(card, 'hazard', self.config.num, self.config.dem, 'hazard') then
-        poke_remove_card(card, card)
+        pokermon.remove_card(card, card)
       end
     end
    end,
