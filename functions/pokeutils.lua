@@ -731,7 +731,7 @@ pokermon.convert_to_set = function(element_or_list)
   end
 end
 
-poke_get_consumeables = function(set)
+pokermon.get_consumeables = function(set)
   local consumeables = {}
   if G.STAGE ~= G.STAGES.RUN then return consumeables end
   local count = 0

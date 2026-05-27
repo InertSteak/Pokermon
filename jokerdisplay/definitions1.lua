@@ -2415,7 +2415,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2433,7 +2433,7 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end

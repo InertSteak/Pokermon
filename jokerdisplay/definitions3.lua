@@ -617,7 +617,7 @@ jd_def["j_poke_ralts"] = {
   },
   calc_function = function(card)
     local energized_jokers = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
       if pokermon.energy.get_total_energy(v) > 0 then
@@ -637,7 +637,7 @@ jd_def["j_poke_kirlia"] = {
   },
   calc_function = function(card)
     local energized_jokers = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
       if pokermon.energy.get_total_energy(v) > 0 then

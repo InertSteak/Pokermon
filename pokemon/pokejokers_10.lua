@@ -197,7 +197,7 @@ local ralts={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     local energized = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
         if pokermon.energy.get_total_energy(v) > 0 then
@@ -221,7 +221,7 @@ local ralts={
   calculate = function(self, card, context)
     if context.joker_main then
       local energized = 0
-      local planets = #poke_get_consumeables('Planet')
+      local planets = #pokermon.get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
         if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
@@ -245,7 +245,7 @@ local kirlia={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     local energized = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
         if pokermon.energy.get_total_energy(v) > 0 then
@@ -269,7 +269,7 @@ local kirlia={
   calculate = function(self, card, context)
     if context.joker_main then
       local energized = 0
-      local planets = #poke_get_consumeables('Planet')
+      local planets = #pokermon.get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
         if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
