@@ -175,7 +175,7 @@ local bunnelby = {
               card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
 						end
           else
-            poke_nope(card)
+            pokermon.nope(card)
 					end
 				end
 			end
@@ -232,7 +232,7 @@ local diggersby = {
               message_colour = G.C.MULT,
             })
           else
-            poke_nope(card)
+            pokermon.nope(card)
           end
         end
 			end

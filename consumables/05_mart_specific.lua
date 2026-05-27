@@ -40,7 +40,7 @@ local leek = {
       local edition = poll_edition('wheel_of_fortune', nil, true, true)
       card:set_edition(edition, true)
     else
-      poke_nope(card)
+      pokermon.nope(card)
     end
     card.ability.extra.usable = false
     card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })

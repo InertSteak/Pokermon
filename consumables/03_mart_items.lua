@@ -315,7 +315,7 @@ local moonstone = {
         local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
         SMODS.smart_level_up_hand(card, hand)
       else
-        poke_nope(card)
+        pokermon.nope(card)
       end
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)

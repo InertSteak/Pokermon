@@ -772,7 +772,7 @@ ease_hands_played = function(mod, instant, ...)
   return ease_hands_played_ref(mod, instant, ...)
 end
 
-poke_nope = function(card)
+pokermon.nope = function(card)
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.4,
