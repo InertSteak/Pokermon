@@ -707,7 +707,7 @@ local professor={
   in_pool = function(self)
     local grass_found, fire_found, water_found, pseudo_found, letsgo_found
     for _, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then grass_found = true end
         if v.starter and v.ptype == "Fire" then fire_found = true end
         if v.starter and v.ptype == "Water" then water_found = true end
@@ -781,7 +781,7 @@ local imposter_professor={
   in_pool = function(self)
     local grass_found, fire_found, water_found, pseudo_found, letsgo_found
     for _, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.knockoff_starter and v.ptype == "Grass" then grass_found = true end
         if v.knockoff_starter and v.ptype == "Fire" then fire_found = true end
         if v.knockoff_starter and v.ptype == "Water" then water_found = true end

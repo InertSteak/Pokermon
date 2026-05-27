@@ -415,7 +415,7 @@ pokermon.get_lowest_evo = function(card)
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
   
-  local family = poke_get_family_list(name)
+  local family = pokermon.get_family_list(name)
   
   --Nice and simple, we just want the lowest value, which should be the first
   --In the case the family is one joker, just return the name
@@ -435,7 +435,7 @@ pokermon.get_highest_evo = function(card)
   if POKE_STAGES[card.config.center.stage].next == nil then return end
 
   -- find the pokermon's family list
-  local family = poke_get_family_list(name)
+  local family = pokermon.get_family_list(name)
   -- if pokermon isn't in a family, return false
   if #family < 2 then return false end
   -- Check for max evo in family list, ignoring megas and aux pokermon
@@ -509,7 +509,7 @@ pokermon.get_previous_evo_from_center = function(center, full_key)
     if mega then return mega end
   end
 
-  local list = poke_get_family_list(name)
+  local list = pokermon.get_family_list(name)
   if #list < 2 then return end
   for i, v in pairs(list) do
     if name == (type(v) == 'table' and v.key or v) then index = i; break end
@@ -531,7 +531,7 @@ end
 pokermon.get_family_keys = function(card)
   local keys = {}
   local center = card.config.center
-  local line = poke_get_family_list(center.name)
+  local line = pokermon.get_family_list(center.name)
   local prefix = center.poke_custom_prefix or 'poke'
   local full_prefix = (center.poke_multi_item and 'c_' or 'j_')..prefix..'_'
   if #line > 1 then
@@ -844,7 +844,7 @@ pokermon.get_random_poke_key = function(pseed, stage, pokerarity, _area, poketyp
     if v.stage and v.stage ~= "Other"
         and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and pokermon.get_gen_allowed(v)
         and not (poketype and poketype ~= v.ptype) and not exclude_types[v.ptype]
-        and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega"
+        and not pokermon.family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega"
         and not exclude_keys[v.key] and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
       if v.enhancement_gate then

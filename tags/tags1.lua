@@ -259,7 +259,7 @@ local starter_tag = {
     local pika_eevee = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end

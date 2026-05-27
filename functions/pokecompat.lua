@@ -298,3 +298,8 @@ poke_create_your_collection_card = pokermon.ui.create_your_collection_card
 
 ---@deprecated use `pokermon.ui.create_UIBox_your_collection` instead
 poke_create_UIBox_your_collection = pokermon.ui.create_UIBox_your_collection
+
+-- pokefamily.lua
+
+---@deprecated use `pokermon.add_to_family` instead
+poke_add_to_family = pokermon.add_to_family

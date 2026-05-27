@@ -68,7 +68,7 @@ pokermon.load_pokemon = function(item)
 end
 
 pokermon.add_family = function(family)
-  poke_add_to_family(nil, family)
+  pokermon.add_to_family(nil, family)
 end
 
 pokermon.Pokemon = function(item, custom_prefix, custom_atlas)
