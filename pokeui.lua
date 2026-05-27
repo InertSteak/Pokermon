@@ -307,7 +307,7 @@ end
 local pokermon_actual_credits_artists_create_grid = function()
   local page = G.pokermon_actual_credits_artists_grid_page or 1
   local rows, cols = 4, 5
-  local artist_list = poke_get_artist_list()
+  local artist_list = pokermon.sprites.get_artist_list()
   local row_nodes = {}
       
   local marker = 1 + rows * cols * (page - 1)
@@ -317,7 +317,7 @@ local pokermon_actual_credits_artists_create_grid = function()
     for j = marker, row_end do
       local artist = artist_list[j]
       if not artist then break end
-      local info = poke_get_artist_info(artist)
+      local info = pokermon.sprites.get_artist_info(artist)
       local button = {
         n = G.UIT.C,
         config = { align = "tm", padding = 0.1 },
@@ -478,7 +478,7 @@ end
 local function get_sprite_keys_by_artist(artist)
   local keys = {}
 
-  for _, sprite in ipairs(poke_get_artist_sprites(artist)) do
+  for _, sprite in ipairs(pokermon.sprites.get_artist_sprites(artist)) do
     local key = {}
 
     key.display_text = sprite.display_text or localize(get_series_localize_key(sprite.atlas_prefix))
@@ -499,7 +499,7 @@ local function get_sprite_keys_by_artist(artist)
 
   -- Jokers get special treatment because we only want jokers without alts
   for _, joker in ipairs(G.P_CENTER_POOLS["Joker"]) do
-    local layer = poke_get_artist_layer(joker, artist)
+    local layer = pokermon.sprites.get_artist_layer(joker, artist)
     if layer and joker.stage == 'Other' then
       keys[#keys+1] = { existing_key = joker.key, set = "Joker", layer = layer }
     end
@@ -507,7 +507,7 @@ local function get_sprite_keys_by_artist(artist)
 
   local add_pool_to_keys = function(pool)
     for _, item in pairs(pool) do
-      local layer = poke_get_artist_layer(item, artist)
+      local layer = pokermon.sprites.get_artist_layer(item, artist)
       if layer then
         keys[#keys+1] = { existing_key = item.key, set = item.set, layer = layer }
       end
@@ -534,7 +534,7 @@ local function get_sprite_keys_by_artist(artist)
 end
 
 local function pokermon_show_artist_info(artist)
-  local artist_info = poke_get_artist_info(artist)
+  local artist_info = pokermon.sprites.get_artist_info(artist)
   local display_name = artist_info.display_name
   local text_colour = artist_info.artist_colour
   local colour = artist_info.highlight_colour
@@ -891,7 +891,7 @@ function poke_artist_credit(artists)
   local outline_nodes = {}
 
   for _, artist in ipairs(artists) do
-    local artist_info = poke_get_artist_info(artist) or {}
+    local artist_info = pokermon.sprites.get_artist_info(artist) or {}
     local artist_name = artist_info.display_name or (type(artist) == 'table' and artist.name) or artist
     local artist_colour = artist_info.artist_colour or G.C.FILTER
     local artist_highlight = artist_info.highlight_colour or G.C.CLEAR

@@ -1424,11 +1424,11 @@ local artistname = function(record)
   return type(record) == 'table' and record.name or record
 end
 
-poke_get_artist_info = function(name_or_record)
+pokermon.sprites.get_artist_info = function(name_or_record)
   return poke_artist_info[artistname(name_or_record)]
 end
 
-poke_get_artist_list = function()
+pokermon.sprites.get_artist_list = function()
   local list = {}
   for artist, _ in pairs(poke_artist_info) do
     list[#list+1] = artist
@@ -1437,7 +1437,7 @@ poke_get_artist_list = function()
   return list
 end
 
-function poke_get_artist_layer(obj, by_artist)
+pokermon.sprites.get_artist_layer = function(obj, by_artist)
   local artists = (type(obj.artist) == 'table' and not obj.artist.name)
       and obj.artist
       or { obj.artist }
@@ -1450,7 +1450,7 @@ function poke_get_artist_layer(obj, by_artist)
   end
 end
 
-poke_get_artist_sprites = function(artist)
+pokermon.sprites.get_artist_sprites = function(artist)
   local sprites = {}
 
   local add_sprite_to_list = function(sprite, layer, atlas_prefix, alt)
@@ -1487,14 +1487,14 @@ poke_get_artist_sprites = function(artist)
 
   for _, sprite in ipairs(PokemonSprites.list) do
     if sprite.base and sprite.base.artist then
-      local layer = poke_get_artist_layer(sprite.base, artist)
+      local layer = pokermon.sprites.get_artist_layer(sprite.base, artist)
       if layer then
         add_sprite_to_list(sprite, layer, "AtlasJokersBasic")
       end
     end
     if sprite.alts then
       for atlas_prefix, alt in pairs(sprite.alts) do
-        local layer = poke_get_artist_layer(alt, artist)
+        local layer = pokermon.sprites.get_artist_layer(alt, artist)
 
         if layer then
           add_sprite_to_list(sprite, layer, atlas_prefix, alt)
@@ -1506,7 +1506,7 @@ poke_get_artist_sprites = function(artist)
   return sprites
 end
 
-poke_get_sprite_artists = function(name)
+pokermon.sprites.get_sprite_artists = function(name)
   local sprite_info = PokemonSprites[name]
   local artists = {}
   if sprite_info then
