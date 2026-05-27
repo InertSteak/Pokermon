@@ -102,7 +102,7 @@ local pumpkaboo={
     end
   end,
   set_sprites = function(self, card, front)
-    if poke_can_set_sprite(card) then
+    if pokermon.can_set_sprite(card) then
       if card.loaded then
         card.loaded = nil
         self:set_ability(card)
@@ -218,7 +218,7 @@ local gourgeist={
     end
   end,
   set_sprites = function(self, card, front)
-    if poke_can_set_sprite(card) then
+    if pokermon.can_set_sprite(card) then
       if card.loaded then
         card.loaded = nil
         self:set_ability(card)

@@ -823,8 +823,8 @@ end
 pokermon.get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys, exclude_types)
   local poke_keys = {}
   local poke_key
-  exclude_keys = poke_convert_to_set(exclude_keys) or {}
-  exclude_types = poke_convert_to_set(exclude_types) or {}
+  exclude_keys = pokermon.convert_to_set(exclude_keys) or {}
+  exclude_types = pokermon.convert_to_set(exclude_types) or {}
 
   if pokerarity then
     local rarities = { common = 1, uncommon = 2, rare = 3, legendary = 4 }
@@ -837,8 +837,8 @@ pokermon.get_random_poke_key = function(pseed, stage, pokerarity, _area, poketyp
     end
   end
 
-  local valid_stages = poke_convert_to_set(stage)
-  local valid_rarities = poke_convert_to_set(pokerarity)
+  local valid_stages = pokermon.convert_to_set(stage)
+  local valid_rarities = pokermon.convert_to_set(pokerarity)
 
   for k, v in pairs(G.P_CENTER_POOLS.Joker) do
     if v.stage and v.stage ~= "Other"

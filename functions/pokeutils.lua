@@ -684,7 +684,7 @@ pokermon.set_previous_evo_win = function(center)
   end
 end
 
-poke_can_set_sprite = function(card)
+pokermon.can_set_sprite = function(card)
   if pokermon.is_in_collection(card) and not card.discovered then return false end
   return true
 end
@@ -715,13 +715,13 @@ pokermon.get_dex_number = function(name)
 end
 
 --- Creates a Set of all the values in a given list, or a Set with 1 given value. Returns nil in place of empty Sets.
-poke_convert_to_set = function(element_or_list)
+pokermon.convert_to_set = function(element_or_list)
   if element_or_list then
     local set
     if type(element_or_list) == 'table' then
       for k, v in pairs(element_or_list) do
         set = set or {}
-local key = v == true and k or v
+        local key = v == true and k or v
         set[key] = true
       end
     else
