@@ -194,7 +194,7 @@ local zorua = {
     return pokermon.level_evo(self, card, context, "j_poke_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
-    poke_set_card_type_badge(card, badges, self:get_illusion(card))
+    pokermon.ui.set_card_type_badge(card, badges, self:get_illusion(card))
   end,
   set_sprites = function(self, card, front)
     local center = self:get_illusion(card)

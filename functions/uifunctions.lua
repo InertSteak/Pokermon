@@ -129,7 +129,7 @@ pokermon.ui.generate_illusion = function(other_center, info_queue, card, desc_no
   end
 end
 
-poke_set_card_type_badge = function(card, badges, center)
+pokermon.ui.set_card_type_badge = function(card, badges, center)
   if not center then center = card.config.center end
 
   local card_type = SMODS.Rarity:get_rarity_badge(center.rarity)
