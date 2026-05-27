@@ -247,9 +247,9 @@ local thickclub = {
   use = function(self, card, area, copier)
     local conv_card = G.hand.highlighted[1]
     local current_bonus = conv_card.ability.perma_bonus or 0
-    juice_flip(card)
+    pokermon.juice_flip(card)
     conv_card.ability.perma_bonus = current_bonus + self.config.bonus
-    juice_flip(card, true)
+    pokermon.juice_flip(card, true)
     delay(0.5)
     pokermon.unhighlight_cards()
     card.ability.extra.usable = false

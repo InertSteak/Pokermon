@@ -104,11 +104,11 @@ local firestone = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 4 then
-      juice_flip(card)
+      pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_mult, nil, true)
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       
       local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
       pokermon.remove_card(target, card)
@@ -153,7 +153,7 @@ local waterstone = {
     pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
-      juice_flip(card)
+      pokermon.juice_flip(card)
       if conv_card.ability.name == 'Bonus' then
         local bonus = math.min(self.config.max_chips, pokermon.total_chips(conv_card))
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
@@ -161,7 +161,7 @@ local waterstone = {
       else
         conv_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       delay(0.5)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
@@ -254,13 +254,13 @@ local leafstone = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
-      juice_flip_hand(card)
+      pokermon.juice_flip_hand(card)
       for i = 1, #G.hand.cards do
         if SMODS.pseudorandom_probability(card, 'leafstone', self.config.num, self.config.dem, 'leafstone') then
           G.hand.cards[i]:set_ability(G.P_CENTERS.m_lucky, nil, true)
         end
       end
-      juice_flip_hand(card, true)
+      pokermon.juice_flip_hand(card, true)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -356,12 +356,12 @@ local sunstone = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
-      juice_flip(card)
+      pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
         pokermon.vary_rank(G.hand.highlighted[i], nil, "sunstone")
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -599,11 +599,11 @@ local icestone = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
-      juice_flip(card)
+      pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_glass, nil, true)
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       for i = 1, #G.hand.highlighted do
         if SMODS.pseudorandom_probability(card, 'icestone', self.config.num, self.config.dem, 'icestone') then
           pokermon.remove_card(G.hand.highlighted[i], card)
@@ -650,7 +650,7 @@ local linkcable = {
     if G.hand.highlighted and #G.hand.highlighted == 2 then
       local rightmost = G.hand.highlighted[1]
       for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x > rightmost.T.x then rightmost = G.hand.highlighted[i] end end
-      juice_flip(card)
+      pokermon.juice_flip(card)
       for i=1, #G.hand.highlighted do
         if G.hand.highlighted[i] ~= rightmost then
           pokermon.vary_rank(G.hand.highlighted[i], false)
@@ -658,7 +658,7 @@ local linkcable = {
           pokermon.vary_rank(G.hand.highlighted[i], true)
         end
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       delay(0.5)
       pokermon.unhighlight_cards()
       
@@ -786,7 +786,7 @@ local kingsrock = {
     pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
-      juice_flip(card)
+      pokermon.juice_flip(card)
       G.E_MANAGER:add_event(Event({
           trigger = 'after',
           delay = 0.2,
@@ -796,7 +796,7 @@ local kingsrock = {
           end
       }))
       delay(0.5)
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -836,11 +836,11 @@ local upgrade = {
     pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
       local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
-      juice_flip(card)
+      pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS[enhancement], nil, true)
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -882,14 +882,14 @@ local hardstone = {
     pokermon.set_spoon_item(card)
     if G.hand.highlighted and #G.hand.highlighted == 1 then
       local conv_card = G.hand.highlighted[1]
-      juice_flip(card)
+      pokermon.juice_flip(card)
       conv_card:set_ability(G.P_CENTERS.m_stone, nil, true)
       local bonus = self.config.max_chips * #pokermon.find_pokemon_type("Earth")
       if bonus > 0 then
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus or 0
         conv_card.ability.perma_bonus = conv_card.ability.perma_bonus + bonus
       end
-      juice_flip(card, true)
+      pokermon.juice_flip(card, true)
       delay(0.5)
       pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
@@ -919,11 +919,11 @@ local miracleseed = {
   discovered = true,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
-    juice_flip(card)
+    pokermon.juice_flip(card)
     for i = 1, #G.hand.highlighted do
       G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
     end
-    juice_flip(card, true)
+    pokermon.juice_flip(card, true)
     pokermon.unhighlight_cards()
   end,
   in_pool = function(self)
@@ -970,11 +970,11 @@ local prismscale = {
       pseudoshuffle(cards_held, pseudoseed('prism'))
       
       local limit = math.min(#cards_held, self.config.converted)
-      juice_flip_table(card, cards_held, false, limit)
+      pokermon.juice_flip_table(card, cards_held, false, limit)
       for i = 1, limit do
         G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
       end
-      juice_flip_table(card, cards_held, true, limit)
+      pokermon.juice_flip_table(card, cards_held, true, limit)
       pokermon.unhighlight_cards()
       
       pokermon.evo_item_use_total(self, card, area, copier)

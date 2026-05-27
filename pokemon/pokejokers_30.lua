@@ -44,11 +44,11 @@ local dreepy={
         local first_card = G.hand.cards[1]
         if not SMODS.has_no_suit(first_card) then
           local suit = first_card.base.suit
-          juice_flip_hand(card)
+          pokermon.juice_flip_hand(card)
           for i=1, #G.hand.cards do
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
           end 
-          juice_flip_hand(card, true)
+          pokermon.juice_flip_hand(card, true)
         end
       end
       return {
@@ -216,11 +216,11 @@ local dreepy_dart={
         local first_card = G.hand.cards[1]
         if not SMODS.has_no_suit(first_card) then
           local suit = first_card.base.suit
-          juice_flip_hand(card)
+          pokermon.juice_flip_hand(card)
           for i=1, #G.hand.cards do
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
           end 
-          juice_flip_hand(card, true)
+          pokermon.juice_flip_hand(card, true)
         end
       end
     end

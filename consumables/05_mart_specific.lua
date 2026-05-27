@@ -96,12 +96,12 @@ local dubious_disc = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if G.hand.cards and #G.hand.cards > 0 then
-      juice_flip_hand(card)
+      pokermon.juice_flip_hand(card)
       for i = 1, #G.hand.cards do
         local enhancement = SMODS.poll_enhancement({guaranteed = true})
         G.hand.cards[i]:set_ability(enhancement, nil, true)
       end
-      juice_flip_hand(card, true)
+      pokermon.juice_flip_hand(card, true)
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -128,7 +128,7 @@ local heartscale = {
   discovered = true,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
-    juice_flip(card)
+    pokermon.juice_flip(card)
     local rightmost = G.hand.highlighted[1]
     for i = 1, #G.hand.highlighted do
       if G.hand.highlighted[i].T.x > rightmost.T.x then
@@ -157,7 +157,7 @@ local heartscale = {
           end
       }))
     end
-    juice_flip(card, true)
+    pokermon.juice_flip(card, true)
     delay(0.5)
     pokermon.unhighlight_cards()
   end,

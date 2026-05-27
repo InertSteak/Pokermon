@@ -272,7 +272,7 @@ local white_executive = {
       if context.setting_blind then
         local modify = function(v) SMODS.debuff_card(v, true, 'white_executive'); end
         local args = {array = G.playing_cards, amt = white_executive_total(), seed = 'whiteexec', mod_func = modify}
-        pseudorandom_multi(args)
+        pokermon.pseudorandom_multi(args)
       end
       if context.end_of_round and not context.individual and not context.repetition then
         for k, v in pairs(G.playing_cards) do

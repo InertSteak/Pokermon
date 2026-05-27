@@ -126,7 +126,7 @@ local raikou={
         for i = 1, limit do
          conv_cards[#conv_cards + 1] = hand_cards[i]
         end
-        juice_flip_table(card, conv_cards, false, limit)
+        pokermon.juice_flip_table(card, conv_cards, false, limit)
         for i = 1, limit do
           G.E_MANAGER:add_event(Event({
             trigger = 'after',
@@ -137,7 +137,7 @@ local raikou={
             end
           }))
         end
-        juice_flip_table(card, conv_cards, true, limit)
+        pokermon.juice_flip_table(card, conv_cards, true, limit)
         local earned = pokermon.ease_poke_dollars(card, "raikou", card.ability.extra.money, true)
         return {
           dollars = earned,

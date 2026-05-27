@@ -385,7 +385,7 @@ local tinkatink={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkatink'..card.unique_val); end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {
@@ -435,7 +435,7 @@ local tinkatuff={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkatuff'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {
@@ -486,7 +486,7 @@ local tinkaton={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkaton'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {

@@ -234,6 +234,15 @@ get_total_energy = pokermon.energy.get_total_energy
 
 -- pokeutils.lua
 
+---@deprecated use `pokermon.pseudorandom_multi` instead
+pseudorandom_multi = pokermon.pseudorandom_multi
+
+---@deprecated use `pokermon.juice_flip_hand` instead
+juice_flip_hand = pokermon.juice_flip_hand
+
+---@deprecated use `pokermon.juice_flip_hand` instead
+juice_flip_table = pokermon.juice_flip_table
+
 ---@deprecated use `pokermon.add_card` instead
 poke_add_card = pokermon.add_card
 

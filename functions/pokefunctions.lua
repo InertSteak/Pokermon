@@ -948,7 +948,7 @@ pokermon.get_target_card_ranks = function(seed, num, default, use_deck)
       random[#random+1] = {value = cvalue, id = i}
     end
     local args = {array = random, amt = num}
-    target_ranks = pseudorandom_multi(args)
+    target_ranks = pokermon.pseudorandom_multi(args)
   end
   local sort_function = function(card1, card2) return card1.id < card2.id end
   table.sort(target_ranks, sort_function)

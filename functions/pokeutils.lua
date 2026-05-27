@@ -1,4 +1,4 @@
-pseudorandom_multi = function(args)
+pokermon.pseudorandom_multi = function(args)
   --Args: array(table), amt(num), seed(string), add_con(function), mod_func(function)
   local elements = {}
   local result = {}
@@ -20,7 +20,7 @@ pseudorandom_multi = function(args)
   return result
 end
 
-juice_flip = function(card, second)
+pokermon.juice_flip = function(card, second)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -43,7 +43,7 @@ juice_flip = function(card, second)
   delay(0.2)
 end
 
-juice_flip_hand = function(card, second)
+pokermon.juice_flip_hand = function(card, second)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -66,7 +66,7 @@ juice_flip_hand = function(card, second)
   delay(0.2)
 end
 
-juice_flip_table = function(card, targets, second, limit)
+pokermon.juice_flip_table = function(card, targets, second, limit)
   local sound = 'card1'
   local base_percent = 1.15
   local extra = nil
@@ -90,7 +90,7 @@ juice_flip_table = function(card, targets, second, limit)
   delay(0.2)
 end
 
-juice_flip_single = function(card, index)
+pokermon.juice_flip_single = function(card, index)
   G.E_MANAGER:add_event(Event({
       trigger = 'after',
       delay = 0.4,
