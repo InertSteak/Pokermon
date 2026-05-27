@@ -251,7 +251,7 @@ local thickclub = {
     conv_card.ability.perma_bonus = current_bonus + self.config.bonus
     juice_flip(card, true)
     delay(0.5)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
     card.ability.extra.usable = false
     card.children.floating_sprite:set_sprite_pos({ x = 99, y = 99 })
   end,

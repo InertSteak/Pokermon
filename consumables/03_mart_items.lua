@@ -112,7 +112,7 @@ local firestone = {
       
       local target = pseudorandom_element(G.hand.highlighted, pseudoseed('firestone'))
       pokermon.remove_card(target, card)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -163,7 +163,7 @@ local waterstone = {
       end
       juice_flip(card, true)
       delay(0.5)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -261,7 +261,7 @@ local leafstone = {
         end
       end
       juice_flip_hand(card, true)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -317,7 +317,7 @@ local moonstone = {
       else
         poke_nope(card)
       end
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -362,7 +362,7 @@ local sunstone = {
         pokermon.vary_rank(G.hand.highlighted[i], nil, "sunstone")
       end
       juice_flip(card, true)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -412,7 +412,7 @@ local shinystone = {
           card:juice_up(0.3, 0.5)
       return true end }))
 
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -610,7 +610,7 @@ local icestone = {
         end
       end
 
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -660,7 +660,7 @@ local linkcable = {
       end
       juice_flip(card, true)
       delay(0.5)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       
       pokermon.evo_item_use_total(self, card, area, copier)
     else
@@ -703,7 +703,7 @@ local metalcoat = {
     local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
     copy:set_ability(G.P_CENTERS.m_steel, nil, true)
     pokermon.add_card(copy, card)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
   in_pool = function(self)
     return true
@@ -797,7 +797,7 @@ local kingsrock = {
       }))
       delay(0.5)
       juice_flip(card, true)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -841,7 +841,7 @@ local upgrade = {
         G.hand.highlighted[i]:set_ability(G.P_CENTERS[enhancement], nil, true)
       end
       juice_flip(card, true)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -891,7 +891,7 @@ local hardstone = {
       end
       juice_flip(card, true)
       delay(0.5)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       pokermon.evo_item_use_total(self, card, area, copier)
     else
       pokermon.highlighted_evo_item(self, card, area, copier)
@@ -924,7 +924,7 @@ local miracleseed = {
       G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
     end
     juice_flip(card, true)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
   in_pool = function(self)
     return true
@@ -975,7 +975,7 @@ local prismscale = {
         G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:change_suit(selected_suit);return true end }))
       end
       juice_flip_table(card, cards_held, true, limit)
-      poke_unhighlight_cards()
+      pokermon.unhighlight_cards()
       
       pokermon.evo_item_use_total(self, card, area, copier)
     else

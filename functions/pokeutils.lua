@@ -425,7 +425,7 @@ pokermon.convert_cards = function(cards, t, noflip, immediate)
   end
 end
 
-poke_unhighlight_cards = function()
+pokermon.unhighlight_cards = function()
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
     delay = 0.2,

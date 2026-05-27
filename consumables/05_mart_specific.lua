@@ -159,7 +159,7 @@ local heartscale = {
     end
     juice_flip(card, true)
     delay(0.5)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
   in_pool = function(self)
     return false

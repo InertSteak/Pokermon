@@ -150,7 +150,7 @@ local obituary = {
         return true end }))
     
     delay(0.5)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
 }
 
@@ -178,7 +178,7 @@ local revenant = {
         return true end }))
     
     delay(0.5)
-    poke_unhighlight_cards()
+    pokermon.unhighlight_cards()
   end,
 }
 
