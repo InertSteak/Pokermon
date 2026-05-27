@@ -585,7 +585,7 @@ local function pokermon_show_artist_jokers(artist)
   local keys = get_sprite_keys_by_artist(artist)
 
   return { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR },
-    nodes = poke_create_UIBox_your_collection {
+    nodes = pokermon.ui.create_UIBox_your_collection {
       keys = keys,
       create_card_func = poke_create_art_display_card,
     }
@@ -634,7 +634,7 @@ poke_joker_page = 1
 local function create_UIBox_pokedex_jokers(keys, previous_menu)
   return create_UIBox_generic_options {
     back_func = previous_menu or 'exit_overlay_menu',
-    contents = poke_create_UIBox_your_collection {
+    contents = pokermon.ui.create_UIBox_your_collection {
       keys = keys,
       cols = 4,
       dynamic_sizing = true
@@ -776,7 +776,7 @@ G.FUNCS.pokermon_individual_sprites = function(e)
   G.FUNCS.overlay_menu{
     definition = create_UIBox_generic_options {
       back_func = G.ACTIVE_MOD_UI and "openModUI_"..G.ACTIVE_MOD_UI.id or 'exit_overlay_menu',
-      contents = poke_create_UIBox_your_collection {
+      contents = pokermon.ui.create_UIBox_your_collection {
         keys = keys,
         cols = 3,
         create_card_func = function(key, x, y)

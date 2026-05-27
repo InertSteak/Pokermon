@@ -295,3 +295,6 @@ poke_suit_check = pokermon.suit_check
 
 ---@deprecated use `pokermon.ui.create_your_collection_card` instead
 poke_create_your_collection_card = pokermon.ui.create_your_collection_card
+
+---@deprecated use `pokermon.ui.create_UIBox_your_collection` instead
+poke_create_UIBox_your_collection = pokermon.ui.create_UIBox_your_collection

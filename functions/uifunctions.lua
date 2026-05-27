@@ -140,7 +140,7 @@ pokermon.ui.set_card_type_badge = function(card, badges, center)
 end
 
 -- Collection Grid UI helper functions
-function pokermon.ui.create_your_collection_card(key, x, y, params)
+pokermon.ui.create_your_collection_card = function(key, x, y, params)
   local form = type(key == 'table') and key.form
   local center_key = type(key == 'table') and key.key or key
   local center = G.P_CENTERS[center_key]
@@ -215,7 +215,7 @@ local function populate_cardareas(keys, options)
   end
 end
 
-function poke_create_UIBox_your_collection(args)
+pokermon.ui.create_UIBox_your_collection = function(args)
   -- Fix for cards not realizing they're in a collection,
   -- because the collection gets initialized *after* the cards do
   -- -- Vanilla cards work without this because the joker collection is nested within a second overlay
