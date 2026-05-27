@@ -310,7 +310,7 @@ local fidough={
         if context.scoring_hand[i]:get_id() == card.ability.extra.id then contains = true; break end
       end
       if contains then
-        card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
+        card.ability.extra.id, card.ability.extra.rank = pokermon.next_owned_rank(card.ability.extra.id, card.ability.extra.rank)
 
         SMODS.scale_card(card, {
           ref_value = 'chips',
@@ -328,7 +328,7 @@ local fidough={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.playing_cards then
-      card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
+      card.ability.extra.id, card.ability.extra.rank = pokermon.get_lowest_rank(14, "Ace")
     end
   end,
   attributes = {"chips", "scaling", "rank", "condition_evo"},
@@ -358,7 +358,7 @@ local dachsbun={
         if context.scoring_hand[i]:get_id() == card.ability.extra.id then contains = true; break end
       end
       if contains then
-        card.ability.extra.id, card.ability.extra.rank = poke_next_highest_rank(card.ability.extra.id, card.ability.extra.rank)
+        card.ability.extra.id, card.ability.extra.rank = pokermon.next_owned_rank(card.ability.extra.id, card.ability.extra.rank)
 
         SMODS.scale_card(card, {
           ref_value = 'chips',
@@ -378,7 +378,7 @@ local dachsbun={
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.playing_cards then
-      card.ability.extra.id, card.ability.extra.rank = poke_lowest_rank(14, "Ace")
+      card.ability.extra.id, card.ability.extra.rank = pokermon.get_lowest_rank(14, "Ace")
     end
   end,
   attributes = {"chips", "scaling", "rank", "joker", "types"},

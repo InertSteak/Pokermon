@@ -282,7 +282,7 @@ pokermon.get_adjacent_jokers = function(card)
   return jokers
 end
 
-poke_next_highest_rank = function(id, rank)
+pokermon.next_owned_rank = function(id, rank)
   local rank_list = {}
   local owned_ranks = {}
   for _, v in pairs(G.playing_cards) do
@@ -321,7 +321,7 @@ poke_next_highest_rank = function(id, rank)
   return SMODS.Ranks[found_next_rank].id, found_next_rank
 end
 
-poke_lowest_rank = function(id, rank)
+pokermon.get_lowest_rank = function(id, rank)
   local cards = {}
   local low_id = id
   local low_rank = rank
