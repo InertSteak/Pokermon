@@ -1435,3 +1435,16 @@ poke_drain_chips = function(card, amount)
 
   return base_drain + bonus_drain
 end
+
+pokermon.get_available_planet_cards = function()
+  local planets = {}
+  for _, v in ipairs(G.P_CENTER_POOLS.Planet) do
+    if not G.GAME.banned_keys[v.key]
+        and (not v.config.softlock or G.GAME.hands[v.config.hand_type].played > 0)
+        and SMODS.add_to_pool(v)
+        and (type(v.mp_include) ~= 'function' or v.mp_include()) then
+      planets[#planets+1] = v
+    end
+  end
+  return planets
+end
