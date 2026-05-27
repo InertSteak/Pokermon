@@ -518,7 +518,7 @@ pokermon.get_previous_evo_from_center = function(center, full_key)
     index = index - 1
     local prev_name = type(list[index]) == 'table' and list[index].key or list[index]
     local prev_center = G.P_CENTERS['j_'..prefix..'_'..prev_name]
-    if prev_center.stage == get_previous_stage(center.stage) and not center.aux_poke then
+    if prev_center.stage == pokermon.get_previous_stage(center.stage) and not center.aux_poke then
       prev = prev_center.name
       break
     end

@@ -19,11 +19,11 @@ poketype_list = POKE_TYPES
 ---@deprecated use `POKE_NATIVE_EVO_ITEMS` instead
 native_evo_items = POKE_NATIVE_EVO_ITEMS
 
----@deprecated use `poke_get_evo_overrides` instead
-HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).highest_evo end})
+---@deprecated use `pokermon.get_evo_overrides` instead
+HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return pokermon.get_evo_overrides(index).highest_evo end})
 
----@deprecated use `poke_get_evo_overrides` instead
-PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
+---@deprecated use `pokermon.get_evo_overrides` instead
+PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return pokermon.get_evo_overrides(index).previous_evo end})
 
 ------------ DE-GLOBALIZING REFACTOR --------------
 
