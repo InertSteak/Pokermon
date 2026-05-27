@@ -650,7 +650,7 @@ SMODS.PokerHandPart:take_ownership('_straight',
 )
 -- Ambipom Flush Check done via lovely patch for the sake of efficiency
 
-set_joker_family_win = function(card)
+pokermon.set_joker_family_win = function(card)
   local keys = pokermon.get_family_keys(card)
   for _, v in pairs(keys) do
     -- Since evo lines and aux_poke / auto-sticker can be tracked separately, this only needs to be the latter
@@ -666,10 +666,10 @@ set_joker_family_win = function(card)
     end
   end
   -- This will sticker the previous evo line
-  set_previous_evo_win(card.config.center)
+  pokermon.set_previous_evo_win(card.config.center)
 end
 
-set_previous_evo_win = function(center)
+pokermon.set_previous_evo_win = function(center)
   local previous = pokermon.get_previous_evo_from_center(center, true)
   if previous then
     -- This is the bit that tracks joker wins
@@ -680,7 +680,7 @@ set_previous_evo_win = function(center)
     joker_usage.wins[G.GAME.stake] = (joker_usage.wins[G.GAME.stake] or 0) + 1
     joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] = (joker_usage.wins_by_key[SMODS.stake_from_index(G.GAME.stake)] or 0) + 1
     -- Moves all the way down the family tree recursively (rather than a gigantic if-else block)
-    set_previous_evo_win(G.P_CENTERS[previous])
+    pokermon.set_previous_evo_win(G.P_CENTERS[previous])
   end
 end
 
