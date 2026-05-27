@@ -359,7 +359,7 @@ local sunstone = {
       juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
-        poke_vary_rank(G.hand.highlighted[i], nil, "sunstone")
+        pokermon.vary_rank(G.hand.highlighted[i], nil, "sunstone")
       end
       juice_flip(card, true)
       poke_unhighlight_cards()
@@ -653,9 +653,9 @@ local linkcable = {
       juice_flip(card)
       for i=1, #G.hand.highlighted do
         if G.hand.highlighted[i] ~= rightmost then
-          poke_vary_rank(G.hand.highlighted[i], false)
+          pokermon.vary_rank(G.hand.highlighted[i], false)
         else
-          poke_vary_rank(G.hand.highlighted[i], true)
+          pokermon.vary_rank(G.hand.highlighted[i], true)
         end
       end
       juice_flip(card, true)

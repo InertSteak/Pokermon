@@ -233,7 +233,7 @@ function pokermon.find_leftmost_or_highlighted(key_or_function)
   return pokermon.find_card(key_or_function, true)
 end
 
-poke_vary_rank = function(card, decrease, seed, immediate)
+pokermon.vary_rank = function(card, decrease, seed, immediate)
   -- if it doesn't have a rank/suit within SMODS, don't do anything
   if not card.base or not card.base.value or not card.base.suit or not SMODS.Ranks[card.base.value] then return end
 
@@ -402,10 +402,10 @@ poke_convert_cards_to = function(cards, t, noflip, immediate)
       poke_conversion_event_helper(function() cards[i]:set_seal(t.seal, nil, true) end, nil, immediate)
     end
     if t.random then
-      poke_vary_rank(cards[i], nil, nil, immediate)
+      pokermon.vary_rank(cards[i], nil, nil, immediate)
     end
     if t.up or t.down then
-      poke_vary_rank(cards[i], not t.up, nil, immediate)
+      pokermon.vary_rank(cards[i], not t.up, nil, immediate)
     end
     if t.bonus_chips then
       local bonus_add = function()

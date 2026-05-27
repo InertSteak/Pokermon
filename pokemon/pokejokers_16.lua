@@ -1239,7 +1239,7 @@ local rotomm={
       
       juice_flip_table(card, targets, false, #targets)
       for i = 1, #targets do
-        poke_vary_rank(G.hand.cards[i], true)
+        pokermon.vary_rank(G.hand.cards[i], true)
       end
       juice_flip_table(card, targets, true, #targets)
       delay(0.5)
