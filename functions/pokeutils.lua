@@ -747,7 +747,7 @@ pokermon.get_consumeables = function(set)
   return consumeables
 end
 
-poke_ease_hands_played = function(mod, instant)
+pokermon.ease_hands_played = function(mod, instant)
   if mod >= 0 then
     ease_hands_played(mod, instant)
   else

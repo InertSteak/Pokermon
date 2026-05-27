@@ -332,7 +332,7 @@ local totodile = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
@@ -385,7 +385,7 @@ local croconaw = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
@@ -437,7 +437,7 @@ local feraligatr = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset"},
 }
