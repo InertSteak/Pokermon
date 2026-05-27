@@ -525,7 +525,7 @@ pokermon.get_hazard_level_vars = function()
   return vars
 end
 
-function pokermon.is_same_suit(hand)
+pokermon.is_same_suit = function(hand)
   local ret = {}
   local suits = SMODS.Suit.obj_buffer
   for j = 1, #suits do
@@ -541,7 +541,7 @@ function pokermon.is_same_suit(hand)
   return false
 end
 
-function pokermon.get_rank(card)
+pokermon.get_rank = function(card)
   local id = card.base.id
   local rank = nil
   if id == 14 then rank = "Ace"
@@ -552,7 +552,7 @@ function pokermon.get_rank(card)
   return rank
 end
 
-function pokermon.is_even(card)
+pokermon.is_even = function(card)
   if card:get_id() == 2 or 
    card:get_id() == 4 or 
    card:get_id() == 6 or 
@@ -564,7 +564,7 @@ function pokermon.is_even(card)
   end
 end
 
-function pokermon.is_odd(card)
+pokermon.is_odd = function(card)
   if card:get_id() == 3 or 
    card:get_id() == 5 or 
    card:get_id() == 7 or 
@@ -576,7 +576,7 @@ function pokermon.is_odd(card)
   end
 end
 
-function pokermon.suit_check(hand, num)
+pokermon.suit_check = function(hand, num)
   local suits = {}
   local suit_count = 0
   
@@ -698,7 +698,7 @@ function table.contains(table, element)
   return false
 end
 
-table.append = function(t1, t2)
+function table.append(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
   end
