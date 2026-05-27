@@ -269,3 +269,6 @@ poke_convert_cards_to = pokermon.convert_cards
 
 ---@deprecated use `pokermon.unhighlight_cards` instead
 poke_unhighlight_cards = pokermon.unhighlight_cards
+
+---@deprecated use `pokermon.is_in_collection` instead
+poke_is_in_collection = pokermon.is_in_collection

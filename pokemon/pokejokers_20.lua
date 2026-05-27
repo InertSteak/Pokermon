@@ -24,7 +24,7 @@ local zoroark = {
   get_illusion = function(self, card)
     if card.ability and card.ability.extra
         and card.area ~= G.jokers
-        and not poke_is_in_collection(card) then
+        and not pokermon.is_in_collection(card) then
       return G.P_CENTERS[card.ability.extra.hidden_key]
     end
   end,
@@ -46,7 +46,7 @@ local zoroark = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+    if card.area ~= G.jokers and not pokermon.is_in_collection(card) then
       -- Initialize the Illusion
       if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Dark") end
       if not card.ability.extra.hidden_key then

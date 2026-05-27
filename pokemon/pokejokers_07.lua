@@ -1075,7 +1075,7 @@ local unown={
       
       self:set_nature(card)
       
-      if poke_is_in_collection(card) then
+      if pokermon.is_in_collection(card) then
         local edition = {negative = true}
         card:set_edition(edition, true, true)
       end

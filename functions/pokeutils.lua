@@ -442,7 +442,7 @@ function Game:init_game_object()
   return game
 end
 
-poke_is_in_collection = function(card)
+pokermon.is_in_collection = function(card)
   if not card.area and G.OVERLAY_MENU then return true end
   if card.area and card.area.config.collection then return true end
   if G.your_collection then
@@ -455,7 +455,7 @@ poke_is_in_collection = function(card)
   return false
 end
 
-poke_stabilize_chip_drain = function(card)
+pokermon.stabilize_chip_drain = function(card)
   if not card or not card.ability or not card.base or not card.base.nominal or not card.ability.bonus then return end
   card.ability.nominal_drain = card.ability.nominal_drain or 0
   card.ability.nominal_drain = math.min(card.ability.nominal_drain, card.base.nominal - 1)
@@ -685,7 +685,7 @@ set_previous_evo_win = function(center)
 end
 
 poke_can_set_sprite = function(card)
-  if poke_is_in_collection(card) and not card.discovered then return false end
+  if pokermon.is_in_collection(card) and not card.discovered then return false end
   return true
 end
 
