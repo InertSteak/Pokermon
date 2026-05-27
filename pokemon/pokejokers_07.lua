@@ -392,12 +392,8 @@ local hoppip={
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2]}
       poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          remove(self, card, context, true)
-          return true
-        end
-      }))
+      SMODS.destroy_cards(card, nil, true)
+      
       return {
         message = localize("poke_hop_ex"),
       }
@@ -437,12 +433,8 @@ local skiploom={
     if context.pre_discard and context.full_hand and #context.full_hand > 0 and not context.hook then
       local target = {context.full_hand[1],context.full_hand[2], context.full_hand[3]}
       poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          remove(self, card, context, true)
-          return true
-        end
-      }))
+      SMODS.destroy_cards(card, nil, true)
+      
       return {
         message = localize("poke_skip_ex"),
       }
@@ -485,12 +477,8 @@ local jumpluff={
         if v then table.insert(target, v) end
       end
       poke_convert_cards_to(target, {mod_conv = 'm_poke_seed'})
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          remove(self, card, context, true)
-          return true
-        end
-      }))
+      SMODS.destroy_cards(card, nil, true)
+      
       return {
         message = localize("poke_jump_ex"),
       }
