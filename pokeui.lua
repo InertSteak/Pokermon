@@ -418,15 +418,15 @@ G.FUNCS.pokermon_sprite_resource = function()
         { n = G.UIT.C, config = { align = "cm" }, nodes = {
           { n = G.UIT.R, config = { minh = 0.2 }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen I-V" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/the-ds-style-64x64-pok%C3%A9mon-sprite-resource-completed.267728/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen I-V" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/the-ds-style-64x64-pok%C3%A9mon-sprite-resource-completed.267728/" }),
             { n = G.UIT.T, config = { text = "by Chaos Rush", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen VI" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/gen-vi-ds-style-64x64-pokemon-sprite-resource.314422/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen VI" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/gen-vi-ds-style-64x64-pokemon-sprite-resource.314422/" }),
             { n = G.UIT.T, config = { text = "by MrDollSteak", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
           { n = G.UIT.R, config = { align = "cl", padding = 0.1, }, nodes = {
-            poke_UIBox_link_button({ label = { "Gen VII+" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/ds-style-gen-vii-and-beyond-pok%C3%A9mon-sprite-repository-in-64x64.368703/" }),
+            pokermon.ui.UIBox_link_button({ label = { "Gen VII+" }, col = true, minw = 3.85, scale = 0.6, url = "https://www.pokecommunity.com/threads/ds-style-gen-vii-and-beyond-pok%C3%A9mon-sprite-repository-in-64x64.368703/" }),
             { n = G.UIT.T, config = { text = "by thedarkdragon11", scale = 0.6, colour = G.C.UI.TEXT_LIGHT }}
           }},
         }}
@@ -552,7 +552,7 @@ local function pokermon_show_artist_info(artist)
         local link = links[j]
         if not link then break end
         col_nodes[#col_nodes+1] = {n=G.UIT.C, config={align="cm", padding=0.1}, nodes = {
-          poke_UIBox_link_button {
+          pokermon.ui.UIBox_link_button {
             url = link.url,
             colour = link.colour,
             site_text = link.site,

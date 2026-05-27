@@ -348,7 +348,7 @@ local function first_to_upper(str)
   return str:gsub("^%l", string.upper)
 end
 
-function poke_UIBox_link_button(args)
+function pokermon.ui.UIBox_link_button(args)
   local domain_name, path = parse_url(args.url)
 
   args.button = 'pokermon_open_site'
