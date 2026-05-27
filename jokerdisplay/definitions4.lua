@@ -870,7 +870,7 @@ jd_def["j_poke_gallade"] = {
     local energized_jokers = 0
     local energize_target = card.ability.extra.e_level
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) >= energize_target then
+      if pokermon.energy.get_total_energy(v) >= energize_target then
         energized_jokers = energized_jokers + 1
       end
     end

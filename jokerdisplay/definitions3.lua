@@ -620,7 +620,7 @@ jd_def["j_poke_ralts"] = {
     local planets = #poke_get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -640,7 +640,7 @@ jd_def["j_poke_kirlia"] = {
     local planets = #poke_get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -664,7 +664,7 @@ jd_def["j_poke_gardevoir"] = {
     local level_target = card.ability.extra.hand_level
     local leveled_hands = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -869,7 +869,7 @@ jd_def["j_poke_delcatty"] = {
     if true_copy then
       if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
         true_copy = card.joker_display_values.fake_card
-        while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
+        while pokermon.energy.get_total_energy(true_copy) - pokermon.energy.get_total_energy(copied_joker) < card.ability.extra.energy_buff do
           pokermon.energy.energize(true_copy, nil, nil, true)
           if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
             true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
@@ -1892,7 +1892,7 @@ jd_def["j_poke_jirachi_power"] = {
 --         if true_copy then
 --             if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
 --                 true_copy = card.joker_display_values.fake_card
---                 while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
+--                 while pokermon.energy.get_total_energy(true_copy) - pokermon.energy.get_total_energy(copied_joker) < card.ability.extra.energy_buff do
 --                     energize(true_copy, nil, nil, true)
 --                     if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
 --                       true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1

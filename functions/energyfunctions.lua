@@ -44,7 +44,7 @@ end
 
 pokermon.energy.can_increase_energy = function(card, etype)
   if pokermon_config.unlimited_energy or card.config.center.no_energy_limit or (etype and etype == "Bird") then return true end
-  return get_total_energy(card) < pokermon.energy.max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
+  return pokermon.energy.get_total_energy(card) < pokermon.energy.max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
 end
 
 -- Checking the type compatibility flowchart
@@ -78,7 +78,7 @@ end
 pokermon.energy.increase = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   if pokermon.energy.can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
-      (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - get_total_energy(card) then
+      (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - pokermon.energy.get_total_energy(card) then
     pokermon.energy.modify(card, etype, amount, silent)
   end
 end
@@ -115,7 +115,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
   if not center then center = card.config.center end
   local rounded
   local frac
-  local energy_count, c_energy_count = get_total_energy(card, true)
+  local energy_count, c_energy_count = pokermon.energy.get_total_energy(card, true)
   -- colorless type check
   local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- vanilla jokers aren't coded well so we're knocking them out first
@@ -220,7 +220,7 @@ pokermon.energy.energize_vanilla_values = function(card, center, field, value, c
   end
 end
 
-get_total_energy = function(card, get_counts)
+pokermon.energy.get_total_energy = function(card, get_counts)
   local curr_energy_count = nil
   local curr_c_energy_count = nil
   if card.ability.extra and type(card.ability.extra) == "table" then

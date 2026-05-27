@@ -200,7 +200,7 @@ local ralts={
     local planets = #poke_get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
@@ -223,7 +223,7 @@ local ralts={
       local energized = 0
       local planets = #poke_get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
@@ -248,7 +248,7 @@ local kirlia={
     local planets = #poke_get_consumeables('Planet')
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
@@ -271,7 +271,7 @@ local kirlia={
       local energized = 0
       local planets = #poke_get_consumeables('Planet')
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
@@ -305,7 +305,7 @@ local gardevoir={
     local energized = 0
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end
@@ -336,7 +336,7 @@ local gardevoir={
     if context.joker_main then
       local energized = 0
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) > 0 then
+        if pokermon.energy.get_total_energy(v) > 0 then
           energized = energized + 1
         end
       end

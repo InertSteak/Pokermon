@@ -225,3 +225,6 @@ increment_energy = pokermon.energy.modify
 
 ---@deprecated use `pokermon.energy.energize` instead
 energize = pokermon.energy.energize
+
+---@deprecated use `pokermon.energy.get_total_energy` instead
+get_total_energy = pokermon.energy.get_total_energy

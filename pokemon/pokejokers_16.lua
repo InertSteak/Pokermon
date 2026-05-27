@@ -749,7 +749,7 @@ local gallade={
     local energized = 0
     if G.jokers then
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) >= center.ability.extra.e_level then
+        if pokermon.energy.get_total_energy(v) >= center.ability.extra.e_level then
           energized = energized + 1
         end
       end
@@ -770,7 +770,7 @@ local gallade={
     if context.joker_main then
       local energized = 0
       for k, v in ipairs(G.jokers.cards) do
-        if get_total_energy(v) >= card.ability.extra.e_level then
+        if pokermon.energy.get_total_energy(v) >= card.ability.extra.e_level then
           energized = energized + 1
         end
       end
