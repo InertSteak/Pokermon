@@ -96,7 +96,7 @@ pokermon.ui.random_text = function(strings, config)
           pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
 end
 
-poke_blueprint_compat_ui = function(copy)
+pokermon.ui.blueprint_compat = function(copy)
   local compatible = copy and copy.config.center.blueprint_compat
 
   local text = localize('k_' .. (compatible and 'compatible' or 'incompatible'))
@@ -111,7 +111,7 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
-poke_generate_illusion_ui = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+pokermon.ui.generate_illusion = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   -- Create the illusion joker's text boxes
   local old_ability = card.ability
   card.ability = copy_table(old_ability)

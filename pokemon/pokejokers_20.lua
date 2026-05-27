@@ -9,7 +9,7 @@ local zoroark = {
 
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
-      main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
+      main_end = pokermon.ui.blueprint_compat(card ~= other_joker and other_joker)
     end
 
     return {main_end = main_end}
@@ -67,7 +67,7 @@ local zoroark = {
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local center = self:get_illusion(card)
     if center then
-      return poke_generate_illusion_ui(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      return pokermon.ui.generate_illusion(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
     return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   end,

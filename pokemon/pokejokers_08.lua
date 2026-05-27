@@ -1395,7 +1395,7 @@ local smeargle={
 
     local other_joker = G.jokers.cards[found_pos + 1]
 
-    local main_end = poke_blueprint_compat_ui(other_joker)
+    local main_end = pokermon.ui.blueprint_compat(other_joker)
 
     return { main_end = main_end }
   end,
