@@ -1399,6 +1399,22 @@ pokermon.drain_chips = function(card, amount)
   return base_drain + bonus_drain
 end
 
+pokermon.ease_poke_dollars = function(card, seed, amt, calc_only)
+  local earned = amt
+  if card.ability.extra and type(card.ability.extra) == "table" then
+    if card.ability.money_frac then
+      if card.ability.money_frac > pseudorandom(pseudoseed(seed)) then
+        earned = earned + 1
+      end
+    end
+  end
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    earned = to_number(earned)
+  end
+  if not calc_only then ease_dollars(earned) end
+  return earned
+end
+
 pokermon.get_available_planet_cards = function()
   local planets = {}
   for _, v in ipairs(G.P_CENTER_POOLS.Planet) do
