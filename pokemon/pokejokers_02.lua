@@ -1178,7 +1178,7 @@ local arcanine={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if not(next(context.poker_hands['Flush'])) then
+    if context.poker_hands and not(next(context.poker_hands['Flush'])) then
       return
     end
     if context.before and not context.blueprint then

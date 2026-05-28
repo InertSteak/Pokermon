@@ -113,21 +113,21 @@ end
 
 pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, sound)
   if type(cards) == 'nil' then
-    sendDebugMessage("Attempted to enhance 0 cards.")
+    sendDebugMessage("Attempted to enhance 0 cards. Function failed.")
     return
   end
-  if type(cards.is) == 'function' then
+  if type(cards.is) == 'function' and cards:is(Card) then
     sendDebugMessage("Single card passed. Converting to table and continuing.")
     local ctable = {cards}
     cards = ctable
   end
-  elseif type(cards[1].is) ~= 'function' then
-    sendDebugMessage("Non-card passed.")
-    return
-  end
   
   local default = type(_delay) ~= 'number'
   for k, v in pairs(cards) do
+    if not(type(v.is) == 'function' and v:is(Card)) then
+      sendDebugMessage("Non-card passed. Function failed.")
+      return
+    end
     if not G.P_CENTERS[enhancement] then
       sendDebugMessage("Could not find enhancement \""..enhancement.."\".")
       enhancement = "c_base"
