@@ -1,6 +1,6 @@
 -- We can initialize the 12 basic energies (not bird) with this template and a good for loop
 local energy_template = {
-  set = "Energy",
+  set = "poke_Energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
@@ -31,7 +31,7 @@ end
 local bird_energy = {
   name = "bird_energy",
   key = "bird_energy",
-  set = "Energy",
+  set = "poke_Energy",
   animated = true,
   artist = "Catzzadilla",
   pos = { x = 0, y = 0 },
@@ -133,7 +133,7 @@ local double_rainbow_energy = {
 local emergy = {
   name = "emergy",
   key = "emergy",
-  set = "Energy",
+  set = "poke_Energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
@@ -141,7 +141,7 @@ local emergy = {
   atlas = "AtlasConsumablesBasic",
   cost = 4,
   hidden = true,
-  soul_set = "Energy",
+  soul_set = "poke_Energy",
   soul_rate = .01,
   unlocked = true,
   discovered = true,

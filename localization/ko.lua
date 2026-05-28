@@ -185,7 +185,7 @@ return {
                 },
             },
         },
-        Item = {
+        poke_Item = {
             c_poke_pokeball = {
                 name = "몬스터볼",
                 text = {
@@ -560,7 +560,7 @@ return {
                 }
             },
         },
-        Energy = {
+        poke_Energy = {
             c_poke_grass_energy = {
                 name = "풀 에너지",
                 text = {

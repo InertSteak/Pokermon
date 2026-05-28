@@ -90,7 +90,7 @@ local abra={
             local message = nil
             local colour = nil
             if pseudorandom('abraitem') < .50 then
-              set = "Item"
+              set = "poke_Item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
             else
@@ -142,7 +142,7 @@ local kadabra={
             local colour = nil
             local conname = nil
             if pseudorandom('kadabraitem') < .50 then
-              set = "Item"
+              set = "poke_Item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"
@@ -194,7 +194,7 @@ local alakazam={
             local colour = nil
             local conname = nil
             if pseudorandom('alakazam') < .50 then
-              set = "Item"
+              set = "poke_Item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"

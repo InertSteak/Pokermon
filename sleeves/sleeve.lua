@@ -158,7 +158,7 @@ end
   calculate = function(self, back, context)
     if context.reroll_shop and self.get_current_deck_key() == "b_poke_luminousdeck" then
       if SMODS.pseudorandom_probability(back, 'luminate', self.config.num, self.config.dem, 'luminate') then
-        local temp_card = {set = "Item", area = G.shop_jokers, key = "c_poke_teraorb"}
+        local temp_card = {set = "poke_Item", area = G.shop_jokers, key = "c_poke_teraorb"}
         local add_card = SMODS.create_card(temp_card)
         add_shop_card(add_card, card)
       end

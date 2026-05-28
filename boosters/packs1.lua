@@ -55,7 +55,7 @@ local create_item = function(seed)
       return SMODS.create_card { key = evo_item_key, area = G.pack_cards, skip_materialize = true }
     end
   end
-  return SMODS.create_card { set = "Item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
+  return SMODS.create_card { set = "poke_Item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
 end
 
 local create_pocket_card = function(self, card, i)

@@ -1,7 +1,7 @@
 local leftovers = {
   name = "leftovers",
   key = "leftovers",
-  set = "Item",
+  set = "poke_Item",
   helditem = true,
   config = {extra = {joker_highlighted = 1, money_mod = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
@@ -15,7 +15,7 @@ local leftovers = {
   unlocked = true,
   discovered = true,
   hidden = true,
-  soul_set = "Item",
+  soul_set = "poke_Item",
   soul_rate = .025,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
@@ -71,7 +71,7 @@ local leftovers = {
 local heavyboots = {
   name = "heavyboots",
   key = "heavyboots",
-  set = "Item",
+  set = "poke_Item",
   helditem = true,
   config = {extra = {usable = true, hazard_off = false}},
   loc_vars = function(self, info_queue, center)
@@ -86,7 +86,7 @@ local heavyboots = {
   unlocked = true,
   discovered = true,
   hidden = true,
-  soul_set = "Item",
+  soul_set = "poke_Item",
   soul_rate = .01,
   can_use = function(self, card)
     if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
@@ -143,7 +143,7 @@ local heavyboots = {
 local teraorb = {
   name = "teraorb",
   key = "teraorb",
-  set = "Item",
+  set = "poke_Item",
   config = {extra = {change_to_type = "Grass", type_bag = {}}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -156,7 +156,7 @@ local teraorb = {
   soul_pos = { x = 3, y = 9 },
   atlas = "AtlasConsumablesBasic",
   cost = 3,
-  soul_set = "Item",
+  soul_set = "poke_Item",
   soul_rate = .045,
   unlocked = true,
   discovered = true,
@@ -218,7 +218,7 @@ local teraorb = {
 local thickclub = {
   name = "thickclub",
   key = "thickclub",
-  set = "Item",
+  set = "poke_Item",
   helditem = true,
   config = {max_highlighted = 1, bonus = 10, extra = {usable = true}},
   loc_vars = function(self, info_queue, center)
@@ -232,7 +232,7 @@ local thickclub = {
   unlocked = true,
   discovered = true,
   hidden = true,
-  soul_set = "Item",
+  soul_set = "poke_Item",
   soul_rate = .025,
   can_use = function(self, card)
     if card.area == G.shop_jokers then return false end

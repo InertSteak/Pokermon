@@ -54,7 +54,7 @@ end
 local oven = {
   name = "oven",
   key = "oven",
-  set = "Item",
+  set = "poke_Item",
   config = {d_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.d_plus}}
@@ -84,7 +84,7 @@ local oven = {
 local washing_machine = {
   name = "washing_machine",
   key = "washing_machine",
-  set = "Item",
+  set = "poke_Item",
   config = {hand_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -114,7 +114,7 @@ local washing_machine = {
 local fridge = {
   name = "fridge",
   key = "fridge",
-  set = "Item",
+  set = "poke_Item",
   config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -150,7 +150,7 @@ local fridge = {
 local fan = {
   name = "fan",
   key = "fan",
-  set = "Item",
+  set = "poke_Item",
   config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -185,7 +185,7 @@ local fan = {
 local lawn_mower = {
   name = "lawn_mower",
   key = "lawn_mower",
-  set = "Item",
+  set = "poke_Item",
   config = {hand_size_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_size_plus}}

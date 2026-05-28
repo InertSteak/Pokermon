@@ -1,7 +1,7 @@
 local leek = {
   name = "leek",
   key = "leek",
-  set = "Item",
+  set = "poke_Item",
   helditem = true,
   config = {extra = {num = 1, dem = 2, usable = true}},
   loc_vars = function(self, info_queue, center)
@@ -77,7 +77,7 @@ local leek = {
 local dubious_disc = {
   name = "dubious_disc",
   key = "dubious_disc",
-  set = "Item",
+  set = "poke_Item",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
   end,
@@ -115,7 +115,7 @@ local dubious_disc = {
 local heartscale = {
   name = "heartscale",
   key = "heartscale",
-  set = "Item",
+  set = "poke_Item",
   config = {max_highlighted = 2, min_highlighted = 2, suit = "Hearts"},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.max_highlighted, localize(self.config.suit, 'suits_plural')}}
