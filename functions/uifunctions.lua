@@ -112,18 +112,17 @@ poke_blueprint_compat_ui = function(copy)
 end
 
 pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, sound)
-  local i = 1
   if type(cards) == 'nil' then
-    --sendDebugMessage("Attempted to enhance 0 cards.")
+    sendDebugMessage("Attempted to enhance 0 cards.")
     return
   end
   if type(cards.is) == 'function' then
-    --sendDebugMessage("Single card passed. Converting to table.")
+    sendDebugMessage("Single card passed. Converting to table and continuing.")
     local ctable = {cards}
     cards = ctable
   end
   elseif type(cards[1].is) ~= 'function' then
-    --sendDebugMessage("Non-card passed.")
+    sendDebugMessage("Non-card passed.")
     return
   end
   
@@ -139,10 +138,10 @@ pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, s
     trigger = 'before',
     delay = default and 0.7 or _delay,
     func = function()
+      --local i = 1 --uncomment this debug message if you uncomment the one two lines down.
       for k, v in pairs(cards) do
-        --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key))
+        --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key)); i = i + 1
         v:juice_up()
-        i = i + 1
       end
       if source then
         source:juice_up()
