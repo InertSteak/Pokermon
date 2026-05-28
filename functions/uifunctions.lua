@@ -111,20 +111,26 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
-pokermon.enhance_cards = function(cards, enhancement, joker, message, _delay, sound)
+pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, sound)
   local i = 1
   if type(cards) == 'nil' then
-    sendDebugMessage("Attempted to enhance 0 cards.")
+    --sendDebugMessage("Attempted to enhance 0 cards.")
     return
   end
-  if type(cards) ~= 'table' or not cards[1] then
-    sendDebugMessage("Single card passed. Converting to table.")
+  if type(cards.is) == 'function' then
+    --sendDebugMessage("Single card passed. Converting to table.")
     local ctable = {cards}
     cards = ctable
   end
+  elseif type(cards[1].is) ~= 'function' then
+    --sendDebugMessage("Non-card passed.")
+    return
+  end
+  
   local default = type(_delay) ~= 'number'
   for k, v in pairs(cards) do
     if not G.P_CENTERS[enhancement] then
+      sendDebugMessage("Could not find enhancement \""..enhancement.."\".")
       enhancement = "c_base"
     end
     v:set_ability(G.P_CENTERS[enhancement], nil, true)
@@ -134,12 +140,12 @@ pokermon.enhance_cards = function(cards, enhancement, joker, message, _delay, so
     delay = default and 0.7 or _delay,
     func = function()
       for k, v in pairs(cards) do
-        sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key))
+        --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key))
         v:juice_up()
         i = i + 1
       end
-      if joker then
-        joker:juice_up()
+      if source then
+        source:juice_up()
       end
       play_sound(sound or 'generic1')
       return true
