@@ -111,7 +111,7 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
-enhance_cards = function(cards, enhancement, joker, message, _delay, sound)
+pokermon.enhance_cards = function(cards, enhancement, joker, message, _delay, sound)
   local i = 1
   if type(cards) == 'nil' then
     sendDebugMessage("Attempted to enhance 0 cards.")

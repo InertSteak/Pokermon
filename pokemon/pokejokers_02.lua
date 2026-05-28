@@ -1192,7 +1192,7 @@ local arcanine={
       end
 
       if scoring_card ~= nil then
-        enhance_cards(scoring_card, "m_mult", card)
+        pokermon.enhance_cards(scoring_card, "m_mult", card)
       end
     end
     if context.joker_main then
