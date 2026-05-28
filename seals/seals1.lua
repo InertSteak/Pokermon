@@ -29,12 +29,12 @@ local pink_seal = {
             end
             if #energy_types > 0 then
               local energy = pseudorandom_element(energy_types, pseudoseed('pink'))
-              _card = create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+              _card = create_card("poke_Energy", G.pack_cards, nil, nil, true, true, energy, nil)
               if energy == "c_poke_bird_energy" then
                 card:set_seal(nil)
               end
             else
-              _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+              _card = create_card("poke_Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
             end
 						_card:add_to_deck()
 						G.consumeables:emplace(_card)

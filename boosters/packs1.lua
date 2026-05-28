@@ -13,10 +13,10 @@ local create_energy = function(self, card)
     end
     if #energy_types > 0 then
       local energy = pseudorandom_element(energy_types, pseudoseed('match'))
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+      return create_card("poke_Energy", G.pack_cards, nil, nil, true, true, energy, nil)
     end
   end
-  return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+  return create_card("poke_Energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
 local poll_evo_item = function(seed)

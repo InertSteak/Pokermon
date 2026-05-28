@@ -255,7 +255,7 @@ end
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
     if G.GAME.modifiers.no_energy then
-      G.GAME.energy_rate = 0
+      G.GAME.poke_energy_rate = 0
     end
   end
 

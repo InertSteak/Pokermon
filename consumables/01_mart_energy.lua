@@ -158,7 +158,7 @@ local emergy = {
       end
     end
     for i= 1, jollycount do
-      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+      local _card = create_card("poke_Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)
       _card:add_to_deck()
