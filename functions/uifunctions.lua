@@ -142,10 +142,15 @@ pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, s
       for k, v in pairs(cards) do
         --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key)); i = i + 1
         v:juice_up()
+        if not source and message then
+          card_eval_status_text(v, 'extra', nil, nil, nil, {message = message})
+        end
       end
       if source then
         source:juice_up()
-      end
+        if message then
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = message})
+        end
       play_sound(sound or 'generic1')
       return true
     end
