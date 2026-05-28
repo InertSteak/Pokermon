@@ -111,6 +111,42 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
+enhance_cards = function(cards, enhancement, joker, message, _delay, sound)
+  local i = 1
+  if type(cards) == 'nil' then
+    sendDebugMessage("Attempted to enhance 0 cards.")
+    return
+  end
+  if type(cards) ~= 'table' or not cards[1] then
+    sendDebugMessage("Single card passed. Converting to table.")
+    local ctable = {cards}
+    cards = ctable
+  end
+  local default = type(_delay) ~= 'number'
+  for k, v in pairs(cards) do
+    if not G.P_CENTERS[enhancement] then
+      enhancement = "c_base"
+    end
+    v:set_ability(G.P_CENTERS[enhancement], nil, true)
+  end
+  G.E_MANAGER:add_event(Event({
+    trigger = 'before',
+    delay = default and 0.7 or _delay,
+    func = function()
+      for k, v in pairs(cards) do
+        sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key))
+        v:juice_up()
+        i = i + 1
+      end
+      if joker then
+        joker:juice_up()
+      end
+      play_sound(sound or 'generic1')
+      return true
+    end
+  }))
+end
+
 poke_generate_illusion_ui = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   -- Create the illusion joker's text boxes
   local old_ability = card.ability
