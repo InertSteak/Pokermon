@@ -2086,7 +2086,7 @@ return {
             j_poke_flareon = {
                 name = 'Flareon',
                 text = {
-                    "Last {C:attention}2{} played {C:attention}Mult{} card",
+                    "Last {C:attention}2{} played {C:attention}Mult{} cards",
                     "gives {X:mult,C:white} X#1# {} Mult", 
                     "when scored"
                 } 
