@@ -13,7 +13,7 @@ local sylveon={
   pos = {x = 8, y = 3},
   config = { extra = { chips = 0, chip_mod = 10} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.chips, card.ability.extra.chip_mod} }
   end,
   rarity = "poke_safari", 
