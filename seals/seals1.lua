@@ -71,7 +71,7 @@ local silver = {
         G.E_MANAGER:add_event(Event({
           func = function()
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card("Item", G.consumeables, nil, nil, nil, nil, nil, nil)
+              local _card = create_card("poke_Item", G.consumeables, nil, nil, nil, nil, nil, nil)
               _card:add_to_deck()
               G.consumeables:emplace(_card)
               card:juice_up()
