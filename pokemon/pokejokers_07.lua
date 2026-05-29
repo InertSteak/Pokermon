@@ -741,8 +741,10 @@ local espeon={
   config = {extra = {retriggers = 1, Xmult_multi = 1.2}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "Ace", 'ranks'),
-                    localize(G.GAME.current_round.espeon_suit or "Spades", 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.espeon_suit or "Spades"]}}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+    end
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "Ace", 'ranks')}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -752,7 +754,7 @@ local espeon={
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.espeon_suit) then
+    if context.individual and context.cardarea == G.play and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_wild') then
       return {
         x_mult = card.ability.extra.Xmult_multi,
         card = card
@@ -785,7 +787,11 @@ local umbreon={
   gen = 2,
   blueprint_compat = false,
   calculate = function(self, card, context)
-     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+     if context.first_hand_drawn then
+      local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+     end
+     if context.after and not context.blueprint then
       --cycle hand_name
       local hands = {"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Five of a Kind", "Flush House", "Flush Five"}
       local visible_hands = {}
@@ -806,28 +812,13 @@ local umbreon={
         end
       end
     end
-    if context.pre_discard and G.GAME.current_round.discards_used <= 0 and not context.blueprint and not context.hook then
-      local text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-      if G.GAME.hands[card.ability.extra.hand_played] == G.GAME.hands[text] then
-        local highest_played = 0
-        local highest_hands = {}
-        for handname, values in pairs(G.GAME.hands) do
-          if SMODS.is_poker_hand_visible(handname) then
-            if values.played > highest_played then
-              highest_hands = {}
-              highest_hands[#highest_hands + 1] = handname
-              highest_played = values.played
-            elseif values.played == highest_played then
-              highest_hands[#highest_hands + 1] = handname
-            end
-          end
-        end
-        local text =  pseudorandom_element(highest_hands, pseudoseed('umbreon'))
-        return {
-          level_up = true,
-          level_up_hand = text
-        }
-      end
+    if context.discard and G.GAME.current_round.discards_used <= 0 and #context.full_hand == 1 and not context.blueprint and not context.hook then
+      return {
+        level_up = true,
+        level_up_hand = card.ability.extra.hand_played,
+        remove = true,
+        delay = 0.45
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)

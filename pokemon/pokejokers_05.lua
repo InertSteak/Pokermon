@@ -671,15 +671,23 @@ local ditto={
 local eevee={
   name = "eevee", 
   pos = {x = 3, y = 10},
-  config = {extra = {Xmult = 1.33}},
+  config = {extra = {mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'eeveelution'}
     end
-    return {vars = {center.ability.extra.Xmult}}
+    local can_evolve = 0
+    if G.jokers and G.jokers.cards then
+      for k, v in ipairs(G.jokers.cards) do
+        if v.config.center.stage and get_highest_evo(v) then
+          can_evolve = can_evolve + 1
+        end
+      end
+    end
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod * can_evolve}}
   end,
-  rarity = 1, 
+  rarity = 2, 
   cost = 3,
   item_req = {"waterstone", "thunderstone", "firestone", "sunstone", "moonstone", "leafstone", "icestone", "shinystone"},
   evo_list = {waterstone = "j_poke_vaporeon", thunderstone = "j_poke_jolteon", firestone = "j_poke_flareon", sunstone = "j_poke_espeon", moonstone = "j_poke_umbreon", 
@@ -691,26 +699,43 @@ local eevee={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and G.GAME.current_round.hands_played == 0 then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+      if context.joker_main then
+        local can_evolve = 0
+        for k, v in ipairs(G.jokers.cards) do
+          if v.config.center.stage and get_highest_evo(v) then
+            can_evolve = can_evolve + 1
+          end
+        end
+        if can_evolve > 0 then
+          return {
+            mult = card.ability.extra.mult_mod * can_evolve
+          }
+        end
       end
     end
     return pokermon.item_evo(self, card, context, nil)
   end,
-  attributes = {"xmult", "hands", "item_evo"},
+  attributes = {"mult", "item_evo"},
 }
 -- Vaporeon 134
 local vaporeon={
   name = "vaporeon", 
   pos = {x = 4, y = 10},
-  config = {extra = {chips = 4}},
+  config = {extra = {chip_mod = 1}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
+    end
+    local bonus = 0
+    if G.playing_cards then
+      for k, v in pairs(G.playing_cards) do
+        if SMODS.has_enhancement(v, 'm_bonus') then
+          bonus = bonus + 1
+        end
+      end
+    end
+    return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * bonus}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -722,15 +747,20 @@ local vaporeon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play then
-        local bonus = card.ability.extra.chips
-        if SMODS.has_enhancement(context.other_card, 'm_bonus') then
-          bonus = bonus * 2
+        local bonus = 0
+        for k, v in pairs(G.playing_cards) do
+          if SMODS.has_enhancement(v, 'm_bonus') then
+            bonus = bonus + 1
+          end
         end
-        context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + bonus
-        return {
-            message = localize('k_upgrade_ex'),
-            colour = G.C.CHIPS
-        }
+        
+        if bonus > 0 then
+          context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + (card.ability.extra.chip_mod * bonus)
+          return {
+              message = localize('k_upgrade_ex'),
+              colour = G.C.CHIPS
+          }
+        end
     end
   end,
   attributes = {"modify_card", "chips", "perma_bonus", "enhancements"},
@@ -777,10 +807,13 @@ local jolteon={
 local flareon={
   name = "flareon", 
   pos = {x = 6, y = 10},
-  config = {extra = {Xmult_multi = 3}}, 
+  config = {extra = {Xmult_multi = 2}}, 
   blueprint_compat = true,
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+    end
     return {vars = {center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari", 
@@ -791,27 +824,26 @@ local flareon={
   gen = 1,
   perishable_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.hand and not context.end_of_round then
-      local first_mult = nil
-      for i=1, #G.hand.cards do
-        if SMODS.has_enhancement(G.hand.cards[i], 'm_mult') then
-          first_mult = G.hand.cards[i]
-          break
+    if context.individual and context.cardarea == G.play and not context.end_of_round then
+      local mult_cards = {}
+      local last_mult, second_to_last_mult = nil
+      local area = context.scoring_hand
+      for i=1, #area do
+        if SMODS.has_enhancement(area[i], 'm_mult') then
+          mult_cards[#mult_cards + 1] = area[i]
         end
       end
-      if context.other_card == first_mult then
-        if context.other_card.debuff then
-            return {
-                message = localize('k_debuffed'),
-                colour = G.C.RED,
-                card = card,
-            }
-        else
-            return {
-                x_mult = card.ability.extra.Xmult_multi,
-                card = card
-            }
-        end
+      if #mult_cards > 1 then
+        last_mult = mult_cards[#mult_cards]
+        second_to_last_mult = mult_cards[#mult_cards - 1]
+      elseif #mult_cards == 1 then
+        last_mult = mult_cards[#mult_cards]
+      end
+      if context.other_card == last_mult or context.other_card == second_to_last_mult then
+        return {
+            x_mult = card.ability.extra.Xmult_multi,
+            card = card
+        }
       end
     end
   end,

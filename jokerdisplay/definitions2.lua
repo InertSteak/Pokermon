@@ -747,18 +747,15 @@ jd_def["j_poke_espeon"] = {
     },
     reminder_text = {
         {ref_table = "card.joker_display_values", ref_value = "rank"},
-        {text = " of "},
-        {ref_table = "card.joker_display_values", ref_value = "suit"}
     },
     calc_function = function(card)
         local rank = G.GAME.current_round.espeon_rank
-        local suit = G.GAME.current_round.espeon_suit
         local count = 0
         if G.play then
             local text, _, scoring_hand = JokerDisplay.evaluate_hand()
             if text ~= 'Unknown' then
                 for _, scoring_card in pairs(scoring_hand) do
-                    if scoring_card:is_suit(suit) then
+                    if SMODS.has_enhancement(scoring_card, 'm_wild') then
                         count = count +
                             JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                     end
@@ -769,7 +766,6 @@ jd_def["j_poke_espeon"] = {
         end
         card.joker_display_values.Xmult = 1 * (card.ability.extra.Xmult_multi^count)
         card.joker_display_values.rank = localize(rank or "2", 'ranks')
-        card.joker_display_values.suit = localize(suit or "Spades", 'suits_plural')
     end,
         retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
             local rank = G.GAME.current_round.espeon_rank

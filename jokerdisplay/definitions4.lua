@@ -725,17 +725,16 @@ end
 
 --	Leafeon
 jd_def["j_poke_leafeon"] = {
-  reminder_text = {
-      { text = "(" },
-      { ref_table = "card.ability.extra",        ref_value = "h_size" },
-      { text = "/" },
-      { ref_table = "card.ability.extra", ref_value = "h_size_limit" },
-      { text = ")" },
+  text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
   },
-  reminder_text_config = { scale = 0.35 },
+  calc_function = function(card)
+    card.joker_display_values.active = (G.GAME.poke_lucky_triggers and G.GAME.poke_lucky_triggers > 0 and localize("jdis_active") or localize("jdis_inactive"))
+  end
 }
 
 --	Glaceon
+--[[
 jd_def["j_poke_glaceon"] = {
   extra = {
     {
@@ -748,7 +747,7 @@ jd_def["j_poke_glaceon"] = {
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'glaceon')
     card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
   end
-}
+}]]--
 
 --	Gliscor
 jd_def["j_poke_gliscor"] = {

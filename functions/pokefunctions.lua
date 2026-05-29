@@ -1279,7 +1279,6 @@ end
 pokermon.reset_espeon_card = function()
   G.GAME.current_round.espeon_rank = 'Ace'
   G.GAME.current_round.espeon_id = 14
-  G.GAME.current_round.espeon_suit = 'Spades'
   
   local valid_espeon_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
@@ -1291,7 +1290,6 @@ pokermon.reset_espeon_card = function()
   if espeon_card then
     G.GAME.current_round.espeon_rank = espeon_card.base.value
     G.GAME.current_round.espeon_id = espeon_card.base.id
-    G.GAME.current_round.espeon_suit = espeon_card.base.suit
   end
 end
 

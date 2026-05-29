@@ -11,21 +11,10 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 8, y = 3},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
+  config = { extra = { chips = 0, chip_mod = 10} },
+  loc_vars = function(self, info_queue, card)
     pokermon.type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      if not center.edition or (center.edition and not center.edition.polychrome) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-      end
-      if not center.edition or (center.edition and not center.edition.foil) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
-      end
-      if not center.edition or (center.edition and not center.edition.holo) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
-      end
-    end
-    return {vars = {}}
+    return { vars = { card.ability.extra.chips, card.ability.extra.chip_mod} }
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -35,19 +24,20 @@ local sylveon={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
-      local _card = context.scoring_hand[1]
-      if _card.config.center == G.P_CENTERS.c_base then
-        local edition = poll_edition('aura', nil, true, true)
-        _card:set_edition(edition, true, true)
-      end
-    end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.edition and not context.blueprint then
+      return {
+        card = context.other_card,
+        func = function()
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS,
+          })
+        end
+      }
     end
   end,
-  attributes = {"hands", "modify_card", "editions"},
+  attributes = {"chips", "scaling", "editions"},
 }
 -- Hawlucha 701
 -- Dedenne 702
