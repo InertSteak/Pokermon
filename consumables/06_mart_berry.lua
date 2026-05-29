@@ -151,7 +151,7 @@ local berry_juice_item = {
   artist = "Sonfive",
   config = {num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
-   info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+   info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'berry_juice_item')
    return {vars = {num, dem}}
   end,

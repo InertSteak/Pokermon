@@ -503,7 +503,7 @@ local munchlax={
     if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       G.E_MANAGER:add_event(Event({
         func = function()
-          SMODS.add_card{set = 'Item', edition = 'e_negative'}
+          SMODS.add_card{set = 'poke_Item', edition = 'e_negative'}
           return true
         end
       }))

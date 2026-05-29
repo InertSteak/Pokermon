@@ -118,7 +118,7 @@ local kadabra={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kadabra')
@@ -172,7 +172,7 @@ local alakazam={
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     end
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'alakazam')
     return {vars = {num, dem, center.ability.extra.card_limit}}
@@ -237,7 +237,7 @@ local mega_alakazam={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.card_limit}}
   end,

@@ -1310,7 +1310,7 @@ local snorlax={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local leftovers = SMODS.add_card({ set = 'Item', key = 'c_poke_leftovers' })
+      local leftovers = SMODS.add_card({ set = 'poke_Item', key = 'c_poke_leftovers' })
       SMODS.calculate_effect({ message = localize('poke_plus_pokeitem') }, leftovers)
     end
   end,

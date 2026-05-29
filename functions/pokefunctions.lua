@@ -1340,7 +1340,7 @@ pokermon.create_treasure = function(card, seed, megastone)
             if stone_key then
               stone_key = 'c_poke_'..stone_key
             end
-            SMODS.add_card{set = 'Item', key = stone_key}
+            SMODS.add_card{set = 'poke_Item', key = stone_key}
             G.GAME.consumeable_buffer = 0
             return true
           end)

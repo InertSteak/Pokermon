@@ -255,7 +255,7 @@ local shuckle={
               key = pokermon.juice_list[sliced_card.config.center.set] or 'c_poke_berry_juice_mystery'
             end
 
-            local berry_juice = SMODS.add_card({set = 'Item', key = key})
+            local berry_juice = SMODS.add_card({set = 'poke_Item', key = key})
             SMODS.calculate_effect({message = localize('poke_plus_pokeitem')}, berry_juice)
             return true
           end
@@ -466,7 +466,7 @@ local ursaring={
         context.blueprint_card or card)
 
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        SMODS.add_card({ set = 'Item', key_append = 'ursa' })
+        SMODS.add_card({ set = 'poke_Item', key_append = 'ursa' })
       end
     end
     if context.joker_main then
