@@ -20,7 +20,7 @@ local reserve_and_use = nil
 if pokermon.can_save_consumable(card) then
   base_attach.children.reserve = G.UIDEF.card_focus_button{
     card = card, parent = base_attach, type = 'reserve',
-    func = 'can_reserve_card', button = 'Can Reserve', card_width = card_width
+    func = 'poke_can_reserve_card', button = 'Can Reserve', card_width = card_width
   }
   reserve_and_use = true
 end
