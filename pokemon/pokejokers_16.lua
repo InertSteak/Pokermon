@@ -685,7 +685,7 @@ local porygonz={
         end
       end
     end
-    if context.using_consumeable and context.consumeable.ability.set == 'Energy' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if context.using_consumeable and context.consumeable.ability.set == 'poke_Energy' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
       local energy_key = nil
       if pseudorandom('porygonz') < (1/256) then
         energy_key = 'c_poke_bird_energy'
@@ -695,7 +695,7 @@ local porygonz={
           trigger = 'immediate',
           delay = 0.0,
           func = (function()
-                  local _card = create_card('Energy', G.consumeables, nil, nil, nil, nil, energy_key, 'pory')
+                  local _card = create_card('poke_Energy', G.consumeables, nil, nil, nil, nil, energy_key, 'pory')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0

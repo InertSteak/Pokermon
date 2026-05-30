@@ -1278,7 +1278,7 @@ local porygon2={
           trigger = 'before',
           delay = 0.0,
           func = (function()
-                  local card = create_card('Energy', G.consumeables, nil, nil, nil, nil, forced_key)
+                  local card = create_card('poke_Energy', G.consumeables, nil, nil, nil, nil, forced_key)
                   card:add_to_deck()
                   G.consumeables:emplace(card)
                   G.GAME.consumeable_buffer = 0

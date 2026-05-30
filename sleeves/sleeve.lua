@@ -206,7 +206,7 @@ local ampedsleeve = {
 
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
       key = self.key.."_alt"
-      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'Energy'}}
+      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'poke_Energy'}}
       self.config = {}
     else
       vars = {localize {type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}
