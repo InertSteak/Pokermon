@@ -478,14 +478,14 @@ local yanmega={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {Xmult = 1, Xmult_mod = 1, money_mod = 3, trigger_goal = 5, triggers_remaining = 5}},
+  config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     end
     local abbr = center.ability.extra
-    return {vars = {abbr.Xmult, abbr.Xmult_mod, abbr.money_mod, abbr.trigger_goal, abbr.triggers_remaining}}
+    return {vars = {}}
   end,
   rarity = "poke_safari", 
   cost = 7, 

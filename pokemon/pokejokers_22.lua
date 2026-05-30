@@ -153,14 +153,16 @@ local bunnelby = {
 	eternal_compat = true,
 	
 	calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
+    if context.hand_drawn and SMODS.drawn_cards then 
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
 				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then
           if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
 						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              card.ability.extra.triggers = card.ability.extra.triggers + 1
+              if not context.blueprint then
+                card.ability.extra.triggers = card.ability.extra.triggers + 1
+              end
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
               G.E_MANAGER:add_event(Event({
                   func = (function()
@@ -172,10 +174,10 @@ local bunnelby = {
                   end)
               }))
           
-              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
 						end
           else
-            pokermon.nope(card)
+            pokermon.nope(context.blueprint_card or card)
 					end
 				end
 			end
@@ -205,7 +207,7 @@ local diggersby = {
 	blueprint_compat = true,
 	eternal_compat = true,
 	calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then 
+    if context.hand_drawn and SMODS.drawn_cards then 
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do 
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
@@ -223,16 +225,18 @@ local diggersby = {
                   end)
               }))
             
-              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
             end
             
-            SMODS.scale_card(card, {
-              ref_value = 'mult',
-              scalar_value = 'mult_mod',
-              message_colour = G.C.MULT,
-            })
+            if not context.blueprint then
+              SMODS.scale_card(card, {
+                ref_value = 'mult',
+                scalar_value = 'mult_mod',
+                message_colour = G.C.MULT,
+              })
+            end
           else
-            pokermon.nope(card)
+            pokermon.nope(context.blueprint_card or card)
           end
         end
 			end

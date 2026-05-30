@@ -95,7 +95,7 @@ local swablu={
   atlas = "Pokedex3",
   knockoff_pseudol = true,
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
@@ -135,7 +135,7 @@ local altaria={
   ptype = "Dragon",
   atlas = "Pokedex3",
   perishable_compat = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then

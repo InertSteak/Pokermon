@@ -336,7 +336,7 @@ local rabsca = {
 				end
 			end
 		end
-		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Item" then
+		if context.using_consumeable and context.consumeable.ability.set == "Item" then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'rabsca', card.ability.extra.num, card.ability.extra.dem, 'rabsca') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
@@ -347,7 +347,7 @@ local rabsca = {
               return true
             end
           }))
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
         end
       end
 			return {
