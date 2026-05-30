@@ -20,7 +20,7 @@ local twisted_spoon = {
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then
             play_sound('timpani')
-            local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
+            local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             used_item:juice_up(0.3, 0.5)

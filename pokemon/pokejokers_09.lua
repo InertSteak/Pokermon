@@ -1257,7 +1257,7 @@ local zigzagoon={
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  local _card = create_card('Item',G.consumeables, nil, nil, nil, nil, pokermon.generate_pickup_item_key('zigzag'))
+                  local _card = create_card('poke_Item',G.consumeables, nil, nil, nil, nil, pokermon.generate_pickup_item_key('zigzag'))
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0
@@ -1304,7 +1304,7 @@ local linoone={
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  local card_type = 'Item'
+                  local card_type = 'poke_Item'
                   local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, pokermon.generate_pickup_item_key('linoone'))
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
