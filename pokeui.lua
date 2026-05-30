@@ -704,7 +704,7 @@ end
 G.FUNCS.poke_can_reserve_card = function(e)
     if #G.consumeables.cards < G.consumeables.config.card_limit then 
         e.config.colour = G.ARGS.LOC_COLOURS.pink
-        e.config.button = 'reserve_card' 
+        e.config.button = 'poke_reserve_card' 
     else
       e.config.colour = G.C.UI.BACKGROUND_INACTIVE
       e.config.button = nil
