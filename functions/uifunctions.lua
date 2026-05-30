@@ -111,15 +111,15 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
-pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, sound)
+pokermon.enhance_cards = function(cards, enhancement, source, _message, _delay, sound)
   if type(cards) == 'nil' then
     sendDebugMessage("Attempted to enhance 0 cards. Function failed.")
     return
   end
   if type(cards.is) == 'function' and cards:is(Card) then
     sendDebugMessage("Single card passed. Converting to table and continuing.")
-    local ctable = {cards}
-    cards = ctable
+    pokermon.enhance_cards({cards}, enhancement, source, _message, _delay, sound)
+    return
   end
   
   local default = type(_delay) ~= 'number'
@@ -142,14 +142,17 @@ pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, s
       for k, v in pairs(cards) do
         --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key)); i = i + 1
         v:juice_up()
-        if not source and message then
-          card_eval_status_text(v, 'extra', nil, nil, nil, {message = message})
+        if not source and type(_message) == 'string' then
+          card_eval_status_text(v, 'extra', nil, nil, nil, {message = _message,instant = true})
         end
       end
       if source then
-        source:juice_up()
-        if message then
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = message})
+        --source:juice_up()
+        for k, v in pairs(source) do
+           sendDebugMessage(k..": "..tostring(v).." ("..type(v)..")")
+        end
+        if type(_message) == 'string' then
+          card_eval_status_text(source, 'extra', nil, nil, nil, {message = _message,instant = true})
         end
       end
       play_sound(sound or 'generic1')
