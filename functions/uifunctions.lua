@@ -151,6 +151,7 @@ pokermon.enhance_cards = function(cards, enhancement, source, message, _delay, s
         if message then
           card_eval_status_text(card, 'extra', nil, nil, nil, {message = message})
         end
+      end
       play_sound(sound or 'generic1')
       return true
     end
