@@ -7459,6 +7459,7 @@ return {
             --From Tangela line
             poke_tangela_bonus = "All!",
             --Golbat And Crobat thingy
+            poke_leech_life_ex = "Leech!",
             poke_screech_ex = "Skree!",
             --Hoppip Line
             poke_hop_ex = "Hop!",
