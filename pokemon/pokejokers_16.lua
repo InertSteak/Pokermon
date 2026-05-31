@@ -257,21 +257,17 @@ local tangrowth={
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
             dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
-            card = card
+            remove_default_message = true,
           }
         else
           local scoring_bonuses = {"Mult", "Chips", "Money"}
           local bonus = pseudorandom_element(scoring_bonuses, pseudoseed('tangela'))
           if bonus == "Mult" then
             return {
-              message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-              colour = G.C.MULT,
               mult = card.ability.extra.mult
             }
           elseif bonus == "Chips" then
             return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
               chips = card.ability.extra.chips
             }
           elseif bonus == "Money" then
@@ -279,7 +275,6 @@ local tangrowth={
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
               dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
-              card = card
             }
           end
         end
