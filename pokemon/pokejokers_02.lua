@@ -1178,24 +1178,29 @@ local arcanine={
   gen = 1,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and next(context.poker_hands['Flush']) then
-        local target = {}
-        for k, v in pairs(context.scoring_hand) do
-          if v.config.center == G.P_CENTERS.c_base then
-            target[#target + 1] = v
-            break
-          end
+    if context.poker_hands and not(next(context.poker_hands['Flush'])) then
+      return
+    end
+    if context.before and not context.blueprint then
+      local scoring_card = nil
+      for i = 1, #context.scoring_hand do
+        --sendDebugMessage("Card "..i.." enhancement:"..tostring(context.scoring_hand[i].config.center_key))
+        if tostring(context.scoring_hand[i].config.center_key) == "c_base" and not context.scoring_hand[i].config.center.debuff then
+          scoring_card = context.scoring_hand[i]
+          break
         end
-        poke_convert_cards_to(target, {mod_conv = 'm_mult'}, true, true)
       end
-      if context.joker_main and next(context.poker_hands['Flush']) then
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-          colour = G.C.MULT,
-          Xmult_mod = card.ability.extra.Xmult
-        }
+
+      if scoring_card ~= nil then
+        pokermon.enhance_cards(scoring_card, "m_mult", card)
       end
+    end
+    if context.joker_main then
+      return {
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+        colour = G.C.MULT,
+        Xmult_mod = card.ability.extra.Xmult
+      }
     end
   end,
   attributes = {"xmult", "hand_type", "modify_card", "enhancements"},

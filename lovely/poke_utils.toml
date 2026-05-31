@@ -50,11 +50,7 @@ pattern = "booster_obj = self.config.center"
 position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(SMODS.find_card("j_poke_xatu")) then
-    local xatu_count = 0
-    for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-        if not G.GAME.banned_keys[v.key] and SMODS.is_poker_hand_visible(v.config.hand_type) then xatu_count = xatu_count + 1 end
-    end
-    self.ability.extra = xatu_count
+    self.ability.extra = #pokermon.get_available_planet_cards()
 elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
     self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
 end
@@ -69,16 +65,9 @@ pattern = "if G.GAME.used_vouchers.v_telescope and i == 1 then"
 position = "at"
 payload = '''
 if next(SMODS.find_card("j_poke_xatu")) then
-    local pos = 0
-    for j = i, #G.P_CENTER_POOLS.Planet do
-        local _curr_planet = G.P_CENTER_POOLS.Planet[j]
-        if not G.GAME.banned_keys[_curr_planet.key] and SMODS.is_poker_hand_visible(_curr_planet.config.hand_type) then
-            pos = j
-            break
-        end
-    end
-    local _planet = G.P_CENTER_POOLS.Planet[pos].key
-    _card = create_card("Planet", G.pack_cards, nil, nil, true, true, _planet, 'pl1')
+    local _planets = pokermon.get_available_planet_cards()
+    local _planet = _planets[i].key
+    _card = {set = "Planet", area = G.pack_cards, skip_materialize = true, soulable = true, key = _planet, key_append = "pl1"}
 elseif G.GAME.used_vouchers.v_telescope and i == 1 then
 '''
 match_indent = true
@@ -238,29 +227,6 @@ four_fingers = (next(SMODS.find_card('j_poke_aipom')) or (#hand == 3 and next(SM
 '''
 match_indent = true
 times = 1
-
-
-## Garbodor
-# Garbodor functionality
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "G.GAME.current_round.discards_used = G.GAME.current_round.discards_used + 1"
-position = "after"
-payload = '''
-G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = "G.GAME.round_resets.ante = G.GAME.round_resets.ante + mod"
-position = "after"
-payload = '''
-G.GAME.poke_ante_discards_used = 0
-'''
-match_indent = true
 
 
 ## Zorua

@@ -483,7 +483,7 @@ local blastoise={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.hands, 
-                    center.ability.extra.chip_mod * G.GAME.current_round.hands_left}}
+                    center.ability.extra.chips + (center.ability.extra.chip_mod * G.GAME.current_round.hands_left)}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -922,7 +922,7 @@ local mega_pidgeot = {
   ptype = "Colorless",
   atlas = "Megas",
   gen = 1,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -1034,23 +1034,31 @@ local spearow={
   atlas = "Pokedex1",
   gen = 1,
   ptype = "Colorless",
-  blueprint_compat = false,
+  blueprint_compat = true,
+  poke_custom_values_to_keep = { "upgrade" },
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    
-    if context.before and card.ability.extra.upgrade and not context.blueprint then
-      card.ability.extra.upgrade = false
-      card.ability.extra.triggers = card.ability.extra.triggers + 1
+
+    if context.before and card.ability.extra.upgrade then
+      if not context.blueprint then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card.ability.extra.upgrade = false
+            card.ability.extra.triggers = card.ability.extra.triggers + 1
+            return true
+          end
+        }))
+      end
       return {
         card = card,
         level_up = true,
         message = localize('k_level_up_ex')
       }
     end
-    
+
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.cards_drawn = card.ability.extra.cards_drawn + #SMODS.drawn_cards
       if card.ability.extra.cards_drawn >= card.ability.extra.card_threshold then
@@ -1080,22 +1088,29 @@ local fearow={
   atlas = "Pokedex1",
   gen = 1,
   ptype = "Colorless",
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return (card.ability.extra.upgrade == true) and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    
-    if context.before and card.ability.extra.upgrade and not context.blueprint then
-      card.ability.extra.upgrade = false
+
+    if context.before and card.ability.extra.upgrade then
+      if not context.blueprint then
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            card.ability.extra.upgrade = false
+            return true
+          end
+        }))
+      end
       return {
         card = card,
         level_up = true,
         message = localize('k_level_up_ex')
       }
     end
-    
+
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.cards_drawn = card.ability.extra.cards_drawn + #SMODS.drawn_cards
       if card.ability.extra.cards_drawn >= card.ability.extra.card_threshold then

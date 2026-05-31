@@ -176,7 +176,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     card.debuff = false
   end
 
-  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "upgrade", "hazards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form", "jack_target",                         "jacks_discarded"}
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
   if type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
@@ -211,7 +211,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
   if type(card.ability.extra) == "table" then
     for k,v in pairs(values_to_keep) do
       if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
-        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" or k == "jack_target" then
+        if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) or k == "form" then
           card.ability.extra[k] = v
         end
       end
@@ -423,6 +423,7 @@ get_lowest_evo = function(card)
 end
 
 get_highest_evo = function(card)
+  if not (card and card.config and card.config.center and card.config.center.stage) then return end
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
@@ -820,10 +821,11 @@ apply_type_sticker = function(card, sticker_type)
   end
 end
 
-get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys)
+get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclude_keys, exclude_types)
   local poke_keys = {}
   local poke_key
-  exclude_keys = exclude_keys or {}
+  exclude_keys = poke_convert_to_set(exclude_keys) or {}
+  exclude_types = poke_convert_to_set(exclude_types) or {}
 
   if pokerarity then
     local rarities = { common = 1, uncommon = 2, rare = 3, legendary = 4 }
@@ -841,8 +843,9 @@ get_random_poke_key = function(pseed, stage, pokerarity, _area, poketype, exclud
 
   for k, v in pairs(G.P_CENTER_POOLS.Joker) do
     if v.stage and v.stage ~= "Other" and (not valid_stages or valid_stages[v.stage]) and (not valid_rarities or valid_rarities[v.rarity]) and get_gen_allowed(v)
-       and not (poketype and poketype ~= v.ptype) and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega" and not exclude_keys[v.key]
-       and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
+        and not (poketype and poketype ~= v.ptype) and not exclude_types[v.ptype]
+        and not poke_family_present(v) and (not (type(v.in_pool) == 'function') or v:in_pool()) and not v.aux_poke and v.rarity ~= "poke_mega"
+        and not exclude_keys[v.key] and not G.GAME.banned_keys[v.key] and not (G.GAME.used_jokers[v.key] and not SMODS.showman(v.key)) then
 
       if v.enhancement_gate then
         if G.playing_cards then
@@ -874,7 +877,8 @@ get_random_poke_key_options = function(options)
   local pokerarity = options.rarity or options.pokerarity
   local poketype = options.type or options.poketype
   local exclude_keys = options.exclude_keys
-  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys)
+  local exclude_types = options.exclude_types
+  return get_random_poke_key(pseed, stage, pokerarity, nil, poketype, exclude_keys, exclude_types)
 end
 
 create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
@@ -1313,7 +1317,6 @@ end
 reset_espeon_card = function()
   G.GAME.current_round.espeon_rank = 'Ace'
   G.GAME.current_round.espeon_id = 14
-  G.GAME.current_round.espeon_suit = 'Spades'
   
   local valid_espeon_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
@@ -1325,7 +1328,6 @@ reset_espeon_card = function()
   if espeon_card then
     G.GAME.current_round.espeon_rank = espeon_card.base.value
     G.GAME.current_round.espeon_id = espeon_card.base.id
-    G.GAME.current_round.espeon_suit = espeon_card.base.suit
   end
 end
 
@@ -1431,4 +1433,17 @@ poke_drain_chips = function(card, amount)
   card.ability.perma_bonus = (card.ability.perma_bonus or 0) - bonus_drain
 
   return base_drain + bonus_drain
+end
+
+pokermon.get_available_planet_cards = function()
+  local planets = {}
+  for _, v in ipairs(G.P_CENTER_POOLS.Planet) do
+    if not G.GAME.banned_keys[v.key]
+        and (not v.config.softlock or G.GAME.hands[v.config.hand_type].played > 0)
+        and SMODS.add_to_pool(v)
+        and (type(v.mp_include) ~= 'function' or v.mp_include()) then
+      planets[#planets+1] = v
+    end
+  end
+  return planets
 end

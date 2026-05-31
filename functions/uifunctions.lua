@@ -111,6 +111,84 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
+pokermon.enhance_cards = function(cards, enhancement, source, _message, _delay, sound)
+  if type(cards) == 'nil' then
+    sendDebugMessage("Attempted to enhance 0 cards. Function failed.")
+    return
+  end
+  if type(cards.is) == 'function' and cards:is(Card) then
+    sendDebugMessage("Single card passed. Converting to table and continuing.")
+    pokermon.enhance_cards({cards}, enhancement, source, _message, _delay, sound)
+    return
+  end
+  
+  local default = type(_delay) ~= 'number'
+  for k, v in pairs(cards) do
+    if not(type(v.is) == 'function' and v:is(Card)) then
+      sendDebugMessage("Non-card passed. Function failed.")
+      return
+    end
+    if not G.P_CENTERS[enhancement] then
+      sendDebugMessage("Could not find enhancement \""..enhancement.."\".")
+      enhancement = "c_base"
+    end
+    v:set_ability(G.P_CENTERS[enhancement], nil, true)
+  end
+  G.E_MANAGER:add_event(Event({
+    trigger = 'before',
+    delay = default and 0.7 or _delay,
+    func = function()
+      --local i = 1 --uncomment this debug message if you uncomment the one two lines down.
+      for k, v in pairs(cards) do
+        --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key)); i = i + 1
+        v:juice_up()
+        if not source and type(_message) == 'string' then
+          card_eval_status_text(v, 'extra', nil, nil, nil, {message = _message,instant = true})
+        end
+      end
+      if source then
+        --source:juice_up()
+        for k, v in pairs(source) do
+           sendDebugMessage(k..": "..tostring(v).." ("..type(v)..")")
+        end
+        if type(_message) == 'string' then
+          card_eval_status_text(source, 'extra', nil, nil, nil, {message = _message,instant = true})
+        end
+      end
+      play_sound(sound or 'generic1')
+      return true
+    end
+  }))
+end
+
+poke_generate_illusion_ui = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  -- Create the illusion joker's text boxes
+  local old_ability = card.ability
+  card.ability = copy_table(old_ability)
+  for k, v in pairs(other_center.config) do card.ability[k] = v end
+  other_center:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  card.ability = old_ability
+  -- Adds the "...?" to the end of the name
+  if next(full_UI_table.name[1].nodes) then
+    local name_nodes = full_UI_table.name[1].nodes
+    local dynatext = name_nodes[#name_nodes].nodes[1].config.object
+    dynatext.string = dynatext.string .. localize("poke_illusion")
+    dynatext.config.string = {dynatext.string}
+    dynatext.strings = {}
+    dynatext:update_text(true)
+  end
+end
+
+poke_set_card_type_badge = function(card, badges, center)
+  if not center then center = card.config.center end
+
+  local card_type = SMODS.Rarity:get_rarity_badge(center.rarity)
+  local card_type_colour = get_type_colour(center, card)
+  local card_type_text_colour = SMODS.get_card_type_text_colour('Joker', center, card)
+
+  badges[#badges+1] = create_badge(card_type, card_type_colour, card_type_text_colour, 1.2)
+end
+
 -- Collection Grid UI helper functions
 function poke_create_your_collection_card(key, x, y, params)
   local form = type(key == 'table') and key.form

@@ -482,10 +482,11 @@ local ursaring={
 local slugma={
   name = "slugma",
   pos = {x = 6, y = 6},
-  config = {extra = {chips = 0,chip_mod = 12, hands = 4, hand_reset = 4}, evo_rqmt = 60},
+  config = {extra = {chips = 0,chip_mod = 12, every = 3, loyalty_remaining = 3}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,self.config.evo_rqmt, center.ability.extra.hands}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt, center.ability.extra.every + 1,
+                    localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 2,
   cost = 6,
@@ -498,28 +499,25 @@ local slugma={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    if context.before and not context.blueprint then
-      card.ability.extra.hands = card.ability.extra.hands - 1
-      if card.ability.extra.hands == 1 then
-        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
-      if card.ability.extra.hands == 0 then
-        card.ability.extra.hands = card.ability.extra.hand_reset
-
-        if G.hand.cards[1] then
-          card.ability.extra.remove = true
+    if context.before then
+      card.ability.extra.loyalty_remaining = (card.ability.extra.every - 1 - (G.GAME.hands_played - card.ability.hands_played_at_create)) %
+          (card.ability.extra.every + 1)
+      if not context.blueprint then
+        if card.ability.extra.loyalty_remaining == 0 then
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
         end
-
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          no_message = true,
-        })
+        
+        if card.ability.extra.loyalty_remaining == card.ability.extra.every then
+          if G.hand.cards[1] then
+            card.ability.extra.remove = true
+          end
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            no_message = true,
+          })
+        end
       end
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
@@ -539,10 +537,11 @@ local slugma={
 local magcargo={
   name = "magcargo",
   pos = {x = 7, y = 6},
-  config = {extra = {chips = 0,chip_mod = 15, hands = 3, hand_reset = 3, remove = false}},
+  config = {extra = {chips = 0,chip_mod = 15, every = 2, loyalty_remaining = 2, remove = false}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.hands}}
+    return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.every + 1,
+                    localize{type = 'variable', key = (center.ability.extra.loyalty_remaining == 0 and 'loyalty_active' or 'loyalty_inactive'), vars = {center.ability.extra.loyalty_remaining}}}}
   end,
   rarity = 3,
   cost = 6,
@@ -554,28 +553,25 @@ local magcargo={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.first_hand_drawn and card.ability.extra.hands == 1 then
-      local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    if context.before and not context.blueprint then
-      card.ability.extra.hands = card.ability.extra.hands - 1
-      if card.ability.extra.hands == 1 then
-        local eval = function(_card) return _card.ability.extra.hands <= 1 and not G.RESET_JIGGLES end
-        juice_card_until(card, eval, true)
-      end
-      if card.ability.extra.hands == 0 then
-        card.ability.extra.hands = card.ability.extra.hand_reset
-
-        if G.hand.cards[1] then
-          card.ability.extra.remove = true
+    if context.before then
+      card.ability.extra.loyalty_remaining = (card.ability.extra.every - 1 - (G.GAME.hands_played - card.ability.hands_played_at_create)) %
+          (card.ability.extra.every + 1)
+      if not context.blueprint then
+        if card.ability.extra.loyalty_remaining == 0 then
+            local eval = function(card) return card.ability.extra.loyalty_remaining == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
         end
-
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          no_message = true,
-        })
+        
+        if card.ability.extra.loyalty_remaining == card.ability.extra.every then
+          if G.hand.cards[1] then
+            card.ability.extra.remove = true
+          end
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            no_message = true,
+          })
+        end
       end
     end
     if context.after and card.ability.extra.remove and not context.blueprint then
@@ -913,14 +909,18 @@ local mantine={
         chips = card.ability.extra.chips
       }
     end
-    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand) then
-      if SMODS.has_enhancement(context.other_card, 'm_gold') then
-        SMODS.scale_card(card, {
-          ref_value = 'chips',
-          scalar_value = 'chip_mod',
-          message_colour = G.C.CHIPS,
-        })
-      end
+    if context.individual and not context.end_of_round and (context.cardarea == G.play or context.cardarea == G.hand)
+        and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      return {
+        card = context.other_card,
+        func = function()
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS,
+          })
+        end
+      }
     end
   end,
   attributes = {"chips", "scaling", "enhancements"},
@@ -1378,18 +1378,22 @@ local smeargle={
       -- Display the description of the copy, instead of the center
       local other_center = copy.config.center
       local new_config = copy_table(copy.ability)
+      local other_vars
       if type(other_center.loc_vars) == 'function' then
-        local other_vars = other_center:loc_vars({}, copy)
+        other_vars = other_center:loc_vars({}, copy)
         if other_vars and other_vars.vars then
           new_config.loc_vars_replacement = other_vars.vars
         end
       end
-      info_queue[#info_queue+1] = {set = 'Joker', key = other_center.key, name = other_center.name, config = new_config }
+      info_queue[#info_queue+1] = {set = 'Joker', key = (other_vars and other_vars.key) or other_center.key, name = other_center.name, config = new_config, vars = other_vars and other_vars.vars or {} }
     end
 
     -- Add blueprint compatible/incompatible text
-    local found_pos = get_index(G.jokers.cards, card) + 1
-    local other_joker = G.jokers.cards[found_pos]
+    local found_pos = get_index(G.jokers.cards, card)
+    -- fix for multiplayer not removing cards from `G.jokers` properly
+    if not found_pos then return end
+
+    local other_joker = G.jokers.cards[found_pos + 1]
 
     local main_end = poke_blueprint_compat_ui(other_joker)
 
@@ -1420,13 +1424,16 @@ local smeargle={
   end,
   calculate = function(self, card, context)
     if context.setting_blind and not card.getting_sliced then
-      local found_pos = get_index(G.jokers.cards, card) + 1
-      local other_joker = G.jokers.cards[found_pos]
-      if other_joker and other_joker.config.center.blueprint_compat then
-        card.sketched_joker = other_joker
-        card.ability.extra.copy_val = other_joker.unique_val
-        card.ability.extra.copy_val__ID = other_joker.unique_val__saved_ID or other_joker.ID
-        SMODS.calculate_effect({message = localize('k_copied_ex')}, card)
+      local found_pos = get_index(G.jokers.cards, card)
+      -- fix for multiplayer not removing cards from `G.jokers` properly
+      if found_pos then
+        local other_joker = G.jokers.cards[found_pos + 1]
+        if other_joker and other_joker.config.center.blueprint_compat then
+          card.sketched_joker = other_joker
+          card.ability.extra.copy_val = other_joker.unique_val
+          card.ability.extra.copy_val__ID = other_joker.unique_val__saved_ID or other_joker.ID
+          SMODS.calculate_effect({message = localize('k_copied_ex')}, card)
+        end
       end
     end
 
@@ -1468,58 +1475,55 @@ local tyrogue={
 		return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        faint_baby_poke(self, card, context)
-        return {
-          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
-          colour = G.C.XMULT,
-          Xmult_mod = card.ability.extra.Xmult_minus
-        }
-      end
-      if context.after and not context.blueprint and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
-        local target = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+
+    if context.joker_main then
+      faint_baby_poke(self, card, context)
+      return {
+        Xmult = card.ability.extra.Xmult_minus
+      }
+    end
+
+    if G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not context.blueprint then
+      if context.before and #context.full_hand == 5 then
+        local target = pseudorandom_element(context.full_hand, 'tyrogue')
+        G.playing_card = (G.playing_card and G.playing_card + 1) or 1
         local copy = copy_card(target, nil, nil, G.playing_card)
         copy:add_to_deck()
         G.deck.config.card_limit = G.deck.config.card_limit + 1
         table.insert(G.playing_cards, copy)
         G.hand:emplace(copy)
         copy.states.visible = nil
+
         G.E_MANAGER:add_event(Event({
           func = function()
-              copy:start_materialize()
-              return true
+            copy:start_materialize()
+            return true
           end
-        })) 
-        playing_card_joker_effects({copy})
+        }))
         return {
-            message = localize('k_copied_ex'),
-            colour = G.C.CHIPS,
-            card = card,
-            playing_cards_created = {true}
+          message = localize('k_copied_ex'),
+          colour = G.C.CHIPS,
+          playing_cards_created = {copy}
+        }
+      end
+
+      if context.pre_discard and #context.full_hand == 5 and not context.hook then
+        local random_card = pseudorandom_element(context.full_hand, 'tyrogue')
+        random_card.poke_tyrogue_destroy = true
+      end
+
+      if context.discard and context.other_card.poke_tyrogue_destroy then
+        context.other_card.poke_tyrogue_destroy = nil
+        return {
+          remove = true
         }
       end
     end
-    
-    if context.discard and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 5 then
-      if not card.ability.extra.destroyed_card then
-        card.ability.extra.destroyed_card = pseudorandom_element(context.full_hand, pseudoseed('tyrogue'))
-      end
-      if context.other_card == card.ability.extra.destroyed_card then
-        return {
-          delay = 0.45, 
-          remove = true,
-          card = card
-        }
-      end
-    end
-    
-    if context.first_hand_drawn and not context.blueprint then
-      card.ability.extra.destroyed_card = nil
-      local eval = function() return G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
-    end
-    
+
     local forced_key = nil
     if #G.playing_cards > G.GAME.starting_deck_size then
       forced_key = "j_poke_hitmonchan"

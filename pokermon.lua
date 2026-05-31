@@ -198,6 +198,9 @@ load_directory("vouchers", SMODS.Voucher, true)
 --Load blinds
 load_directory("blinds", SMODS.Blind, true)
 
+--Load stakes
+load_directory("stakes", SMODS.Stake, true)
+
 --Load tags
 load_directory("tags", SMODS.Tag, true)
 
@@ -299,8 +302,26 @@ function SMODS.current_mod.calculate(self, context)
     end
   end
   --Garbodor
+  if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss == true then
+    G.GAME.poke_ante_discards_used = 0
+    G.GAME.poke_lucky_triggers = 0
+  end
   if context.pre_discard and not context.hook then
     G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+  end
+  
+  --Leafeon
+  if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger then
+    G.GAME.poke_lucky_triggers = (G.GAME.poke_lucky_triggers or 0) + 1
+  end
+
+  --Revive fainted Jokers (MP Fix)
+  if context.round_eval then
+    for _, area in ipairs(SMODS.get_card_areas('jokers')) do
+      for _, joker in ipairs(area.cards) do
+        joker.ability.fainted = nil
+      end
+    end
   end
 end
 

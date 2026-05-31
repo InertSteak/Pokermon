@@ -257,21 +257,17 @@ local tangrowth={
             mult = card.ability.extra.mult,
             chips = card.ability.extra.chips,
             dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
-            card = card
+            remove_default_message = true,
           }
         else
           local scoring_bonuses = {"Mult", "Chips", "Money"}
           local bonus = pseudorandom_element(scoring_bonuses, pseudoseed('tangela'))
           if bonus == "Mult" then
             return {
-              message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
-              colour = G.C.MULT,
               mult = card.ability.extra.mult
             }
           elseif bonus == "Chips" then
             return {
-              message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
-              colour = G.C.CHIPS,
               chips = card.ability.extra.chips
             }
           elseif bonus == "Money" then
@@ -279,7 +275,6 @@ local tangrowth={
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
             return {
               dollars = ease_poke_dollars(card, "tangrowth", card.ability.extra.money_mod, true),
-              card = card
             }
           end
         end
@@ -478,10 +473,14 @@ local yanmega={
 local leafeon={
   name = "leafeon", 
   pos = {x = 13, y = 5},
-  config = {extra = {h_size = 7, h_mod = 1, h_size_limit = 7}},
+  config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.h_size, center.ability.extra.h_mod, center.ability.extra.h_size_limit}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
+    end
+    local abbr = center.ability.extra
+    return {vars = {}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -489,44 +488,27 @@ local leafeon={
   ptype = "Grass",
   atlas = "Pokedex4",
   gen = 4,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand and not context.blueprint then
-      if context.before and card.ability.extra.h_size > 0 then
-        card.ability.extra.h_size = card.ability.extra.h_size - card.ability.extra.h_mod
-        G.hand:change_size(-card.ability.extra.h_mod)
+    if context.mod_probability and G.GAME.poke_lucky_triggers and G.GAME.poke_lucky_triggers > 0 and not context.blueprint then
         return {
-            message = localize { type = 'variable', key = 'a_handsize_minus', vars = { card.ability.extra.h_mod } },
-            colour = G.C.FILTER
+            numerator = context.numerator * 3
         }
-      end
-    end
-    if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger and card.ability.extra.h_size < card.ability.extra.h_size_limit and not context.blueprint then
-      card.ability.extra.h_size = card.ability.extra.h_size + card.ability.extra.h_mod
-      G.hand:change_size(card.ability.extra.h_mod)
-      return {
-          message = localize { type = 'variable', key = 'a_handsize', vars = { card.ability.extra.h_mod } },
-          colour = G.C.FILTER
-      }
     end
   end,
-  add_to_deck = function(self, card, from_debuff)
-    G.hand:change_size(card.ability.extra.h_size)
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    G.hand:change_size(-card.ability.extra.h_size)
-  end,
-  attributes = {"scaling", "hand_size", "enhancements"},
+  attributes = {"mod_chance", "passive",},
 }
 -- Glaceon 471
 local glaceon={
   name = "glaceon", 
   pos = {x = 0, y = 6},
-  config = {extra = {num = 1, dem = 4}},
+  config = {extra = {retriggers = 1}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'glaceon')
-    return {vars = {num, dem}}
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
+    return {vars = {}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -536,16 +518,15 @@ local glaceon={
   gen = 4,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    if context.reroll_shop and not context.blueprint then
-      if SMODS.pseudorandom_probability(card, 'glaceon', card.ability.extra.num, card.ability.extra.dem, 'glaceon') then
-        local card_to_copy = pseudorandom_element(G.deck.cards, pseudoseed('deckglaceon'))
-        local copy = copy_card(card_to_copy, nil, nil, G.playing_card)
-        copy:set_ability(G.P_CENTERS.m_glass, nil, true)
-        poke_add_shop_card(copy, card)
-      end
+    if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
     end
   end,
-  attributes = {"chance", "generation", "enhancements"},
+  attributes = {"retrigger", "enhancements"},
 }
 -- Gliscor 472
 local gliscor = {

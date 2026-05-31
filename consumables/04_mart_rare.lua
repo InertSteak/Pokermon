@@ -144,7 +144,7 @@ local teraorb = {
   name = "teraorb",
   key = "teraorb",
   set = "Item",
-  config = {extra = {change_to_type = "Grass"}},
+  config = {extra = {change_to_type = "Grass", type_bag = {}}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     local info = center.ability.extra or self.config.extra
@@ -160,6 +160,13 @@ local teraorb = {
   soul_rate = .045,
   unlocked = true,
   discovered = true,
+  get_next_type = function(self, card)
+    if not card.ability.extra.type_bag or #card.ability.extra.type_bag < 1 then
+      card.ability.extra.type_bag = copy_table(POKE_TYPES)
+      pseudoshuffle(card.ability.extra.type_bag, 'tera')
+    end
+    return table.remove(card.ability.extra.type_bag)
+  end,
   can_use = function(self, card)
     return #G.jokers.cards > 0
   end,
@@ -173,32 +180,23 @@ local teraorb = {
     card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-        local change_list = {}
-        for i = 1, #poketype_list do
-          if card.ability.extra.change_to_type ~= poketype_list[i] then
-            change_list[#change_list + 1] = poketype_list[i]
-          end
+    if context.pre_discard then
+      card.ability.extra.change_to_type = self:get_next_type(card)
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          self:set_sprites(card)
+          return true
         end
-        card.ability.extra.change_to_type = pseudorandom_element(change_list, 'tera')
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            self:set_sprites(card)
-            return true
-          end
-        }))
-  
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.change_to_type, colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]})
-      end
+      }))
+      return {
+        message = card.ability.extra.change_to_type,
+        colour = G.ARGS.LOC_COLOURS[string.lower(card.ability.extra.change_to_type)]
+      }
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
-      local poketype_list = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
-      card.ability.extra.change_to_type = pseudorandom_element(poketype_list, 'tera')
-      
+      card.ability.extra.change_to_type = self:get_next_type(card)
       self:set_sprites(card)
     end
   end,
@@ -208,7 +206,7 @@ local teraorb = {
                               colorless = {x = 0, y = 10}, dark = {x = 0, y = 8}, metal = {x = 6, y = 9}, fairy = {x = 6, y = 8}, dragon = {x = 2, y = 8}, earth = {x = 4, y = 8}}
     local sprite_x = sprite_locations[string.lower(info.change_to_type)].x
     local sprite_y = sprite_locations[string.lower(info.change_to_type)].y
-    
+
     card.children.center:set_sprite_pos({x = sprite_x, y = sprite_y})
     card.children.floating_sprite:set_sprite_pos({x = sprite_x + 1, y = sprite_y})
   end,
