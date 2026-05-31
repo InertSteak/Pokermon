@@ -126,7 +126,7 @@ return {
                 name = "Padrino gris",
                 text = {
                     "-#1# $ cuando juegas",
-                    "o descartas una mano",
+                    "o descartas una mano.",
                     "Destruye un comodín al azar",
                     "si estás endeudado",
                 }, 
@@ -692,8 +692,8 @@ return {
             stake_poke_elite = {
               name = "Pozo de liga",
               text = {
-                "{X:gray,C:attention}+2{} apuestas iniciales para ganar",
-                "Las últimas {C:attention}4{} apuestas iniciales son {C:attention}ciegas jefe finales",
+                "{X:gray,C:attention}+2{} {C:attention}apuestas iniciales{} para ganar",
+                "Lás últimas {C:attention}4{} ciegas jefe son {C:attention}ciegas jefe finales",
                 "{s:0.8}Se aplica a todos los pozos anteriores"
               },
             },
@@ -1971,7 +1971,7 @@ return {
 					"omitida en esta partida",
 					"{br:2}ERROR - CONTACT STEAK",
                     "Omitir {C:attention}ciegas{} no",
-                    "te hace omitir la {C:attention}tienda{}",
+                    "omite la {C:attention}tienda{}",
 					"{C:inactive}(Actual {C:chips}+#1# {C:inactive}fichas)"
                 } 
             },
@@ -2000,8 +2000,8 @@ return {
                 text = {
                     "Cada {C:attention}carta{} que anota",
                     "gana para siempre",
-                    "{C:chips}+#1#{} fichas por cada",
-                    "cartas {C:attention}adicional{} en tu {C:attention}baraja"
+                    "{C:chips}+#1#{} ficha por cada carta",
+                    "{C:attention}adicional{} en tu {C:attention}baraja",
                     "{C:inactive}(Actualmente {C:chips}+#2#{C:inactive} fichas)"
                 } 
             },
@@ -2015,9 +2015,9 @@ return {
             j_poke_flareon = {
                 name = 'Flareon',
                 text = {
-                    "Las {C:attention}2{} últimas",
-                    "cartas {C:attention}multi{} jugadas", 
-                    "otorgan {X:mult,C:white} X#1# {} multi cuando anotan"
+                    "Las {C:attention}2{} últimas cartas {C:attention}multi{}",
+                    "jugadas otorgan {X:mult,C:white} X#1# {} multi",
+					"cuando anotan"
                 } 
             },
             j_poke_porygon = {
@@ -2636,16 +2636,16 @@ return {
                 text = {
                     "{C:attention}Reactiva{} cada {C:attention}#3#{} jugado(a)",
 					"{br:3}ERROR - CONTACT STEAK",
-					"Las cartas {C:attention}versátiles{}",
-					"otorgan {X:mult,C:white}X#2#{} multi cuando anotan",
+					"Las cartas {C:attention}versátiles{} otorgan",
+					"{X:mult,C:white}X#2#{} multi cuando anotan",
 					"{C:inactive,s:0.9}(La {C:attention,s:0.9}categoría{C:inactive,s:0.9} cambia {C:attention,s:0.9}cada ronda{C:inactive})",
                 } 
             },
             j_poke_umbreon = {
                 name = 'Umbreon',
                 text = {
-                    "Si el {C:attention}primer descarte{} de la",
-                    "ronda tiene solo {C:attention}1{} carta, la destruye y",
+                    "Si el {C:attention}primer descarte{} de la ronda",
+                    "tiene solo {C:attention}1{} carta, la destruye y",
                     "aumenta el nivel de {C:attention}#1#",
                     "{C:inactive}(La mano cambia tras cada mano)"
 				} 
@@ -2763,11 +2763,11 @@ return {
                 name = "Mega Steelix",
                 text = {
                     "Las {C:attention}cartas de piedra{} cuentan como",
-					"{C:attention}cartas de acero{} y {c:attention}trampa",
+					"{C:attention}cartas de acero{} y {C:hazard}trampa",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Reactivas todas las cartas {C:attention}en tu mano",
-                    "por cada {C:attention}#1#{} cartas sin",
-                    "{C:attention}categoría{} en tu mano"
+                    "Reactiva todas las cartas",
+                    "{C:attention}en tu mano{} por cada {C:attention}#1#{} cartas",
+                    "sin {C:attention}categoría{} en tu mano"
                 }
             },
             j_poke_snubbull = {
@@ -4105,11 +4105,11 @@ return {
             j_poke_jirachi_power = {
                 name = 'Jirachi',
                 text = {
-                    "Las cartas jugadas",
-                    "otorgan {X:mult,C:white}X#1#{} multi",
-                    "cuando anotan cada",
-                    "{C:attention}#2#{} manos jugadas",
-                    "{C:inactive}(#3#){}",                }
+                    "Las cartas jugadas otorgan",
+					"{X:mult,C:white}X#1#{} multi cuando anotan",
+					"cada {C:attention}#2#{} manos jugadas",
+                    "{C:inactive}(#3#){}",
+				}
             },
             j_poke_jirachi_negging = {
                 name = 'Jirachi',
@@ -4493,7 +4493,7 @@ return {
                     "Triplica todas las {C:green,E:1,S:1.1}probabilidades{} si",
                     "una carta {C:attention}de la suerte{} se activa",
                     "{C:green}con éxito{} en esta {C:attention}apuesta inicial",
-                    "{C:inactive}(ejm: {C:green}1 en 6{C:inactive} -> {C:green}3 en 6{C:inactive})",
+                    "{C:inactive}(ejemplo: {C:green}1 en 6{C:inactive} -> {C:green}3 en 6{C:inactive})",
 				} 
             },
             j_poke_glaceon = {
@@ -5462,8 +5462,8 @@ return {
             j_poke_dolliv = {
               name = "Dolliv",
               text = {
-                "Agrega {C:money}#1# ${} de valor de venta",
-                "{C:attention}a sí mismo{} y los comodines {C:attention}adyacentes{}",
+                "Agrega {C:money}#1# ${} de valor de venta {C:attention}a sí",
+                "{C:attention}mismo{} y a los comodines {C:attention}adyacentes{}",
                 "al final de la ronda",
                 "{C:inactive}(Evoluciona cuando tiene",
                 "{C:money}$#3#{C:inactive} / #2# $ de valor de venta)"
@@ -5476,8 +5476,8 @@ return {
                 "{C:attention}todos{} los comodines y {C:attention}consumibles{}",
                 "al final de la ronda",
                 "{br:2.5}ERROR - CONTACT STEAK",
-                "Agrega el {C:attention}doble{} a comodines tipo {X:grass,C:white}Planta{}",
-                "y {C:pink}Energías {X:grass,C:white}Planta{}"
+                "Agrega el {C:attention}doble{} a comodines",
+				"tipo {X:grass,C:white}Planta{} y {C:pink}Energías {X:grass,C:white}Planta{}"
               }
             },
             j_poke_charcadet = {
@@ -7192,7 +7192,7 @@ return {
             k_poke_pp = "Más PP",
 			
             k_poke_chips = "fichas",
-            k_poke_hazard_layer = "nivel de trampas",
+            k_poke_hazard_layer = "Nivel de trampas",
 
             k_poke_baby = "Bebé",
             k_poke_safari = "Safari",
