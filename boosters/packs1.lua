@@ -27,7 +27,7 @@ local poll_evo_item = function(seed)
           and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
           or v.config.center.item_req
 
-      local prefix = table.contains(native_evo_items, item_req)
+      local prefix = pokermon.has(native_evo_items, item_req)
           and 'poke'
           or v.config.center.poke_custom_prefix
 

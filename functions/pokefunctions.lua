@@ -576,7 +576,7 @@ pokermon.get_family_keys = function(card)
     end
   end
   local evo_item_keys = pokermon.get_evo_item_keys(card)
-  table.append(keys, evo_item_keys)
+  pokermon.table_append(keys, evo_item_keys)
   return keys
 end
 
@@ -587,12 +587,12 @@ pokermon.get_evo_item_keys = function(card)
     local item_key, evo_item_prefix
     if type(card.config.center.item_req) == "table" then
       for i = 1, #card.config.center.item_req do
-        evo_item_prefix = table.contains(native_evo_items, card.config.center.item_req[i]) and 'poke' or prefix
+        evo_item_prefix = pokermon.has(native_evo_items, card.config.center.item_req[i]) and 'poke' or prefix
         item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req[i]
         table.insert(keys, item_key)
       end
     else
-      evo_item_prefix = table.contains(native_evo_items, card.config.center.item_req) and 'poke' or prefix
+      evo_item_prefix = pokermon.has(native_evo_items, card.config.center.item_req) and 'poke' or prefix
       item_key = 'c_'..(evo_item_prefix)..'_'..card.config.center.item_req
       table.insert(keys, item_key)
     end

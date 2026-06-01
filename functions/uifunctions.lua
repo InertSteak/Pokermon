@@ -485,7 +485,7 @@ end
 G.FUNCS.toggle_pokermon_skins = function()
   local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
   for k, _ in pairs(G.P_STAKES) do
-    if table.contains(vanilla_stakes, k) then
+    if pokermon.has(vanilla_stakes, k) then
       if pokermon_config.stake_skins then
         SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
         G.shared_stickers[string.sub(k, 7, -1)].atlas = SMODS.get_atlas("poke_pokestakes_stickers")

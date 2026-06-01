@@ -689,7 +689,7 @@ pokermon.can_set_sprite = function(card)
   return true
 end
 
-function table.contains(table, element)
+pokermon.has = function(table, element)
   for _, value in pairs(table) do
     if value == element then
       return true
@@ -698,7 +698,7 @@ function table.contains(table, element)
   return false
 end
 
-function table.append(t1, t2)
+pokermon.table_append = function(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
   end
