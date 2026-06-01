@@ -188,6 +188,7 @@ local default_family_list = {
   { "rellor", "rabsca"},
   { "tinkatink", "tinkatuff", "tinkaton" },
   { "wiglett", "wugtrio" },
+  { "cetoddle", "cetitan" },
   { "gimmighoul", "gholdengo", "gimmighoulr" },
   { "ruins_of_alph" },
   {{key = "imposter_professor", form = 0}, {key = "imposter_professor", form = 1}},
