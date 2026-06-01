@@ -815,6 +815,12 @@ local crobat={
       if d_count > 0 then
         scale_crobat('money', 'money_mod', d_count)
       end
+
+      if m_count > 0 or c_count > 0 or x_count > 0 or d_count > 0 then
+        return {
+          message = localize("poke_leech_life_ex"),
+        }
+      end
     end
     if context.joker_main then
       return {

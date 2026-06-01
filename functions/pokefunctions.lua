@@ -423,6 +423,7 @@ pokermon.get_lowest_evo = function(card)
 end
 
 pokermon.get_highest_evo = function(card)
+  if not (card and card.config and card.config.center and card.config.center.stage) then return end
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
