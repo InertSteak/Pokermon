@@ -273,7 +273,7 @@ local rellor = {
 	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 5},
 	loc_vars = function(self, info_queue, card)
 		pokermon.type_tooltip(self, info_queue, card)
-		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
+		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
 	    return {vars = {card.ability.extra.mult_mod, mult, math.max(self.config.evo_rqmt - card.ability.extra.items_used, 0 )}}
 	end,
 	rarity = 1, --Common
@@ -289,15 +289,15 @@ local rellor = {
 	calculate = function(self, card, context)
 		if context.joker_main  then
 			if G.GAME.consumeable_usage_total then
-				if G.GAME.consumeable_usage_total.item  and G.GAME.consumeable_usage_total.item > 0 then
-					local mult = (G.GAME.consumeable_usage_total.item) * card.ability.extra.mult_mod
+				if G.GAME.consumeable_usage_total.poke_item  and G.GAME.consumeable_usage_total.poke_item > 0 then
+					local mult = (G.GAME.consumeable_usage_total.poke_item) * card.ability.extra.mult_mod
 					return {
 						mult = mult
 									}
 				end
 			end
 		end
-		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Item" then
+		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "poke_Item" then
 		card.ability.extra.items_used = card.ability.extra.items_used + 1
 			return {
 				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
@@ -313,7 +313,7 @@ local rabsca = {
 	config = {extra = { mult_mod = 1, num = 1, dem = 4}},
 	loc_vars = function(self, info_queue, card)
 		pokermon.type_tooltip(self, info_queue, card)
-    local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
+    local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'rabsca')
 	  return {vars = {card.ability.extra.mult_mod, mult, num, dem}}
 	end,
@@ -328,15 +328,15 @@ local rabsca = {
 	calculate = function(self, card, context)
 		if context.joker_main  then
 			if G.GAME.consumeable_usage_total then
-				if (G.GAME.consumeable_usage_total.item or 0) > 0 then
-					local mult = (G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod
+				if (G.GAME.consumeable_usage_total.poke_item or 0) > 0 then
+					local mult = (G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod
 					return {
 						mult = mult
 									}
 				end
 			end
 		end
-		if context.using_consumeable and context.consumeable.ability.set == "Item" then
+		if context.using_consumeable and context.consumeable.ability.set == "poke_Item" then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'rabsca', card.ability.extra.num, card.ability.extra.dem, 'rabsca') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
