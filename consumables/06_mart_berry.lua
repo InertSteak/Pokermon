@@ -1,4 +1,4 @@
-pokermon.juice_list = {Energy = "c_poke_berry_juice_energy", Spectral = "c_poke_berry_juice_spectral", Planet = "c_poke_berry_juice_planet", Item = "c_poke_berry_juice_item",
+pokermon.juice_list = {poke_Energy = "c_poke_berry_juice_energy", Spectral = "c_poke_berry_juice_spectral", Planet = "c_poke_berry_juice_planet", poke_Item = "c_poke_berry_juice_item",
                        Tarot = "c_poke_berry_juice_tarot"}
 
 local berry_juice = {
