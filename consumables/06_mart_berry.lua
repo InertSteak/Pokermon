@@ -2,14 +2,14 @@ pokermon.juice_list = {
   ["Tarot"] = "c_poke_berry_juice_tarot",
   ["Planet"] = "c_poke_berry_juice_planet",
   ["Spectral"] = "c_poke_berry_juice_spectral",
-  ["poke_Item"] = "c_poke_berry_juice_item",
-  ["poke_Energy"] = "c_poke_berry_juice_energy",
+  ["poke_item"] = "c_poke_berry_juice_item",
+  ["poke_energy"] = "c_poke_berry_juice_energy",
 }
 
 local berry_juice = {
   name = "berry_juice",
   key = "berry_juice",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
   end,
@@ -29,7 +29,7 @@ local berry_juice = {
 local berry_juice_energy = {
   name = "berry_juice_energy",
   key = "berry_juice_energy",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
@@ -84,7 +84,7 @@ local berry_juice_energy = {
 local berry_juice_spectral = {
   name = "berry_juice_spectral",
   key = "berry_juice_spectral",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
@@ -114,7 +114,7 @@ local berry_juice_spectral = {
 local berry_juice_planet = {
   name = "berry_juice_planet",
   key = "berry_juice_planet",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
   end,
@@ -152,11 +152,11 @@ local berry_juice_planet = {
 local berry_juice_item = {
   name = "berry_juice_item",
   key = "berry_juice_item",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
-   info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+   info_queue[#info_queue+1] = { set = 'poke_item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'berry_juice_item')
    return {vars = {num, dem}}
   end,
@@ -192,7 +192,7 @@ local berry_juice_item = {
 local berry_juice_tarot = {
   name = "berry_juice_tarot",
   key = "berry_juice_tarot",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {money = 5},
   loc_vars = function(self, info_queue, center)
@@ -226,7 +226,7 @@ local berry_juice_tarot = {
 local berry_juice_mega = {
   name = "berry_juice_mega",
   key = "berry_juice_mega",
-  set = "poke_Item",
+  set = "poke_item",
   artist = { "Sonfive", "Emma" },
   berry_juice = true,
   poke_multi_item = true,
@@ -258,7 +258,7 @@ local berry_juice_mega = {
 local berry_juice_mystery = {
   name = "berry_juice_mystery",
   key = "berry_juice_mystery",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {money = 5},
   loc_vars = function(self, info_queue, center)

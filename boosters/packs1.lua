@@ -13,10 +13,10 @@ local create_energy = function(self, card)
     end
     if #energy_types > 0 then
       local energy = pseudorandom_element(energy_types, pseudoseed('match'))
-      return create_card("poke_Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+      return create_card("poke_energy", G.pack_cards, nil, nil, true, true, energy, nil)
     end
   end
-  return create_card("poke_Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+  return create_card("poke_energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
 local poll_evo_item = function(seed)
@@ -55,7 +55,7 @@ local create_item = function(seed)
       return SMODS.create_card { key = evo_item_key, area = G.pack_cards, skip_materialize = true }
     end
   end
-  return SMODS.create_card { set = "poke_Item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
+  return SMODS.create_card { set = "poke_item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
 end
 
 local create_pocket_card = function(self, card, i)

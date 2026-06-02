@@ -41,7 +41,7 @@ local ursaluna={
         context.blueprint_card or card)
 
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        SMODS.add_card({ set = 'poke_Item', key_append = 'luna', edition = poll_edition('aura', nil, true, true) })
+        SMODS.add_card({ set = 'poke_item', key_append = 'luna', edition = poll_edition('aura', nil, true, true) })
       end
     end
     if context.joker_main then

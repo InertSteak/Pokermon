@@ -1,7 +1,7 @@
 local twisted_spoon = {
   name = "twisted_spoon",
   key = "twisted_spoon",
-  set = "poke_Item",
+  set = "poke_item",
   pos = { x = 1, y = 5 },
   atlas = "AtlasConsumablesBasic",
   cost = 4,
@@ -20,7 +20,7 @@ local twisted_spoon = {
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then
             play_sound('timpani')
-            local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
+            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             used_item:juice_up(0.3, 0.5)
@@ -79,7 +79,7 @@ local twisted_spoon = {
 local firestone = {
   name = "firestone",
   key = "firestone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 4, min_highlighted = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -127,7 +127,7 @@ local firestone = {
 local waterstone = {
   name = "waterstone",
   key = "waterstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1, max_chips = 50},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -177,7 +177,7 @@ local waterstone = {
 local thunderstone = {
   name = "thunderstone",
   key = "thunderstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -231,7 +231,7 @@ local thunderstone = {
 local leafstone = {
   name = "leafstone",
   key = "leafstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {num = 1, dem = 3},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
@@ -275,7 +275,7 @@ local leafstone = {
 local moonstone = {
   name = "moonstone",
   key = "moonstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {min_highlighted = 1, num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -331,7 +331,7 @@ local moonstone = {
 local sunstone = {
   name = "sunstone",
   key = "sunstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -376,7 +376,7 @@ local sunstone = {
 local shinystone = {
   name = "shinystone",
   key = "shinystone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -426,7 +426,7 @@ local shinystone = {
 local duskstone = {
   name = "duskstone",
   key = "duskstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {extra = {money = 4, max = 30, round_target = 3, rounds = 0}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -487,7 +487,7 @@ local duskstone = {
 local dawnstone = {
   name = "dawnstone",
   key = "dawnstone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {extra = {hand_played = nil, money_limit = 40}},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -573,7 +573,7 @@ local dawnstone = {
 local icestone = {
   name = "icestone",
   key = "icestone",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 1, num = 1, dem = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -624,7 +624,7 @@ local icestone = {
 local linkcable = {
   name = "linkcable",
   key = "linkcable",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -675,7 +675,7 @@ local linkcable = {
 local metalcoat = {
   name = "metalcoat",
   key = "metalcoat",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {G.ARGS.LOC_COLOURS.metal}}}
@@ -713,7 +713,7 @@ local metalcoat = {
 local dragonscale = {
   name = "dragonscale",
   key = "dragonscale",
-  set = "poke_Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {G.ARGS.LOC_COLOURS.dragon}}}
   end,
@@ -742,9 +742,9 @@ local dragonscale = {
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local card_type = nil
         if pseudorandom(pseudoseed('dragonscale')) > .50 or G.GAME.modifiers.no_energy then
-          card_type = "poke_Item"
+          card_type = "poke_item"
         else
-          card_type = "poke_Energy"
+          card_type = "poke_energy"
         end
         
         local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, nil)
@@ -761,7 +761,7 @@ local dragonscale = {
 local kingsrock = {
   name = "kingsrock",
   key = "kingsrock",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -811,7 +811,7 @@ local kingsrock = {
 local upgrade = {
   name = "upgrade",
   key = "upgrade",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 1,},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -855,7 +855,7 @@ local upgrade = {
 local hardstone = {
   name = "hardstone",
   key = "hardstone",
-  set = "poke_Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {max_highlighted = 1, max_chips = 10},
   loc_vars = function(self, info_queue, center)
@@ -905,7 +905,7 @@ local hardstone = {
 local miracleseed = {
   name = "miracleseed",
   key = "miracleseed",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1, min_highlighted = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
@@ -934,7 +934,7 @@ local miracleseed = {
 local prismscale = {
   name = "prismscale",
   key = "prismscale",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1, converted = 4},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}

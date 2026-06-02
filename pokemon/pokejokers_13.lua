@@ -172,7 +172,7 @@ local huntail ={
       card.ability.extra.increased_handsize = nil
       G.hand:change_size(-card.ability.extra.h_size)
     end
-    if context.selling_card and (context.card.config.center.set == 'Tarot' or context.card.config.center.set == 'poke_Item') and not context.blueprint then
+    if context.selling_card and (context.card.config.center.set == 'Tarot' or context.card.config.center.set == 'poke_item') and not context.blueprint then
       if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
           or G.STATE == G.STATES.STANDARD_PACK then
         SMODS.scale_card(card, {
@@ -236,7 +236,7 @@ local gorebyss ={
       G.hand:change_size(-card.ability.extra.h_size)
     end
 
-    if context.using_consumeable and (context.consumeable.ability.set == 'Tarot' or context.consumeable.ability.set == 'poke_Item') and not context.blueprint then
+    if context.using_consumeable and (context.consumeable.ability.set == 'Tarot' or context.consumeable.ability.set == 'poke_item') and not context.blueprint then
       if G.STATE == G.STATES.SMODS_BOOSTER_OPENED or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK
           or G.STATE == G.STATES.STANDARD_PACK then
         SMODS.scale_card(card, {
@@ -367,7 +367,7 @@ local luvdisc={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, 'c_poke_heartscale')
+      local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, 'c_poke_heartscale')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})

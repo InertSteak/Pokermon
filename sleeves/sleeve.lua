@@ -158,7 +158,7 @@ end
   calculate = function(self, back, context)
     if context.reroll_shop and self.get_current_deck_key() == "b_poke_luminousdeck" then
       if SMODS.pseudorandom_probability(back, 'luminate', self.config.num, self.config.dem, 'luminate') then
-        local temp_card = {set = "poke_Item", area = G.shop_jokers, key = "c_poke_teraorb"}
+        local temp_card = {set = "poke_item", area = G.shop_jokers, key = "c_poke_teraorb"}
         local add_card = SMODS.create_card(temp_card)
         add_shop_card(add_card, card)
       end
@@ -206,7 +206,7 @@ local ampedsleeve = {
 
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
       key = self.key.."_alt"
-      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'poke_Energy'}}
+      vars = {localize{type = 'name_text', key = 'j_poke_jelly_donut', set = 'Joker'}, localize("double_rainbow_energy_variable"), localize{type = 'name_text', key = 'c_poke_colorless_energy', set = 'poke_energy'}}
       self.config = {}
     else
       vars = {localize {type = 'name_text', key = 'v_poke_energysearch', set = 'Voucher'}, localize("double_rainbow_energy_variable")}

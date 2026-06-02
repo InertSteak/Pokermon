@@ -878,7 +878,7 @@ local porygon={
           trigger = 'before',
           delay = 0.0,
           func = (function()
-                  local card = create_card('poke_Energy', G.consumeables, nil, nil, nil, nil, nil, 'pory')
+                  local card = create_card('poke_energy', G.consumeables, nil, nil, nil, nil, nil, 'pory')
                   card:add_to_deck()
                   G.consumeables:emplace(card)
                   G.GAME.consumeable_buffer = 0
@@ -938,7 +938,7 @@ local omanyte={
         if card.ability.extra.ancient_count > 2 then
           card.ability.extra.third_times = card.ability.extra.third_times + 1
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, nil)
+            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
@@ -994,7 +994,7 @@ local omastar={
         end
         if card.ability.extra.ancient_count > 2 then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, nil)
+            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
@@ -1310,7 +1310,7 @@ local snorlax={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local leftovers = SMODS.add_card({ set = 'poke_Item', key = 'c_poke_leftovers' })
+      local leftovers = SMODS.add_card({ set = 'poke_item', key = 'c_poke_leftovers' })
       SMODS.calculate_effect({ message = localize('poke_plus_pokeitem') }, leftovers)
     end
   end,

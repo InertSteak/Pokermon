@@ -297,7 +297,7 @@ local rellor = {
 				end
 			end
 		end
-		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "poke_Item" then
+		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "poke_item" then
 		card.ability.extra.items_used = card.ability.extra.items_used + 1
 			return {
 				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
@@ -336,7 +336,7 @@ local rabsca = {
 				end
 			end
 		end
-		if context.using_consumeable and context.consumeable.ability.set == "poke_Item" then
+		if context.using_consumeable and context.consumeable.ability.set == "poke_item" then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'rabsca', card.ability.extra.num, card.ability.extra.dem, 'rabsca') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1

@@ -255,7 +255,7 @@ local shuckle={
               key = pokermon.juice_list[sliced_card.config.center.set] or 'c_poke_berry_juice_mystery'
             end
 
-            local berry_juice = SMODS.add_card({set = 'poke_Item', key = key})
+            local berry_juice = SMODS.add_card({set = 'poke_item', key = key})
             SMODS.calculate_effect({message = localize('poke_plus_pokeitem')}, berry_juice)
             return true
           end
@@ -466,7 +466,7 @@ local ursaring={
         context.blueprint_card or card)
 
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        SMODS.add_card({ set = 'poke_Item', key_append = 'ursa' })
+        SMODS.add_card({ set = 'poke_item', key_append = 'ursa' })
       end
     end
     if context.joker_main then
@@ -854,7 +854,7 @@ local delibird={
     elseif gift > .35 then
       --create item
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, nil)
+        local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
         _card:add_to_deck()
         G.consumeables:emplace(_card)
       end
@@ -1278,7 +1278,7 @@ local porygon2={
           trigger = 'before',
           delay = 0.0,
           func = (function()
-                  local card = create_card('poke_Energy', G.consumeables, nil, nil, nil, nil, forced_key)
+                  local card = create_card('poke_energy', G.consumeables, nil, nil, nil, nil, forced_key)
                   card:add_to_deck()
                   G.consumeables:emplace(card)
                   G.GAME.consumeable_buffer = 0

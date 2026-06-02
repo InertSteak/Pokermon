@@ -1,5 +1,5 @@
 local energy = {
-  key = "poke_Energy",
+  key = "poke_energy",
   primary_colour = HEX("4F6367"),
   secondary_colour = HEX("4ABA8D"),
   loc_txt =  	{
@@ -12,7 +12,7 @@ local energy = {
 }
 
 local item = {
-  key = "poke_Item",
+  key = "poke_item",
   primary_colour = HEX("4F6367"),
   secondary_colour = HEX("9AA4B7"),
   loc_txt =  	{

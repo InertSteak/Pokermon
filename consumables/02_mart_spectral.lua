@@ -11,7 +11,7 @@ local transformation = {
   cost = 4,
   etype = "Trans",
   hidden = true,
-  soul_set = "poke_Energy",
+  soul_set = "poke_energy",
   soul_rate = .025,
   unlocked = true,
   discovered = true,
@@ -66,7 +66,7 @@ local megastone = {
   atlas = "AtlasConsumablesBasic",
   cost = 4,
   hidden = true,
-  soul_set = "poke_Item",
+  soul_set = "poke_item",
   soul_rate = .005,
   unlocked = true,
   discovered = true,
@@ -201,7 +201,7 @@ local nightmare = {
       if energy then
         local max = (energy == "c_poke_bird_energy") and 1 or 2
         for _ = 1, max do
-          local _card = SMODS.add_card({set = "poke_Energy", area = G.consumeables, key = energy, skip_materialize = true, soulable = true})
+          local _card = SMODS.add_card({set = "poke_energy", area = G.consumeables, key = energy, skip_materialize = true, soulable = true})
           _card:set_edition({negative = true}, true)
         end
       end

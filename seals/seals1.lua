@@ -29,12 +29,12 @@ local pink_seal = {
             end
             if #energy_types > 0 then
               local energy = pseudorandom_element(energy_types, pseudoseed('pink'))
-              _card = create_card("poke_Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+              _card = create_card("poke_energy", G.pack_cards, nil, nil, true, true, energy, nil)
               if energy == "c_poke_bird_energy" then
                 card:set_seal(nil)
               end
             else
-              _card = create_card("poke_Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+              _card = create_card("poke_energy", G.consumeables, nil, nil, nil, nil, nil, nil)
             end
 						_card:add_to_deck()
 						G.consumeables:emplace(_card)
@@ -71,7 +71,7 @@ local silver = {
         G.E_MANAGER:add_event(Event({
           func = function()
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card("poke_Item", G.consumeables, nil, nil, nil, nil, nil, nil)
+              local _card = create_card("poke_item", G.consumeables, nil, nil, nil, nil, nil, nil)
               _card:add_to_deck()
               G.consumeables:emplace(_card)
               card:juice_up()

@@ -90,7 +90,7 @@ local abra={
             local message = nil
             local colour = nil
             if pseudorandom('abraitem') < .50 then
-              set = "poke_Item"
+              set = "poke_item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
             else
@@ -118,7 +118,7 @@ local kadabra={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_linkcable
     end
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kadabra')
@@ -142,7 +142,7 @@ local kadabra={
             local colour = nil
             local conname = nil
             if pseudorandom('kadabraitem') < .50 then
-              set = "poke_Item"
+              set = "poke_item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"
@@ -172,7 +172,7 @@ local alakazam={
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Tarot', key = 'c_fool'}
-      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     end
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'alakazam')
     return {vars = {num, dem, center.ability.extra.card_limit}}
@@ -194,7 +194,7 @@ local alakazam={
             local colour = nil
             local conname = nil
             if pseudorandom('alakazam') < .50 then
-              set = "poke_Item"
+              set = "poke_item"
               message = "poke_plus_pokeitem"
               colour = G.ARGS.LOC_COLOURS.item
               conname = "c_poke_twisted_spoon"
@@ -237,7 +237,7 @@ local mega_alakazam={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = { set = 'poke_Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+      info_queue[#info_queue+1] = { set = 'poke_item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
     end
     return {vars = {center.ability.extra.Xmult_multi, center.ability.extra.Xmult_multi2, center.ability.extra.card_limit}}
   end,
@@ -1035,7 +1035,7 @@ local farfetchd={
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('poke_Item', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
+      local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
       _card:add_to_deck()
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})

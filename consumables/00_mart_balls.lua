@@ -1,7 +1,7 @@
 local pokeball = {
   name = "pokeball",
   key = "pokeball",
-  set = "poke_Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'basic'}
   end,
@@ -33,7 +33,7 @@ local pokeball = {
 local greatball = {
   name = "greatball",
   key = "greatball",
-  set = "poke_Item",
+  set = "poke_item",
   loc_vars = function(self, info_queue, center)
    info_queue[#info_queue+1] = {set = 'Other', key = 'stage1'}
   end,
@@ -77,7 +77,7 @@ local ultraball = {
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "poke_Item",
+  soul_set = "poke_item",
   soul_rate = .01,
   unlocked = true,
   discovered = true,
@@ -109,7 +109,7 @@ local masterball = {
   cost = 4,
   pokeball = true,
   hidden = true,
-  soul_set = "poke_Item",
+  soul_set = "poke_item",
   soul_rate = .003,
   unlocked = true,
   discovered = true,

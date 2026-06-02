@@ -212,7 +212,7 @@ local budew={
     if context.end_of_round and not context.individual and not context.repetition and not card.debuff then
       G.E_MANAGER:add_event(Event({
         func = function()
-          SMODS.add_card{set = 'poke_Item', key = 'c_poke_miracleseed', edition = 'e_negative'}
+          SMODS.add_card{set = 'poke_item', key = 'c_poke_miracleseed', edition = 'e_negative'}
           return true
         end
       }))

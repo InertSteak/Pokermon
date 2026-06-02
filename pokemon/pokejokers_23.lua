@@ -73,7 +73,7 @@ local pyroar={
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  local card_type = 'poke_Energy'
+                  local card_type = 'poke_energy'
                   local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, nil, 'sup')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
