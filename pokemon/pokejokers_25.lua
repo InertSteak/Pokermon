@@ -147,10 +147,10 @@ local rockruff={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card:is_face() then
-      if poke_is_even(context.other_card) and card.ability.extra.even_to_score > 0 then
+      if poke_is_even(context.other_card) and card.ability.extra.even_to_score > 0 and not context.blueprint then
         card.ability.extra.even_to_score = card.ability.extra.even_to_score - 1
       end
-      if poke_is_odd(context.other_card) and card.ability.extra.odd_to_score > 0 then
+      if poke_is_odd(context.other_card) and card.ability.extra.odd_to_score > 0 and not context.blueprint then
         card.ability.extra.odd_to_score = card.ability.extra.odd_to_score - 1
       end
       return {
