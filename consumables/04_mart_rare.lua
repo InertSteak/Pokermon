@@ -197,8 +197,13 @@ local teraorb = {
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
       card.ability.extra.change_to_type = self:get_next_type(card)
-      self:set_sprites(card)
     end
+    G.E_MANAGER:add_event(Event({
+      func = function()
+        self:set_sprites(card)
+        return true
+      end
+    }))
   end,
   set_sprites = function(self, card, front)
     local info = card.ability and card.ability.extra or self.config.extra
