@@ -199,6 +199,7 @@ local teraorb = {
       card.ability.extra.change_to_type = self:get_next_type(card)
     end
     G.E_MANAGER:add_event(Event({
+      blockable = false,
       func = function()
         self:set_sprites(card)
         return true
