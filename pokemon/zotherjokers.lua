@@ -744,7 +744,7 @@ local imposter_professor={
     if context.selling_self and (card.ability.extra.rounds_current >= card.ability.extra.rounds_total) and not context.blueprint then
       play_sound('timpani')
       local added = SMODS.add_card{set = 'Joker', key = 'j_poke_pokedex'}
-      added.ability.rental = true
+      added:set_rental(true)
       
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE,})
 
