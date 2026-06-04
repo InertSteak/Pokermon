@@ -6135,8 +6135,9 @@ return {
             c_poke_transformation = {
                 name = "Transformation",
                 text = {
-                    "Evolves leftmost or selected Pokemon to",
-                    "the highest {C:attention}stage{} and {C:pink}Energizes{} it", 
+                    "{C:pink}Energizes{} leftmost or selected",
+                    "Pokemon and {C:attention}evolves{} it to",
+                    "the highest {C:attention}stage{} if able"
                 },
             },
             c_poke_megastone = {
