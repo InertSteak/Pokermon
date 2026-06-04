@@ -233,10 +233,10 @@ target = "functions/state_events.lua"
 pattern = "if total_cashout_rows > 7 then"
 position = "before"
 payload = '''
-local jirachis = find_joker('jirachi_banker')
+local jirachis = SMODS.find_card('j_poke_jirachi_banker')
 for i = 1, #jirachis do
-  add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars, card = jirachis[i]})
-  dollars = dollars + dollars
+  add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars * (jirachis[i].ability.extra.multiply - 1), card = jirachis[i]})
+  dollars = dollars * jirachis[i].ability.extra.multiply
 end
 if G.GAME.modifiers.reset_no_interest then
   G.GAME.modifiers.no_interest = nil

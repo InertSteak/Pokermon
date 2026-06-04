@@ -6,6 +6,7 @@ local fake_banker = {
    soul_pos = { x = 5, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_banker
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -37,6 +38,7 @@ local fake_booster = {
    soul_pos = { x = 7, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_booster
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -68,6 +70,7 @@ local fake_power = {
    soul_pos = { x = 9, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_power
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -129,6 +132,7 @@ local fake_copy = {
    soul_pos = { x = 11, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_invis
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -160,6 +164,7 @@ local fake_fixer = {
    soul_pos = { x = 1, y = 3 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_fixer
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -191,6 +196,7 @@ local fake_masterball = {
    soul_pos = { x = 4, y = 2},
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_masterball
      return {vars = {}}
    end,
    atlas = "AtlasConsumablesBasic",
