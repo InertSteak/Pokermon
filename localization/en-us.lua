@@ -2097,7 +2097,7 @@ return {
                     "{C:pink}+1{} Energy Limit",
                     "Create an {C:pink}Energy{} card when",
                     "any {C:attention}Booster Pack{} is opened",
-                    "{C:inactive,s:0.8}(Evolves with a {C:item,s:0.8}Upgrade{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves with an {C:item,s:0.8}Upgrade{C:inactive,s:0.8})",
                 } 
             },
             j_poke_omanyte = {
@@ -4132,14 +4132,19 @@ return {
             j_poke_jirachi_banker = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}Double{} end of round payout",
+                    "{C:attention}#1#X{} payout at",
+                    "end of round"
                 }
             },
             j_poke_jirachi_booster = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}+1{} Booster Pack slot",
-                    "{C:attention}Booster Packs{} have {C:attention}1{} more card in them",
+                    "{C:attention}Booster{} packs have",
+                    "{C:attention}#3#{} more card in them",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "The first {C:attention}#1#{} {C:inactive}[#2#] {C:green}rerolls",
+                    "each {C:attention}shop{} adds",
+                    "a {C:attention}Booster to {C:attention}shop"
                 }
             },
             j_poke_jirachi_power = {
@@ -4161,11 +4166,11 @@ return {
             j_poke_jirachi_invis = {
                 name = 'Jirachi',
                 text = {
-                    "When {C:attention}Blind{} is selected",
-                    "create a {C:attention}copy{} of",
+                    "Copies ability of",
                     "{C:attention}Joker{} to the right",
-                    "then {S:1.1,C:red,E:2}self destructs{}",
-                    "{C:inactive}(removes Negative)"
+                    "if you have {C:attention}#1#+",
+                    "{C:pink}Energized{} Jokers ",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_jirachi_copy = {
@@ -4178,11 +4183,10 @@ return {
             j_poke_jirachi_fixer = {
                 name = 'Jirachi',
                 text = {
-                    "If {C:attention}first hand{} has exactly {C:attention}1{} card,",
-                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{} to it",
-                    "{br:3}ERROR - CONTACT STEAK",
                     "If {C:attention}first discard{} has exactly {C:attention}1{} card,",
-                    "{C:attention}destroy{} it",
+                    "{C:attention}destroy{} it and create a copy of",
+                    "{C:tarot}Death{}, {C:spectral}Cryptid{}, or {C:item}Metal Coat{}",
+                    "{C:inactive}(Must have room)",
                 }
             },
             j_poke_deoxys = {
@@ -6131,8 +6135,9 @@ return {
             c_poke_transformation = {
                 name = "Transformation",
                 text = {
-                    "Evolves leftmost or selected Pokemon to",
-                    "the highest {C:attention}stage{} and {C:pink}Energizes{} it", 
+                    "{C:pink}Energizes{} leftmost or selected",
+                    "Pokemon and {C:attention}evolves{} it to",
+                    "the highest {C:attention}stage{} if able"
                 },
             },
             c_poke_megastone = {
@@ -7518,6 +7523,7 @@ return {
             poke_sticky_web_ex = "Sticky Web!",
             poke_head_smash_ex = "Head Smash!",
             poke_teeter_dance_ex = "Teeter Dance!",
+            poke_wish_ex = "Wish!",
             
             poke_attack_forme = "Attack",
             poke_defense_forme = "Defense",
