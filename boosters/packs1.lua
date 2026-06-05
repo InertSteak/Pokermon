@@ -263,7 +263,7 @@ local wish_pack = {
 	atlas = "AtlasBoosterpacksBasic",
   artist = "Catzzadilla",
 	pos = { x = 4, y = 0 },
-	config = { extra = 6, choose = 1 },
+	config = { extra = 3, choose = 1, used_wishes = {} },
 	cost = 999,
 	order = 4,
 	weight = 0,
@@ -275,9 +275,28 @@ local wish_pack = {
 
     -- force pack_choices to 1
     G.GAME.pack_choices = 1
-
-    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
-    local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%6], no_edition = true, skip_materialize = true}
+    
+    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer',}
+    local possible_wishes = {}
+    
+    for k, v in ipairs(jirachi_cards) do
+      local add = true
+      for x, y in ipairs(card.ability.used_wishes) do
+        if v == y then
+          add = false
+          break
+        end
+      end
+      if add then
+        possible_wishes[#possible_wishes + 1] = v
+      end
+    end
+    
+    local random_wish = pseudorandom_element(possible_wishes, pseudoseed('jirachi'..i))
+    
+    card.ability.used_wishes[#card.ability.used_wishes + 1] = random_wish
+    
+    local temp_card = {area = G.pack_cards, key = random_wish, no_edition = true, skip_materialize = true}
     if not G.P_CENTERS[temp_card.key] then temp_card.key = 'c_judgement' end
     return SMODS.create_card(temp_card)
 	end,

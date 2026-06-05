@@ -423,6 +423,7 @@ get_lowest_evo = function(card)
 end
 
 get_highest_evo = function(card)
+  if not (card and card.config and card.config.center and card.config.center.stage) then return end
   local name = card.name or card.ability.name or "bulbasaur"
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
@@ -1316,7 +1317,6 @@ end
 reset_espeon_card = function()
   G.GAME.current_round.espeon_rank = 'Ace'
   G.GAME.current_round.espeon_id = 14
-  G.GAME.current_round.espeon_suit = 'Spades'
   
   local valid_espeon_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
@@ -1328,7 +1328,6 @@ reset_espeon_card = function()
   if espeon_card then
     G.GAME.current_round.espeon_rank = espeon_card.base.value
     G.GAME.current_round.espeon_id = espeon_card.base.id
-    G.GAME.current_round.espeon_suit = espeon_card.base.suit
   end
 end
 

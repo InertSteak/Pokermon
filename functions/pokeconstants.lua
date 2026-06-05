@@ -19,6 +19,8 @@ POKE_NATIVE_EVO_ITEMS = {
 }
 
 POKE_EVO_OVERRIDES = {
+  {"silcoon", {"beautifly"}},
+  {"cascoon", {"dustox"}},
   { "cosmog", "cosmoem", { "solgaleo", "lunala" } },
   { "kubfu", { "urshifu_single_strike", "urshifu_rapid_strike" } },
 }

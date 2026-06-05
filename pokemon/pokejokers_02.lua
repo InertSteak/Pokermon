@@ -511,7 +511,7 @@ local golbat={
           operation = function(ref_table, ref_value, initial, change)
             ref_table[ref_value] = initial + change * m_count
           end,
-          no_message = true,
+          message_colour = G.C.MULT,
         })
       end
     end

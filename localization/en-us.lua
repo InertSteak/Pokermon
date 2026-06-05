@@ -2059,18 +2059,21 @@ return {
             j_poke_eevee = {
                 name = 'Eevee',
                 text = {
-                    "{X:mult,C:white} X#1# {} Mult on {C:attention}first",
-                    "{C:attention}hand{} of round",
+                    "{C:mult}+#1#{} Mult for each",
+                    "Joker you have that",
+                    "can {C:attention}evolve",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves with...a lot)",
                 } 
             },
             j_poke_vaporeon = {
                 name = 'Vaporeon',
                 text = {
-                    "Every played {C:attention}card{}",
-                    "permanently gains",
-                    "{C:chips}+#1#{} Chips when scored",
-                    "{C:attention}Doubled{} for {C:attention}Bonus{} cards"
+                    "Every played {C:attention}card{} permanently",
+                    "gains {C:chips}+#1#{} Chips for each {C:attention}Bonus{}",
+                    "card in your {C:attention}full deck{}",
+                    "when scored",
+                    "{C:inactive}(Currrently {C:chips}+#2#{C:inactive} Chips)"
                 } 
             },
             j_poke_jolteon = {
@@ -2083,9 +2086,9 @@ return {
             j_poke_flareon = {
                 name = 'Flareon',
                 text = {
-                    "First {C:attention}Mult{} card",
-                    "held in hand", 
-                    "gives {X:mult,C:white} X#1# {} Mult"
+                    "Last {C:attention}2{} played {C:attention}Mult{} cards",
+                    "give {X:mult,C:white} X#1# {} Mult", 
+                    "when scored"
                 } 
             },
             j_poke_porygon = {
@@ -2094,7 +2097,7 @@ return {
                     "{C:pink}+1{} Energy Limit",
                     "Create an {C:pink}Energy{} card when",
                     "any {C:attention}Booster Pack{} is opened",
-                    "{C:inactive,s:0.8}(Evolves with a {C:item,s:0.8}Upgrade{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.8}(Evolves with an {C:item,s:0.8}Upgrade{C:inactive,s:0.8})",
                 } 
             },
             j_poke_omanyte = {
@@ -2691,19 +2694,20 @@ return {
                 text = {
                     "Retrigger each played {C:attention}#3#{}",
                     "{br:3}ERROR - CONTACT STEAK",
-                    "Each scored {V:1}#4#{} card",
+                    "Each played {C:attention}Wild{} card",
                     "gives {X:mult,C:white}X#2#{} Mult",
-                    "{C:inactive,s:0.7}Rank and Suit change every round{}"
+                    "when scored",
+                    "{C:inactive,s:0.7}Rank changes every round{}"
                 } 
             },
             j_poke_umbreon = {
                 name = 'Umbreon',
                 text = {
-                    "If first {C:attention}discarded{} hand",
-                    "is a {C:attention}#1#{}",
-                    "increase level of most",
-                    "played {C:attention}poker hand",
-                    "{C:inactive,s:0.7}Hand changes every round{}"
+                    "If {C:attention}first discard{} of",
+                    "round has only {C:attention}1{} card",
+                    "destroy it and increase",
+                    "level of {C:attention}#1#{}",
+                    "{C:inactive,s:0.7}Hand changes after scoring{}"
                 } 
             },
             j_poke_murkrow = {
@@ -4128,14 +4132,19 @@ return {
             j_poke_jirachi_banker = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}Double{} end of round payout",
+                    "{C:attention}#1#X{} payout at",
+                    "end of round"
                 }
             },
             j_poke_jirachi_booster = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}+1{} Booster Pack slot",
-                    "{C:attention}Booster Packs{} have {C:attention}1{} more card in them",
+                    "{C:attention}Booster{} packs have",
+                    "{C:attention}#3#{} more card in them",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "The first {C:attention}#1#{} {C:inactive}[#2#] {C:green}rerolls",
+                    "each {C:attention}shop{} adds",
+                    "a {C:attention}Booster to {C:attention}shop"
                 }
             },
             j_poke_jirachi_power = {
@@ -4157,11 +4166,11 @@ return {
             j_poke_jirachi_invis = {
                 name = 'Jirachi',
                 text = {
-                    "When {C:attention}Blind{} is selected",
-                    "create a {C:attention}copy{} of",
+                    "Copies ability of",
                     "{C:attention}Joker{} to the right",
-                    "then {S:1.1,C:red,E:2}self destructs{}",
-                    "{C:inactive}(removes Negative)"
+                    "if you have {C:attention}#1#+",
+                    "{C:pink}Energized{} Jokers ",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_jirachi_copy = {
@@ -4174,11 +4183,10 @@ return {
             j_poke_jirachi_fixer = {
                 name = 'Jirachi',
                 text = {
-                    "If {C:attention}first hand{} has exactly {C:attention}1{} card,",
-                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or {C:dark_edition}Polychrome{} to it",
-                    "{br:3}ERROR - CONTACT STEAK",
                     "If {C:attention}first discard{} has exactly {C:attention}1{} card,",
-                    "{C:attention}destroy{} it",
+                    "{C:attention}destroy{} it and create a copy of",
+                    "{C:tarot}Death{}, {C:spectral}Cryptid{}, or {C:item}Metal Coat{}",
+                    "{C:inactive}(Must have room)",
                 }
             },
             j_poke_deoxys = {
@@ -4528,23 +4536,17 @@ return {
             j_poke_leafeon = {
                 name = 'Leafeon',
                 text = {
-                    "{C:attention}+#1#{} hand size",
-                    "reduces by {C:red}#2#{}",
-                    "every hand played",
-                    "{br:2}ERROR - CONTACT STEAK",
-                    "Gain {C:attention}+#2#{} hand size",
-                    "when a {C:attention}Lucky{} card",
-                    "{C:green}successfully{} triggers",
-                    "{C:inactive}(Max of {C:attention}+#3#{C:inactive} hand size){}"
+                    "Triples all {C:attention}listed {C:green,E:1,S:1.1}probabilities{} if",
+                    "a {C:attention}Lucky{} card {C:green}successfully{}",
+                    "triggered this {C:attention}ante",
+                    "{C:inactive}(ex: {C:green}1 in 6{C:inactive} -> {C:green}3 in 6{C:inactive})",
                 } 
             },
             j_poke_glaceon = {
                 name = 'Glaceon',
                 text = {
-                    "Each reroll in the shop has a",
-                    "{C:green}#1# in #2#{} chance to add",
-                    "a {C:attention}Glass{} copy of a random",
-                    "card in your deck to shop",
+                    "Retrigger all played",
+                    "{C:attention}Glass{} cards" 
                 } 
             },
             j_poke_gliscor = {
@@ -5140,10 +5142,9 @@ return {
             j_poke_sylveon = {
                 name = 'Sylveon',
                 text = {
-                    "If {C:attention}first hand{} is",
-                    "exactly {C:attention}1{} unenhanced card,",
-                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
-                    "or {C:dark_edition}Polychrome{} to it",
+                    "Gain {C:chips}+#2#{} Chips when each",
+                    "played {C:attention}editioned{} card scores",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 } 
             },
             j_poke_pumpkaboo_small = {
@@ -6134,8 +6135,9 @@ return {
             c_poke_transformation = {
                 name = "Transformation",
                 text = {
-                    "Evolves leftmost or selected Pokemon to",
-                    "the highest {C:attention}stage{} and {C:pink}Energizes{} it", 
+                    "{C:pink}Energizes{} leftmost or selected",
+                    "Pokemon and {C:attention}evolves{} it to",
+                    "the highest {C:attention}stage{} if able"
                 },
             },
             c_poke_megastone = {
@@ -7462,6 +7464,7 @@ return {
             --From Tangela line
             poke_tangela_bonus = "All!",
             --Golbat And Crobat thingy
+            poke_leech_life_ex = "Leech!",
             poke_screech_ex = "Skree!",
             --Hoppip Line
             poke_hop_ex = "Hop!",
@@ -7520,6 +7523,7 @@ return {
             poke_sticky_web_ex = "Sticky Web!",
             poke_head_smash_ex = "Head Smash!",
             poke_teeter_dance_ex = "Teeter Dance!",
+            poke_wish_ex = "Wish!",
             
             poke_attack_forme = "Attack",
             poke_defense_forme = "Defense",

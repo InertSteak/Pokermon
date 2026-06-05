@@ -668,10 +668,10 @@ local jirachi_banker = {
   name = "jirachi_banker", 
   pos = {x = 0, y = 0},
   soul_pos = {x = 1, y = 0},
-  config = {extra = {retriggers = 1}},
+  config = {extra = {multiply = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    return {vars = {card.ability.extra.multiply}}
   end,
   rarity = 4,
   cost = 20,
@@ -694,10 +694,10 @@ local jirachi_booster = {
   name = "jirachi_booster", 
   pos = { x = 2, y = 0 },
   soul_pos = { x = 3, y = 0 },
-  config = {extra = {bonus_packs = 1, bonus_choices = 1}},
+  config = {extra = {reroll_max = 3, rerolls = 0, bonus_choices = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    return {vars = {card.ability.extra.reroll_max, math.max(card.ability.extra.reroll_max - card.ability.extra.rerolls, 0), card.ability.extra.bonus_choices}}
   end,
   rarity = 4,
   cost = 20,
@@ -708,18 +708,37 @@ local jirachi_booster = {
   aux_poke = true,
   no_collection = true,
   perishable_compat = false,
-  blueprint_compat = false,
-  add_to_deck = function(self, card, from_debuff)
-    SMODS.change_booster_limit(card.ability.extra.bonus_packs)
-    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
-  end,
-  remove_from_deck = function(self, card, from_debuff)
-    SMODS.change_booster_limit(-card.ability.extra.bonus_packs)
-    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.reroll_shop and card.ability.extra.rerolls < card.ability.extra.reroll_max then
+      if not context.blueprint then
+        card.ability.extra.rerolls = card.ability.extra.rerolls + 1
+      end
+      
+      card:juice_up()
+      SMODS.add_booster_to_shop()
+      
+      return {
+        message = localize("poke_wish_ex"),
+        colour = G.C.PURPLE,
+      }
+    end
+    if context.ending_shop and not context.blueprint then
+      card.ability.extra.rerolls = 0
+      return {
+        message = localize("k_reset")
+      }
+    end
   end,
   custom_pool_func = true,
   in_pool = function(self)
     return false
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
   end,
   attributes = {"passive"}
 }
@@ -728,10 +747,31 @@ local jirachi_invis = {
   name = "jirachi_invis", 
   pos = { x = 2, y = 1 },
   soul_pos = { x = 3, y = 1 },
-  config = {extra = {}},
+  config = {extra = {energy_target = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {}}
+    
+    local energized = 0
+    local main_end
+    
+    if G.jokers then
+      for k, v in ipairs(G.jokers.cards) do
+        if get_total_energy(v) > 0 then
+          energized = energized + 1
+        end
+      end
+    end
+    
+    if card.area and card.area == G.jokers then
+      local found_pos = get_index(G.jokers.cards, card)
+      -- fix for multiplayer not removing cards from `G.jokers` properly
+      if found_pos then
+        local other_joker = G.jokers.cards[found_pos + 1]
+        main_end = poke_blueprint_compat_ui((energized >= card.ability.extra.energy_target) and other_joker)
+      end
+    end
+    
+    return {vars = {card.ability.extra.energy_target, energized}, main_end = main_end}
   end,
   rarity = 4,
   cost = 20,
@@ -744,19 +784,22 @@ local jirachi_invis = {
   no_collection = true,
   aux_poke = true,
   calculate = function(self, card, context)
-    if context.setting_blind and not context.blueprint then
-      local other_joker = nil
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] == card and G.jokers.cards[i+1] and G.jokers.cards[i+1].config.center_key ~= "j_poke_jirachi_invis" then other_joker = G.jokers.cards[i+1] end
-      end
+    local found_pos = get_index(G.jokers.cards, card)
+    -- fix for multiplayer not removing cards from `G.jokers` properly
+    if found_pos then
+      local other_joker = G.jokers.cards[found_pos + 1]
       if other_joker then
-        local copy = copy_card(other_joker, nil, nil, nil, other_joker.edition and other_joker.edition.negative)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
-        copy:add_to_deck()
-        G.jokers:emplace(copy)
-        copy:start_materialize()
-
-        SMODS.destroy_cards(card, true, nil, true)
+        local energized = 0
+        for k, v in ipairs(G.jokers.cards) do
+          if get_total_energy(v) > 0 then
+            energized = energized + 1
+          end
+        end
+        if energized >= card.ability.extra.energy_target then
+          local ret = SMODS.blueprint_effect(card, other_joker, context)
+          if ret then ret.colour = G.C.BLUE end
+          return ret
+        end
       end
     end
   end,
@@ -958,6 +1001,11 @@ local jirachi_fixer = {
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.c_death
+      info_queue[#info_queue+1] = G.P_CENTERS.c_cryptid
+      info_queue[#info_queue+1] = G.P_CENTERS.c_poke_metalcoat
+    end
     return {vars = {}}
   end,
   rarity = 4,
@@ -971,30 +1019,40 @@ local jirachi_fixer = {
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before and G.GAME.current_round.hands_played == 0 and context.full_hand and #context.full_hand == 1 then
-        if not context.scoring_hand[1].edition then
-          local edition = poll_edition('aura', nil, true, true)
-          context.scoring_hand[1]:set_edition(edition, true, true)
+    if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 then
+      local create_function = function()
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = function()
+              local cons = {
+                {set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE, key = 'c_death'},
+                {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral, key = 'c_cryptid'},
+                {set = "Item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item, key = 'c_poke_metalcoat'},
+               }
+              local con = pseudorandom_element(cons, pseudoseed('jirachi_fixer'))
+              local added = SMODS.add_card{set = con.set, key = con.key, key_append = 'jirachi_fixer'}
+              SMODS.calculate_effect({ message = con.message, colour = con.colour }, added)
+              G.GAME.consumeable_buffer = 0
+              return true
+            end
+          }))
         end
       end
-    end
-    if context.discard and G.GAME.current_round.discards_used == 0 and context.full_hand and #context.full_hand == 1 and context.other_card and not card.ability.extra.triggered then
-      card.ability.extra.triggered = true
+      
       return {
         delay = 0.45,
         remove = true,
-        card = card
+        card = card,
+        extra = {focus = card, message = localize('k_plus_tarot'), colour = G.C.PURPLE, func = create_function},
       }
     end
 
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function(card) return (G.GAME.current_round.hands_played == 0 or G.GAME.current_round.discards_used == 0) and not G.RESET_JIGGLES and not card.ability.extra.triggered end
-      juice_card_until(card, eval, true)
-    end
-    
-    if context.end_of_round and not context.individual and not context.repetition then
-      card.ability.extra.triggered = nil
+    if context.first_hand_drawn then
+        local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
     end
   end,
   custom_pool_func = true,
