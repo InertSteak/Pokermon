@@ -420,7 +420,7 @@ local skiploom={
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Grass",
@@ -1263,7 +1263,7 @@ local forretress={
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, }}
   end,
-  rarity = 3,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Metal",

@@ -124,7 +124,7 @@ local kadabra={
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'kadabra')
     return {vars = {num, dem}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   item_req = "linkcable",
   stage = "One", 
@@ -339,7 +339,7 @@ local machoke={
     end
 		return {vars = {center.ability.extra.hands, center.ability.extra.discards, center.ability.extra.mult}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8,
   item_req = "linkcable",
   stage = "One", 
@@ -631,7 +631,7 @@ local graveler={
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.h_size}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   item_req = "linkcable",
   stage = "One", 
@@ -738,7 +738,7 @@ local rapidash={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
-  rarity = 3, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Fire",
@@ -1025,7 +1025,7 @@ local farfetchd={
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num or 1, center.ability.extra.dem, 'farfetchd')
     return {vars = {center.ability.extra.money, num, dem}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 7, 
   stage = "Basic", 
   ptype = "Colorless",

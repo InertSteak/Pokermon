@@ -189,7 +189,7 @@ local budew={
     end
     return {vars = {center.ability.extra.Xmult_minus, center.ability.extra.rounds, }}
   end,
-  rarity = 2,
+  rarity = 1,
   cost = 3,
   stage = "Baby",
   ptype = "Grass",

@@ -89,7 +89,7 @@ local nidorino={
     end
     return {vars = {center.ability.extra.mult}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   item_req = "moonstone",
@@ -915,7 +915,7 @@ local meowth={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.money_mod, self.config.evo_rqmt}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 5, 
   stage = "Basic",
   ptype = "Colorless",
@@ -1022,7 +1022,7 @@ local golduck={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   ptype = "Water",

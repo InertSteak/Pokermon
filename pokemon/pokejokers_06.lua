@@ -575,7 +575,7 @@ local noctowl={
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
 		return {vars = {card.ability.extra.scry}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 7,
   stage = "One",
   ptype = "Colorless",
@@ -647,7 +647,7 @@ local ledian={
     local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
     return {vars = {center.ability.extra.mult, center.ability.extra.mult * math.floor(deck_count/3)}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 5,
   stage = "One",
   ptype = "Grass",
@@ -716,7 +716,7 @@ local ariados={
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'ariados')
     return {vars = {center.ability.extra.chips, num, dem, center.ability.extra.chips2}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 5,
   stage = "One",
   ptype = "Grass",

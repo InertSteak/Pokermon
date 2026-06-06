@@ -951,7 +951,7 @@ local rhyhorn={
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = 1, 
   cost = 5, 
   enhancement_gate = 'm_stone',
   stage = "Basic", 

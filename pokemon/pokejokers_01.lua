@@ -997,7 +997,7 @@ local raticate={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.retriggers}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One", 
   atlas = "Pokedex1",
@@ -1450,7 +1450,7 @@ local nidorina={
     end
     return {vars = {center.ability.extra.chips}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   stage = "One",
   item_req = "moonstone",

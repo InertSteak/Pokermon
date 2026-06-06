@@ -574,7 +574,7 @@ local numel={
     return {vars = {center.ability.extra.Xmult, center.ability.extra.rounds, center.ability.extra.score_goal, math.max(0, center.ability.extra.score_goal - center.ability.extra.cards_scored)}}
   end,
   designer = "xtremepolymath",
-  rarity = 2,
+  rarity = 1,
   cost = 6,
   gen = 3,
   stage = "Basic",

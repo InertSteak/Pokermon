@@ -134,7 +134,7 @@ local gothorita={
     type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Psychic",
