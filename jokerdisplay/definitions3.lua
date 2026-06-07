@@ -1864,20 +1864,30 @@ jd_def["j_poke_jirachi_power"] = {
         end
     end
 }
--- Can't think of a good way to show this without it being ridiculous
--- jd_def["j_poke_jirachi_fixer"] = {
---     reminder_text = {
---         { text = "(Hand: " },
---         { ref_table = "card.joker_display_values", ref_value = "hand_active_text" },
---         { text = "  Discard: " },
---         { ref_table = "card.joker_display_values", ref_value = "discard_active_text" },
---         { text = ")" },
---     },
---     calc_function = function(card)
---         card.joker_display_values.hand_active_text = localize(G.GAME.current_round.hands_played == 0 and 'k_active_ex' or 'k_copied_ex')
---         card.joker_display_values.discard_active_text = localize(G.GAME.current_round.discards_used == 0 and 'k_active_ex' or 'k_copied_ex')
---     end
--- }
+
+jd_def["j_poke_jirachi_fixer"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    if G.GAME.current_round.discards_used == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.joker_display_values.active == localize("jdis_active") then
+        reminder_text.children[2].config.colour = G.C.GREEN
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
 
 jd_def["j_poke_jirachi_invis"] = {
   reminder_text = {
