@@ -1833,6 +1833,29 @@ jd_def["j_poke_metagross"] = {
 --	Groudon
 --	Rayquaza
 --	Jirachi
+jd_def["j_poke_jirachi_booster"] = {
+  reminder_text = {
+    { text = "[" },
+    { ref_table ="card.joker_display_values", ref_value = "rerolls" },
+    { text = "/" },
+    { ref_table ="card.joker_display_values", ref_value = "reroll_max" },
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.rerolls = card.ability.extra.rerolls
+    card.joker_display_values.reroll_max = card.ability.extra.reroll_max
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.ability.extra.rerolls < card.ability.extra.reroll_max then
+        reminder_text.children[2].config.colour = G.C.ORANGE
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
+
 jd_def["j_poke_jirachi_power"] = {
     text = {
         {
