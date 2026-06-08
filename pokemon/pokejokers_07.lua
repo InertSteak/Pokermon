@@ -106,7 +106,7 @@ local bellossom={
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           local upgrade = pseudorandom(pseudoseed('bellossom'))
-          if poke_is_odd(v) and upgrade > .50 and not v.edition then
+          if poke_is_odd(v) and upgrade > .50 and not (v.config.center ~= G.P_CENTERS.c_base and v.edition) then
               odds[#odds+1] = v
               if v.config.center ~= G.P_CENTERS.c_base and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
