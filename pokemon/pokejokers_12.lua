@@ -138,19 +138,22 @@ local altaria={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+    if context.hand_drawn and SMODS.drawn_cards then
       for i = 1, #SMODS.drawn_cards do
         if SMODS.drawn_cards[i]:get_id() == 9 then
-          SMODS.scale_card(card, {
-            ref_value = 'chips',
-            scalar_value = 'chip_mod',
-            operation = function(ref_table, ref_value, initial, change)
-              ref_table[ref_value] = initial + change + (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
-            end,
-            message_colour = G.C.CHIPS
-          })
+          if not context.blueprint then
+            SMODS.scale_card(card, {
+              ref_value = 'chips',
+              scalar_value = 'chip_mod',
+              operation = function(ref_table, ref_value, initial, change)
+                ref_table[ref_value] = initial + change + (#find_pokemon_type("Dragon", card) > 0 and card.ability.extra.chip_mod_extra or 0)
+              end,
+              message_colour = G.C.CHIPS
+            })
+          end
+          
           if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#find_pokemon_type("Dragon", card) > 0) then
-            local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
+            local earned = ease_poke_dollars(card, "altaria", card.ability.extra.money_mod, true)
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -158,6 +161,9 @@ local altaria={
                     return true
                 end
             }))
+            return {
+              dollars = earned
+            }
           end
         end
       end
