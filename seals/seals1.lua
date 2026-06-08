@@ -32,7 +32,6 @@ local pink_seal = {
                 and SMODS.pseudorandom_probability(card, 'poke_pink_seal_selfdestruct', card.ability.seal.num, card.ability.seal.dem, 'poke_pink_seal_selfdestruct') then
               card:set_seal(nil)
             end
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
             return true
           end,
         }))
