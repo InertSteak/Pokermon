@@ -1,11 +1,3 @@
-local check_main_scoring = function(main)
-  if SMODS.version >= '1.0.0~ALPHA-1315b' then
-    return main
-  else
-    return true
-  end
-end
-
 local pink_seal = {
 	name = "pink_seal",
 	key = "pink_seal",
@@ -15,12 +7,13 @@ local pink_seal = {
   pos = {x = 0, y = 0},
   config = {num = 1, dem = 3},
 	calculate = function(self, card, context)
-		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and G.GAME.current_round.hands_played == 0 then
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+		if context.cardarea == G.play and not context.repetition_only and context.main_scoring and G.GAME.current_round.hands_played == 0 then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+        G.E_MANAGER:add_event(Event({
+          func = function()
             local energy_types = {}
-            local _card = nil
+            local energy_key = nil
             for l, v in pairs(G.jokers.cards) do
               local match = pokermon.energy.get_matching_energy(v, true)
               if match then
@@ -28,27 +21,21 @@ local pink_seal = {
               end
             end
             if #energy_types > 0 then
-              local energy = pseudorandom_element(energy_types, pseudoseed('pink'))
-              _card = create_card("poke_energy", G.pack_cards, nil, nil, true, true, energy, nil)
-              if energy == "c_poke_bird_energy" then
+              energy_key = pseudorandom_element(energy_types, pseudoseed('pink'))
+              if energy_key == "c_poke_bird_energy" then
                 card:set_seal(nil)
               end
-            else
-              _card = create_card("poke_energy", G.consumeables, nil, nil, nil, nil, nil, nil)
             end
-						_card:add_to_deck()
-						G.consumeables:emplace(_card)
+            SMODS.add_card({ set = 'poke_energy', key = energy_key })
+            G.GAME.consumeable_buffer = 0
             if G.GAME.modifiers.poke_pink_seal_selfdestruct
                 and SMODS.pseudorandom_probability(card, 'poke_pink_seal_selfdestruct', card.ability.seal.num, card.ability.seal.dem, 'poke_pink_seal_selfdestruct') then
               card:set_seal(nil)
             end
-            card:juice_up()
-					end
-          return true
-				end,
-			}))
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+            return true
+          end,
+        }))
+        return { message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"] }
       end
 		end
 	end,
@@ -66,7 +53,7 @@ local silver = {
   artist = "KatRoman",
   pos = {x = 3, y = 1},
 	calculate = function(self, card, context)
-		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) and not card.destroyed then
+		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and context.main_scoring and not card.destroyed then
         card.ability.discarded = true
         G.E_MANAGER:add_event(Event({
           func = function()
@@ -134,7 +121,7 @@ local dna_seal = {
     return {vars = {}}
   end,
 	calculate = function(self, card, context)
-		if context.cardarea == G.play and not context.repetition_only and check_main_scoring(context.main_scoring) and #context.full_hand == 1 then
+		if context.cardarea == G.play and not context.repetition_only and context.main_scoring and #context.full_hand == 1 then
       G.playing_card = (G.playing_card and G.playing_card + 1) or 1
       local card_copied = copy_card(context.full_hand[1], nil, nil, G.playing_card)
       card_copied:add_to_deck()

@@ -786,19 +786,26 @@ local jolteon={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.discard and SMODS.has_enhancement(context.other_card, 'm_gold') then
-      local earned = pokermon.ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
-      G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
-      return {
-          dollars = earned,
-          func = function() -- This is for timing purposes, it runs after the dollar manipulation
-              G.E_MANAGER:add_event(Event({
-                  func = function()
-                      G.GAME.dollar_buffer = 0
-                      return true
-                  end
-              }))
-          end
-      }
+      if context.other_card.debuff then
+        return {
+            message = localize('k_debuffed'),
+            colour = G.C.RED
+        }
+      else
+        local earned = pokermon.ease_poke_dollars(card, "jolteon", card.ability.extra.money, true)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
+        return {
+            dollars = earned,
+            func = function() -- This is for timing purposes, it runs after the dollar manipulation
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.GAME.dollar_buffer = 0
+                        return true
+                    end
+                }))
+            end
+        }
+      end
     end
   end,
   attributes = {"discard", "economy", "enhancements"},

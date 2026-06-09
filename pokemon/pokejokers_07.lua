@@ -106,7 +106,7 @@ local bellossom={
       local odds = {}
       for k, v in ipairs(context.scoring_hand) do
           local upgrade = pseudorandom(pseudoseed('bellossom'))
-          if pokermon.is_odd(v) and upgrade > .50 and not v.edition then
+          if pokermon.is_odd(v) and upgrade > .50 and not (v.config.center ~= G.P_CENTERS.c_base and v.edition) then
               odds[#odds+1] = v
               if v.config.center ~= G.P_CENTERS.c_base and not v.edition then
                 local edition = poll_edition('aura', nil, true, true)
@@ -420,7 +420,7 @@ local skiploom={
     end
     return {vars = {center.ability.extra.h_size, center.ability.extra.rounds}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Grass",
@@ -1263,7 +1263,7 @@ local forretress={
     end
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, }}
   end,
-  rarity = 3,
+  rarity = "poke_safari",
   cost = 6,
   stage = "One",
   ptype = "Metal",
