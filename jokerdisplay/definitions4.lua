@@ -734,20 +734,12 @@ jd_def["j_poke_leafeon"] = {
 }
 
 --	Glaceon
---[[
 jd_def["j_poke_glaceon"] = {
-  extra = {
-    {
-      { text = "(", colour=G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-      { text = ")", colour=G.C.GREEN, scale = 0.3 },
-    },
-  },
-  calc_function = function(card)
-    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'glaceon')
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    return SMODS.has_enhancement(playing_card, 'm_glass') and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
   end
-}]]--
+}
 
 --	Gliscor
 jd_def["j_poke_gliscor"] = {
