@@ -3686,6 +3686,26 @@ return {
                 "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
               }
             },
+            j_poke_plusle = {
+              name = "Plusle",
+              text = {
+                "{C:mult}+#1#{} Mult for each {C:attention}Joker",
+                "and {C:attention}consumable{} you have",
+                "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Each {C:attention}Minun{} gives {X:mult,C:white} X#3# {} Mult"
+              }
+            },
+            j_poke_minun = {
+              name = "Minun",
+              text = {
+                "All {C:attention}Jokers{} and {C:attention}consumables{} in",
+                "the shop cost {C:money}$#1#{} less",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Earn {C:money}$#2#{} at end of round",
+                "for each {C:attention}Plusle{} you have"
+              }
+            },
             j_poke_volbeat = {
               name = "Volbeat",
               text = {

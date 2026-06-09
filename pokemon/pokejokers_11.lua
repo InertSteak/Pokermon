@@ -317,7 +317,89 @@ local medicham={
 -- Electrike 309
 -- Manectric 310
 -- Plusle 311
+local plusle={
+  name = "plusle",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult_mod = 2, Xmult = 2.5}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    local joker_count = 0
+    if G.jokers then
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
+      end
+    end
+
+    local count = joker_count + #poke_get_consumeables()
+    return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod * count, center.ability.extra.Xmult}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local joker_count = 0
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
+      end
+      
+      return {
+        mult = card.ability.extra.mult_mod * (joker_count + #poke_get_consumeables())
+      }
+    end
+    
+    if context.other_joker and context.other_joker.config.center_key == 'j_poke_minun' then
+      return {
+        xmult = card.ability.extra.Xmult
+      }
+    end
+  end,
+}
 -- Minun 312
+local minun={
+  name = "minun",
+  pos = {x = 0, y = 0},
+  config = {extra = {money_minus = 1, money = 10}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.money_minus, center.ability.extra.money}}
+  end,
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calc_dollar_bonus = function(self, card)
+    local plusles = #SMODS.find_card("j_poke_plusle")
+    if plusles > 0 then
+      return ease_poke_dollars(card, "minun", card.ability.extra.money * plusles, true)
+    end
+	end,
+  add_to_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.E_MANAGER:add_event(Event({func = function()
+      for k, v in pairs(G.I.CARD) do
+          if v.set_cost then v:set_cost() end
+      end
+      return true end }))
+  end,
+}
 -- Volbeat 313
 local volbeat={
   name = "volbeat",
@@ -814,5 +896,5 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
 }
