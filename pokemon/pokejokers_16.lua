@@ -700,17 +700,17 @@ local porygonz={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 3
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 3
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 3
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 3
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 3
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - 3
     end
   end,
   attributes = {"energy_limit", "energy", "generation", "xmult", "passive"},
@@ -724,7 +724,7 @@ local gallade={
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = { set = 'Spectral', key = 'c_poke_double_rainbow_energy', 
-                                    vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
+                                    vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
       info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Double Rainbow Energy"}}
     end
     local energized = 0

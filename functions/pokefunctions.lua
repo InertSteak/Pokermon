@@ -695,7 +695,7 @@ end
 pokermon.type_tooltip = function(self, info_queue, center)
   local percent
   if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and (pokermon.energy.get_total_energy(center) ~= 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
+      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
       if center.ability.money_frac and center.ability.money_frac > 0 then
         percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
         if percent ~= 100 and percent ~= 0 then
@@ -721,7 +721,7 @@ pokermon.type_tooltip = function(self, info_queue, center)
         end
       end
   elseif (center.ability and (pokermon.energy.get_total_energy(center) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.energy_plus or 0)}}
+      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
       if center.ability.money_frac then
         percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
         if percent ~= 100 and percent ~= 0 then

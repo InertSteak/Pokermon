@@ -44,7 +44,7 @@ end
 
 pokermon.energy.can_increase_energy = function(card, etype)
   if pokermon_config.unlimited_energy or card.config.center.no_energy_limit or (etype and etype == "Bird") then return true end
-  return pokermon.energy.get_total_energy(card) < pokermon.energy.max + (G.GAME.energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
+  return pokermon.energy.get_total_energy(card) < pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0)
 end
 
 -- Checking the type compatibility flowchart
@@ -77,7 +77,7 @@ end
 -- this is probably now the function to call for energizing effects that aren't tied to energy cards
 pokermon.energy.increase = function(card, etype, amount, silent)
   if not amount then amount = 1 end
-  if pokermon.energy.can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.energy_plus or 0) +
+  if pokermon.energy.can_increase_energy(card) or amount <= pokermon.energy.max + (G.GAME.poke_energy_plus or 0) +
       (type(card.ability.extra) == "table" and card.ability.extra.e_limit_up or 0) - pokermon.energy.get_total_energy(card) then
     pokermon.energy.modify(card, etype, amount, silent)
   end

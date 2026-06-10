@@ -1289,17 +1289,17 @@ local porygon2={
     return pokermon.item_evo(self, card, context, "j_poke_porygonz")
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 2
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 2
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 2
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 2
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 2
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - 2
     end
   end,
   attributes = {"energy_limit", "generation", "energy", "types", "item_evo"},

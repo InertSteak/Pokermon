@@ -896,17 +896,17 @@ local porygon={
     return pokermon.item_evo(self, card, context, "j_poke_porygon2")
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 1
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 1
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 1
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 1
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 1
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - 1
     end
   end,
   attributes = {"generation", "energy", "energy_limit", "item_evo"},
@@ -1680,10 +1680,10 @@ local mega_mewtwo_y = {
     end
     if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 1
+      if not G.GAME.poke_energy_plus then
+        G.GAME.poke_energy_plus = 1
       else
-        G.GAME.energy_plus = G.GAME.energy_plus + 1
+        G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 1
       end
     end
   end,

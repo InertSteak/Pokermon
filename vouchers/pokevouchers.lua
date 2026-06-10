@@ -13,17 +13,17 @@ local energysearch = { --+1 max energy limit
 		return { vars = {} }
 	end,
   redeem = function(self)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 2
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 2
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 2
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 2
     end
   end,
   unredeem = function(self)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 2
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - 2
     end
   end,
   in_pool = function(self)
@@ -46,17 +46,17 @@ local energyresearch = { --+1 max energy limit
 		return { vars = {} }
 	end,
   redeem = function(self)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 3
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 3
     else
-      G.GAME.energy_plus = G.GAME.energy_plus + 3
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus + 3
     end
   end,
   unredeem = function(self)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
+    if not G.GAME.poke_energy_plus then
+      G.GAME.poke_energy_plus = 0
     else
-      G.GAME.energy_plus = G.GAME.energy_plus - 3
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus - 3
     end
   end,
   in_pool = function(self)

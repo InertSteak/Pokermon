@@ -33,7 +33,7 @@ local berry_juice_energy = {
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
   end,
   berry_juice = true,
   poke_multi_item = true,
