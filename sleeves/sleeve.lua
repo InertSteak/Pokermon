@@ -340,7 +340,7 @@ local megasleeve = {
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
     if self.get_current_deck_key() == "b_poke_megadeck" then
-      G.GAME.modifiers.infinite_megastone = true
+      G.GAME.modifiers.poke_infinite_megastone = true
     else
       G.E_MANAGER:add_event(Event({
         func = function()

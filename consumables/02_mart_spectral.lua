@@ -38,7 +38,7 @@ local get_mega_target = function(self)
   return pokermon.find_leftmost_or_highlighted(function(joker)
     return not self.ability.extra.used_on and pokermon.get_mega(joker) and not joker.debuff
         or joker.config.center.rarity == "poke_mega" and joker.unique_val == self.ability.extra.used_on
-        or G.GAME.modifiers.infinite_megastone and ((pokermon.get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
+        or G.GAME.modifiers.poke_infinite_megastone and ((pokermon.get_mega(joker) and not joker.debuff) or joker.config.center.rarity == "poke_mega")
   end)
 end
 
@@ -52,7 +52,7 @@ local megastone = {
   config = {extra = {usable = true, used_on = nil}},
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue + 1] = { set = 'Other', key = 'endless' }
-    if not G.GAME.modifiers.infinite_megastone then
+    if not G.GAME.modifiers.poke_infinite_megastone then
       info_queue[#info_queue+1] = {set = 'Other', key = 'mega_rule'}
     end
     local joker = pokermon.find_card(function(joker)
@@ -88,7 +88,7 @@ local megastone = {
     local prefix = target.config.center.poke_custom_prefix or "poke"
     if pokermon.get_mega(target) then
       forced_key = "j_"..prefix.."_"..pokermon.get_mega(target)
-      card.ability.extra.used_on = not G.GAME.modifiers.infinite_megastone and target.unique_val
+      card.ability.extra.used_on = not G.GAME.modifiers.poke_infinite_megastone and target.unique_val
     else
       forced_key = pokermon.get_previous_evo(target, true)
       card.ability.extra.used_on = nil
