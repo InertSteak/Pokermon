@@ -6,7 +6,7 @@ pokermon.ui.create_scry_cardarea = function()
    scry_view.T.y = G.TILE_H - G.deck.T.h - scry_view.T.h
    scry_view:hard_set_VT()
 
-   G.GAME.scry_amount = G.GAME.scry_amount or 0
+   G.GAME.poke_scry_amount = G.GAME.poke_scry_amount or 0
    return scry_view
 end
 
@@ -48,12 +48,12 @@ pokermon.ui.update_scry_cardarea = function(scry_view)
    scry_view.adjusting_cards = true
 
    local deck = {}
-   for i = 1, G.GAME.scry_amount do
+   for i = 1, G.GAME.poke_scry_amount do
       if #G.deck.cards + 1 <= i then break end
       deck[i] = G.deck.cards[#G.deck.cards + 1 - i]
    end
    -- blank card that will cause the removal of any extra cards
-   deck[G.GAME.scry_amount + 1] = true
+   deck[G.GAME.poke_scry_amount + 1] = true
 
    local i = 1
    for k, card in pairs(deck) do
@@ -61,7 +61,7 @@ pokermon.ui.update_scry_cardarea = function(scry_view)
          scry_view.cards[i]:start_dissolve({G.C.PURPLE})
          i = i + 1
       end
-      if k <= G.GAME.scry_amount and pokermon.cards_dont_match(card, scry_view.cards[i]) then
+      if k <= G.GAME.poke_scry_amount and pokermon.cards_dont_match(card, scry_view.cards[i]) then
          local temp_card = copy_card(card, nil, 0.7)
          temp_card.states.drag.can = false
          temp_card.states.hover.can = false

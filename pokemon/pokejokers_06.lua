@@ -558,10 +558,10 @@ local hoothoot={
     return pokermon.level_evo(self, card, context, "j_poke_noctowl")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
   attributes = {"foresight", "chips", "round_evo"},
 }
@@ -597,10 +597,10 @@ local noctowl={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
   attributes = {"foresight", "chips"},
 }

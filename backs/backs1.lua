@@ -132,7 +132,7 @@ local futuredeck = {
 	pos = { x = 6, y = 0 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry
   end
 }
 

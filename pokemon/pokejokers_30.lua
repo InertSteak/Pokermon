@@ -268,7 +268,7 @@ local wyrdeer={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry_plus
+        G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry_plus
         card.ability.extra.scry_added = card.ability.extra.scry_added + card.ability.extra.scry_plus
       end
     end
@@ -298,7 +298,7 @@ local wyrdeer={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      G.GAME.scry_amount = math.max(card.ability.extra.scry, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      G.GAME.poke_scry_amount = math.max(card.ability.extra.scry, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry_added)
       card.ability.extra.scry_added = 0
       return {
         message = localize('k_reset'),
@@ -308,16 +308,16 @@ local wyrdeer={
   end,
   add_to_deck = function(self, card, from_debuff)
     if card.ability.extra.scry_added > 0 then
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
     else
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if card.ability.extra.scry_added > 0 then
-      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
+      G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
     else
-      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+      G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
     end
   end,
   attributes = {"foresight", "mult", "hands", "reset"}

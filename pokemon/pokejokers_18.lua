@@ -270,10 +270,10 @@ local munna={
     return pokermon.item_evo(self, card, context, "j_poke_musharna")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
   attributes = {"foresight", "enhancements", "modify_card", "xmult", "item_evo"},
 }
@@ -299,13 +299,13 @@ local musharna={
     if context.setting_blind then
       local psy_count = #pokermon.find_pokemon_type("Psychic")
       if psy_count > 0 then
-        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + (psy_count * card.ability.extra.scry)
+        G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + (psy_count * card.ability.extra.scry)
         card.ability.extra.scry_added = card.ability.extra.scry_added + (psy_count * card.ability.extra.scry)
         card:juice_up()
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      G.GAME.poke_scry_amount = math.max(0, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry_added)
       card.ability.extra.scry_added = 0
     end
     if context.individual and context.cardarea == G.scry_view and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.end_of_round and not context.other_card.debuff then
@@ -316,7 +316,7 @@ local musharna={
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff and card.ability.extra.scry_added > 0 then
-      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry_added)
     end
   end,
   attributes = {"foresight", "enhancements", "xmult", "joker", "types"},
