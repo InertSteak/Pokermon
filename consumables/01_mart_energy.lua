@@ -55,7 +55,7 @@ local bird_energy = {
         local energy_strings2 = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
                         { string = localize('k_mult'), colour = G.C.MULT}, { string = 'ERROR', colour = G.C.CHIPS}
                        }
-        main_start = {
+        local main_start = {
           {n = G.UIT.R,
           config = {
             align = "cm",
