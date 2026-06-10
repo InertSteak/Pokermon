@@ -152,7 +152,7 @@ end
   end,
 	apply = function(self)
       if self.get_current_deck_key() ~= "b_poke_luminousdeck" then
-	    G.GAME.modifiers.apply_type = true
+	    G.GAME.modifiers.poke_apply_type = true
       end
 	end,
   calculate = function(self, back, context)

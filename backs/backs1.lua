@@ -52,7 +52,7 @@ local luminousdeck = {
 	pos = { x = 1, y = 0 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
-    G.GAME.modifiers.apply_type = true
+    G.GAME.modifiers.poke_apply_type = true
   end
 }
 
