@@ -175,7 +175,7 @@ local star={
   end,
 }
 
-gray_godfather_remove = function(difference)
+local gray_godfather_remove = function(difference)
     local in_debt = nil
     local dollars = nil
     local buffer = nil
