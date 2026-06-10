@@ -239,7 +239,7 @@ local gray_godfather = {
   end,
 }
 
-white_executive_total = function()
+local white_executive_total = function()
   local total = 0
   for _, area in ipairs({ G.jokers, G.consumeables }) do
     for _, other_card in ipairs(area.cards) do
