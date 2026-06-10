@@ -99,7 +99,7 @@ end
 local pack1 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -119,7 +119,7 @@ local pack1 = {
 local pack2 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -139,7 +139,7 @@ local pack2 = {
 local pack3 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 0 },
 	config = { extra = 6, choose = 1 },
@@ -159,7 +159,7 @@ local pack3 = {
 local pack4 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 0 },
 	config = { extra = 6, choose = 2 },
@@ -179,7 +179,7 @@ local pack4 = {
 local pack5 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_3",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -199,7 +199,7 @@ local pack5 = {
 local pack6 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_4",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -219,7 +219,7 @@ local pack6 = {
 local pack7 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 1 },
 	config = { extra = 6, choose = 1 },
@@ -239,7 +239,7 @@ local pack7 = {
 local pack8 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 1 },
 	config = { extra = 6, choose = 2 },

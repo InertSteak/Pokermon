@@ -108,7 +108,7 @@ end
       if self.get_current_deck_key() == "b_poke_revenantdeck" then
         G.GAME.modifiers.no_poke_packs = true
         for k, v in pairs(G.P_CENTER_POOLS["Booster"]) do
-          if v.kind == "Energy" then
+          if v.kind == "poke_energy" then
             v.get_weight = function() return G.GAME.modifiers.no_poke_packs and 0 or 1 end
           end
         end
