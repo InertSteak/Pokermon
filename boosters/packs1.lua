@@ -60,7 +60,7 @@ end
 
 local create_pocket_card = function(self, card, i)
     if i == 1 then
-      if not G.GAME.modifiers.no_energy then
+      if not G.GAME.modifiers.poke_no_energy then
         return create_energy(self, card)
       else
         return create_item('pocket')

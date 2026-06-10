@@ -741,7 +741,7 @@ local dragonscale = {
     for i = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         local card_type = nil
-        if pseudorandom(pseudoseed('dragonscale')) > .50 or G.GAME.modifiers.no_energy then
+        if pseudorandom(pseudoseed('dragonscale')) > .50 or G.GAME.modifiers.poke_no_energy then
           card_type = "poke_item"
         else
           card_type = "poke_energy"
