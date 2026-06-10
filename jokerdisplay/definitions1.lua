@@ -2972,12 +2972,8 @@ jd_def["j_poke_lapras"] = {
 
 jd_def["j_poke_eevee"] = {
   text = {
-    {
-      border_nodes = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
-      },
-    },
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
   },
   calc_function = function(card)
     local can_evolve = 0

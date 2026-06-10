@@ -36,6 +36,12 @@ local sylveon={
         end
       }
     end
+    
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
+    end
   end,
   attributes = {"chips", "scaling", "editions"},
 }

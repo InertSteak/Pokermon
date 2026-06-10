@@ -157,7 +157,27 @@ jd_def["j_poke_brambleghast"] = {
 --	Capsakid
 --	Scovillain
 --	Rellor
+jd_def["j_poke_rellor"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME.consumeable_usage_total.item or 0
+  end
+}
+
 --	Rabsca
+jd_def["j_poke_rabsca"] = {
+  text = {
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    card.joker_display_values.mult = G.GAME.consumeable_usage_total.item or 0
+  end
+}
+
 --	Flittle
 --	Espathra
 --	Tinkatink
