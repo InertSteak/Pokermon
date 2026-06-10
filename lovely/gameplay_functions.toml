@@ -210,17 +210,17 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-    if G.GAME.modifiers.money_per_enhancement then
+    if G.GAME.modifiers.poke_money_per_enhancement then
       local tally = 0
       for _, playing_card in ipairs(G.playing_cards) do
-          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.enhance_bonus) then tally = tally + 1 end
+          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.poke_enhance_bonus) then tally = tally + 1 end
       end
       if tally > 0 then
-        add_round_eval_row({dollars = tally * G.GAME.modifiers.money_per_enhancement, disp = tally * G.GAME.modifiers.money_per_enhancement, bonus = true,  name='custom',
-                            text = G.GAME.modifiers.enhance_bonus_text, number = tally, 
-                            number_colour = G.GAME.modifiers.enhance_bonus_color or G.C.FILTER, pitch = pitch})
+        add_round_eval_row({dollars = tally * G.GAME.modifiers.poke_money_per_enhancement, disp = tally * G.GAME.modifiers.poke_money_per_enhancement, bonus = true,  name='custom',
+                            text = G.GAME.modifiers.poke_enhance_bonus_text, number = tally, 
+                            number_colour = G.GAME.modifiers.poke_enhance_bonus_color or G.C.FILTER, pitch = pitch})
         pitch = pitch + 0.06
-        dollars = dollars + tally * G.GAME.modifiers.money_per_enhancement
+        dollars = dollars + tally * G.GAME.modifiers.poke_money_per_enhancement
       end
     end
 '''

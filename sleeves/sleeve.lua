@@ -409,10 +409,10 @@ local diceysleeve = {
           pokermon.change_hazard_level(self.config.hazard_layer)
           G.hand:change_size(self.config.h_size)
           
-          G.GAME.modifiers.enhance_bonus = 'm_poke_hazard'
-          G.GAME.modifiers.money_per_enhancement = self.config.money
-          G.GAME.modifiers.enhance_bonus_text = localize('poke_hazards_in_deck')
-          G.GAME.modifiers.enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
+          G.GAME.modifiers.poke_enhance_bonus = 'm_poke_hazard'
+          G.GAME.modifiers.poke_money_per_enhancement = self.config.money
+          G.GAME.modifiers.poke_enhance_bonus_text = localize('poke_hazards_in_deck')
+          G.GAME.modifiers.poke_enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
           return true
         end
       }))
