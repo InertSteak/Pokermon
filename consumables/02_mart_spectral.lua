@@ -205,7 +205,7 @@ local nightmare = {
           _card:set_edition({negative = true}, true)
         end
       end
-      remove(self, choice)
+      SMODS.destroy_cards(choice)
     end
   end,
   can_use = function(self, card)
