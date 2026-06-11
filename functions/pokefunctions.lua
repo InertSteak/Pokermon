@@ -428,8 +428,8 @@ pokermon.get_highest_evo = function(card)
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
   -- if there's an override then return early
-  if HIGHEST_EVO_OVERRIDES[name] then
-    local evos = HIGHEST_EVO_OVERRIDES[name]
+  if next(pokermon.get_evo_overrides(name)) then
+    local evos = pokermon.get_evo_overrides(name).highest_evo
     return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
   end
   -- if already at highest stage, return early
@@ -500,8 +500,8 @@ pokermon.get_previous_evo_from_center = function(center, full_key)
   local index, prev
   local prefix = center.poke_custom_prefix or "poke"
 
-  if PREVIOUS_EVO_OVERRIDES[name] then
-    prev = PREVIOUS_EVO_OVERRIDES[name]
+  if next(pokermon.get_evo_overrides(name)) then
+    prev = pokermon.get_evo_overrides(name).previous_evo
     return full_key and "j_"..prefix.."_"..prev or prev
   end
 
