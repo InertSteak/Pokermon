@@ -631,12 +631,6 @@ function Card:is_face(from_boss)
   return is_face_ref(self, from_boss)
 end
 
--- Smeared Check Hook
-local smeared_ref = SMODS.smeared_check
-function SMODS.smeared_check(card, suit)
-  return smeared_ref(card, suit)
-end
-
 -- Ambipom Straight Hand-Part Override
 SMODS.PokerHandPart:take_ownership('_straight',
   {
