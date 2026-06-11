@@ -883,7 +883,7 @@ pokermon.get_random_poke_key_options = function(options)
 end
 
 pokermon.create_random_poke_joker = function(pseed, stage, pokerarity, area, poketype)
-  local create_args = {set = "Joker", area = pokearea, key = ''}
+  local create_args = {set = "Joker", key = ''}
   create_args.key = pokermon.get_random_poke_key(pseed, stage, pokerarity, area, poketype)
 
   return SMODS.create_card(create_args)
