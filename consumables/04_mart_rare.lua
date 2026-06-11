@@ -136,7 +136,7 @@ local heavyboots = {
     return true
   end,
   in_pool = function(self)
-    return G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0
+    return G.GAME.poke_hazard_level and G.GAME.poke_hazard_level > 0
   end,
 }
 
