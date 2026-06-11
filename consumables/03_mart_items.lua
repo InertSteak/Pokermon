@@ -8,8 +8,8 @@ local twisted_spoon = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.last_poke_item and G.GAME.last_poke_item ~= 'c_poke_twisted_spoon' 
-        and G.GAME.last_poke_item ~= 'c_poke_leftovers' and G.GAME.last_poke_item ~= 'c_poke_leek' and G.GAME.last_poke_item ~= 'c_poke_thickclub' then 
+    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.poke_last_item and G.GAME.poke_last_item ~= 'c_poke_twisted_spoon' 
+        and G.GAME.poke_last_item ~= 'c_poke_leftovers' and G.GAME.poke_last_item ~= 'c_poke_leek' and G.GAME.poke_last_item ~= 'c_poke_thickclub' then 
       return true 
     end
     return false
@@ -20,7 +20,7 @@ local twisted_spoon = {
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then
             play_sound('timpani')
-            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
+            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, G.GAME.poke_last_item, 'spoon')
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             used_item:juice_up(0.3, 0.5)
@@ -36,7 +36,7 @@ local twisted_spoon = {
     if not full_UI_table.name then
 			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
 		end
-    local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
+    local spoon_c = G.GAME.poke_last_item and G.P_CENTERS[G.GAME.poke_last_item] or nil
     local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
     local colour = (not spoon_c or spoon_c.name == 'twisted_spoon' or spoon_c.name == 'leftovers' or spoon_c.name == 'leek' or spoon_c.name == 'thickclub') and G.C.RED or G.C.GREEN
     local main_end = {

@@ -346,7 +346,7 @@ pokermon.set_spoon_item = function(card)
       G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = function()
-          G.GAME.last_poke_item = card.config.center_key
+          G.GAME.poke_last_item = card.config.center_key
             return true
         end
       }))
