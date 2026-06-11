@@ -126,7 +126,7 @@ match_indent = true
 target = "cardarea.lua"
 pattern = "if self.config.type == 'hand' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
 position = "at"
-payload = "if self.config.type == 'hand' or self.config.type == 'scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+payload = "if self.config.type == 'hand' or self.config.type == 'poke_scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
 match_indent = true
 overwrite = true
 
@@ -136,7 +136,7 @@ overwrite = true
 target = "cardarea.lua"
 pattern = "if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
 position = "at"
-payload = "if self.config.type == 'scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+payload = "if self.config.type == 'poke_scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
 match_indent = true
 overwrite = true
 
