@@ -218,7 +218,7 @@ local ampedsleeve = {
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
-      G.GAME.modifiers.disable_colorless_penalty = true
+      G.GAME.modifiers.poke_disable_colorless_penalty = true
       G.E_MANAGER:add_event(Event({
         func = function()
           SMODS.find_card('c_poke_double_rainbow_energy')[1]:remove()
