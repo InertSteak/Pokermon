@@ -544,7 +544,7 @@ local hoothoot={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
         local chips = pokermon.total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
@@ -584,7 +584,7 @@ local noctowl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
         local chips = pokermon.total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},

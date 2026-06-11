@@ -90,7 +90,7 @@ local lopunny={
             found_ranks[unscored_card:get_id()] = true
           end
         end
-        for _,scry_card in pairs(G.scry_view.cards) do
+        for _,scry_card in pairs(G.poke_scry_view.cards) do
           if found_ranks[scry_card:get_id()] then
             score_xmult = true
             break
@@ -134,8 +134,8 @@ local mega_lopunny={
     pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     local hand = localize('poke_none')
-    if G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
-      local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
+    if G.poke_scry_view and G.poke_scry_view.cards and #G.poke_scry_view.cards > 0 then
+      local text,disp_text = G.FUNCS.get_poker_hand_info(G.poke_scry_view.cards)
       hand = text
     end
     return {vars = {center.ability.extra.scry, hand}}
@@ -152,8 +152,8 @@ local mega_lopunny={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and G.scry_view and G.scry_view.cards and #G.scry_view.cards > 0 then
-        local text,disp_text = G.FUNCS.get_poker_hand_info(G.scry_view.cards)
+      if context.joker_main and G.poke_scry_view and G.poke_scry_view.cards and #G.poke_scry_view.cards > 0 then
+        local text,disp_text = G.FUNCS.get_poker_hand_info(G.poke_scry_view.cards)
         local Xmult = nil
         if (SMODS.Mods["Talisman"] or {}).can_load then
           Xmult = to_number(G.GAME.hands[text].level)

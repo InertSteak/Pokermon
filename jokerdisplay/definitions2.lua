@@ -191,8 +191,8 @@ jd_def["j_poke_hoothoot"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
             chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
@@ -211,8 +211,8 @@ jd_def["j_poke_noctowl"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
             chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
@@ -1540,8 +1540,8 @@ jd_def["j_poke_stantler"] = {
     local highest = nil
     local highest_card = nil
 
-    if G.scry_view then
-      for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for k, v in pairs(G.poke_scry_view.cards) do
         if not highest then highest = v.base.id; highest_card = v end
         if v.base.id > highest then
           highest = v.base.id
