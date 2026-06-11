@@ -1,10 +1,15 @@
-pokermon.juice_list = {Energy = "c_poke_berry_juice_energy", Spectral = "c_poke_berry_juice_spectral", Planet = "c_poke_berry_juice_planet", Item = "c_poke_berry_juice_item",
-                       Tarot = "c_poke_berry_juice_tarot"}
+pokermon.juice_list = {
+  ["Tarot"] = "c_poke_berry_juice_tarot",
+  ["Planet"] = "c_poke_berry_juice_planet",
+  ["Spectral"] = "c_poke_berry_juice_spectral",
+  ["poke_item"] = "c_poke_berry_juice_item",
+  ["poke_energy"] = "c_poke_berry_juice_energy",
+}
 
 local berry_juice = {
   name = "berry_juice",
   key = "berry_juice",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
   end,
@@ -24,11 +29,11 @@ local berry_juice = {
 local berry_juice_energy = {
   name = "berry_juice_energy",
   key = "berry_juice_energy",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
   end,
   berry_juice = true,
   poke_multi_item = true,
@@ -64,10 +69,10 @@ local berry_juice_energy = {
       choice = G.jokers.cards[1]
     end
     play_sound('poke_energy_use', 1, 0.5)
-    if choice.config and choice.config.center.stage and not type_sticker_applied(choice) then
-      energy_increase(choice, choice.ability.extra.ptype)
-    elseif type_sticker_applied(choice) then
-      energy_increase(choice, type_sticker_applied(choice))
+    if choice.config and choice.config.center.stage and not pokermon.type_sticker_applied(choice) then
+      pokermon.energy.increase(choice, choice.ability.extra.ptype)
+    elseif pokermon.type_sticker_applied(choice) then
+      pokermon.energy.increase(choice, pokermon.type_sticker_applied(choice))
     end
     if not G.GAME.modifiers.no_interest then
       G.GAME.modifiers.reset_no_interest = true
@@ -79,7 +84,7 @@ local berry_juice_energy = {
 local berry_juice_spectral = {
   name = "berry_juice_spectral",
   key = "berry_juice_spectral",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
@@ -102,14 +107,14 @@ local berry_juice_spectral = {
   use = function(self, card, area, copier)
     local target = G.hand.highlighted[1]
     local args = {edition = poll_edition('aura', nil, true, true), seal = SMODS.poll_seal({guaranteed = true})}
-    poke_convert_cards_to(target, args, nil, true)
+    pokermon.convert_cards(target, args, nil, true)
   end
 }
 
 local berry_juice_planet = {
   name = "berry_juice_planet",
   key = "berry_juice_planet",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   loc_vars = function(self, info_queue, center)
   end,
@@ -147,11 +152,11 @@ local berry_juice_planet = {
 local berry_juice_item = {
   name = "berry_juice_item",
   key = "berry_juice_item",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {num = 1, dem = 2},
   loc_vars = function(self, info_queue, center)
-   info_queue[#info_queue+1] = { set = 'Item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
+   info_queue[#info_queue+1] = { set = 'poke_item', key = 'c_poke_twisted_spoon', poke_add_desc = true}
    local num, dem = SMODS.get_probability_vars(center, self.config.num, self.config.dem, 'berry_juice_item')
    return {vars = {num, dem}}
   end,
@@ -187,7 +192,7 @@ local berry_juice_item = {
 local berry_juice_tarot = {
   name = "berry_juice_tarot",
   key = "berry_juice_tarot",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {money = 5},
   loc_vars = function(self, info_queue, center)
@@ -221,7 +226,7 @@ local berry_juice_tarot = {
 local berry_juice_mega = {
   name = "berry_juice_mega",
   key = "berry_juice_mega",
-  set = "Item",
+  set = "poke_item",
   artist = { "Sonfive", "Emma" },
   berry_juice = true,
   poke_multi_item = true,
@@ -236,24 +241,24 @@ local berry_juice_mega = {
   end,
   can_use = function(self, card)
     return G.jokers and #G.jokers.cards > 0 and
-        poke_find_leftmost_or_highlighted(function(joker)
-          return get_mega(joker) and not joker.debuff
+        pokermon.find_leftmost_or_highlighted(function(joker)
+          return pokermon.get_mega(joker) and not joker.debuff
         end)
   end,
   use = function(self, card, area, copier)
-    local target = poke_find_leftmost_or_highlighted(function(joker)
-      return get_mega(joker) and not joker.debuff
+    local target = pokermon.find_leftmost_or_highlighted(function(joker)
+      return pokermon.get_mega(joker) and not joker.debuff
     end)
     local prefix = target.config.center.poke_custom_prefix or "poke"
-    local forced_key = "j_" .. prefix .. "_" .. get_mega(target)
-    poke_evolve(target, forced_key)
+    local forced_key = "j_" .. prefix .. "_" .. pokermon.get_mega(target)
+    pokermon.evolve(target, forced_key)
   end
 }
 
 local berry_juice_mystery = {
   name = "berry_juice_mystery",
   key = "berry_juice_mystery",
-  set = "Item",
+  set = "poke_item",
   artist = "Sonfive",
   config = {money = 5},
   loc_vars = function(self, info_queue, center)

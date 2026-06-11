@@ -10,7 +10,7 @@ local litleo={
   pos = {x = 3, y = 1},
   config = {extra = {chips = 70,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -32,7 +32,7 @@ local litleo={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_pyroar")
+    return pokermon.level_evo(self, card, context, "j_poke_pyroar")
   end,
   attributes = {"chips", "hand_type", "round_evo"},
 }
@@ -42,7 +42,7 @@ local pyroar={
   pos = {x = 4, y = 1},
   config = {extra = {chips = 90}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips}}
   end,
   rarity = 2,
@@ -73,8 +73,8 @@ local pyroar={
                 trigger = 'before',
                 delay = 0.0,
                 func = function()
-                  local card_type = 'Energy'
-                  local _card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                  local card_type = 'poke_energy'
+                  local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, nil, 'sup')
                   _card:add_to_deck()
                   G.consumeables:emplace(_card)
                   G.GAME.consumeable_buffer = 0

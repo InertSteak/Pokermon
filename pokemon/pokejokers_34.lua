@@ -12,7 +12,7 @@ local gimmighoul={
   pos = {x = 12, y = 6},
   config = {extra = {money = 3, money_goal = 999, money_seen = 0, previous_money = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     end
@@ -37,7 +37,7 @@ local gimmighoul={
                 return true
             end
         }))
-      local earned = ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, "gimmi", card.ability.extra.money, true)
       return {
         dollars = earned,
         card = card
@@ -48,10 +48,10 @@ local gimmighoul={
         local new_card = SMODS.create_card(temp_card)
         local edition = {negative = true}
         new_card:set_edition(edition, true)
-        poke_add_shop_card(new_card, card)
+        pokermon.add_shop_card(new_card, card)
         new_card.cost = 0
     end
-    return scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
+    return pokermon.scaling_evo(self, card, context, "j_poke_gholdengo", card.ability.extra.money_seen, card.ability.extra.money_goal)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial and G.STAGE == G.STAGES.RUN then
@@ -94,7 +94,7 @@ local gimmighoulr={
   config = {extra = {}},
   no_collection = true,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {}}
   end,
   rarity = "poke_safari",
@@ -120,7 +120,7 @@ local gimmighoulr={
     elseif money_chance < .9999 then amount_earned = 100
     else amount_earned = 200 end
   
-    ease_poke_dollars(card, "gimmir", amount_earned)
+    pokermon.ease_poke_dollars(card, "gimmir", amount_earned)
     remove(self, card, {})
   end,
   set_ability = function(self, card, initial, delay_sprites)
@@ -140,7 +140,7 @@ local gholdengo={
   pos = {x = 13, y = 6},
   config = {extra = {Xmult = 1, money_minus = 3, Xmult1 = 1, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money_minus, center.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",

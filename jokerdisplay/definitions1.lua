@@ -916,7 +916,7 @@ jd_def["j_poke_wigglytuff"] = {
                     if scoring_card:is_suit("Spades") then
                         local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                         mult = mult + card.ability.extra.mult * retriggers
-                        chips = chips + (card.ability.extra.chips + poke_total_chips(scoring_card)) * retriggers
+                        chips = chips + (card.ability.extra.chips + pokermon.total_chips(scoring_card)) * retriggers
                     end
                 end
             end
@@ -1868,9 +1868,9 @@ calc_function = function(card)
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
+        if pokermon.is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
     end
     local count = 0
@@ -2415,7 +2415,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2433,7 +2433,7 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end
@@ -2972,19 +2972,19 @@ jd_def["j_poke_lapras"] = {
 
 jd_def["j_poke_eevee"] = {
   text = {
-    {
-      border_nodes = {
-        { text = "X" },
-        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
-      },
-    },
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
   },
   calc_function = function(card)
-    if G.GAME.current_round.hands_played == 0 then
-      card.joker_display_values.Xmult = card.ability.extra.Xmult
-    else
-      card.joker_display_values.Xmult = 1
+    local can_evolve = 0
+    if G.jokers and G.jokers.cards then
+      for k, v in ipairs(G.jokers.cards) do
+        if v.config.center.stage and get_highest_evo(v) then
+          can_evolve = can_evolve + 1
+        end
+      end
     end
+    card.joker_display_values.mult = card.ability.extra.mult_mod * can_evolve
   end
 }
 
@@ -3018,20 +3018,23 @@ jd_def["j_poke_flareon"] = {
       }
   },
   calc_function = function(card)
-    local count = 0
-    local cards_in_hand = {}
-    for i, playing_card in ipairs(G.hand.cards) do
-      if not playing_card.highlighted then
-        table.insert(cards_in_hand, playing_card)
+    --Played
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local triggers = 0
+    local mult_cards = {}
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_mult') then
+          table.insert(mult_cards, scoring_card)
+        end
+      end
+      if #mult_cards > 1 then
+        triggers = triggers + JokerDisplay.calculate_card_triggers(mult_cards[#mult_cards], scoring_hand) + JokerDisplay.calculate_card_triggers(mult_cards[#mult_cards - 1], scoring_hand)
+      elseif #mult_cards == 1 then
+        triggers = triggers + JokerDisplay.calculate_card_triggers(mult_cards[#mult_cards], scoring_hand)
       end
     end
-    for _, playing_card in ipairs(cards_in_hand) do
-      if SMODS.has_enhancement(playing_card, 'm_mult') and not (playing_card.facing == 'back') and not playing_card.debuff then
-        count = count + JokerDisplay.calculate_card_triggers(playing_card, nil, true)
-        break
-      end
-    end
-    card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ count
+    card.joker_display_values.x_mult = math.max((triggers > 0) and (card.ability.extra.Xmult_multi ^ (triggers)) or 1, 1)
 end
 }
 

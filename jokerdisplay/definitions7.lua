@@ -23,7 +23,7 @@ jd_def["j_poke_grubbin"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-        local count = #find_pokemon_type("Lightning")
+        local count = #pokermon.find_pokemon_type("Lightning")
         if count >= 1 then
           card.joker_display_values.mult = card.ability.extra.mult * 3
         else
@@ -40,7 +40,7 @@ jd_def["j_poke_charjabug"] = {
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-        local count = #find_pokemon_type("Lightning")
+        local count = #pokermon.find_pokemon_type("Lightning")
         card.joker_display_values.mult = card.ability.extra.mult * count
     end
 }
@@ -63,8 +63,8 @@ jd_def["j_poke_vikavolt"] = {
     },
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
-        local count = #find_pokemon_type("Lightning")
-        if is_type(card, "Lightning") then
+        local count = #pokermon.find_pokemon_type("Lightning")
+        if pokermon.is_type(card, "Lightning") then
             count = count - 1
           end
         card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult * count)

@@ -94,7 +94,7 @@ jd_def["j_poke_sceptile"] = {
   },
   calc_function = function(card)
     local count = 0
-    local grass_count = #find_pokemon_type("Grass", card)
+    local grass_count = #pokermon.find_pokemon_type("Grass", card)
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text ~= 'Unknown' then
       for _, scoring_card in pairs(scoring_hand) do
@@ -214,7 +214,7 @@ jd_def["j_poke_blaziken"] = {
   end,
   mod_function = function(card, mod_joker)
     if mod_joker.ability.extra.cards_discarded >= mod_joker.ability.extra.discard_target then
-      return { x_mult = ((is_type(card, "Fire") or is_type(card, "Fighting")) and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+      return { x_mult = ((pokermon.is_type(card, "Fire") or pokermon.is_type(card, "Fighting")) and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     else
       return { xmult = nil }
     end
@@ -324,8 +324,8 @@ jd_def["j_poke_swampert"] = {
       end
     end
     if nature_cards >= 5 then
-      local water_jokers = #find_pokemon_type("Water")
-      local earth_jokers = #find_pokemon_type("Earth")
+      local water_jokers = #pokermon.find_pokemon_type("Water")
+      local earth_jokers = #pokermon.find_pokemon_type("Earth")
       card.joker_display_values.tarot = math.floor((water_jokers + earth_jokers)/2)
     else
       card.joker_display_values.tarot = 0
@@ -593,7 +593,7 @@ jd_def["j_poke_pelipper"] = {
   },
   calc_function = function(card)
     local money = 0
-    local water_jokers = #find_pokemon_type("Water")
+    local water_jokers = #pokermon.find_pokemon_type("Water")
     local hand = G.hand.highlighted
     for _, playing_card in pairs(hand) do
       if playing_card.facing and not (playing_card.facing == 'back') and not playing_card.debuff and playing_card:get_id() and playing_card:get_id() == G.GAME.current_round.wingullcard.id  then
@@ -617,10 +617,10 @@ jd_def["j_poke_ralts"] = {
   },
   calc_function = function(card)
     local energized_jokers = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -637,10 +637,10 @@ jd_def["j_poke_kirlia"] = {
   },
   calc_function = function(card)
     local energized_jokers = 0
-    local planets = #poke_get_consumeables('Planet')
+    local planets = #pokermon.get_consumeables('Planet')
     local mult = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -664,7 +664,7 @@ jd_def["j_poke_gardevoir"] = {
     local level_target = card.ability.extra.hand_level
     local leveled_hands = 0
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) > 0 then
+      if pokermon.energy.get_total_energy(v) > 0 then
         energized_jokers = energized_jokers + 1
       end
     end
@@ -839,7 +839,7 @@ jd_def["j_poke_skitty"] = {
   get_blueprint_joker = function(card)
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
-        if is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
+        if pokermon.is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
           return G.jokers.cards[i + 1]
         else
           return nil
@@ -869,8 +869,8 @@ jd_def["j_poke_delcatty"] = {
     if true_copy then
       if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
         true_copy = card.joker_display_values.fake_card
-        while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
-          energize(true_copy, nil, nil, true)
+        while pokermon.energy.get_total_energy(true_copy) - pokermon.energy.get_total_energy(copied_joker) < card.ability.extra.energy_buff do
+          pokermon.energy.energize(true_copy, nil, nil, true)
           if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
             true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
           else
@@ -885,7 +885,7 @@ jd_def["j_poke_delcatty"] = {
         card.joker_display_values.to_track = {}
         card.joker_display_values.extra_to_track = {}
         for i = 1, card.ability.extra.energy_buff do
-          energize(true_copy, nil, nil, true)
+          pokermon.energy.energize(true_copy, nil, nil, true)
         end
         for k,v in pairs(copied_joker.ability) do
           if type(true_copy.ability[k]) ~= "table" then
@@ -926,7 +926,7 @@ jd_def["j_poke_delcatty"] = {
   get_blueprint_joker = function(card)
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then
-        if is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
+        if pokermon.is_type(G.jokers.cards[i+1], G.GAME.current_round.cattype) then
           return G.jokers.cards[i + 1]
         else
           return nil
@@ -1191,6 +1191,23 @@ jd_def["j_poke_torkoal"] = {
 --	Spoink
 --	Grumpig
 --	Spinda
+jd_def["j_poke_spinda"] = {
+  reminder_text = {
+    { text = "[" },
+    { ref_table = "card.joker_display_values", ref_value = "nature1"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature2"},
+    { text = ", " },
+    { ref_table = "card.joker_display_values", ref_value = "nature3"},
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.nature1 = localize(card.ability.extra.targets[1].value, 'ranks')
+    card.joker_display_values.nature2 = localize(card.ability.extra.targets[2].value, 'ranks')
+    card.joker_display_values.nature3 = localize(card.ability.extra.targets[3].value, 'ranks')
+  end
+}
+
 --	Trapinch
 --	Vibrava
 --	Flygon
@@ -1246,7 +1263,7 @@ jd_def["j_poke_altaria"] = {
     { ref_table = "card.joker_display_values", ref_value = "localized_text" }
   },
   calc_function = function(card)
-    local dragon_count = #find_pokemon_type("Dragon")
+    local dragon_count = #pokermon.find_pokemon_type("Dragon")
     card.joker_display_values.localized_text = "(Draw " .. localize("9", "ranks")..")"
   end
 }
@@ -1302,7 +1319,21 @@ jd_def["j_poke_crawdaunt"] = {
 }
 
 --	Baltoy
+jd_def["j_poke_baltoy"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  }
+}
+
 --	Claydol
+jd_def["j_poke_claydol"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.ability.extra", ref_value = "chips", colour = G.C.CHIPS },
+  }
+}
+
 --	Lileep
 jd_def["j_poke_lileep"] = {
   text = {
@@ -1783,7 +1814,7 @@ jd_def["j_poke_metagross"] = {
     local text, _, scoring_hand = JokerDisplay.evaluate_hand()
     if text == 'Four of a Kind' then
       for _, scoring_card in pairs(scoring_hand) do
-        local total_chips = poke_total_chips(scoring_card)
+        local total_chips = pokermon.total_chips(scoring_card)
         local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
         x_mult = x_mult * (total_chips ^ (retriggers/4))
       end
@@ -1802,6 +1833,29 @@ jd_def["j_poke_metagross"] = {
 --	Groudon
 --	Rayquaza
 --	Jirachi
+jd_def["j_poke_jirachi_booster"] = {
+  reminder_text = {
+    { text = "[" },
+    { ref_table ="card.joker_display_values", ref_value = "rerolls" },
+    { text = "/" },
+    { ref_table ="card.joker_display_values", ref_value = "reroll_max" },
+    { text = "]" },
+  },
+  calc_function = function(card)
+    card.joker_display_values.rerolls = card.ability.extra.rerolls
+    card.joker_display_values.reroll_max = card.ability.extra.reroll_max
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.ability.extra.rerolls < card.ability.extra.reroll_max then
+        reminder_text.children[2].config.colour = G.C.ORANGE
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
+
 jd_def["j_poke_jirachi_power"] = {
     text = {
         {
@@ -1833,95 +1887,85 @@ jd_def["j_poke_jirachi_power"] = {
         end
     end
 }
--- Can't think of a good way to show this without it being ridiculous
--- jd_def["j_poke_jirachi_fixer"] = {
---     reminder_text = {
---         { text = "(Hand: " },
---         { ref_table = "card.joker_display_values", ref_value = "hand_active_text" },
---         { text = "  Discard: " },
---         { ref_table = "card.joker_display_values", ref_value = "discard_active_text" },
---         { text = ")" },
---     },
---     calc_function = function(card)
---         card.joker_display_values.hand_active_text = localize(G.GAME.current_round.hands_played == 0 and 'k_active_ex' or 'k_copied_ex')
---         card.joker_display_values.discard_active_text = localize(G.GAME.current_round.discards_used == 0 and 'k_active_ex' or 'k_copied_ex')
---     end
--- }
 
--- jd_def["j_poke_jirachi_copy"] = {
---     reminder_text = {
---         { text = "(" },
---         { ref_table = "card.joker_display_values", ref_value = "blueprint_compat", colour = G.C.RED },
---         { text = ")" }
---     },
---     calc_function = function(card)
---         local copied_joker, copied_debuff = JokerDisplay.calculate_blueprint_copy(card)
---         local true_copy = copied_joker
---         card.joker_display_values.blueprint_compat = localize('k_incompatible')
---         if true_copy then
---             if card.joker_display_values and card.joker_display_values.fake_card and card.joker_display_values.fake_card.config.center.key == true_copy.config.center.key then
---                 true_copy = card.joker_display_values.fake_card
---                 while get_total_energy(true_copy) - get_total_energy(copied_joker) < card.ability.extra.energy_buff do
---                     energize(true_copy, nil, nil, true)
---                     if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
---                       true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + 1
---                     else
---                       true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + 1
---                     end
---                 end
---
---                 true_copy:update_joker_display(true)
---             else
---                 true_copy = copy_card(copied_joker)
---
---                 card.joker_display_values.to_track = {}
---                 card.joker_display_values.extra_to_track = {}
---                 for i = 1, card.ability.extra.energy_buff do
---                   energize(true_copy, nil, nil, true)
---                 end
---                 for k,v in pairs(copied_joker.ability) do
---                     if type(true_copy.ability[k]) ~= "table" then
---                         if true_copy.ability[k] == v then
---                             true_copy.ability[k] = nil
---                         end
---                     end
---                 end
---                 setmetatable(true_copy.ability, {__index=copied_joker.ability})
---                 if type(copied_joker.ability.extra) == "table" then
---                     for k,v in pairs(copied_joker.ability.extra) do
---                         if true_copy.ability.extra[k] == v then
---                             true_copy.ability.extra[k] = nil
---                         end
---                     end
---                     setmetatable(true_copy.ability.extra, {__index=copied_joker.ability.extra})
---                 end
---
---                 if true_copy.ability.extra and type(true_copy.ability.extra) == "table" then
---                   true_copy.ability.extra.energy_count = (true_copy.ability.extra.energy_count or 0) + card.ability.extra.energy_buff
---                   true_copy.ability.extra.c_energy_count = (true_copy.ability.extra.c_energy_count or 0)
---                 else
---                   true_copy.ability.energy_count = (true_copy.ability.energy_count or 0) + card.ability.extra.energy_buff
---                   true_copy.ability.c_energy_count = (true_copy.ability.c_energy_count or 0)
---                 end
---
---                 true_copy:remove()
---                 true_copy:update_joker_display(true, true)
---                 if card.joker_display_values then
---                     card.joker_display_values.fake_card = true_copy
---                 end
---             end
---         end
---         JokerDisplay.copy_display(card, true_copy, copied_debuff)
---     end,
---     get_blueprint_joker = function(card)
---         for i = 1, #G.jokers.cards do
---             if G.jokers.cards[i] == card then
---                 return G.jokers.cards[i + 1]
---             end
---         end
---         return nil
---     end
--- }
+jd_def["j_poke_jirachi_fixer"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "active" },
+    { text = ")" },
+  },
+  calc_function = function(card)
+    if G.GAME.current_round.discards_used == 0 then
+      card.joker_display_values.active = localize("jdis_active")
+    else
+      card.joker_display_values.active = localize("jdis_inactive")
+    end
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if reminder_text and reminder_text.children and reminder_text.children[2] then
+      if card.joker_display_values.active == localize("jdis_active") then
+        reminder_text.children[2].config.colour = G.C.GREEN
+      else
+        reminder_text.children[2].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
+
+jd_def["j_poke_jirachi_invis"] = {
+  reminder_text = {
+    { text = "(" },
+    { ref_table = "card.joker_display_values", ref_value = "blueprint_compat", colour = G.C.RED },
+    { text = ")" }
+  },
+  extra = {
+    {
+      { text = "(", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3  },
+      { ref_table = "card.joker_display_values", ref_value = "energized_jokers", scale = 0.3 },
+      { text = "/", scale = 0.3 },
+      { ref_table = "card.ability.extra", ref_value = "energy_target", scale = 0.3 },
+      { text = ")", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3  },
+    }
+  },
+  calc_function = function(card)
+    local energized_jokers = 0
+    for k, v in ipairs(G.jokers.cards) do
+      if get_total_energy(v) >= 1 then
+        energized_jokers = energized_jokers + 1
+      end
+    end
+    card.joker_display_values.energized_jokers = energized_jokers
+
+    local copied_joker, copied_debuff = JokerDisplay.calculate_blueprint_copy(card)
+    card.joker_display_values.blueprint_compat = localize('k_incompatible')
+    JokerDisplay.copy_display(card, copied_joker, copied_debuff)
+  end,
+  get_blueprint_joker = function(card)
+    if card.joker_display_values.energized_jokers < 3 then
+      return nil
+    end
+
+    for i = 1, #G.jokers.cards do
+      if G.jokers.cards[i] == card then
+        return G.jokers.cards[i + 1]
+      end
+    end
+    return nil
+  end,
+  style_function = function(card, text, reminder_text, extra)
+    if extra and extra.children and extra.children[1] then
+      if card.joker_display_values.energized_jokers >= card.ability.extra.energy_target then
+        extra.children[1].children[2].config.colour = G.C.GREEN
+        extra.children[1].children[3].config.colour = G.C.GREEN
+        extra.children[1].children[4].config.colour = G.C.GREEN
+      else
+        extra.children[1].children[2].config.colour = G.C.UI.TEXT_INACTIVE
+        extra.children[1].children[3].config.colour = G.C.UI.TEXT_INACTIVE
+        extra.children[1].children[4].config.colour = G.C.UI.TEXT_INACTIVE
+      end
+    end
+  end
+}
 
 --	Deoxys
 jd_def["j_poke_deoxys"] = {

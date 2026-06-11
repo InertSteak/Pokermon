@@ -11,21 +11,10 @@
 local sylveon={
   name = "sylveon", 
   pos = {x = 8, y = 3},
-  config = {extra = {}},
-  loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      if not center.edition or (center.edition and not center.edition.polychrome) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-      end
-      if not center.edition or (center.edition and not center.edition.foil) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
-      end
-      if not center.edition or (center.edition and not center.edition.holo) then
-        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
-      end
-    end
-    return {vars = {}}
+  config = { extra = { chips = 0, chip_mod = 10} },
+  loc_vars = function(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
+    return { vars = { card.ability.extra.chips, card.ability.extra.chip_mod} }
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -35,19 +24,26 @@ local sylveon={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 and not context.blueprint then
-      local _card = context.scoring_hand[1]
-      if _card.config.center == G.P_CENTERS.c_base then
-        local edition = poll_edition('aura', nil, true, true)
-        _card:set_edition(edition, true, true)
-      end
+    if context.individual and not context.end_of_round and context.cardarea == G.play and context.other_card.edition and not context.blueprint then
+      return {
+        card = context.other_card,
+        func = function()
+          SMODS.scale_card(card, {
+            ref_value = 'chips',
+            scalar_value = 'chip_mod',
+            message_colour = G.C.CHIPS,
+          })
+        end
+      }
     end
-    if context.first_hand_drawn and not context.blueprint then
-      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
-      juice_card_until(card, eval, true)
+    
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips
+      }
     end
   end,
-  attributes = {"hands", "modify_card", "editions"},
+  attributes = {"chips", "scaling", "editions"},
 }
 -- Hawlucha 701
 -- Dedenne 702
@@ -64,7 +60,7 @@ local pumpkaboo={
   pos = {x = 0, y = 0},
   config = {extra = {jack_target = 5, jacks_discarded = 0, form = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local forms = {'j_poke_pumpkaboo_small', 'j_poke_pumpkaboo_average', 'j_poke_pumpkaboo_large', 'j_poke_pumpkaboo_super'}
     local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
     return {vars = {center.ability.extra.jack_target, display_jacks}, key = forms[center.ability.extra.form + 1]}
@@ -79,6 +75,7 @@ local pumpkaboo={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  poke_custom_values_to_keep = { "jack_target", "jacks_discarded" },
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
       card.ability.extra.form = pseudorandom_element({0, 1, 2, 3}, pseudoseed('pumpkaboo'))
@@ -101,19 +98,19 @@ local pumpkaboo={
     end
   end,
   set_sprites = function(self, card, front)
-    if poke_can_set_sprite(card) then
+    if pokermon.can_set_sprite(card) then
       if card.loaded then
         card.loaded = nil
         self:set_ability(card)
       end
       if card.ability and card.ability.extra and card.ability.extra.form == 1 then
-        card.children.center:set_sprite_pos({x = 2, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
         card.children.center:set_sprite_pos({x = 4, y = 9})
-      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
+      elseif card.ability and card.ability.extra and card.ability.extra.form == 2 then
         card.children.center:set_sprite_pos({x = 6, y = 9})
+      elseif card.ability and card.ability.extra and card.ability.extra.form == 3 then  
+        card.children.center:set_sprite_pos({x = 8, y = 9})
       else
-        card.children.center:set_sprite_pos({x = 0, y = 9})
+        card.children.center:set_sprite_pos({x = 2, y = 9})
       end
     end
   end,
@@ -157,7 +154,7 @@ local pumpkaboo={
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_gourgeist")
+    return pokermon.item_evo(self, card, context, "j_poke_gourgeist")
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
@@ -175,7 +172,7 @@ local gourgeist={
   pos = {x = 0, y = 0},
   config = {extra = {jack_target = 5, jacks_discarded = 0, form = -1, money = 6}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local forms = {'j_poke_gourgeist_small', 'j_poke_gourgeist_average', 'j_poke_gourgeist_large', 'j_poke_gourgeist_super'}
     local display_jacks = math.max(0, center.ability.extra.jack_target - center.ability.extra.jacks_discarded)
     return {vars = {center.ability.extra.jack_target, display_jacks, center.ability.extra.money}, 
@@ -217,7 +214,7 @@ local gourgeist={
     end
   end,
   set_sprites = function(self, card, front)
-    if poke_can_set_sprite(self) then
+    if pokermon.can_set_sprite(card) then
       if card.loaded then
         card.loaded = nil
         self:set_ability(card)
@@ -274,8 +271,8 @@ local gourgeist={
       end
     end
     if context.using_consumeable and context.consumeable.ability.set == 'Spectral' then
-      ease_poke_dollars(card, "gourgeist", card.ability.extra.money)
-      apply_type_sticker(G.jokers.cards[1], "Psychic")
+      pokermon.ease_poke_dollars(card, "gourgeist", card.ability.extra.money)
+      pokermon.apply_type_sticker(G.jokers.cards[1], "Psychic")
       card:juice_up()
       card_eval_status_text(G.jokers.cards[1], 'extra', nil, nil, nil, {message = localize("poke_tera_ex"), colour = G.C.SECONDARY_SET.Spectral})
     end

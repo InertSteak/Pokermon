@@ -6,6 +6,7 @@ local fake_banker = {
    soul_pos = { x = 5, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_banker
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -19,7 +20,7 @@ local fake_banker = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_banker", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_banker", nil, nil, true)
             return
          end
       end
@@ -37,6 +38,7 @@ local fake_booster = {
    soul_pos = { x = 7, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_booster
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -50,7 +52,7 @@ local fake_booster = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_booster", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_booster", nil, nil, true)
             return
          end
       end
@@ -68,6 +70,7 @@ local fake_power = {
    soul_pos = { x = 9, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_power
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -81,7 +84,7 @@ local fake_power = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_power", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_power", nil, nil, true)
             return
          end
       end
@@ -111,7 +114,7 @@ local fake_negging = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_negging", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_negging", nil, nil, true)
             return
          end
       end
@@ -129,6 +132,7 @@ local fake_copy = {
    soul_pos = { x = 11, y = 2 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_invis
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -142,7 +146,7 @@ local fake_copy = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_invis", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_invis", nil, nil, true)
             return
          end
       end
@@ -160,6 +164,7 @@ local fake_fixer = {
    soul_pos = { x = 1, y = 3 },
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.j_poke_jirachi_fixer
      return {vars = {}}
    end,
    atlas = "AtlasJokersSeriesAGen03",
@@ -173,7 +178,7 @@ local fake_fixer = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            poke_evolve(jirachi, "j_poke_jirachi_fixer", nil, nil, true)
+            pokermon.evolve(jirachi, "j_poke_jirachi_fixer", nil, nil, true)
             return
          end
       end
@@ -191,6 +196,7 @@ local fake_masterball = {
    soul_pos = { x = 4, y = 2},
    config = {},
    loc_vars = function(self, info_queue, center)
+     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_masterball
      return {vars = {}}
    end,
    atlas = "AtlasConsumablesBasic",
@@ -204,8 +210,8 @@ local fake_masterball = {
    use = function(self, card, area, copier)
       for _,jirachi in pairs(G.jokers.cards) do
          if (jirachi.name or jirachi.ability.name) == "jirachi" then
-            local forced_evo = get_random_poke_key("masterball", "Legendary", nil, nil, nil, {j_poke_jirachi = true})
-            poke_evolve(jirachi, forced_evo, nil, nil, true)
+            local forced_evo = pokermon.get_random_poke_key("masterball", "Legendary", nil, nil, nil, {j_poke_jirachi = true})
+            pokermon.evolve(jirachi, forced_evo, nil, nil, true)
             return
          end
       end

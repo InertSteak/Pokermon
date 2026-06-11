@@ -5,7 +5,7 @@ if SMODS.current_mod then
   end
 end
 
-pokermon = {}
+pokermon = { energy = {}, ui = {}, sprites = {} }
 SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
@@ -95,11 +95,11 @@ end
 
 --Load helper function files
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
+assert(SMODS.load_file("functions/pokefunctions.lua"))()
+assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
-assert(SMODS.load_file("functions/pokefunctions.lua"))()
-assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 
@@ -198,6 +198,9 @@ load_directory("vouchers", SMODS.Voucher, true)
 --Load blinds
 load_directory("blinds", SMODS.Blind, true)
 
+--Load stakes
+load_directory("stakes", SMODS.Stake, true)
+
 --Load tags
 load_directory("tags", SMODS.Tag, true)
 
@@ -251,25 +254,25 @@ end
 
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
-    if G.GAME.modifiers.no_energy then
-      G.GAME.energy_rate = 0
+    if G.GAME.modifiers.poke_no_energy then
+      G.GAME.poke_energy_rate = 0
     end
   end
 
   local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard', 'wingullcard'}
   for i = 1, #rank_resets do
-    poke_reset_rank(rank_resets[i])
+    pokermon.reset_rank(rank_resets[i])
   end
-  reset_espeon_card()
-  reset_gligar_suit()
+  pokermon.reset_espeon_card()
+  pokermon.reset_gligar_suit()
   
-  poke_reset_type('cattype', {'skitty', 'delcatty'})
+  pokermon.reset_type('cattype', {'skitty', 'delcatty'})
 end
 
 function SMODS.current_mod.calculate(self, context)
   -- Poliwag line suit
   if context.after then
-    poke_change_poli_suit()
+    pokermon.change_poli_suit()
   end
   -- Vending deck
   if G.GAME.modifiers.vending == true then
@@ -292,15 +295,33 @@ function SMODS.current_mod.calculate(self, context)
           trigger = 'before',
           delay = 0.4,
           func = function()
-            poke_add_hazards(nil, hazards, G.hand)
+            pokermon.add_hazards(nil, hazards, G.hand)
             return true
           end
       }))
     end
   end
   --Garbodor
+  if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss == true then
+    G.GAME.poke_ante_discards_used = 0
+    G.GAME.poke_lucky_triggers = 0
+  end
   if context.pre_discard and not context.hook then
     G.GAME.poke_ante_discards_used = (G.GAME.poke_ante_discards_used or 0) + 1
+  end
+  
+  --Leafeon
+  if context.individual and context.cardarea == G.play and context.other_card.lucky_trigger then
+    G.GAME.poke_lucky_triggers = (G.GAME.poke_lucky_triggers or 0) + 1
+  end
+
+  --Revive fainted Jokers (MP Fix)
+  if context.round_eval then
+    for _, area in ipairs(SMODS.get_card_areas('jokers')) do
+      for _, joker in ipairs(area.cards) do
+        joker.ability.fainted = nil
+      end
+    end
   end
 end
 
@@ -322,7 +343,7 @@ function SMODS.current_mod.menu_cards()
   local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
 
   local sprite_info = PokemonSprites['unown']
-  local atlas_prefix = poke_get_atlas_prefix('unown', sprite_info)
+  local atlas_prefix = pokermon.sprites.get_atlas_prefix('unown', sprite_info)
 
   local atlas = 'poke_' .. atlas_prefix .. 'TitleCard'
 

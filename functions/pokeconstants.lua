@@ -19,21 +19,23 @@ POKE_NATIVE_EVO_ITEMS = {
 }
 
 POKE_EVO_OVERRIDES = {
+  {"silcoon", {"beautifly"}},
+  {"cascoon", {"dustox"}},
   { "cosmog", "cosmoem", { "solgaleo", "lunala" } },
   { "kubfu", { "urshifu_single_strike", "urshifu_rapid_strike" } },
 }
 
 -- Helper functions/getters for accessing constants
 
-get_previous_stage = function(stage)
+pokermon.get_previous_stage = function(stage)
   return (POKE_STAGES[stage] or {}).prev
 end
 
-get_next_stage = function(stage)
+pokermon.get_next_stage = function(stage)
   return (POKE_STAGES[stage] or {}).next
 end
 
-poke_get_evo_overrides = function(name)
+pokermon.get_evo_overrides = function(name)
   for _, evo_line in ipairs(POKE_EVO_OVERRIDES) do
     for i, evo_stage in ipairs(evo_line) do
       local pokemon_in_stage = type(evo_stage) == 'table'
