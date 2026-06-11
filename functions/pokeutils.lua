@@ -508,19 +508,19 @@ pokermon.set_hazards = function(amount)
 end
 
 pokermon.change_hazard_max = function(mod)
-  G.GAME.hazard_max = G.GAME.hazard_max or 3
-  G.GAME.hazard_max = G.GAME.hazard_max + mod
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max or 3
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max + mod
 end
 
 pokermon.change_hazard_level = function(mod)
-  local max = G.GAME.hazard_max or 3
+  local max = G.GAME.poke_hazard_max or 3
   G.GAME.poke_hazard_level = G.GAME.poke_hazard_level or 0
   G.GAME.poke_hazard_level = G.GAME.poke_hazard_level + mod
 end
 
 pokermon.get_hazard_level_vars = function()
-  local level = math.min(G.GAME.hazard_max or 3, G.GAME.poke_hazard_level or 0)
-  local max = G.GAME.hazard_max or 3
+  local level = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level or 0)
+  local max = G.GAME.poke_hazard_max or 3
   local vars = {level, max}
   return vars
 end

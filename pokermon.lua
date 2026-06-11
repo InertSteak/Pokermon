@@ -290,7 +290,7 @@ function SMODS.current_mod.calculate(self, context)
   --Hazard level
   if context.first_hand_drawn then
     if G.GAME.poke_hazard_level and G.GAME.poke_hazard_level > 0 then
-      local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.poke_hazard_level)
+      local hazards = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level)
       G.E_MANAGER:add_event(Event({
           trigger = 'before',
           delay = 0.4,
