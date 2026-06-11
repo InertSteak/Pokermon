@@ -92,7 +92,7 @@ elseif not v.boss.showdown and (v.boss.min <= math.max(1, G.GAME.round_resets.an
 '''
 position = "before"
 payload = '''
-elseif G.GAME.modifiers.elite4 then
+elseif G.GAME.modifiers.poke_elite4 then
     if v.boss.showdown and G.GAME.round_resets.ante >= 2 and
             (G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3 or G.GAME.round_resets.ante % G.GAME.win_ante == 0) then
         eligible_bosses[k] = res and true
