@@ -1,5 +1,5 @@
 pokermon.ui.create_scry_cardarea = function()
-   local config = { card_limit = 0, type = 'scry' }
+   local config = { card_limit = 0, type = 'poke_scry' }
    config.major = G.deck
    local scry_view = CardArea(0, 0, 2 * G.CARD_W, 0.5 * G.CARD_H, config)
    scry_view.T.x = G.TILE_W - G.deck.T.w / 2 - scry_view.T.w / 2 - 0.4
