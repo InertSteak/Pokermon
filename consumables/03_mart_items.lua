@@ -55,7 +55,7 @@ local twisted_spoon = {
    desc_nodes[#desc_nodes+1] = main_end 
   end,
   add_to_deck = function(self, card, from_debuff)
-    if G.GAME.modifiers.spoon_slots then
+    if G.GAME.modifiers.poke_spoon_slots then
       G.E_MANAGER:add_event(Event({
         func = function()
           G.consumeables.config.card_limit = G.consumeables.config.card_limit + 1
@@ -65,7 +65,7 @@ local twisted_spoon = {
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if G.GAME.modifiers.spoon_slots then
+    if G.GAME.modifiers.poke_spoon_slots then
       G.E_MANAGER:add_event(Event({
         func = function()
           G.consumeables.config.card_limit = G.consumeables.config.card_limit - 1

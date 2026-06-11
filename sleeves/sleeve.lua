@@ -188,7 +188,7 @@ local telekineticsleeve = {
     if self.get_current_deck_key() ~= "b_poke_telekineticdeck" then
       CardSleeves.Sleeve.apply(self)
     else
-      G.GAME.modifiers.spoon_slots = true
+      G.GAME.modifiers.poke_spoon_slots = true
     end
   end,
 }
