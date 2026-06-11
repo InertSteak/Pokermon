@@ -51,8 +51,8 @@ position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(SMODS.find_card("j_poke_xatu")) then
     self.ability.extra = #pokermon.get_available_planet_cards()
-elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-    self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
+elseif G.GAME.poke_extra_picks and G.GAME.poke_extra_picks > 0 then
+    self.ability.extra = self.ability.extra + G.GAME.poke_extra_picks
 end
 '''
 match_indent = true

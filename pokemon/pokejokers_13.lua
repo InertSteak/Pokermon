@@ -735,10 +735,10 @@ local jirachi_booster = {
     return false
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) + card.ability.extra.bonus_choices
+    G.GAME.poke_extra_picks = (G.GAME.poke_extra_picks or 0) + card.ability.extra.bonus_choices
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.extra_pocket_picks = (G.GAME.extra_pocket_picks or 0) - card.ability.extra.bonus_choices
+    G.GAME.poke_extra_picks = (G.GAME.poke_extra_picks or 0) - card.ability.extra.bonus_choices
   end,
   attributes = {"passive"}
 }
