@@ -574,8 +574,8 @@ local lapras={
         }
       end
     end
-    if context.skip_blind and not context.blueprint and not G.GAME.lapras_skip then
-      G.GAME.lapras_skip = true
+    if context.skip_blind and not context.blueprint and not G.GAME.poke_lapras_skip then
+      G.GAME.poke_lapras_skip = true
       G.E_MANAGER:add_event(Event({
         trigger = "immediate",
         func = function()
@@ -597,7 +597,7 @@ local lapras={
       }))
     end
     if context.ending_shop and not context.blueprint then
-      G.GAME.lapras_skip = nil
+      G.GAME.poke_lapras_skip = nil
     end
   end,
   update = function(self, card, dt)
