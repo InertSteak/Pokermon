@@ -656,7 +656,8 @@ local porygonz={
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {1 + ((G.GAME.energies_used or 0) * center.ability.extra.Xmult_mod), center.ability.extra.Xmult_mod}}
+    local xmult = 1 + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * center.ability.extra.Xmult_mod
+    return {vars = {xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -670,7 +671,7 @@ local porygonz={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + (G.GAME.consumeable_usage_total.poke_energy * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 

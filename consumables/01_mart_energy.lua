@@ -91,7 +91,6 @@ local bird_energy = {
     if choice then
       pokermon.energy.modify(choice, self.etype, pokermon.energy.max + (G.GAME.poke_energy_plus or 0))
     end
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,
   in_pool = function(self)
     return false
@@ -118,7 +117,6 @@ local double_rainbow_energy = {
     return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
     local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
     for _ = 1, 2 do
       pokermon.energy.increase(choice, self.etype)

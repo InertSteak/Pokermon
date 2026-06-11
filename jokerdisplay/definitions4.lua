@@ -842,7 +842,7 @@ jd_def["j_poke_porygonz"] = {
         },
     },
     calc_function = function(card)
-        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * card.ability.extra.Xmult_mod
         card.joker_display_values.Xmult = Xmult
     end
 }
