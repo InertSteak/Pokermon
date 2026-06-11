@@ -106,7 +106,7 @@ pokermon.fake_evolve = function(card, evolve_message, set_sprites)
 end
 
 pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
-  if G.GAME.modifiers.apply_randomizer and not transformation then
+  if G.GAME.modifiers.poke_apply_randomizer and not transformation then
     to_key = pokermon.get_random_poke_key('randomizer')
   end
   if immediate then
