@@ -124,23 +124,6 @@ payload = "if self.debuff and not self.delay_debuff_sprites then"
 match_indent = true
 
 
-## Houndour
-# Post Discard context
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = '''
-check_for_unlock({type = 'discard_custom', cards = cards})
-'''
-position = "after"
-payload = '''
-if not hook then
-  SMODS.calculate_context({post_discard = true})
-end
-'''
-match_indent = true
-
-
 ## Smeargle
 # Smeargle fix with copy effects
 [[patches]]
