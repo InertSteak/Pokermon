@@ -238,7 +238,7 @@ for i = 1, #jirachis do
   add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars * (jirachis[i].ability.extra.multiply - 1), card = jirachis[i]})
   dollars = dollars * jirachis[i].ability.extra.multiply
 end
-if G.GAME.modifiers.reset_no_interest then
+if G.GAME.modifiers.poke_reset_no_interest then
   G.GAME.modifiers.no_interest = nil
 end
 '''

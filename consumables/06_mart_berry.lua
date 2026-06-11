@@ -75,7 +75,7 @@ local berry_juice_energy = {
       pokermon.energy.increase(choice, pokermon.type_sticker_applied(choice))
     end
     if not G.GAME.modifiers.no_interest then
-      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.poke_reset_no_interest = true
       G.GAME.modifiers.no_interest = true
     end
   end

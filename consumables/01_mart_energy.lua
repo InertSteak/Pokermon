@@ -122,7 +122,7 @@ local double_rainbow_energy = {
       pokermon.energy.increase(choice, self.etype)
     end
     if not G.GAME.modifiers.no_interest then
-      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.poke_reset_no_interest = true
       G.GAME.modifiers.no_interest = true
     end
   end
