@@ -138,7 +138,7 @@ local drampa = {
   add_to_deck = function(self, card, from_debuff)
     G.E_MANAGER:add_event(Event({
       func = function()
-        poke_upgrade_all_shop_packs('jumbo')
+        pokermon.upgrade_all_shop_packs('jumbo')
         return true
       end
     }))
@@ -166,7 +166,7 @@ local mega_drampa = {
   gen = 7,
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
-    poke_upgrade_all_shop_packs('mega')
+    pokermon.upgrade_all_shop_packs('mega')
     -- to stop adding boosters when mega evolving
     G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + card.ability.extra.boosters
     G.GAME.modifiers.booster_choice_mod = (G.GAME.modifiers.booster_choice_mod or 0) + card.ability.extra.booster_choice_mod
