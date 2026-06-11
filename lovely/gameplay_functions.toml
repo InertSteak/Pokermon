@@ -112,10 +112,10 @@ target = "game.lua"
 pattern = "function Game:update_selecting_hand(dt)"
 position = "after"
 payload = '''
-    if not self.scry_view and type(pokermon.ui.create_scry_cardarea) == "function" then
-      self.scry_view = pokermon.ui.create_scry_cardarea()
-    elseif self.scry_view then
-      pokermon.ui.update_scry_cardarea(self.scry_view)
+    if not self.poke_scry_view and type(pokermon.ui.create_scry_cardarea) == "function" then
+      self.poke_scry_view = pokermon.ui.create_scry_cardarea()
+    elseif self.poke_scry_view then
+      pokermon.ui.update_scry_cardarea(self.poke_scry_view)
     end
 '''
 match_indent = true
