@@ -197,6 +197,16 @@ pokermon.debug = function(message, verbose, depth)
   end
 end
 
+pokermon.filter = function(list, func)
+  local new_list = {}
+  for _, v in pairs(list) do
+    if func(v) then
+      new_list[#new_list + 1] = v
+    end
+  end
+  return new_list
+end
+
 pokermon.find_card = function(key_or_function, use_highlighted)
   local is_target = function(card)
     return (type(key_or_function) == "function") and key_or_function(card)
