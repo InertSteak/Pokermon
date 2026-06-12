@@ -499,7 +499,7 @@ local celebi = {
   config = {extra = {reward = 1, skip_count = 0, Xmult_mod = .05}},
   loc_vars = function(self, info_queue, card)
     pokermon.type_tooltip(self, info_queue, card)
-    return {vars = {(G.GAME.celebi_skips or 1), card.ability.extra.reward, (G.GAME.celebi_skips or 1) - card.ability.extra.skip_count, 
+    return {vars = {(G.GAME.poke_celebi_skips or 1), card.ability.extra.reward, (G.GAME.poke_celebi_skips or 1) - card.ability.extra.skip_count, 
                     card.ability.extra.Xmult_mod, 1 + (G.GAME.round * card.ability.extra.Xmult_mod)}}
   end,
   rarity = 4,
@@ -513,11 +513,11 @@ local celebi = {
     if context.skip_blind and not context.blueprint then
       card:juice_up(0.1)
       card.ability.extra.skip_count = card.ability.extra.skip_count + 1
-      if card.ability.extra.skip_count >= (G.GAME.celebi_skips or 1) then
+      if card.ability.extra.skip_count >= (G.GAME.poke_celebi_skips or 1) then
         ease_ante(-card.ability.extra.reward)
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
         G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.reward
-        G.GAME.celebi_skips = (G.GAME.celebi_skips or 1) + 1
+        G.GAME.poke_celebi_skips = (G.GAME.poke_celebi_skips or 1) + 1
         card.ability.extra.skip_count = 0
       end
     end

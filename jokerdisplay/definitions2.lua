@@ -1755,7 +1755,7 @@ jd_def["j_poke_celebi"] = {
     { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
-    card.joker_display_values.skip_target = (G.GAME.celebi_skips or 1)
+    card.joker_display_values.skip_target = (G.GAME.poke_celebi_skips or 1)
     card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
   end
 }
