@@ -1592,7 +1592,7 @@ local mewtwo={
         
         if not leftmost.ability.eternal then
           G.E_MANAGER:add_event(Event({
-            remove(self, G.jokers.cards[1], context)
+            SMODS.destroy_cards(leftmost)
           }))
         end
       end
