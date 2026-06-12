@@ -106,10 +106,10 @@ end
       CardSleeves.Sleeve.apply(self)
       G.GAME.modifiers.poke_force_seal = "poke_silver"
       if self.get_current_deck_key() == "b_poke_revenantdeck" then
-        G.GAME.modifiers.no_poke_packs = true
+        G.GAME.modifiers.poke_no_pocket_packs = true
         for k, v in pairs(G.P_CENTER_POOLS["Booster"]) do
           if v.kind == "poke_energy" then
-            v.get_weight = function() return G.GAME.modifiers.no_poke_packs and 0 or 1 end
+            v.get_weight = function() return G.GAME.modifiers.poke_no_pocket_packs and 0 or 1 end
           end
         end
       end
