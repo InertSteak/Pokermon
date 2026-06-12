@@ -222,7 +222,7 @@ local spiclops = {
   end
 }
 
-function capture_disc_load(self,card)
+local function capture_disc_load(self,card)
   local card_drag_orig = card.drag
 
   local shake_rqmt = 25
