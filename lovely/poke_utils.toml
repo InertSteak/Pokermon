@@ -124,23 +124,7 @@ payload = "if self.debuff and not self.delay_debuff_sprites then"
 match_indent = true
 
 
-## Smeargle
-# Smeargle fix with copy effects
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''
-new_card:set_base(other.config.card)
-'''
-position = "after"
-payload = '''
-if other.config.center.name == "smeargle" then
-  other.ability.extra.copy_joker = nil
-  other.ability.extra.copy_pos = 0
-end
-'''
-match_indent = true
-
+## Ruins of Alph
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
