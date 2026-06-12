@@ -643,7 +643,7 @@ local function create_UIBox_pokedex_jokers(keys, previous_menu)
 end
 
 local function open_pokedex(target)
-  if target and target:is(Card) and target.facing ~= 'back'
+  if target and target:is(Card) and not target:is(PokeDisplayCard) and target.facing ~= 'back'
       and not target.poke_change_sprite
       and (target.config.center.stage or target.config.center.poke_multi_item) then
     local menu = G.SETTINGS.paused and 'pokedex_back' or nil
