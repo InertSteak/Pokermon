@@ -1021,7 +1021,41 @@ jd_def["j_poke_medicham"] = {
 --	Electrike
 --	Manectric
 --	Plusle
+jd_def["j_poke_plusle"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    local joker_count = 0
+    if G.jokers then
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
+      end
+    end
+    card.joker_display_values.mult = card.ability.extra.mult_mod * (joker_count + #poke_get_consumeables())
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = (card.config.center.name and card.config.center.name == "minun" and mod_joker.ability.extra.Xmult ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil)}
+  end
+}
+
 --	Minun
+jd_def["j_poke_minun"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  calc_function = function(card)
+    local plusle_count = #SMODS.find_card("j_poke_plusle")
+    card.joker_display_values.money = card.ability.extra.money * plusle_count
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
+}
+
 --	Volbeat
 jd_def["j_poke_volbeat"] = {
   text = {
