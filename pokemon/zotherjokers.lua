@@ -383,7 +383,7 @@ local rival = {
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
-      G.GAME.rival_defeated = true
+      G.GAME.poke_rival_defeated = true
 
       pokermon.ease_poke_dollars(card, 'rival', card.ability.extra.money)
 
@@ -395,7 +395,7 @@ local rival = {
     end
   end,
   in_pool = function(self)
-    return not G.GAME.rival_defeated
+    return not G.GAME.poke_rival_defeated
   end,
   attributes = {"skip", "economy", "boss_blind", "scaling"},
 }
@@ -429,7 +429,7 @@ local bitter_rival = {
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
-      G.GAME.bitter_rival_defeated = true
+      G.GAME.poke_bitter_rival_defeated = true
 
       pokermon.ease_poke_dollars(card, 'bitter_rival', card.ability.extra.money)
 
@@ -441,7 +441,7 @@ local bitter_rival = {
     end
   end,
   in_pool = function(self)
-    return G.GAME.rival_defeated and not G.GAME.bitter_rival_defeated
+    return G.GAME.poke_rival_defeated and not G.GAME.poke_bitter_rival_defeated
   end,
   attributes = {"skip", "economy", "boss_blind", "scaling"},
 }
@@ -486,7 +486,7 @@ local champion = {
     end
   end,
   in_pool = function(self)
-    return G.GAME.bitter_rival_defeated
+    return G.GAME.poke_bitter_rival_defeated
   end,
   attributes = {"xmult", "skip", "boss_blind", "tag", "generation"},
 }
