@@ -228,13 +228,13 @@ end
 
 local previous_neg_get_weight = G.P_CENTERS.e_negative.get_weight
 G.P_CENTERS.e_negative.get_weight = function(self)
-  return previous_neg_get_weight(self) + ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
+  return previous_neg_get_weight(self) + ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
 end
 
 -- polychrome steals negative's chances with the Hone / Glow Up voucher, so we're gonna steal it back (won't decrease past base weight)
 local previous_poly_get_weight = G.P_CENTERS.e_polychrome.get_weight
 G.P_CENTERS.e_polychrome.get_weight = function(self)
-  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
+  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
 end
 
 --To support Debris sleeve combo

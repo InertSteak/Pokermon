@@ -934,11 +934,11 @@ local jirachi_negging = {
   blueprint_compat = false,
   add_to_deck = function(self, card, from_debuff)
     G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
-    G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) * card.ability.extra.chance
+    G.GAME.poke_negative_edition_rate = (G.GAME.poke_negative_edition_rate or 1) * card.ability.extra.chance
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.slots
-    G.GAME.negative_edition_rate = (G.GAME.negative_edition_rate or 1) / card.ability.extra.chance
+    G.GAME.poke_negative_edition_rate = (G.GAME.poke_negative_edition_rate or 1) / card.ability.extra.chance
   end,
   custom_pool_func = true,
   in_pool = function(self)
@@ -1030,7 +1030,7 @@ local jirachi_fixer = {
               local cons = {
                 {set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE, key = 'c_death'},
                 {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral, key = 'c_cryptid'},
-                {set = "Item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item, key = 'c_poke_metalcoat'},
+                {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item, key = 'c_poke_metalcoat'},
                }
               local con = pseudorandom_element(cons, pseudoseed('jirachi_fixer'))
               local added = SMODS.add_card{set = con.set, key = con.key, key_append = 'jirachi_fixer'}
