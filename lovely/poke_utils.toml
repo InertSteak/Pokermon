@@ -207,7 +207,7 @@ position = "after"
 payload = '''
 if self.ability.set == 'Joker' or self.ability.consumeable then self.cost = math.max(0, self.cost - 1 * #SMODS.find_card('j_poke_minun')) end
 if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - 1 * #SMODS.find_card('j_poke_rotom')) end
-if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.rotom_discount or 0) * #SMODS.find_card('j_poke_rotomdex')) end
+if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.poke_rotom_discount or 0) * #SMODS.find_card('j_poke_rotomdex')) end
 if self.ability.set == 'Voucher' and #SMODS.find_card('j_poke_chimecho') > 0 then self.cost = 0 end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #SMODS.find_card('j_poke_gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #SMODS.find_card('j_poke_gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end

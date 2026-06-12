@@ -21,7 +21,7 @@ local rotomdex={
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-		return {vars = {G.GAME.rotom_discount or 0}}
+		return {vars = {G.GAME.poke_rotom_discount or 0}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -42,8 +42,8 @@ local rotomdex={
           end
         end
       end
-      if type_amount ~= (G.GAME.rotom_discount or 0) then
-        G.GAME.rotom_discount = type_amount
+      if type_amount ~= (G.GAME.poke_rotom_discount or 0) then
+        G.GAME.poke_rotom_discount = type_amount
         for k, v in pairs(G.I.CARD) do
           if v.set_cost then v:set_cost() end
         end
