@@ -275,7 +275,7 @@ function SMODS.current_mod.calculate(self, context)
     pokermon.change_poli_suit()
   end
   -- Vending deck
-  if G.GAME.modifiers.vending == true then
+  if G.GAME.modifiers.poke_vending == true then
     if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
         G.E_MANAGER:add_event(Event({
             func = function()
