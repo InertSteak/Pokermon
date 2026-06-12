@@ -48,10 +48,6 @@ jd_def["j_poke_charjabug"] = {
 --	Vikavolt
 jd_def["j_poke_vikavolt"] = {
     text = {
-        { text = "+" ,
-        colour = G.C.MULT},
-        { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult", 
-        colour = G.C.MULT},
         {text = " "},
         {
             border_nodes = {
@@ -64,9 +60,6 @@ jd_def["j_poke_vikavolt"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local count = #pokermon.find_pokemon_type("Lightning")
-        if pokermon.is_type(card, "Lightning") then
-            count = count - 1
-          end
         card.joker_display_values.Xmult = 1 + (card.ability.extra.Xmult * count)
     end
 }
