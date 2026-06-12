@@ -921,7 +921,7 @@ local shell={
         break
       end
     end
-    remove(self, card, {})
+    SMODS.destroy_cards(card)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
