@@ -240,7 +240,7 @@ local treasure_eatery={
   attributes = {"types"},
 }
 
-function is_egg_helper(card)
+local function is_egg_helper(card)
   local name = ''
   if not card.name and card.ability.name then
     name = card.ability.name
