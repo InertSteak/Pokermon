@@ -482,7 +482,7 @@ end
 
 
 -- Toggle function for Stake + Sticker Skins
-G.FUNCS.toggle_pokermon_skins = function()
+G.FUNCS.poke_toggle_pokermon_skins = function()
   local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
   for k, _ in pairs(G.P_STAKES) do
     if pokermon.has(vanilla_stakes, k) then

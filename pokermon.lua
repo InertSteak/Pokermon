@@ -29,7 +29,7 @@ SMODS.UndiscoveredSprite({
 }):register()
 
 --Get mod path and load other files
-mod_dir = ''..SMODS.current_mod.path
+local mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
 
 --Load Joker Display if the mod is enabled
@@ -181,7 +181,7 @@ end, true)
 -- Sets custom skins according to config on load
 G.E_MANAGER:add_event(Event({
   func = function()
-    G.FUNCS.toggle_pokermon_skins()
+    G.FUNCS.poke_toggle_pokermon_skins()
 	  return true
   end
 }))
