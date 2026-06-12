@@ -219,7 +219,7 @@ poke_backend_evolve = function(card, to_key, energize_amount)
     if values_to_keep["form"] and type(new_card.set_ability) == 'function' then
       new_card:set_ability(card)
     end
-    if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
+    if card.ability.extra.energy_count or card.ability.extra.c_energy_count and not card.ability.poke_pokerus then
       energize(card, nil, true, true)
     end
   end

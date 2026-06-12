@@ -404,6 +404,11 @@ for i = 1, 5 do
   })
 end
 
+SMODS.Sound({
+    key = "pokerus_sound",
+    path = "pokerus_sound.wav"
+})
+
 --Custom colors for Types (humplydinkle wuz here)
 local pokecolors = loc_colour
 function loc_colour(_c, _default)

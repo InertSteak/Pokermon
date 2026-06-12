@@ -6431,6 +6431,16 @@ return {
                   "{X:bird,C:white}Bird{}",
                 }
             },
+            poke_pokerus = {
+                name = "Pokérus",
+                text = {
+                    "This Joker is always",
+                    "fully {C:pink}energized{}",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "{C:green}25%{} to spread",
+                    "at end of round"
+                }
+            },
             --infoqueue used for things like kabuto and omanyte
             ancient = {
                 name = "Ancient",
