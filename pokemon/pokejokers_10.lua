@@ -728,7 +728,7 @@ local shedinja={
       if fire_count > 0 or earth_count > 0 or dark_count > 0 or psychic_count > 0 then
         G.E_MANAGER:add_event(Event({
           func = function()
-            remove(self, card, context, true)
+            SMODS.destroy_cards(card)
             return true
           end
         }))

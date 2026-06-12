@@ -1327,7 +1327,7 @@ local dunsparce={
     if context.ending_shop and not context.blueprint and card.ability.extra.rerolled then
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context, true)
+          SMODS.destroy_cards(card)
           return true
         end
       }))
