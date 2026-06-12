@@ -1027,13 +1027,11 @@ jd_def["j_poke_plusle"] = {
     { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
   },
   calc_function = function(card)
-    local joker_count = 0
-    if G.jokers then
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
-      end
+    local count = 0
+    for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+      count = count + #pokermon.filter(cardarea.cards, function(v) return v.ability.set == 'Joker' or v.ability.consumeable end)
     end
-    card.joker_display_values.mult = card.ability.extra.mult_mod * (joker_count + #poke_get_consumeables())
+    card.joker_display_values.mult = card.ability.extra.mult_mod * count
   end,
   mod_function = function(card, mod_joker)
     return { x_mult = (card.config.center.name and card.config.center.name == "minun" and mod_joker.ability.extra.Xmult ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil)}

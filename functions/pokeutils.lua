@@ -738,15 +738,10 @@ end
 pokermon.get_consumeables = function(set)
   local consumeables = {}
   if G.STAGE ~= G.STAGES.RUN then return consumeables end
-  local count = 0
-  local areas = {G.jokers.cards, G.consumeables.cards}
-  for i = 1, #areas do
-    local area = areas[i]
-    for j = 1, #area do
-      if area[j].ability.consumeable and not (set and area[j].ability.set ~= set) then
-        consumeables[#consumeables + 1] = area[j]
-      end
-    end
+  for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+    pokermon.table_append(consumeables, pokermon.filter(cardarea.cards,
+      function(v) return v.ability.consumeable and not (set and v.ability.set ~= set)
+    end))
   end
   return consumeables
 end
