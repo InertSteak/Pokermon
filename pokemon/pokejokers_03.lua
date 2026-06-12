@@ -15,7 +15,7 @@ local poliwhirl={
                     colours = {G.C.SUITS[G.GAME.poke_poli_suit or "Spades"]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   item_req = {"waterstone", "kingsrock"},
   evo_list = {waterstone = "j_poke_poliwrath", kingsrock = "j_poke_politoed"},

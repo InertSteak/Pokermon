@@ -16,7 +16,7 @@
 -- Grubbin 736
 local grubbin={
   name = "grubbin",
-  config = {extra = {mult = 3, rounds = 3}},
+  config = {extra = {mult = 3, rounds = 4}},
   pos = {x = 0, y = 1}, 
   rarity = 1, 
   cost = 3, 
@@ -50,9 +50,9 @@ local grubbin={
 -- Charjabug 737
 local charjabug={
   name = "charjabug",
-  config = {extra = {mult = 9}},
+  config = {extra = {mult = 7}},
   pos = {x = 1, y = 1}, 
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 5, 
   item_req = "thunderstone",
   stage = "One", 
@@ -87,7 +87,7 @@ local charjabug={
 -- Vikavolt 738
 local vikavolt={
   name = "vikavolt",
-  config = {extra = {Xmult = .75, mult = 12}},
+  config = {extra = {Xmult = .5}},
   pos = {x = 2, y = 1}, 
   rarity = "poke_safari", 
   cost = 6, 
@@ -99,23 +99,16 @@ local vikavolt={
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
     local count = #find_pokemon_type("Lightning")
-      if is_type(center, "Lightning") then
-        count = count - 1
-      end
-		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count), center.ability.extra.mult}}
+		return {vars = {center.ability.extra.Xmult, math.max(1, 1 + center.ability.extra.Xmult * count)}}
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         local count = #find_pokemon_type("Lightning")
-        if is_type(card, "Lightning") then
-          count = count - 1
-        end
         return {
           message = localize("poke_thunder_ex"),
           colour = G.C.XMULT,
           Xmult_mod = math.max(1, 1 + card.ability.extra.Xmult * count),
-          mult_mod = card.ability.extra.mult
         }
       end
     end

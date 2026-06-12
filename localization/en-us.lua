@@ -5272,8 +5272,7 @@ return {
             j_poke_vikavolt = {
                 name = 'Vikavolt',
                 text = {
-                    "{C:mult}+#3#{} Mult",
-                    "{X:mult,C:white} X#1# {} Mult for each other",
+                    "{X:mult,C:white} X#1# {} Mult for each",
                     "{X:lightning, C:black}Lightning{} Joker you have",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 }
