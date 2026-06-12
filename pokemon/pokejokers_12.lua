@@ -321,7 +321,7 @@ local baltoy={
         r_chips[#r_chips + 1] = tostring(i)
     end
     local loc_chips = ' '..(localize('k_poke_chips'))..' '..(localize('poke_baltoy_text'))
-    main_start = {
+    local main_start = {
         {n = G.UIT.R,
           config = {
             align = "cm",
@@ -417,7 +417,7 @@ local claydol={
         r_chips[#r_chips + 1] = tostring(i)
     end
     local loc_chips = ' '..(localize('k_poke_chips'))..' '..(localize('poke_baltoy_text'))
-    main_start = {
+    local main_start = {
         {n = G.UIT.R,
           config = {
             align = "cm",
