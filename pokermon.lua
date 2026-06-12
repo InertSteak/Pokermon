@@ -240,11 +240,11 @@ end
 --To support Debris sleeve combo
 local card_set_ability_old = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
       self.ability.card_limit = self.ability.card_limit - 1
   end
   local ret = card_set_ability_old(self, center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
       if not self.ability then self.ability = {} end
       self.ability.card_limit = (self.ability.card_limit or 0) + 1
   end

@@ -262,12 +262,12 @@ local futuresleeve = {
       if context.scoring_hand then
         if context.before then
           G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry_plus
-          G.GAME.scry_added = (G.GAME.scry_added or 0) + self.config.scry_plus
+          G.GAME.poke_scry_added = (G.GAME.poke_scry_added or 0) + self.config.scry_plus
         end
       end
       if context.end_of_round and not context.individual and not context.repetition then
-        G.GAME.poke_scry_amount = math.max(self.config.scry, (G.GAME.poke_scry_amount or 0) - (G.GAME.scry_added or 0))
-        G.GAME.scry_added = 0
+        G.GAME.poke_scry_amount = math.max(self.config.scry, (G.GAME.poke_scry_amount or 0) - (G.GAME.poke_scry_added or 0))
+        G.GAME.poke_scry_added = 0
         return {
           message = localize('k_reset'),
           colour = G.C.PURPLE
@@ -401,7 +401,7 @@ local diceysleeve = {
 	atlas = "AtlasDecksBasic",
   apply = function(self)
     if self.get_current_deck_key() == "b_poke_diceydeck" then
-      G.GAME.modifiers.negative_hazards = true
+      G.GAME.modifiers.poke_negative_hazards = true
     else
       G.E_MANAGER:add_event(Event({
         func = function()
