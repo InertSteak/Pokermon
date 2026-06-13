@@ -48,7 +48,6 @@ jd_def["j_poke_charjabug"] = {
 --	Vikavolt
 jd_def["j_poke_vikavolt"] = {
     text = {
-        {text = " "},
         {
             border_nodes = {
                 { text = "X" },
