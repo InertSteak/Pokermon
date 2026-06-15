@@ -191,9 +191,9 @@ jd_def["j_poke_hoothoot"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
-            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
+            chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
     else
@@ -211,9 +211,9 @@ jd_def["j_poke_noctowl"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
-            chips = chips + poke_total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
+            chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
     else
@@ -329,8 +329,8 @@ jd_def["j_poke_lanturn"] = {
   calc_function = function(card)
     card.joker_display_values.chips = 0
     card.joker_display_values.money = 0
-    local water_count = #find_pokemon_type("Water")
-    local lightning_count = #find_pokemon_type("Lightning")
+    local water_count = #pokermon.find_pokemon_type("Water")
+    local lightning_count = #pokermon.find_pokemon_type("Lightning")
     local text, poker_hands, _ = JokerDisplay.evaluate_hand()
     if poker_hands['Pair'] and next(poker_hands['Pair']) then
       card.joker_display_values.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * water_count)
@@ -636,7 +636,7 @@ jd_def["j_poke_politoed"] = {
       end
       local first_suit = JokerDisplay.calculate_leftmost_card(suit_cards)
       return first_suit and playing_card == first_suit and 
-           (#find_pokemon_type("Water") + joker_card.ability.extra.retriggers) * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+           (#pokermon.find_pokemon_type("Water") + joker_card.ability.extra.retriggers) * JokerDisplay.calculate_joker_triggers(joker_card) or 0
     end,
     style_function = function(card, text, reminder_text, extra)
       if text and text.children[2] then
@@ -795,7 +795,7 @@ jd_def["j_poke_murkrow"] = {
         },
     },
     calc_function = function(card)
-        local dark = #find_pokemon_type("Dark")
+        local dark = #pokermon.find_pokemon_type("Dark")
         card.joker_display_values.Xmult = 1 + (dark * card.ability.extra.Xmult)
     end
 }
@@ -1541,8 +1541,8 @@ jd_def["j_poke_stantler"] = {
     local highest = nil
     local highest_card = nil
 
-    if G.scry_view then
-      for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for k, v in pairs(G.poke_scry_view.cards) do
         if not highest then highest = v.base.id; highest_card = v end
         if v.base.id > highest then
           highest = v.base.id
@@ -1633,7 +1633,7 @@ jd_def["j_poke_miltank"] = {
         { ref_table = "card.joker_display_values", ref_value = "localized_text" },
     },
     calc_function = function(card)
-        local type = #find_pokemon_type("Colorless")
+        local type = #pokermon.find_pokemon_type("Colorless")
         card.joker_display_values.money = type * card.ability.extra.money
                 card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
     end
@@ -1756,7 +1756,7 @@ jd_def["j_poke_celebi"] = {
     { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
-    card.joker_display_values.skip_target = (G.GAME.celebi_skips or 1)
+    card.joker_display_values.skip_target = (G.GAME.poke_celebi_skips or 1)
     card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
   end
 }

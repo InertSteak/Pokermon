@@ -1,9 +1,9 @@
 -- We can initialize the 12 basic energies (not bird) with this template and a good for loop
 local energy_template = {
-  set = "Energy",
+  set = "poke_energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
   end,
   pos = { x = 0, y = 0 },
   atlas = "AtlasConsumablesBasic",
@@ -11,10 +11,10 @@ local energy_template = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    return energy_use(self, card, area, copier)
+    return pokermon.energy.use(self, card, area, copier)
   end
 }
 
@@ -31,7 +31,7 @@ end
 local bird_energy = {
   name = "bird_energy",
   key = "bird_energy",
-  set = "Energy",
+  set = "poke_energy",
   animated = true,
   artist = "Catzzadilla",
   pos = { x = 0, y = 0 },
@@ -55,7 +55,7 @@ local bird_energy = {
         local energy_strings2 = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
                         { string = localize('k_mult'), colour = G.C.MULT}, { string = 'ERROR', colour = G.C.CHIPS}
                        }
-        main_start = {
+        local main_start = {
           {n = G.UIT.R,
           config = {
             align = "cm",
@@ -63,9 +63,9 @@ local bird_energy = {
             colour = G.C.CLEAR,
           },
           nodes = {
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
-              { n = G.UIT.T, config = { text = ' +'..(energy_max + (G.GAME.energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(gives_strings, {poke_rep_string = localize('k_poke_gives'), poke_rep_num = 5})) } },
+              { n = G.UIT.T, config = { text = ' +'..(pokermon.energy.max + (G.GAME.poke_energy_plus or 0))..' ', colour = HEX("FF7ABF"), scale = 0.32 } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(energy_strings, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
             }
           },
           {n = G.UIT.R,
@@ -76,7 +76,7 @@ local bird_energy = {
           },
           nodes = {
               { n = G.UIT.T, config = { text = '('..localize('k_poke_ignores')..' ', colour = G.C.JOKER_GREY, scale = 0.32 } },
-              { n = G.UIT.O, config = { object = DynaText(poke_random_text(energy_strings2, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
+              { n = G.UIT.O, config = { object = DynaText(pokermon.ui.random_text(energy_strings2, {poke_rep_string = localize('k_energy'), poke_rep_num = 5})) } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_limit')..')', colour = G.C.JOKER_GREY, scale = 0.32 } },
             }
           },
@@ -84,14 +84,13 @@ local bird_energy = {
         return { main_start = main_start }
     end,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    local choice = energy_can_use(self, card)
+    local choice = pokermon.energy.can_use(self, card)
     if choice then
-      increment_energy(choice, self.etype, energy_max + (G.GAME.energy_plus or 0))
+      pokermon.energy.modify(choice, self.etype, pokermon.energy.max + (G.GAME.poke_energy_plus or 0))
     end
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,
   in_pool = function(self)
     return false
@@ -106,7 +105,7 @@ local double_rainbow_energy = {
   config = {},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or energy_max + (G.GAME.energy_plus or 0)}}
+    return {vars = {(pokermon_config.unlimited_energy and localize("poke_unlimited_energy")) or pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
   end,
   pos = { x = 0, y = 6 },
   atlas = "AtlasConsumablesBasic",
@@ -115,16 +114,15 @@ local double_rainbow_energy = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    return energy_can_use(self, card)
+    return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
-    local choice = poke_find_leftmost_or_highlighted(function(joker) return can_apply_energy(joker, self.etype) end)
+    local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
     for _ = 1, 2 do
-      energy_increase(choice, self.etype)
+      pokermon.energy.increase(choice, self.etype)
     end
     if not G.GAME.modifiers.no_interest then
-      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.poke_reset_no_interest = true
       G.GAME.modifiers.no_interest = true
     end
   end
@@ -133,7 +131,7 @@ local double_rainbow_energy = {
 local emergy = {
   name = "emergy",
   key = "emergy",
-  set = "Energy",
+  set = "poke_energy",
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
   end,
@@ -141,7 +139,7 @@ local emergy = {
   atlas = "AtlasConsumablesBasic",
   cost = 4,
   hidden = true,
-  soul_set = "Energy",
+  soul_set = "poke_energy",
   soul_rate = .01,
   unlocked = true,
   discovered = true,
@@ -158,7 +156,7 @@ local emergy = {
       end
     end
     for i= 1, jollycount do
-      local _card = create_card("Energy", G.consumeables, nil, nil, nil, nil, nil, nil)
+      local _card = create_card("poke_energy", G.consumeables, nil, nil, nil, nil, nil, nil)
       local edition = {negative = true}
       _card:set_edition(edition, true)
       _card:add_to_deck()

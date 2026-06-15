@@ -18,7 +18,7 @@ if G.PROFILES[G.SETTINGS.profile].joker_usage[v.config.center_key] then
 position = "after"
 payload = '''
 if pokermon_config.previous_evo_stickers then
-  set_joker_family_win(v)
+  pokermon.set_joker_family_win(v)
 end
 '''
 match_indent = true
@@ -78,7 +78,7 @@ pattern = "if card.ability.consumeable and not skip_materialize then card:start_
 position = "after"
 payload = '''
 if front and G.GAME.modifiers.poke_force_seal then card:set_seal(G.GAME.modifiers.poke_force_seal) end
-if _type == 'Joker' and G.GAME.modifiers.apply_type then apply_type_sticker(card); energy_increase(card, get_type(card)) end
+if _type == 'Joker' and G.GAME.modifiers.poke_apply_type then pokermon.apply_type_sticker(card); pokermon.energy.increase(card, pokermon.get_type(card)) end
 '''
 match_indent = true
 
@@ -92,7 +92,7 @@ elseif not v.boss.showdown and (v.boss.min <= math.max(1, G.GAME.round_resets.an
 '''
 position = "before"
 payload = '''
-elseif G.GAME.modifiers.elite4 then
+elseif G.GAME.modifiers.poke_elite4 then
     if v.boss.showdown and G.GAME.round_resets.ante >= 2 and
             (G.GAME.round_resets.ante % G.GAME.win_ante >= G.GAME.win_ante - 3 or G.GAME.round_resets.ante % G.GAME.win_ante == 0) then
         eligible_bosses[k] = res and true
@@ -112,10 +112,10 @@ target = "game.lua"
 pattern = "function Game:update_selecting_hand(dt)"
 position = "after"
 payload = '''
-    if not self.scry_view and type(create_scry_cardarea) == "function" then
-      self.scry_view = create_scry_cardarea()
-    elseif self.scry_view then
-      update_scry_cardarea(self.scry_view)
+    if not self.poke_scry_view and type(pokermon.ui.create_scry_cardarea) == "function" then
+      self.poke_scry_view = pokermon.ui.create_scry_cardarea()
+    elseif self.poke_scry_view then
+      pokermon.ui.update_scry_cardarea(self.poke_scry_view)
     end
 '''
 match_indent = true
@@ -126,7 +126,7 @@ match_indent = true
 target = "cardarea.lua"
 pattern = "if self.config.type == 'hand' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
 position = "at"
-payload = "if self.config.type == 'hand' or self.config.type == 'scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
+payload = "if self.config.type == 'hand' or self.config.type == 'poke_scry' or self.config.type == 'play' or self.config.type == 'title' or self.config.type == 'voucher' then"
 match_indent = true
 overwrite = true
 
@@ -136,7 +136,7 @@ overwrite = true
 target = "cardarea.lua"
 pattern = "if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
 position = "at"
-payload = "if self.config.type == 'scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
+payload = "if self.config.type == 'poke_scry' or self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"
 match_indent = true
 overwrite = true
 
@@ -147,7 +147,7 @@ target = "game.lua"
 pattern = "function Game:update_round_eval(dt)"
 position = "after"
 payload = '''
-    if G.scry_view then hide_scry_cardarea() end
+    if G.poke_scry_view then pokermon.ui.hide_scry_cardarea() end
 '''
 match_indent = true
 
@@ -158,8 +158,8 @@ target = '=[SMODS _ "src/utils.lua"]'
 pattern = "-- TARGET: add your own CardAreas for playing card evaluation"
 position = "after"
 payload = '''
-if G.scry_view and G.scry_view.cards then
-    t[#t+1] = G.scry_view
+if G.poke_scry_view and G.poke_scry_view.cards then
+    t[#t+1] = G.poke_scry_view
 end
 '''
 match_indent = true
@@ -171,7 +171,7 @@ target = "functions/common_events.lua"
 pattern = "local config = {}"
 position = "before"
 payload = '''
-if card.area == G.scry_view then
+if card.area == G.poke_scry_view then
     y_off = -0.05*G.CARD_H
     card_aligned = 'tm'
 end
@@ -190,9 +190,9 @@ pattern = "if v.yes_pool_flag and not G.GAME.pool_flags[v.yes_pool_flag] then ad
 position = "after"
 payload = '''
 if v.set == 'Joker' and not v.stage and pokermon_config and pokermon_config.pokemon_only then add = nil end
-if v.set == 'Joker' and v.stage and not get_gen_allowed(v) then add = nil end
+if v.set == 'Joker' and v.stage and not pokermon.get_gen_allowed(v) then add = nil end
 if v.set == 'Joker' and v.stage and pokermon_config and not pokermon_config.hazards_on and v.hazard_poke then add = nil end
-if add and v.set == 'Joker' and v.stage and poke_family_present(v) then add = nil end
+if add and v.set == 'Joker' and v.stage and pokermon.family_present(v) then add = nil end
 '''
 match_indent = true
 
@@ -210,17 +210,17 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-    if G.GAME.modifiers.money_per_enhancement then
+    if G.GAME.modifiers.poke_money_per_enhancement then
       local tally = 0
       for _, playing_card in ipairs(G.playing_cards) do
-          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.enhance_bonus) then tally = tally + 1 end
+          if SMODS.has_enhancement(playing_card, G.GAME.modifiers.poke_enhance_bonus) then tally = tally + 1 end
       end
       if tally > 0 then
-        add_round_eval_row({dollars = tally * G.GAME.modifiers.money_per_enhancement, disp = tally * G.GAME.modifiers.money_per_enhancement, bonus = true,  name='custom',
-                            text = G.GAME.modifiers.enhance_bonus_text, number = tally, 
-                            number_colour = G.GAME.modifiers.enhance_bonus_color or G.C.FILTER, pitch = pitch})
+        add_round_eval_row({dollars = tally * G.GAME.modifiers.poke_money_per_enhancement, disp = tally * G.GAME.modifiers.poke_money_per_enhancement, bonus = true,  name='custom',
+                            text = G.GAME.modifiers.poke_enhance_bonus_text, number = tally, 
+                            number_colour = G.GAME.modifiers.poke_enhance_bonus_color or G.C.FILTER, pitch = pitch})
         pitch = pitch + 0.06
-        dollars = dollars + tally * G.GAME.modifiers.money_per_enhancement
+        dollars = dollars + tally * G.GAME.modifiers.poke_money_per_enhancement
       end
     end
 '''
@@ -238,7 +238,7 @@ for i = 1, #jirachis do
   add_round_eval_row({bonus = true, name='joker_jirachi'..i, pitch = pitch, dollars = dollars * (jirachis[i].ability.extra.multiply - 1), card = jirachis[i]})
   dollars = dollars * jirachis[i].ability.extra.multiply
 end
-if G.GAME.modifiers.reset_no_interest then
+if G.GAME.modifiers.poke_reset_no_interest then
   G.GAME.modifiers.no_interest = nil
 end
 '''

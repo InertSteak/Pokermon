@@ -74,8 +74,8 @@ jd_def["j_poke_musharna"] = {
   },
   calc_function = function(card)
     local triggers = 0
-    if G.scry_view then
-      for _, scry_card in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for _, scry_card in pairs(G.poke_scry_view.cards) do
         if scry_card.config.center ~= G.P_CENTERS.c_base and not scry_card.debuff then
           Xmult = card.ability.extra.Xmult
           triggers = triggers + JokerDisplay.calculate_card_triggers(scry_card, nil, true)

@@ -241,8 +241,8 @@ jd_def["j_poke_wyrdeer"] = {
     local highest = nil
     local highest_card = nil
 
-    if G.scry_view then
-      for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for k, v in pairs(G.poke_scry_view.cards) do
         if not highest then highest = v.base.id; highest_card = v end
         if v.base.id > highest then
           highest = v.base.id

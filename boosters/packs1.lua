@@ -6,17 +6,17 @@ local create_energy = function(self, card)
   if match_type > .50 and #G.jokers.cards > 0 then
     local energy_types = {}
     for l, v in pairs(G.jokers.cards) do
-      local match = matching_energy(v)
+      local match = pokermon.energy.get_matching_energy(v)
       if match and not next(SMODS.find_card(match)) then
         table.insert(energy_types, match)
       end
     end
     if #energy_types > 0 then
       local energy = pseudorandom_element(energy_types, pseudoseed('match'))
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+      return create_card("poke_energy", G.pack_cards, nil, nil, true, true, energy, nil)
     end
   end
-  return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+  return create_card("poke_energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
 local poll_evo_item = function(seed)
@@ -27,7 +27,7 @@ local poll_evo_item = function(seed)
           and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
           or v.config.center.item_req
 
-      local prefix = table.contains(native_evo_items, item_req)
+      local prefix = pokermon.has(native_evo_items, item_req)
           and 'poke'
           or v.config.center.poke_custom_prefix
 
@@ -55,12 +55,12 @@ local create_item = function(seed)
       return SMODS.create_card { key = evo_item_key, area = G.pack_cards, skip_materialize = true }
     end
   end
-  return SMODS.create_card { set = "Item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
+  return SMODS.create_card { set = "poke_item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
 end
 
 local create_pocket_card = function(self, card, i)
     if i == 1 then
-      if not G.GAME.modifiers.no_energy then
+      if not G.GAME.modifiers.poke_no_energy then
         return create_energy(self, card)
       else
         return create_item('pocket')
@@ -68,7 +68,7 @@ local create_pocket_card = function(self, card, i)
     elseif i == 2 and card.from_tag and G.GAME.round_resets.ante >= 5 and not next(SMODS.find_card('c_poke_megastone')) then
       local mega = pseudorandom(pseudoseed('pocket'))
       if mega > .75 then
-        return create_card("Item", G.pack_cards, nil, nil, true, true, 'c_poke_megastone', nil)
+        return create_card("poke_item", G.pack_cards, nil, nil, true, true, 'c_poke_megastone', nil)
       else
         return create_item('pocket')
       end
@@ -99,7 +99,7 @@ end
 local pack1 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -119,7 +119,7 @@ local pack1 = {
 local pack2 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -139,7 +139,7 @@ local pack2 = {
 local pack3 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 0 },
 	config = { extra = 6, choose = 1 },
@@ -159,7 +159,7 @@ local pack3 = {
 local pack4 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 0 },
 	config = { extra = 6, choose = 2 },
@@ -179,7 +179,7 @@ local pack4 = {
 local pack5 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_3",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -199,7 +199,7 @@ local pack5 = {
 local pack6 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_4",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -219,7 +219,7 @@ local pack6 = {
 local pack7 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 1 },
 	config = { extra = 6, choose = 1 },
@@ -239,7 +239,7 @@ local pack7 = {
 local pack8 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 1 },
 	config = { extra = 6, choose = 2 },
@@ -358,7 +358,7 @@ local starter_pack = {
     local pika_eevee = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end
@@ -446,7 +446,7 @@ local starterq_pack = {
     local bidoof_yamper = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.knockoff_starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end

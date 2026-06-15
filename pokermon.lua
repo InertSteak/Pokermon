@@ -5,7 +5,7 @@ if SMODS.current_mod then
   end
 end
 
-pokermon = {}
+pokermon = { energy = {}, ui = {}, sprites = {} }
 SMODS.current_mod.optional_features = { quantum_enhancements = true }
 
 --Undiscovered sprites, mostly for testing some localization things since the game crashes without them
@@ -29,7 +29,7 @@ SMODS.UndiscoveredSprite({
 }):register()
 
 --Get mod path and load other files
-mod_dir = ''..SMODS.current_mod.path
+local mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
 
 --Load Joker Display if the mod is enabled
@@ -95,11 +95,11 @@ end
 
 --Load helper function files
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
+assert(SMODS.load_file("functions/pokefunctions.lua"))()
+assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
-assert(SMODS.load_file("functions/pokefunctions.lua"))()
-assert(SMODS.load_file("functions/energyfunctions.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
 assert(SMODS.load_file("functions/uifunctions.lua"))()
 
@@ -181,7 +181,7 @@ end, true)
 -- Sets custom skins according to config on load
 G.E_MANAGER:add_event(Event({
   func = function()
-    G.FUNCS.toggle_pokermon_skins()
+    G.FUNCS.poke_toggle_pokermon_skins()
 	  return true
   end
 }))
@@ -228,23 +228,23 @@ end
 
 local previous_neg_get_weight = G.P_CENTERS.e_negative.get_weight
 G.P_CENTERS.e_negative.get_weight = function(self)
-  return previous_neg_get_weight(self) + ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
+  return previous_neg_get_weight(self) + ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
 end
 
 -- polychrome steals negative's chances with the Hone / Glow Up voucher, so we're gonna steal it back (won't decrease past base weight)
 local previous_poly_get_weight = G.P_CENTERS.e_polychrome.get_weight
 G.P_CENTERS.e_polychrome.get_weight = function(self)
-  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
+  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
 end
 
 --To support Debris sleeve combo
 local card_set_ability_old = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
       self.ability.card_limit = self.ability.card_limit - 1
   end
   local ret = card_set_ability_old(self, center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
       if not self.ability then self.ability = {} end
       self.ability.card_limit = (self.ability.card_limit or 0) + 1
   end
@@ -254,28 +254,28 @@ end
 
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
-    if G.GAME.modifiers.no_energy then
-      G.GAME.energy_rate = 0
+    if G.GAME.modifiers.poke_no_energy then
+      G.GAME.poke_energy_rate = 0
     end
   end
 
   local rank_resets = {'bulb1card', 'sneaselcard', 'bramblincard', 'wingullcard'}
   for i = 1, #rank_resets do
-    poke_reset_rank(rank_resets[i])
+    pokermon.reset_rank(rank_resets[i])
   end
-  reset_espeon_card()
-  reset_gligar_suit()
+  pokermon.reset_espeon_card()
+  pokermon.reset_gligar_suit()
   
-  poke_reset_type('cattype', {'skitty', 'delcatty'})
+  pokermon.reset_type('cattype', {'skitty', 'delcatty'})
 end
 
 function SMODS.current_mod.calculate(self, context)
   -- Poliwag line suit
   if context.after then
-    poke_change_poli_suit()
+    pokermon.change_poli_suit()
   end
   -- Vending deck
-  if G.GAME.modifiers.vending == true then
+  if G.GAME.modifiers.poke_vending == true then
     if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
         G.E_MANAGER:add_event(Event({
             func = function()
@@ -289,13 +289,13 @@ function SMODS.current_mod.calculate(self, context)
   end
   --Hazard level
   if context.first_hand_drawn then
-    if G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0 then
-      local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+    if G.GAME.poke_hazard_level and G.GAME.poke_hazard_level > 0 then
+      local hazards = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level)
       G.E_MANAGER:add_event(Event({
           trigger = 'before',
           delay = 0.4,
           func = function()
-            poke_add_hazards(nil, hazards, G.hand)
+            pokermon.add_hazards(nil, hazards, G.hand)
             return true
           end
       }))
@@ -343,7 +343,7 @@ function SMODS.current_mod.menu_cards()
   local shiny = pseudorandom('poke_shiny_menu_card') < 1 / 4096
 
   local sprite_info = PokemonSprites['unown']
-  local atlas_prefix = poke_get_atlas_prefix('unown', sprite_info)
+  local atlas_prefix = pokermon.sprites.get_atlas_prefix('unown', sprite_info)
 
   local atlas = 'poke_' .. atlas_prefix .. 'TitleCard'
 

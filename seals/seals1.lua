@@ -15,7 +15,7 @@ local pink_seal = {
             local energy_types = {}
             local energy_key = nil
             for l, v in pairs(G.jokers.cards) do
-              local match = matching_energy(v, true)
+              local match = pokermon.energy.get_matching_energy(v, true)
               if match then
                 table.insert(energy_types, match)
               end
@@ -26,7 +26,7 @@ local pink_seal = {
                 card:set_seal(nil)
               end
             end
-            SMODS.add_card({ set = 'Energy', key = energy_key })
+            SMODS.add_card({ set = 'poke_energy', key = energy_key })
             G.GAME.consumeable_buffer = 0
             if G.GAME.modifiers.poke_pink_seal_selfdestruct
                 and SMODS.pseudorandom_probability(card, 'poke_pink_seal_selfdestruct', card.ability.seal.num, card.ability.seal.dem, 'poke_pink_seal_selfdestruct') then
@@ -58,7 +58,7 @@ local silver = {
         G.E_MANAGER:add_event(Event({
           func = function()
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card("Item", G.consumeables, nil, nil, nil, nil, nil, nil)
+              local _card = create_card("poke_item", G.consumeables, nil, nil, nil, nil, nil, nil)
               _card:add_to_deck()
               G.consumeables:emplace(_card)
               card:juice_up()

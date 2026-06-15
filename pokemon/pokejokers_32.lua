@@ -8,7 +8,7 @@ local charcadet={
   pos = {x = 0, y = 0},
   config = {extra = {mult = 0,mult_mod = 5, mult_original = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_dawnstone
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_duskstone
@@ -43,7 +43,7 @@ local charcadet={
       card.ability.extra.mult = card.ability.extra.mult_original
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.RED})
     end
-    return item_evo(self, card, context)
+    return pokermon.item_evo(self, card, context)
   end,
   attributes = {"mult", "scaling", "reset", "item_evo"},
 }
@@ -53,7 +53,7 @@ local armarouge={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 3, Xmult_mod = 1, Xmult2 = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
   end,
   rarity = "poke_safari",
@@ -98,7 +98,7 @@ local ceruledge={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1, Xmult_mod = 0.75, Xmult2 = 1, money_minus = 1,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -129,7 +129,7 @@ local ceruledge={
             end
           end
           if #drain_jokers > 0 then
-            poke_drain(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
+            pokermon.drain_value(card, pseudorandom_element(drain_jokers, 'ceruledge'), card.ability.extra.money_minus)
           end
           return true
         end
@@ -165,7 +165,7 @@ local bramblin={
   pos = {x = 0, y = 0},
   config = {extra = {cards_drawn = 0, seed_added = 0, rank_scored = 0}, evo_rqmt = 160},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     return {vars = {localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks'), math.max(0, self.config.evo_rqmt - center.ability.extra.cards_drawn)}}
   end,
@@ -204,7 +204,7 @@ local bramblin={
       card.ability.extra.rank_scored = 0
       card.ability.extra.seed_added = 0
     end
-    return scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_brambleghast", card.ability.extra.cards_drawn, self.config.evo_rqmt)
   end,
   attributes = {"rank", "modify_card", "enhancements", "condition_evo"},
 }
@@ -214,7 +214,7 @@ local brambleghast={
   pos = {x = 0, y = 0},
   config = {extra = {chip_mod = 2, seed_added = 0, rank_scored = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
     return {vars = {center.ability.extra.chip_mod, center.ability.extra.chip_mod * math.max(0, (G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)),
         localize(G.GAME.current_round.bramblincard and G.GAME.current_round.bramblincard.rank or "Ace", 'ranks')}}
@@ -272,8 +272,8 @@ local rellor = {
 	--pos = {x = 14, y = 63},
 	config = {extra = { items_used = 0, mult_mod = 1 }, evo_rqmt = 5},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
-		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
+		pokermon.type_tooltip(self, info_queue, card)
+		local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
 	    return {vars = {card.ability.extra.mult_mod, mult, math.max(self.config.evo_rqmt - card.ability.extra.items_used, 0 )}}
 	end,
 	rarity = 1, --Common
@@ -289,21 +289,21 @@ local rellor = {
 	calculate = function(self, card, context)
 		if context.joker_main  then
 			if G.GAME.consumeable_usage_total then
-				if G.GAME.consumeable_usage_total.item  and G.GAME.consumeable_usage_total.item > 0 then
-					local mult = (G.GAME.consumeable_usage_total.item) * card.ability.extra.mult_mod
+				if G.GAME.consumeable_usage_total.poke_item  and G.GAME.consumeable_usage_total.poke_item > 0 then
+					local mult = (G.GAME.consumeable_usage_total.poke_item) * card.ability.extra.mult_mod
 					return {
 						mult = mult
 									}
 				end
 			end
 		end
-		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Item" then
+		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "poke_item" then
 		card.ability.extra.items_used = card.ability.extra.items_used + 1
 			return {
 				extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
 			}
 		end
-		return scaling_evo(self, card, context, "j_poke_rabsca", card.ability.extra.items_used, self.config.evo_rqmt)
+		return pokermon.scaling_evo(self, card, context, "j_poke_rabsca", card.ability.extra.items_used, self.config.evo_rqmt)
 	end,
 }
 -- Rabsca 954
@@ -312,8 +312,8 @@ local rabsca = {
 	--pos = {x = 16, y = 63},
 	config = {extra = { mult_mod = 1, num = 1, dem = 4}},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
-    local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod)
+		pokermon.type_tooltip(self, info_queue, card)
+    local mult = ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod)
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'rabsca')
 	  return {vars = {card.ability.extra.mult_mod, mult, num, dem}}
 	end,
@@ -328,15 +328,15 @@ local rabsca = {
 	calculate = function(self, card, context)
 		if context.joker_main  then
 			if G.GAME.consumeable_usage_total then
-				if (G.GAME.consumeable_usage_total.item or 0) > 0 then
-					local mult = (G.GAME.consumeable_usage_total.item or 0) * card.ability.extra.mult_mod
+				if (G.GAME.consumeable_usage_total.poke_item or 0) > 0 then
+					local mult = (G.GAME.consumeable_usage_total.poke_item or 0) * card.ability.extra.mult_mod
 					return {
 						mult = mult
 									}
 				end
 			end
 		end
-		if context.using_consumeable and context.consumeable.ability.set == "Item" then
+		if context.using_consumeable and context.consumeable.ability.set == "poke_item" then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'rabsca', card.ability.extra.num, card.ability.extra.dem, 'rabsca') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
@@ -364,7 +364,7 @@ local tinkatink={
   pos = {x = 0, y = 4},
   config = {extra = {mult = 5,rounds = 5, cards_debuffed = 12}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
@@ -385,7 +385,7 @@ local tinkatink={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkatink'..card.unique_val); end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatink', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {
@@ -398,7 +398,7 @@ local tinkatink={
         SMODS.debuff_card(v,false, 'tinkatink'..card.unique_val)
       end
     end
-    return level_evo(self, card, context, "j_poke_tinkatuff")
+    return pokermon.level_evo(self, card, context, "j_poke_tinkatuff")
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
@@ -415,7 +415,7 @@ local tinkatuff={
   pos = {x = 1, y = 4},
   config = {extra = {mult = 10,rounds = 5, cards_debuffed = 16}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     end
@@ -435,7 +435,7 @@ local tinkatuff={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkatuff'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkatuff', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {
@@ -448,7 +448,7 @@ local tinkatuff={
         SMODS.debuff_card(v,false, 'tinkatuff'..card.unique_val)
       end
     end
-    return level_evo(self, card, context, "j_poke_tinkaton")
+    return pokermon.level_evo(self, card, context, "j_poke_tinkaton")
   end,
   remove_from_deck = function(self, card, from_debuff)
     if not from_debuff or (from_debuff and card.ability.perishable and card.ability.perish_tally == 0) then
@@ -465,7 +465,7 @@ local tinkaton={
   pos = {x = 2, y = 4},
   config = {extra = {mult = 15,rounds = 5, cards_debuffed = 20}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
@@ -486,7 +486,7 @@ local tinkaton={
       local add = function(v) return not SMODS.has_enhancement(v, 'm_steel') end
       local modify = function(v) SMODS.debuff_card(v, true, 'tinkaton'..card.unique_val) end
       local args = {array = G.playing_cards, amt = card.ability.extra.cards_debuffed, seed = 'tinkaton', add_con = add, mod_func = modify}
-      pseudorandom_multi(args)
+      pokermon.pseudorandom_multi(args)
     end
     if context.individual and not context.end_of_round and context.cardarea == G.play and not context.other_card.debuff then
       return {
@@ -520,7 +520,7 @@ local wiglett={
   pos = {x = 3, y = 4}, 
   config = {extra = {rounds = 4, chips = 60, mult = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds, center.ability.extra.chips, center.ability.extra.mult}}
   end,
   rarity = 1, 
@@ -567,7 +567,7 @@ local wiglett={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_wugtrio")
+    return pokermon.level_evo(self, card, context, "j_poke_wugtrio")
   end,
   attributes = {"mult", "chips", "hand_type", "rank", "five", "six", "seven", "round_evo"},
 }

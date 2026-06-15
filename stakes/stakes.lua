@@ -9,7 +9,7 @@ local elite = { -- Elite Stake
 
     modifiers = function()
         G.GAME.win_ante = (G.GAME.win_ante + 2)
-        G.GAME.modifiers.elite4 = true
+        G.GAME.modifiers.poke_elite4 = true
     end,
 
     pos = {x = 0, y = 0},

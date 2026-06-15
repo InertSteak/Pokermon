@@ -98,7 +98,7 @@ local stage_one_tag = {
     if context and context.type == "store_joker_create" then
       local card = nil
       
-      card = create_random_poke_joker("stage1tag", "One", nil, context.area)
+      card = pokermon.create_random_poke_joker("stage1tag", "One", nil, context.area)
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.C.GREEN,function() 
@@ -259,7 +259,7 @@ local starter_tag = {
     local pika_eevee = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end
