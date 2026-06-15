@@ -4120,7 +4120,7 @@ return {
                 name = 'Jirachi',
                 text = {
                     "{C:attention}+1{} ranura de paquete potenciador",
-                    
+                    "{br:3}ERROR - CONTACT STEAK",
                     "Los {C:attention}paquetes potenciadores{}",
                     "tienen {C:attention}3{} carta más",
                     "{br:3}ERROR - CONTACT STEAK",
