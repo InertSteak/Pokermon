@@ -243,3 +243,18 @@ if G.GAME.modifiers.poke_reset_no_interest then
 end
 '''
 match_indent = true
+
+# Blind Size Modifier
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''
+self.chips = get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling
+'''
+position = "after"
+payload = '''
+if G.GAME.modifiers.unova_X_blind_size then
+    self.chips = self.chips*G.GAME.modifiers.unova_X_blind_size
+end
+'''
+match_indent = true
