@@ -97,7 +97,6 @@ end
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
 assert(SMODS.load_file("functions/energyfunctions.lua"))()
-assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
@@ -129,6 +128,9 @@ assert(SMODS.load_file("pokeui.lua"))()
 
 --Load quip file
 assert(SMODS.load_file("pokequips.lua"))()
+
+--Load backwards compat file
+assert(SMODS.load_file("functions/pokecompat.lua"))()
 
 local load_directory = function(dirname, map_item, auto_discovery)
   local pfiles = NFS.getDirectoryItems(mod_dir .. dirname)
