@@ -135,7 +135,7 @@ local haunter={
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         else
-          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('haunter'))
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         end
