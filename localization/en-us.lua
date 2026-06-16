@@ -5001,6 +5001,32 @@ return {
                 "{C:attention}Steel{} cards {C:attention}held in hand{}",
               }
             },
+						j_poke_klink = {
+							name = 'Klink',
+							text = {
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
+								"{C:inactive,s:0.8}(Evolve after earning {C:money,s:0.8}$#4#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klang = {
+							name = 'Klang',
+							text = {
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
+								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klinklang = {
+							name = 'Klinklang',
+							text = {
+                "Earns {C:money}$#1#{} and gains {X:mult,C:white} X#5# {} Mult",
+                "for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds, resets",
+                "{X:mult,C:white}X{} Mult at end of round",
+                "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)",
+							}
+						},
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {

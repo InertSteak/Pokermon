@@ -156,6 +156,7 @@ local default_family_list = {
   { "gothita", "gothorita", "gothitelle" },
   { "vanillite", "vanillish", "vanilluxe" },
   { "frillish", "jellicent" },
+  { "klink", "klang", "klinklang"},
   { "elgyem", "beheeyem" },
   { "trubbish", "garbodor" },
   { "litwick", "lampent", "chandelure" },

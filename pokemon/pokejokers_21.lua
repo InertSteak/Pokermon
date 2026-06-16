@@ -1,4 +1,57 @@
 -- Klinklang 601
+local klinklang = {
+	name = "klinklang",
+	--pos = {x = 0, y = 40},
+	config = {extra = {money = 1, Xmult = 1, Xmult_mod = 0.4, Xmult2 = 1, drawn = 0, to_draw = 8}},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), abbr.Xmult, abbr.Xmult_mod}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 8,
+	stage = "Two",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.MULT
+        })
+      
+				local earned = pokermon.ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		if context.joker_main then
+			return {
+        xmult = card.ability.extra.Xmult
+			}
+		end
+    
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+	end,
+}
 -- Tynamo 602
 -- Eelektrik 603
 -- Eelektross 604
@@ -519,5 +572,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
 }
