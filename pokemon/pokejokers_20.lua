@@ -586,7 +586,7 @@ local klink = {
 	loc_vars = function(self, info_queue, card)
 		type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
-	  return {vars = {abbr.money, abbr.to_draw - abbr.drawn, math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
 	end,
 	rarity = 1, --Common
 	cost = 4,
@@ -621,9 +621,9 @@ local klang = {
 	--pos = {x = 28, y = 39},
 	config = {extra = {money = 1, drawn = 0, to_draw = 10, totalEarned = 0}, evo_rqmt = 10},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
-		return {vars = {abbr.money, abbr.to_draw - abbr.drawn, math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+		return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
 	end,
 	rarity = "poke_safari", --Safari
 	cost = 6,
@@ -640,7 +640,7 @@ local klang = {
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-				local earned = ease_poke_dollars(card, "klang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+				local earned = pokermon.ease_poke_dollars(card, "klang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
 				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
         return {
@@ -649,7 +649,7 @@ local klang = {
         }
       end
     end
-		return scaling_evo (self, card, context, "j_poke_klinklang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+		return pokermon.scaling_evo (self, card, context, "j_poke_klinklang", card.ability.extra.totalEarned, self.config.evo_rqmt)
 	end,
 }
 return {name = "Pokemon Jokers 570-600", 

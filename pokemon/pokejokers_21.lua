@@ -2,11 +2,11 @@
 local klinklang = {
 	name = "klinklang",
 	--pos = {x = 0, y = 40},
-	config = {extra = {money = 1, Xmult = 2.5, drawn = 0, to_draw = 8, totaldrawn = 0, totalTarget = 30}},
+	config = {extra = {money = 1, Xmult = 1, Xmult_mod = 0.4, Xmult2 = 1, drawn = 0, to_draw = 8}},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
 		local abbr = card.ability.extra
-	  return {vars = {abbr.money, abbr.to_draw - abbr.drawn, abbr.Xmult, abbr.totalTarget, abbr.totaldrawn}}
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), abbr.Xmult, abbr.Xmult_mod}}
 	end,
 	rarity = "poke_safari", --Safari
 	cost = 8,
@@ -25,9 +25,14 @@ local klinklang = {
 		end
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
-			card.ability.extra.totaldrawn = card.ability.extra.totaldrawn + #SMODS.drawn_cards
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
-				local earned = ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.MULT
+        })
+      
+				local earned = pokermon.ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
         card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
         return {
 						message = '$'..earned,
@@ -35,13 +40,19 @@ local klinklang = {
         }
       end
     end
-		if context.cardarea == G.jokers and context.joker_main and card.ability.extra.totaldrawn >= card.ability.extra.totalTarget then
+		if context.joker_main then
 			return {
-				message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
-				colour = G.C.XMULT,
-				Xmult_mod = card.ability.extra.Xmult
+        xmult = card.ability.extra.Xmult
 			}
 		end
+    
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
 	end,
 }
 -- Tynamo 602

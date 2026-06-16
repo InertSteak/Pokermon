@@ -4971,27 +4971,27 @@ return {
 						j_poke_klink = {
 							name = 'Klink',
 							text = {
-								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
-								"cards in a blind",
-								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
+								"{C:inactive,s:0.8}(Evolve after earning {C:money,s:0.8}$#4#{C:inactive,s:0.8})",
 							}
 						},
 						j_poke_klang = {
 							name = 'Klang',
 							text = {
-								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
-								"cards in a blind",
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
 								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
 							}
 						},
 						j_poke_klinklang = {
 							name = 'Klinklang',
 							text = {
-								"Earn {C:money}$#1#{} after drawing {C:attention}#2#", 
-								"cards in a blind",
-								"{br:2}ERROR - CONTACT STEAK",
-								"{X:mult,C:white}X#3#{} if {C:attention}#4#{C:inactive}[#5#]{} cards have ",
-								"been drawn this blind",
+                "Earns {C:money}$#1#{} and gains {X:mult,C:white} X#5# {} Mult",
+                "for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds, resets",
+                "{X:mult,C:white}X{} Mult at end of round",
+                "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)",
 							}
 						},
             j_poke_elgyem = {
