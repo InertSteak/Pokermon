@@ -20,9 +20,6 @@ local klinklang = {
 	eternal_compat = true,
 	
 	calculate = function(self, card, context)
-		if context.setting_blind and not card.getting_sliced and not context.blueprint then
-			card.ability.extra.totaldrawn = 0
-		end
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
       if card.ability.extra.drawn >= card.ability.extra.to_draw then
