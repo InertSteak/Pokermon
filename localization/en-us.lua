@@ -5014,7 +5014,7 @@ return {
 							text = {
                 "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
 								"drawn during Blinds",
-								"{C:inactive,s:0.8}(Evolve after giving {C:money,s:0.8}$#3#{C:inactive,s:0.8})",
+								"{C:inactive,s:0.8}(Evolve after earning {C:money,s:0.8}$#4#{C:inactive,s:0.8})",
 							}
 						},
 						j_poke_klinklang = {
