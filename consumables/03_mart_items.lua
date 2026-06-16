@@ -355,7 +355,7 @@ local sunstone = {
   end,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
-    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
       pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
