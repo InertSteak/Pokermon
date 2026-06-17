@@ -1649,6 +1649,17 @@ jd_def["j_poke_dusclops"] = {
 }
 
 --	Tropius
+jd_def["j_poke_tropius"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+}
+
 --	Chimecho
 jd_def["j_poke_chimecho"] = {
   reminder_text = {
