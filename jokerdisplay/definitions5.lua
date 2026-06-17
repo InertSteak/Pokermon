@@ -430,8 +430,57 @@ jd_def["j_poke_ferrothorn"] = {
 
 }
 --	Klink
+jd_def["j_poke_klink"] = {
+  text = {
+    { text = "+$",  colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "drawn", colour = G.C.ORANGE },
+    { text = " " },
+    { text = "[", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "to_draw", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY }
+  },
+}
+
 --	Klang
+jd_def["j_poke_klang"] = {
+  text = {
+    { text = "+$",  colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "drawn", colour = G.C.ORANGE },
+    { text = " " },
+    { text = "[", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "to_draw", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY }
+  },
+}
+
 --	Klinklang
+jd_def["j_poke_klinklang"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" },
+      },
+    },
+    { text = " " },
+    { text = "+$",  colour = G.C.GOLD },
+    { ref_table = "card.ability.extra", ref_value = "money", retrigger_type = "mult", colour = G.C.GOLD }
+  },
+  reminder_text = {
+    { ref_table = "card.ability.extra", ref_value = "drawn", colour = G.C.ORANGE },
+    { text = " " },
+    { text = "[", colour = G.C.GREY },
+    { ref_table = "card.ability.extra", ref_value = "to_draw", colour = G.C.GREY },
+    { text = "]", colour = G.C.GREY }
+  },
+}
+
 --	Tynamo
 --	Eelektrik
 --	Eelektross
