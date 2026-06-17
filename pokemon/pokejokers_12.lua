@@ -968,6 +968,78 @@ local dusclops={
   attributes = {"retrigger", "hands", "destroy_card", "spectral", "item_evo"},
 }
 -- Tropius 357
+local tropius={
+  name = "tropius",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 1, Xmult_mod = 0.5, cavendish_chance = 0, chance_increase = .20, active = true}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = G.P_CENTERS.j_gros_michel
+    info_queue[#info_queue+1] = G.P_CENTERS.j_cavendish
+    return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, }}
+  end,
+  rarity = 2,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function(card) return card.ability.extra.active and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    
+    if context.joker_main and card.ability.extra.Xmult > 1 then
+      return {
+        xmult = card.ability.extra.Xmult
+			}
+    end
+    
+    if context.joker_type_destroyed and context.card.config.center.set == 'Joker' and not context.blueprint then
+      if context.card.config.center_key == 'j_gros_michel' then
+        card.ability.extra.cavendish_chance = card.ability.extra.cavendish_chance + card.ability.extra.chance_increase
+      end
+      
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        message_colour = G.C.MULT
+      })
+    end
+    
+    if context.end_of_round and context.main_eval and card.ability.extra.active then
+      card.ability.extra.active = false
+      if (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit then
+        G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+        
+        local banana = pseudorandom('tropius')
+        local banana_key = nil
+        if banana > card.ability.extra.cavendish_chance then
+          banana_key = 'j_gros_michel'
+        else
+          banana_key = 'j_cavendish'
+        end
+        
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            G.GAME.joker_buffer = 0
+            play_sound('timpani')
+            SMODS.add_card({ set = 'Joker', key = banana_key })
+            return true
+          end
+        }))
+      end
+    end
+  
+    if context.ante_change and context.ante_end and not context.blueprint then
+      card.ability.extra.active = true
+    end
+  end,
+}
 -- Chimecho 358
 local chimecho={
   name = "chimecho",
@@ -1129,5 +1201,5 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, tropius, chimecho, absol, wynaut},
 }

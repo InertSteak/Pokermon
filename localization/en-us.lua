@@ -3975,6 +3975,18 @@ return {
                 "{C:inactive}(Evolves with a {C:attention}Linking Cord{C:inactive})",
               }
             },
+            j_poke_tropius = {
+              name = "Tropius",
+              text = {
+                "Creates a {C:attention}Banana{} Joker at",
+                "end of round once per {C:attention}ante",
+                "{C:inactive}(Must have room)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gains {X:mult,C:white} X#2# {} Mult when a",
+                "Joker is destroyed",
+                "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
+              }
+            },
             j_poke_chimecho = {
               name = "Chimecho",
               text = { 
