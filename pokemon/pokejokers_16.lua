@@ -757,16 +757,12 @@ local gallade={
         end
       end
       local total = 1 + (card.ability.extra.Xmult_mod * energized)
-      return 
-      {
-        Xmult = total
-      }
+      return { Xmult = total }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_poke_double_rainbow_energy'}
-      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
+    if not from_debuff then
+      pokermon.create_held_item("c_poke_double_rainbow_energy")
     end
   end,
   attributes = {"energy_count", "item", "xmult", "hand_type", "passive"},

@@ -880,8 +880,8 @@ local spinda={
     card.ability.extra.targets = pokermon.get_target_card_ranks("spinda", 3, card.ability.extra.targets)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      SMODS.add_card{set = 'Tarot', key = 'c_wheel_of_fortune'}
+    if not from_debuff then
+      pokermon.create_held_item("c_wheel_of_fortune")
     end
   end,
   attributes = {"holding", "modify_card", "nature", "rank", "enhancements"},

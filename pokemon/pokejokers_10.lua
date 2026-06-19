@@ -358,9 +358,8 @@ local gardevoir={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_black_hole'}
-      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
+    if not from_debuff then
+      pokermon.create_held_item("c_black_hole")
     end
   end,
   attributes = {"mult", "xmult", "energy_count", "joker", "passive", "holding", "generation", "spectral"},

@@ -1426,3 +1426,23 @@ pokermon.get_available_planet_cards = function()
   end
   return planets
 end
+
+pokermon.create_held_item = function(args)
+  if type(args) == 'string' then args = { key = args } end
+  if not G.GAME.banned_keys[args.key]
+      and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
+    local card = SMODS.add_card(args)
+    local set = card.ability.set
+    local loc_keys = {
+      ['Tarot'] = 'k_plus_tarot',
+      ['Planet'] = 'k_plus_planet',
+      ['Spectral'] = 'k_plus_spectral',
+      ['poke_item'] = 'poke_plus_pokeitem',
+      ['poke_energy'] = 'poke_plus_pokeitem',
+    }
+    SMODS.calculate_effect({
+      message = localize(loc_keys[set]),
+      colour = G.C.SECONDARY_SET[set]
+    }, card)
+  end
+end

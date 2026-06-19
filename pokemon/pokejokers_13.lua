@@ -360,18 +360,12 @@ local luvdisc={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.modify_scoring_hand and not context.blueprint then
-      return {
-          add_to_hand = true
-      }
+      return { add_to_hand = true }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, 'c_poke_heartscale')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      return true
+    if not from_debuff then
+      pokermon.create_held_item("c_poke_heartscale")
     end
   end,
   attributes = {"holding", "passive", "applies"},
