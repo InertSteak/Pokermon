@@ -3645,6 +3645,26 @@ return {
                 "{C:inactive}(Actual {C:mult}+#4#{C:inactive} multi)",
               }
             },
+            j_poke_plusle = {
+              name = "Plusle",
+              text = {
+                "{C:mult}+#1#{} multi por cada {C:attention}comodín",
+                "y {C:attention}consumible{} que tengas",
+                "{C:inactive}(Actual {C:mult}+#2#{C:inactive} multi){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Cada {C:attention}Minun{} otorga {X:mult,C:white} X#3# {} multi"
+              }
+            },
+            j_poke_minun = {
+              name = "Minun",
+              text = {
+                "Todos los {C:attention}comodines{} y {C:attention}consumibles{}",
+                "en la tienda cuestan {C:money}#1# ${} menos",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gana {C:money}#2# ${} al final de la ronda",
+                "por cada {C:attention}Plusle{} que tengas"
+              }
+            },
             j_poke_volbeat = {
               name = "Volbeat",
               text = {
@@ -4096,13 +4116,20 @@ return {
             j_poke_jirachi_banker = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}Duplica{} la paga","al final de la ronda",
+                    "{C:attention}X#1#{} pago al", "final de la ronda",
                 }
             },
             j_poke_jirachi_booster = {
                 name = 'Jirachi',
                 text = {
-                    "{C:attention}+1{} ranura de paquete potenciador","Los {C:attention}paquetes potenciadores{}","tienen {C:attention}1{} carta más",
+                    "{C:attention}+1{} ranura de paquete potenciador",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Los {C:attention}paquetes potenciadores{}",
+                    "tienen {C:attention}3{} carta más",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Los primeros {C:attention}#1#{} {C:inactive}[#2#] {C:green}cambios",
+                    "en cada {C:attention}tienda{} agregan",
+                    "un {C:attention}paquete potenciador en la {C:attention}tienda"
                 }
             },
             j_poke_jirachi_power = {
@@ -4112,21 +4139,24 @@ return {
 					"{X:mult,C:white}X#1#{} multi cuando anotan",
 					"cada {C:attention}#2#{} manos jugadas",
                     "{C:inactive}(#3#){}",
-                }
+				}
             },
             j_poke_jirachi_negging = {
                 name = 'Jirachi',
                 text = {
-                    "{C:blue}+2{} ranuras de comodín","Las cartas {C:dark_edition}negativas{}","aparecen {C:attention}2X{} veces más seguido",
+                    "{C:blue}+2{} ranuras de comodín",
+                    "Las cartas {C:dark_edition}negativas{}",
+                    "aparecen {C:attention}2X{} veces más seguido",
                 }
             },
             j_poke_jirachi_invis = {
                 name = 'Jirachi',
                 text = {
-                    "Cuando se selecciona la {C:attention}ciega{}",
-					"crea una {C:attention}copia{} del",
+                    "Copia la habilidad del",
 					"{C:attention}comodín{} a su derecha",
-					"y {S:1.1,C:red,E:2}se autodestruye{}","{C:inactive}(Remueve el negativo de la copia)"
+                    "si tienees {C:attention}#1# o más",
+                    "comodines {C:pink}energizados{}",
+                    "{C:inactive}(Actual {C:attention}#2#{C:inactive}/#1#){}"
                 }
             },
             j_poke_jirachi_copy = {
@@ -4138,12 +4168,11 @@ return {
             j_poke_jirachi_fixer = {
                 name = 'Jirachi',
                 text = {
-                    "Si la {C:attention}primera mano{} tiene solo",
-					"{C:attention}1{} carta, le agrega {C:dark_edition}laminado{},",
-					"{C:dark_edition}holográfico{}, o {C:dark_edition}policromía{}",
-					"{br:3}ERROR - CONTACT STEAK",
 					"Si el {C:attention}primer descarte{} tiene",
 					"solo {C:attention}1{} carta, la {C:attention}destruye{}",
+                    "y crea una copia de {C:tarot}La muerte{},",
+                    "{C:spectral}Críptido{}, o {C:item}Revestimiento Metálico{}",
+                    "{C:inactive}(Debe haber espacio)",
                 }
             },
             j_poke_deoxys = {
@@ -5211,7 +5240,7 @@ return {
                 name = 'Vikavolt',
                 text = {
                     "{C:mult}+#3#{} multi",
-					"{X:mult,C:white} X#1# {} multi por cada otro",
+					"{X:mult,C:white} X#1# {} multi por cada",
 					"comodín tipo {X:lightning, C:black}Rayo{} que tengas",
 					"{C:inactive}(Actual {X:mult,C:white} X#2# {C:inactive} multi)",
                 }
@@ -6096,7 +6125,9 @@ return {
                 name = "Transformación",
                 text = {
                     "Evoluciona al Pokémon más",
-					"a la izquierda o seleccionado a su","{C:attention}etapa{} más alta y lo {C:pink}energiza{}", 
+					"a la izquierda o seleccionado a su",
+                    "{C:attention}etapa{} más alta {C:inactive}(si puede){} y",
+                    "lo {C:pink}energiza{}", 
                 },
             },
             c_poke_megastone = {
@@ -7333,6 +7364,7 @@ return {
             --From Tangela line
             poke_tangela_bonus = "¡Todas!",
             --Golbat And Crobat thingy
+            poke_leech_life_ex = "¡Chupavidas!",
             poke_screech_ex = "¡Chirrido!",
             --Hoppip Line
             poke_hop_ex = "¡Hop!",
@@ -7391,7 +7423,8 @@ return {
             poke_sticky_web_ex = "¡Red pegajosa!",
             poke_head_smash_ex = "¡Testarazo!",
             poke_teeter_dance_ex = "¡Danza caos!",
-			
+			poke_wish_ex = "¡Deseo!",
+
             poke_attack_forme = "Ataque",
             poke_defense_forme = "Defensa",
             poke_speed_forme = "Velocidad",
