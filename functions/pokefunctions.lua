@@ -500,7 +500,7 @@ pokermon.get_previous_evo_from_center = function(center, full_key)
   local index, prev
   local prefix = center.poke_custom_prefix or "poke"
 
-  if next(pokermon.get_evo_overrides(name)) then
+  if next(pokermon.get_evo_overrides(name)) and pokermon.get_evo_overrides(name).previous_evo then
     prev = pokermon.get_evo_overrides(name).previous_evo
     return full_key and "j_"..prefix.."_"..prev or prev
   end
