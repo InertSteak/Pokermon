@@ -428,7 +428,7 @@ pokermon.get_highest_evo = function(card)
   local prefix = "j_"..(card.config.center.poke_custom_prefix or "poke").."_"
 
   -- if there's an override then return early
-  if next(pokermon.get_evo_overrides(name)) then
+  if next(pokermon.get_evo_overrides(name)) and pokermon.get_evo_overrides(name).highest_evo then
     local evos = pokermon.get_evo_overrides(name).highest_evo
     return (#evos == 1 and evos[1]) or pseudorandom_element(evos, pseudoseed('highest'))
   end
