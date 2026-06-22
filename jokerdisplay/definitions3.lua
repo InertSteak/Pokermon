@@ -1765,10 +1765,25 @@ jd_def["j_poke_relicanth"] = {
       chips = card.ability.extra.chips * last_card_triggers
     end
     if four_count >= 3 then
-      money = card.ability.extra.money
+      money = card.ability.extra.money_mod * last_card_triggers
     end
     if four_count >= 4 then
-      Xmult = (card.ability.extra.Xmult_multi ^ last_card_triggers) or 1
+      local depleted_count = 0
+    
+      for k, v in pairs(SMODS.Ranks) do
+        local is_rank = function(deck_card)
+          if deck_card:get_id() == v.id then
+            return true
+          else
+            return false
+          end
+        end
+        
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
+      end
+      Xmult = 1 + card.ability.extra.Xmult_mod * depleted_count
     end
     card.joker_display_values.chips = chips
     card.joker_display_values.money = money

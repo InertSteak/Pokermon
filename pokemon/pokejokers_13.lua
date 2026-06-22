@@ -272,13 +272,31 @@ local gorebyss ={
 local relicanth={
   name = "relicanth",
   pos = {x = 0, y = 0},
-  config = {extra = {rank = "4", chips = 40, money = 4, Xmult_multi = 4,}},
+  config = {extra = {rank = "4", chips = 40, money_mod = 4, Xmult_mod = 0.75,}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+      info_queue[#info_queue+1] = {set = 'Other', key = 'depleted'}
     end
-    return {vars = {localize(center.ability.extra.rank, 'ranks'), center.ability.extra.chips, center.ability.extra.money, center.ability.extra.Xmult_multi, }}
+    
+    local abbr = center.ability.extra
+    local depleted_count = 0
+    
+    for k, v in pairs(SMODS.Ranks) do
+      local is_rank = function(deck_card)
+        if deck_card:get_id() == v.id then
+          return true
+        else
+          return false
+        end
+      end
+      
+      if pokermon.get_depleted(is_rank) then
+        depleted_count = depleted_count + 1
+      end
+    end
+    return {vars = {localize(abbr.rank, 'ranks'), abbr.chips, abbr.money_mod, abbr.Xmult_mod, math.max(1, 1 + abbr.Xmult_mod * depleted_count)}}
   end,
   rarity = 3,
   cost = 6,
@@ -290,46 +308,78 @@ local relicanth={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.before then
-        pokermon.get_ancient_amount(context.scoring_hand, 4, card)
-      end
-      if context.joker_main and card.ability.extra.ancient_count > 1 and #G.deck.cards > 0 then
-        local bottom_card = G.deck.cards[1]
+    if context.before then
+      pokermon.get_ancient_amount(context.scoring_hand, 4, card)
+      
+      if card.ability.extra.ancient_count > 2 and #G.deck.cards > 0 then
+        local bottom_card = nil
         
-        bottom_card:set_ability(G.P_CENTERS.m_stone, nil, true)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                card:juice_up()
-                return true
-            end
-        })) 
-    
-        if card.ability.extra.ancient_count > 2 then
-          draw_card(G.deck, G.hand, nil, nil, nil, bottom_card)
-          pokermon.ease_poke_dollars(card, "relicanth", card.ability.extra.money)
+        for i = 1, #G.deck.cards do
+          if not SMODS.has_no_rank(G.deck.cards[i]) and G.deck.cards[i]:get_id() ~= 4 then
+            bottom_card = G.deck.cards[i]
+            break
+          end
+        end
+        
+        if bottom_card then
+          bottom_card:set_ability(G.P_CENTERS.m_stone, nil, true)
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  card:juice_up()
+                  return true
+              end
+          }))
         end
       end
-      if context.after then
-        card.ability.extra.ancient_count = 0
+    end
+    
+    if context.joker_main and card.ability.extra.ancient_count > 3 then
+      local depleted_count = 0
+    
+      for k, v in pairs(SMODS.Ranks) do
+        local is_rank = function(deck_card)
+          if deck_card:get_id() == v.id then
+            return true
+          else
+            return false
+          end
+        end
+        
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
+      end
+      
+      if depleted_count > 0 then
+        return {
+          Xmult = 1 + card.ability.extra.Xmult_mod * depleted_count
+        }
       end
     end
+    
+    if context.after and not context.blueprint then
+      card.ability.extra.ancient_count = 0
+    end
+      
     if context.individual and not context.end_of_round and context.cardarea == G.play and card.ability.extra.ancient_count > 0 then
       local rightmost = context.scoring_hand[#context.scoring_hand]
       if context.other_card == rightmost then
         local scoring_parms = {}
         scoring_parms.chips = card.ability.extra.chips
-        if card.ability.extra.ancient_count > 3 then
-          scoring_parms.x_mult = card.ability.extra.Xmult_multi
-          scoring_parms.message = localize('poke_head_smash_ex')
-          scoring_parms.colour = G.C.XMULT
+        if card.ability.extra.ancient_count > 1 then
+          G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money_mod
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  G.GAME.dollar_buffer = 0
+                  return true
+              end
+          }))
+      
+          local earned = pokermon.ease_poke_dollars(card, "relicanth", card.ability.extra.money_mod, true)
+          scoring_parms.dollars = earned
         end
         return scoring_parms
       end
-    end
-    if context.destroying_card and card.ability.extra.ancient_count > 3 and not context.blueprint then
-      local rightmost = context.scoring_hand[#context.scoring_hand]
-      return context.destroying_card == rightmost and not SMODS.has_enhancement(context.destroying_card, 'm_stone')
     end
   end,
   generate_ui = pokermon.fossil_generate_ui,

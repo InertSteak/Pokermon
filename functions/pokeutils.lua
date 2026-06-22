@@ -895,3 +895,18 @@ pokermon.reset_sprite = function(card, center)
   if sprite then sprite:remove() end
   if soul then soul:remove() end
 end
+
+pokermon.get_depleted = function(find_func)
+  if not G.deck or not G.deck.cards then return false end
+  
+  local depleted = true
+  
+  for k, v in ipairs(G.deck.cards) do
+    if find_func(v) then 
+      depleted = false
+      break
+    end
+  end
+  
+  return depleted
+end
