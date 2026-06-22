@@ -262,6 +262,11 @@ pokermon.backend_evolve = function(card, to_key, energize_amount)
   if energize_amount then
     pokermon.energy.increase(card, 'Trans', energize_amount)
   end
+  
+  --Stops pokemon shaking
+  if type(card.ability.extra) == "table" then
+    card.ability.extra.juiced = nil
+  end
 end
 
 pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
@@ -316,7 +321,7 @@ pokermon.item_evo = function(self, card, context, forced_key)
       if pokermon.can_evolve(self, card, context, forced_key, true) then
         if not card.ability.extra.juiced then
           card.ability.extra.juiced = true
-          local eval = function(card) return card.ability.extra.evolve and not card.REMOVED and not G.RESET_JIGGLES end
+          local eval = function(card) return card.ability.extra.evolve and not card.REMOVED and card.ability.extra.juiced end
           juice_card_until(card, eval, true)
         end
       end
@@ -337,7 +342,7 @@ pokermon.scaling_evo = function (self, card, context, forced_key, current, targe
   if pokermon.can_evolve(self, card, context, forced_key, true) and current >= target then
     if not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return current >= target and not card.REMOVED and not G.RESET_JIGGLES end
+      local eval = function(card) return current >= target and not card.REMOVED and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
   end
@@ -351,7 +356,7 @@ pokermon.type_evo  = function (self, card, context, forced_key, type_req)
   elseif pokermon.can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
     if not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability[type_req.."_sticker"] and not card.REMOVED and not G.RESET_JIGGLES end
+      local eval = function(card) return card.ability[type_req.."_sticker"] and not card.REMOVED and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
   end
