@@ -153,7 +153,7 @@ local altaria={
           end
           
           if (SMODS.pseudorandom_probability(card, 'altaria', card.ability.extra.num, card.ability.extra.dem, 'altaria')) or (#pokermon.find_pokemon_type("Dragon", card) > 0) then
-            local earned = pokermon.ease_poke_dollars(card, "altaria", card.ability.extra.money_mod, true)
+            local earned = pokermon.ease_poke_dollars(card, "altaria", card.ability.extra.money_mod)
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -161,9 +161,6 @@ local altaria={
                     return true
                 end
             }))
-            return {
-              dollars = earned
-            }
           end
         end
       end
