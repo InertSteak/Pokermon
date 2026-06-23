@@ -177,6 +177,7 @@ local default_family_list = {
   },
   { "grubbin", "charjabug", "vikavolt" },
   { "rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk" },
+  { "duraludon", "archaludon"},
   { "dreepy", "drakloak", "dragapult", "dreepy_dart" },
   { "hisuian_qwilfish", "overqwil" },
   { "nickit", "thievul" },
