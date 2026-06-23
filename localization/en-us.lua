@@ -5287,6 +5287,15 @@ return {
                   "sticker to leftmost {C:attention}Joker"
                 }
             },
+						j_poke_volcanion = {
+							name = 'Volcanion',
+							text = {
+								"Gain {X:mult,C:white}X#2#{} if total {C:chips}chips{} of scoring hand",
+								"is greater than previous total: {C:chips}#3#{}",
+								"double {X:mult,C:white}X{} Mult then reset self on failure",
+								"{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})",
+							}
+						},
             j_poke_grubbin = {
                 name = 'Grubbin',
                 text = {
