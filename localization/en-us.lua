@@ -2040,8 +2040,8 @@ return {
                     "{C:chips}+#2#{} Chips for each",
                     "{C:attention}Blind{} skipped this run",
                     "{br:2}ERROR - CONTACT STEAK",
-                    "Skipping {C:attention}Blinds{} no",
-                    "longer skips {C:attention}Shops{}",
+                    "Visit the {C:attention}shop{}",
+                    "after skipping",
                     "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips)"
                 } 
             },
@@ -2106,7 +2106,7 @@ return {
                     "{C:attention}Ancient #1#s{}",
                     "{X:attention,C:white}1+{} : Create a {C:tarot}Tarot{} card",
                     "{X:attention,C:white}2+{} : Earn {C:money}$#2#{}",
-                    "{X:attention,C:white}3+{} : Create an {C:item}Item{} card",
+                    "{X:attention,C:white}3+{} : Create a {C:item}Item{} card",
                     "{C:inactive,s:0.8}(Must have room)",
                     "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
                 } 
@@ -3887,7 +3887,7 @@ return {
                 "{C:green}#3# in #4#{} chance for",
                 "discarded {C:attention}Hazard{} cards",
                 "to be returned to {C:attention}hand",
-                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
+                "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips",
               }
             },
             j_poke_lileep = {
@@ -3951,7 +3951,7 @@ return {
                 name = "Milotic",
                 text = {
                   "Retrigger all cards played if",
-                  "they share the same {C:attention}suit{}"
+                  "poker hand is {C:attention}mono-suit{}"
                 }
             },
             j_poke_duskull = {
@@ -5368,6 +5368,33 @@ return {
                   "{C:inactive}(#3#){}"
                 }
             },
+						j_poke_blipbug = {
+							name = 'Blipbug',
+							text = {
+								"Earn {C:money}$#1#{} after using a",
+								"{C:attention}unique{} {C:tarot}Tarot{} card",
+								"{C:inactive,s:0.7}(Evolves after using {C:attention,s:0.7}#2#{C:inactive,s:0.7} unique Tarot cards)",
+							}
+						},
+						j_poke_dottler = {
+							name = 'Dottler',
+							text = {
+								"Earn {C:money}$#1#{} after using a {C:attention}unique{} ",
+								"{C:tarot}Tarot{} or {C:planet}Planet{} card",
+								"{C:inactive,s:0.7}(Evolves after using {C:attention,s:0.7}#2#{C:inactive,s:0.7} unique Tarot or Planet cards)",
+							}
+						},
+						j_poke_orbeetle = {
+							name = 'Orbeetle',
+							text = {
+								"Earn {C:money}$#1#{} after using a",
+								"{C:attention}unique{} {C:attention}consumable{}",
+								"{br:2}ERROR - CONTACT STEAK",
+								"{C:mult}+#2#{} Mult per {C:attention}unique{}",
+								"{C:attention}consumable{} used",
+								"{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+							}
+						},
             j_poke_nickit = {
                 name = "Nickit",
                 text = {
