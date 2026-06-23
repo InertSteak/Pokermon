@@ -1764,7 +1764,7 @@ jd_def["j_poke_relicanth"] = {
     if four_count >= 1 then
       chips = card.ability.extra.chips * last_card_triggers
     end
-    if four_count >= 3 then
+    if four_count >= 2 then
       money = card.ability.extra.money_mod * last_card_triggers
     end
     if four_count >= 4 then
