@@ -4733,6 +4733,15 @@ return {
                   "{C:inactive}(Transforms when using a {C:attention}Machine{}){}"
                 }
             },
+            j_poke_darkrai = {
+                name = 'Darkrai',
+                text = {
+                    "{C:attention}Holding {C:spectral}Nightmare{}",
+                    "{C:attention}Held{} {C:pink}Energy{} cards are {C:attention}applied{}",
+                    "to all Jokers with the same {C:pink}Type{}", 
+                    "{C:inactive}(Doesn't increment Energy count){}"                                
+                } 
+            },
             j_poke_shaymin = {
               name = "Shaymin",
               text = {
