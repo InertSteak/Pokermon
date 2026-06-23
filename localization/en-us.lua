@@ -5357,6 +5357,62 @@ return {
                 "in poker hand"
               }
             },
+            j_poke_minior = {
+                name = 'Minior',
+                text = {
+                    "{X:red,C:white}X#3#{} Mult, {C:attention}Core:{} {C:inactive}({}{V:1}#1#{}{C:inactive}){}",
+                    "{C:inactive}(Transforms after playing #2# hands){}"
+                }
+            },
+            j_poke_minior_mult = {
+                name = 'Minior (Red Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_wild = {
+                name = 'Minior (Orange Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_gold = {
+                name = 'Minior (Yellow Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_lucky = {
+                name = 'Minior (Green Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_glass = {
+                name = 'Minior (Blue Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_bonus = {
+                name = 'Minior (Indigo Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{}",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
+            j_poke_minior_steel = {
+                name = 'Minior (Violet Core)',
+                text = {
+                    "{C:attention}Stone{} cards are also {V:1}#1#{} cards",
+                    "{C:inactive}(Transforms at end of round){}"
+                }
+            },
             j_poke_mimikyu = {
                 name = "Mimikyu",
                 text = {
