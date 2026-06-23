@@ -479,7 +479,7 @@ local mystery_dungeon = {
           local deck_key = deck.key
 
           if deck_key == "b_poke_vendingdeck" then
-            G.GAME.modifiers.vending = true
+            G.GAME.modifiers.poke_vending = true
           else
             Back(G.P_CENTERS[deck_key]):apply_to_run()
           end

@@ -3665,6 +3665,26 @@ return {
                 "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
               }
             },
+            j_poke_plusle = {
+              name = "Plusle",
+              text = {
+                "{C:mult}+#1#{} Mult for each {C:attention}Joker",
+                "and {C:attention}consumable{} you have",
+                "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Each {C:attention}Minun{} gives {X:mult,C:white} X#3# {} Mult"
+              }
+            },
+            j_poke_minun = {
+              name = "Minun",
+              text = {
+                "All {C:attention}Jokers{} and {C:attention}consumables{} in",
+                "the shop cost {C:money}$#1#{} less",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Earn {C:money}$#2#{} at end of round",
+                "for each {C:attention}Plusle{} you have"
+              }
+            },
             j_poke_volbeat = {
               name = "Volbeat",
               text = {
@@ -3953,6 +3973,18 @@ return {
                 "and create a {C:spectral}Spectral{} card",
                 "{C:inactive}(Must have room){}",
                 "{C:inactive}(Evolves with a {C:attention}Linking Cord{C:inactive})",
+              }
+            },
+            j_poke_tropius = {
+              name = "Tropius",
+              text = {
+                "Creates a {C:attention}Banana{} Joker at",
+                "end of round once per {C:attention}ante",
+                "{C:inactive}(Must have room)",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Gains {X:mult,C:white} X#2# {} Mult when a",
+                "Joker is destroyed",
+                "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)"
               }
             },
             j_poke_chimecho = {
@@ -5011,6 +5043,32 @@ return {
                 "{C:attention}Steel{} cards {C:attention}held in hand{}",
               }
             },
+            j_poke_klink = {
+							name = 'Klink',
+							text = {
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
+								"{C:inactive,s:0.8}(Evolve after earning {C:money,s:0.8}$#4#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klang = {
+							name = 'Klang',
+							text = {
+                "Earns {C:money}$#1#{} for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds",
+								"{C:inactive,s:0.8}(Evolve after earning {C:money,s:0.8}$#4#{C:inactive,s:0.8})",
+							}
+						},
+						j_poke_klinklang = {
+							name = 'Klinklang',
+							text = {
+                "Earns {C:money}$#1#{} and gains {X:mult,C:white} X#5# {} Mult",
+                "for every {C:attention}#2#{} {C:inactive}[#3#]{} cards",
+								"drawn during Blinds, resets",
+                "{X:mult,C:white}X{} Mult at end of round",
+                "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)",
+							}
+						},
             j_poke_elgyem = {
                 name = "Elgyem",
                 text = {

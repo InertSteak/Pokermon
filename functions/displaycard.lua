@@ -303,7 +303,7 @@ poke_input_manager:add_listener('double_click', function(target)
   end
 end)
 
-function poke_create_art_display_card(args, ...)
+function pokermon.ui.create_art_display_card(args, ...)
   args = copy_table(args)
 
   if args.existing_key then

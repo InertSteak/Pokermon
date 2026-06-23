@@ -1,16 +1,16 @@
-create_scry_cardarea = function()
-   local config = { card_limit = 0, type = 'scry' }
+pokermon.ui.create_scry_cardarea = function()
+   local config = { card_limit = 0, type = 'poke_scry' }
    config.major = G.deck
    local scry_view = CardArea(0, 0, 2 * G.CARD_W, 0.5 * G.CARD_H, config)
    scry_view.T.x = G.TILE_W - G.deck.T.w / 2 - scry_view.T.w / 2 - 0.4
    scry_view.T.y = G.TILE_H - G.deck.T.h - scry_view.T.h
    scry_view:hard_set_VT()
 
-   G.GAME.scry_amount = G.GAME.scry_amount or 0
+   G.GAME.poke_scry_amount = G.GAME.poke_scry_amount or 0
    return scry_view
 end
 
-cards_dont_match = function(card1, card2)
+pokermon.cards_dont_match = function(card1, card2)
    if type(card1) ~= type(card2) then return true end
    if card1.config.center ~= card2.config.center then return true end
    if card1.config.card_key ~= card2.config.card_key then return true end
@@ -25,15 +25,15 @@ cards_dont_match = function(card1, card2)
    return false
 end
 
-hide_scry_cardarea = function()
-   G.scry_view.states.visible = false
-   local to_kill = #G.scry_view.cards
+pokermon.ui.hide_scry_cardarea = function()
+   G.poke_scry_view.states.visible = false
+   local to_kill = #G.poke_scry_view.cards
    for i = to_kill, 1, -1 do
-      G.scry_view.cards[i]:remove()
+      G.poke_scry_view.cards[i]:remove()
    end
 end
 
-update_scry_cardarea = function(scry_view)
+pokermon.ui.update_scry_cardarea = function(scry_view)
    if not scry_view.states.visible then
       local to_kill = #scry_view.cards
       for i = to_kill, 1, -1 do
@@ -48,20 +48,20 @@ update_scry_cardarea = function(scry_view)
    scry_view.adjusting_cards = true
 
    local deck = {}
-   for i = 1, G.GAME.scry_amount do
+   for i = 1, G.GAME.poke_scry_amount do
       if #G.deck.cards + 1 <= i then break end
       deck[i] = G.deck.cards[#G.deck.cards + 1 - i]
    end
    -- blank card that will cause the removal of any extra cards
-   deck[G.GAME.scry_amount + 1] = true
+   deck[G.GAME.poke_scry_amount + 1] = true
 
    local i = 1
    for k, card in pairs(deck) do
-      while i <= #scry_view.cards and cards_dont_match(card,scry_view.cards[i]) do
+      while i <= #scry_view.cards and pokermon.cards_dont_match(card,scry_view.cards[i]) do
          scry_view.cards[i]:start_dissolve({G.C.PURPLE})
          i = i + 1
       end
-      if k <= G.GAME.scry_amount and cards_dont_match(card, scry_view.cards[i]) then
+      if k <= G.GAME.poke_scry_amount and pokermon.cards_dont_match(card, scry_view.cards[i]) then
          local temp_card = copy_card(card, nil, 0.7)
          temp_card.states.drag.can = false
          temp_card.states.hover.can = false
@@ -78,7 +78,7 @@ update_scry_cardarea = function(scry_view)
    }))
 end
 
-poke_random_text = function(strings, config)
+pokermon.ui.random_text = function(strings, config)
   config = config or {}
   local c_colours = config.colours or {G.C.UI.TEXT_DARK}
   if config.poke_rep_string and config.poke_rep_num then
@@ -96,7 +96,7 @@ poke_random_text = function(strings, config)
           pop_delay = c_pop_delay, min_cycle_time = c_min_cycle_time}
 end
 
-poke_blueprint_compat_ui = function(copy)
+pokermon.ui.blueprint_compat = function(copy)
   local compatible = copy and copy.config.center.blueprint_compat
 
   local text = localize('k_' .. (compatible and 'compatible' or 'incompatible'))
@@ -111,8 +111,86 @@ poke_blueprint_compat_ui = function(copy)
   }
 end
 
+pokermon.enhance_cards = function(cards, enhancement, source, _message, _delay, sound)
+  if type(cards) == 'nil' then
+    sendDebugMessage("Attempted to enhance 0 cards. Function failed.")
+    return
+  end
+  if type(cards.is) == 'function' and cards:is(Card) then
+    sendDebugMessage("Single card passed. Converting to table and continuing.")
+    pokermon.enhance_cards({cards}, enhancement, source, _message, _delay, sound)
+    return
+  end
+  
+  local default = type(_delay) ~= 'number'
+  for k, v in pairs(cards) do
+    if not(type(v.is) == 'function' and v:is(Card)) then
+      sendDebugMessage("Non-card passed. Function failed.")
+      return
+    end
+    if not G.P_CENTERS[enhancement] then
+      sendDebugMessage("Could not find enhancement \""..enhancement.."\".")
+      enhancement = "c_base"
+    end
+    v:set_ability(G.P_CENTERS[enhancement], nil, true)
+  end
+  G.E_MANAGER:add_event(Event({
+    trigger = 'before',
+    delay = default and 0.7 or _delay,
+    func = function()
+      --local i = 1 --uncomment this debug message if you uncomment the one two lines down.
+      for k, v in pairs(cards) do
+        --sendDebugMessage("Card "..i.." enhancement: "..tostring(v.config.center_key)); i = i + 1
+        v:juice_up()
+        if not source and type(_message) == 'string' then
+          card_eval_status_text(v, 'extra', nil, nil, nil, {message = _message,instant = true})
+        end
+      end
+      if source then
+        --source:juice_up()
+        for k, v in pairs(source) do
+           sendDebugMessage(k..": "..tostring(v).." ("..type(v)..")")
+        end
+        if type(_message) == 'string' then
+          card_eval_status_text(source, 'extra', nil, nil, nil, {message = _message,instant = true})
+        end
+      end
+      play_sound(sound or 'generic1')
+      return true
+    end
+  }))
+end
+
+pokermon.ui.generate_illusion = function(other_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  -- Create the illusion joker's text boxes
+  local old_ability = card.ability
+  card.ability = copy_table(old_ability)
+  for k, v in pairs(other_center.config) do card.ability[k] = v end
+  other_center:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  card.ability = old_ability
+  -- Adds the "...?" to the end of the name
+  if next(full_UI_table.name[1].nodes) then
+    local name_nodes = full_UI_table.name[1].nodes
+    local dynatext = name_nodes[#name_nodes].nodes[1].config.object
+    dynatext.string = dynatext.string .. localize("poke_illusion")
+    dynatext.config.string = {dynatext.string}
+    dynatext.strings = {}
+    dynatext:update_text(true)
+  end
+end
+
+pokermon.ui.set_card_type_badge = function(card, badges, center)
+  if not center then center = card.config.center end
+
+  local card_type = SMODS.Rarity:get_rarity_badge(center.rarity)
+  local card_type_colour = get_type_colour(center, card)
+  local card_type_text_colour = SMODS.get_card_type_text_colour('Joker', center, card)
+
+  badges[#badges+1] = create_badge(card_type, card_type_colour, card_type_text_colour, 1.2)
+end
+
 -- Collection Grid UI helper functions
-function poke_create_your_collection_card(key, x, y, params)
+pokermon.ui.create_your_collection_card = function(key, x, y, params)
   local form = type(key == 'table') and key.form
   local center_key = type(key == 'table') and key.key or key
   local center = G.P_CENTERS[center_key]
@@ -166,7 +244,7 @@ local function populate_cardareas(keys, options)
   local page = options.page or 1
   local rows = options.rows or 3
   local cols = options.cols or 5
-  local create_card_func = options.create_card_func or poke_create_your_collection_card
+  local create_card_func = options.create_card_func or pokermon.ui.create_your_collection_card
   local offset = rows * cols * (page - 1)
 
   local marker = 1 + offset
@@ -187,7 +265,7 @@ local function populate_cardareas(keys, options)
   end
 end
 
-function poke_create_UIBox_your_collection(args)
+pokermon.ui.create_UIBox_your_collection = function(args)
   -- Fix for cards not realizing they're in a collection,
   -- because the collection gets initialized *after* the cards do
   -- -- Vanilla cards work without this because the joker collection is nested within a second overlay
@@ -202,7 +280,7 @@ function poke_create_UIBox_your_collection(args)
   local keys = args.keys or {}
   local rows = args.rows or 3
   local cols = args.cols or 5
-  local create_card_func = args.create_card_func or poke_create_your_collection_card
+  local create_card_func = args.create_card_func or pokermon.ui.create_your_collection_card
 
   local page_text = args.page_text or localize('k_page')
   local show_pagination = true
@@ -320,7 +398,7 @@ local function first_to_upper(str)
   return str:gsub("^%l", string.upper)
 end
 
-function poke_UIBox_link_button(args)
+pokermon.ui.UIBox_link_button = function(args)
   local domain_name, path = parse_url(args.url)
 
   args.button = 'pokermon_open_site'
@@ -404,10 +482,10 @@ end
 
 
 -- Toggle function for Stake + Sticker Skins
-G.FUNCS.toggle_pokermon_skins = function()
+G.FUNCS.poke_toggle_pokermon_skins = function()
   local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
   for k, _ in pairs(G.P_STAKES) do
-    if table.contains(vanilla_stakes, k) then
+    if pokermon.has(vanilla_stakes, k) then
       if pokermon_config.stake_skins then
         SMODS.Stake:take_ownership(k, { atlas = "poke_pokestakes" }, true)
         G.shared_stickers[string.sub(k, 7, -1)].atlas = SMODS.get_atlas("poke_pokestakes_stickers")

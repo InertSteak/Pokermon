@@ -222,8 +222,8 @@ jd_def["j_poke_lopunny"] = {
         found_ranks[playing_card:get_id()] = true
       end
     end
-    if G.scry_view then
-      for _, scry_card in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for _, scry_card in pairs(G.poke_scry_view.cards) do
         if found_ranks[scry_card:get_id()] then
           Xmult = card.ability.extra.Xmult
           break
@@ -247,8 +247,8 @@ jd_def["j_poke_mega_lopunny"] = {
   },
   calc_function = function(card)
     local Xmult = 1
-    if G.scry_view then
-      local text, poker_hands, _ = JokerDisplay.evaluate_hand(G.scry_view.cards)
+    if G.poke_scry_view then
+      local text, poker_hands, _ = JokerDisplay.evaluate_hand(G.poke_scry_view.cards)
       if poker_hands[text] and next(poker_hands[text]) then
         if (SMODS.Mods["Talisman"] or {}).can_load then
           Xmult = to_number(G.GAME.hands[text].level) or 1
@@ -294,7 +294,7 @@ jd_def["j_poke_honchkrow"] = {
         local count = 0
         if G.jokers then
             for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Dark") then
+                if joker_card.config.center.rarity and pokermon.is_type(joker_card, "Dark") then
                     count = count + 1
                 end
             end
@@ -303,7 +303,7 @@ jd_def["j_poke_honchkrow"] = {
         card.joker_display_values.localized_text = "Dark"
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = (is_type(card, "Dark") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+        return { x_mult = (pokermon.is_type(card, "Dark") and mod_joker.ability.extra.Xmult_multi ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
 }
 --	Glameow
@@ -522,7 +522,7 @@ jd_def["j_poke_magnezone"] = {
         },
     },
     calc_function = function(card)
-        local metal = #find_pokemon_type("Metal")
+        local metal = #pokermon.find_pokemon_type("Metal")
         local count = 0
         local playing_hand = next(G.play.cards)
         local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
@@ -580,7 +580,7 @@ jd_def["j_poke_rhyperior"] = {
   retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
     if held_in_hand then return 0 end
 
-    local rhytriggers = 1 + math.floor(#find_pokemon_type("Earth") / 3)
+    local rhytriggers = 1 + math.floor(#pokermon.find_pokemon_type("Earth") / 3)
     return playing_card.ability.effect == "Stone Card" and (rhytriggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
   end
 }
@@ -725,28 +725,19 @@ end
 
 --	Leafeon
 jd_def["j_poke_leafeon"] = {
-  reminder_text = {
-      { text = "(" },
-      { ref_table = "card.ability.extra",        ref_value = "h_size" },
-      { text = "/" },
-      { ref_table = "card.ability.extra", ref_value = "h_size_limit" },
-      { text = ")" },
+  text = {
+    { ref_table ="card.joker_display_values", ref_value = "active", colour = G.C.GREY }
   },
-  reminder_text_config = { scale = 0.35 },
+  calc_function = function(card)
+    card.joker_display_values.active = (G.GAME.poke_lucky_triggers and G.GAME.poke_lucky_triggers > 0 and localize("jdis_active") or localize("jdis_inactive"))
+  end
 }
 
 --	Glaceon
 jd_def["j_poke_glaceon"] = {
-  extra = {
-    {
-      { text = "(", colour=G.C.GREEN, scale = 0.3 },
-      { ref_table = "card.joker_display_values", ref_value = "odds", colour = G.C.GREEN, scale = 0.3 },
-      { text = ")", colour=G.C.GREEN, scale = 0.3 },
-    },
-  },
-  calc_function = function(card)
-    local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'glaceon')
-    card.joker_display_values.odds = localize { type = 'variable', key = "jdis_odds", vars = { num, dem } }
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    if held_in_hand then return 0 end
+    return SMODS.has_enhancement(playing_card, 'm_glass') and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
   end
 }
 
@@ -851,7 +842,7 @@ jd_def["j_poke_porygonz"] = {
         },
     },
     calc_function = function(card)
-        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * card.ability.extra.Xmult_mod
         card.joker_display_values.Xmult = Xmult
     end
 }
@@ -870,7 +861,7 @@ jd_def["j_poke_gallade"] = {
     local energized_jokers = 0
     local energize_target = card.ability.extra.e_level
     for k, v in ipairs(G.jokers.cards) do
-      if get_total_energy(v) >= energize_target then
+      if pokermon.energy.get_total_energy(v) >= energize_target then
         energized_jokers = energized_jokers + 1
       end
     end

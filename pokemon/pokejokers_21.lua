@@ -1,4 +1,57 @@
 -- Klinklang 601
+local klinklang = {
+	name = "klinklang",
+	--pos = {x = 0, y = 40},
+	config = {extra = {money = 1, Xmult = 1, Xmult_mod = 0.4, Xmult2 = 1, drawn = 0, to_draw = 8}},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), abbr.Xmult, abbr.Xmult_mod}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 8,
+	stage = "Two",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.MULT
+        })
+      
+				local earned = pokermon.ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		if context.joker_main then
+			return {
+        xmult = card.ability.extra.Xmult
+			}
+		end
+    
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+	end,
+}
 -- Tynamo 602
 -- Eelektrik 603
 -- Eelektross 604
@@ -8,7 +61,7 @@ local elgyem={
   pos = {x = 13, y = 7},
   config = {extra = {top_planets = 5,  current_planet_count = 0}, evo_rqmt = 5},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
@@ -60,7 +113,7 @@ local elgyem={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
     end
-    return scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_beheeyem", card.ability.extra.current_planet_count, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -89,7 +142,7 @@ local beheeyem={
   pos = {x = 0, y = 8},
   config = {extra = {top_planets = 3, boosters_to_open = 9}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     end
@@ -190,7 +243,7 @@ local litwick={
   pos = {x = 1, y = 8},
   config = {extra = {mult = 3, money_minus = 1, sell_goal = 7}, evo_rqmt = 13},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -216,12 +269,12 @@ local litwick={
       }
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      local adjacent = poke_get_adjacent_jokers(card)
+      local adjacent = pokermon.get_adjacent_jokers(card)
       for _, v in ipairs(adjacent) do
-        poke_drain(card, v, card.ability.extra.money_minus)
+        pokermon.drain_value(card, v, card.ability.extra.money_minus)
       end
     end
-    return scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_lampent", card.sell_cost, self.config.evo_rqmt)
   end,
   attributes = {"drain", "mult", "sell_value", "scaling", "scaling_evo"},
 }
@@ -231,7 +284,7 @@ local lampent={
   pos = {x = 2, y = 8},
   config = {extra = {money_minus = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_drain'}
     end
@@ -256,11 +309,11 @@ local lampent={
     if context.end_of_round and not context.individual and not context.repetition then
       for _, v in ipairs(G.jokers.cards) do
         if v ~= card then
-          poke_drain(card, v, card.ability.extra.money_minus)
+          pokermon.drain_value(card, v, card.ability.extra.money_minus)
         end
       end
     end
-    return item_evo(self, card, context, "j_poke_chandelure")
+    return pokermon.item_evo(self, card, context, "j_poke_chandelure")
   end,
   attributes = {"drain", "mult", "sell_value", "joker", "scaling", "item_evo"},
 }
@@ -270,7 +323,7 @@ local chandelure={
   pos = {x = 3, y = 8},
   config = {extra = {Xmult_multi = 1.3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult_multi, center.sell_cost}}
   end,
   rarity = "poke_safari",
@@ -406,10 +459,10 @@ local golett={
   pos = {x = 2, y = 9},
   config = {extra = {hazard_level = 1, Xmult_multi = 1.2, rounds = 5, num = 1, dem = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golett')
@@ -442,13 +495,13 @@ local golett={
         end
       end
     end
-    return level_evo(self, card, context, "j_poke_golurk")
+    return pokermon.level_evo(self, card, context, "j_poke_golurk")
   end,
   add_to_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "xmult", "chance", "round_evo"},
 }
@@ -458,10 +511,10 @@ local golurk={
   pos = {x = 3, y = 9},
   config = {extra = {hazard_level = 1, interval = 3, Xmult_multi = 1.3, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     -- just to shorten function
     local abbr = center.ability.extra
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
     
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'golurk')
@@ -496,10 +549,10 @@ local golurk={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "xmult", "chance"},
 }
@@ -509,7 +562,7 @@ local pawniard={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,}, evo_rqmt = 2},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, self.config.evo_rqmt}}
   end,
   rarity = 3,
@@ -544,7 +597,7 @@ local pawniard={
         Xmult = card.ability.extra.Xmult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_bisharp", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "face", "scaling", "scaling_evo"},
 }
@@ -554,7 +607,7 @@ local bisharp={
   pos = {x = 0, y = 0},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25,kings_destroyed = 0}, evo_rqmt = 3},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, math.max(0, self.config.evo_rqmt - center.ability.extra.kings_destroyed)}}
   end,
   rarity = "poke_safari",
@@ -601,7 +654,7 @@ local bisharp={
         remove = true
       }
     end
-    return scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_kingambit", card.ability.extra.kings_destroyed, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "face", "hands", "destroy_card", "scaling", "condition_evo"},
 }
@@ -611,5 +664,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure, shelmet, accelgor, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, shelmet, accelgor, golett, golurk, pawniard, bisharp},
 }

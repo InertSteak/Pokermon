@@ -20,7 +20,7 @@ local nickit={
   pos = {x = 3, y = 1},
   config = {extra = {money = 3, rounds = 5}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -31,10 +31,10 @@ local nickit={
   gen = 8,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_thievul")
+    return pokermon.level_evo(self, card, context, "j_poke_thievul")
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "nickit", card.ability.extra.money, true)
+    return pokermon.ease_poke_dollars(card, "nickit", card.ability.extra.money, true)
 	end,
   attributes = {"economy", "round_evo"},
 }
@@ -43,7 +43,7 @@ local thievul={
   name = "thievul", 
   pos = {x = 4, y = 1}, 
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {(G.jokers and G.jokers.cards and G.jokers.cards[1] and G.jokers.cards[1] ~= center and math.min(G.jokers.cards[1].sell_cost*2, 15)) or 0}}
   end,
   rarity = "poke_safari", 
@@ -55,7 +55,7 @@ local thievul={
   blueprint_compat = false,
   calc_dollar_bonus = function(self, card)
     if #G.jokers.cards > 1 and G.jokers.cards[1] ~= card then
-			return ease_poke_dollars(card, "thievul", math.min(G.jokers.cards[1].sell_cost*2, 15), true)
+			return pokermon.ease_poke_dollars(card, "thievul", math.min(G.jokers.cards[1].sell_cost*2, 15), true)
     end
 	end,
   attributes = {"economy", "sell_value"},
@@ -72,7 +72,7 @@ local yamper={
   pos = {x = 11, y = 1}, 
   config = {extra = {mult = 3, money = 3, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.mult, center.ability.extra.money, center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -85,7 +85,7 @@ local yamper={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
-        ease_poke_dollars(card, "yamper", card.ability.extra.money)
+        pokermon.ease_poke_dollars(card, "yamper", card.ability.extra.money)
         return {
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}, 
           colour = G.C.MULT,
@@ -93,7 +93,7 @@ local yamper={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_boltund")
+    return pokermon.level_evo(self, card, context, "j_poke_boltund")
   end,
   attributes = {"mult", "economy", "hand_type", "round_evo"},
 }
@@ -103,7 +103,7 @@ local boltund={
   pos = {x = 12, y = 1}, 
   config = {extra = {Xmult = 2, money = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.money}}
   end,
   rarity = 3, 
@@ -116,7 +116,7 @@ local boltund={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Straight']) then
-        ease_poke_dollars(card, "boltund", card.ability.extra.money)
+        pokermon.ease_poke_dollars(card, "boltund", card.ability.extra.money)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
           colour = G.C.MULT,

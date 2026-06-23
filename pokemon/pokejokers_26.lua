@@ -101,12 +101,12 @@ local golisopod={
 -- Mimikyu 778
 local mimikyu={
   name = "mimikyu",
-  pos = {x = 2, y = 5},
+  pos = {x = 24, y = 51},
   broke_pos = {x = 4, y = 4},
-  config = {extra = {chips = 80, suit = "Hearts", disguise = true}},
+  config = {extra = {chips = 80, suit = "Hearts"}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), center.ability.extra.disguise and 
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), not center.ability.extra.disguise_broken and 
                     localize('poke_disguise_intact') or localize('poke_disguise_broken')}}
   end,
   rarity = 2,
@@ -137,7 +137,7 @@ local mimikyu={
         end
       end
     end
-    if context.end_of_round and context.game_over and card.ability.extra.disguise then
+    if context.end_of_round and context.game_over and not card.ability.extra.disguise_broken then
         local chips = 0
         local blind_chips = 0
         local save = false
@@ -147,7 +147,7 @@ local mimikyu={
           save = true
         end
         if save then
-          card.ability.extra.disguise = false
+          card.ability.extra.disguise_broken = true
           card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
           card.children.center:set_sprite_pos(card.config.center.broke_pos)
           
@@ -179,15 +179,16 @@ local mimikyu={
       end
   end,
   set_sprites = function(self, card, front)
-    if card and card.ability and card.ability.extra and not card.ability.extra.disguise then
+    if card and card.ability and card.ability.extra and card.ability.extra.disguise_broken then
       card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
       card.children.center:set_sprite_pos(card.config.center.broke_pos)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
+      card.ability.extra.disguise_broken = nil
       card.children.center:set_sprite_pos(card.config.center.pos)
-      card.ability.extra.disguise = true
+      self:set_sprites(card)
     end
   end,
   attributes = {"chips", "suit", "hearts", "prevents_death"},

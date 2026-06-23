@@ -5,7 +5,7 @@ local mew ={
   soul_pos = { x = 0, y = 12},
   config = {extra = {percent = 15}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -29,7 +29,7 @@ local mew ={
       else
         --create random consumable and apply negative
         local sets = {{set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE}, {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, 
-                      {set = "Item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink}}
+                      {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink}}
         local creation = pseudorandom_element(sets, pseudoseed('mewcreate'))
         
         local consum = SMODS.add_card{set = creation.set, edition = 'e_negative', key_append = 'mew'}
@@ -46,7 +46,7 @@ local chikorita = {
   pos = {x = 0, y = 0},
   config = {extra = {money = 1, h_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -69,14 +69,14 @@ local chikorita = {
       if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-        local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
         return {
             dollars = earned,
             card = context.other_card or card,
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_bayleef")
+    return pokermon.level_evo(self, card, context, "j_poke_bayleef")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -92,7 +92,7 @@ local bayleef = {
   pos = {x = 1, y = 0},
   config = {extra = {money = 1, h_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money, card.ability.extra.rounds,}}
   end,
   rarity = "poke_safari",
@@ -114,14 +114,14 @@ local bayleef = {
       if beyond then
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-        local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
         return {
             dollars = earned,
             card = context.other_card or card,
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_meganium")
+    return pokermon.level_evo(self, card, context, "j_poke_meganium")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -137,7 +137,7 @@ local meganium = {
   pos = {x = 2, y = 0},
   config = {extra = {money = 1, h_size = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.money}}
   end,
   rarity = "poke_safari",
@@ -151,7 +151,7 @@ local meganium = {
     if context.end_of_round and context.individual and context.cardarea == G.hand then
       G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
       G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
-      local earned = ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
+      local earned = pokermon.ease_poke_dollars(card, 'chikorita', card.ability.extra.money, true)
       return {
           dollars = earned,
           card = context.other_card or card,
@@ -172,7 +172,7 @@ local cyndaquil = {
   pos = {x = 3, y = 0},
   config = {extra = {mult = 4, d_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.rounds, card.ability.extra.mult * G.GAME.current_round.discards_left}}
   end,
   rarity = 2,
@@ -193,7 +193,7 @@ local cyndaquil = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_quilava")
+    return pokermon.level_evo(self, card, context, "j_poke_quilava")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -211,7 +211,7 @@ local quilava = {
   pos = {x = 4, y = 0},
   config = {extra = {mult = 8, d_size = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.rounds, card.ability.extra.mult * G.GAME.current_round.discards_left}}
   end,
   rarity = "poke_safari",
@@ -231,7 +231,7 @@ local quilava = {
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_typhlosion")
+    return pokermon.level_evo(self, card, context, "j_poke_typhlosion")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -249,7 +249,7 @@ local typhlosion = {
   pos = {x = 5, y = 0},
   config = {extra = {mult = 8, Xmult = 0.3, d_size = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.Xmult, card.ability.extra.mult * G.GAME.current_round.discards_left, 
                     1 + (card.ability.extra.Xmult * G.GAME.current_round.discards_left)}}
   end,
@@ -288,7 +288,7 @@ local totodile = {
   pos = {x = 6, y = 0},
   config = {extra = {chips = 0, chip_mod = 4, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -322,7 +322,7 @@ local totodile = {
         colour = G.C.CHIPS
       }
     end
-    return level_evo(self, card, context, "j_poke_croconaw")
+    return pokermon.level_evo(self, card, context, "j_poke_croconaw")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -332,7 +332,7 @@ local totodile = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
@@ -342,7 +342,7 @@ local croconaw = {
   pos = {x = 7, y = 0},
   config = {extra = {chips = 0, chip_mod = 7, hands = 1, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
@@ -375,7 +375,7 @@ local croconaw = {
         colour = G.C.CHIPS
       }
     end
-    return level_evo(self, card, context, "j_poke_feraligatr")
+    return pokermon.level_evo(self, card, context, "j_poke_feraligatr")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -385,7 +385,7 @@ local croconaw = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset", "round_evo"},
 }
@@ -395,7 +395,7 @@ local feraligatr = {
   pos = {x = 8, y = 0},
   config = {extra = {chips = 0, chip_mod = 10, hands = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chip_mod, card.ability.extra.chips}}
   end,
   rarity = "poke_safari",
@@ -437,7 +437,7 @@ local feraligatr = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
-    poke_ease_hands_played(-card.ability.extra.hands)
+    pokermon.ease_hands_played(-card.ability.extra.hands)
   end,
   attributes = {"starter", "hands", "passive", "chips", "scaling", "reset"},
 }
@@ -455,7 +455,7 @@ local sentret={
   blueprint_compat = true,
   perishable_compat = false,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
@@ -480,7 +480,7 @@ local sentret={
         mult = card.ability.extra.mult
       }
     end
-    return scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_furret", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.last_hand = G.GAME.last_hand_played
@@ -501,7 +501,7 @@ local furret={
   blueprint_compat = true,
   perishable_compat = false,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize("poke_none")}}
   end,
   calculate = function(self, card, context)
@@ -531,7 +531,7 @@ local hoothoot={
   pos = {x = 1, y = 1},
   config = {extra = {scry = 2, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
 		return {vars = {card.ability.extra.scry, card.ability.extra.rounds}}
   end,
@@ -544,8 +544,8 @@ local hoothoot={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
-        local chips = poke_total_chips(context.other_card)
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
+        local chips = pokermon.total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           message_card = context.other_card,
@@ -555,13 +555,13 @@ local hoothoot={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_noctowl")
+    return pokermon.level_evo(self, card, context, "j_poke_noctowl")
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
   attributes = {"foresight", "chips", "round_evo"},
 }
@@ -571,11 +571,11 @@ local noctowl={
   pos = {x = 2, y = 1},
   config = {extra = {scry = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
 		return {vars = {card.ability.extra.scry}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 7,
   stage = "One",
   ptype = "Colorless",
@@ -584,8 +584,8 @@ local noctowl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
-        local chips = poke_total_chips(context.other_card)
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
+        local chips = pokermon.total_chips(context.other_card)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {chips}},
           message_card = context.other_card,
@@ -597,10 +597,10 @@ local noctowl={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
   end,
   attributes = {"foresight", "chips"},
 }
@@ -610,7 +610,7 @@ local ledyba={
   pos = {x = 3, y = 1},
   config = {extra = {mult = 1,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
     return {vars = {center.ability.extra.mult, center.ability.extra.rounds, center.ability.extra.mult * math.floor(deck_count/5)}}
   end,
@@ -633,7 +633,7 @@ local ledyba={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_ledian")
+    return pokermon.level_evo(self, card, context, "j_poke_ledian")
   end,
   attributes = {"mult", "round_evo"},
 }
@@ -643,11 +643,11 @@ local ledian={
   pos = {x = 4, y = 1},
   config = {extra = {mult = 1,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local deck_count = (G.deck and G.deck.cards) and #G.deck.cards or 0
     return {vars = {center.ability.extra.mult, center.ability.extra.mult * math.floor(deck_count/3)}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 5,
   stage = "One",
   ptype = "Grass",
@@ -675,7 +675,7 @@ local spinarak={
   pos = {x = 5, y = 1},
   config = {extra = {chips = 40, chips2 = 90, num = 1, dem = 3,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'spinarak')
     return {vars = {center.ability.extra.chips, num, dem, center.ability.extra.rounds, center.ability.extra.chips2}}
   end,
@@ -702,7 +702,7 @@ local spinarak={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_ariados")
+    return pokermon.level_evo(self, card, context, "j_poke_ariados")
   end,
   attributes = {"chips", "chance", "round_evo"},
 }
@@ -712,11 +712,11 @@ local ariados={
   pos = {x = 6, y = 1},
   config = {extra = {chips = 60, chips2 = 135, num = 1, dem = 3}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'ariados')
     return {vars = {center.ability.extra.chips, num, dem, center.ability.extra.chips2}}
   end,
-  rarity = 2,
+  rarity = "poke_safari",
   cost = 5,
   stage = "One",
   ptype = "Grass",
@@ -748,7 +748,7 @@ local crobat={
   pos = {x = 7, y = 1},
   config = {extra = {mult = 0, mult_mod = 2, chips = 0, chip_mod = 15, Xmult = 1, Xmult_mod = .1, money = 0, money_mod = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'bat_leech'}
     return {vars = {center.ability.extra.mult, center.ability.extra.mult_mod, center.ability.extra.chips, center.ability.extra.chip_mod, center.ability.extra.Xmult, center.ability.extra.Xmult_mod,                    center.ability.extra.money, center.ability.extra.money_mod}}
   end,
@@ -815,6 +815,12 @@ local crobat={
       if d_count > 0 then
         scale_crobat('money', 'money_mod', d_count)
       end
+
+      if m_count > 0 or c_count > 0 or x_count > 0 or d_count > 0 then
+        return {
+          message = localize("poke_leech_life_ex"),
+        }
+      end
     end
     if context.joker_main then
       return {
@@ -828,7 +834,7 @@ local crobat={
   end,
   calc_dollar_bonus = function(self, card)
     if card.ability.extra.money > 0 then
-      return ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
+      return pokermon.ease_poke_dollars(card, "crobat", card.ability.extra.money, true)
     end
 	end,
   attributes = {"chips", "mult", "xmult", "economy", "modify_card", "enhancements", "scaling"},
@@ -839,7 +845,7 @@ local chinchou={
   pos = {x = 8, y = 1},
   config = {extra = {chips = 40,money = 1,rounds = 4,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.money, center.ability.extra.rounds, }}
   end,
   rarity = 1,
@@ -854,7 +860,7 @@ local chinchou={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
-        local earned = ease_poke_dollars(card, "chinchou", card.ability.extra.money, true)
+        local earned = pokermon.ease_poke_dollars(card, "chinchou", card.ability.extra.money, true)
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
           colour = G.C.CHIPS,
@@ -863,7 +869,7 @@ local chinchou={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_lanturn")
+    return pokermon.level_evo(self, card, context, "j_poke_lanturn")
   end,
   attributes = {"chips", "economy", "hand_type", "round_evo"},
 }
@@ -873,9 +879,9 @@ local lanturn={
   pos = {x = 9, y = 1},
   config = {extra = {chips = 60, chip_mod = 20, money = 1, money_mod = 1,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
-    local Money = center.ability.extra.money + (center.ability.extra.money_mod * #find_pokemon_type("Lightning"))
-    local Chips = center.ability.extra.chips + (center.ability.extra.chip_mod * #find_pokemon_type("Water"))
+    pokermon.type_tooltip(self, info_queue, center)
+    local Money = center.ability.extra.money + (center.ability.extra.money_mod * #pokermon.find_pokemon_type("Lightning"))
+    local Chips = center.ability.extra.chips + (center.ability.extra.chip_mod * #pokermon.find_pokemon_type("Water"))
     return {vars = {center.ability.extra.chips, center.ability.extra.money, center.ability.extra.chip_mod, center.ability.extra.money_mod, Money, Chips}}
   end,
   rarity = 2,
@@ -890,9 +896,9 @@ local lanturn={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and next(context.poker_hands['Pair']) then
-        local Money = card.ability.extra.money + (card.ability.extra.money_mod * #find_pokemon_type("Lightning"))
-        local earned = ease_poke_dollars(card, "lanturn", Money, true)
-        local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #find_pokemon_type("Water"))
+        local Money = card.ability.extra.money + (card.ability.extra.money_mod * #pokermon.find_pokemon_type("Lightning"))
+        local earned = pokermon.ease_poke_dollars(card, "lanturn", Money, true)
+        local Chips = card.ability.extra.chips + (card.ability.extra.chip_mod * #pokermon.find_pokemon_type("Water"))
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {Chips}}, 
           colour = G.C.CHIPS,
@@ -910,7 +916,7 @@ local pichu={
   pos = {x = 0, y = 2},
   config = {extra={money = 10, Xmult_minus = 0.75, rounds = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     return {vars = {center.ability.extra.money, center.ability.extra.Xmult_minus, center.ability.extra.rounds}}
   end,
@@ -924,7 +930,7 @@ local pichu={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -932,10 +938,10 @@ local pichu={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_pikachu")
+    return pokermon.level_evo(self, card, context, "j_poke_pikachu")
   end,
   calc_dollar_bonus = function(self, card)
-    return ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
+    return pokermon.ease_poke_dollars(card, "pichu", card.ability.extra.money, true)
 	end,
   attributes = {"baby", "economy", "round_evo"},
 }
@@ -945,7 +951,7 @@ local cleffa={
   pos = {x = 1, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -965,7 +971,7 @@ local cleffa={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -981,7 +987,7 @@ local cleffa={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_clefairy")
+    return pokermon.level_evo(self, card, context, "j_poke_clefairy")
   end,
   attributes = {"baby", "tarot", "generation", "space", "round_evo"},
 }
@@ -991,7 +997,7 @@ local igglybuff={
   pos = {x = 2, y = 2},
   config = {extra = {Xmult_minus = 0.75,rounds = 2,}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
@@ -1011,7 +1017,7 @@ local igglybuff={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context) 
+        pokermon.faint_baby_poke(self, card, context) 
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult_minus}}, 
           colour = G.C.XMULT,
@@ -1027,7 +1033,7 @@ local igglybuff={
         end
       }))
     end
-    return level_evo(self, card, context, "j_poke_jigglypuff")
+    return pokermon.level_evo(self, card, context, "j_poke_jigglypuff")
   end,
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
@@ -1049,7 +1055,7 @@ local togepi={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        faint_baby_poke(self, card, context)
+        pokermon.faint_baby_poke(self, card, context)
         local xmult = 20 * (card.ability.extra.Xmult1 + pseudorandom('togepi') * (card.ability.extra.Xmult2 - card.ability.extra.Xmult1))
         xmult = math.floor(xmult + 0.5) / 20
         return {
@@ -1059,7 +1065,7 @@ local togepi={
         }
       end
     end
-    return level_evo(self, card, context, "j_poke_togetic")
+    return pokermon.level_evo(self, card, context, "j_poke_togetic")
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or self
@@ -1068,7 +1074,7 @@ local togepi={
 		end
 
     info_queue[#info_queue+1] = {set = 'Other', key = 'baby'}
-    type_tooltip(_c, info_queue, card)
+    pokermon.type_tooltip(_c, info_queue, card)
 
     local r_mults = {}
     for i = card.ability.extra.Xmult1 * 20, card.ability.extra.Xmult2 * 20 do
@@ -1090,7 +1096,7 @@ local togetic={
   pos = {x = 4, y = 2},
   config = {extra = {num = 1, chip_dem = 5, Xmult_dem = 10, chips = 100, Xmult_multi = 1.5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.c_poke_shinystone
     end
@@ -1133,7 +1139,7 @@ local togetic={
 
       return ret
     end
-    return item_evo(self, card, context, "j_poke_togekiss")
+    return pokermon.item_evo(self, card, context, "j_poke_togekiss")
   end,
   attributes = {"enhancements", "chance", "chips", "xmult", "item_evo"},
 }
@@ -1143,7 +1149,7 @@ local natu = {
   pos = {x = 5, y = 2},
   config = {levels = {}, extra = {level_amt = 1, rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -1180,7 +1186,7 @@ local natu = {
         break
       end
     end
-    return level_evo(self, card, context, "j_poke_xatu")
+    return pokermon.level_evo(self, card, context, "j_poke_xatu")
   end,
   set_sprites = function(self, card, front)
     for hand, data in pairs(G.GAME.hands) do
@@ -1195,7 +1201,7 @@ local xatu = {
   pos = {x = 6, y = 2},
   config = {levels = {}, extra = {level_amt = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.level_amt}}
   end,
   rarity = "poke_safari",
@@ -1246,7 +1252,7 @@ local mareep={
   pos = {x = 7, y = 2},
   config = {extra = {Xmult = 1,Xmult_mod = 0.1, Xmult_minus = 0.1}, evo_rqmt = 1.5},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.Xmult_minus, self.config.evo_rqmt}}
   end,
   rarity = 2,
@@ -1279,7 +1285,7 @@ local mareep={
         message_key = 'a_xmult_minus'
       })
     end
-    return scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_flaaffy", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "scaling", "scaling_evo"},
 }
@@ -1289,7 +1295,7 @@ local flaaffy={
   pos = {x = 8, y = 2},
   config = {extra = {Xmult = 1,Xmult_mod = 0.25, Xmult_minus = 0.1}, evo_rqmt = 2.5},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod, center.ability.extra.Xmult_minus, self.config.evo_rqmt}}
   end,
   rarity = "poke_safari",
@@ -1321,7 +1327,7 @@ local flaaffy={
         message_key = 'a_xmult_minus'
       })
     end
-    return scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_ampharos", card.ability.extra.Xmult, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "scaling", "scaling_evo"},
 }
