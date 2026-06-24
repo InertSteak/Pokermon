@@ -1,3 +1,57 @@
+local falinks = {
+  name = "falinks",
+  pos = { x = 7, y = 4 },
+  config = { extra = {chip_mod = 50, mult_mod = 10, Xmult_mod = 0.5, hand_mod = 1, lost_hands = 0}},
+  loc_vars = function(self, info_queue, card)
+    type_tooltip(self, info_queue, card)
+    return { vars = {card.ability.extra.chip_mod, card.ability.extra.mult_mod, 1 + card.ability.extra.Xmult_mod, card.ability.extra.hand_mod} }
+  end,
+  rarity = 3,
+  cost = 9,
+  stage = "Basic",
+  ptype = "Fighting",
+  atlas = "Pokedex8",
+  volatile = true,
+  blueprint_compat = false,
+  perishable_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    if context.setting_blind then
+		card.ability.eternal = true
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_falinks_ex')})
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.hand_mod
+		ease_discard(card.ability.extra.hand_mod)
+		G.hand:change_size(card.ability.extra.hand_mod)
+		if not (G.GAME.blind.boss and G.GAME.blind.name == 'The Needle' and not G.GAME.blind.disabled) then
+			local starting_hands = G.GAME.round_resets.hands
+			G.GAME.round_resets.hands = card.ability.extra.hand_mod
+			card.ability.extra.lost_hands = starting_hands - G.GAME.round_resets.hands
+			ease_hands_played(-card.ability.extra.lost_hands)
+		end
+	end
+	if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+		return {
+          message = "Forward!",
+          colour = G.C.BLACK,
+          mult_mod = card.ability.extra.mult_mod,
+          chip_mod = card.ability.extra.chip_mod,
+          Xmult_mod = 1 + card.ability.extra.Xmult_mod
+        }
+	end
+	 if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+	    card.ability.eternal = false
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+		if not (G.GAME.blind.boss and G.GAME.blind.name == 'The Needle' and not G.GAME.blind.disabled) then
+			G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.lost_hands 
+			ease_hands_played(card.ability.extra.lost_hands)
+			ease_discard(-card.ability.extra.hand_mod)
+			card.ability.extra.lost_hands = 0
+		end
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.hand_mod
+		G.hand:change_size(-card.ability.extra.hand_mod)
+	 end
+  end,
+}
 -- Pincurchin 871
 -- Snom 872
 -- Frosmoth 873
@@ -5,6 +59,71 @@
 -- Eiscue 875
 -- Indeedee 876
 -- Morpeko 877
+local morpeko={
+  name = "morpeko",
+  pos = {x = 0, y = 9},
+  config = {extra = {money = 1, hanger = 0.5, antes_won = 0, form = 0}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+  local alt_key = nil
+	if center.ability.extra.form == 0 then
+      alt_key = "j_poke_morpeko"
+  elseif center.ability.extra.form == 1 then
+      alt_key = "j_poke_morpeko_hangry"
+  end
+    return {vars = {1+(center.ability.extra.money*center.ability.extra.antes_won), center.ability.extra.money, 
+    1.25+(center.ability.extra.hanger*center.ability.extra.antes_won), center.ability.extra.hanger}, key = alt_key}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex8",
+  gen = 8,
+  pseudol = false,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    local changed = false
+    if context.cardarea == G.jokers and context.scoring_hand and context.before then
+          if card.ability.extra.form == 0 then
+		        pokermon.ease_poke_dollars(card, "morpeko", 1+(card.ability.extra.money*card.ability.extra.antes_won))
+          end
+    end
+    if context.after and not context.blueprint and not changed then
+      if card.ability.extra.form == 0 then      
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_morpeko_hanger_ex'), colour = G.C.FILTER})
+            apply_type_sticker(card, "Dark")
+            card.children.center:set_sprite_pos({x = 2, y = 9})
+            card.ability.extra.form = 1
+      else 
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_morpeko_full_ex'), colour = G.C.FILTER})
+            apply_type_sticker(card, "Lightning")
+            card.children.center:set_sprite_pos({x = 0, y = 9})
+            card.ability.extra.form = 0
+      end
+      changed = true
+    end
+
+    if context.cardarea == G.jokers and context.scoring_hand and card.ability.extra.form == 1 then
+      if context.joker_main then
+        local Xmult = math.max(1, 1.25+(card.ability.extra.hanger*card.ability.extra.antes_won))
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card.ability.extra.antes_won = card.ability.extra.antes_won + 1
+    end
+  end,
+  attributes = {"xmult", "economy"},
+}
 -- Cufant 878
 -- Copperajah 879
 -- Dracozolt 880
@@ -248,6 +367,7 @@ local dreepy_dart={
 -- Spectrier 897
 -- Calyrex 898
 -- Wyrdeer 899
+-- Kleavor 900
 local wyrdeer={
   name = "wyrdeer",
   pos = {x = 0, y = 8},
@@ -404,5 +524,5 @@ local kleavor={
   attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
 }
 return {name = "Pokemon Jokers 871-900", 
-        list = {dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
+        list = {falinks, morpeko, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

@@ -253,6 +253,26 @@ local kingambit={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
+	if context.pre_discard and not context.hook then
+      local text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+	  card.ability.extra.mult_stack = card.ability.extra.mult_stack + 2* G.GAME.hands[text].mult
+	  return {
+		message = localize { type = 'variable', key = 'a_chips', vars = { 2* G.GAME.hands[text].mult .. " Mult"} },
+		colour = G.C.MULT,
+	  }
+	end
+	if context.cardarea == G.jokers and context.scoring_hand and context.joker_main then
+	  return {
+		message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult + card.ability.extra.mult_stack }},
+		colour = G.C.MULT,
+		mult_mod = card.ability.extra.mult + card.ability.extra.mult_stack
+	  }
+	end
+	if context.end_of_round and not context.individual and not context.repetition then
+      card.ability.extra.mult_stack = 0
+      card:juice_up()
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+	end
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
         return {

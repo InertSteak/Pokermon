@@ -640,7 +640,80 @@ local sharpedo={
   attributes = {"destroy_card", "xmult", "hand_type", "generation", "spectral"},
 }
 -- Wailmer 320
+local wailmer = {
+  name = "wailmer",
+  pos = { x = 8, y = 6 },
+  config = { extra = { mult = 3, exp = 0, largest_hand_name = 'High Card'}, evo_rqmt = 40},
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  atlas = "Pokedex3",
+  ptype = "Water",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+	info_queue[#info_queue+1] = {set = 'Other', key = 'tier'}
+	local tier = get_poker_hand_tier(center.ability.extra.largest_hand_name)
+    return { vars = { center.ability.extra.mult*tier, center.ability.extra.mult, center.ability.extra.largest_hand_name, center.ability.extra.exp, self.config.evo_rqmt} }
+  end,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+		if get_poker_hand_tier(context.scoring_name) > get_poker_hand_tier(card.ability.extra.largest_hand_name) then
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+				card.ability.extra.largest_hand_name = context.scoring_name
+		end
+	end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      local tier = get_poker_hand_tier(card.ability.extra.largest_hand_name)
+		if context.joker_main and get_poker_hand_tier(context.scoring_name) == tier then 
+			card.ability.extra.exp = card.ability.extra.exp + tier
+			  return {
+				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult*tier } },
+				colour = G.C.MULT,
+				mult_mod = card.ability.extra.mult*tier
+			  }
+		end
+    end
+    return scaling_evo(self, card, context, "j_poke_wailord", card.ability.extra.exp, self.config.evo_rqmt)
+  end
+}
 -- Wailord 321
+local wailord = {
+  name = "wailord",
+  pos = { x = 9, y = 6 },
+  config = { extra = { mult = 4, Xmult = 0.2, largest_hand_name = 'High Card'}},
+  rarity = "poke_safari",
+  cost = 6,
+  stage = "Basic",
+  atlas = "Pokedex3",
+  ptype = "Water",
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+	info_queue[#info_queue+1] = {set = 'Other', key = 'tier'}
+	local tier = get_poker_hand_tier(center.ability.extra.largest_hand_name)
+    return { vars = { tier*center.ability.extra.mult, 1+center.ability.extra.Xmult*tier, center.ability.extra.mult, center.ability.extra.Xmult, center.ability.extra.largest_hand_name} }
+  end,
+  calculate = function(self, card, context)
+    if context.before then
+		if get_poker_hand_tier(context.scoring_name) > get_poker_hand_tier(card.ability.extra.largest_hand_name) then
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+			card.ability.extra.largest_hand_name = context.scoring_name
+		end
+	end
+	if context.cardarea == G.jokers and context.scoring_hand then
+	local tier = get_poker_hand_tier(card.ability.extra.largest_hand_name)
+		if context.joker_main and get_poker_hand_tier(context.scoring_name) == tier then
+			  return {
+				message = localize("poke_wailmer_ex"), 
+				colour = G.C.XMULT,
+				mult_mod = card.ability.extra.mult*tier,
+				Xmult_mod = 1+card.ability.extra.Xmult*tier
+			  }
+		 end
+    end
+  end
+}
 -- Numel 322
 local numel={
   name = "numel",
@@ -891,5 +964,6 @@ local spinda={
 -- Flygon 330
 return {
   name = "Pokemon Jokers 301-330",
-  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
+  
+  list = {delcatty, aron, lairon, aggron, meditite, medicham, plusle, minun, volbeat, illumise, roselia, wailmer, wailord, carvanha, sharpedo, numel, camerupt, mega_camerupt, torkoal, spinda},
 }

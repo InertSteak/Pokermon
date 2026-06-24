@@ -15,7 +15,80 @@
 -- Oranguru 765
 -- Passimian 766
 -- Wimpod 767
+local wimpod={
+  name = "wimpod",
+  pos = {x = 9, y = 3},
+  config = {extra = {chips = 30, rounds = 6, debuffed = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+	return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
+  end,
+  rarity = 3,
+  cost = 4,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+  --Ensure that Wimpod isn't hard countered by Needle or Water
+    if not card.ability.extra.debuffed and ((G.GAME.current_round.hands_left < 1 and G.GAME.current_round.hands_played > 1) or (G.GAME.current_round.discards_left < 1 and G.GAME.current_round.discards_used > 1)) then
+		  remove(self, card, context, true)
+		  card:set_debuff(true)
+		  card.ability.extra.debuffed = true
+		  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_wimpod_ex")})
+     end
+	if context.cardarea == G.jokers and context.scoring_hand then
+		if context.joker_main then
+		return {
+				message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}, 
+				colour = G.C.CHIPS,
+				chip_mod = card.ability.extra.chips		
+			}
+		end
+	end
+	return level_evo(self, card, context, "j_poke_golisopod")
+  end
+}
 -- Golisopod 768
+local golisopod={
+  name = "golisopod",
+  pos = {x = 10, y = 3},
+  config = {extra = {Xmult = 3, debuffed = false}},
+  loc_vars = function(self, info_queue, center)
+    type_tooltip(self, info_queue, center)
+	return {vars = {center.ability.extra.Xmult}}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  stage = "One",
+  ptype = "Grass",
+  atlas = "Pokedex7",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if not card.ability.extra.debuffed and  (G.GAME.current_round.discards_left < 1 or G.GAME.current_round.hands_left < 1) then
+		  card:set_debuff(true)
+		  card.ability.extra.debuffed = true
+		  card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_golisopod_ex")})
+	end
+	if context.cardarea == G.jokers and context.scoring_hand then
+		if context.joker_main then
+		return {
+				message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}}, 
+				colour = G.C.XMULT,
+				Xmult_mod = card.ability.extra.Xmult
+		}
+		end
+	end
+	
+	if context.end_of_round then
+		card.ability.extra.debuffed = false
+	end
+  end
+}
 -- Sandygast 769
 -- Palossand 770
 -- Pyukumuku 771
@@ -123,5 +196,5 @@ local mimikyu={
 -- Bruxish 779
 -- Drampa 780
 return {name = "Pokemon Jokers 751-780", 
-        list = {mimikyu},
+        list = {mimikyu, wimpod, golisopod},
 }

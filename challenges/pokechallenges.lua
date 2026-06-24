@@ -508,8 +508,328 @@ local mystery_dungeon = {
   text_colour = HEX("FFCB01"),
 }
 
-return {name = "Challenges", 
-        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+local bunnelby_test = {
+    object_type = "Challenge",
+    key = "bunnelby_test",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_bunnelby", eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
 }
 
+local wailmer_test = {
+    object_type = "Challenge",
+    key = "wailmer_test",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+        }
+    },
+    jokers = {
+      {id = "j_poke_wailmer", eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local kecleon_test = {
+    object_type = "Challenge",
+    key = "kecleon_test",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'dollars', value = 100}
+        }
+    },
+    jokers = {
+      {id = "j_poke_kecleon", eternal = true},
+    },
+	consumeables = {
+		{id = "c_poke_colorless_energy"},
+		{id = "c_poke_colorless_energy"}
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local wimpod_test = {
+    object_type = "Challenge",
+    key = "wimpod_test",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+        }
+    },
+    jokers = {
+      {id = "j_poke_wimpod", eternal = false},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local sawk_throh = {
+    object_type = "Challenge",
+    key = "sawk_throh",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 3},
+			{id = 'discards', value = 2}
+        }
+    },
+    jokers = {
+      {id = "j_poke_sawk", eternal = true},
+	  {id = "j_poke_psyduck", eternal = true},
+	  {id = "j_poke_throh", eternal = true},
+    },
+	consumeables = {
+		{id = 'c_poke_fighting_energy'},
+		{id = 'c_poke_fighting_energy'},
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+		{id = 'tag_negative'},
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local furfrou = {
+    object_type = "Challenge",
+    key = "furfrou",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_furfrou", eternal = true},
+    },
+	consumeables = {
+		{id = "c_poke_colorless_energy"},
+		{id = "c_poke_colorless_energy"}
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local ruin = {
+    object_type = "Challenge",
+    key = "ruin",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+     {id = "j_poke_chi_yu", eternal = true},
+	 {id = "j_poke_ting_lu", eternal = true},
+	 {id = "j_poke_wo_chien", eternal = true},
+	 {id = "j_poke_chien_pao", eternal = true},
+    },
+	consumeables = {
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local no_retreat = {
+    object_type = "Challenge",
+    key = "no_retreat",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_falinks", eternal = true},
+    },
+	consumeables = {
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local speed = {
+    object_type = "Challenge",
+    key = "speed",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+      {id = "j_poke_karrablast", eternal = true},
+	  {id = "j_poke_shelmet", eternal = true},
+    },
+	consumeables = {
+		{id = 'c_poke_linkcable'}
+	},
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local deer = {
+    object_type = "Challenge",
+    key = "deer",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+	  {id = "j_poke_deerling", eternal = false},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+local deer = {
+    object_type = "Challenge",
+    key = "morpeko",
+    rules = {
+        modifiers = {
+            {id = 'joker_slots', value = 5},
+			{id = 'discards', value = 2},
+        }
+    },
+    jokers = {
+	  {id = "j_poke_morpeko", eternal = true},
+    },
+    restrictions = {
+        banned_cards = {
+        },
+        banned_tags = {
+        },
+        banned_other = {
+        },
+    },
+    deck = {
+      type = 'Challenge Deck',
+    },
+	button_colour = HEX('262B91'),
+    text_colour = HEX("338FFF"),
+}
+
+return {name = "Challenges", 
+        list = {nuzlocke, goodasgold, parenthood, littlecup, hammertime, bunnelby_test, wailmer_test, kecleon_test, wimpod_test, sawk_throh, furfrou, ruin, no_retreat, speed, deer, morpeko, lonesome, randomizer, delibird_delimma, safety_first, mystery_dungeon}
+}
 

@@ -2474,6 +2474,7 @@ return {
                     "evolves or is removed"
                 }
             },
+        },
             safaridesc = {
                 name = "Safari",
                 text = {

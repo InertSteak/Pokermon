@@ -28,6 +28,8 @@
 -- Milcery 868
 -- Alcremie 869
 -- Falinks 870
+
+
 return {name = "Pokemon Jokers 841-870", 
         list = {},
 }
