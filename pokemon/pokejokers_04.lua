@@ -79,11 +79,11 @@ local gastly={
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         end
+
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
       end
-
-      SMODS.destroy_cards(card, nil, nil, true)
-
-      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
   attributes = {"chance", "editions", "round_evo"},
@@ -139,11 +139,11 @@ local haunter={
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         end
+
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
       end
-
-      SMODS.destroy_cards(card, nil, nil, true)
-
-      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
   attributes = {"chance", "editions", "item_evo"},
