@@ -2743,7 +2743,7 @@ return {
                 name = "Unown",
                 text = {
                   "{C:attention}Nature:{} {C:inactive}({C:attention}#2#{C:inactive})",
-                  "{C:mult}+#1#{} Mult if played hand",
+                  "{C:mult}+#1#{} Mult if poker hand",
                   "contains a {C:attention}Nature{} card",
                   "{br:2}ERROR - CONTACT STEAK",
                   "{S:1.1,C:red,E:2}self destructs{} at end of round",
@@ -5773,7 +5773,7 @@ return {
             j_poke_pokedex = {
                 name = 'Pokedex',
                 text = {
-                    "{C:attention}Pokemon{} from the same", 
+                    "Other {C:attention}Pokemon{} from the same", 
                     "evolutionary line may appear",
                 } 
             },
