@@ -5934,6 +5934,23 @@ return {
 				"and gain {C:attention}+#4#{} hand size and {C:red}+#4# discard{} until end of round."
               }
             },
+            j_poke_morpeko = {
+              name = "Morpeko (Full Belly)",
+              text = {
+				  "After a hand is played, gain {C:money}$#1#{}",
+                  "and transform this Joker to Hangry Mode.",
+                  "{C:inactive,s:0.8}(Money gained increases by $#2# each ante){}"
+              }
+            },
+            j_poke_morpeko_hangry = {
+              name = "Morpeko (Hangry)",
+              text = {
+				"{X:mult,C:white}X#3#{} Mult",
+                "After a hand is played, transform",
+                "this Joker into Full Belly Mode",
+                "{C:inactive,s:0.8}(XMult increases by #4# each ante){}"
+              }
+            },
             j_poke_gimmighoul = {
                 name = "Gimmighoul (Chest)",
                 text = {
@@ -7623,6 +7640,7 @@ return {
 			c_poke_no_retreat = "No Retreat",
 			c_poke_speed = "Speed",
 			c_poke_deer = "Seasons Greetings",
+            c_poke_morpeko = "Feeling Hangry",
             
         },
         dictionary = {
@@ -7817,6 +7835,8 @@ return {
 			poke_ursaring_ex = "Full Moon!",
 			poke_ursaluna_ex = "Moonblast!",
 			poke_furfrou_ex = "Trim!",
+            poke_morpeko_full_ex = "Full Belly!",
+            poke_morpeko_hanger_ex = "Hangry!",
 			poke_furfrou_revert_ex = "Revert!",
 			poke_bisharp_ex = "Guillotine!",
 			poke_falinks_ex = "No Retreat!",

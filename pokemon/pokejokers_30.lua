@@ -59,6 +59,71 @@ local falinks = {
 -- Eiscue 875
 -- Indeedee 876
 -- Morpeko 877
+local morpeko={
+  name = "morpeko",
+  pos = {x = 0, y = 9},
+  config = {extra = {money = 1, hanger = 0.5, antes_won = 0, form = 0}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+  local alt_key = nil
+	if center.ability.extra.form == 0 then
+      alt_key = "j_poke_morpeko"
+  elseif center.ability.extra.form == 1 then
+      alt_key = "j_poke_morpeko_hangry"
+  end
+    return {vars = {1+(center.ability.extra.money*center.ability.extra.antes_won), center.ability.extra.money, 
+    1.25+(center.ability.extra.hanger*center.ability.extra.antes_won), center.ability.extra.hanger}, key = alt_key}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Lightning",
+  atlas = "Pokedex8",
+  gen = 8,
+  pseudol = false,
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    local changed = false
+    if context.cardarea == G.jokers and context.scoring_hand and context.before then
+          if card.ability.extra.form == 0 then
+		        pokermon.ease_poke_dollars(card, "morpeko", 1+(card.ability.extra.money*card.ability.extra.antes_won))
+          end
+    end
+    if context.after and not context.blueprint and not changed then
+      if card.ability.extra.form == 0 then      
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_morpeko_hanger_ex'), colour = G.C.FILTER})
+            apply_type_sticker(card, "Dark")
+            card.children.center:set_sprite_pos({x = 2, y = 9})
+            card.ability.extra.form = 1
+      else 
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_morpeko_full_ex'), colour = G.C.FILTER})
+            apply_type_sticker(card, "Lightning")
+            card.children.center:set_sprite_pos({x = 0, y = 9})
+            card.ability.extra.form = 0
+      end
+      changed = true
+    end
+
+    if context.cardarea == G.jokers and context.scoring_hand and card.ability.extra.form == 1 then
+      if context.joker_main then
+        local Xmult = math.max(1, 1.25+(card.ability.extra.hanger*card.ability.extra.antes_won))
+        if Xmult > 1 then
+          return {
+            message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
+            colour = G.C.XMULT,
+            Xmult_mod = Xmult
+          }
+        end
+      end
+    end
+    if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
+      card.ability.extra.antes_won = card.ability.extra.antes_won + 1
+    end
+  end,
+  attributes = {"xmult", "economy"},
+}
 -- Cufant 878
 -- Copperajah 879
 -- Dracozolt 880
@@ -459,5 +524,5 @@ local kleavor={
   attributes = {"destroy_card", "mult", "generation", "enhancements", "scaling"},
 }
 return {name = "Pokemon Jokers 871-900", 
-        list = {falinks, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
+        list = {falinks, morpeko, dreepy, drakloak, dragapult, dreepy_dart, wyrdeer, kleavor},
 }

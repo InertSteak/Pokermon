@@ -187,6 +187,8 @@ local default_family_list = {
   { "grubbin", "charjabug", "vikavolt" },
   { "rockruff", "lycanroc_day", "lycanroc_night", "lycanroc_dusk" },
   { "wimpod", "golisopod" },
+  { { key = "morpeko", form = 0 }, { key = "morpeko", form = 1 }
+  },
   { "dreepy", "drakloak", "dragapult", "dreepy_dart" },
   { "hisuian_qwilfish", "overqwil" },
   { "nickit", "thievul" },
