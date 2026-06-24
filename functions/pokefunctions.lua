@@ -63,93 +63,84 @@ pokermon.copy_scaled_values = function(card)
   return values
 end
 
+---@deprecated use pokermon.do_evolution_anim instead
 pokermon.fake_evolve = function(card, evolve_message, set_sprites)
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        if card.poke_evolution_timer then return true end
-        card.poke_evolution_timer = 0
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 1.5,
-            delay = 2.0,
-            func = (function(t) return t end)
-        }))
-        if set_sprites then
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              card:set_sprites(card.config.center)
-              return true
-            end
-          }))
-        end
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 2.25,
-            delay = 1.0,
-            func = (function(t) return t end)
-        }))
+  local on_complete = function()
+    if set_sprites then
+      card:set_sprites(card.config.center)
+    end
+  end
+
+  pokermon.do_evolution_anim(card, on_complete, evolve_message)
+end
+
+pokermon.do_evolution_anim = function(card, on_complete, evo_message)
+  G.E_MANAGER:add_event(Event({
+    func = function()
+      if card.poke_evolution_timer then return true end
+      card.poke_evolution_timer = 0
+      G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        ref_table = card,
+        ref_value = 'poke_evolution_timer',
+        ease_to = 1.5,
+        delay = 2.0,
+        func = (function(t) return t end)
+      }))
+      if type(on_complete) == 'function' then
         G.E_MANAGER:add_event(Event({
           func = function()
-            card.poke_evolution_timer = nil
-            play_sound('tarot1')
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+            on_complete(card)
             return true
           end
         }))
-        return true
       end
-    }))
+      G.E_MANAGER:add_event(Event({
+        trigger = 'ease',
+        ref_table = card,
+        ref_value = 'poke_evolution_timer',
+        ease_to = 2.25,
+        delay = 1.0,
+        func = (function(t) return t end)
+      }))
+      G.E_MANAGER:add_event(Event({
+        func = function()
+          card.poke_evolution_timer = nil
+          play_sound('tarot1')
+          card_eval_status_text(card, 'extra', nil, nil, nil, {message = evo_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
+          return true
+        end
+      }))
+      return true
+    end
+  }))
+end
+
+local call_backend_evolve = function(card, to_key, immediate, message, energize_amount)
+  if immediate then
+    pokermon.backend_evolve(card, to_key, energize_amount)
+  elseif G.P_CENTERS[to_key] ~= card.config.center then
+    pokermon.do_evolution_anim(
+      card,
+      function() pokermon.backend_evolve(card, to_key, energize_amount) end,
+      message)
+  end
 end
 
 pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.poke_apply_randomizer and not transformation then
     to_key = pokermon.get_random_poke_key('randomizer')
   end
-  if immediate then
-    pokermon.backend_evolve(card, to_key, energize_amount)
-  else
-    G.E_MANAGER:add_event(Event({
-      func = function()
-        if card.poke_evolution_timer or G.P_CENTERS[to_key] == card.config.center then return true end
-        card.poke_evolution_timer = 0
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 1.5,
-            delay = 2.0,
-            func = (function(t) return t end)
-        }))
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            pokermon.backend_evolve(card, to_key, energize_amount)
-            return true
-          end
-        }))
-        G.E_MANAGER:add_event(Event({
-            trigger = 'ease',
-            ref_table = card,
-            ref_value = 'poke_evolution_timer',
-            ease_to = 2.25,
-            delay = 1.0,
-            func = (function(t) return t end)
-        }))
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            card.poke_evolution_timer = nil
-            play_sound('tarot1')
-            card_eval_status_text(card, 'extra', nil, nil, nil, { message = evolve_message or localize("poke_evolve_success"), colour = G.C.FILTER, instant = true})
-            return true
-          end
-        }))
-        return true
-      end
-    }))
-  end
+
+  call_backend_evolve(card, to_key, immediate, evolve_message, energize_amount)
+end
+
+pokermon.devolve = function(card, to_key, immediate, devolve_message)
+  call_backend_evolve(card, to_key, immediate, devolve_message or localize('poke_devolve_success'))
+end
+
+pokermon.change_form = function(card, to_key, immediate, transform_message)
+  call_backend_evolve(card, to_key, immediate, transform_message or localize('poke_transform_success'))
 end
 
 -- Stolen from Cardsauce
