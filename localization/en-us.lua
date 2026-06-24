@@ -7480,6 +7480,7 @@ return {
             poke_plus_shop = "+1 Shop Card",
             poke_destroyed_ex = "Destroyed!",
             poke_evolve_success = "Evolved!",
+            poke_devolve_success = "Reverted",
             poke_transform_success = "Transformed!",
             poke_evolve_level = "Level up!",
             poke_tera = "Tera",

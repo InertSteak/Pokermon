@@ -116,20 +116,31 @@ pokermon.do_evolution_anim = function(card, on_complete, evo_message)
   }))
 end
 
+local call_backend_evolve = function(card, to_key, immediate, message, energize_amount)
+  if immediate then
+    pokermon.backend_evolve(card, to_key, energize_amount)
+  elseif G.P_CENTERS[to_key] ~= card.config.center then
+    pokermon.do_evolution_anim(
+      card,
+      function() pokermon.backend_evolve(card, to_key, energize_amount) end,
+      message)
+  end
+end
+
 pokermon.evolve = function(card, to_key, immediate, evolve_message, transformation, energize_amount)
   if G.GAME.modifiers.poke_apply_randomizer and not transformation then
     to_key = pokermon.get_random_poke_key('randomizer')
   end
 
-  local evolve = function()
-    pokermon.backend_evolve(card, to_key, energize_amount)
-  end
+  call_backend_evolve(card, to_key, immediate, evolve_message, energize_amount)
+end
 
-  if immediate then
-    evolve()
-  elseif G.P_CENTERS[to_key] ~= card.config.center then
-    pokermon.do_evolution_anim(card, evolve, evolve_message)
-  end
+pokermon.devolve = function(card, to_key, immediate, devolve_message)
+  call_backend_evolve(card, to_key, immediate, devolve_message or localize('poke_devolve_success'))
+end
+
+pokermon.change_form = function(card, to_key, immediate, transform_message)
+  call_backend_evolve(card, to_key, immediate, transform_message or localize('poke_transform_success'))
 end
 
 -- Stolen from Cardsauce
