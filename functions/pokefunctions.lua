@@ -754,7 +754,7 @@ pokermon.set_type_badge = function(self, card, badges)
     if lower_ptype == "bird" then
       if math.random(0,5) == 5 then ptype = nil end
     end
-    badges[#badges+1] = create_badge(ptype, G.ARGS.LOC_COLOURS[lower_ptype], text_colour, 1.2 )
+    badges[#badges+1] = create_badge(ptype, pokermon.colours[lower_ptype], text_colour, 1.2 )
   end
 end
 

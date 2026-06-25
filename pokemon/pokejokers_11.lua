@@ -9,7 +9,7 @@ local delcatty={
     local cattype = G.GAME.current_round.cattype or "Grass"
 
     local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local type_colour = pokermon.colours[string.lower(cattype)]
     local main_end
 
     if card.area and card.area == G.jokers then
@@ -865,7 +865,7 @@ local spinda={
       if natures > 0 then
         return {
             message = localize('poke_teeter_dance_ex'),
-            colour = G.ARGS.LOC_COLOURS["colorless"]
+            colour = pokermon.colours.colorless
         }
       end
     end

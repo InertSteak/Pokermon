@@ -1252,7 +1252,7 @@ local zigzagoon={
         if SMODS.pseudorandom_probability(card, 'zigzagoon', card.ability.extra.num, card.ability.extra.dem, 'zigzagoon') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
@@ -1299,7 +1299,7 @@ local linoone={
         if next(context.poker_hands['Straight']) or SMODS.pseudorandom_probability(card, 'linoone', card.ability.extra.num, card.ability.extra.dem, 'linoone') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink, func = function()
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
               G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,

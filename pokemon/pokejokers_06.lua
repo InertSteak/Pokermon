@@ -29,7 +29,7 @@ local mew ={
       else
         --create random consumable and apply negative
         local sets = {{set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE}, {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral}, 
-                      {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.pink}}
+                      {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink}}
         local creation = pseudorandom_element(sets, pseudoseed('mewcreate'))
         
         local consum = SMODS.add_card{set = creation.set, edition = 'e_negative', key_append = 'mew'}

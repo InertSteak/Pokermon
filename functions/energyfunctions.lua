@@ -155,7 +155,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
     pokermon.energy.energize_other(card, etype, center, c_penalty, amount)
   end
   if not silent then
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = pokermon.colours.pink})
   end
 end
 

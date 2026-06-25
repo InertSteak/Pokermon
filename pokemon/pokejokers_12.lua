@@ -326,7 +326,7 @@ local baltoy={
             colour = G.C.CLEAR,
           },
           nodes = {
-            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = pokermon.colours.hazard, scale = 0.32 } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             }
         },
@@ -422,7 +422,7 @@ local claydol={
             colour = G.C.CLEAR,
           },
           nodes = {
-            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = G.ARGS.LOC_COLOURS.hazard, scale = 0.32 } },
+            { n = G.UIT.T, config = { text = '+'..center.ability.extra.hazard_level, colour = pokermon.colours.hazard, scale = 0.32 } },
               { n = G.UIT.T, config = { text = ' '..localize('k_poke_hazard_layer'), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             }
         },

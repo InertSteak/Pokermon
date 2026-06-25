@@ -35,7 +35,7 @@ local pink_seal = {
             return true
           end,
         }))
-        return { message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"] }
+        return { message = localize("poke_plus_energy"), colour = pokermon.colours.pink }
       end
 		end
 	end,

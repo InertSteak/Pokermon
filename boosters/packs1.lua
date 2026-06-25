@@ -78,7 +78,7 @@ local create_pocket_card = function(self, card, i)
 end
 
 local pocket_background = function(self)
-  ease_background_colour{new_colour = G.ARGS.LOC_COLOURS.pocket, contrast = 3}
+  ease_background_colour{new_colour = pokermon.colours.pocket, contrast = 3}
 end
 local pocket_particle = function(self)
   G.booster_pack_sparkles = Particles(1, 1, 0,0, {

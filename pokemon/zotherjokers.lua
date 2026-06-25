@@ -183,7 +183,7 @@ local jelly_donut={
               return true
             end
         })) 
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = G.ARGS.LOC_COLOURS.pink})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = pokermon.colours.pink})
       else
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.MULT})
       end
@@ -207,7 +207,7 @@ local treasure_eatery={
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {pokermon.colours.pink}}}
     return {vars = {center.ability.extra.rounds, }}
   end,
   rarity = 2,

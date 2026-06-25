@@ -46,7 +46,7 @@ local bird_energy = {
         for i = 1, 23 do
             r_mults[#r_mults + 1] = tostring(i)
         end
-        local gives_strings = {{ string = localize('poke_water_gun_ex'), colour = G.ARGS.LOC_COLOURS.water }, { string = localize('poke_sky_attack_ex'), colour = G.ARGS.LOC_COLOURS.colorless },
+        local gives_strings = {{ string = localize('poke_water_gun_ex'), colour = pokermon.colours.water }, { string = localize('poke_sky_attack_ex'), colour = pokermon.colours.colorless },
                                { string = 'HEX("FF7ABF")', colour = G.C.JOKER_GREY}, { string = '?????', colour = G.C.JOKER_GREY}
                              }
         local energy_strings = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
