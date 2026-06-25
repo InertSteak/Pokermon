@@ -891,7 +891,7 @@ local porygon={
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = pokermon.colours.pink})
     end
     return pokermon.item_evo(self, card, context, "j_poke_porygon2")
   end,
@@ -948,7 +948,7 @@ local omanyte={
             local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item})
           end
         end
         
@@ -1004,7 +1004,7 @@ local omastar={
             local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item})
           end
         end
         if card.ability.extra.ancient_count > 3 and not card.ability.extra.tag_created then
@@ -1678,7 +1678,7 @@ local mega_mewtwo_y = {
       end
     end
     if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = pokermon.colours.psychic})
       if not G.GAME.poke_energy_plus then
         G.GAME.poke_energy_plus = 1
       else

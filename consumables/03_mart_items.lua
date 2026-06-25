@@ -678,7 +678,7 @@ local metalcoat = {
   set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {G.ARGS.LOC_COLOURS.metal}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {pokermon.colours.metal}}}
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 2 },
@@ -697,7 +697,7 @@ local metalcoat = {
     
     if choice then
       pokermon.apply_type_sticker(choice, "Metal")
-      card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
+      card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = pokermon.colours.metal})
     end
     
     local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
@@ -715,7 +715,7 @@ local dragonscale = {
   key = "dragonscale",
   set = "poke_item",
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {G.ARGS.LOC_COLOURS.dragon}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {pokermon.colours.dragon}}}
   end,
   pos = { x = 7, y = 2 },
   atlas = "AtlasConsumablesBasic",
@@ -736,7 +736,7 @@ local dragonscale = {
     end
     
     pokermon.apply_type_sticker(choice, "Dragon")
-    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
+    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = pokermon.colours.dragon})
     
     for i = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then

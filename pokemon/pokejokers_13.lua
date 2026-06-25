@@ -1074,7 +1074,7 @@ local jirachi_fixer = {
               local cons = {
                 {set = "Tarot", message = localize('k_plus_tarot'), colour = G.C.PURPLE, key = 'c_death'},
                 {set = "Spectral", message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral, key = 'c_cryptid'},
-                {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item, key = 'c_poke_metalcoat'},
+                {set = "poke_item", message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item, key = 'c_poke_metalcoat'},
                }
               local con = pseudorandom_element(cons, pseudoseed('jirachi_fixer'))
               local added = SMODS.add_card{set = con.set, key = con.key, key_append = 'jirachi_fixer'}

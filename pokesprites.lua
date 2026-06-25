@@ -405,38 +405,39 @@ for i = 1, 5 do
 end
 
 --Custom colors for Types (humplydinkle wuz here)
-local pokecolors = loc_colour
-function loc_colour(_c, _default)
-  if not G.ARGS.LOC_COLOURS then
-    pokecolors()
-  end
-  G.ARGS.LOC_COLOURS["dark"] = HEX("0086a5")
-  G.ARGS.LOC_COLOURS["lightning"] = HEX("f8f800")
-  G.ARGS.LOC_COLOURS["fire"] = HEX("f81020")
-  G.ARGS.LOC_COLOURS["water"] = HEX("38b8f8")
-  G.ARGS.LOC_COLOURS["earth"] = HEX("e97333")
-  G.ARGS.LOC_COLOURS["fairy"] = HEX("ff3db6")
-  G.ARGS.LOC_COLOURS["fighting"] = HEX("b85838")
-  G.ARGS.LOC_COLOURS["colorless"] = HEX("c8c0f8")
-  G.ARGS.LOC_COLOURS["psychic"] = HEX("c135ff")
-  G.ARGS.LOC_COLOURS["metal"] = HEX("888080")
-  G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
-  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
-  G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
-  G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
-  G.ARGS.LOC_COLOURS["item"] = HEX("9AA4B7")
-  G.ARGS.LOC_COLOURS["safari"] = HEX("F2C74E")
-  G.ARGS.LOC_COLOURS["pocket"] = HEX("E8C069")
-  G.ARGS.LOC_COLOURS["hazard"] = HEX("BA7333")
-  G.ARGS.LOC_COLOURS["sun"] = HEX("F48E62")
-  G.ARGS.LOC_COLOURS["rain"] = HEX("6169FF")
-  G.ARGS.LOC_COLOURS["sand"] = HEX("E1C019")
-  G.ARGS.LOC_COLOURS["snow"] = HEX("82C8E8")
-  return pokecolors(_c, _default)
-end
+pokermon.colours = {
+  dark = HEX("0086a5"),
+  lightning = HEX("f8f800"),
+  fire = HEX("f81020"),
+  water = HEX("38b8f8"),
+  earth = HEX("e97333"),
+  fairy = HEX("ff3db6"),
+  fighting = HEX("b85838"),
+  colorless = HEX("c8c0f8"),
+  psychic = HEX("c135ff"),
+  metal = HEX("888080"),
+  grass = HEX("289830"),
+  dragon = HEX("c8a800"),
+  bird = HEX("F7B58C"),
+  pink = HEX("FF7ABF"),
+  -- item = HEX("9AA4B7"),
+  -- safari = HEX("F2C74E"),
+  pocket = HEX("E8C069"),
+  hazard = HEX("BA7333"),
+  sun = HEX("F48E62"),
+  rain = HEX("6169FF"),
+  sand = HEX("E1C019"),
+  snow = HEX("82C8E8")
+}
 
---called to ensure crashes don't happen
-loc_colour()
+local loc_colour_ref = loc_colour
+function loc_colour(_c, _default, ...)
+  if type(_c) == 'string' and string.sub(_c, 0, 5) == 'poke_' then
+    local poke_colour = pokermon.colours[string.sub(_c, 6)]
+    if poke_colour then return poke_colour end
+  end
+  return loc_colour_ref(_c, _default, ...)
+end
 
 --Stake textures for Malverk
 if (SMODS.Mods["malverk"] or {}).can_load then
