@@ -194,7 +194,7 @@ local beheeyem={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
     end
-    if context.open_booster then
+    if context.open_booster and not context.blueprint then
       local added = false
       local telescope_in_shop = false
       local observatory_in_shop = false
