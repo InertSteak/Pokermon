@@ -734,7 +734,9 @@ pokermon.add_mega_evolution_tooltip = function(center, info_queue)
 end
 
 pokermon.add_joker_tooltips = function(self, info_queue, card)
-  if self.stage and card then
+  if self.stage then
+    if not card then card = self:create_fake_card() end
+
     pokermon.add_energy_tooltip(info_queue, card)
     pokermon.add_mega_evolution_tooltip(self, info_queue)
   end
