@@ -3,6 +3,16 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
+
+# Add Pokermon-specific tooltips to Jokers
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+position = "before"
+match_indent = true
+pattern = "_c:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)"
+payload = "pokermon.add_joker_tooltips(_c, info_queue, card)"
+
 # Description functionality, a little hacky but it works
 [[patches]]
 [patches.pattern]

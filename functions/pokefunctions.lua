@@ -688,56 +688,60 @@ pokermon.evo_item_in_pool = function(self)
     return false
 end
 
-pokermon.type_tooltip = function(self, info_queue, center)
-  local percent
-  if (center.ability and center.ability.extra and type(center.ability.extra) == "table" and (pokermon.energy.get_total_energy(center) ~= 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (center.ability.extra.e_limit_up or 0)}}
-      if center.ability.money_frac and center.ability.money_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
-      if center.ability.money_mod_frac and center.ability.money_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.money_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_progress", vars = {percent}}
-        end
-      end
-      if center.ability.mult_mod_frac and center.ability.mult_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.mult_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "mult_progress", vars = {percent}}
-        end
-      end
-      if center.ability.chip_mod_frac and center.ability.chip_mod_frac > 0 then
-        percent = tonumber(string.format('%.3f', center.ability.chip_mod_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "chip_progress", vars = {percent}}
-        end
-      end
-  elseif (center.ability and (pokermon.energy.get_total_energy(center) > 0)) then
-      info_queue[#info_queue+1] = {set = 'Other', key = "energy", vars = {pokermon.energy.get_total_energy(center), pokermon.energy.max + (G.GAME.poke_energy_plus or 0)}}
-      if center.ability.money_frac then
-        percent = tonumber(string.format('%.3f', center.ability.money_frac)) * 100
-        if percent ~= 100 and percent ~= 0 then
-          info_queue[#info_queue+1] = {set = 'Other', key = "money_chance", vars = {percent}}
-        end
-      end
+pokermon.add_frac_tooltip = function(info_queue, card, frac_var, loc_key)
+  if card.ability[frac_var] and card.ability[frac_var] > 0 then
+    local percent = tonumber(string.format('%.3f', card.ability[frac_var])) * 100
+    if percent ~= 100 and percent ~= 0 then
+      info_queue[#info_queue + 1] = {set = 'Other', key = loc_key, vars = {percent}}
+    end
   end
-  if self.megas and pokermon_config.detailed_tooltips then
+end
+
+pokermon.add_energy_tooltip = function(info_queue, card)
+  if card.ability and type(card.ability.extra) == 'table' and pokermon.energy.get_total_energy(card) ~= 0 then
+    local energy = pokermon.energy.get_total_energy(card)
+    local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (card.ability.extra.e_limit_up or 0)
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energy', vars = {energy, energy_max}}
+
+    pokermon.add_frac_tooltip(info_queue, card, 'money_frac', 'money_chance')
+    pokermon.add_frac_tooltip(info_queue, card, 'money_mod_frac', 'money_progress')
+    pokermon.add_frac_tooltip(info_queue, card, 'mult_mod_frac', 'mult_progress')
+    pokermon.add_frac_tooltip(info_queue, card, 'chip_mod_frac', 'chip_progress')
+  elseif card.ability and pokermon.energy.get_total_energy(card) > 0 then
+    local energy = pokermon.energy.get_total_energy(card)
+    local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0)
+
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energy', vars = {energy, energy_max}}
+
+    pokermon.add_frac_tooltip(info_queue, card, 'money_frac', 'money_chance')
+  end
+end
+
+pokermon.add_mega_evolution_tooltip = function(center, info_queue)
+  if center.megas and pokermon_config.detailed_tooltips then
     info_queue[#info_queue+1] = {set = 'Other', key = 'mega_poke'}
-    if #self.megas > 1 and next(SMODS.find_card('c_poke_megastone')) then
+    if #center.megas > 1 and next(SMODS.find_card('c_poke_megastone')) then
       local mega_names = {}
-      for _, mega in ipairs(self.megas) do
-        local prefix = self.poke_custom_prefix or "poke"
-        local key = "j_"..prefix.."_"..mega
-        mega_names[#mega_names+1] = localize({type = "name_text", set = "Joker", key = key})
+      for _, mega in ipairs(center.megas) do
+        local prefix = center.poke_custom_prefix or 'poke'
+        local key = 'j_' .. prefix .. '_' .. mega
+        mega_names[#mega_names+1] = localize({type = 'name_text', set = 'Joker', key = key})
       end
       info_queue[#info_queue+1] = {set = 'Other', key = 'split_mega', vars = mega_names}
     end
   end
 end
+
+pokermon.add_joker_tooltips = function(self, info_queue, card)
+  if self.stage then
+    pokermon.add_energy_tooltip(info_queue, card)
+    pokermon.add_mega_evolution_tooltip(self, info_queue)
+  end
+end
+
+---@deprecated functionality has been made baseline
+pokermon.type_tooltip = function(self, info_queue, center) end
 
 pokermon.set_type_badge = function(self, card, badges)
   local ptype = pokermon.get_type(card)
