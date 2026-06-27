@@ -884,24 +884,26 @@ local milotic={
 local kecleon = {
   name = "kecleon",
   pos = {x = 0, y = 0},
-  config = {extra = {Xmult_multi = 1.25}},
+  config = {extra = {Xmult = 2}},
   loc_txt = {
     name = "Kecleon",
     text = {
-      "Copies the {C:pink}Type{} of",
+      "Copies the {C:poke_pink}Type{} of",
       "Joker to the right",
       "{br:2}ERROR - CONTACT STEAK",
-      "Each {C:white,X:pink}Type{} Joker",
-      "gives {C:white,X:mult}X#1#{} Mult",
+      "{C:white,X:mult}X#1#{} Mult if you have",
+      "{C:attention}3+ {B:1,V:2}#2#{} Jokers",
+      "{C:inactive,s:0.8}(Changes to {C:attention,s:0.8}Kecleon{C:inactive,s:0.8}'s type)"
     },
   },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
-    if pokermon_config.detailed_tooltips then
-    end
-    return {vars = {card.ability.extra.Xmult_multi}}
+    local ptype = pokermon.get_type(card) or 'Colorless'
+    local colour = pokermon.colours[string.lower(ptype)]
+    local text_colour = ptype ~= 'Lightning' and G.C.WHITE or G.C.BLACK
+
+    return {vars = {card.ability.extra.Xmult, ptype, colours = {colour, text_colour}}}
   end,
-  rarity = "Uncommon",
+  rarity = 2,
   cost = 6,
   stage = "Basic",
   ptype = "Colorless",
@@ -909,14 +911,14 @@ local kecleon = {
   gen = 3,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker and is_type(context.other_joker, get_type(card)) then
+    if context.joker_main and #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
       return {
-        Xmult = card.ability.extra.Xmult_multi
+        Xmult = card.ability.extra.Xmult
       }
     end
   end,
   set_sprites = function(self, card)
-    local ptype = get_type(card)
+    local ptype = pokermon.get_type(card)
     local sprite_pos = ({
       ['Dark'] = {x = 6, y = 0},
       ['Dragon'] = {x = 8, y = 0},
@@ -940,7 +942,7 @@ local kecleon = {
     end
   end,
   set_type = function(self, card, ptype)
-    apply_type_sticker(card, ptype)
+    pokermon.apply_type_sticker(card, ptype)
     self:set_sprites(card)
     SMODS.recalc_debuff(card)
   end,
@@ -951,15 +953,15 @@ local kecleon = {
       if v == card then other_joker = G.jokers.cards[k+1] break end
     end
     if other_joker then
-      local other_type = get_type(other_joker) or 'Colorless'
-      if get_type(card) ~= other_type then
+      local other_type = pokermon.get_type(other_joker) or 'Colorless'
+      if pokermon.get_type(card) ~= other_type then
         self:set_type(card, other_type)
       end
     elseif not is_type(card, 'Colorless') then
       self:set_type(card, 'Colorless')
     end
   end,
-  attributes = {},
+  attributes = {"types", "joker", "xmult"},
 }
 -- Shuppet 353
 -- Banette 354
