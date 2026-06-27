@@ -23,15 +23,15 @@ local function is_rotom(key)
 end
 
 local function machine_transform(self, card, area, copier, machine)
-  set_spoon_item(card)
+  pokermon.set_spoon_item(card)
   if not machine then machine = 'oven' end
   local machine_dict = {oven = 'j_poke_rotomh', washing_machine = 'j_poke_rotomw', fridge = 'j_poke_rotomf', fan = 'j_poke_rotomfan', lawn_mower = 'j_poke_rotomm'}
   if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-    poke_evolve(G.jokers.highlighted[1], machine_dict[machine], nil, nil, true)
+    pokermon.change_form(G.jokers.highlighted[1], machine_dict[machine], nil, nil)
   else
     for k, v in pairs(G.jokers.cards) do
       if is_rotom(v.config.center_key) and v.config.center_key ~= machine_dict[machine] then
-        poke_evolve(v, machine_dict[machine], nil, nil, true)
+        pokermon.change_form(v, machine_dict[machine], nil, nil)
         break
       end
     end
@@ -54,7 +54,7 @@ end
 local oven = {
   name = "oven",
   key = "oven",
-  set = "Item",
+  set = "poke_item",
   config = {d_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.d_plus}}
@@ -84,7 +84,7 @@ local oven = {
 local washing_machine = {
   name = "washing_machine",
   key = "washing_machine",
-  set = "Item",
+  set = "poke_item",
   config = {hand_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -114,7 +114,7 @@ local washing_machine = {
 local fridge = {
   name = "fridge",
   key = "fridge",
-  set = "Item",
+  set = "poke_item",
   config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -150,7 +150,7 @@ local fridge = {
 local fan = {
   name = "fan",
   key = "fan",
-  set = "Item",
+  set = "poke_item",
   config = {},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_plus}}
@@ -185,7 +185,7 @@ local fan = {
 local lawn_mower = {
   name = "lawn_mower",
   key = "lawn_mower",
-  set = "Item",
+  set = "poke_item",
   config = {hand_size_plus = 1},
   loc_vars = function(self, info_queue, center)
     return {vars = {self.config.hand_size_plus}}

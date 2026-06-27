@@ -52,7 +52,7 @@ local luminousdeck = {
 	pos = { x = 1, y = 0 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
-    G.GAME.modifiers.apply_type = true
+    G.GAME.modifiers.poke_apply_type = true
   end
 }
 
@@ -132,7 +132,7 @@ local futuredeck = {
 	pos = { x = 6, y = 0 },
 	atlas = "AtlasDecksBasic",
   apply = function(self)
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + self.config.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry
   end
 }
 
@@ -226,14 +226,14 @@ local diceydeck = {
   apply = function(self)
     G.E_MANAGER:add_event(Event({
       func = function()
-        poke_change_hazard_max(self.config.hazard_layer_max)
-        poke_change_hazard_level(self.config.hazard_layer)
+        pokermon.change_hazard_max(self.config.hazard_layer_max)
+        pokermon.change_hazard_level(self.config.hazard_layer)
         G.hand:change_size(self.config.h_size)
         
-        G.GAME.modifiers.enhance_bonus = 'm_poke_hazard'
-        G.GAME.modifiers.money_per_enhancement = self.config.money
-        G.GAME.modifiers.enhance_bonus_text = localize('poke_hazards_in_deck')
-        G.GAME.modifiers.enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
+        G.GAME.modifiers.poke_enhance_bonus = 'm_poke_hazard'
+        G.GAME.modifiers.poke_money_per_enhancement = self.config.money
+        G.GAME.modifiers.poke_enhance_bonus_text = localize('poke_hazards_in_deck')
+        G.GAME.modifiers.poke_enhance_bonus_color = pokermon.colours.hazard
         return true
       end
     }))

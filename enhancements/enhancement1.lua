@@ -19,7 +19,7 @@ local hazard = {
    calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition and context.cardarea == G.hand and context.playing_card_end_of_round then
       if SMODS.pseudorandom_probability(card, 'hazard', self.config.num, self.config.dem, 'hazard') then
-        poke_remove_card(card, card)
+        pokermon.remove_card(card, card)
       end
     end
    end,
@@ -90,7 +90,7 @@ local flower = {
    atlas = "AtlasEnhancementsBasic",
    artist = 'MyDude_YT',
    pos = { x = 6, y = 0 },
-   config = {Xmult_flower = 3},
+   config = {Xmult_flower = 2},
    loc_vars = function(self, info_queue, center)
      return {vars = {center.ability.Xmult_flower}}
    end,
@@ -99,10 +99,14 @@ local flower = {
    calculate = function(self, card, context)
      if context.main_scoring and context.cardarea == G.play then
         local suit_number = next(SMODS.find_card('j_poke_roserade')) and 3 or 4
-        if poke_suit_check(context.scoring_hand, suit_number) then
+        if pokermon.suit_check(context.scoring_hand, suit_number) then
+          local extra = 0
+          if next(SMODS.find_card("j_poke_shaymin")) or next(SMODS.find_card("j_poke_shaymin_sky")) then
+            extra = 1
+          end
           return
           {
-            x_mult = card.ability.Xmult_flower
+            x_mult = card.ability.Xmult_flower + extra
           }
         end
      end

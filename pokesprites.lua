@@ -101,7 +101,10 @@ SMODS.Atlas({
     key = "AtlasConsumablesBirdEnergy",
     path = "Basic Series/AtlasConsumablesBirdEnergy.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 36,
+    fps = 15
 })
 
 SMODS.Atlas({
@@ -196,31 +199,97 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "j_poke_unown_swarm",
+    path = "j_poke_unown_swarm.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny",
+    path = "j_poke_unown_swarm_shiny.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_soul",
+    path = "j_poke_unown_swarm_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
+    key = "j_poke_unown_swarm_shiny_soul",
+    path = "j_poke_unown_swarm_shiny_soul.png",
+    px = 290,
+    py = 285,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 36,
+    fps = 12
+})
+
+SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorb",
     path = "Series A/AtlasJokersSeriesAVoltorb.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAVoltorbShiny",
     path = "Series A/AtlasJokersSeriesAVoltorbShiny.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 11,
+    fps = 11
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrode",
     path = "Series A/AtlasJokersSeriesAElectrode.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
 })
 
 SMODS.Atlas({
     key = "AtlasJokersSeriesAElectrodeShiny",
     path = "Series A/AtlasJokersSeriesAElectrodeShiny.png",
     px = 71,
-    py = 95
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 13,
+    fps = 13
+})
+
+SMODS.Atlas({
+  key = "elite_stake",
+  px = 29,
+  py = 29,
+  path = "elite_stake.png"
+})
+
+SMODS.Atlas({
+  key = "elite_stake_sticker",
+  px = 71,
+  py = 95,
+  path = "elite_stake_sticker.png"
 })
 
 SMODS.Atlas({
@@ -306,6 +375,15 @@ SMODS.Sound({
 		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Pocket") or SMODS.OPENED_BOOSTER.label:find("Starter"))
 	end,
 })
+
+SMODS.Sound({
+	key = "pocket_music_high_knockoff",
+	path = "pocket_music_high_knockoff.ogg",
+	select_music_track = function()
+		return G.STATE and G.STATE == G.STATES.SMODS_BOOSTER_OPENED and (SMODS.OPENED_BOOSTER.label:find("Starteq"))
+	end,
+})
+
 SMODS.Sound({
 	key = "energy_use",
 	path = "energy_use.ogg",
@@ -327,38 +405,39 @@ for i = 1, 5 do
 end
 
 --Custom colors for Types (humplydinkle wuz here)
-local pokecolors = loc_colour
-function loc_colour(_c, _default)
-  if not G.ARGS.LOC_COLOURS then
-    pokecolors()
-  end
-  G.ARGS.LOC_COLOURS["dark"] = HEX("0086a5")
-  G.ARGS.LOC_COLOURS["lightning"] = HEX("f8f800")
-  G.ARGS.LOC_COLOURS["fire"] = HEX("f81020")
-  G.ARGS.LOC_COLOURS["water"] = HEX("38b8f8")
-  G.ARGS.LOC_COLOURS["earth"] = HEX("e97333")
-  G.ARGS.LOC_COLOURS["fairy"] = HEX("ff3db6")
-  G.ARGS.LOC_COLOURS["fighting"] = HEX("b85838")
-  G.ARGS.LOC_COLOURS["colorless"] = HEX("c8c0f8")
-  G.ARGS.LOC_COLOURS["psychic"] = HEX("c135ff")
-  G.ARGS.LOC_COLOURS["metal"] = HEX("888080")
-  G.ARGS.LOC_COLOURS["grass"] = HEX("289830")
-  G.ARGS.LOC_COLOURS["dragon"] = HEX("c8a800")
-  G.ARGS.LOC_COLOURS["bird"] = HEX("F7B58C")
-  G.ARGS.LOC_COLOURS["pink"] = HEX("FF7ABF")
-  G.ARGS.LOC_COLOURS["item"] = HEX("9AA4B7")
-  G.ARGS.LOC_COLOURS["safari"] = HEX("F2C74E")
-  G.ARGS.LOC_COLOURS["pocket"] = HEX("E8C069")
-  G.ARGS.LOC_COLOURS["hazard"] = HEX("BA7333")
-  G.ARGS.LOC_COLOURS["sun"] = HEX("F48E62")
-  G.ARGS.LOC_COLOURS["rain"] = HEX("6169FF")
-  G.ARGS.LOC_COLOURS["sand"] = HEX("E1C019")
-  G.ARGS.LOC_COLOURS["snow"] = HEX("82C8E8")
-  return pokecolors(_c, _default)
-end
+pokermon.colours = {
+  dark = HEX("0086a5"),
+  lightning = HEX("f8f800"),
+  fire = HEX("f81020"),
+  water = HEX("38b8f8"),
+  earth = HEX("e97333"),
+  fairy = HEX("ff3db6"),
+  fighting = HEX("b85838"),
+  colorless = HEX("c8c0f8"),
+  psychic = HEX("c135ff"),
+  metal = HEX("888080"),
+  grass = HEX("289830"),
+  dragon = HEX("c8a800"),
+  bird = HEX("F7B58C"),
+  pink = HEX("FF7ABF"),
+  -- item = HEX("9AA4B7"),
+  -- safari = HEX("F2C74E"),
+  pocket = HEX("E8C069"),
+  hazard = HEX("BA7333"),
+  sun = HEX("F48E62"),
+  rain = HEX("6169FF"),
+  sand = HEX("E1C019"),
+  snow = HEX("82C8E8")
+}
 
---called to ensure crashes don't happen
-loc_colour()
+local loc_colour_ref = loc_colour
+function loc_colour(_c, _default, ...)
+  if type(_c) == 'string' and string.sub(_c, 0, 5) == 'poke_' then
+    local poke_colour = pokermon.colours[string.sub(_c, 6)]
+    if poke_colour then return poke_colour end
+  end
+  return loc_colour_ref(_c, _default, ...)
+end
 
 --Stake textures for Malverk
 if (SMODS.Mods["malverk"] or {}).can_load then

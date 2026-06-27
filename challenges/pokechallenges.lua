@@ -430,7 +430,7 @@ local safety_first = {
             {id = 'tag_poke_starter_tag'},
         },
         banned_other = {
-            { id = 'bl_final_bell', type = 'blind' },
+            { id = 'bl_final_leaf', type = 'blind' },
             { id = 'bl_final_acorn', type = 'blind' },
             {id = 'bl_poke_mirror', type = 'blind'},
             {id = 'bl_eye', type = 'blind'},
@@ -479,7 +479,7 @@ local mystery_dungeon = {
           local deck_key = deck.key
 
           if deck_key == "b_poke_vendingdeck" then
-            G.GAME.modifiers.vending = true
+            G.GAME.modifiers.poke_vending = true
           else
             Back(G.P_CENTERS[deck_key]):apply_to_run()
           end

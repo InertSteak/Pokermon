@@ -31,7 +31,7 @@ local trubbish={
   pos = {x = 4, y = 5},
   config = {extra = {chips = 0,chip_mod = 3,money = 2,triggers = 0}, evo_rqmt = 4},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod,center.ability.extra.money, math.max(0, self.config.evo_rqmt - center.ability.extra.triggers)}}
   end,
   designer = "bt",
@@ -64,11 +64,11 @@ local trubbish={
         card.ability.extra.triggers = card.ability.extra.triggers + 1
       end
     end
-    return scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_garbodor", card.ability.extra.triggers, self.config.evo_rqmt)
   end,
   calc_dollar_bonus = function(self, card)
     if G.GAME.current_round.discards_used == 0 and G.GAME.current_round.discards_left > 0 then
-      return ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
+      return pokermon.ease_poke_dollars(card, "trubbish", G.GAME.current_round.discards_left * card.ability.extra.money, true)
     end
   end,
   attributes = {"discard", "economy", "chips", "scaling", "trigger_evo"},
@@ -79,7 +79,7 @@ local garbodor={
   pos = {x = 5, y = 5},
   config = {extra = {chips = 0,chip_mod = 5,triggers = 0, active = false}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {key = 'tag_garbage', set = 'Tag', specific_vars = {1, G.GAME.unused_discards or 0}}
     end
@@ -138,6 +138,16 @@ local zorua = {
   pos = { x = 6, y = 5 },
   soul_pos = { x = 99, y = 99 },
   config = {extra = {hidden_key = nil, rounds = 5, active = true}},
+  loc_vars = function(self, info_queue, card)
+    local main_end
+
+    if card.area and card.area == G.jokers then
+      local other_joker = G.jokers.cards[#G.jokers.cards]
+      main_end = pokermon.ui.blueprint_compat(card ~= other_joker and other_joker)
+    end
+
+    return {vars = {card.ability.extra.rounds, colours = {not card.ability.extra.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
+  end,
   rarity = 3,
   cost = 8,
   stage = "Basic",
@@ -146,127 +156,89 @@ local zorua = {
   gen = 5,
   blueprint_compat = true,
   rental_compat = false,
+  get_illusion = function(self, card)
+    if card.ability and card.ability.extra
+        and card.area ~= G.jokers
+        and not pokermon.is_in_collection(card) then
+      return G.P_CENTERS[card.ability.extra.hidden_key]
+    end
+  end,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[#G.jokers.cards]
-    if other_joker and other_joker ~= card and card.ability.extra.active then
+    if card.ability.extra.active and other_joker and other_joker ~= card then
       local ret = SMODS.blueprint_effect(card, other_joker, context)
+
       if ret then
         ret.colour = G.C.BLACK
         SMODS.calculate_effect(ret, card)
       end
-    end
-    if context.after and other_joker ~= card and card.ability.extra.active then
-      G.E_MANAGER:add_event(Event({
-        trigger = 'after',
-        delay = 0.2,
-        func = function()
-          card.ability.extra.active = false
-          SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
-          return true
-        end
-      }))
+
+      if context.after then
+        G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.2,
+          func = function()
+            card.ability.extra.active = false
+            SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
+            return true
+          end
+        }))
+      end
     end
     if context.end_of_round and context.game_over == false and context.main_eval and not card.ability.extra.active then
       card.ability.extra.active = true
-      SMODS.calculate_effect({message = localize('k_reset')}, card)
+      return {
+        message = localize('k_reset')
+      }
     end
-    return level_evo(self, card, context, "j_poke_zoroark")
+    return pokermon.level_evo(self, card, context, "j_poke_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
-    local card_type = SMODS.Rarity:get_rarity_badge(card.config.center.rarity)
-    local card_type_colour = get_type_colour(card.config.center or card.config, card)
-    if card.area and card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card_type = SMODS.Rarity:get_rarity_badge(_o.rarity)
-      card_type_colour = get_type_colour(_o, card)
-    end
-    badges[#badges + 1] = create_badge(card_type, card_type_colour, nil, 1.2)
+    pokermon.ui.set_card_type_badge(card, badges, self:get_illusion(card))
   end,
   set_sprites = function(self, card, front)
-    if card.ability and card.ability.extra and card.ability.extra.hidden_key then
-      self:set_ability(card)
+    local center = self:get_illusion(card)
+    if center then
+      card:set_sprites(center)
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if not type_sticker_applied(card) and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-      apply_type_sticker(card, "Dark")
+    if card.area ~= G.jokers and not pokermon.is_in_collection(card) then
+      -- Initialize the Illusion
+      if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Dark") end
+      if not card.ability.extra.hidden_key then
+        card.ability.extra.hidden_key = pokermon.get_random_poke_key_options {
+          key_append = 'zorua',
+          rarity = 'Common',
+          exclude_types = 'Dark',
+        }
+      end
+
+      self:set_sprites(card)
     end
-    if card.area ~= G.jokers and not G.SETTINGS.paused then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-    else
-      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-      card.children.center:set_sprite_pos(self.pos)
-    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    card.ability.extra.hidden_key = nil
+    pokermon.reset_sprite(card)
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or card
-    card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
-    local _o = G.P_CENTERS[card.ability.extra.hidden_key]
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
-      local temp_ability = card.ability
-      card.ability = _o.config
-      _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _o.set, key = _o.key, nodes = full_UI_table.name })
-      end
-      card.ability = temp_ability
-      if full_UI_table.name[1].nodes[1] then
-        local textDyna = full_UI_table.name[1].nodes[1].nodes[1].config.object
-        textDyna.string = textDyna.string .. localize("poke_illusion")
-        textDyna.config.string = {textDyna.string}
-        textDyna.strings = {}
-        textDyna:update_text(true)
-      end
-      card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
-      card.children.center:set_sprite_pos(_o.pos)
-      local poketype_list = {Grass = true, Fire = true, Water = true, Lightning = true, Psychic = true, Fighting = true, Colorless = true, Dark = true, Metal = true, Fairy = true, Dragon = true, Earth = true}
-      for i = #info_queue, 1, -1 do
-        if info_queue[i].set == "Other" and info_queue[i].key and poketype_list[info_queue[i].key] then
-          table.remove(info_queue, i)
-        end
-      end
-    else
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-      end
-      card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-      card.ability.blueprint_compat_check = nil
-      local main_end = (card.area and card.area == G.jokers) and {
-        {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
-          {n=G.UIT.C, config={ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes={
-            {n=G.UIT.T, config={ref_table = card.ability, ref_value = 'blueprint_compat_ui',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8}},
-          }}
-        }}
-      } or nil
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {card.ability.extra.rounds, colours = {not card.ability.extra.active and G.C.UI.TEXT_INACTIVE}}}
-      desc_nodes[#desc_nodes+1] = main_end
+    local center = self:get_illusion(card)
+    if center then
+      return pokermon.ui.generate_illusion(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
+    return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   end,
   update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers  then
+    if G.STAGE == G.STAGES.RUN and card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
-      card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
-      if card.ability.blueprint_compat == 'compatible' and not card.debuff and card.ability.extra.active and other_joker.children.center.atlas.px == 71 then
-        card.children.center.atlas = other_joker.children.center.atlas
-        card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-        if other_joker.children.floating_sprite then
-          card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
-          card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
-        else
-          card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-          card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-        end
+      if card.ability.extra.active and not card.debuff
+          and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
+          and other_joker and other_joker ~= card
+          and other_joker.config.center.blueprint_compat then
+        pokermon.copy_joker_sprites(card, other_joker)
       else
-        card.children.center.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"]
-        card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"]
-        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
+        pokermon.reset_sprite(card)
       end
-    elseif poke_is_in_collection(card) and card.children.center.sprite_pos ~= self.pos and card.children.center.atlas.name ~= self.atlas then
-      self:set_ability(card)
     end
   end,
   attributes = {"copying", "round_evo"},

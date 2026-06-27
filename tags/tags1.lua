@@ -21,7 +21,7 @@ local pocket_tag = {
 			--I'll leave that up to you
       --Oops, meant to change that lol
 			-- -Jevonn
-			tag:yep("+", G.ARGS.LOC_COLOURS.item, function()
+			tag:yep("+", G.C.SECONDARY_SET.poke_item, function()
 				local key = "p_poke_pokepack_mega_"..math.random(1, 2)
 				local card = Card(
 					G.play.T.x + G.play.T.w / 2 - G.CARD_W * 1.27 / 2,
@@ -98,7 +98,7 @@ local stage_one_tag = {
     if context and context.type == "store_joker_create" then
       local card = nil
       
-      card = create_random_poke_joker("stage1tag", "One", nil, context.area)
+      card = pokermon.create_random_poke_joker("stage1tag", "One", nil, context.area)
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
       tag:yep('+', G.C.GREEN,function() 
@@ -137,7 +137,7 @@ local safari_tag = {
       }
       create_shop_card_ui(card, 'Joker', context.area)
       card.states.visible = false
-      tag:yep('+', G.ARGS.LOC_COLOURS.safari,function() 
+      tag:yep('+', G.C.RARITY.poke_safari,function() 
           card:start_materialize()
           card.ability.couponed = true
           card:set_cost()
@@ -259,7 +259,7 @@ local starter_tag = {
     local pika_eevee = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end
@@ -283,6 +283,49 @@ local starter_tag = {
   end
 }
 
+local starterq_tag = {
+	object_type = "Tag",
+	atlas = "AtlasTags",
+	name = "starterq_tag",
+	order = 28,
+	pos = { x = 4, y = 0 },
+	config = { type = "new_blind_choice" },
+	key = "starterq_tag",
+	artist = {"Sonfive", "Catzzadilla", "InertSteak"},
+  discovered = true,
+  min_ante = 2,
+  no_collection = true,
+	loc_vars = function(self, info_queue)
+		info_queue[#info_queue + 1] = { set = "Other", key = "p_poke_pokepack_starterq_pack", specific_vars = {1, 4} }
+	end,
+	apply = function(self, tag, context)
+		if context and context.type == "new_blind_choice" then
+			tag:yep("+", G.C.SECONDARY_SET.Spectral, function()
+				local key = "p_poke_pokepack_starterq_pack"
+				local card = Card(
+					G.play.T.x + G.play.T.w / 2 - G.CARD_W * 1.27 / 2,
+					G.play.T.y + G.play.T.h / 2 - G.CARD_H * 1.27 / 2,
+					G.CARD_W * 1.27,
+					G.CARD_H * 1.27,
+					G.P_CARDS.empty,
+					G.P_CENTERS[key],
+					{ bypass_discovery_center = true, bypass_discovery_ui = true }
+				)
+				card.cost = 0
+				card.from_tag = true
+				G.FUNCS.use_card({ config = { ref_table = card } })
+				card:start_materialize()
+				return true
+			end)
+			tag.triggered = true
+			return true
+		end
+	end,
+  in_pool = function(self)
+    return false
+  end
+}
+
 return {name = "Tags",
-        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag, jirachi_tag, starter_tag}
+        list = {pocket_tag, shiny_tag, stage_one_tag, safari_tag, jirachi_tag, starter_tag, starterq_tag}
 }

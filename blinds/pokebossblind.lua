@@ -13,27 +13,38 @@ local mirror = {
   calculate = function(self, blind, context)
     if context.setting_blind and not blind.disabled then
       if #G.jokers.cards > 0 then
-      local target = G.jokers.cards[#G.jokers.cards]
-      if not target.getting_sliced then
-        if target.ability.eternal then
-          self.config.reset_eternal = true
-          target:set_eternal(false)
+        local target = G.jokers.cards[#G.jokers.cards]
+        if not target.getting_sliced then
+          if target.ability.eternal then
+            blind.effect.reset_eternal = true
+            target:set_eternal(false)
+          end
+          target.ability.from_mirror = true
+          blind.effect.trans_key = target.config.center_key
+          pokermon.evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
         end
-        self.config.trans_key = target.config.center_key
-        poke_evolve(target, 'j_poke_ditto', nil, localize("poke_transform_success"), true)
       end
     end
+    if context.blind_disabled then
+      local target = nil
+      for i = 1, #G.jokers.cards do
+        if G.jokers.cards[i].ability.from_mirror then
+          target = G.jokers.cards[i]
+        end
+      end
+      if target then
+        pokermon.evolve(target, blind.effect.trans_key, nil, localize("poke_transform_success"), true)
+        if blind.effect.reset_eternal then
+          target.ability.eternal = true
+        end
+      end
+    end
+    if context.end_of_round and not context.repetition and not context.individual then
+      for i = 1, #G.jokers.cards do
+        G.jokers.cards[i].ability.from_mirror = nil
+      end
     end
   end,
-  disable = function(self)
-    local target = G.jokers.cards[#G.jokers.cards]
-    if not target.getting_sliced then
-      poke_evolve(target, self.config.trans_key, nil, localize("poke_transform_success"), true)
-      if self.config.reset_eternal then
-        target.ability.eternal = true
-      end
-    end
-  end
 }
 
 local rocket = {
@@ -136,7 +147,7 @@ local star={
   calculate = function(self, blind, context)
     if not blind.disabled then
       if context.debuff_card and context.debuff_card.area == G.jokers
-          and blind.effect.ptype and is_type(context.debuff_card, blind.effect.ptype) then
+          and blind.effect.ptype and pokermon.is_type(context.debuff_card, blind.effect.ptype) then
         return {
           debuff = true
         }
@@ -150,7 +161,7 @@ local star={
         for _, v in ipairs(G.jokers.cards) do
           if v.debuff then
             SMODS.recalc_debuff(v)
-          elseif blind.effect.ptype and is_type(v, blind.effect.ptype) then
+          elseif blind.effect.ptype and pokermon.is_type(v, blind.effect.ptype) then
             SMODS.recalc_debuff(v)
             v:juice_up()
           end
@@ -164,7 +175,7 @@ local star={
   end,
 }
 
-gray_godfather_remove = function(difference)
+local gray_godfather_remove = function(difference)
     local in_debt = nil
     local dollars = nil
     local buffer = nil
@@ -228,7 +239,7 @@ local gray_godfather = {
   end,
 }
 
-white_executive_total = function()
+local white_executive_total = function()
   local total = 0
   for _, area in ipairs({ G.jokers, G.consumeables }) do
     for _, other_card in ipairs(area.cards) do
@@ -261,7 +272,7 @@ local white_executive = {
       if context.setting_blind then
         local modify = function(v) SMODS.debuff_card(v, true, 'white_executive'); end
         local args = {array = G.playing_cards, amt = white_executive_total(), seed = 'whiteexec', mod_func = modify}
-        pseudorandom_multi(args)
+        pokermon.pseudorandom_multi(args)
       end
       if context.end_of_round and not context.individual and not context.repetition then
         for k, v in pairs(G.playing_cards) do
@@ -279,7 +290,7 @@ local white_executive = {
 
 local ptype_matches = function(card, types)
   for _, v in ipairs(types) do
-    if is_type(card, v) then return true end
+    if pokermon.is_type(card, v) then return true end
   end
   return false
 end

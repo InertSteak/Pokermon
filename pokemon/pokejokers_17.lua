@@ -15,7 +15,7 @@ local shaymin={
   pos = {x = 0, y = 0},
   config = {extra = {flowers_scored = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
     end
@@ -51,7 +51,7 @@ local shaymin={
        and SMODS.has_enhancement(context.other_card, 'm_poke_flower') and not context.blueprint then
       card.ability.extra.flowers_scored = card.ability.extra.flowers_scored + 1
     end
-    return scaling_evo(self, card, context, "j_poke_shaymin_sky", card.ability.extra.flowers_scored, self.config.evo_rqmt, localize("poke_transform_success"))
+    return pokermon.scaling_evo(self, card, context, "j_poke_shaymin_sky", card.ability.extra.flowers_scored, self.config.evo_rqmt, localize("poke_transform_success"))
   end,
   attributes = {"hands", "modify_card", "enhancements"},
 }
@@ -61,7 +61,7 @@ local shaymin_sky={
   pos = {x = 0, y = 0},
   config = {extra = {death_used = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_flower
@@ -89,7 +89,7 @@ local shaymin_sky={
     if context.using_consumeable and context.consumeable.label == "Death" then
       card.ability.extra.death_used = card.ability.extra.death_used + 1
     end
-    return scaling_evo(self, card, context, "j_poke_shaymin", card.ability.extra.death_used, 1, localize("poke_transform_success"))
+    return pokermon.scaling_evo(self, card, context, "j_poke_shaymin", card.ability.extra.death_used, 1, localize("poke_transform_success"))
   end,
   in_pool = function(self)
     return false

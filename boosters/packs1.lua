@@ -6,17 +6,17 @@ local create_energy = function(self, card)
   if match_type > .50 and #G.jokers.cards > 0 then
     local energy_types = {}
     for l, v in pairs(G.jokers.cards) do
-      local match = matching_energy(v)
+      local match = pokermon.energy.get_matching_energy(v)
       if match and not next(SMODS.find_card(match)) then
         table.insert(energy_types, match)
       end
     end
     if #energy_types > 0 then
       local energy = pseudorandom_element(energy_types, pseudoseed('match'))
-      return create_card("Energy", G.pack_cards, nil, nil, true, true, energy, nil)
+      return create_card("poke_energy", G.pack_cards, nil, nil, true, true, energy, nil)
     end
   end
-  return create_card("Energy", G.pack_cards, nil, nil, true, true, nil, nil)
+  return create_card("poke_energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
 local poll_evo_item = function(seed)
@@ -27,7 +27,7 @@ local poll_evo_item = function(seed)
           and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
           or v.config.center.item_req
 
-      local prefix = table.contains(native_evo_items, item_req)
+      local prefix = pokermon.has(native_evo_items, item_req)
           and 'poke'
           or v.config.center.poke_custom_prefix
 
@@ -55,12 +55,12 @@ local create_item = function(seed)
       return SMODS.create_card { key = evo_item_key, area = G.pack_cards, skip_materialize = true }
     end
   end
-  return SMODS.create_card { set = "Item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
+  return SMODS.create_card { set = "poke_item", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = seed }
 end
 
 local create_pocket_card = function(self, card, i)
     if i == 1 then
-      if not G.GAME.modifiers.no_energy then
+      if not G.GAME.modifiers.poke_no_energy then
         return create_energy(self, card)
       else
         return create_item('pocket')
@@ -68,7 +68,7 @@ local create_pocket_card = function(self, card, i)
     elseif i == 2 and card.from_tag and G.GAME.round_resets.ante >= 5 and not next(SMODS.find_card('c_poke_megastone')) then
       local mega = pseudorandom(pseudoseed('pocket'))
       if mega > .75 then
-        return create_card("Item", G.pack_cards, nil, nil, true, true, 'c_poke_megastone', nil)
+        return create_card("poke_item", G.pack_cards, nil, nil, true, true, 'c_poke_megastone', nil)
       else
         return create_item('pocket')
       end
@@ -78,7 +78,7 @@ local create_pocket_card = function(self, card, i)
 end
 
 local pocket_background = function(self)
-  ease_background_colour{new_colour = G.ARGS.LOC_COLOURS.pocket, contrast = 3}
+  ease_background_colour{new_colour = pokermon.colours.pocket, contrast = 3}
 end
 local pocket_particle = function(self)
   G.booster_pack_sparkles = Particles(1, 1, 0,0, {
@@ -99,7 +99,7 @@ end
 local pack1 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -119,7 +119,7 @@ local pack1 = {
 local pack2 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 0 },
 	config = { extra = 4, choose = 1 },
@@ -139,7 +139,7 @@ local pack2 = {
 local pack3 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 0 },
 	config = { extra = 6, choose = 1 },
@@ -159,7 +159,7 @@ local pack3 = {
 local pack4 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_1",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 0 },
 	config = { extra = 6, choose = 2 },
@@ -179,7 +179,7 @@ local pack4 = {
 local pack5 = {
   name = "Pocket Pack",
 	key = "pokepack_normal_3",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 0, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -199,7 +199,7 @@ local pack5 = {
 local pack6 = {
 	name = "Pocket Pack",
 	key = "pokepack_normal_4",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 1, y = 1 },
 	config = { extra = 4, choose = 1 },
@@ -219,7 +219,7 @@ local pack6 = {
 local pack7 = {
 	name = "Jumbo Pocket Pack",
 	key = "pokepack_jumbo_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 2, y = 1 },
 	config = { extra = 6, choose = 1 },
@@ -239,7 +239,7 @@ local pack7 = {
 local pack8 = {
 	name = "Mega Pocket Pack",
 	key = "pokepack_mega_2",
-	kind = "Energy",
+	kind = "poke_energy",
 	atlas = "AtlasBoosterpacksBasic",
 	pos = { x = 3, y = 1 },
 	config = { extra = 6, choose = 2 },
@@ -263,7 +263,7 @@ local wish_pack = {
 	atlas = "AtlasBoosterpacksBasic",
   artist = "Catzzadilla",
 	pos = { x = 4, y = 0 },
-	config = { extra = 6, choose = 1 },
+	config = { extra = 3, choose = 1, used_wishes = {} },
 	cost = 999,
 	order = 4,
 	weight = 0,
@@ -275,9 +275,28 @@ local wish_pack = {
 
     -- force pack_choices to 1
     G.GAME.pack_choices = 1
-
-    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer', 'c_poke_fake_masterball', }
-    local temp_card = {area = G.pack_cards, key = jirachi_cards[1 + (i-1)%6], no_edition = true, skip_materialize = true}
+    
+    local jirachi_cards = {'c_poke_fake_banker', 'c_poke_fake_booster', 'c_poke_fake_power', 'c_poke_fake_copy', 'c_poke_fake_fixer',}
+    local possible_wishes = {}
+    
+    for k, v in ipairs(jirachi_cards) do
+      local add = true
+      for x, y in ipairs(card.ability.used_wishes) do
+        if v == y then
+          add = false
+          break
+        end
+      end
+      if add then
+        possible_wishes[#possible_wishes + 1] = v
+      end
+    end
+    
+    local random_wish = pseudorandom_element(possible_wishes, pseudoseed('jirachi'..i))
+    
+    card.ability.used_wishes[#card.ability.used_wishes + 1] = random_wish
+    
+    local temp_card = {area = G.pack_cards, key = random_wish, no_edition = true, skip_materialize = true}
     if not G.P_CENTERS[temp_card.key] then temp_card.key = 'c_judgement' end
     return SMODS.create_card(temp_card)
 	end,
@@ -339,7 +358,7 @@ local starter_pack = {
     local pika_eevee = {}
     local pack_key = nil
     for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
-      if not poke_family_present(v) then
+      if not pokermon.family_present(v) then
         if v.starter and v.ptype == "Grass" then
           grass_starters[#grass_starters + 1] = v.key
         end
@@ -404,7 +423,95 @@ local starter_pack = {
 	group_key = "k_poke_starter_pack",
 }
 
-local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack}
+local starterq_pack = {
+	name = "Starteq Pack",
+	key = "pokepack_starterq_pack",
+	kind = "Spectral",
+  artist = {name = {"Currently a placeholder!", "Want your art here?", "Join the Discord!"}},
+	atlas = "AtlasBoosterpacksBasic",
+	pos = { x = 4, y = 1 },
+	config = { extra = 4, choose = 1 },
+	cost = 6,
+	order = 5,
+	weight = 0,
+  no_collection = true,
+  draw_hand = false,
+  unlocked = true,
+  discovered = true,
+	create_card = function(self, card, i)
+    local grass_starters = {}
+    local fire_starters = {}
+    local water_starters = {}
+    local pseudo_starters = {}
+    local bidoof_yamper = {}
+    local pack_key = nil
+    for k, v in ipairs(G.P_CENTER_POOLS["Joker"]) do
+      if not pokermon.family_present(v) then
+        if v.knockoff_starter and v.ptype == "Grass" then
+          grass_starters[#grass_starters + 1] = v.key
+        end
+        if v.knockoff_starter and v.ptype == "Fire" then
+          fire_starters[#fire_starters + 1] = v.key
+        end
+        if v.knockoff_starter and v.ptype == "Water" then
+          water_starters[#water_starters + 1] = v.key
+        end
+        if v.knockoff_pseudol then
+          pseudo_starters[#pseudo_starters + 1] = v.key
+        end
+        if v.name == "bidoof" or v.name == "yamper" then
+          bidoof_yamper[#bidoof_yamper + 1] = v.key
+        end
+      end
+    end
+    
+    if i == 1 and #grass_starters > 0 then
+      pack_key = pseudorandom_element(grass_starters, pseudoseed('grass'))
+    elseif i == 2 and #fire_starters > 0 then
+      pack_key = pseudorandom_element(fire_starters, pseudoseed('fire'))
+    elseif i == 3 and #water_starters > 0 then
+      pack_key = pseudorandom_element(water_starters, pseudoseed('water'))
+    elseif i == 4 and #bidoof_yamper > 0 then
+      pack_key = pseudorandom_element(bidoof_yamper, pseudoseed('pikaeevee'))
+    elseif i == 5 and #pseudo_starters > 0 then
+      pack_key = pseudorandom_element(pseudo_starters, pseudoseed('pseudo'))
+    else
+      if G.P_CENTERS['j_poke_caterpie'] then
+        pack_key = 'j_poke_caterpie'
+      else
+        pack_key = nil
+      end
+    end
+    
+    local temp_card = {area = G.pack_cards, key = pack_key, no_edition = true, skip_materialize = true}
+    return SMODS.create_card(temp_card)
+	end,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.config.center.config.choose, card.ability.extra} }
+	end,
+  in_pool = function(self)
+    return false
+  end,
+  ease_background_colour = function(self)
+     ease_background_colour{new_colour = HEX('8A8A8A'), contrast = 1}
+  end,
+  particles = function(self)
+    G.booster_pack_stars = Particles(1, 1, 0,0, {
+      timer = 0.07,
+      scale = 0.1,
+      initialize = true,
+      lifespan = 15,
+      speed = 0.1,
+      padding = -4,
+      attach = G.ROOM_ATTACH,
+      colours = {HEX('E8B6B3'), HEX('82B1CF'), HEX('78B099')},
+      fill = true
+    })
+	end,
+	group_key = "k_poke_starterq_pack",
+}
+
+local pack_list = {pack1, pack2, pack5, pack6, pack3, pack7, pack4, pack8, wish_pack, starter_pack, starterq_pack}
 
 for k, v in pairs(pack_list) do
   if not v.ease_background_colour then
