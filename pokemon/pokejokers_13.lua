@@ -728,6 +728,13 @@ local jirachi_banker = {
   perishable_compat = false,
   blueprint_compat = false,
   custom_pool_func = true,
+  calculate = function(self, card, context)
+    if context.modify_final_cashout and not context.blueprint then
+      return {
+        modify = context.amount * 2
+      }
+    end
+  end,
   in_pool = function(self)
     return false
   end,
