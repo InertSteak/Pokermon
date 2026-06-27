@@ -3954,6 +3954,17 @@ return {
                   "they share the same {C:attention}suit{}"
                 }
             },
+            j_poke_kecleon = {
+                name = "Kecleon",
+                text = {
+                    "Copies the {C:poke_pink}Type{} of",
+                    "Joker to the right",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "{C:white,X:mult}X#1#{} Mult if you have",
+                    "{C:attention}3+ {B:1,V:2}#2#{} Jokers",
+                    "{C:inactive,s:0.8}(Changes to {C:attention,s:0.8}Kecleon{C:inactive,s:0.8}'s type)"
+                },
+            },
             j_poke_duskull = {
               name = "Duskull",
               text = {

@@ -881,6 +881,77 @@ local milotic={
 }
 -- Castform 351
 -- Kecleon 352
+local kecleon = {
+  name = "kecleon",
+  pos = {x = 0, y = 0},
+  config = {extra = {Xmult = 2}},
+  loc_vars = function(self, info_queue, card)
+    local ptype = pokermon.get_type(card) or 'Colorless'
+    local colour = pokermon.colours[string.lower(ptype)]
+    local text_colour = ptype ~= 'Lightning' and G.C.WHITE or G.C.BLACK
+
+    return {vars = {card.ability.extra.Xmult, ptype, colours = {colour, text_colour}}}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Basic",
+  ptype = "Colorless",
+  atlas = "Pokedex3",
+  gen = 3,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
+      return {
+        Xmult = card.ability.extra.Xmult
+      }
+    end
+  end,
+  set_sprites = function(self, card)
+    local ptype = pokermon.get_type(card)
+    local sprite_pos = ({
+      ['Dark'] = {x = 6, y = 0},
+      ['Dragon'] = {x = 8, y = 0},
+      ['Earth'] = {x = 10, y = 0},
+      ['Fairy'] = {x = 0, y = 1},
+      ['Fighting'] = {x = 2, y = 1},
+      ['Fire'] = {x = 4, y = 1},
+      ['Grass'] = {x = 6, y = 1},
+      ['Lightning'] = {x = 8, y = 1},
+      ['Metal'] = {x = 10, y = 1},
+      ['Psychic'] = {x = 0, y = 2},
+      ['Water'] = {x = 2, y = 2},
+    })[ptype]
+
+    if sprite_pos then
+      card.children.center.atlas = SMODS.get_atlas('poke_'..card.config.center.poke_lookup_atlas)
+      card.children.center:set_sprite_pos(sprite_pos)
+    else
+      card.children.center.atlas = SMODS.get_atlas(card.config.center.atlas)
+      card.children.center:set_sprite_pos(card.config.center.pos)
+    end
+  end,
+  set_type = function(self, card, ptype)
+    pokermon.apply_type_sticker(card, ptype)
+    self:set_sprites(card)
+    SMODS.recalc_debuff(card)
+  end,
+  update = function(self, card, dt)
+    if not (card.area and card.area == G.jokers) then return end
+    local other_joker
+    for k, v in ipairs(G.jokers.cards) do
+      if v == card then other_joker = G.jokers.cards[k+1] break end
+    end
+    if other_joker then
+      local other_type = pokermon.get_type(other_joker) or 'Colorless'
+      if pokermon.get_type(card) ~= other_type then
+        self:set_type(card, other_type)
+      end
+    elseif not is_type(card, 'Colorless') then
+      self:set_type(card, 'Colorless')
+    end
+  end,
+  attributes = {"types", "joker", "xmult"},
+}
 -- Shuppet 353
 -- Banette 354
 -- Duskull 355
@@ -1198,5 +1269,5 @@ local wynaut={
   attributes = {"baby", "tarot", "generation", "round_evo"},
 }
 return {name = "Pokemon Jokers 331-360", 
-        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, duskull, dusclops, tropius, chimecho, absol, wynaut},
+        list = {cacnea, cacturne, swablu, altaria, corphish, crawdaunt, baltoy, claydol, lileep, cradily, anorith, armaldo, feebas, milotic, kecleon, duskull, dusclops, tropius, chimecho, absol, wynaut},
 }
