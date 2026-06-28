@@ -178,7 +178,7 @@ return {
                 },
             },
         },
-        poke_item = {
+        Item = {
             c_poke_pokeball = {
                 name = "精靈球",
                 text = {
@@ -215,7 +215,7 @@ return {
                     "並{C:attention}隨機{}其牌級",
                 },
             },
-            c_poke_waterstone = {
+            c_poke_poke_waterstone = {
                 name = "水之石",
                 text = {
                     "{C:attention}進化牌{}",
@@ -237,7 +237,7 @@ return {
                     "到牌組中，然後抽出{C:attention}1{}張到手牌中",
                 },
             },
-            c_poke_firestone = {
+            c_poke_poke_firestone = {
                 name = "火之石",
                 text = {
                     "{C:attention}進化牌{}",
@@ -321,7 +321,7 @@ return {
             c_poke_metalcoat = {
                 name = "金屬膜",
                 text = {
-                    "{C:attention}屬性變更：{}{X:poke_metal,C:white}鋼{}",
+                    "{C:attention}屬性變更：{}{X:pokemetal,C:white}鋼{}",
                     "{br:2}此為分隔線",
                     "產生一張",
                     "與選擇的{C:attention}1張{}卡牌的牌級相同的{C:attention}鋼鐵牌{}",
@@ -330,7 +330,7 @@ return {
             c_poke_dragonscale = {
                 name = "龍之鱗片",
                 text = {
-                    "{C:attention}屬性變更：{}{X:poke_dragon,C:white}龍{}",
+                    "{C:attention}屬性變更：{}{X:pokedragon,C:white}龍{}",
                     "{br:2}此為分隔線",
                     "產生最多{C:attention}3{}張隨機的",
                     "{C:poke_item}物品牌{}或{C:poke_pink}能量牌{}",
@@ -557,8 +557,8 @@ return {
                 }
             },
         },
-        poke_energy = {
-            c_poke_grass_energy = {
+        Energy = {
+            c_poke_poke_grass_energy = {
                 name = "草能量",
                 text = {
                     "對最左邊或選擇的{X:poke_grass,C:white}草{}屬性小丑牌",
@@ -566,7 +566,7 @@ return {
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_fire_energy = {
+            c_poke_poke_fire_energy = {
                 name = "火能量",
                 text = {
                     "對最左邊或選擇的{X:poke_fire,C:white}火{}屬性小丑牌的",
@@ -574,7 +574,7 @@ return {
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_water_energy = {
+            c_poke_poke_water_energy = {
                 name = "水能量",
                 text = {
                     "對最左邊或選擇的{X:poke_water,C:white}水{}屬性小丑牌",
@@ -582,7 +582,7 @@ return {
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_lightning_energy = {
+            c_poke_poke_lightning_energy = {
                 name = "電能量",
                 text = {
                     "對最左邊或選擇的{X:poke_lightning,C:black}電{}屬性小丑牌",
@@ -590,7 +590,7 @@ return {
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_psychic_energy = {
+            c_poke_poke_psychic_energy = {
                 name = "超能量",
                 text = {
                     "對最左邊或選擇的{X:poke_psychic,C:white}超能力{}屬性小丑牌",
@@ -598,7 +598,7 @@ return {
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_fighting_energy = {
+            c_poke_poke_fighting_energy = {
                 name = "鬥能量",
                 text = {
                     "對最左邊或選擇的{X:poke_fighting,C:white}格鬥{}屬性小丑牌",
@@ -609,7 +609,7 @@ return {
             c_poke_colorless_energy = {
                 name = "無色能量",
                 text = {
-                    "對最左邊或選擇的{X:poke_colorless,C:white}一般{}屬性小丑牌",
+                    "對最左邊或選擇的{X:colorless,C:white}一般{}屬性小丑牌",
                     "增加{C:poke_pink}能量{}，如果可適用",
                     "對非{C:attention}一般{}屬性小丑牌的增強效果減半",
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
@@ -626,7 +626,7 @@ return {
             c_poke_metal_energy = {
                 name = "鋼能量",
                 text = {
-                    "對最左邊或選擇的{X:Metal,C:white}鋼{}屬性小丑牌",
+                    "對最左邊或選擇的{X:pokemetal,C:white}鋼{}屬性小丑牌",
                     "增加{C:poke_pink}能量{}，如果可適用",
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
@@ -634,7 +634,7 @@ return {
             c_poke_fairy_energy = {
                 name = "妖能量",
                 text = {
-                    "對最左邊或選擇的{X:poke_fairy,C:white}妖精{}屬性小丑牌",
+                    "對最左邊或選擇的{X:fairy,C:white}妖精{}屬性小丑牌",
                     "增加{C:poke_pink}能量{}，如果可適用",
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
@@ -643,12 +643,12 @@ return {
             c_poke_dragon_energy = {
                 name = "龍能量",
                 text = {
-                    "對最左邊或選擇的{X:poke_dragon,C:white}龍{}屬性小丑牌",
+                    "對最左邊或選擇的{X:pokedragon,C:white}龍{}屬性小丑牌",
                     "增加{C:poke_pink}能量{}，如果可適用",
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },
             },
-            c_poke_earth_energy = {
+            c_poke_poke_earth_energy = {
                 name = "地能量",
                 text = {
                     "對最左邊或選擇的{X:poke_earth,C:white}地面{}屬性小丑牌",
@@ -886,7 +886,7 @@ return {
             j_poke_pidgey = {
                 name = "波波",
                 text = {
-                    "每個在得分牌中的不同{C:attention}牌級{}及{C:attention}花色{}",
+                    "每個在得分牌中不同的{C:attention}牌級{}及{C:attention}花色{}",
                     "將給予{C:mult}+#2#{}倍數",
                     "{C:inactive,s:0.8}（在{C:attention,s:0.8}#1#{C:inactive,s:0.8}個回合後進化）"
                 } 
@@ -1492,7 +1492,7 @@ return {
                 text = {
                     "每張打出的{C:attention}鋼鐵{}牌",
                     "會在得分時給予{X:red,C:white}X#1#{}倍數",
-                    "每張在這張牌旁邊的{X:poke_metal,C:white}鋼{}屬性小丑牌",
+                    "每張在這張牌旁邊的{X:pokemetal,C:white}鋼{}屬性小丑牌",
                     "會對加成增加{X:red,C:white}X#2#{}倍數",
                     "{C:inactive}（目前將給予{X:red,C:white}X#3#{}{C:inactive}倍數）{}",
                     "{C:inactive,s:0.8}（使用{C:attention,s:0.8}雷之石{}{C:inactive,s:0.8}後進化）"
@@ -3681,7 +3681,7 @@ return {
                 "當你在{C:attention}盲注{}中抽出{C:attention}9{}時",
                 "這張小丑牌將獲得{C:chips}+#2#{}籌碼並給予{C:money}$#3#{}",
                 "{br:2}此為分隔線",
-                "如果你持有其他的{X:poke_dragon,C:white}龍{}屬性小丑牌",
+                "如果你持有其他的{X:pokedragon,C:white}龍{}屬性小丑牌",
                 "這張小丑牌將額外獲得{C:chips}+#4#{}籌碼",
                 "並額外給予{C:money}$#5#{}",
                 "{C:inactive}（目前將給予{C:chips}+#1#{C:inactive}籌碼）",
@@ -3784,6 +3784,16 @@ return {
                   "所有卡牌會額外觸發一次"
                 }
             },
+            j_poke_kecleon = {
+                name = "變隱龍",
+                text = {
+                    "複製右邊小丑牌的{C:poke_pink}屬性{}",
+                    "{br:2}此為分隔線",
+                    "如果你持有{C:attention}3張或以上{}的{B:1,V:2}#2#{}屬性小丑牌",
+                    "倍數{C:white,X:mult}X#1#{}",
+                    "{C:inactive,s:0.8}（會對應{C:attention,s:0.8}變隱龍{C:inactive,s:0.8}目前的屬性而變更）"
+                },
+            },
             j_poke_duskull = {
               name = "夜巡靈",
               text = {
@@ -3805,13 +3815,25 @@ return {
                 "{C:inactive}（使用{}{C:attention}聯繫繩{}{C:inactive}後進化）"
               }
             },
+            j_poke_tropius = {
+              name = "熱帶龍",
+              text = {
+                "回合結束後，產生一張{C:attention}香蕉{}小丑牌",
+                "每個{C:attention}底注{}只觸發一次",
+                "{C:inactive}（必須有空位）",
+                "{br:2}此為分隔線",
+                "當有小丑牌被摧毀時",
+                "這張小丑牌將獲得{X:mult,C:white}X#2#{}倍數",
+                "{C:inactive}（目前將給予{X:mult,C:white}X#1#{C:inactive}倍數）"
+              }
+            },
             j_poke_chimecho = {
               name = "風鈴鈴",
               text = { 
                 "在商店中的{C:attention}兌換券{}將會是{C:attention}免費",
                 "{br:3}此為分隔線",
                 "{V:1}複製在回合中",
-                "頭{C:attention,V:1}#1#{} {C:inactive}[#2#]{} 張被摧毀的{C:attention,V:1}玻璃{V:1}牌",
+                "頭{C:attention,V:1}#1#{}{C:inactive}[#2#]{}張被摧毀的{C:attention,V:1}玻璃{V:1}牌",
                 "{V:1}並抽到手中",
               }
             },
@@ -3889,14 +3911,13 @@ return {
                 text = {
                     "{C:attention}原始的#1#{}",
                     "{X:attention,C:white}一張{}：{C:attention}最後{}打出的卡牌",
-                    "在得分時給予{C:chips}+#2#{}籌碼",
-                    "{X:attention,C:white}兩張{}：牌組中最底層的卡牌",
-                    "會變為{C:attention}石頭{}牌",
-                    "{X:attention,C:white}三張{}：抽出牌組中最底層的卡牌",
-                    "並獲得{C:money}$#3#{}",
-                    "{X:attention,C:white}四張{}：{C:attention}最後{}打出的卡牌",
-                    "在得分時會給予{X:mult,C:white} X#4# {}倍數",
-                    "並會被摧毀，除非是{C:attention}石頭{}牌",
+                    "將在得分時給予{C:chips}+#2#{}籌碼",
+                    "{X:attention,C:white}兩張{}：{C:attention}最後{}打出的卡牌",
+                    "將在得分時給予{C:money}$#3#{}",
+                    "{X:attention,C:white}三張{}：在你的{C:attention}牌組{}中最底層{C:attention}4以外{}的卡牌",
+                    "將加強為{C:attention}石頭{}牌",
+                    "{X:attention,C:white}四張{}： 每個{C:attention}已耗盡的牌級{}將給予{X:mult,C:white}X#4#{}倍數",
+                    "{C:inactive}（目前將給予{X:mult,C:white}X#5#{C:inactive}倍數）{}"
                 } 
             },
             j_poke_luvdisc = {
@@ -4274,7 +4295,7 @@ return {
                 text = {
                     "每張得分的{C:attention}鋼鐵牌{}",
                     "會給予{X:red,C:white}X#1#{}倍數",
-                    "每張在旁邊的{X:poke_metal,C:white}鋼{}屬性小丑牌",
+                    "每張在旁邊的{X:pokemetal,C:white}鋼{}屬性小丑牌",
                     "會給予{X:red,C:white}X#2#{}倍數"
                 } 
             },
@@ -4779,6 +4800,32 @@ return {
                 "額外觸發{C:attention}手牌中{}所有的{C:attention}鋼鐵{}牌一次",
               }
             },
+            j_poke_klink = {
+              name = '齒輪兒',
+              text = {
+                "在盲注回合中",
+                "每抽出{C:attention}#2#{}{C:inactive}[#3#]{}張卡牌時，將獲得{C:money}$#1#{}",
+                "{C:inactive,s:0.8}（在獲得{C:money,s:0.8}$#4#{C:inactive,s:0.8}後進化）",
+			  }
+			},
+			j_poke_klang = {
+			  name = '齒輪組',
+			  text = {
+                "在盲注回合中",
+                "每抽出{C:attention}#2#{}{C:inactive}[#3#]{}張卡牌時，將獲得{C:money}$#1#{}",
+				 "{C:inactive,s:0.8}（在獲得{C:money,s:0.8}$#4#{C:inactive,s:0.8}後進化）",
+			  }
+			},
+			j_poke_klinklang = {
+			  name = '齒輪怪',
+			  text = {
+                 "在盲注回合中",
+                 "每抽出{C:attention}#2#{}{C:inactive}[#3#]{}張卡牌時",
+                 "這張小丑牌將獲得{X:mult,C:white}X#5#{}倍數並獲得{C:money}$#1#{}",
+                 "回合結束後，重設這張小丑牌的{X:mult,C:white}X{}倍數",
+                 "{C:inactive}（目前將給予{X:mult,C:white}X#4#{C:inactive}倍數）",
+			  }
+			},
             j_poke_elgyem = {
                 name = "小灰怪",
                 text = {
@@ -5032,8 +5079,8 @@ return {
             j_poke_charjabug = {
                 name = '蟲電寶',
                 text = {
-                    "每張你持有的{X:poke_lightning, C:black}電{}屬性小丑牌",
-                    "會給予{C:mult}+#1#{}倍數{C:inactive}（包括自身）{}",
+                    "每張持有的{X:poke_lightning, C:black}電{}屬性小丑牌",
+                    "將給予{C:mult}+#1#{}倍數",
                      "{C:inactive}（目前將給予{C:mult}#2#{C:inactive}倍數）",
                     "{C:inactive}（使用{} {C:attention}雷之石{}{C:inactive}後進化）"
                 }  
@@ -5041,9 +5088,8 @@ return {
             j_poke_vikavolt = {
                 name = '鍬農炮蟲',
                 text = {
-                    "倍數{C:mult}+#3#{}",
-                    "每張其他你持有的{X:poke_lightning, C:black}雷{}屬性小丑牌",
-                    "會給予{X:red,C:white} X#1# {}倍數",
+                    "每張持有的{X:poke_lightning, C:black}雷{}屬性小丑牌",
+                    "將給予{X:red,C:white} X#1# {}倍數",
                      "{C:inactive}（目前將給予{X:red,C:white} X#2# {}{C:inactive}倍數）",
                 }  
             },
@@ -5051,7 +5097,7 @@ return {
               name = "岩狗狗",
               text = {
                 "每張打出的{C:attention}非人頭牌{}",
-                "會在得分時給予{C:mult}+#1#{}倍數",
+                "將在得分時給予{C:mult}+#1#{}倍數",
                 "{C:inactive,s:0.8}（在打出並得分{C:attention,s:0.8}#2#{C:inactive,s:0.8}張偶數牌時進化）",
                 "{C:inactive,s:0.8}（在打出並得分{C:attention,s:0.8}#3#{C:inactive,s:0.8}張奇數牌時進化）"
               }
@@ -5060,7 +5106,7 @@ return {
               name = "鬃岩狼人（白晝）",
               text = {
                 "每張打出的{C:attention}偶數牌{}",
-                "會在得分時給予{C:mult}+#1#{}倍數",
+                "將在得分時給予{C:mult}+#1#{}倍數",
                 "{br:3}此為分隔線",
                 "如果第一次出牌中只有{C:attention}1{}張牌",
                 "該牌會在得分時對這個回合給予{C:chips}+#2#{}籌碼",
@@ -5071,7 +5117,7 @@ return {
               name = "鬃岩狼人（黑夜）",
               text = {
                 "每張打出的{C:attention}奇數牌{}",
-                "會在得分時給予{C:mult}+#1#{}倍數",
+                "將在得分時給予{C:mult}+#1#{}倍數",
                 "{br:3}此為分隔線",
                 "選擇首領盲注時",
                 "對這個回合給予{C:chips}+#2#{}出牌次數，", 
@@ -5082,7 +5128,7 @@ return {
               name = "鬃岩狼人（黃昏）",
               text = {
                 "每張打出的{C:attention}非人頭牌{}",
-                "會在得分時給予{C:mult}+#1#{}倍數",
+                "將在得分時給予{C:mult}+#1#{}倍數",
                 "{br:3}此為分隔線",
                 "每個回合中{C:attention}第一張{}得分的{C:attention}偶數牌{}",
                 "及{C:attention}第一張{}得分的{C:attention}奇數牌{}",
@@ -5511,7 +5557,7 @@ return {
                     "每張{C:attention}嬰兒{}寶可夢會給予{X:mult,C:white} X#1# {}倍數",
                 } 
             },
-            j_poke_tall_grass = {
+            j_poke_tall_poke_grass = {
                 name = '草叢',
                 text = {
                     "出牌時，有{C:green}#1#/#2#{}的機率",
@@ -5913,7 +5959,7 @@ return {
                 text = {
                     "摧毀最左邊或選擇的寶可夢小丑牌",
                     "並產生{C:attention}2{}張其{C:poke_pink}屬性{}的{C:dark_edition}負片{}{C:poke_pink}能量{}牌",
-                    "{C:inactive}（無屬性的小丑牌會產生{X:poke_colorless,C:white}一般{C:inactive}能量）"
+                    "{C:inactive}（無屬性的小丑牌會產生{X:colorless,C:white}一般{C:inactive}能量）"
                 },
             },
             c_poke_double_rainbow_energy = {
@@ -6007,7 +6053,7 @@ return {
                 name = "野生標籤",
                 text = {
                     "下個在商店中",
-                    "有免費的{C:poke_safari}野生{}寶可夢",
+                    "有免費的{C:safari}野生{}寶可夢",
                 }, 
             },
             tag_poke_starter_tag = {
@@ -6084,7 +6130,7 @@ return {
                   "{X:poke_fire,C:white}火{}",
                 }
             },
-            Water = {
+            Fire = {
                 name = "屬性",
                 text = {
                   "{X:poke_water,C:white}水{}",
@@ -6111,7 +6157,7 @@ return {
             Colorless = {
                 name = "屬性",
                 text = {
-                  "{X:poke_colorless,C:white}一般{}",
+                  "{X:colorless,C:white}一般{}",
                 }
             },
             Dark = {
@@ -6123,19 +6169,19 @@ return {
             Metal = {
                 name = "屬性",
                 text = {
-                  "{X:poke_metal,C:white}鋼{}",
+                  "{X:pokemetal,C:white}鋼{}",
                 }
             },
             Fairy = {
                 name = "屬性",
                 text = {
-                  "{X:poke_fairy,C:white}妖精{}",
+                  "{X:fairy,C:white}妖精{}",
                 }
             },
             Dragon = {
                 name = "屬性",
                 text = {
-                  "{X:poke_dragon,C:white}龍{}",
+                  "{X:pokedragon,C:white}龍{}",
                 }
             },
             Earth = {
@@ -6148,7 +6194,7 @@ return {
             Bird = {
                 name = "屬性",
                 text = {
-                  "{X:poke_bird,C:white}鳥{}",
+                  "{X:bird,C:white}鳥{}",
                 }
             },
             --infoqueue used for things like kabuto and omanyte
@@ -6476,7 +6522,7 @@ return {
                     "{C:attention}月之石{} - {X:poke_dark,C:white}月亮伊布{}",
                     "{C:attention}葉之石{} - {X:poke_grass,C:white}葉伊布{}",
                     "{C:attention}冰之石{} - {X:poke_water,C:white}冰伊布{}",
-                    "{C:attention}光之石{} - {X:poke_fairy,C:white}仙子伊布{}"
+                    "{C:attention}光之石{} - {X:fairy,C:white}仙子伊布{}"
                 }
             },
             poke_egg_tip = {
@@ -6748,37 +6794,37 @@ return {
             },
 
             --[[
-            grass_sticker = {
+            poke_grass_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_grass,C:white}草{}"
                 } 
             },
-            fire_sticker = {
+            poke_fire_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_fire,C:white}火{}"
                 } 
             },
-            water_sticker = {
+            poke_water_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_water,C:white}水{}"
                 } 
             },
-            lightning_sticker = {
+            poke_lightning_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_lightning,C:white}電{}"
                 } 
             },
-            psychic_sticker = {
+            poke_psychic_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_psychic,C:white}超能力{}"
                 } 
             },
-            fighting_sticker = {
+            poke_fighting_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_fighting,C:white}格鬥{}"
@@ -6787,7 +6833,7 @@ return {
             colorless_sticker = {
                 name = "屬性",
                 text = {
-                    "{X:poke_colorless,C:white}一般{}"
+                    "{X:colorless,C:white}一般{}"
                 } 
             },
             dark_sticker = {
@@ -6799,22 +6845,22 @@ return {
             metal_sticker = {
                 name = "屬性",
                 text = {
-                    "{X:poke_metal,C:white}鋼{}"
+                    "{X:pokemetal,C:white}鋼{}"
                 } 
             },
             fairy_sticker = {
                 name = "屬性",
                 text = {
-                    "{X:poke_fairy,C:white}妖精{}"
+                    "{X:fairy,C:white}妖精{}"
                 } 
             },
             dragon_sticker = {
                 name = "屬性",
                 text = {
-                    "{X:poke_dragon,C:white}龍{}"
+                    "{X:pokedragon,C:white}龍{}"
                 } 
             },
-            earth_sticker = {
+            poke_earth_sticker = {
                 name = "屬性",
                 text = {
                     "{X:poke_earth,C:white}地面{}"
@@ -7073,7 +7119,7 @@ return {
             --From Mime Jr.
             poke_mime_ex = "模仿！",
             --From Magmortar
-            poke_fire_blast_ex = "大字爆炎！",
+            poke_poke_fire_blast_ex = "大字爆炎！",
             --From Vikavolt
             --If it's not 100% accurate...
             poke_thunder_ex = "打雷！",
@@ -7105,7 +7151,7 @@ return {
             poke_iron_tail_ex = "鐵尾！",
             poke_autotomize_ex = "輕量化！",
             poke_highjumpkick_ex = "飛膝踢！",
-            poke_water_gun_ex = "水槍！",
+            poke_poke_water_gun_ex = "水槍！",
             poke_sky_attack_ex = "神鳥猛擊！",
             poke_bug_buzz_ex = "蟲鳴！",
             poke_sticky_web_ex = "黏黏網！",
@@ -7118,18 +7164,18 @@ return {
             poke_speed_forme = "速度",
             poke_normal_forme = "普通",
 
-            poke_grass_badge = "草",
-            poke_fire_badge = "火",
-            poke_water_badge = "水",
-            poke_lightning_badge = "電",
-            poke_psychic_badge = "超能力",
-            poke_fighting_badge = "格鬥",
+            poke_poke_grass_badge = "草",
+            poke_poke_fire_badge = "火",
+            poke_poke_water_badge = "水",
+            poke_poke_lightning_badge = "電",
+            poke_poke_psychic_badge = "超能力",
+            poke_poke_fighting_badge = "格鬥",
             poke_colorless_badge = "一般",
             poke_dark_badge = "惡",
             poke_metal_badge = "鋼",
             poke_fairy_badge = "妖精",
             poke_dragon_badge = "龍",
-            poke_earth_badge = "地面",
+            poke_poke_earth_badge = "地面",
             poke_bird_badge = "鳥",
 
             poke_m_bonus = "獎勵",
@@ -7151,25 +7197,25 @@ return {
 
             poke_shiny = "發光",
 
-            grass_sticker = "屬性貼紙",
-            fire_sticker = "屬性貼紙",
-            water_sticker = "屬性貼紙",
-            lightning_sticker = "屬性貼紙",
-            psychic_sticker = "屬性貼紙",
-            fighting_sticker = "屬性貼紙",
+            poke_grass_sticker = "屬性貼紙",
+            poke_fire_sticker = "屬性貼紙",
+            poke_water_sticker = "屬性貼紙",
+            poke_lightning_sticker = "屬性貼紙",
+            poke_psychic_sticker = "屬性貼紙",
+            poke_fighting_sticker = "屬性貼紙",
             colorless_sticker = "屬性貼紙",
             dark_sticker = "屬性貼紙",
             metal_sticker = "屬性貼紙",
             fairy_sticker = "屬性貼紙",
             dragon_sticker = "屬性貼紙",
-            earth_sticker = "屬性貼紙",
+            poke_earth_sticker = "屬性貼紙",
 
             k_poke_safari = "野生",
             k_poke_mega = "超級",
         },
         quips = {
           poke_lose_quip1 = {"Maybe Pokémon contests", "are more your speed...",},
-          poke_lose_quip2 = {"You looked like a", "Magikarp out of water!",},
+          poke_lose_quip2 = {"You looked like a", "Magikarp out of poke_water!",},
           poke_lose_quip3 = {"Did you forget", "to study your", "type matchups?",},
           poke_lose_quip4 = {"Oh no, we're", "blasting off again!",},
           poke_lose_quip5 = {"Looks like that", "blind was super effective!",},
