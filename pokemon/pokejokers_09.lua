@@ -1461,7 +1461,13 @@ local beautifly={
           end
         end
         if has_nature and SMODS.pseudorandom_probability(card, 'beautifly', card.ability.extra.num, card.ability.extra.dem, 'beautifly') then
-          SMODS.smart_level_up_hand(context.blueprint_card or card, 'Flush')
+          local instant = (context.scoring_name ~= 'Flush')
+          SMODS.upgrade_poker_hands{hands = 'Flush', from = context.blueprint_card or card, instant = instant}
+          if instant then 
+            return {
+              message = localize('k_upgrade_ex')
+            }
+          end
         end
       end
       if context.joker_main then
