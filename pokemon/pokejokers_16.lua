@@ -516,7 +516,7 @@ local glaceon={
   ptype = "Water",
   atlas = "Pokedex4",
   gen = 4,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then
       return {
