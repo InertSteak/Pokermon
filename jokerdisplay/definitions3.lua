@@ -1579,6 +1579,24 @@ jd_def["j_poke_milotic"] = {
 
 --	Castform
 --	Kecleon
+jd_def["j_poke_kecleon"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+  calc_function = function(card)
+    if #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
+    end
+  end
+}
+
 --	Shuppet
 --	Banette
 --	Duskull
