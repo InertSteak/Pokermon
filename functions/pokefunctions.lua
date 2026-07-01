@@ -1179,34 +1179,48 @@ pokermon.fossil_generate_ui = function(self, info_queue, card, desc_nodes, speci
 end
 
 pokermon.generate_pickup_item_key = function(seed)
-  local item_key = 'c_poke_transformation'
+  local item_key
   local item_chance = pseudorandom(seed)
+
   if item_chance < .34 then item_key = nil
-  elseif item_chance < .59 then item_key = 'evo'
+  elseif item_chance < .59 then item_key = pokermon.poll_evo_item(seed)
   elseif item_chance < .79 then item_key = 'c_poke_leftovers'
   elseif item_chance < .99 then item_key = 'c_poke_twisted_spoon'
+  else item_key = 'c_poke_transformation'
   end
-  
-  if item_key == "evo" then
-    local evo_item_keys = {}
-    for k, v in pairs(G.jokers.cards) do
-      if v.config.center.item_req then
-        if type(v.config.center.item_req) == "table" then
-          item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
-        else
-          item_key = "c_poke_"..v.config.center.item_req
-        end
-        table.insert(evo_item_keys, item_key)
-      end
-    end
-    if #evo_item_keys > 0 then
-      item_key = pseudorandom_element(evo_item_keys, pseudoseed(seed))
-    else
-      item_key = nil
-    end
-  end
-  
+
   return item_key
+end
+
+pokermon.poll_evo_item = function(seed)
+  local evo_item_key_set = {}
+  for _, v in pairs(G.jokers.cards) do
+    if v.config.center.item_req then
+      local item_req = type(v.config.center.item_req) == 'table'
+          and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
+          or v.config.center.item_req
+
+      local prefix = pokermon.has(POKE_NATIVE_EVO_ITEMS, item_req)
+          and 'poke'
+          or v.config.center.poke_custom_prefix
+
+      local item_key = 'c_' .. prefix .. '_' .. item_req
+
+      evo_item_key_set[item_key] = true
+    end
+  end
+
+  local evo_item_key_list = {}
+  for key, _ in pairs(evo_item_key_set) do
+    if G.P_CENTERS[key] and not G.GAME.used_jokers[key] and not G.GAME.banned_keys[key]
+        and (not type(G.P_CENTERS[key].in_pool) == 'function' or G.P_CENTERS[key]:in_pool()) then
+      evo_item_key_list[#evo_item_key_list+1] = key
+    end
+  end
+  if #evo_item_key_list > 1 then
+    return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
+  end
+  return evo_item_key_list[1]
 end
 
 pokermon.set_sprites = function(self, card, front)
