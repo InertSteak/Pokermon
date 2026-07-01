@@ -2495,14 +2495,16 @@ return {
             j_poke_natu = {
                 name = 'Natu',
                 text = {
-                    "{C:planet}Planet{} cards give an extra level",
+                    "{C:planet}Planet{} cards upgrade level of",
+                    "hand an extra time",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_poke_xatu = {
                 name = 'Xatu',
                 text = {
-                    "{C:planet}Planet{} cards give an extra level",
+                    "{C:planet}Planet{} cards upgrade level of",
+                    "hand an extra time",
                     "{br:2}ERROR - CONTACT STEAK",
                     "{C:planet}Celestial Packs{} contain every",
                     "{C:attention}available{} {C:planet}Planet{} card"
@@ -2705,7 +2707,7 @@ return {
                 text = {
                     "If {C:attention}first discard{} of",
                     "round has only {C:attention}1{} card",
-                    "destroy it and increase",
+                    "destroy it and upgrade",
                     "level of {C:attention}#1#{}",
                     "{C:inactive,s:0.7}Hand changes after scoring{}"
                 } 
@@ -3414,7 +3416,7 @@ return {
                 text = {
                   "{C:mult}+#1#{} Mult, {C:attention}Nature: {C:inactive}({V:1}#2#{C:inactive}){}",
                   "{br:2}ERROR - CONTACT STEAK",
-                  "{C:green}#3# in #4#{} chance to level up",
+                  "{C:green}#3# in #4#{} chance to upgrade level of",
                   "{C:attention}Flush{} if {C:attention}poker hand{} contains",
                   "a scoring {C:attention}Nature{} card"
                 }

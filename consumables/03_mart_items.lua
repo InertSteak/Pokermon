@@ -313,7 +313,7 @@ local moonstone = {
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
         local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-        SMODS.smart_level_up_hand(card, hand)
+        SMODS.upgrade_poker_hands{hands = hand, from = card}
       else
         pokermon.nope(card)
       end
