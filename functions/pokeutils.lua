@@ -910,3 +910,15 @@ pokermon.get_depleted = function(find_func)
   
   return depleted
 end
+
+pokermon.sort_hands = function(sort_func)
+  local temp_hands = {}
+  for k, v in pairs(G.GAME.hands) do
+    if v.visible then
+      table.insert(temp_hands, v)
+    end
+  end
+  table.sort(temp_hands, sort_func)
+  
+  return temp_hands
+end

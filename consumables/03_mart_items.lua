@@ -835,7 +835,7 @@ local upgrade = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
-      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
+      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky", "m_poke_seed"}, guaranteed = true})
       pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS[enhancement], nil, true)
