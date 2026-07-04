@@ -7197,7 +7197,7 @@ return {
               text = {
                 "If played hand is",
                 "exactly {C:attention}1{} card, creates",
-                "a {C:attention}Sealess{} copy",
+                "a {C:attention}Sealless{} copy",
               }
             },
             
