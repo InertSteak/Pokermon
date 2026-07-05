@@ -7184,9 +7184,9 @@ return {
             poke_silver_seal = {
                 name = "Silver Seal",
                 text = {
-                  "Creates an {C:poke_item}Item{} card",
-                  "and is {C:attention}discarded{} if {C:attention}held{}",
-                  "in hand when cards are scored"
+                  "Creates an {C:poke_item}Item{} card and",
+                  "is {C:attention}discarded{} if {C:attention}held{} in",
+                  "hand during scoring"
                 }
             },
                         

@@ -55,14 +55,18 @@ local silver = {
 	calculate = function(self, card, context)
 		if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and context.main_scoring and not card.destroyed then
         card.ability.discarded = true
+        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              SMODS.add_card({ set = 'poke_item'})
+              G.GAME.consumeable_buffer = 0
+              return true
+            end
+          }))
+        end
         G.E_MANAGER:add_event(Event({
           func = function()
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-              local _card = create_card("poke_item", G.consumeables, nil, nil, nil, nil, nil, nil)
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
-              card:juice_up()
-            end
             G.hand:add_to_highlighted(card, true)
             play_sound('card1', 1)
             local removed = false
