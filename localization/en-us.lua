@@ -6665,9 +6665,8 @@ return {
             nature = {
                 name = "Nature",
                 text = {
-                    "A unique {C:attention}#1#{} or set of {C:attention}#1#s{}",
-                    "that trigger this Joker",
-                    "Set once upon Joker creation",
+                    "A value or values",
+                    "set upon {C:attention}creation",
                 }
             },
             hazard_level = {
