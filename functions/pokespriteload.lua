@@ -564,7 +564,7 @@ PokemonSprites = {
 {name = "honchkrow", base = {pos = {x = 18, y = 28}},},
 {name = "glameow", base = {pos = {x = 20, y = 28}},},
 {name = "purugly", base = {pos = {x = 22, y = 28}},},
-{name = "chingling", base = {pos = {x = 24, y = 28}},alts = {AtlasJokersSeriesA = {artist = 'Sunny'}}},
+{name = "chingling", base = {pos = {x = 24, y = 28}},alts = {AtlasJokersSeriesA = {artist = 'Sunny', soul_pos = {x = 25, y = 28}}}},
 {name = "stunky", base = {pos = {x = 26, y = 28}},},
 {name = "skuntank", base = {pos = {x = 28, y = 28}},},
 {name = "bronzor", base = {pos = {x = 0, y = 29}},},
