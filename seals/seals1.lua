@@ -120,6 +120,7 @@ local dna_seal = {
 	badge_colour = HEX("f81020"), --fire
 	atlas = "AtlasStickersBasic",
   pos = {x = 6, y = 1},
+  artist = "CBMX",
   config = {},
   loc_vars = function(self, info_queue, center)    
     return {vars = {}}

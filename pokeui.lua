@@ -235,7 +235,7 @@ local pokermon_actual_credits = function()
     { localize("poke_credits_sound"), "Dread" },
     { localize("poke_credits_developer"), "SDM0, Jevonnissocoolman, Ishtech, Fem," },
     { localize("poke_credits_developer"), "MathIsFun_, Kek, Eternalnacho, Emma" },
-    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla" },
+    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla", "bt", "Emma" },
     { localize("poke_credits_localization"), "Rafael, PainKiller, FlamingRok, Mr. Onyx" },
     { localize("poke_credits_localization"), "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf" },
     { localize("poke_credits_community_manager"), "Astra, Kaethela" },

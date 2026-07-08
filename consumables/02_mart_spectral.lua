@@ -46,7 +46,7 @@ local megastone = {
   name = "megastone",
   key = "megastone",
   set = "Spectral",
-  artist = "MyDude_YT",
+  artist = {"MyDude_YT", "Lemmanade"},
   helditem = true,
   saveable = true,
   config = {extra = {usable = true, used_on = nil}},
