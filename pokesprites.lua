@@ -279,6 +279,66 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "AtlasJokersSeriesABaltoy",
+    path = "Series A/AtlasJokersSeriesABaltoy.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 32,
+    fps = 50
+})
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesABaltoyShiny",
+    path = "Series A/AtlasJokersSeriesABaltoyShiny.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 32,
+    fps = 50
+})
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesAClaydol",
+    path = "Series A/AtlasJokersSeriesAClaydol.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 32,
+    fps = 50
+})
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesAClaydolShiny",
+    path = "Series A/AtlasJokersSeriesAClaydolShiny.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 32,
+    fps = 50
+})
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesABellsprout",
+    path = "Series A/AtlasJokersSeriesABellsprout.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 24,
+    fps = 20
+})
+
+SMODS.Atlas({
+    key = "AtlasJokersSeriesABellsproutShiny",
+    path = "Series A/AtlasJokersSeriesABellsproutShiny.png",
+    px = 71,
+    py = 95,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 24,
+    fps = 20
+})
+
+SMODS.Atlas({
   key = "elite_stake",
   px = 29,
   py = 29,
