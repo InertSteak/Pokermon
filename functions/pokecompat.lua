@@ -19,8 +19,310 @@ poketype_list = POKE_TYPES
 ---@deprecated use `POKE_NATIVE_EVO_ITEMS` instead
 native_evo_items = POKE_NATIVE_EVO_ITEMS
 
----@deprecated use `poke_get_evo_overrides` instead
-HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).highest_evo end})
+---@deprecated use `pokermon.get_evo_overrides` instead
+HIGHEST_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return pokermon.get_evo_overrides(index).highest_evo end})
 
----@deprecated use `poke_get_evo_overrides` instead
-PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return poke_get_evo_overrides(index).previous_evo end})
+---@deprecated use `pokermon.get_evo_overrides` instead
+PREVIOUS_EVO_OVERRIDES = setmetatable({}, { __index = function(_, index) return pokermon.get_evo_overrides(index).previous_evo end})
+
+------------ DE-GLOBALIZING REFACTOR --------------
+
+-- pokefunctions.lua
+
+---@deprecated use `pokermon.extended_family` instead
+extended_family = pokermon.extended_family
+
+---@deprecated use `pokermon.find_pokemon_type` instead
+type_sticker_applied = pokermon.type_sticker_applied
+
+---@deprecated use `pokermon.find_pokemon_type` instead
+find_pokemon_type = pokermon.find_pokemon_type
+
+---@deprecated use `pokermon.is_type` instead
+is_type = pokermon.is_type
+
+---@deprecated use `pokermon.get_type` instead
+get_type = pokermon.get_type
+
+---@deprecated use `pokermon.copy_scaled_values` instead
+copy_scaled_values = pokermon.copy_scaled_values
+
+---@deprecated use `pokermon.fake_evolve` instead
+poke_fake_evolve = pokermon.fake_evolve
+
+---@deprecated use `pokermon.evolve` instead
+poke_evolve = pokermon.evolve
+
+---@deprecated use `pokermon.backend_evolve` instead
+poke_backend_evolve = pokermon.backend_evolve
+
+---@deprecated use `pokermon.can_evolve` instead
+can_evolve = pokermon.can_evolve
+
+---@deprecated use `pokermon.level_evo` instead
+level_evo = pokermon.level_evo
+
+---@deprecated use `pokermon.item_evo` instead
+item_evo = pokermon.item_evo
+
+---@deprecated use `pokermon.scaling_evo` instead
+scaling_evo = pokermon.scaling_evo
+
+---@deprecated use `pokermon.type_evo` instead
+type_evo = pokermon.type_evo
+
+---@deprecated use `pokermon.deck_suit_evo` instead
+deck_suit_evo = pokermon.deck_suit_evo
+
+---@deprecated use `pokermon.deck_enhance_evo` instead
+deck_enhance_evo = pokermon.deck_enhance_evo
+
+---@deprecated use `pokermon.deck_seal_evo` instead
+deck_seal_evo = pokermon.deck_seal_evo
+
+---@deprecated use `pokermon.get_lowest_evo` instead
+get_lowest_evo = pokermon.get_lowest_evo
+
+---@deprecated use `pokermon.get_highest_evo` instead
+get_highest_evo = pokermon.get_highest_evo
+
+---@deprecated use `pokermon.get_mega` instead
+get_mega = pokermon.get_mega
+
+---@deprecated use `pokermon.get_previous_from_mega` instead
+get_previous_from_mega = pokermon.get_previous_from_mega
+
+---@deprecated use `pokermon.get_previous_evo` instead
+get_previous_evo = pokermon.get_previous_evo
+
+---@deprecated use `pokermon.get_previous_evo_from_center` instead
+get_previous_evo_from_center = pokermon.get_previous_evo_from_center
+
+---@deprecated use `pokermon.get_family_keys` instead
+get_family_keys = pokermon.get_family_keys
+
+---@deprecated use `pokermon.get_evo_item_keys` instead
+get_evo_item_keys = pokermon.get_evo_item_keys
+
+---@deprecated use `pokermon.evo_item_use` instead
+evo_item_use = pokermon.evo_item_use
+
+---@deprecated use `pokermon.highlighted_evo_item` instead
+highlighted_evo_item = pokermon.highlighted_evo_item
+
+---@deprecated use `pokermon.is_evo_item_for` instead
+is_evo_item_for = pokermon.is_evo_item_for
+
+---@deprecated use `pokermon.evo_item_use_total` instead
+evo_item_use_total = pokermon.evo_item_use_total
+
+---@deprecated use `pokermon.evo_item_in_pool` instead
+evo_item_in_pool = pokermon.evo_item_in_pool
+
+---@deprecated use `pokermon.type_tooltip` instead
+type_tooltip = pokermon.type_tooltip
+
+---@deprecated use `pokermon.set_type_badge` instead
+poke_set_type_badge = pokermon.set_type_badge
+
+---@deprecated use `pokermon.apply_type_sticker` instead
+apply_type_sticker = pokermon.apply_type_sticker
+
+---@deprecated use `pokermon.get_random_poke_key` instead
+get_random_poke_key = pokermon.get_random_poke_key
+
+---@deprecated use `pokermon.get_random_poke_key_options` instead
+get_random_poke_key_options = pokermon.get_random_poke_key_options
+
+---@deprecated use `pokermon.create_random_poke_joker` instead
+create_random_poke_joker = pokermon.create_random_poke_joker
+
+---@deprecated use `pokermon.get_gen_allowed` instead
+get_gen_allowed = pokermon.get_gen_allowed
+
+---@deprecated use `pokermon.get_target_card_ranks` instead
+get_poke_target_card_ranks = pokermon.get_target_card_ranks
+
+---@deprecated use `pokermon.get_target_card_suit` instead
+get_poke_target_card_suit = pokermon.get_target_card_suit
+
+---@deprecated use `pokermon.get_target_card_enhancements` instead
+get_poke_target_card_enhancements = pokermon.get_target_card_enhancements
+
+---@deprecated use `pokermon.add_target_cards_to_vars` instead
+add_target_cards_to_vars = pokermon.add_target_cards_to_vars
+
+---@deprecated use `pokermon.find_cards_by_ptype` instead
+find_other_poke_or_energy_type = pokermon.find_cards_by_ptype
+
+---@deprecated use `pokermon.faint_baby_poke` instead
+faint_baby_poke = pokermon.faint_baby_poke
+
+---@deprecated use `pokermon.volatile_active` instead
+volatile_active = pokermon.volatile_active
+
+---@deprecated use `pokermon.total_chips` instead
+poke_total_chips = pokermon.total_chips
+
+---@deprecated use `pokermon.drain_value` instead
+poke_drain = pokermon.drain_value
+
+---@deprecated use `pokermon.fossil_generate_ui` instead
+fossil_generate_ui = pokermon.fossil_generate_ui
+
+---@deprecated use `pokermon.generate_pickup_item_key` instead
+generate_pickup_item_key = pokermon.generate_pickup_item_key
+
+---@deprecated use `pokermon.set_sprites` instead
+poke_set_sprites = pokermon.set_sprites
+
+---@deprecated use `pokermon.set_sprite_ability` instead
+poke_set_sprite_ability = pokermon.set_sprite_ability
+
+---@deprecated use `pokermon.load_individual_sprite` instead
+poke_load_individual_sprite = pokermon.load_individual_sprite
+
+---@deprecated use `pokermon.create_treasure` instead
+poke_create_treasure = pokermon.create_treasure
+
+---@deprecated use `pokermon.get_ancient_amount` instead
+get_ancient_amount = pokermon.get_ancient_amount
+
+---@deprecated use `pokermon.drain_chips` instead
+poke_drain_chips = pokermon.drain_chips
+
+---@deprecated use `pokermon.ease_poke_dollars` instead
+ease_poke_dollars = pokermon.ease_poke_dollars
+
+-- energyfunctions.lua
+
+---@deprecated use `pokermon.energy.values` instead
+energy_values = pokermon.energy.values
+
+---@deprecated use `pokermon.energy.values` instead
+energy_max = pokermon.energy.max
+
+---@deprecated use `pokermon.energy.is_energizable` instead
+is_energizable = pokermon.energy.is_energizable
+
+---@deprecated use `pokermon.energy.can_increase_energy` instead
+can_increase_energy = pokermon.energy.can_increase_energy
+
+---@deprecated use `pokermon.energy.energy_matches` instead
+energy_matches = pokermon.energy.energy_matches
+
+---@deprecated use `pokermon.energy.can_apply_energy` instead
+can_apply_energy = pokermon.energy.can_apply_energy
+
+---@deprecated use `pokermon.energy.can_use` instead
+energy_can_use = pokermon.energy.can_use
+
+---@deprecated use `pokermon.energy.can_use` instead
+energy_use = pokermon.energy.use
+
+---@deprecated use `pokermon.energy.increase` instead
+energy_increase = pokermon.energy.increase
+
+---@deprecated use `pokermon.energy.modify` instead
+increment_energy = pokermon.energy.modify
+
+---@deprecated use `pokermon.energy.energize` instead
+energize = pokermon.energy.energize
+
+---@deprecated use `pokermon.energy.get_total_energy` instead
+get_total_energy = pokermon.energy.get_total_energy
+
+-- pokeutils.lua
+
+---@deprecated use `pokermon.pseudorandom_multi` instead
+pseudorandom_multi = pokermon.pseudorandom_multi
+
+---@deprecated use `pokermon.juice_flip_hand` instead
+juice_flip_hand = pokermon.juice_flip_hand
+
+---@deprecated use `pokermon.juice_flip_hand` instead
+juice_flip_table = pokermon.juice_flip_table
+
+---@deprecated use `pokermon.add_card` instead
+poke_add_card = pokermon.add_card
+
+---@deprecated use `pokermon.add_playing_card` instead
+poke_add_playing_card = pokermon.add_playing_card
+
+---@deprecated use `pokermon.add_shop_card` instead
+poke_add_shop_card = pokermon.add_shop_card
+
+---@deprecated use `pokermon.remove_card` instead
+poke_remove_card = pokermon.remove_card
+
+---@deprecated use `pokermon.find_card` instead
+poke_find_card = pokermon.find_card
+
+---@deprecated use `pokermon.find_playing_card` instead
+poke_find_playing_card = pokermon.find_playing_card
+
+---@deprecated use `pokermon.find_leftmost_or_highlighted` instead
+poke_find_leftmost_or_highlighted = pokermon.find_leftmost_or_highlighted
+
+---@deprecated use `pokermon.vary_rank` instead
+poke_vary_rank = pokermon.vary_rank
+
+---@deprecated use `pokermon.get_adjacent_jokers` instead
+poke_get_adjacent_jokers = pokermon.get_adjacent_jokers
+
+---@deprecated use `pokermon.set_spoon_item` instead
+set_spoon_item = pokermon.set_spoon_item
+
+---@deprecated use `pokermon.convert_cards` instead
+poke_convert_cards_to = pokermon.convert_cards
+
+---@deprecated use `pokermon.unhighlight_cards` instead
+poke_unhighlight_cards = pokermon.unhighlight_cards
+
+---@deprecated use `pokermon.is_in_collection` instead
+poke_is_in_collection = pokermon.is_in_collection
+
+---@deprecated use `pokermon.add_hazards` instead
+poke_add_hazards = pokermon.add_hazards
+
+---@deprecated use `pokermon.set_hazards` instead
+poke_set_hazards = pokermon.set_hazards
+
+---@deprecated use `pokermon.change_hazard_max` instead
+poke_change_hazard_max = pokermon.change_hazard_max
+
+---@deprecated use `pokermon.change_hazard_level` instead
+poke_change_hazard_level = pokermon.change_hazard_level
+
+---@deprecated use `pokermon.get_hazard_level_vars` instead
+poke_get_hazard_level_vars = pokermon.get_hazard_level_vars
+
+---@deprecated use `pokermon.suit_check` instead
+poke_suit_check = pokermon.suit_check
+
+-- uifunctions.lua
+
+---@deprecated use `pokermon.ui.create_your_collection_card` instead
+poke_create_your_collection_card = pokermon.ui.create_your_collection_card
+
+---@deprecated use `pokermon.ui.create_UIBox_your_collection` instead
+poke_create_UIBox_your_collection = pokermon.ui.create_UIBox_your_collection
+
+-- pokefamily.lua
+
+---@deprecated use `pokermon.add_to_family` instead
+poke_add_to_family = pokermon.add_to_family
+
+-- pokespriteload.lua
+
+---@deprecated use `pokermon.sprites.load_sprites` instead
+poke_load_sprites = pokermon.sprites.load_sprites
+
+---@deprecated use `pokermon.sprites.get_atlas_prefix` instead
+poke_get_atlas_prefix = pokermon.sprites.get_atlas_prefix
+
+---@deprecated use `pokermon.sprites.get_atlas_string` instead
+poke_get_atlas_string = pokermon.sprites.get_atlas_string
+
+---@deprecated use `pokermon.sprites.load_atlas` instead
+poke_load_atlas = pokermon.sprites.load_atlas

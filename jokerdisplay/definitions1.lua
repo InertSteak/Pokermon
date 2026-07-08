@@ -916,7 +916,7 @@ jd_def["j_poke_wigglytuff"] = {
                     if scoring_card:is_suit("Spades") then
                         local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                         mult = mult + card.ability.extra.mult * retriggers
-                        chips = chips + (card.ability.extra.chips + poke_total_chips(scoring_card)) * retriggers
+                        chips = chips + (card.ability.extra.chips + pokermon.total_chips(scoring_card)) * retriggers
                     end
                 end
             end
@@ -1868,9 +1868,9 @@ calc_function = function(card)
     local adjacent = 0
     local pos = 0
     if G.STAGE == G.STAGES.RUN then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
+        if pokermon.is_type(adjacent_jokers[i], "Metal") then adjacent = adjacent + 1 end
       end
     end
     local count = 0
@@ -2107,16 +2107,16 @@ jd_def["j_poke_haunter"] = {
 -- Gengar 
 -- Mega Gengar 
 
-jd_def["j_poke_onix"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
-    },
-    calc_function = function(card)
-        local status = "Not Active!"
-        if G.GAME.current_round.hands_played == 0 then status = "Active!" end
-        card.joker_display_values.status = status
-    end
-}
+-- jd_def["j_poke_onix"] = {
+--     text = {
+--         {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+--     },
+--     calc_function = function(card)
+--         local status = "Not Active!"
+--         if G.GAME.current_round.hands_played == 0 then status = "Active!" end
+--         card.joker_display_values.status = status
+--     end
+-- }
 
 jd_def["j_poke_drowzee"] = {
     text = {
@@ -2415,7 +2415,7 @@ jd_def["j_poke_cubone"] = {
     },
     calc_function = function(card)
         local mult = 0
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         mult = card.ability.extra.mult * consumables
         card.joker_display_values.mult = mult
     end
@@ -2433,7 +2433,7 @@ jd_def["j_poke_marowak"] = {
     text_config = { colour = G.C.WHITE },
     calc_function = function(card)
         local Xmult = 1
-        local consumables = #poke_get_consumeables() + #SMODS.find_card('c_poke_thickclub')
+        local consumables = #pokermon.get_consumeables() + #SMODS.find_card('c_poke_thickclub')
         Xmult = Xmult + (card.ability.extra.Xmult_mod*consumables)
         card.joker_display_values.x_mult = Xmult
     end
@@ -2972,12 +2972,8 @@ jd_def["j_poke_lapras"] = {
 
 jd_def["j_poke_eevee"] = {
   text = {
-    {
-      border_nodes = {
-        { text = "+" },
-        { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" },
-      },
-    },
+    { text = "+", colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT }
   },
   calc_function = function(card)
     local can_evolve = 0

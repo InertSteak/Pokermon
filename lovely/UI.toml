@@ -4,24 +4,14 @@ dump_lua = true
 priority = 0
 
 
-# Localization color
+# Add Pokermon-specific tooltips to Jokers
 [[patches]]
 [patches.pattern]
-target = "functions/misc_functions.lua"
-pattern = "legendary = G.C.RARITY[4],"
-position = "after"
-payload = "poke_safari = G.C.RARITY['poke_safari'], poke_mega = G.C.RARITY['poke_mega'],"
+target = "functions/common_events.lua"
+position = "before"
 match_indent = true
-# Localization color
-[[patches]]
-[patches.pattern]
-target = "functions/misc_functions.lua"
-pattern = "legendary = G.C.RARITY[4],"
-position = "after"
-payload = "poke_safari = G.C.RARITY['poke_safari'], poke_mega = G.C.RARITY['poke_mega'],"
-match_indent = true
-
-
+pattern = "_c:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)"
+payload = "pokermon.add_joker_tooltips(_c, info_queue, card)"
 
 # Description functionality, a little hacky but it works
 [[patches]]
@@ -34,7 +24,7 @@ end
 '''
 position = "after"
 payload = '''
-if (_c.set == 'Item' or _c.set == 'Energy') and _c.poke_add_desc then
+if (_c.set == 'poke_item' or _c.set == 'poke_energy') and _c.poke_add_desc then
   localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
 end
 '''

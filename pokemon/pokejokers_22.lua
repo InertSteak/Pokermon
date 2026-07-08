@@ -6,7 +6,7 @@ local deino={
   pos = {x = 13, y = 9},
   config = {extra = {Xmult = 1.5, hand_played = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = 2,
@@ -30,7 +30,7 @@ local deino={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_zweilous", card.ability.extra.hand_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_zweilous", card.ability.extra.hand_played, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "hand_type", "trigger_evo"},
 }
@@ -40,7 +40,7 @@ local zweilous={
   pos = {x = 0, y = 10},
   config = {extra = {Xmult = 2, hand_played = 0}, evo_rqmt = 10},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, math.max(0, self.config.evo_rqmt - center.ability.extra.hand_played)}}
   end,
   rarity = "poke_safari",
@@ -63,7 +63,7 @@ local zweilous={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_hydreigon", card.ability.extra.hand_played, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_hydreigon", card.ability.extra.hand_played, self.config.evo_rqmt)
   end,
   attributes = {"xmult", "hand_type", "trigger_evo"},
 }
@@ -73,7 +73,7 @@ local hydreigon={
   pos = {x = 1, y = 10},
   config = {extra = {Xmult = 3.33, Xmult_mod = 0.33}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari",
@@ -137,7 +137,7 @@ local bunnelby = {
 	--pos = {x = 26, y = 43},
 	config = {extra = {num= 1, dem = 2, triggers = 0}, evo_rqmt = 6},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
 		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'bunnelby')
 	  return {vars = {num, dem, math.max(self.config.evo_rqmt - card.ability.extra.triggers, 0)}}
@@ -157,7 +157,7 @@ local bunnelby = {
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then
+				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then
           if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
 						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               if not context.blueprint then
@@ -177,13 +177,13 @@ local bunnelby = {
               card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_plus_tarot"), colour = G.C.PURPLE})
 						end
           else
-            poke_nope(context.blueprint_card or card)
+            pokermon.nope(context.blueprint_card or card)
 					end
 				end
 			end
      end
    end
-	return scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
+	return pokermon.scaling_evo (self, card, context, "j_poke_diggersby", card.ability.extra.triggers, self.config.evo_rqmt)
 	end,
 }
 -- Diggersby 660
@@ -192,7 +192,7 @@ local diggersby = {
 	--pos = {x = 28, y = 43},
 	config = {extra = {num= 1, dem = 2, mult = 0, mult_mod = 2}},
 	loc_vars = function(self, info_queue, card)
-		type_tooltip(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'deplete'}
     local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, 'diggersby')
 	  return {vars = {num, dem, card.ability.extra.mult, card.ability.extra.mult_mod}}
@@ -211,7 +211,7 @@ local diggersby = {
      if G.deck and G.deck.cards then
 			for i, drawnCard in ipairs(SMODS.drawn_cards) do 
         local findFunc = function(v) return drawnCard:get_id() == v:get_id() end
-				if not SMODS.has_no_rank(drawnCard) and not next(poke_find_playing_card(findFunc)) then 
+				if not SMODS.has_no_rank(drawnCard) and not next(pokermon.find_playing_card(findFunc)) then 
           if SMODS.pseudorandom_probability(card, 'bunnelby', card.ability.extra.num, card.ability.extra.dem, 'bunnelby') then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
               G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
@@ -236,7 +236,7 @@ local diggersby = {
               })
             end
           else
-            poke_nope(context.blueprint_card or card)
+            pokermon.nope(context.blueprint_card or card)
           end
         end
 			end

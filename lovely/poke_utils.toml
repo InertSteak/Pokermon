@@ -36,7 +36,7 @@ match_indent = true
 target = "functions/button_callbacks.lua"
 pattern = "if G.shop and not G.shop.alignment.offset.py then"
 position = "after"
-payload = "if G.GAME.lapras_skip then G.shop.alignment.offset.y = -5.3 end"
+payload = "if G.GAME.poke_lapras_skip then G.shop.alignment.offset.y = -5.3 end"
 match_indent = true
 
 
@@ -51,8 +51,8 @@ position = "after"
 payload = '''
 if self.ability.name:find('Celestial') and next(SMODS.find_card("j_poke_xatu")) then
     self.ability.extra = #pokermon.get_available_planet_cards()
-elseif G.GAME.extra_pocket_picks and G.GAME.extra_pocket_picks > 0 then
-    self.ability.extra = self.ability.extra + G.GAME.extra_pocket_picks
+elseif G.GAME.poke_extra_picks and G.GAME.poke_extra_picks > 0 then
+    self.ability.extra = self.ability.extra + G.GAME.poke_extra_picks
 end
 '''
 match_indent = true
@@ -81,7 +81,7 @@ overwrite = true
 target = "card.lua"
 pattern = "elseif card_type == 'Default' or card_type == 'Enhanced' then"
 position = "after"
-payload = "poke_stabilize_chip_drain(self)"
+payload = "pokermon.stabilize_chip_drain(self)"
 match_indent = true
 
 # Add nominal drain UI
@@ -107,7 +107,7 @@ target = "card.lua"
 pattern = "return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)"
 position = "at"
 payload = '''
-  poke_stabilize_chip_drain(self)
+  pokermon.stabilize_chip_drain(self)
   return self.base.nominal - self.ability.nominal_drain + self.ability.bonus + self.ability.perma_bonus
 '''
 match_indent = true
@@ -124,40 +124,7 @@ payload = "if self.debuff and not self.delay_debuff_sprites then"
 match_indent = true
 
 
-## Houndour
-# Post Discard context
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = '''
-check_for_unlock({type = 'discard_custom', cards = cards})
-'''
-position = "after"
-payload = '''
-if not hook then
-  SMODS.calculate_context({post_discard = true})
-end
-'''
-match_indent = true
-
-
-## Smeargle
-# Smeargle fix with copy effects
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''
-new_card:set_base(other.config.card)
-'''
-position = "after"
-payload = '''
-if other.config.center.name == "smeargle" then
-  other.ability.extra.copy_joker = nil
-  other.ability.extra.copy_pos = 0
-end
-'''
-match_indent = true
-
+## Ruins of Alph
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -229,25 +196,6 @@ match_indent = true
 times = 1
 
 
-## Zorua
-# Zorua Rental Incompatibility
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-self.ability.rental = _rental
-self:set_cost()
-'''
-position = "at"
-payload = '''
-if self.config.center.rental_compat ~= false and not self.ability.rental then 
-    self.ability.rental = _rental
-    self:set_cost()
-end
-'''
-match_indent = true
-overwrite = true
-
 #Cost setting functionality
 [[patches]]
 [patches.pattern]
@@ -257,8 +205,9 @@ if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.abil
 '''
 position = "after"
 payload = '''
+if self.ability.set == 'Joker' or self.ability.consumeable then self.cost = math.max(0, self.cost - 1 * #SMODS.find_card('j_poke_minun')) end
 if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - 1 * #SMODS.find_card('j_poke_rotom')) end
-if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.rotom_discount or 0) * #SMODS.find_card('j_poke_rotomdex')) end
+if self.ability.set == 'Booster' then self.cost = math.max(0, self.cost - (G.GAME.poke_rotom_discount or 0) * #SMODS.find_card('j_poke_rotomdex')) end
 if self.ability.set == 'Voucher' and #SMODS.find_card('j_poke_chimecho') > 0 then self.cost = 0 end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #SMODS.find_card('j_poke_gothita') > 0 then self.cost = math.max(0, self.cost - 2 * #find_joker('gothita')) end
 if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #SMODS.find_card('j_poke_gothorita') > 0 then self.cost = math.max(0, self.cost - 3 * #find_joker('gothorita')) end

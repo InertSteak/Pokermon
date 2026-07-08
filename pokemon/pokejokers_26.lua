@@ -32,7 +32,7 @@ local mimikyu={
   broke_pos = {x = 4, y = 4},
   config = {extra = {chips = 80, suit = "Hearts"}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, localize(center.ability.extra.suit, 'suits_plural'), not center.ability.extra.disguise_broken and 
                     localize('poke_disguise_intact') or localize('poke_disguise_broken')}}
   end,

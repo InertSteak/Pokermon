@@ -6,8 +6,8 @@ pokermon.load_pokemon = function(item)
     item.config = {}
   end
   if not item.poke_custom_prefix then
-    poke_load_atlas(item)
-    poke_load_sprites(item)
+    pokermon.sprites.load_atlas(item)
+    pokermon.sprites.load_sprites(item)
   end
   if item.ptype then
     if item.config and item.config.extra then
@@ -16,7 +16,7 @@ pokermon.load_pokemon = function(item)
       item.config.extra = {ptype = item.ptype}
     end
   end
-  item.set_badges = poke_set_type_badge
+  item.set_badges = pokermon.set_type_badge
   if item.item_req then
     if item.config and item.config.extra then
       item.config.extra.item_req = item.item_req
@@ -43,7 +43,7 @@ pokermon.load_pokemon = function(item)
         end
       }))
     end
-    poke_load_individual_sprite(self, card, card_table, other_card)
+    pokermon.load_individual_sprite(self, card, card_table, other_card)
     if prev_load then
       prev_load(self, card, card_table, other_card)
     end
@@ -51,7 +51,7 @@ pokermon.load_pokemon = function(item)
   if item.poke_multi_sprite then
     local prev_set_sprites = item.set_sprites
     item.set_sprites = function(self, card, front)
-      poke_set_sprites(self, card, front)
+      pokermon.set_sprites(self, card, front)
       if prev_set_sprites then
         prev_set_sprites(self, card, front)
       end
@@ -61,15 +61,14 @@ pokermon.load_pokemon = function(item)
       if prev_set_ability then
         prev_set_ability(self, card, initial, delay_sprites)
       end
-      poke_set_sprite_ability(self, card, initial, delay_sprites)
+      pokermon.set_sprite_ability(self, card, initial, delay_sprites)
     end
   end
-  if item.name == "articuno" then poke_debug(item.atlas) end
   SMODS.Joker(item)
 end
 
 pokermon.add_family = function(family)
-  poke_add_to_family(nil, family)
+  pokermon.add_to_family(nil, family)
 end
 
 pokermon.Pokemon = function(item, custom_prefix, custom_atlas)

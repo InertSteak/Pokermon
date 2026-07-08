@@ -9,7 +9,7 @@ local zoroark = {
 
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
-      main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
+      main_end = pokermon.ui.blueprint_compat(card ~= other_joker and other_joker)
     end
 
     return {main_end = main_end}
@@ -24,7 +24,7 @@ local zoroark = {
   get_illusion = function(self, card)
     if card.ability and card.ability.extra
         and card.area ~= G.jokers
-        and not poke_is_in_collection(card) then
+        and not pokermon.is_in_collection(card) then
       return G.P_CENTERS[card.ability.extra.hidden_key]
     end
   end,
@@ -37,7 +37,7 @@ local zoroark = {
     end
   end,
   set_card_type_badge = function(self, card, badges)
-    poke_set_card_type_badge(card, badges, self:get_illusion(card))
+    pokermon.ui.set_card_type_badge(card, badges, self:get_illusion(card))
   end,
   set_sprites = function(self, card, front)
     local center = self:get_illusion(card)
@@ -46,11 +46,11 @@ local zoroark = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+    if card.area ~= G.jokers and not pokermon.is_in_collection(card) then
       -- Initialize the Illusion
-      if not type_sticker_applied(card) then apply_type_sticker(card, "Dark") end
+      if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Dark") end
       if not card.ability.extra.hidden_key then
-        card.ability.extra.hidden_key = get_random_poke_key_options {
+        card.ability.extra.hidden_key = pokermon.get_random_poke_key_options {
           key_append = 'zoroark',
           rarity = 'poke_safari',
           exclude_types = 'Dark',
@@ -62,12 +62,12 @@ local zoroark = {
   end,
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.hidden_key = nil
-    poke_reset_sprite(card)
+    pokermon.reset_sprite(card)
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local center = self:get_illusion(card)
     if center then
-      return poke_generate_illusion_ui(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      return pokermon.ui.generate_illusion(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
     return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   end,
@@ -78,9 +78,9 @@ local zoroark = {
           and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker and other_joker ~= card
           and other_joker.config.center.blueprint_compat then
-        poke_copy_joker_sprites(card, other_joker)
+        pokermon.copy_joker_sprites(card, other_joker)
       else
-        poke_reset_sprite(card)
+        pokermon.reset_sprite(card)
       end
     end
   end,
@@ -94,7 +94,7 @@ local gothita={
   pos = {x = 10, y = 5},
   config = {extra = {rounds = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
   rarity = 1, 
@@ -106,7 +106,7 @@ local gothita={
   knockoff_pseudol = true,
   blueprint_compat = false,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_gothorita")
+    return pokermon.level_evo(self, card, context, "j_poke_gothorita")
   end,
   add_to_deck = function(self, card, from_debuff)
       G.E_MANAGER:add_event(Event({func = function()
@@ -131,17 +131,17 @@ local gothorita={
   config = {extra = {rounds = 4}},
   blueprint_compat = false,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.rounds}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 8, 
   stage = "One", 
   ptype = "Psychic",
   atlas = "Pokedex5",
   gen = 5,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_poke_gothitelle")
+    return pokermon.level_evo(self, card, context, "j_poke_gothitelle")
   end,
   add_to_deck = function(self, card, from_debuff)
       G.E_MANAGER:add_event(Event({func = function()
@@ -165,7 +165,7 @@ local gothitelle={
   pos = {x = 12, y = 5},
   config = {extra = {money = 2}}, 
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
 		return {vars = {center.ability.extra.money}}
   end,
   rarity = "poke_safari", 
@@ -177,7 +177,7 @@ local gothitelle={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-      ease_poke_dollars(card, "gothitelle", card.ability.extra.money)
+      pokermon.ease_poke_dollars(card, "gothitelle", card.ability.extra.money)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -207,7 +207,7 @@ local vanillite={
   pos = {x = 4, y = 6}, 
   config = {extra = {chips = 60, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
@@ -223,7 +223,7 @@ local vanillite={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips
@@ -248,7 +248,7 @@ local vanillite={
         })
       end
     end
-    return level_evo(self, card, context, "j_poke_vanillish")
+    return pokermon.level_evo(self, card, context, "j_poke_vanillish")
   end,
   attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
@@ -258,7 +258,7 @@ local vanillish={
   pos = {x = 5, y = 6}, 
   config = {extra = {chips = 100, chips_minus = 10, rounds = 3, triggered = false, volatile = 'left'}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'poke_volatile_'..center.ability.extra.volatile}
     end
@@ -274,7 +274,7 @@ local vanillish={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips
@@ -299,7 +299,7 @@ local vanillish={
         })
       end
     end
-    return level_evo(self, card, context, "j_poke_vanilluxe")
+    return pokermon.level_evo(self, card, context, "j_poke_vanilluxe")
   end,
   attributes = {"chips", "scaling", "food", "volatile", "round_evo"},
 }
@@ -309,7 +309,7 @@ local vanilluxe={
   pos = {x = 6, y = 6}, 
   config = {extra = {chips = 140, chips_minus = 10, tags = 2}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chips_minus, center.ability.extra.tags}}
   end,
   rarity = 3, 
@@ -321,7 +321,7 @@ local vanilluxe={
   blueprint_compat = true,
   eternal_compat = false,
   calculate = function(self, card, context)
-    if context.joker_main and volatile_active(self, card, card.ability.extra.volatile) then
+    if context.joker_main and pokermon.volatile_active(self, card, card.ability.extra.volatile) then
       card.ability.extra.triggered = true
       return {
         chips = card.ability.extra.chips
@@ -373,7 +373,7 @@ local frillish = {
   pos = {x = 0, y = 7},
   config = {extra = {chips = 0, chip_mod = 2}, evo_rqmt = 60},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod, self.config.evo_rqmt}}
   end,
   designer = "Hwang2760",
@@ -400,7 +400,7 @@ local frillish = {
         chips = card.ability.extra.chips
       }
     end
-    return scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_jellicent", card.ability.extra.chips, self.config.evo_rqmt)
   end,
   attributes = {"chips", "scaling", "discard", "face", "scaling_evo"},
 }
@@ -411,7 +411,7 @@ local jellicent = {
   pos = {x = 1, y = 7},
   config = {extra = {chips = 60, chip_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.chips, center.ability.extra.chip_mod}}
   end,
   designer = "Hwang2760",
@@ -456,12 +456,12 @@ local ferroseed={
   pos = {x = 5, y = 7},
   config = {extra = {rounds = 5, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     end
     return {vars = {center.ability.extra.rounds, center.ability.extra.hazard_level}}
   end,
@@ -480,13 +480,13 @@ local ferroseed={
           return {m_steel = true}
       end
     end
-    return level_evo(self, card, context, "j_poke_ferrothorn")
+    return pokermon.level_evo(self, card, context, "j_poke_ferrothorn")
   end,
   add_to_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "passive", "modify_card", "enhancements", "round_evo"},
 }
@@ -496,12 +496,12 @@ local ferrothorn={
   pos = {x = 6, y = 7},
   config = {extra = {retriggers = 1, hazard_level = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
       info_queue[#info_queue+1] = G.P_CENTERS.m_steel
       info_queue[#info_queue+1] = G.P_CENTERS.m_poke_hazard
-      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     end
     return {vars = {center.ability.extra.hazard_level}}
   end,
@@ -538,15 +538,87 @@ local ferrothorn={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "passive", "modify_card", "enhancements", "hand_type", "retrigger"},
 }
 -- Klink 599
+local klink = {
+	name = "klink",
+	--pos = {x = 26, y = 39},
+	config = {extra = {money = 1, drawn = 0, to_draw = 12, totalEarned = 0}, evo_rqmt = 8},
+	loc_vars = function(self, info_queue, card)
+		type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+	end,
+	rarity = 1, --Common
+	cost = 4,
+	stage = "Basic",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+				local earned = ease_poke_dollars(card, "klink", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		return scaling_evo (self, card, context, "j_poke_klang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+	end,
+}
 -- Klang 600
+local klang = {
+	name = "klang",
+	--pos = {x = 28, y = 39},
+	config = {extra = {money = 1, drawn = 0, to_draw = 10, totalEarned = 0}, evo_rqmt = 10},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+		return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), math.max(self.config.evo_rqmt - abbr.totalEarned, 0)}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 6,
+	stage = "One",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+				local earned = pokermon.ease_poke_dollars(card, "klang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+				card.ability.extra.totalEarned = card.ability.extra.totalEarned + earned
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		return pokermon.scaling_evo (self, card, context, "j_poke_klinklang", card.ability.extra.totalEarned, self.config.evo_rqmt)
+	end,
+}
 return {name = "Pokemon Jokers 570-600", 
-        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn},
+        list = {zoroark, gothita, gothorita, gothitelle, vanillite, vanillish, vanilluxe, frillish, jellicent, ferroseed, ferrothorn, klink, klang},
 }

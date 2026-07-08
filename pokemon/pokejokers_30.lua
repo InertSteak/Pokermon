@@ -18,7 +18,7 @@ local dreepy={
   pos = {x = 11, y = 5},
   config = {extra = {money = 1, straight_flush_played = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money}}
   end,
   designer = "Lemmanade",
@@ -44,11 +44,11 @@ local dreepy={
         local first_card = G.hand.cards[1]
         if not SMODS.has_no_suit(first_card) then
           local suit = first_card.base.suit
-          juice_flip_hand(card)
+          pokermon.juice_flip_hand(card)
           for i=1, #G.hand.cards do
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
           end 
-          juice_flip_hand(card, true)
+          pokermon.juice_flip_hand(card, true)
         end
       end
       return {
@@ -61,7 +61,7 @@ local dreepy={
         card.ability.extra.straight_flush_played = card.ability.extra.straight_flush_played + 1
       end
     end
-    return scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
+    return pokermon.scaling_evo(self, card, context, "j_poke_drakloak", card.ability.extra.straight_flush_played, 1)
   end,
   attributes = {"sell_value", "joker", "suit", "condition_evo"},
 }
@@ -71,7 +71,7 @@ local drakloak={
   pos = {x = 12, y = 5},
   config = {extra = {money = 1, total_sell_value = 0, Xmult = .01}, evo_rqmt = 40},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, center.ability.extra.total_sell_value, self.config.evo_rqmt, center.ability.extra.Xmult, 
                     1 + center.ability.extra.total_sell_value * center.ability.extra.Xmult}}
   end,
@@ -106,7 +106,7 @@ local drakloak={
         }
       end
     end
-    return scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_poke_dragapult", card.ability.extra.total_sell_value, self.config.evo_rqmt)
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN then
@@ -127,7 +127,7 @@ local dragapult={
   pos = {x = 13, y = 5},
   config = {extra = {money = 2, total_sell_value = 0, Xmult = .03}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.negative) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -189,7 +189,7 @@ local dreepy_dart={
   config = {extra = {money = 1, suit = "Spades"}},
   no_collection = true,
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.money, localize(center.ability.extra.suit, 'suits_plural')}}
   end,
   designer = "Lemmanade",
@@ -216,11 +216,11 @@ local dreepy_dart={
         local first_card = G.hand.cards[1]
         if not SMODS.has_no_suit(first_card) then
           local suit = first_card.base.suit
-          juice_flip_hand(card)
+          pokermon.juice_flip_hand(card)
           for i=1, #G.hand.cards do
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.cards[i]:change_suit(suit);return true end }))
           end 
-          juice_flip_hand(card, true)
+          pokermon.juice_flip_hand(card, true)
         end
       end
     end
@@ -253,7 +253,7 @@ local wyrdeer={
   pos = {x = 0, y = 8},
   config = {extra = {scry = 2, scry_plus = 1, scry_added = 0}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.scry, center.ability.extra.scry_plus}}
   end,
   rarity = "poke_safari",
@@ -268,15 +268,15 @@ local wyrdeer={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.before then
-        G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry_plus
+        G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry_plus
         card.ability.extra.scry_added = card.ability.extra.scry_added + card.ability.extra.scry_plus
       end
     end
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
         local highest = nil
         local highest_card = nil
-        for k, v in pairs(G.scry_view.cards) do
+        for k, v in pairs(G.poke_scry_view.cards) do
           if not SMODS.has_no_suit(v) then
             if not highest then highest = v.base.id; highest_card = v end
             if v.base.id > highest then
@@ -298,7 +298,7 @@ local wyrdeer={
       end
     end
     if context.end_of_round and not context.individual and not context.repetition then
-      G.GAME.scry_amount = math.max(card.ability.extra.scry, (G.GAME.scry_amount or 0) - card.ability.extra.scry_added)
+      G.GAME.poke_scry_amount = math.max(card.ability.extra.scry, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry_added)
       card.ability.extra.scry_added = 0
       return {
         message = localize('k_reset'),
@@ -308,16 +308,16 @@ local wyrdeer={
   end,
   add_to_deck = function(self, card, from_debuff)
     if card.ability.extra.scry_added > 0 then
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry + card.ability.extra.scry_added
     else
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
     if card.ability.extra.scry_added > 0 then
-      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
+      G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - (card.ability.extra.scry + card.ability.extra.scry_added))
     else
-      G.GAME.scry_amount = math.max(0,(G.GAME.scry_amount or 0) - card.ability.extra.scry)
+      G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
     end
   end,
   attributes = {"foresight", "mult", "hands", "reset"}
@@ -328,7 +328,7 @@ local kleavor={
   pos = {x = 1, y = 8},
   config = {extra = {mult = 0, mult_mod = 4}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.e_foil
       info_queue[#info_queue+1] = G.P_CENTERS.e_holo
