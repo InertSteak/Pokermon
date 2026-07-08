@@ -15,7 +15,7 @@ local poliwhirl={
                     colours = {G.C.SUITS[G.GAME.poke_poli_suit or "Spades"]}, localize("Spades", 'suits_plural'), localize("Hearts", 'suits_plural'), 
                     localize("Clubs", 'suits_plural'), localize("Diamonds", 'suits_plural')}}
   end,
-  rarity = 2, 
+  rarity = "poke_safari", 
   cost = 7, 
   item_req = {"waterstone", "kingsrock"},
   evo_list = {waterstone = "j_poke_poliwrath", kingsrock = "j_poke_politoed"},
@@ -92,7 +92,7 @@ local abra={
             if pseudorandom('abraitem') < .50 then
               set = "poke_item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.item
+              colour = G.C.SECONDARY_SET.poke_item
             else
               set = "Tarot"
               message = "k_plus_tarot"
@@ -144,7 +144,7 @@ local kadabra={
             if pseudorandom('kadabraitem') < .50 then
               set = "poke_item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.item
+              colour = G.C.SECONDARY_SET.poke_item
               conname = "c_poke_twisted_spoon"
             else
               set = "Tarot"
@@ -196,7 +196,7 @@ local alakazam={
             if pseudorandom('alakazam') < .50 then
               set = "poke_item"
               message = "poke_plus_pokeitem"
-              colour = G.ARGS.LOC_COLOURS.item
+              colour = G.C.SECONDARY_SET.poke_item
               conname = "c_poke_twisted_spoon"
             else
               set = "Tarot"
@@ -921,7 +921,7 @@ local shell={
         break
       end
     end
-    remove(self, card, {})
+    SMODS.destroy_cards(card)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then
@@ -1034,13 +1034,7 @@ local farfetchd={
   gen = 1,
   blueprint_compat = true,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, 'c_poke_leek')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      return true
-    end
+    if not from_debuff then pokermon.create_held_item('c_poke_leek') end
   end,
   calculate = function(self, card, context)
     if context.using_consumeable then

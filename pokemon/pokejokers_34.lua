@@ -121,7 +121,7 @@ local gimmighoulr={
     else amount_earned = 200 end
   
     pokermon.ease_poke_dollars(card, "gimmir", amount_earned)
-    remove(self, card, {})
+    SMODS.destroy_cards(card)
   end,
   set_ability = function(self, card, initial, delay_sprites)
     if initial then

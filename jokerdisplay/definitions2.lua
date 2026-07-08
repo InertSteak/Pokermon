@@ -191,8 +191,8 @@ jd_def["j_poke_hoothoot"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
             chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
@@ -211,8 +211,8 @@ jd_def["j_poke_noctowl"] = {
     text_config = { colour = G.C.CHIPS },
 calc_function = function(card)
     local chips = 0
-    if G.scry_view then
-        for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+        for k, v in pairs(G.poke_scry_view.cards) do
             chips = chips + pokermon.total_chips(v) * (v:get_seal() == 'Red' and 2 or 1)
         end
         card.joker_display_values.chips = chips
@@ -1061,36 +1061,33 @@ jd_def["j_poke_gligar"] = {
 }
 
 --	Steelix
-jd_def["j_poke_steelix"] = {
-    text = {
-        {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
-    },
-    calc_function = function(card)
-        local status = "Not Active!"
-        if G.GAME.current_round.hands_played == 0 then status = "Active!" end
-        card.joker_display_values.status = status
-    end
-}
---[[
-jd_def["j_poke_mega_steelix"] = {
-    text = {
-      { text = "+$", colour = G.C.GOLD },
-      { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
-    },
-    reminder_text = {
-      { ref_table = "card.joker_display_values", ref_value = "localized_text" },
-    },
-    calc_function = function(card)
-      local diamond_tally = 0
-      for _, playing_card in ipairs(G.playing_cards) do
-        if playing_card:is_suit(card.ability.extra.suit) then diamond_tally = diamond_tally + 1 end
-      end
+-- jd_def["j_poke_steelix"] = {
+--     text = {
+--         {ref_table ="card.joker_display_values", ref_value = "status", colour = G.C.GREY}
+--     },
+--     calc_function = function(card)
+--         local status = "Not Active!"
+--         if G.GAME.current_round.hands_played == 0 then status = "Active!" end
+--         card.joker_display_values.status = status
+--     end
+-- }
 
-      card.joker_display_values.money = diamond_tally
-      card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+jd_def["j_poke_mega_steelix"] = {
+  retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+    local triggers = 0
+    local rankless_count = 0
+    local playing_hand = next(G.play.cards)
+    for _, playing_card in ipairs(G.hand.cards) do
+      if playing_hand or not playing_card.highlighted then
+        if playing_card.facing and not (playing_card.facing == 'back') and SMODS.has_no_rank(playing_card) then
+          rankless_count = rankless_count + 1
+        end
+      end
     end
+    triggers = math.floor(rankless_count / 4)
+    return held_in_hand and (triggers * JokerDisplay.calculate_joker_triggers(joker_card)) or 0
+  end
 }
---]]
 
 --	Snubbull
 jd_def["j_poke_snubbull"] = {
@@ -1540,8 +1537,8 @@ jd_def["j_poke_stantler"] = {
     local highest = nil
     local highest_card = nil
 
-    if G.scry_view then
-      for k, v in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for k, v in pairs(G.poke_scry_view.cards) do
         if not highest then highest = v.base.id; highest_card = v end
         if v.base.id > highest then
           highest = v.base.id
@@ -1755,7 +1752,7 @@ jd_def["j_poke_celebi"] = {
     { text = "]", colour = G.C.GREY },
   },
   calc_function = function(card)
-    card.joker_display_values.skip_target = (G.GAME.celebi_skips or 1)
+    card.joker_display_values.skip_target = (G.GAME.poke_celebi_skips or 1)
     card.joker_display_values.Xmult = 1 + (G.GAME.round * card.ability.extra.Xmult_mod)
   end
 }

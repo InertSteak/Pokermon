@@ -160,7 +160,7 @@ local scizor={
     if context.joker_main and (card.ability.extra.mult > 0 or card.ability.extra.scizor_chips > 0 or card.ability.extra.scizor_Xmult > 1) then
       return {
         message = localize("poke_x_scissor_ex"),
-        colour = G.ARGS.LOC_COLOURS.metal,
+        colour = pokermon.colours.metal,
         mult_mod = card.ability.extra.mult,
         chip_mod = card.ability.extra.scizor_chips,
         Xmult_mod = card.ability.extra.scizor_Xmult
@@ -1284,7 +1284,7 @@ local porygon2={
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = pokermon.colours.pink})
     end
     return pokermon.item_evo(self, card, context, "j_poke_porygonz")
   end,
@@ -1324,10 +1324,10 @@ local stantler={
   eternal_compat = true,
   calculate = function(self, card, context)
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
         local highest = nil
         local highest_card = nil
-        for k, v in pairs(G.scry_view.cards) do
+        for k, v in pairs(G.poke_scry_view.cards) do
           if not SMODS.has_no_suit(v) then
             if not highest then highest = v.base.id; highest_card = v end
             if v.base.id > highest then

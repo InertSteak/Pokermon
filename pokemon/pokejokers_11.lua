@@ -9,7 +9,7 @@ local delcatty={
     local cattype = G.GAME.current_round.cattype or "Grass"
 
     local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local type_colour = pokermon.colours[string.lower(cattype)]
     local main_end
 
     if card.area and card.area == G.jokers then
@@ -323,14 +323,10 @@ local plusle={
   config = {extra = {mult_mod = 2, Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     type_tooltip(self, info_queue, center)
-    local joker_count = 0
-    if G.jokers then
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
-      end
+    local count = 0
+    for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+      count = count + #pokermon.filter(cardarea.cards, function(v) return v.ability.set == 'Joker' or v.ability.consumeable end)
     end
-
-    local count = joker_count + #poke_get_consumeables()
     return {vars = {center.ability.extra.mult_mod, center.ability.extra.mult_mod * count, center.ability.extra.Xmult}}
   end,
   rarity = 1,
@@ -344,13 +340,12 @@ local plusle={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.joker_main then
-      local joker_count = 0
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].ability.set == 'Joker' then joker_count = joker_count + 1 end
+      local count = 0
+      for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+        count = count + #pokermon.filter(cardarea.cards, function(v) return v.ability.set == 'Joker' or v.ability.consumeable end)
       end
-      
       return {
-        mult = card.ability.extra.mult_mod * (joker_count + #poke_get_consumeables())
+        mult = card.ability.extra.mult_mod * count
       }
     end
     
@@ -382,7 +377,7 @@ local minun={
   calc_dollar_bonus = function(self, card)
     local plusles = #SMODS.find_card("j_poke_plusle")
     if plusles > 0 then
-      return ease_poke_dollars(card, "minun", card.ability.extra.money * plusles, true)
+      return pokermon.ease_poke_dollars(card, "minun", card.ability.extra.money * plusles, true)
     end
 	end,
   add_to_deck = function(self, card, from_debuff)
@@ -838,6 +833,7 @@ local spinda={
     end
     pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
     info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Wheel of Fortune"}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
     return {vars = card_vars}
   end,
   rarity = 2,
@@ -870,7 +866,7 @@ local spinda={
       if natures > 0 then
         return {
             message = localize('poke_teeter_dance_ex'),
-            colour = G.ARGS.LOC_COLOURS["colorless"]
+            colour = pokermon.colours.colorless
         }
       end
     end
@@ -885,8 +881,8 @@ local spinda={
     card.ability.extra.targets = pokermon.get_target_card_ranks("spinda", 3, card.ability.extra.targets)
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      SMODS.add_card{set = 'Tarot', key = 'c_wheel_of_fortune'}
+    if not from_debuff then
+      pokermon.create_held_item("c_wheel_of_fortune")
     end
   end,
   attributes = {"holding", "modify_card", "nature", "rank", "enhancements"},

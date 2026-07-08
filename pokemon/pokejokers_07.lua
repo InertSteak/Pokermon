@@ -297,7 +297,7 @@ local weird_tree={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {G.ARGS.LOC_COLOURS.grass}}}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerpoke', vars = {"Grass Type", colours = {pokermon.colours.grass}}}
     end
     return {vars = {}}
   end,
@@ -970,7 +970,7 @@ local unown={
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
     end
     local card_vars = {center.ability.extra.mult}
     pokermon.add_target_cards_to_vars(card_vars, center.ability.extra.targets)
@@ -1327,7 +1327,7 @@ local dunsparce={
     if context.ending_shop and not context.blueprint and card.ability.extra.rerolled then
       G.E_MANAGER:add_event(Event({
         func = function()
-          remove(self, card, context, true)
+          SMODS.destroy_cards(card)
           return true
         end
       }))

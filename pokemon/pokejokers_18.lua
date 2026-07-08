@@ -234,7 +234,7 @@ local munna={
   calculate = function(self, card, context)
     if context.before then
       local eaten = 0
-      for k, v in ipairs(G.scry_view.cards) do
+      for k, v in ipairs(G.poke_scry_view.cards) do
         if v.config.center ~= G.P_CENTERS.c_base and not v.debuff and not v.vampired then
             local true_card = G.deck.cards[#G.deck.cards - k + 1]
             v.vampired = true
@@ -308,7 +308,7 @@ local musharna={
       G.GAME.poke_scry_amount = math.max(0, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry_added)
       card.ability.extra.scry_added = 0
     end
-    if context.individual and context.cardarea == G.scry_view and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.end_of_round and not context.other_card.debuff then
+    if context.individual and context.cardarea == G.poke_scry_view and context.other_card.config.center ~= G.P_CENTERS.c_base and not context.end_of_round and not context.other_card.debuff then
         return {
           x_mult = card.ability.extra.Xmult_multi
         }
@@ -511,7 +511,7 @@ local drilbur={
       if not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_stone') and card.ability.extra.active then
         card.ability.extra.active = false
         card.ability.extra.stones_destroyed = card.ability.extra.stones_destroyed + 1
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = pokermon.colours.earth})
         pokermon.create_treasure(card, 'drilbur')
         return true
       end
@@ -558,7 +558,7 @@ local excadrill={
     end
     if context.destroying_card then
       if not context.blueprint and SMODS.has_enhancement(context.destroying_card, 'm_stone') then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = G.ARGS.LOC_COLOURS.earth})
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_drill_ex'), colour = pokermon.colours.earth})
         pokermon.create_treasure(card, 'excadril', true)
         return true
       end

@@ -19,38 +19,9 @@ local create_energy = function(self, card)
   return create_card("poke_energy", G.pack_cards, nil, nil, true, true, nil, nil)
 end
 
-local poll_evo_item = function(seed)
-  local evo_item_key_set = {}
-  for _, v in pairs(G.jokers.cards) do
-    if v.config.center.item_req then
-      local item_req = type(v.config.center.item_req) == 'table'
-          and pseudorandom_element(v.config.center.item_req, pseudoseed(seed))
-          or v.config.center.item_req
-
-      local prefix = pokermon.has(native_evo_items, item_req)
-          and 'poke'
-          or v.config.center.poke_custom_prefix
-
-      local item_key = 'c_' .. prefix .. '_' .. item_req
-
-      evo_item_key_set[item_key] = true
-    end
-  end
-  local evo_item_key_list = {}
-  for key, _ in pairs(evo_item_key_set) do
-    if G.P_CENTERS[key] and not G.GAME.used_jokers[key] and not G.GAME.banned_keys[key] and (not (type(G.P_CENTERS[key].in_pool) == 'function') or G.P_CENTERS[key]:in_pool()) then
-      evo_item_key_list[#evo_item_key_list+1] = key
-    end
-  end
-  if #evo_item_key_list > 1 then
-    return pseudorandom_element(evo_item_key_list, pseudoseed(seed))
-  end
-  return evo_item_key_list[1]
-end
-
 local create_item = function(seed)
   if pseudorandom(pseudoseed(seed .. '_evo_item')) > .92 then
-    local evo_item_key = poll_evo_item('match')
+    local evo_item_key = pokermon.poll_evo_item('match')
     if evo_item_key then
       return SMODS.create_card { key = evo_item_key, area = G.pack_cards, skip_materialize = true }
     end
@@ -78,7 +49,7 @@ local create_pocket_card = function(self, card, i)
 end
 
 local pocket_background = function(self)
-  ease_background_colour{new_colour = G.ARGS.LOC_COLOURS.pocket, contrast = 3}
+  ease_background_colour{new_colour = pokermon.colours.pocket, contrast = 3}
 end
 local pocket_particle = function(self)
   G.booster_pack_sparkles = Particles(1, 1, 0,0, {

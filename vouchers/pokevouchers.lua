@@ -79,17 +79,17 @@ local goodrod = { --+1 card choice in pocket packs
 		return { vars = {} }
 	end,
   redeem = function(self)
-    if not G.GAME.extra_pocket_picks then
-      G.GAME.extra_pocket_picks = 1
+    if not G.GAME.poke_extra_picks then
+      G.GAME.poke_extra_picks = 1
     else
-      G.GAME.extra_pocket_picks = G.GAME.extra_pocket_picks + 1
+      G.GAME.poke_extra_picks = G.GAME.poke_extra_picks + 1
     end
   end,
   unredeem = function(self)
-    if not G.GAME.extra_pocket_picks then
-      G.GAME.extra_pocket_picks = 0
+    if not G.GAME.poke_extra_picks then
+      G.GAME.poke_extra_picks = 0
     else
-      G.GAME.extra_pocket_picks = G.GAME.extra_pocket_picks - 1
+      G.GAME.poke_extra_picks = G.GAME.poke_extra_picks - 1
     end
   end
 }

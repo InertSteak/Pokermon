@@ -46,7 +46,7 @@ local megastone = {
   name = "megastone",
   key = "megastone",
   set = "Spectral",
-  artist = "MyDude_YT",
+  artist = {"MyDude_YT", "Lemmanade"},
   helditem = true,
   saveable = true,
   config = {extra = {usable = true, used_on = nil}},
@@ -84,17 +84,17 @@ local megastone = {
   end,
   use = function(self, card, area, copier)
     local target = get_mega_target(card)
-    local forced_key
     local prefix = target.config.center.poke_custom_prefix or "poke"
     if pokermon.get_mega(target) then
-      forced_key = "j_"..prefix.."_"..pokermon.get_mega(target)
+      local forced_key = "j_"..prefix.."_"..pokermon.get_mega(target)
       card.ability.extra.used_on = not G.GAME.modifiers.poke_infinite_megastone and target.unique_val
+      pokermon.evolve(target, forced_key)
     else
-      forced_key = pokermon.get_previous_evo(target, true)
+      local forced_key = pokermon.get_previous_evo(target, true)
       card.ability.extra.used_on = nil
+      pokermon.devolve(target, forced_key)
     end
     card.ability.extra.usable = false
-    pokermon.evolve(target, forced_key)
   end,
   calculate = function(self, card, context)
     if context.end_of_round then

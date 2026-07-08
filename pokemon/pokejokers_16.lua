@@ -516,7 +516,7 @@ local glaceon={
   ptype = "Water",
   atlas = "Pokedex4",
   gen = 4,
-  blueprint_compat = false,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.repetition and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then
       return {
@@ -656,7 +656,8 @@ local porygonz={
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {1 + ((G.GAME.energies_used or 0) * center.ability.extra.Xmult_mod), center.ability.extra.Xmult_mod}}
+    local xmult = 1 + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * center.ability.extra.Xmult_mod
+    return {vars = {xmult, center.ability.extra.Xmult_mod}}
   end,
   rarity = "poke_safari", 
   cost = 10, 
@@ -670,7 +671,7 @@ local porygonz={
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
-        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * card.ability.extra.Xmult_mod)
         if Xmult > 1 then
           return {
             message = localize{type = 'variable', key = 'a_xmult', vars = {Xmult}}, 
@@ -690,13 +691,11 @@ local porygonz={
           trigger = 'immediate',
           delay = 0.0,
           func = (function()
-                  local _card = create_card('poke_energy', G.consumeables, nil, nil, nil, nil, energy_key, 'pory')
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
+                  SMODS.add_card{set = 'poke_energy'}
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = pokermon.colours.pink})
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -756,16 +755,12 @@ local gallade={
         end
       end
       local total = 1 + (card.ability.extra.Xmult_mod * energized)
-      return 
-      {
-        Xmult = total
-      }
+      return { Xmult = total }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_poke_double_rainbow_energy'}
-      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
+    if not from_debuff then
+      pokermon.create_held_item("c_poke_double_rainbow_energy")
     end
   end,
   attributes = {"energy_count", "item", "xmult", "hand_type", "passive"},

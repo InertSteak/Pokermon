@@ -21,7 +21,7 @@ local rotomdex={
   config = {extra = {}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-		return {vars = {G.GAME.rotom_discount or 0}}
+		return {vars = {G.GAME.poke_rotom_discount or 0}}
   end,
   rarity = 2, 
   cost = 6, 
@@ -42,8 +42,8 @@ local rotomdex={
           end
         end
       end
-      if type_amount ~= (G.GAME.rotom_discount or 0) then
-        G.GAME.rotom_discount = type_amount
+      if type_amount ~= (G.GAME.poke_rotom_discount or 0) then
+        G.GAME.poke_rotom_discount = type_amount
         for k, v in pairs(G.I.CARD) do
           if v.set_cost then v:set_cost() end
         end
@@ -183,7 +183,7 @@ local jelly_donut={
               return true
             end
         })) 
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = G.ARGS.LOC_COLOURS.pink})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Energy!", colour = pokermon.colours.pink})
       else
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "No Room!", colour = G.C.MULT})
       end
@@ -207,7 +207,7 @@ local treasure_eatery={
   config = {extra = {rounds = 4,}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {G.ARGS.LOC_COLOURS.pink}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerother', vars = {"Type", colours = {pokermon.colours.pink}}}
     return {vars = {center.ability.extra.rounds, }}
   end,
   rarity = 2,
@@ -240,7 +240,7 @@ local treasure_eatery={
   attributes = {"types"},
 }
 
-function is_egg_helper(card)
+local function is_egg_helper(card)
   local name = ''
   if not card.name and card.ability.name then
     name = card.ability.name
@@ -383,7 +383,7 @@ local rival = {
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
-      G.GAME.rival_defeated = true
+      G.GAME.poke_rival_defeated = true
 
       pokermon.ease_poke_dollars(card, 'rival', card.ability.extra.money)
 
@@ -395,7 +395,7 @@ local rival = {
     end
   end,
   in_pool = function(self)
-    return not G.GAME.rival_defeated
+    return not G.GAME.poke_rival_defeated
   end,
   attributes = {"skip", "economy", "boss_blind", "scaling"},
 }
@@ -429,7 +429,7 @@ local bitter_rival = {
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
-      G.GAME.bitter_rival_defeated = true
+      G.GAME.poke_bitter_rival_defeated = true
 
       pokermon.ease_poke_dollars(card, 'bitter_rival', card.ability.extra.money)
 
@@ -441,7 +441,7 @@ local bitter_rival = {
     end
   end,
   in_pool = function(self)
-    return G.GAME.rival_defeated and not G.GAME.bitter_rival_defeated
+    return G.GAME.poke_rival_defeated and not G.GAME.poke_bitter_rival_defeated
   end,
   attributes = {"skip", "economy", "boss_blind", "scaling"},
 }
@@ -486,7 +486,7 @@ local champion = {
     end
   end,
   in_pool = function(self)
-    return G.GAME.bitter_rival_defeated
+    return G.GAME.poke_bitter_rival_defeated
   end,
   attributes = {"xmult", "skip", "boss_blind", "tag", "generation"},
 }

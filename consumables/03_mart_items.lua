@@ -8,8 +8,8 @@ local twisted_spoon = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.last_poke_item and G.GAME.last_poke_item ~= 'c_poke_twisted_spoon' 
-        and G.GAME.last_poke_item ~= 'c_poke_leftovers' and G.GAME.last_poke_item ~= 'c_poke_leek' and G.GAME.last_poke_item ~= 'c_poke_thickclub' then 
+    if (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables) and G.GAME.poke_last_item and G.GAME.poke_last_item ~= 'c_poke_twisted_spoon' 
+        and G.GAME.poke_last_item ~= 'c_poke_leftovers' and G.GAME.poke_last_item ~= 'c_poke_leek' and G.GAME.poke_last_item ~= 'c_poke_thickclub' then 
       return true 
     end
     return false
@@ -20,7 +20,7 @@ local twisted_spoon = {
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
         if G.consumeables.config.card_limit > #G.consumeables.cards then
             play_sound('timpani')
-            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, G.GAME.last_poke_item, 'spoon')
+            local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, G.GAME.poke_last_item, 'spoon')
             _card:add_to_deck()
             G.consumeables:emplace(_card)
             used_item:juice_up(0.3, 0.5)
@@ -36,7 +36,7 @@ local twisted_spoon = {
     if not full_UI_table.name then
 			full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
 		end
-    local spoon_c = G.GAME.last_poke_item and G.P_CENTERS[G.GAME.last_poke_item] or nil
+    local spoon_c = G.GAME.poke_last_item and G.P_CENTERS[G.GAME.poke_last_item] or nil
     local last_poke_item = spoon_c and localize{type = 'name_text', key = spoon_c.key, set = spoon_c.set} or localize('k_none')
     local colour = (not spoon_c or spoon_c.name == 'twisted_spoon' or spoon_c.name == 'leftovers' or spoon_c.name == 'leek' or spoon_c.name == 'thickclub') and G.C.RED or G.C.GREEN
     local main_end = {
@@ -55,7 +55,7 @@ local twisted_spoon = {
    desc_nodes[#desc_nodes+1] = main_end 
   end,
   add_to_deck = function(self, card, from_debuff)
-    if G.GAME.modifiers.spoon_slots then
+    if G.GAME.modifiers.poke_spoon_slots then
       G.E_MANAGER:add_event(Event({
         func = function()
           G.consumeables.config.card_limit = G.consumeables.config.card_limit + 1
@@ -65,7 +65,7 @@ local twisted_spoon = {
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if G.GAME.modifiers.spoon_slots then
+    if G.GAME.modifiers.poke_spoon_slots then
       G.E_MANAGER:add_event(Event({
         func = function()
           G.consumeables.config.card_limit = G.consumeables.config.card_limit - 1
@@ -313,7 +313,7 @@ local moonstone = {
     if #G.hand.highlighted >= self.config.min_highlighted then
       if SMODS.pseudorandom_probability(card, 'moonstone', self.config.num, self.config.dem, 'moonstone') then
         local hand = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-        SMODS.smart_level_up_hand(card, hand)
+        SMODS.upgrade_poker_hands{hands = hand, from = card}
       else
         pokermon.nope(card)
       end
@@ -355,7 +355,7 @@ local sunstone = {
   end,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
-    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted then
+    if G.hand.highlighted and #G.hand.highlighted >= self.config.min_highlighted and #G.hand.highlighted <= self.config.max_highlighted then
       pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS.m_wild, nil, true)
@@ -487,6 +487,7 @@ local duskstone = {
 local dawnstone = {
   name = "dawnstone",
   key = "dawnstone",
+  artist = "Lemmanade",
   set = "poke_item",
   config = {extra = {hand_played = nil, money_limit = 40}},
   loc_vars = function(self, info_queue, center)
@@ -678,7 +679,7 @@ local metalcoat = {
   set = "poke_item",
   config = {max_highlighted = 1},
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {G.ARGS.LOC_COLOURS.metal}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Metal", colours = {pokermon.colours.metal}}}
     return {vars = {self.config.max_highlighted}}
   end,
   pos = { x = 6, y = 2 },
@@ -697,7 +698,7 @@ local metalcoat = {
     
     if choice then
       pokermon.apply_type_sticker(choice, "Metal")
-      card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = G.ARGS.LOC_COLOURS["metal"]})
+      card_eval_status_text(choice, 'extra', nil, nil, nil, {message = localize("poke_metal_ex"), colour = pokermon.colours.metal})
     end
     
     local copy = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
@@ -715,7 +716,7 @@ local dragonscale = {
   key = "dragonscale",
   set = "poke_item",
   loc_vars = function(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {G.ARGS.LOC_COLOURS.dragon}}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'typechanger', vars = {"Dragon", colours = {pokermon.colours.dragon}}}
   end,
   pos = { x = 7, y = 2 },
   atlas = "AtlasConsumablesBasic",
@@ -736,7 +737,7 @@ local dragonscale = {
     end
     
     pokermon.apply_type_sticker(choice, "Dragon")
-    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = G.ARGS.LOC_COLOURS["dragon"]})
+    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = pokermon.colours.dragon})
     
     for i = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -835,7 +836,7 @@ local upgrade = {
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
     if #G.hand.highlighted >= self.config.min_highlighted then
-      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}, guaranteed = true})
+      local enhancement = SMODS.poll_enhancement({options = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky", "m_poke_seed"}, guaranteed = true})
       pokermon.juice_flip(card)
       for i = 1, #G.hand.highlighted do
         G.hand.highlighted[i]:set_ability(G.P_CENTERS[enhancement], nil, true)

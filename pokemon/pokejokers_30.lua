@@ -273,10 +273,10 @@ local wyrdeer={
       end
     end
     if not context.end_of_round and context.scoring_hand then
-      if context.individual and context.cardarea == G.scry_view and not context.other_card.debuff then
+      if context.individual and context.cardarea == G.poke_scry_view and not context.other_card.debuff then
         local highest = nil
         local highest_card = nil
-        for k, v in pairs(G.scry_view.cards) do
+        for k, v in pairs(G.poke_scry_view.cards) do
           if not SMODS.has_no_suit(v) then
             if not highest then highest = v.base.id; highest_card = v end
             if v.base.id > highest then

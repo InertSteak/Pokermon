@@ -574,8 +574,8 @@ local lapras={
         }
       end
     end
-    if context.skip_blind and not context.blueprint and not G.GAME.lapras_skip then
-      G.GAME.lapras_skip = true
+    if context.skip_blind and not context.blueprint and not G.GAME.poke_lapras_skip then
+      G.GAME.poke_lapras_skip = true
       G.E_MANAGER:add_event(Event({
         trigger = "immediate",
         func = function()
@@ -597,7 +597,7 @@ local lapras={
       }))
     end
     if context.ending_shop and not context.blueprint then
-      G.GAME.lapras_skip = nil
+      G.GAME.poke_lapras_skip = nil
     end
   end,
   update = function(self, card, dt)
@@ -891,7 +891,7 @@ local porygon={
                   G.GAME.consumeable_buffer = 0
               return true
           end)}))
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = G.ARGS.LOC_COLOURS["pink"]})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_plus_energy"), colour = pokermon.colours.pink})
     end
     return pokermon.item_evo(self, card, context, "j_poke_porygon2")
   end,
@@ -948,7 +948,7 @@ local omanyte={
             local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item})
           end
         end
         
@@ -1004,7 +1004,7 @@ local omastar={
             local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, nil)
             _card:add_to_deck()
             G.consumeables:emplace(_card)
-            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+            card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.SECONDARY_SET.poke_item})
           end
         end
         if card.ability.extra.ancient_count > 3 and not card.ability.extra.tag_created then
@@ -1315,12 +1315,6 @@ local snorlax={
   gen = 1,
   perishable_compat = false,
   blueprint_compat = true,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local leftovers = SMODS.add_card({ set = 'poke_item', key = 'c_poke_leftovers' })
-      SMODS.calculate_effect({ message = localize('poke_plus_pokeitem') }, leftovers)
-    end
-  end,
   calculate = function(self, card, context)
     if context.joker_main then
       return {
@@ -1339,6 +1333,11 @@ local snorlax={
           message_colour = G.C.RED,
         })
       end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      pokermon.create_held_item("c_poke_leftovers")
     end
   end,
   attributes = {"holding", "xmult", "scaling"},
@@ -1592,7 +1591,7 @@ local mewtwo={
         
         if not leftmost.ability.eternal then
           G.E_MANAGER:add_event(Event({
-            remove(self, G.jokers.cards[1], context)
+            SMODS.destroy_cards(leftmost)
           }))
         end
       end
@@ -1679,7 +1678,7 @@ local mega_mewtwo_y = {
       end
     end
     if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = G.ARGS.LOC_COLOURS.psychic})
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_future_sight"), colour = pokermon.colours.psychic})
       if not G.GAME.poke_energy_plus then
         G.GAME.poke_energy_plus = 1
       else

@@ -1021,7 +1021,39 @@ jd_def["j_poke_medicham"] = {
 --	Electrike
 --	Manectric
 --	Plusle
+jd_def["j_poke_plusle"] = {
+  text = {
+    { text = "+" , colour = G.C.MULT },
+    { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult", colour = G.C.MULT },
+  },
+  calc_function = function(card)
+    local count = 0
+    for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+      count = count + #pokermon.filter(cardarea.cards, function(v) return v.ability.set == 'Joker' or v.ability.consumeable end)
+    end
+    card.joker_display_values.mult = card.ability.extra.mult_mod * count
+  end,
+  mod_function = function(card, mod_joker)
+    return { x_mult = (card.config.center.name and card.config.center.name == "minun" and mod_joker.ability.extra.Xmult ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil)}
+  end
+}
+
 --	Minun
+jd_def["j_poke_minun"] = {
+  text = {
+    { text = "+$", colour = G.C.GOLD },
+    { ref_table = "card.joker_display_values", ref_value = "money", colour = G.C.GOLD },
+  },
+  reminder_text = {
+    { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+  },
+  calc_function = function(card)
+    local plusle_count = #SMODS.find_card("j_poke_plusle")
+    card.joker_display_values.money = card.ability.extra.money * plusle_count
+    card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+  end
+}
+
 --	Volbeat
 jd_def["j_poke_volbeat"] = {
   text = {
@@ -1547,6 +1579,24 @@ jd_def["j_poke_milotic"] = {
 
 --	Castform
 --	Kecleon
+jd_def["j_poke_kecleon"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+  calc_function = function(card)
+    if #pokermon.find_pokemon_type(pokermon.get_type(card)) >= 3 then
+      card.joker_display_values.Xmult = card.ability.extra.Xmult
+    else
+      card.joker_display_values.Xmult = 1
+    end
+  end
+}
+
 --	Shuppet
 --	Banette
 --	Duskull
@@ -1617,6 +1667,17 @@ jd_def["j_poke_dusclops"] = {
 }
 
 --	Tropius
+jd_def["j_poke_tropius"] = {
+  text = {
+    {
+      border_nodes = {
+        { text = "X" },
+        { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+      }
+    },
+  },
+}
+
 --	Chimecho
 jd_def["j_poke_chimecho"] = {
   reminder_text = {
@@ -1721,11 +1782,26 @@ jd_def["j_poke_relicanth"] = {
     if four_count >= 1 then
       chips = card.ability.extra.chips * last_card_triggers
     end
-    if four_count >= 3 then
-      money = card.ability.extra.money
+    if four_count >= 2 then
+      money = card.ability.extra.money_mod * last_card_triggers
     end
     if four_count >= 4 then
-      Xmult = (card.ability.extra.Xmult_multi ^ last_card_triggers) or 1
+      local depleted_count = 0
+    
+      for k, v in pairs(SMODS.Ranks) do
+        local is_rank = function(deck_card)
+          if deck_card:get_id() == v.id then
+            return true
+          else
+            return false
+          end
+        end
+        
+        if pokermon.get_depleted(is_rank) then
+          depleted_count = depleted_count + 1
+        end
+      end
+      Xmult = 1 + card.ability.extra.Xmult_mod * depleted_count
     end
     card.joker_display_values.chips = chips
     card.joker_display_values.money = money

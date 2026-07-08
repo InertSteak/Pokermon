@@ -316,7 +316,7 @@ poke_add_to_family = pokermon.add_to_family
 -- pokespriteload.lua
 
 ---@deprecated use `pokermon.sprites.load_sprites` instead
-poke_add_to_family = pokermon.sprites.load_sprites
+poke_load_sprites = pokermon.sprites.load_sprites
 
 ---@deprecated use `pokermon.sprites.get_atlas_prefix` instead
 poke_get_atlas_prefix = pokermon.sprites.get_atlas_prefix

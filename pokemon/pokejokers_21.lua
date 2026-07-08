@@ -1,4 +1,57 @@
 -- Klinklang 601
+local klinklang = {
+	name = "klinklang",
+	--pos = {x = 0, y = 40},
+	config = {extra = {money = 1, Xmult = 1, Xmult_mod = 0.4, Xmult2 = 1, drawn = 0, to_draw = 8}},
+	loc_vars = function(self, info_queue, card)
+		pokermon.type_tooltip(self, info_queue, card)
+		local abbr = card.ability.extra
+	  return {vars = {abbr.money, abbr.to_draw, math.max(0, abbr.to_draw - abbr.drawn), abbr.Xmult, abbr.Xmult_mod}}
+	end,
+	rarity = "poke_safari", --Safari
+	cost = 8,
+	stage = "Two",
+	ptype = "Metal",
+	gen = 5,
+	designer = "Thor's Girdle",
+	--atlas = "AtlasJokersBasicNatdex",
+	perishable_compat = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	
+	calculate = function(self, card, context)
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      card.ability.extra.drawn = card.ability.extra.drawn + #SMODS.drawn_cards 
+      if card.ability.extra.drawn >= card.ability.extra.to_draw then
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          message_colour = G.C.MULT
+        })
+      
+				local earned = pokermon.ease_poke_dollars(card, "klinklang", card.ability.extra.money * (math.floor(card.ability.extra.drawn/card.ability.extra.to_draw)))
+        card.ability.extra.drawn = card.ability.extra.drawn % card.ability.extra.to_draw
+        return {
+						message = '$'..earned,
+						colour = G.C.MONEY
+        }
+      end
+    end
+		if context.joker_main then
+			return {
+        xmult = card.ability.extra.Xmult
+			}
+		end
+    
+    if not context.repetition and not context.individual and context.end_of_round and not context.blueprint then
+      card.ability.extra.Xmult = card.ability.extra.Xmult2
+      return {
+        message = localize('k_reset'),
+        colour = G.C.RED
+      }
+    end
+	end,
+}
 -- Tynamo 602
 -- Eelektrik 603
 -- Eelektross 604
@@ -141,7 +194,7 @@ local beheeyem={
       G.consumeables:emplace(_card)
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
     end
-    if context.open_booster then
+    if context.open_booster and not context.blueprint then
       local added = false
       local telescope_in_shop = false
       local observatory_in_shop = false
@@ -297,8 +350,216 @@ local chandelure={
   attributes = {"xmult", "mult", "sell_value", "joker"},
 }
 -- Axew 610
+local axew={
+  name = "axew",
+  pos = {x = 0, y = 0},
+  config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0, active = true}, evo_rqmt = 7},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
+                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
+                    math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
+  end,
+  rarity = 2,
+  cost = 6,
+  gen = 5,
+  stage = "Basic",
+  ptype = "Dragon",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and not context.blueprint then
+      card.ability.extra.nature_played = card.ability.extra.nature_played + 1
+    end
+    
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and card.ability.extra.active then
+      mult = mod_mult(mult * 2)
+      hand_chips = mod_chips(hand_chips * 2)
+      update_hand_text({ sound = 'gong'}, { chips = hand_chips, mult = mult })
+      card:juice_up()
+      card.ability.extra.active = false
+    end
+    if context.end_of_round and context.main_eval and not context.blueprint then
+      card.ability.extra.active = true
+    end
+    return pokermon.scaling_evo(self, card, context, "j_poke_fraxure", card.ability.extra.nature_played, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
+    local first = {}
+    local highest = hands[1].played
+    
+    for k, v in ipairs(hands) do
+      if v.played == highest then
+        first[#first + 1] = v
+      end
+    end
+    
+    if #first >= 2 then
+      pseudoshuffle(first, pseudoseed('axew'))
+      card.ability.extra.targets[1] = first[1].key
+      card.ability.extra.targets[2] = first[2].key
+    else
+      card.ability.extra.targets[1] = first[1].key
+      
+      local second = {}
+      local second_highest = hands[2].played
+      
+      for k, v in ipairs(hands) do
+        if v.played == second_highest then
+          second[#second + 1] = v
+        end
+      end
+      
+      pseudoshuffle(second, pseudoseed('axew'))
+      card.ability.extra.targets[2] = second[1].key
+    end
+  end,
+}
 -- Fraxure 611
+local fraxure={
+  name = "fraxure",
+  pos = {x = 0, y = 0},
+  config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0,}, evo_rqmt = 7},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
+                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
+                    math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
+  end,
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 5,
+  stage = "One",
+  ptype = "Dragon",
+  atlas = "Pokedex5",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) and not context.blueprint then
+      card.ability.extra.nature_played = card.ability.extra.nature_played + 1
+    end
+    
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) then
+      mult = mod_mult(mult * 2)
+      hand_chips = mod_chips(hand_chips * 2)
+      update_hand_text({ sound = 'gong' }, { chips = hand_chips, mult = mult })
+      card:juice_up()
+    end
+    return pokermon.scaling_evo(self, card, context, "j_poke_haxorus", card.ability.extra.nature_played, self.config.evo_rqmt)
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
+    local first = {}
+    local highest = hands[1].played
+    
+    for k, v in ipairs(hands) do
+      if v.played == highest then
+        first[#first + 1] = v
+      end
+    end
+    
+    if #first >= 2 then
+      pseudoshuffle(first, pseudoseed('fraxure'))
+      card.ability.extra.targets[1] = first[1].key
+      card.ability.extra.targets[2] = first[2].key
+    else
+      card.ability.extra.targets[1] = first[1].key
+      
+      local second = {}
+      local second_highest = hands[2].played
+      
+      for k, v in ipairs(hands) do
+        if v.played == second_highest then
+          second[#second + 1] = v
+        end
+      end
+      
+      pseudoshuffle(second, pseudoseed('fraxure'))
+      card.ability.extra.targets[2] = second[1].key
+    end
+  end,
+}
 -- Haxorus 612
+local haxorus={
+  name = "haxorus",
+  pos = {x = 0, y = 0},
+  config = {extra = {targets = {"High Card", "Pair"}, rounds = 5}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'), 
+                    center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), }}
+  end,
+  rarity = "poke_safari",
+  cost = 10,
+  gen = 5,
+  stage = "Two",
+  ptype = "Dragon",
+  atlas = "Pokedex3",
+  perishable_compat = true,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.modify_hand and (context.scoring_name == card.ability.extra.targets[1] or context.scoring_name == card.ability.extra.targets[2]) then
+      mult = mod_mult(mult * 3)
+      hand_chips = mod_chips(hand_chips * 3)
+      update_hand_text({ sound = 'gong'}, { chips = hand_chips, mult = mult })
+      card:juice_up()
+    end
+  end,
+  set_ability = function(self, card, initial, delay_sprites)
+    if initial then
+      self:set_nature(card)
+    end
+  end,
+  set_nature = function(self,card)
+    local hands = pokermon.sort_hands(function(hand1, hand2) return hand1.played > hand2.played end)
+    local first = {}
+    local highest = hands[1].played
+    
+    for k, v in ipairs(hands) do
+      if v.played == highest then
+        first[#first + 1] = v
+      end
+    end
+    
+    if #first >= 2 then
+      pseudoshuffle(first, pseudoseed('haxorus'))
+      card.ability.extra.targets[1] = first[1].key
+      card.ability.extra.targets[2] = first[2].key
+    else
+      card.ability.extra.targets[1] = first[1].key
+      
+      local second = {}
+      local second_highest = hands[2].played
+      
+      for k, v in ipairs(hands) do
+        if v.played == second_highest then
+          second[#second + 1] = v
+        end
+      end
+      
+      pseudoshuffle(second, pseudoseed('haxorus'))
+      card.ability.extra.targets[2] = second[1].key
+    end
+  end,
+}
 -- Cubchoo 613
 -- Beartic 614
 -- Cryogonal 615
@@ -519,5 +780,5 @@ local bisharp={
 -- Vullaby 629
 -- Mandibuzz 630
 return {name = "Pokemon Jokers 601-630", 
-        list = {elgyem, beheeyem, litwick, lampent, chandelure, golett, golurk, pawniard, bisharp},
+        list = {klinklang, elgyem, beheeyem, litwick, lampent, chandelure, axew, fraxure, haxorus, golett, golurk, pawniard, bisharp},
 }

@@ -79,11 +79,11 @@ local gastly={
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         end
+
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
       end
-
-      SMODS.destroy_cards(card, nil, nil, true)
-
-      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
   attributes = {"chance", "editions", "round_evo"},
@@ -135,15 +135,15 @@ local haunter={
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         else
-          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('gastly'))
+          eligible_card = pseudorandom_element(G.jokers.cards, pseudoseed('haunter'))
           local edition = {negative = true}
           eligible_card:set_edition(edition, true)
         end
+
+        SMODS.destroy_cards(card, nil, nil, true)
+
+        card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
       end
-
-      SMODS.destroy_cards(card, nil, nil, true)
-
-      card_eval_status_text(eligible_card, 'extra', nil, nil, nil, {message = localize("poke_lick_ex"), colour = G.C.PURPLE})
     end
   end,
   attributes = {"chance", "editions", "item_evo"},
@@ -376,11 +376,8 @@ local hypno={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not from_debuff then
-      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_trance')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+    if not from_debuff then
+      pokermon.create_held_item('c_trance')
     end
   end,
   attributes = {"xmult", "planet", "holding"},
@@ -656,14 +653,6 @@ local cubone={
   atlas = "Pokedex1",
   gen = 1, 
   blueprint_compat = true,
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local _card = create_card('poke_item', G.consumeables, nil, nil, nil, nil, 'c_poke_thickclub')
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-    end
-  end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -681,6 +670,11 @@ local cubone={
       card.ability.extra.consumables_used = card.ability.extra.consumables_used + 1
     end
     return pokermon.scaling_evo(self, card, context, "j_poke_marowak", card.ability.extra.consumables_used, self.config.evo_rqmt)
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    if not from_debuff then
+      pokermon.create_held_item("c_poke_thickclub")
+    end
   end,
   attributes = {"mult", "holding", "condition_evo"},
 }

@@ -66,7 +66,6 @@ pokermon.energy.can_use = function(self, card)
 end
 
 pokermon.energy.use = function(self, card, area, copier, exclude_spoon)
-  G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   play_sound('poke_energy_use', 1, 0.5)
   if not exclude_spoon then pokermon.set_spoon_item(card) end
   -- check if valid target or not
@@ -88,7 +87,7 @@ end
 pokermon.energy.modify = function(card, etype, amount, silent)
   if not amount then amount = 1 end
   -- checking if the colorless penalty applies
-  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
+  local c_penalty = (not G.GAME.modifiers.poke_disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- the regular energy increment
   if (pokermon.energy.energy_matches(card, etype, false)) then
     if card.ability.extra and type(card.ability.extra) == "table" then
@@ -117,7 +116,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
   local frac
   local energy_count, c_energy_count = pokermon.energy.get_total_energy(card, true)
   -- colorless type check
-  local c_penalty = (not G.GAME.modifiers.disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
+  local c_penalty = (not G.GAME.modifiers.poke_disable_colorless_penalty and not pokermon.is_type(card, "Colorless") and etype == "Colorless") and 2 or 1
   -- vanilla jokers aren't coded well so we're knocking them out first
   if energizable_vanilla[center.name] then
     pokermon.energy.energize_other(card, etype, center, c_penalty, amount)
@@ -156,7 +155,7 @@ pokermon.energy.energize = function(card, etype, evolving, silent, amount, cente
     pokermon.energy.energize_other(card, etype, center, c_penalty, amount)
   end
   if not silent then
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = G.ARGS.LOC_COLOURS.pink})
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("poke_energized_ex"), colour = pokermon.colours.pink})
   end
 end
 

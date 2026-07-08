@@ -19,8 +19,8 @@ POKE_NATIVE_EVO_ITEMS = {
 }
 
 POKE_EVO_OVERRIDES = {
-  {"silcoon", {"beautifly"}},
-  {"cascoon", {"dustox"}},
+  { "silcoon", { "beautifly" } },
+  { "cascoon", { "dustox" } },
   { "cosmog", "cosmoem", { "solgaleo", "lunala" } },
   { "kubfu", { "urshifu_single_strike", "urshifu_rapid_strike" } },
 }
@@ -45,7 +45,7 @@ pokermon.get_evo_overrides = function(name)
         if pokemon == name then
           local overrides = {}
           if i > 1 then
-            overrides.previous_evo = evo_line[1]
+            overrides.previous_evo = evo_line[i-1]
           end
           if i < #evo_line then
             overrides.highest_evo = evo_line[#evo_line]

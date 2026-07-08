@@ -106,10 +106,10 @@ end
       CardSleeves.Sleeve.apply(self)
       G.GAME.modifiers.poke_force_seal = "poke_silver"
       if self.get_current_deck_key() == "b_poke_revenantdeck" then
-        G.GAME.modifiers.no_poke_packs = true
+        G.GAME.modifiers.poke_no_pocket_packs = true
         for k, v in pairs(G.P_CENTER_POOLS["Booster"]) do
           if v.kind == "poke_energy" then
-            v.get_weight = function() return G.GAME.modifiers.no_poke_packs and 0 or 1 end
+            v.get_weight = function() return G.GAME.modifiers.poke_no_pocket_packs and 0 or 1 end
           end
         end
       end
@@ -188,7 +188,7 @@ local telekineticsleeve = {
     if self.get_current_deck_key() ~= "b_poke_telekineticdeck" then
       CardSleeves.Sleeve.apply(self)
     else
-      G.GAME.modifiers.spoon_slots = true
+      G.GAME.modifiers.poke_spoon_slots = true
     end
   end,
 }
@@ -218,7 +218,7 @@ local ampedsleeve = {
   apply = function(self)
     CardSleeves.Sleeve.apply(self)
     if self.get_current_deck_key() == "b_poke_ampeddeck" then
-      G.GAME.modifiers.disable_colorless_penalty = true
+      G.GAME.modifiers.poke_disable_colorless_penalty = true
       G.E_MANAGER:add_event(Event({
         func = function()
           SMODS.find_card('c_poke_double_rainbow_energy')[1]:remove()
@@ -262,12 +262,12 @@ local futuresleeve = {
       if context.scoring_hand then
         if context.before then
           G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + self.config.scry_plus
-          G.GAME.scry_added = (G.GAME.scry_added or 0) + self.config.scry_plus
+          G.GAME.poke_scry_added = (G.GAME.poke_scry_added or 0) + self.config.scry_plus
         end
       end
       if context.end_of_round and not context.individual and not context.repetition then
-        G.GAME.poke_scry_amount = math.max(self.config.scry, (G.GAME.poke_scry_amount or 0) - (G.GAME.scry_added or 0))
-        G.GAME.scry_added = 0
+        G.GAME.poke_scry_amount = math.max(self.config.scry, (G.GAME.poke_scry_amount or 0) - (G.GAME.poke_scry_added or 0))
+        G.GAME.poke_scry_added = 0
         return {
           message = localize('k_reset'),
           colour = G.C.PURPLE
@@ -401,7 +401,7 @@ local diceysleeve = {
 	atlas = "AtlasDecksBasic",
   apply = function(self)
     if self.get_current_deck_key() == "b_poke_diceydeck" then
-      G.GAME.modifiers.negative_hazards = true
+      G.GAME.modifiers.poke_negative_hazards = true
     else
       G.E_MANAGER:add_event(Event({
         func = function()
@@ -412,7 +412,7 @@ local diceysleeve = {
           G.GAME.modifiers.poke_enhance_bonus = 'm_poke_hazard'
           G.GAME.modifiers.poke_money_per_enhancement = self.config.money
           G.GAME.modifiers.poke_enhance_bonus_text = localize('poke_hazards_in_deck')
-          G.GAME.modifiers.poke_enhance_bonus_color = G.ARGS.LOC_COLOURS["hazard"]
+          G.GAME.modifiers.poke_enhance_bonus_color = pokermon.colours.hazard
           return true
         end
       }))

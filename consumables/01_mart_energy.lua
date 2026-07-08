@@ -46,7 +46,7 @@ local bird_energy = {
         for i = 1, 23 do
             r_mults[#r_mults + 1] = tostring(i)
         end
-        local gives_strings = {{ string = localize('poke_water_gun_ex'), colour = G.ARGS.LOC_COLOURS.water }, { string = localize('poke_sky_attack_ex'), colour = G.ARGS.LOC_COLOURS.colorless },
+        local gives_strings = {{ string = localize('poke_water_gun_ex'), colour = pokermon.colours.water }, { string = localize('poke_sky_attack_ex'), colour = pokermon.colours.colorless },
                                { string = 'HEX("FF7ABF")', colour = G.C.JOKER_GREY}, { string = '?????', colour = G.C.JOKER_GREY}
                              }
         local energy_strings = {{ string = '?????', colour = G.C.JOKER_GREY}, { string = self.name, colour = G.C.JOKER_GREY}, { string = localize('k_poke_pp'), colour = G.C.JOKER_GREY},
@@ -91,7 +91,6 @@ local bird_energy = {
     if choice then
       pokermon.energy.modify(choice, self.etype, pokermon.energy.max + (G.GAME.poke_energy_plus or 0))
     end
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
   end,
   in_pool = function(self)
     return false
@@ -118,13 +117,12 @@ local double_rainbow_energy = {
     return pokermon.energy.can_use(self, card)
   end,
   use = function(self, card, area, copier)
-    G.GAME.energies_used = G.GAME.energies_used and (G.GAME.energies_used + 1) or 1
     local choice = pokermon.find_leftmost_or_highlighted(function(joker) return pokermon.energy.can_apply_energy(joker, self.etype) end)
     for _ = 1, 2 do
       pokermon.energy.increase(choice, self.etype)
     end
     if not G.GAME.modifiers.no_interest then
-      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.poke_reset_no_interest = true
       G.GAME.modifiers.no_interest = true
     end
   end

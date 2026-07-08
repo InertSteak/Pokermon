@@ -134,7 +134,7 @@ local spiclops = {
     -- Increase hand size by the current hazard level, and lose a discard
     if context.setting_blind then
       ease_discard(-1)
-      local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+      local level = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level)
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={level}}})
       G.hand:change_size(level)
       G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + level
@@ -222,7 +222,7 @@ local spiclops = {
   end
 }
 
-function capture_disc_load(self,card)
+local function capture_disc_load(self,card)
   local card_drag_orig = card.drag
 
   local shake_rqmt = 25

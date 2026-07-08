@@ -222,8 +222,8 @@ jd_def["j_poke_lopunny"] = {
         found_ranks[playing_card:get_id()] = true
       end
     end
-    if G.scry_view then
-      for _, scry_card in pairs(G.scry_view.cards) do
+    if G.poke_scry_view then
+      for _, scry_card in pairs(G.poke_scry_view.cards) do
         if found_ranks[scry_card:get_id()] then
           Xmult = card.ability.extra.Xmult
           break
@@ -247,8 +247,8 @@ jd_def["j_poke_mega_lopunny"] = {
   },
   calc_function = function(card)
     local Xmult = 1
-    if G.scry_view then
-      local text, poker_hands, _ = JokerDisplay.evaluate_hand(G.scry_view.cards)
+    if G.poke_scry_view then
+      local text, poker_hands, _ = JokerDisplay.evaluate_hand(G.poke_scry_view.cards)
       if poker_hands[text] and next(poker_hands[text]) then
         if (SMODS.Mods["Talisman"] or {}).can_load then
           Xmult = to_number(G.GAME.hands[text].level) or 1
@@ -842,7 +842,7 @@ jd_def["j_poke_porygonz"] = {
         },
     },
     calc_function = function(card)
-        local Xmult = 1 + ((G.GAME.energies_used or 0) * card.ability.extra.Xmult_mod)
+        local Xmult = 1 + (G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.poke_energy or 0) * card.ability.extra.Xmult_mod
         card.joker_display_values.Xmult = Xmult
     end
 }

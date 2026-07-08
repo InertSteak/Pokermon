@@ -232,7 +232,11 @@ local meteorite = {
       end
       if deoxys.ability.extra.form ~= curr_index then
         deoxys.ability.extra.form = curr_index
-        pokermon.fake_evolve(deoxys, localize("poke_transform_success"), true)
+
+        pokermon.do_evolution_anim(
+          deoxys,
+          function(c) c:set_sprites(c.config.center) end,
+          localize("poke_transform_success"))
       end
     end
   end,

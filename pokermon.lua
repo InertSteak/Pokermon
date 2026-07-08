@@ -29,7 +29,7 @@ SMODS.UndiscoveredSprite({
 }):register()
 
 --Get mod path and load other files
-mod_dir = ''..SMODS.current_mod.path
+local mod_dir = ''..SMODS.current_mod.path
 pokermon_config = SMODS.current_mod.config
 
 --Load Joker Display if the mod is enabled
@@ -97,7 +97,6 @@ end
 assert(SMODS.load_file("functions/pokeconstants.lua"))()
 assert(SMODS.load_file("functions/pokefunctions.lua"))()
 assert(SMODS.load_file("functions/energyfunctions.lua"))()
-assert(SMODS.load_file("functions/pokecompat.lua"))()
 assert(SMODS.load_file("functions/pokeutils.lua"))()
 assert(SMODS.load_file("functions/pokefamily.lua"))()
 assert(SMODS.load_file("functions/dex_order.lua"))()
@@ -129,6 +128,9 @@ assert(SMODS.load_file("pokeui.lua"))()
 
 --Load quip file
 assert(SMODS.load_file("pokequips.lua"))()
+
+--Load backwards compat file
+assert(SMODS.load_file("functions/pokecompat.lua"))()
 
 local load_directory = function(dirname, map_item, auto_discovery)
   local pfiles = NFS.getDirectoryItems(mod_dir .. dirname)
@@ -181,7 +183,7 @@ end, true)
 -- Sets custom skins according to config on load
 G.E_MANAGER:add_event(Event({
   func = function()
-    G.FUNCS.toggle_pokermon_skins()
+    G.FUNCS.poke_toggle_pokermon_skins()
 	  return true
   end
 }))
@@ -228,23 +230,23 @@ end
 
 local previous_neg_get_weight = G.P_CENTERS.e_negative.get_weight
 G.P_CENTERS.e_negative.get_weight = function(self)
-  return previous_neg_get_weight(self) + ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
+  return previous_neg_get_weight(self) + ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight
 end
 
 -- polychrome steals negative's chances with the Hone / Glow Up voucher, so we're gonna steal it back (won't decrease past base weight)
 local previous_poly_get_weight = G.P_CENTERS.e_polychrome.get_weight
 G.P_CENTERS.e_polychrome.get_weight = function(self)
-  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
+  return math.max(G.P_CENTERS.e_polychrome.weight, previous_poly_get_weight(self) - ((G.GAME.poke_negative_edition_rate or 1) - 1) * G.P_CENTERS.e_negative.weight)
 end
 
 --To support Debris sleeve combo
 local card_set_ability_old = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" and self.ability and self.ability.card_limit then
       self.ability.card_limit = self.ability.card_limit - 1
   end
   local ret = card_set_ability_old(self, center, initial, delay_sprites)
-  if G.GAME.modifiers.negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
+  if G.GAME.modifiers.poke_negative_hazards and self.config.center and self.config.center.key == "m_poke_hazard" then
       if not self.ability then self.ability = {} end
       self.ability.card_limit = (self.ability.card_limit or 0) + 1
   end
@@ -275,7 +277,7 @@ function SMODS.current_mod.calculate(self, context)
     pokermon.change_poli_suit()
   end
   -- Vending deck
-  if G.GAME.modifiers.vending == true then
+  if G.GAME.modifiers.poke_vending == true then
     if context and context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss and ((G.GAME.round_resets.ante - 1) % 2 == 1) then
         G.E_MANAGER:add_event(Event({
             func = function()
@@ -289,8 +291,8 @@ function SMODS.current_mod.calculate(self, context)
   end
   --Hazard level
   if context.first_hand_drawn then
-    if G.GAME.round_resets.hazard_level and G.GAME.round_resets.hazard_level > 0 then
-      local hazards = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level)
+    if G.GAME.poke_hazard_level and G.GAME.poke_hazard_level > 0 then
+      local hazards = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level)
       G.E_MANAGER:add_event(Event({
           trigger = 'before',
           delay = 0.4,

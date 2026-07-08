@@ -1,5 +1,5 @@
 pokermon.ui.create_scry_cardarea = function()
-   local config = { card_limit = 0, type = 'scry' }
+   local config = { card_limit = 0, type = 'poke_scry' }
    config.major = G.deck
    local scry_view = CardArea(0, 0, 2 * G.CARD_W, 0.5 * G.CARD_H, config)
    scry_view.T.x = G.TILE_W - G.deck.T.w / 2 - scry_view.T.w / 2 - 0.4
@@ -26,10 +26,10 @@ pokermon.cards_dont_match = function(card1, card2)
 end
 
 pokermon.ui.hide_scry_cardarea = function()
-   G.scry_view.states.visible = false
-   local to_kill = #G.scry_view.cards
+   G.poke_scry_view.states.visible = false
+   local to_kill = #G.poke_scry_view.cards
    for i = to_kill, 1, -1 do
-      G.scry_view.cards[i]:remove()
+      G.poke_scry_view.cards[i]:remove()
    end
 end
 
@@ -482,7 +482,7 @@ end
 
 
 -- Toggle function for Stake + Sticker Skins
-G.FUNCS.toggle_pokermon_skins = function()
+G.FUNCS.poke_toggle_pokermon_skins = function()
   local vanilla_stakes = {'stake_white', 'stake_red', 'stake_green', 'stake_black', 'stake_blue', 'stake_purple', 'stake_orange', 'stake_gold'}
   for k, _ in pairs(G.P_STAKES) do
     if pokermon.has(vanilla_stakes, k) then

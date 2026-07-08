@@ -358,9 +358,8 @@ local gardevoir={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if not from_debuff and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-      local bhole = SMODS.add_card{ set = 'Spectral', key = 'c_black_hole'}
-      SMODS.calculate_effect({ message = localize('poke_plus_energy') }, bhole)
+    if not from_debuff then
+      pokermon.create_held_item("c_black_hole")
     end
   end,
   attributes = {"mult", "xmult", "energy_count", "joker", "passive", "holding", "generation", "spectral"},
@@ -728,7 +727,7 @@ local shedinja={
       if fire_count > 0 or earth_count > 0 or dark_count > 0 or psychic_count > 0 then
         G.E_MANAGER:add_event(Event({
           func = function()
-            remove(self, card, context, true)
+            SMODS.destroy_cards(card)
             return true
           end
         }))
@@ -901,7 +900,7 @@ local skitty={
     local cattype = G.GAME.current_round.cattype or "Grass"
 
     local highlight_colour = cattype ~= "Lightning" and G.C.WHITE or G.C.BLACK
-    local type_colour = G.ARGS.LOC_COLOURS[string.lower(cattype)]
+    local type_colour = pokermon.colours[string.lower(cattype)]
     local main_end
 
     if card.area and card.area == G.jokers then

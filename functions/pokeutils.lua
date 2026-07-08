@@ -197,6 +197,16 @@ pokermon.debug = function(message, verbose, depth)
   end
 end
 
+pokermon.filter = function(list, func)
+  local new_list = {}
+  for _, v in pairs(list) do
+    if func(v) then
+      new_list[#new_list + 1] = v
+    end
+  end
+  return new_list
+end
+
 pokermon.find_card = function(key_or_function, use_highlighted)
   local is_target = function(card)
     return (type(key_or_function) == "function") and key_or_function(card)
@@ -346,7 +356,7 @@ pokermon.set_spoon_item = function(card)
       G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = function()
-          G.GAME.last_poke_item = card.config.center_key
+          G.GAME.poke_last_item = card.config.center_key
             return true
         end
       }))
@@ -508,19 +518,19 @@ pokermon.set_hazards = function(amount)
 end
 
 pokermon.change_hazard_max = function(mod)
-  G.GAME.hazard_max = G.GAME.hazard_max or 3
-  G.GAME.hazard_max = G.GAME.hazard_max + mod
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max or 3
+  G.GAME.poke_hazard_max = G.GAME.poke_hazard_max + mod
 end
 
 pokermon.change_hazard_level = function(mod)
-  local max = G.GAME.hazard_max or 3
-  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level or 0
-  G.GAME.round_resets.hazard_level = G.GAME.round_resets.hazard_level + mod
+  local max = G.GAME.poke_hazard_max or 3
+  G.GAME.poke_hazard_level = G.GAME.poke_hazard_level or 0
+  G.GAME.poke_hazard_level = G.GAME.poke_hazard_level + mod
 end
 
 pokermon.get_hazard_level_vars = function()
-  local level = math.min(G.GAME.hazard_max or 3, G.GAME.round_resets.hazard_level or 0)
-  local max = G.GAME.hazard_max or 3
+  local level = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level or 0)
+  local max = G.GAME.poke_hazard_max or 3
   local vars = {level, max}
   return vars
 end
@@ -631,12 +641,6 @@ function Card:is_face(from_boss)
   return is_face_ref(self, from_boss)
 end
 
--- Smeared Check Hook
-local smeared_ref = SMODS.smeared_check
-function SMODS.smeared_check(card, suit)
-  return smeared_ref(card, suit)
-end
-
 -- Ambipom Straight Hand-Part Override
 SMODS.PokerHandPart:take_ownership('_straight',
   {
@@ -734,15 +738,10 @@ end
 pokermon.get_consumeables = function(set)
   local consumeables = {}
   if G.STAGE ~= G.STAGES.RUN then return consumeables end
-  local count = 0
-  local areas = {G.jokers.cards, G.consumeables.cards}
-  for i = 1, #areas do
-    local area = areas[i]
-    for j = 1, #area do
-      if area[j].ability.consumeable and not (set and area[j].ability.set ~= set) then
-        consumeables[#consumeables + 1] = area[j]
-      end
-    end
+  for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+    pokermon.table_append(consumeables, pokermon.filter(cardarea.cards,
+      function(v) return v.ability.consumeable and not (set and v.ability.set ~= set)
+    end))
   end
   return consumeables
 end
@@ -954,4 +953,31 @@ pokermon.reset_sprite = function(card, center)
 
   if sprite then sprite:remove() end
   if soul then soul:remove() end
+end
+
+pokermon.get_depleted = function(find_func)
+  if not G.deck or not G.deck.cards then return false end
+  
+  local depleted = true
+  
+  for k, v in ipairs(G.deck.cards) do
+    if find_func(v) then 
+      depleted = false
+      break
+    end
+  end
+  
+  return depleted
+end
+
+pokermon.sort_hands = function(sort_func)
+  local temp_hands = {}
+  for k, v in pairs(G.GAME.hands) do
+    if v.visible then
+      table.insert(temp_hands, v)
+    end
+  end
+  table.sort(temp_hands, sort_func)
+  
+  return temp_hands
 end

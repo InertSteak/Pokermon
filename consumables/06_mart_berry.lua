@@ -75,7 +75,7 @@ local berry_juice_energy = {
       pokermon.energy.increase(choice, pokermon.type_sticker_applied(choice))
     end
     if not G.GAME.modifiers.no_interest then
-      G.GAME.modifiers.reset_no_interest = true
+      G.GAME.modifiers.poke_reset_no_interest = true
       G.GAME.modifiers.no_interest = true
     end
   end
@@ -145,7 +145,7 @@ local berry_juice_planet = {
     table.sort(temp_hands, sort_function)
     
     local upgrade_handname = temp_hands[1].handname
-    SMODS.smart_level_up_hand(card, upgrade_handname)
+    SMODS.upgrade_poker_hands{hands = upgrade_handname, from = card}
   end
 }
 

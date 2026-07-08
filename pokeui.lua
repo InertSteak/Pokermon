@@ -20,7 +20,7 @@ local joker_pool_toggles = {
 
 local misc_no_restart_toggles = {
   {ref_value = "shiny_playing_cards", label = "poke_settings_shiny_playing_cards", tooltip = {set = 'Other', key = 'shinyplayingcard_tooltip'}},
-  {ref_value = "stake_skins", label = "poke_settings_stake_skins", tooltip = {set = 'Other', key = 'stake_skins_tooltip'}, callback = G.FUNCS.toggle_pokermon_skins},
+  {ref_value = "stake_skins", label = "poke_settings_stake_skins", tooltip = {set = 'Other', key = 'stake_skins_tooltip'}, callback = G.FUNCS.poke_toggle_pokermon_skins},
   {ref_value = "detailed_tooltips", label = "poke_settings_pokemon_detailed_tooltips", tooltip = {set = 'Other', key = 'detailed_tooltips_tooltip'}},
   {ref_value = "previous_evo_stickers", label = "poke_settings_previous_evo_stickers", tooltip = {set = 'Other', key = 'previous_evo_stickers_tooltip'}},
   {ref_value = "order_jokers", label = "poke_settings_order_jokers", tooltip = {set = 'Other', key = 'order_jokers_tooltip'}},
@@ -235,7 +235,7 @@ local pokermon_actual_credits = function()
     { localize("poke_credits_sound"), "Dread" },
     { localize("poke_credits_developer"), "SDM0, Jevonnissocoolman, Ishtech, Fem," },
     { localize("poke_credits_developer"), "MathIsFun_, Kek, Eternalnacho, Emma" },
-    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla" },
+    { localize("poke_credits_designer"), "Xilande, Lemmanade, PrincessRoxie, Catzzadilla", "bt", "Emma" },
     { localize("poke_credits_localization"), "Rafael, PainKiller, FlamingRok, Mr. Onyx" },
     { localize("poke_credits_localization"), "PIPIKAI, PanbimboGD, HuyCorn, IlPastaio, heyctf" },
     { localize("poke_credits_community_manager"), "Astra, Kaethela" },
@@ -643,7 +643,7 @@ local function create_UIBox_pokedex_jokers(keys, previous_menu)
 end
 
 local function open_pokedex(target)
-  if target and target:is(Card) and target.facing ~= 'back'
+  if target and target:is(Card) and not target:is(PokeDisplayCard) and target.facing ~= 'back'
       and not target.poke_change_sprite
       and (target.config.center.stage or target.config.center.poke_multi_item) then
     local menu = G.SETTINGS.paused and 'pokedex_back' or nil
@@ -703,7 +703,7 @@ function G.UIDEF.use_and_sell_buttons(card)
 end
 G.FUNCS.poke_can_reserve_card = function(e)
     if #G.consumeables.cards < G.consumeables.config.card_limit then 
-        e.config.colour = G.ARGS.LOC_COLOURS.pink
+        e.config.colour = pokermon.colours.pink
         e.config.button = 'poke_reserve_card' 
     else
       e.config.colour = G.C.UI.BACKGROUND_INACTIVE

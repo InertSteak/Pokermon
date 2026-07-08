@@ -332,12 +332,7 @@ local ninetales={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      local _card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, 'c_medium')
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+      pokermon.create_held_item('c_medium')
     end
   end,
   attributes = {"chance", "rank", "nine", "tarot", "generation", "holding"},
