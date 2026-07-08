@@ -487,6 +487,7 @@ local duskstone = {
 local dawnstone = {
   name = "dawnstone",
   key = "dawnstone",
+  artist = "Lemmanade",
   set = "Item",
   config = {extra = {hand_played = nil, money_limit = 40}},
   loc_vars = function(self, info_queue, center)
