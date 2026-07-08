@@ -101,7 +101,7 @@ PokemonSprites = {
 {name = "machoke", base = {pos = {x = 12, y = 4}},},
 {name = "machamp", base = {pos = {x = 14, y = 4}},},
 {name = "gmax_machamp", base = {pos = {x = 8, y = 7}, soul_pos = {x = 9, y = 7}},gen_atlas = 1},
-{name = "bellsprout", base = {pos = {x = 16, y = 4}},alts = {AtlasJokersSeriesA = {artist = 'Skittle_Skitty'}}},
+{name = "bellsprout", base = {pos = {x = 16, y = 4}},alts = {AtlasJokersSeriesA = {artist = 'Skittle_Skitty', anim_atlas = "AtlasJokersSeriesABellsprout"}}},
 {name = "weepinbell", base = {pos = {x = 18, y = 4}},},
 {name = "victreebel", base = {pos = {x = 20, y = 4}},},
 {name = "mega_victreebel", base = {pos = {x = 8, y = 9}, soul_pos = {x = 9, y = 9}}, gen_atlas = 1},
