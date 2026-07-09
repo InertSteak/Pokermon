@@ -771,6 +771,65 @@ ease_hands_played = function(mod, instant, ...)
   return ease_hands_played_ref(mod, instant, ...)
 end
 
+-- Drampa pack upgrading functionality
+pokermon.get_upgraded_pack_center = function(center, into, from)
+  if not from then
+    local pack_types = {'normal', 'jumbo', 'mega'}
+    for _, pack_type in ipairs(pack_types) do
+      if pack_type == into then return end -- never downgrade packs
+      if center.key:match(pack_type) then
+        from = pack_type
+        break
+      end
+    end
+    if not from then return end
+  end
+
+  local pack_num = tonumber(center.key:match("_(%d)$")) or 1
+  local upgraded_key = center.key:gsub(from, into)
+
+  if upgraded_key == center.key then return end
+
+  return G.P_CENTERS[upgraded_key]
+      or G.P_CENTERS[upgraded_key:gsub('_%d$', '_' .. math.ceil(pack_num / 2))] -- prefer to match down evenly
+      or G.P_CENTERS[upgraded_key:gsub('_%d$', '_1')]
+end
+
+local get_pack_ref = get_pack
+function get_pack(_key, _type)
+  local center = get_pack_ref(_key, _type)
+  if _key == 'shop_pack' then
+    if next(SMODS.find_card('j_poke_mega_drampa')) then
+      center = pokermon.get_upgraded_pack_center(center, 'mega') or center
+    elseif next(SMODS.find_card('j_poke_drampa')) then
+      center = pokermon.get_upgraded_pack_center(center, 'jumbo') or center
+    end
+  end
+  return center
+end
+
+pokermon.upgrade_shop_pack = function(pack, into)
+  local old_center = pack.config.center
+  local new_center = pokermon.get_upgraded_pack_center(old_center, into)
+  if new_center and new_center ~= old_center then
+    pack:set_ability(new_center, true)
+    -- `set_ability` overrides these with `self.original_T`, which is *sometimes* erroneously the size of a regular playing card
+    pack.T.w = G.CARD_W * 1.27
+    pack.T.h = G.CARD_H * 1.27
+    pack:set_cost()
+    pack:juice_up()
+    create_shop_card_ui(pack)
+  end
+end
+
+pokermon.upgrade_all_shop_packs = function(into)
+  if G.shop_booster and G.shop_booster.cards then
+    for _, pack in ipairs(G.shop_booster.cards) do
+      pokermon.upgrade_shop_pack(pack, into)
+    end
+  end
+end
+
 pokermon.nope = function(card)
   G.E_MANAGER:add_event(Event({
     trigger = 'after',
