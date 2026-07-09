@@ -1,3 +1,5 @@
+local mod_dir = ''..SMODS.current_mod.path
+
 --Config UI
 local energy_toggles = {
   {ref_value = "unlimited_energy", label = "poke_settings_unlimited_energy", tooltip = {set = 'Other', key = 'unlimited_energy_tooltip'}}, 
