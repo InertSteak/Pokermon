@@ -7,7 +7,8 @@ local seedot={
   config = {extra = {num=1,dem=6,rounds=5}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.rounds}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'seedot')
+    return {vars = {num, dem, center.ability.extra.rounds}}
   end,
   designer = "Catzzadilla",
   rarity = 1,
@@ -51,7 +52,8 @@ local nuzleaf={
   config = {extra = {chips_mod = 7,num=1,dem=6}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.chips_mod}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'nuzleaf')
+    return {vars = {num, dem, center.ability.extra.chips_mod}}
   end,
   designer = "Catzzadilla",
   rarity = "poke_safari",
@@ -99,7 +101,8 @@ local shiftry={
   config = {extra = {mult = 0, mult_mod = 5, chips_mod = 10,num=1,dem=6}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.chips_mod, center.ability.extra.mult_mod, center.ability.extra.mult}}
+    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'shiftry')
+    return {vars = {num, dem, center.ability.extra.chips_mod, center.ability.extra.mult_mod, center.ability.extra.mult}}
   end,
   designer = "Catzzadilla",
   rarity = "poke_safari",
