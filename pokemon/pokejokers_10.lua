@@ -1,8 +1,185 @@
 -- Lombre 271
 -- Ludicolo 272
 -- Seedot 273
+local seedot={
+  name = "seedot",
+  pos = {x = 0, y = 0},
+  config = {extra = {num=1,dem=6,rounds=5}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.rounds}}
+  end,
+  designer = "Catzzadilla",
+  rarity = 1,
+  cost = 4,
+  gen = 3,
+  stage = "Basic",
+  ptype = "Grass",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
+          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+        end
+      end
+    end
+   if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if SMODS.pseudorandom_probability(card, 'seedot', card.ability.extra.num, card.ability.extra.dem, 'seedot') then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end}
+          }
+        end
+      end
+    return pokermon.level_evo(self, card, context, "j_poke_nuzleaf")
+    end
+  end,
+  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "round_evo"},
+}
 -- Nuzleaf 274
+local nuzleaf={
+  name = "nuzleaf",
+  pos = {x = 0, y = 0},
+  config = {extra = {chips_mod = 7,num=1,dem=6}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.chips_mod}}
+  end,
+  designer = "Catzzadilla",
+  rarity = "poke_safari",
+  cost = 6,
+  gen = 3,
+  stage = "One",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  item_req = "leafstone",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
+          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          SMODS.scale_card(SMODS.drawn_cards[i], {
+            ref_value = 'chips',
+            scalar_value = 'chips_mod',
+            message_colour = G.C.CHIPS
+          })
+        end
+      end
+    end
+   if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if SMODS.pseudorandom_probability(card, 'nuzleaf', card.ability.extra.num, card.ability.extra.dem, 'nuzleaf') then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end}
+          }
+        end
+      end
+    return pokermon.item_evo(self, card, context, "j_poke_shiftry")
+    end
+  end,
+  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "scaling", "perma_bonus", "item_evo"},
+}
 -- Shiftry 275
+local shiftry={
+  name = "shiftry",
+  pos = {x = 0, y = 0},
+  config = {extra = {mult = 0, mult_mod = 5, chips_mod = 7,num=1,dem=6}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.chips_mod, center.ability.extra.mult_mod, center.ability.extra.mult}}
+  end,
+  designer = "Catzzadilla",
+  rarity = "poke_safari",
+  cost = 8,
+  gen = 3,
+  stage = "Two",
+  ptype = "Dark",
+  atlas = "Pokedex3",
+  perishable_compat = false,
+  blueprint_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return 
+      {
+        mult = card.ability.extra.mult
+      }
+    end 
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+      for i = 1, #SMODS.drawn_cards do
+        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
+          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          SMODS.scale_card(SMODS.drawn_cards[i], {
+            ref_value = 'chips',
+            scalar_value = 'chips_mod',
+            message_colour = G.C.CHIPS
+          })
+          SMODS.scale_card(card, {
+            ref_value = 'mult',
+            scalar_value = 'mult_mod',
+            message_colour = G.C.MULT
+          })
+        end
+      end
+    end
+    if context.cardarea == G.jokers and context.scoring_hand then
+      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if SMODS.pseudorandom_probability(card, 'shiftry', card.ability.extra.num, card.ability.extra.dem, 'shiftry') then
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+          return {
+            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
+              G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = function()
+                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
+                  _card:add_to_deck()
+                  G.consumeables:emplace(_card)
+                  G.GAME.consumeable_buffer = 0
+                  return true
+                end
+              }))
+            end}
+          }
+        end
+      end
+    end
+  end,
+  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "mult", "scaling", "perma_bonus"},
+}
 -- Taillow 276
 local taillow={
   name = "taillow",
@@ -942,6 +1119,6 @@ local skitty={
   attributes = {"copying", "types", "item_evo"},
 }
 return {name = "Pokemon Jokers 271-300", 
-        list = {taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
+        list = {seedot, nuzleaf, shiftry, taillow, swellow, wingull, pelipper, ralts, kirlia, gardevoir, shroomish, breloom, slakoth, vigoroth, slaking, nincada, ninjask, shedinja, 
                 makuhita, hariyama, azurill, nosepass, skitty},
 }

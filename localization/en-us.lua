@@ -3438,6 +3438,41 @@ return {
                   "are {C:attention}Nature{} cards"
                 }
             },
+            j_poke_seedot = {
+              name = "Seedot",
+              text = {
+                "{C:green}#1# in #2#{} chance to create",
+                "a {C:attention}Miracle Seed{}",
+                "when hand is played",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Drawn {C:attention}Flower cards{}",
+                "revert to {C:attention}Seed cards{}",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+              }
+            }, 
+            j_poke_nuzleaf = {
+              name = "Nuzleaf",
+              text = {
+                "{C:green}#1# in #2#{} chance to create",
+                "a {C:attention}Miracle Seed{} when hand is played",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Drawn {C:attention}Flower cards{} revert to",
+                "{C:attention}Seed cards{} and gain {C:chips}+#3#{} Chips",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8}){}",
+              }
+            }, 
+            j_poke_shiftry = {
+              name = "Shiftry",
+              text = {
+                "{C:green}#1# in #2#{} chance to create",
+                "a {C:attention}Miracle Seed{} when hand is played",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Drawn {C:attention}Flower cards{} revert to",
+                "{C:attention}Seed cards{}, gain {C:chips}+#3#{} Chips, and",
+                "increase this joker's Mult by {C:mult}+#4#{}",
+                "{C:inactive}(Currently {C:mult}+#5#{C:inactive} Mult)",
+              }
+            },             
             j_poke_taillow = {
               name = "Taillow",
               text = {
