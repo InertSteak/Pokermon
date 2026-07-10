@@ -77,6 +77,7 @@ local default_family_list = {
   { "tyrogue", "hitmonlee", "hitmonchan", "hitmontop" },
   { "poochyena", "mightyena" },
   { "wurmple", "silcoon", "beautifly", "cascoon", "dustox" },
+  { "seedot", "nuzleaf", "shiftry" },
   { "taillow", "swellow"},
   { "wingull", "pelipper"},
   { "ralts", "kirlia", "gardevoir", "gallade"},
