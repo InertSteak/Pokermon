@@ -20,36 +20,27 @@ local seedot={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       for i = 1, #SMODS.drawn_cards do
         if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
           SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
         end
       end
     end
-   if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'seedot', card.ability.extra.num, card.ability.extra.dem, 'seedot') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
-              G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end}
-          }
-        end
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
+              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
+              G.GAME.consumeable_buffer = 0
+              return true
+              end
+            }))
+          end
       end
     return pokermon.level_evo(self, card, context, "j_poke_nuzleaf")
-    end
   end,
   attributes = {"enhancements", "modify_card", "generation", "item", "chance", "round_evo"},
 }
@@ -86,29 +77,20 @@ if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
         end
       end
     end
-   if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'nuzleaf', card.ability.extra.num, card.ability.extra.dem, 'nuzleaf') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
-              G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end}
-          }
-        end
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
+              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
+              G.GAME.consumeable_buffer = 0
+              return true
+              end
+            }))
+          end
       end
     return pokermon.item_evo(self, card, context, "j_poke_shiftry")
-    end
   end,
   attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "scaling", "perma_bonus", "item_evo"},
 }
@@ -155,28 +137,19 @@ local shiftry={
         end
       end
     end
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+    if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'shiftry', card.ability.extra.num, card.ability.extra.dem, 'shiftry') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          return {
-            extra = {focus = card, message = localize('poke_plus_pokeitem'), colour = pokermon.colours.pink, func = function()
-              G.E_MANAGER:add_event(Event({
-                trigger = 'before',
-                delay = 0.0,
-                func = function()
-                  local _card = create_card('poke_item',G.consumeables, nil, nil, nil, nil, 'miracleseed')
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  G.GAME.consumeable_buffer = 0
-                  return true
-                end
-              }))
-            end}
-          }
-        end
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
+              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
+              G.GAME.consumeable_buffer = 0
+              return true
+              end
+            }))
+          end
       end
-    end
   end,
   attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "mult", "scaling", "perma_bonus"},
 }

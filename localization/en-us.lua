@@ -7634,6 +7634,8 @@ return {
             poke_x_scissor = "X Scissor",
             --From Kingdra
             poke_twister_ex = "Twister!",
+            --From Seedot line
+            poke_seed_ex = "Seed!",
             --From Mime Jr.
             poke_mime_ex = "Mime!",
             --From Magmortar
