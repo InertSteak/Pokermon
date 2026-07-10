@@ -67,13 +67,11 @@ local nuzleaf={
   calculate = function(self, card, context)
 if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       for i = 1, #SMODS.drawn_cards do
-        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
-          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-          SMODS.scale_card(SMODS.drawn_cards[i], {
-            ref_value = 'chips',
-            scalar_value = 'chips_mod',
-            message_colour = G.C.CHIPS
-          })
+        local fscard = SMODS.drawn_cards[i]
+        if SMODS.has_enhancement(fscard, 'm_poke_flower') then
+         fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+        fscard.ability.perma_bonus = fscard.ability.perma_bonus or 0
+        fscard.ability.perma_bonus = fscard.ability.perma_bonus + card.ability.extra.chips_mod
         end
       end
     end
@@ -98,7 +96,7 @@ if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
 local shiftry={
   name = "shiftry",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 5, chips_mod = 7,num=1,dem=6}},
+  config = {extra = {mult = 0, mult_mod = 5, chips_mod = 10,num=1,dem=6}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.num, center.ability.extra.dem, center.ability.extra.chips_mod, center.ability.extra.mult_mod, center.ability.extra.mult}}
@@ -122,13 +120,11 @@ local shiftry={
     end 
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       for i = 1, #SMODS.drawn_cards do
-        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
-          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-          SMODS.scale_card(SMODS.drawn_cards[i], {
-            ref_value = 'chips',
-            scalar_value = 'chips_mod',
-            message_colour = G.C.CHIPS
-          })
+        local fscard = SMODS.drawn_cards[i]
+        if SMODS.has_enhancement(fscard, 'm_poke_flower') then
+         fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+        fscard.ability.perma_bonus = fscard.ability.perma_bonus or 0
+        fscard.ability.perma_bonus = fscard.ability.perma_bonus + card.ability.extra.chips_mod
           SMODS.scale_card(card, {
             ref_value = 'mult',
             scalar_value = 'mult_mod',
