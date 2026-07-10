@@ -2694,12 +2694,10 @@ return {
             j_poke_espeon = {
                 name = 'Espeon',
                 text = {
-                    "Retrigger each played {C:attention}#3#{}",
-                    "{br:3}ERROR - CONTACT STEAK",
-                    "Each played {C:attention}Wild{} card",
-                    "gives {X:mult,C:white}X#2#{} Mult",
-                    "when scored",
-                    "{C:inactive,s:0.7}Rank changes every round{}"
+                    "{C:purple}+#1# Foresight",
+                    "{X:mult,C:white}X#2#{} Mult if the top card",
+                    "of your deck is a {V:1}#3#{}",
+                    "{C:inactive,s:0.7}Suit changes every round{}"
                 } 
             },
             j_poke_umbreon = {
@@ -4407,6 +4405,27 @@ return {
                     "{C:tarot}Justice{} at end of round",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
                 }
+            },
+            j_poke_bronzor = {
+                name = 'Bronzor',
+                text = {
+                    "Each played {V:1}#3#{} gives",
+                    "{X:mult,C:white}X#1#{} Mult when scored",
+                    "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#4# #2#s{C:inactive,s:0.8})",
+                    "{C:inactive,s:0.7}Rank and Suit change every round{}",
+                    
+                } 
+            },
+            j_poke_bronzong = {
+                name = 'Bronzong',
+                text = {
+                    "Retrigger each played {C:attention}#3#{}",
+                    "{br:3}ERROR - CONTACT STEAK",
+                    "Each played {V:1}#4#{} gives",
+                    "{X:mult,C:white}X#2#{} Mult when scored",
+                    "{C:inactive,s:0.7}Rank and Suit change every round{}"
+                    
+                } 
             },
             j_poke_bonsly = {
                 name = "Bonsly",

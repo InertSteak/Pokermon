@@ -265,7 +265,8 @@ function SMODS.current_mod.reset_game_globals(run_start)
   for i = 1, #rank_resets do
     pokermon.reset_rank(rank_resets[i])
   end
-  pokermon.reset_espeon_card()
+  pokermon.reset_bronzo_card()
+  pokermon.reset_espeon_suit()
   pokermon.reset_gligar_suit()
   
   pokermon.reset_type('cattype', {'skitty', 'delcatty'})

@@ -318,7 +318,72 @@ local chingling={
 -- Stunky 434
 -- Skuntank 435
 -- Bronzor 436
+local bronzor={
+  name = "bronzor", 
+  pos = {x = 4, y = 4},
+  config = {extra = {Xmult_multi = 1.3, scored = 0}, evo_rqmt = 10},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    local abbr = center.ability.extra
+    return {vars = {abbr.Xmult_multi, localize(G.GAME.current_round.bronzo_rank or "Ace", 'ranks'), localize(G.GAME.current_round.bronzo_suit or "Spades", 'suits_singular'), 
+                    math.max(0, self.config.evo_rqmt - abbr.scored), colours = {G.C.SUITS[G.GAME.current_round.bronzo_suit or "Spades"]}}}
+  end,
+  rarity = 3, 
+  cost = 6, 
+  stage = "Basic",
+  ptype = "Metal",
+  atlas = "Pokedex4",
+  gen = 4,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
+      return {
+        x_mult = card.ability.extra.Xmult_multi,
+        card = card
+      }
+    end
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.bronzo_id and not context.blueprint then
+      card.ability.extra.scored = card.ability.extra.scored + 1
+    end
+    
+    return pokermon.scaling_evo(self, card, context, "j_poke_bronzong", card.ability.extra.scored, self.config.evo_rqmt)
+  end,
+  attributes = {"retrigger", "rank", "xmult", "suit"},
+}
 -- Bronzong 437
+local bronzong={
+  name = "bronzong", 
+  pos = {x = 4, y = 4},
+  config = {extra = {retriggers = 1, Xmult_multi = 1.3}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.bronzo_rank or "Ace", 'ranks'),
+                localize(G.GAME.current_round.bronzo_suit or "Spades", 'suits_singular'), colours = {G.C.SUITS[G.GAME.current_round.bronzo_suit or "Spades"]}}}
+  end,
+  rarity = "poke_safari", 
+  cost = 8, 
+  stage = "One",
+  ptype = "Metal",
+  atlas = "Pokedex4",
+  gen = 4,
+  blueprint_compat = true,
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
+      return {
+        x_mult = card.ability.extra.Xmult_multi,
+        card = card
+      }
+    end
+    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.bronzo_id then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
+    end
+  end,
+  attributes = {"retrigger", "rank", "xmult", "suit"},
+}
 -- Bonsly 438
 local bonsly={
   name = "bonsly",
@@ -659,5 +724,5 @@ local mega_lucario={
 -- Hippopotas 449
 -- Hippowdon 450
 return {name = "Pokemon Jokers 421-450", 
-        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
+        list = {ambipom, buneary, lopunny, mega_lopunny, mismagius, honchkrow, chingling, bronzor, bronzong, bonsly, mimejr, happiny, munchlax, riolu, lucario, mega_lucario},
 }

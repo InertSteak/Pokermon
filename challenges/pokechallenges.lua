@@ -383,7 +383,7 @@ local safety_first = {
     jokers = {
         { id = 'j_poke_mudkip', eternal = true},
         { id = 'j_poke_roggenrola', eternal = true},
-        { id = 'j_poke_espeon', eternal = true},
+        { id = 'j_poke_bronzor', eternal = true},
 	},
     restrictions = {
         banned_cards = {

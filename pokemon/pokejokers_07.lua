@@ -738,13 +738,12 @@ local quagsire={
 local espeon={
   name = "espeon", 
   pos = {x = 4, y = 4},
-  config = {extra = {retriggers = 1, Xmult_multi = 1.2}},
+  config = {extra = {scry = 2, Xmult = 2.5}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = G.P_CENTERS.m_wild
-    end
-    return {vars = {center.ability.extra.retriggers, center.ability.extra.Xmult_multi, localize(G.GAME.current_round.espeon_rank or "Ace", 'ranks')}}
+    info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
+    return {vars = {center.ability.extra.scry, center.ability.extra.Xmult, localize(G.GAME.current_round.espeon_suit or "Spades", 'suits_singular'), 
+                    colours = {G.C.SUITS[G.GAME.current_round.espeon_suit or "Spades"]}}}
   end,
   rarity = "poke_safari", 
   cost = 7, 
@@ -754,21 +753,19 @@ local espeon={
   gen = 2,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_wild') then
+    if context.joker_main and #G.deck.cards > 0 and G.deck.cards[#G.deck.cards]:is_suit(G.GAME.current_round.espeon_suit) then
       return {
-        x_mult = card.ability.extra.Xmult_multi,
-        card = card
-      }
-    end
-    if context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.espeon_id then
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+        xmult = card.ability.extra.Xmult
+			}
     end
   end,
-  attributes = {"retrigger", "rank", "xmult", "suit"},
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_scry_amount = math.max(0,(G.GAME.poke_scry_amount or 0) - card.ability.extra.scry)
+  end,
+  attributes = {"xmult", "suit"},
 }
 -- Umbreon 197
 local umbreon={

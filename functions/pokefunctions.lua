@@ -1293,20 +1293,31 @@ pokermon.reset_type = function(name, exclude_names)
   end
 end
 
-pokermon.reset_espeon_card = function()
-  G.GAME.current_round.espeon_rank = 'Ace'
-  G.GAME.current_round.espeon_id = 14
-  
-  local valid_espeon_cards = {}
+pokermon.reset_espeon_suit = function()
+  local espeon_suits = {}
+  for k, v in ipairs({'Spades','Hearts','Clubs','Diamonds'}) do
+      if v ~= G.GAME.current_round.espeon_suit then espeon_suits[#espeon_suits + 1] = v end
+  end
+  local espeon_card = pseudorandom_element(espeon_suits, pseudoseed('espeon'..G.GAME.round_resets.ante))
+  G.GAME.current_round.espeon_suit = espeon_card
+end
+
+pokermon.reset_bronzo_card = function()
+  G.GAME.current_round.bronzo_rank = 'Ace'
+  G.GAME.current_round.bronzo_id = 14
+  G.GAME.current_round.bronzo_suit = 'Spades'
+
+  local valid_bronzo_cards = {}
   for _, playing_card in ipairs(G.playing_cards) do
     if not SMODS.has_no_suit(playing_card) and not SMODS.has_no_rank(playing_card) then
-      valid_espeon_cards[#valid_espeon_cards + 1] = playing_card
+      valid_bronzo_cards[#valid_bronzo_cards + 1] = playing_card
     end
   end
-  local espeon_card = pseudorandom_element(valid_espeon_cards, 'espeon' .. G.GAME.round_resets.ante)
-  if espeon_card then
-    G.GAME.current_round.espeon_rank = espeon_card.base.value
-    G.GAME.current_round.espeon_id = espeon_card.base.id
+  local bronzo_card = pseudorandom_element(valid_bronzo_cards, 'bronzo' .. G.GAME.round_resets.ante)
+  if bronzo_card then
+    G.GAME.current_round.bronzo_rank = bronzo_card.base.value
+    G.GAME.current_round.bronzo_id = bronzo_card.base.id
+    G.GAME.current_round.bronzo_suit = bronzo_card.base.suit
   end
 end
 
