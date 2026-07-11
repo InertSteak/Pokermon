@@ -245,7 +245,7 @@ PokemonSprites = {
 {name = "mega_feraligatr", base = {pos = {x = 2, y = 6}, soul_pos = {x = 3, y = 6}}, gen_atlas = 2},
 {name = "sentret", base = {pos = {x = 20, y = 10}},},
 {name = "furret", base = {pos = {x = 22, y = 10}},},
-{name = "hoothoot", base = {pos = {x = 24, y = 10}},alts = {AtlasJokersSeriesA = {artist = {'CBMX'}}}},
+{name = "hoothoot", base = {pos = {x = 24, y = 10}},alts = {AtlasJokersSeriesA = {artist = {'CBMX', 'Sunny'}}}},
 {name = "noctowl", base = {pos = {x = 26, y = 10}},alts = {AtlasJokersSeriesA = {artist = {name ='CBMX', layer = 'center'}, soul_pos = {x = 27, y = 10}}}},
 {name = "ledyba", base = {pos = {x = 28, y = 10}},},
 {name = "ledian", base = {pos = {x = 0, y = 11}},},
