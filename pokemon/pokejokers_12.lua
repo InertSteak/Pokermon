@@ -543,14 +543,14 @@ local lileep={
         pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
         
         if card.ability.extra.ancient_count > 1 then
           card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra.money_mod
           card:set_cost()
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           for k, v in ipairs(G.consumeables.cards) do
             v.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money_mod
             v:set_cost()
@@ -615,14 +615,14 @@ local cradily={
         pokermon.get_ancient_amount(context.scoring_hand, 8, card)
       end
       if context.joker_main and card.ability.extra.ancient_count > 0 then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_handsize',vars={card.ability.extra.h_size}}})
         G.hand:change_size(card.ability.extra.h_size)
         G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_size
         
         if card.ability.extra.ancient_count > 1 then
           card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra.money_mod
           card:set_cost()
-          card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_val_up')})
           for k, v in ipairs(G.consumeables.cards) do
             v.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money_mod
             v:set_cost()

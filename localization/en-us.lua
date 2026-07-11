@@ -4412,7 +4412,7 @@ return {
                     "Each played {V:1}#3#{} gives",
                     "{X:mult,C:white}X#1#{} Mult when scored",
                     "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#4# #2#s{C:inactive,s:0.8})",
-                    "{C:inactive,s:0.7}Rank and Suit change every round{}",
+                    "{C:inactive,s:0.7}Rank and Suit changes every round{}",
                     
                 } 
             },
@@ -4423,7 +4423,7 @@ return {
                     "{br:3}ERROR - CONTACT STEAK",
                     "Each played {V:1}#4#{} gives",
                     "{X:mult,C:white}X#2#{} Mult when scored",
-                    "{C:inactive,s:0.7}Rank and Suit change every round{}"
+                    "{C:inactive,s:0.7}Rank and Suit changes every round{}"
                     
                 } 
             },
