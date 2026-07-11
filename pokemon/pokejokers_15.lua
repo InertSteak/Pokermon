@@ -336,14 +336,17 @@ local bronzor={
   gen = 4,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
-      return {
-        x_mult = card.ability.extra.Xmult_multi,
-        card = card
-      }
-    end
-    if context.individual and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == G.GAME.current_round.bronzo_id and not context.blueprint then
-      card.ability.extra.scored = card.ability.extra.scored + 1
+    if context.individual and context.cardarea == G.play and not context.end_of_round then
+      if context.other_card:get_id() == G.GAME.current_round.bronzo_id then
+        card.ability.extra.scored = card.ability.extra.scored + 1
+      end
+      
+      if context.other_card:is_suit(G.GAME.current_round.bronzo_suit) then
+        return {
+          x_mult = card.ability.extra.Xmult_multi,
+          card = card
+        }
+      end
     end
     
     return pokermon.scaling_evo(self, card, context, "j_poke_bronzong", card.ability.extra.scored, self.config.evo_rqmt)
