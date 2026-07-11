@@ -325,7 +325,7 @@ SMODS.Atlas({
     py = 95,
     atlas_table = 'ANIMATION_ATLAS',
     frames = 24,
-    fps = 20
+    fps = 10
 })
 
 SMODS.Atlas({
@@ -335,7 +335,7 @@ SMODS.Atlas({
     py = 95,
     atlas_table = 'ANIMATION_ATLAS',
     frames = 24,
-    fps = 20
+    fps = 10
 })
 
 SMODS.Atlas({
