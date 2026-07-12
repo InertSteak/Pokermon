@@ -374,7 +374,7 @@ local safety_first = {
     rules = {
         custom = {
             { id = 'no_shop_jokers' },
-            { id = 'no_energy'}
+            { id = 'poke_no_energy'}
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
