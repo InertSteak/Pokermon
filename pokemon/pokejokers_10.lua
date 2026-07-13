@@ -4,15 +4,16 @@
 local seedot={
   name = "seedot",
   pos = {x = 0, y = 0},
-  config = {extra = {num=1,dem=6,rounds=5}},
+  config = {extra = {chips = 40, rounds=5}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'seedot')
-    return {vars = {num, dem, center.ability.extra.rounds}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {center.ability.extra.chips, center.ability.extra.rounds}}
   end,
   designer = "Catzzadilla",
   rarity = 1,
   cost = 4,
+  enhancement_gate = 'm_poke_seed',
   gen = 3,
   stage = "Basic",
   ptype = "Grass",
@@ -21,43 +22,31 @@ local seedot={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
-      for i = 1, #SMODS.drawn_cards do
-        if SMODS.has_enhancement(SMODS.drawn_cards[i], 'm_poke_flower') then
-          SMODS.drawn_cards[i]:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-        end
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
       end
     end
-    if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if SMODS.pseudorandom_probability(card, 'seedot', card.ability.extra.num, card.ability.extra.dem, 'seedot') then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
-              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
-              G.GAME.consumeable_buffer = 0
-              return true
-              end
-            }))
-          end
-      end
     return pokermon.level_evo(self, card, context, "j_poke_nuzleaf")
   end,
-  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "round_evo"},
+  attributes = {"enhancements", "chips", "round_evo"},
 }
 -- Nuzleaf 274
 local nuzleaf={
   name = "nuzleaf",
   pos = {x = 0, y = 0},
-  config = {extra = {chip_mod = 7,num=1,dem=6}},
+  config = {extra = {chips = 50}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'nuzleaf')
-    return {vars = {num, dem, center.ability.extra.chip_mod}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    return {vars = {center.ability.extra.chips}}
   end,
   designer = "Catzzadilla",
   rarity = "poke_safari",
   cost = 6,
+  enhancement_gate = 'm_poke_seed',
   gen = 3,
   stage = "One",
   ptype = "Dark",
@@ -67,46 +56,42 @@ local nuzleaf={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       for i = 1, #SMODS.drawn_cards do
         local fscard = SMODS.drawn_cards[i]
         if SMODS.has_enhancement(fscard, 'm_poke_flower') then
-         fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-        fscard.ability.perma_bonus = fscard.ability.perma_bonus or 0
-        fscard.ability.perma_bonus = fscard.ability.perma_bonus + card.ability.extra.chip_mod
+          fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          fscard.ability.extra.level = 0
         end
       end
     end
-      if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if SMODS.pseudorandom_probability(card, 'nuzleaf', card.ability.extra.num, card.ability.extra.dem, 'nuzleaf') then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
-              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
-              G.GAME.consumeable_buffer = 0
-              return true
-              end
-            }))
-          end
+    
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
       end
+    end
     return pokermon.item_evo(self, card, context, "j_poke_shiftry")
   end,
-  attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "scaling", "perma_bonus", "item_evo"},
+  attributes = {"enhancements", "modify_card", "chips", "item_evo"},
 }
 -- Shiftry 275
 local shiftry={
   name = "shiftry",
   pos = {x = 0, y = 0},
-  config = {extra = {mult = 0, mult_mod = 5, chip_mod = 10,num=1,dem=6}},
+  config = {extra = {chips = 60, growth = 1}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    local num, dem = SMODS.get_probability_vars(center, center.ability.extra.num, center.ability.extra.dem, 'shiftry')
-    return {vars = {num, dem, center.ability.extra.chip_mod, center.ability.extra.mult_mod, center.ability.extra.mult}}
+    info_queue[#info_queue+1] = G.P_CENTERS.m_poke_seed
+    info_queue[#info_queue+1] = {set = 'Other', key = 'growth_level'}
+    return {vars = {center.ability.extra.chips, center.ability.extra.growth}}
   end,
   designer = "Catzzadilla",
   rarity = "poke_safari",
   cost = 8,
+  enhancement_gate = 'm_poke_seed',
   gen = 3,
   stage = "Two",
   ptype = "Dark",
@@ -115,40 +100,29 @@ local shiftry={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main then
-      return 
-      {
-        mult = card.ability.extra.mult
-      }
-    end 
     if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
       for i = 1, #SMODS.drawn_cards do
         local fscard = SMODS.drawn_cards[i]
         if SMODS.has_enhancement(fscard, 'm_poke_flower') then
-         fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
-        fscard.ability.perma_bonus = fscard.ability.perma_bonus or 0
-        fscard.ability.perma_bonus = fscard.ability.perma_bonus + card.ability.extra.chip_mod
-          SMODS.scale_card(card, {
-            ref_value = 'mult',
-            scalar_value = 'mult_mod',
-            message_colour = G.C.MULT
-          })
+          fscard:set_ability(G.P_CENTERS.m_poke_seed, nil, true)
+          fscard.ability.extra.level = 0
         end
       end
     end
-    if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if SMODS.pseudorandom_probability(card, 'shiftry', card.ability.extra.num, card.ability.extra.dem, 'shiftry') then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              local mseed = SMODS.add_card({set = 'poke_item', key = 'c_poke_miracleseed'})
-              SMODS.calculate_effect({message = localize('poke_seed_ex'), colour = G.C.green}, mseed)
-              G.GAME.consumeable_buffer = 0
-              return true
-              end
-            }))
-          end
+    
+    if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_poke_seed') then
+      if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+        return {
+          chips = card.ability.extra.chips
+        }
       end
+    end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(card.ability.extra.growth)
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    pokermon.change_growth_level(-card.ability.extra.growth)
   end,
   attributes = {"enhancements", "modify_card", "generation", "item", "chance", "chips", "mult", "scaling", "perma_bonus"},
 }
