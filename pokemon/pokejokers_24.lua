@@ -112,7 +112,7 @@ local pumpkaboo = {
     if context.discard then
       if context.other_card['pumpkaboo_trigger'..card.unique_val] then
         pokermon.create_consumeable({ set = 'Spectral' }, true, card)
-      elseif context.other_card:get_id() == 11 and not context.blueprint then
+      elseif context.other_card:get_id() == 11 and not context.other_card.debuff and not context.blueprint then
         return {
           message = localize('poke_boo_ex'),
           colour = G.C.RED
@@ -184,7 +184,7 @@ local gourgeist = {
     if context.discard then
       if context.other_card['gourgeist_trigger'..card.unique_val]  then
         pokermon.create_consumeable({ set = 'Spectral' }, true, card)
-      elseif context.other_card:get_id() == 11 and not context.blueprint then
+      elseif context.other_card:get_id() == 11 and not context.other_card.debuff and not context.blueprint then
         return {
           message = localize('poke_boo_ex'),
           colour = G.C.RED
