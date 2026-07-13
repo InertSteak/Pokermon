@@ -698,7 +698,8 @@ pokermon.add_frac_tooltip = function(info_queue, card, frac_var, loc_key)
 end
 
 pokermon.add_energy_tooltip = function(info_queue, card)
-  if card.ability and type(card.ability.extra) == 'table' and pokermon.energy.get_total_energy(card) ~= 0 then
+  if card.ability and type(card.ability.extra) == 'table' and ( pokermon.energy.get_total_energy(card) ~= 0
+      or card.ability.extra.e_limit_up and card.ability.extra.e_limit_up > 0 ) then
     local energy = pokermon.energy.get_total_energy(card)
     local energy_max = pokermon.energy.max + (G.GAME.poke_energy_plus or 0) + (card.ability.extra.e_limit_up or 0)
 
@@ -1454,11 +1455,11 @@ pokermon.get_available_planet_cards = function()
   return planets
 end
 
-pokermon.create_held_item = function(args)
+pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
   if not G.GAME.banned_keys[args.key]
       and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
-    local card = SMODS.add_card(args)
+    local card = SMODS.create_card(args)
     local set = card.ability.set
     local loc_keys = {
       ['Tarot'] = 'k_plus_tarot',
@@ -1467,9 +1468,23 @@ pokermon.create_held_item = function(args)
       ['poke_item'] = 'poke_plus_pokeitem',
       ['poke_energy'] = 'poke_plus_pokeitem',
     }
+    if in_event then
+      card.states.visible = nil
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      G.E_MANAGER:add_event(Event({
+        func = (function()
+          SMODS.add_to_deck(card, args)
+          card:start_materialize()
+          G.GAME.consumeable_buffer = 0
+          return true
+        end)
+      }))
+    else
+      SMODS.add_to_deck(card, args)
+    end
     SMODS.calculate_effect({
-      message = localize(loc_keys[set]),
+      message = loc_keys[set] and localize(loc_keys[set]) or "+1 " .. card.ability.set,
       colour = G.C.SECONDARY_SET[set]
-    }, card)
+    }, message_card or card)
   end
 end
