@@ -729,28 +729,15 @@ local dragonscale = {
   end,
   use = function(self, card, area, copier)
     pokermon.set_spoon_item(card)
-    local choice = nil
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 then
-      choice = G.jokers.highlighted[1]
-    else
-      choice = G.jokers.cards[1]
-    end
-    
+    local choice = pokermon.find_leftmost_or_highlighted()
     pokermon.apply_type_sticker(choice, "Dragon")
-    card_eval_status_text(choice, 'extra', nil, nil, nil, {localize("poke_dragon_ex"), colour = pokermon.colours.dragon})
-    
-    for i = 1, 3 do
+    SMODS.calculate_effect({ message = localize("poke_dragon_ex"), colour = pokermon.colours.dragon }, choice)
+    for _ = 1, 3 do
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local card_type = nil
-        if pseudorandom(pseudoseed('dragonscale')) > .50 or G.GAME.modifiers.poke_no_energy then
-          card_type = "poke_item"
-        else
-          card_type = "poke_energy"
-        end
-        
-        local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, nil)
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
+        local card_type = (G.GAME.modifiers.poke_no_energy or pseudorandom(pseudoseed('dragonscale')) > .50)
+            and "poke_item"
+            or "poke_energy"
+        SMODS.add_card({ set = card_type, area = G.consumeables })
       end
     end
   end,
