@@ -731,7 +731,7 @@ return {
             m_poke_seed = {
                 name = "Seed Card",
                 text = {
-                    "{C:attention}Grows{} when scored",
+                    "{C:attention}Grows #4#{} #5# when scored",
                     "{br:2}ERROR - CONTACT STEAK",
                     "Turns into a {C:attention}Flower{} card",
                     "and earns {C:money}$#3#{} after",
@@ -3436,6 +3436,36 @@ return {
                   "are {C:attention}Nature{} cards"
                 }
             },
+            j_poke_seedot = {
+              name = "Seedot",
+              text = {
+                "Played {C:attention}Seed{} cards give",
+                "{C:chips}+#1#{} Chips when scored",
+                "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+              }
+            }, 
+            j_poke_nuzleaf = {
+              name = "Nuzleaf",
+              text = {
+                "Played {C:attention}Seed{} cards give",
+                "{C:chips}+#1#{} Chips when scored",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Drawn {C:attention}Flower{} cards",
+                "become {C:attention}Seed{} cards",
+                "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Leaf Stone{C:inactive,s:0.8}){}",
+              }
+            }, 
+            j_poke_shiftry = {
+              name = "Shiftry",
+              text = {
+                "{C:attention}+#2#{} growth level",
+                "Played {C:attention}Seed{} cards give",
+                "{C:chips}+#1#{} Chips when scored",
+                "{br:2}ERROR - CONTACT STEAK",
+                "Drawn {C:attention}Flower{} cards",
+                "become {C:attention}Seed{} cards",
+              }
+            },             
             j_poke_taillow = {
               name = "Taillow",
               text = {
@@ -5684,12 +5714,12 @@ return {
             j_poke_brambleghast = {
               name = "Brambleghast",
               text = {
+                "{C:attention}+#4#{} growth level",
                 "{C:chips}+#1#{} Chips for each {C:money}$1{} you have",
                 "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                 "{br:2}ERROR - CONTACT STEAK",
                 "{C:attention}Second{} scoring {C:attention}#3#{} of the round",
                 "becomes a {C:attention}Seed{} card",
-                "with {C:attention}2 growths{}",
                 "{C:inactive,s:0.8}(Rank changes every round){}",
               }
             },
@@ -6725,6 +6755,14 @@ return {
                   "{C:inactive}(Extra hazard layers raise the limit){}"
               }
             },
+            growth_level = {
+              name = "Growth Level",
+              text = {
+                "Amount of extra times",
+                "a {C:attention}Seed{} card grows",
+                "when scored",
+              }
+            },
             merge = {
                 name = "Merge",
                 text = {
@@ -7466,6 +7504,8 @@ return {
             k_poke_pp = "PP UP",
             k_poke_chips = "Chips",
             k_poke_hazard_layer = "hazard layer",
+            k_poke_time = "time",
+            k_poke_times = "times",
             
             k_poke_baby = "Baby",
             k_poke_safari = "Safari",
@@ -7618,6 +7658,8 @@ return {
             poke_x_scissor = "X Scissor",
             --From Kingdra
             poke_twister_ex = "Twister!",
+            --From Seedot line
+            poke_seed_ex = "Seed!",
             --From Mime Jr.
             poke_mime_ex = "Mime!",
             --From Magmortar

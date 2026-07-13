@@ -528,6 +528,11 @@ pokermon.change_hazard_level = function(mod)
   G.GAME.poke_hazard_level = G.GAME.poke_hazard_level + mod
 end
 
+pokermon.change_growth_level = function(mod)
+  G.GAME.poke_growth_level = G.GAME.poke_growth_level or 0
+  G.GAME.poke_growth_level = G.GAME.poke_growth_level + mod
+end
+
 pokermon.get_hazard_level_vars = function()
   local level = math.min(G.GAME.poke_hazard_max or 3, G.GAME.poke_hazard_level or 0)
   local max = G.GAME.poke_hazard_max or 3
