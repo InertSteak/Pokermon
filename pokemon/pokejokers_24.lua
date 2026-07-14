@@ -99,7 +99,7 @@ local pumpkaboo = {
   end,
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
-      local jacks = pokermon.filter(context.full_hand, function() return v:get_id() == 11 and not v.debuff end)
+      local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
       local discarded, target = card.ability.extra.jacks_discarded, card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
         discarded = discarded + 1
@@ -171,7 +171,7 @@ local gourgeist = {
   end,
   calculate = function(self, card, context)
     if context.pre_discard and not context.blueprint then
-      local jacks = pokermon.filter(context.full_hand, function() return v:get_id() == 11 and not v.debuff end)
+      local jacks = pokermon.filter(context.full_hand, function(v) return v:get_id() == 11 and not v.debuff end)
       local discarded, target = card.ability.extra.jacks_discarded, card.ability.extra.jack_target
       for _, v in ipairs(jacks) do
         discarded = discarded + 1
