@@ -626,7 +626,7 @@ return {
             c_poke_metal_energy = {
                 name = "鋼能量",
                 text = {
-                    "對最左邊或選擇的{X:Metal,C:white}鋼{}屬性小丑牌",
+                    "對最左邊或選擇的{X:poke_metal,C:white}鋼{}屬性小丑牌",
                     "增加{C:poke_pink}能量{}，如果可適用",
                     "{C:inactive}(每張小丑牌可增強{C:attention}#1#{}{C:inactive}次)",
                 },

@@ -464,7 +464,7 @@ return {
             c_poke_metal_energy = {
                 name = "Energia Metálica",
                 text = {
-                    "{C:poke_pink}Energiza{} o Coringa {X:Metal,C:white}Metálico{}",
+                    "{C:poke_pink}Energiza{} o Coringa {X:poke_metal,C:white}Metálico{}",
                     "mais à esquerda ou selecionado se possível",
                     "{C:inactive}(Máx de {C:attention}#1#{C:inactive} aumentos por Coringa)",
                 },
