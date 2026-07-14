@@ -1403,9 +1403,11 @@ local steelix={
   calculate = function(self, card, context)
     if context.remove_playing_cards then
       for _, removed_card in ipairs(context.removed) do
-         local stone_card = SMODS.add_card { set = "Base", enhancement = "m_stone", area = G.deck }
-         SMODS.calculate_context({ playing_card_added = true, cards = { stone_card } })
-         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
+        if not SMODS.has_enhancement(removed_card, 'm_stone') then
+          local stone_card = SMODS.add_card { set = "Base", enhancement = "m_stone", area = G.deck }
+          SMODS.calculate_context({ playing_card_added = true, cards = { stone_card } })
+          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
+        end
       end
     end
     
