@@ -356,7 +356,7 @@ local axew={
   config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0, active = true}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
     return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
                     center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
                     math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
@@ -431,7 +431,7 @@ local fraxure={
   config = {extra = {targets = {"High Card", "Pair"}, nature_played = 0,}, evo_rqmt = 7},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
     return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'),
                     center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), 
                     math.max(0, self.config.evo_rqmt - center.ability.extra.nature_played), }}
@@ -502,7 +502,7 @@ local haxorus={
   config = {extra = {targets = {"High Card", "Pair"}, rounds = 5}},
   loc_vars = function(self, info_queue, center)
     pokermon.type_tooltip(self, info_queue, center)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"poker hand"}}
     return {vars = {center.ability.extra.targets[1] and localize(center.ability.extra.targets[1], 'poker_hands') or localize('poke_none'), 
                     center.ability.extra.targets[2] and localize(center.ability.extra.targets[2], 'poker_hands') or localize('poke_none'), }}
   end,
