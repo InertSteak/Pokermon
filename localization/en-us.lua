@@ -654,7 +654,7 @@ return {
                 name = "Metal Energy",
                 text = {
                     "{C:poke_pink}Energize{} leftmost or selected",
-                    "{X:Metal,C:white}Metal{} Joker if able",
+                    "{X:poke_metal,C:white}Metal{} Joker if able",
                     "{C:inactive}(Max of {C:attention}#1#{C:inactive} increases per Joker)",
                 },
             },

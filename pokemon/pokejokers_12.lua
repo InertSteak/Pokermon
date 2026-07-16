@@ -187,7 +187,7 @@ local corphish={
   loc_vars = function(self, info_queue, card)
     pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     end
     
     local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod, self.config.evo_rqmt}
@@ -249,7 +249,7 @@ local crawdaunt={
   loc_vars = function(self, info_queue, card)
     pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
-      info_queue[#info_queue+1] = {set = 'Other', key = 'nature'}
+      info_queue[#info_queue+1] = {set = 'Other', key = 'nature', vars = {"rank"}}
     end
     
     local card_vars = {card.ability.extra.mult, card.ability.extra.mult_mod}

@@ -599,7 +599,7 @@ return {
             c_poke_metal_energy = {
                 name = "Energía Metal",
                 text = {
-                    "{C:poke_pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:Metal,C:white}Metal{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
+                    "{C:poke_pink}Energiza{} al comodín más a la","izquierda o seleccionado","de tipo {X:poke_metal,C:white}Metal{} disponible","{C:inactive}(Máximo de {C:attention}#1#","{C:inactive}aumentos por comodín)",
                 },
             },
             c_poke_fairy_energy = {
