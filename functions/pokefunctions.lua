@@ -1459,6 +1459,7 @@ pokermon.create_consumeable = function(args, in_event, message_card)
   if type(args) == 'string' then args = { key = args } end
   if not G.GAME.banned_keys[args.key]
       and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or args.edition == 'e_negative') then
+    args.skip_materialize = true
     local card = SMODS.create_card(args)
     local set = card.ability.set
     local loc_keys = {
@@ -1468,8 +1469,8 @@ pokermon.create_consumeable = function(args, in_event, message_card)
       ['poke_item'] = 'poke_plus_pokeitem',
       ['poke_energy'] = 'poke_plus_pokeitem',
     }
+    card.states.visible = nil
     if in_event then
-      card.states.visible = nil
       G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
       G.E_MANAGER:add_event(Event({
         func = (function()
@@ -1481,6 +1482,7 @@ pokermon.create_consumeable = function(args, in_event, message_card)
       }))
     else
       SMODS.add_to_deck(card, args)
+      card:start_materialize()
     end
     SMODS.calculate_effect({
       message = loc_keys[set] and localize(loc_keys[set]) or "+1 " .. card.ability.set,
