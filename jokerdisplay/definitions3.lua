@@ -534,8 +534,65 @@ jd_def["j_poke_dustox"] = {
 --	Lombre
 --	Ludicolo
 --	Seedot
+jd_def["j_poke_seedot"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Nuzleaf
+jd_def["j_poke_nuzleaf"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Shiftry
+jd_def["j_poke_shiftry"] = {
+  text = {
+    { text = "+", colour = G.C.CHIPS },
+    { ref_table = "card.joker_display_values", ref_value = "chips", retrigger_type = "mult", colour = G.C.CHIPS },
+  },
+  calc_function = function(card)
+    local count = 0
+    local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if text ~= 'Unknown' then
+      for _, scoring_card in pairs(scoring_hand) do
+        if SMODS.has_enhancement(scoring_card, 'm_poke_seed') then
+          count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+        end
+      end
+    end
+    card.joker_display_values.chips = count * card.ability.extra.chips
+  end
+}
+
 --	Taillow
 jd_def["j_poke_taillow"] = {
   text = {
