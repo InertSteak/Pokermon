@@ -5920,6 +5920,15 @@ return {
                   "{C:inactive}({C:attention}#1#{C:inactive} rounds remaining){}"
                 }
             },
+            j_poke_rage_candy_bar = {
+                name = "Rage Candy Bar",
+                text = {
+                  "When {C:attention}first{} hand is played,",
+                  "destroy the top {C:attention}2{} cards",
+                  "of your deck",
+                  "{C:inactive}({C:attention}#1#{C:inactive} hands remaining){}"
+                }
+            },
             j_poke_ruins_of_alph = {
                 name = "Ruins of Alph",
                 text = {
