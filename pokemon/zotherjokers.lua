@@ -936,6 +936,48 @@ local daycare={
   attributes = {"joker", "generation", "on_sell"},
 }
 
+local rage_candy_bar={
+  name = "rage_candy_bar",
+  pos = {x = 0, y = 0},
+  config = {extra = {hands = 3,}},
+  loc_vars = function(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
+    return {vars = {center.ability.extra.hands, }}
+  end,
+  rarity = 2,
+  cost = 6,
+  stage = "Other",
+  atlas = "placeholder_joker",
+  perishable_compat = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+  calculate = function(self, card, context)
+    
+    if context.first_hand_drawn and not context.blueprint then
+      local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
+    end
+    
+    if context.joker_main and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+      
+      card.ability.extra.hands = card.ability.extra.hands - 1
+      
+      local cards_to_destroy = {G.deck.cards[#G.deck.cards], G.deck.cards[#G.deck.cards - 1]}
+      
+      SMODS.destroy_cards(cards_to_destroy)
+      
+      if card.ability.extra.hands <= 0 then
+        SMODS.destroy_cards(card, nil, nil, true)
+        return {
+            message = localize('k_eaten_ex'),
+            colour = G.C.RED
+        }
+      end
+    end
+  end,
+  attributes = {"destroy_card", "food"},
+}
+
 local repel={
   name = "repel", 
   pos = {x = 0, y = 0}, 
@@ -969,7 +1011,7 @@ local repel={
   attributes = {"tag", "generation", "boss_blind", "on_sell"},
 }
 
-local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, treasure_eatery, mystery_egg, rival, bitter_rival, champion, 
+local jlist = {pokedex, rotomdex, everstone, tall_grass, jelly_donut, rage_candy_bar, treasure_eatery, mystery_egg, rival, bitter_rival, champion, 
                ruins_of_alph, unown_swarm, professor, imposter_professor, daycare, oologist}
 
 return {name = "Other Jokers",
