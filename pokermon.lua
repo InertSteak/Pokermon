@@ -253,6 +253,27 @@ function Card:set_ability(center, initial, delay_sprites)
   return ret
 end
 
+-- Changing these vouchers to increase interest cap rather than hard setting it
+SMODS.Voucher:take_ownership('seed_money', {
+  redeem = function(self, card)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+          G.GAME.interest_cap = G.GAME.interest_cap + 25
+          return true
+      end
+    }))
+  end
+}, true)
+SMODS.Voucher:take_ownership('money_tree', {
+  redeem = function(self, card)
+    G.E_MANAGER:add_event(Event({
+      func = function()
+          G.GAME.interest_cap = G.GAME.interest_cap + 50
+          return true
+      end
+    }))
+  end
+}, true)
 
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
