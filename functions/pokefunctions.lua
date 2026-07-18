@@ -262,7 +262,7 @@ end
 
 pokermon.can_evolve = function(self, card, context, forced_key, ignore_step, allow_level)
   if not G.P_CENTERS[forced_key] then return false end
-  if next(find_joker("everstone")) and not allow_level then return false end
+  if next(SMODS.find_card("j_poke_everstone")) and not allow_level then return false end
   if (context.evolution or ignore_step) and not context.blueprint and not card.gone then
     return true
   else
@@ -292,7 +292,7 @@ pokermon.level_evo = function(self, card, context, forced_key)
     end
     if pokermon.can_evolve(self, card, context, forced_key, true) and card.ability.extra.rounds <= 1 and not card.ability.extra.juiced then
       card.ability.extra.juiced = true
-      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(find_joker("everstone")) and card.ability.extra.juiced end
+      local eval = function(card) return card.ability.extra.rounds and card.ability.extra.rounds <= 1 and not next(SMODS.find_card("j_poke_everstone")) and card.ability.extra.juiced end
       juice_card_until(card, eval, true)
     end
 end

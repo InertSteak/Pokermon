@@ -836,7 +836,7 @@ local upgrade = {
     end
   end,
   in_pool = function(self)
-    return not next(find_joker("porygon2"))
+    return not next(SMODS.find_card("j_poke_porygon2"))
   end
 }
 

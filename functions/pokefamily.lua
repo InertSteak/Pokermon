@@ -280,7 +280,7 @@ end
 
 --- Returns whether any cards present share a family with the provided center
 pokermon.family_present = function(center)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
+  if SMODS.showman() or next(SMODS.find_card("j_poke_pokedex")) then return false end
   local family_list = pokermon.get_family_list(center.name)
   local prefix = center.poke_custom_prefix or 'poke'
   for _, fam in pairs(family_list) do
